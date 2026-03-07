@@ -46,12 +46,12 @@ export default tseslint.config(
       '**/*.js',
       '**/*.mjs',
       '**/*.cjs',
-      'node_modules',
-      '.turbo',
-      '.next',
-      'public',
-      'dist',
-      '.trash',
+      '**/node_modules/**',
+      '**/.turbo/**',
+      '**/.next/**',
+      '**/public/**',
+      '**/dist/**',
+      '.trash/**',
     ],
   }
 )
