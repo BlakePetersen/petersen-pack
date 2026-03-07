@@ -1,0 +1,41 @@
+---
+title: "How To: Force On/Off \"www.\" Subdomain with .htaccess"
+date: "2011-06-07T00:00-07:00"
+description: "People add and remove \"www.\" from URLs like they're optional, so you need to handle both cases. Whatever varition's chosen should send you to the same content as the other but this can lead to content duplication issues. With a few easy edits to your Apache-based site's .htaccess file, you can handle all user and crawler cases ideally."
+tags: ["apache", "how to", "seo"]
+draft: true
+---
+
+A website can generally be accessed by entering the site's domain directly (domain.com) or by including a leading "www." subdomain. This offers increased usability in that users can enter the site in either way but lowers overall SEO in that web crawlers index both addresses as separate sites and will penalize the site for duplicate content.
+
+This is easily fixed by forcing on or off the "www." subdomain while allowing the users to enter through both addresses. To do this you can modify your .htaccess file in your site's root folder by adding in the following mod_rewrite condition. If you have issues with your permalinks or cache after including this condition, move the snippet to the beginning of the .htaccess file. The codes send a 301 redirect while doing their thing so search engine crawlers know that this is a permanent redirect and to reallocate the pagerank data from the defunct subdomain's pages over to the main domain's matching pages.
+
+__To force site to use "www.": __
+```apacheconf
+RewriteEngine On RewriteCond %{HTTP_HOST} ^example.com$ [NC] 
+RewriteRule ^(.*)$ http://www.example.com/$1 [R=301,L]
+```
+
+__To force site NOT to use "www.":__ 
+```apacheconf
+RewriteEngine On RewriteCond %{HTTP_HOST} ^www.example.com$ [NC] 
+RewriteRule ^(.*)$ http://example.com/$1 [R=301,L]
+```
+
+These two snippets allow for the domain to use other subdomains while forcing the two main domains into either subdomain schema you'd like.The following snippets will force any subdomain that might be inputted into your preferred subdomain schema.
+
+__To force site to use "www.": __
+```apacheconf
+RewriteEngine On RewriteCond %{HTTP_HOST} !^www.example.com$ [NC] 
+RewriteRule ^(.*)$ http://www.example.com/$1 [R=301,L]
+```
+
+__To force site NOT to use "www.": __
+```apacheconf
+RewriteEngine On RewriteCond %{HTTP_HOST} !^example.com$ [NC] 
+RewriteRule ^(.*)$ http://example.com/$1 [R=301,L]
+```
+
+If you don't have a .htaccess file in your site's root, you can quickly whip one up by opening notepad and saving the file with one of these conditions as ".htaccess" without a file extension. When saving the file, enter the name ".htaccess" and select "All Files" under the save as dropdown and it will save the file without the extension. Once saved, simply place the file in your site's root and the file will immediately begin sending users to the proper domain.
+
+You can test whether the file is working by accessing your site using the opposite address you set your site to default to. If it immediately switches up the subdomain, then everything is working properly. If not, check to make sure the file is saved without an extension (most commonly overlooked error) and the code is exactly as it is above, with your domain replacing niteodesign, of course. If you are still having issues, give your hosting provider a jingle and find out how they go about doing this, as it's pretty important SEO-wise.

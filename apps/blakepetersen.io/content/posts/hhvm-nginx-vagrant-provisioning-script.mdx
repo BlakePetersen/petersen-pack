@@ -1,0 +1,107 @@
+---
+title: "HHVM/nginx Vagrant Bootstrap and Provisioning Script"
+date: "2015-12-27T00:00-07:00"
+description: "A bootstrap script to configure a virtual machine to use HHVM/nginx, proxied locally with Vagrant that can also be modified to provision a non-vagrant Ubuntu instance.
+
+"
+tags: ["nginx", "code snippets", "hhvm", "vagrant", "bash"]
+draft: true
+---
+
+Vagrant is an awesome tool, it allows you to provision and manage virtual machine instances, configured within a project, from the command line.
+
+This is a bootstrap script to configure a virtual machine to use HHVM/nginx, proxied locally with Vagrant. This can also be modified to provision a non-vagrant Ubuntu instance.
+
+```bash
+#!/usr/bin/env bash
+
+###### -- Installs and configures HHVM to run on nginx
+
+
+### Add Dependency Repos
+echo '    -=-=- Adding Dependency Repositories and Updating Packages'
+
+    sudo add-apt-repository -y ppa:nginx/stable
+    apt-get update
+
+
+### Install Essentials
+echo '    -=-=- Installing Essentials...'
+
+    apt-get install -y unzip vim git-core curl wget build-essential python-software-properties
+
+
+### Install nginx
+echo '    -=-=- Installing nginx...'
+
+    apt-get -y install nginx
+
+
+### Install HHVM
+echo '    -=-=- Installing HHVM...'
+
+    wget -O - http://dl.hhvm.com/conf/hhvm.gpg.key | sudo apt-key add -
+    echo deb http://dl.hhvm.com/ubuntu trusty main | sudo tee /etc/apt/sources.list.d/hhvm.list
+    apt-get update
+    apt-get install -y hhvm
+
+
+### Post-install HHVM scripts
+echo '    -=-=- Running HHVM Post-Install Scripts...'
+
+    /usr/share/hhvm/install_fastcgi.sh
+    update-rc.d hhvm defaults
+    service hhvm restart
+
+    /usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
+
+
+### Configure Virtual Hosts
+echo '    -=-=- Configuring Virtual Hosts...'
+
+    # Remove Defaults
+    sudo rm /etc/nginx/sites-available/default
+    sudo rm /etc/nginx/sites-enabled/default
+
+    # Create WebSockets-friendly Virtual Hosts Entry
+    echo '
+
+        server {
+
+            listen 80 default_server;
+
+            root /vagrant;
+            index index.html index.htm index.php;
+
+            access_log /var/log/nginx/vagrant.access.log;
+            error_log /var/log/nginx/vagrant.error.log;
+
+            large_client_header_buffers 8 32k;
+
+            location / {
+
+                try_files $uri $uri/ /index.php?$query_string;
+
+            }
+
+            location = /favicon.ico { log_not_found off; access_log off; }
+            location = /robots.txt  { log_not_found off; access_log off; }
+
+            error_page 404 /index.php;   
+
+                include hhvm.conf;
+
+        }
+
+    ' > /etc/nginx/sites-available/vagrant
+
+    # Symlink into 'Sites Enabled
+    ln -s /etc/nginx/sites-available/vagrant /etc/nginx/sites-enabled/vagrant
+
+    # Restart nginx
+    service nginx stop
+    service nginx start
+
+    # Add entry to Hosts
+    echo '127.0.0.1 vagrant' >> /etc/hosts
+```

@@ -1,0 +1,74 @@
+---
+title: " How To: iOS and CSS Hover Events"
+date: "2011-06-06T00:00-07:00"
+description: "Mobile devices have a tough time handling css-based hover events (*:hover) due to the simple fact that iPhones, iPads, and Android devices use touch-based inputs where hovering is pretty much impossible. Let's take a look!"
+draft: true
+---
+
+Mobile devices have a tough time handling css-based hover events (*:hover) due to the simple fact that iPhones, iPads, and Android devices use touch-based inputs where hovering is pretty much impossible. This proves to be problematic for elements that rely on hover events for usability, such as pure css drop-down menus. Replacing the menu with a JS-based method would bypass this issue but in some cases, that may be tough or impossible to do, especially when compared to this easy workaround.
+
+For Android devices, the css hover event is activated simply by tapping the element that would otherwise be hovered over and, voila, the hidden menu is instantiated and you can move along to a child page. But iOS-based devices, such as the iPhone, iPod Touch and iPad, require a bit more coaxing to get the dropdown to show up.
+
+iOS will not recognize the hover event class but will emulate the manner through which Android handles hover event classes (click-to-reveal) through an instance of a click event listener aimed at the head of the dropdown list (the word, when hovered/clicked, drops down the menu). Add the following code to the document.ready portion of your jQuery script in the site's global header (assuming the dropdown appears on every page like a typical navigation menu).
+
+``` javascript
+// iOS Hover Event Class Fix
+if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) {  
+    $(".change-this-class li a").click(function(){  
+        // Update '.change-this-class' to the class of your menu
+        // Leave this empty, that's the magic sauce
+    });
+}
+```
+If you aren't yet using jQuery on your site, the following script includes the jQuery core and the code within document.ready and will resolve the issue with a simple copy and paste. Just be sure to update the class the script points to.
+
+``` markup
+<script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">  
+    $(document).ready(function(){
+        if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) {
+            $(".change-this-class li a").click(function(){  
+                // Update '.change-this-class' to the class of your menu
+                // Leave this empty, that's the magic sauce
+            });
+        }
+    });
+</script>  
+```
+One caveat you will have to contend with is the fact that if the list head links to another page, tapping it will take you to that page. You can work around this by adding a carrot-arrow to the right of the menu item and point the script at that class. But, you will need to make sure the carrot is large enough so that users will be able to click it without accidentally tapping the link to its left, and, if its close enough, to its right.
+
+### Update (11-14-15)
+Joe V pointed out in the comments that this implementation opens the dropdown fine but doesn't really address how to close the dropdown once it's open. Thanks Joe V, and let me know how it goes!
+
+To do this you can assume a click anywhere but the dropdown's content would signify a request to close the dropdown that's open.
+
+Here's the (untested) code to do just that...
+
+``` javascript
+// iOS Hover Event Class Fix
+if(navigator.userAgent.match(/iPhone/i|/iPod/i|/iPad/i)) {
+
+    // Update '.change-this-class' to the class of your menu
+    var menu = '.change-this-class';
+    var $dropdownLink = $(menu + ' li a'),
+        $dropdownContent = $(menu + ' li .content');
+
+    // Toggle Dropdown
+    $dropdownLink.on('click', function(){  
+        // Toggle 'opened' class with the iOS dropdown-on-click
+        $(this).toggleClass('opened');
+    });
+
+    // Click-Anywhere to close Dropdown
+    $("body").on('click', function(e){  
+        // Don't target content or menu links (as they toggle well already)
+        if (e.target !== $dropdownContent && e.target !== $dropdownLink) {
+            // Find the open link and fire click to close
+            $dropdownLink.hasClass('opened').click();
+        }
+    });
+
+}
+```
+Also, thanks to Admiral in the comments for the conditional optimization!

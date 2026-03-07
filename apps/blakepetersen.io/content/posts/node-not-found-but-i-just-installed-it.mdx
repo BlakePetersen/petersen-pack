@@ -1,0 +1,38 @@
+---
+title: "Node: Not Found? But I Just Installed It!"
+date: "2015-11-23T00:00-07:00"
+description: "NodeJS doesn't work with 'node' but does with 'nodejs', run `sudo ln -s \"$(which nodejs)\" /usr/bin/node`"
+tags: ["how to", "code snippets", "ubuntu", "nodejs"]
+draft: true
+---
+
+I'm sure you can relate to this scenario -- You fire up a fresh Ubuntu server with intention of running a node app on it. 
+
+You install NodeJs and npm using Aptitude...
+
+```bash
+sudo apt-get updaxte
+sudo apt-get install nodejs npm
+```
+
+Everything installs correctly, but when you run node-based scripts, you get the following...
+
+```bash
+sh: 1: node: not found
+```
+
+... with a whole lot of errors along with it. 
+
+What the heck? Node was literally just installed, how is it that it can't be found? 
+
+The issue rests with another application called 'node' that comes pre-installed on Ubuntu. To avoid conflicting with this application, the command to launch NodeJS uses 'nodejs' instead of 'node'.
+
+To check if this is truly the case in your situation, simply run 'nodejs' in shell and it should show the NodeJS command prompt ($>, hit ctrl+c twice to hop out). If you aren't getting the Nodejs prompt, you likely don't have NodeJS installed at all, go ahead and try to install using the commands above. 
+
+Once we've confirmed this is the case, all we have to do is tell the system, "We appreciate your concern, but want the command 'node' to launch NodeJS and not that other application". This is done by symlinking the command 'node' to 'nodejs' using the following command...
+
+```bash
+sudo ln -s "$(which nodejs)" /usr/bin/node
+```
+
+That's it! Try running your NodeJS application and and it should now be working. 

@@ -1,0 +1,38 @@
+---
+title: "How To: Always Keep Your Copyright Statement Up To Date"
+date: "2012-05-07T00:00-08:00"
+description: "A quick way to make sure your copyright statement is current is to pull the information from the server's clock."
+tags: ["php"]
+draft: true
+---
+
+We've all seen them, copyright statements in the footer with a date that's half a decade old. It makes you think, if this is so out of date, I wonder how they take care of the rest of their business. Even a copyright that's just a few years old is enough to make me think about things, and any reason for a customer to jump-ship, however small, is lost business. 
+
+A quick way to make sure your copyright statement is current is to pull the information from the server's clock. Unless your server's date is off, which is highly unlikely, you can set up a simple bit of PHP to tap into that clock and make sure you're always displaying the current year. 
+
+``` php
+<?php echo date('Y'); ?>
+```
+
+**Example Usage:**
+``` php
+<div id="copyright-statement">
+  Copyright <?php echo date('Y'); ?> ACME Widgets, All Rights Reserved.
+</div>
+```
+
+Just pop that into any PHP-based page or footer template, add the standard HTML-based copyright copy and you're set, you can forget about it for another half-decade! 
+
+Here are a few more examples for other languages
+
+Javascript:
+``` javascript
+new Date().getFullYear()
+```
+
+Python:
+``` python
+import datetime
+now = datetime.datetime.now()
+print now.year
+```

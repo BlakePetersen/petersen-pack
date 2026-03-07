@@ -1,0 +1,147 @@
+---
+title: "How To: Set Up and Configure HHVM on Ubuntu 14.04"
+date: "2014-09-11T00:00-07:00"
+description: "Install and configure HHVM on an Ubuntu 14.04 Server set up using an Apache Virtual Hosts configuration; run traditional and HHVM-based PHP-powered web applications side-by-side on the same system."
+tags: ["how to", "apache", "devops", "php", "hhvm"]
+draft: true
+---
+
+HHVM or HipHop Virtual Machine is an virtual machine that executes code written in PHP or Hacklang using a just-in-time (JIT) compilation approach to realize greater performance than would otherwise be achievable. 
+
+In this post, I will be running through how to install and set up HHVM on an Ubuntu 14.04 Server set up using an Apache Virtual Hosts configuration. In the end, you will be able to run traditional and HHVM-based PHP-powered web applications side-by-side on the same system.
+
+## Install HHVM
+We don't need to all get fancy compiling anything, so we will simply install the prebuilt HHVM packages for Ubuntu 14.04 (64-bit). Run the following...
+
+```bash
+wget -O - http://dl.hhvm.com/conf/hhvm.gpg.key | sudo apt-key add -
+echo deb http://dl.hhvm.com/ubuntu trusty main | sudo tee /etc/apt/sources.list.d/hhvm.list
+sudo apt-get update
+sudo apt-get install hhvm
+```
+*Source: https://github.com/facebook/hhvm/wiki/Prebuilt-Packages-on-Ubuntu-14.04*
+
+Next, we need a way to hook HHVM into our Apache web server. This is done using FastCGI, which we will need to install. Luckily, HHVM provides a shell script to set this up. Run the following...
+
+```bash
+sudo /usr/share/hhvm/install_fastcgi.sh
+```
+
+Also, to ensure HHVM fires up at boot, run this...
+
+```bash
+sudo update-rc.d hhvm defaults
+```
+
+## Configure HHVM and Apache Virtual Hosts
+The install script will ask you to restart both HHVM and Apache. Don't just yet, otherwise your site visitors will be seeing some 404 action coming their way. Instead, open hhvm_proxy_fcgi.conf and comment the single ProxyPassMatch line that's in there.
+
+```bash
+sudo nano /etc/apache2/mods-available/hhvm_proxy_fcgi.conf
+```
+
+```apacheconf
+# ProxyPassMatch ^/(.+\.(hh|php)(/.*)?)$ fcgi://127.0.0.1:9000/var/www/$1
+```
+
+This stops all PHP/Hack scripts from being routed through FastCGI, this will allow you to choose which web applications you'd like to send through HHVM. If you're only running a single web application in your web server root, you don't need to do this, but I feel it's a smart move regardless. 
+
+Right now HHVM is running but has no way for scripts to be handed off to it. We need to add the ProxyPassMatch configuration to the Virtual Host Configuration for the web applications we'd like HHVM to power. Add this to each Virtual Host instance in each configuration file (both secure and non-secure traffic covered in the example below.). 
+
+```bash
+sudo nano /etc/apache2/sites-available/hhvm.example.com.conf
+```
+
+```apacheconf
+# HHVM Example - hhvm.example.com
+
+<VirtualHost *:80>
+
+	ServerName hhvm.example.com
+    
+	DirectoryIndex index.php
+	DocumentRoot /var/www/sites/hhvm.example
+
+	ProxyPassMatch ^/(.+\.(hh|php)(/.*)?)$ fcgi://127.0.0.1:9000/var/www/sites/hhvm.example/$1
+
+</VirtualHost>
+<VirtualHost *:443>
+
+	ServerName hhvm.example.com
+    
+	DirectoryIndex index.php
+	DocumentRoot /var/www/sites/hhvm.example
+	
+	SSLEngine On
+	SSLCertificateFile 	 /etc/ssl/certs/hhvm.crt
+	SSLCertificateKeyFile 	 /etc/ssl/private/hhvm.key
+	SSLCACertificateFile  /etc/ssl/certs/hhvm.ca.crt
+
+	ProxyPassMatch ^/(.+\.(hh|php)(/.*)?)$ fcgi://127.0.0.1:9000/var/www/sites/hhvm.example/$1
+
+</VirtualHost>
+```
+
+#### *Pro-Tip*
+You can also designate another port to explicitly use HHVM if you'd like to quickly A/B test the performance gains. To do this, simply open the port in /etc/apache2/ports.conf
+
+```apacheconf
+Listen 8080
+```
+
+Then in your Virtual Host configuration, create another instance with the new port specified and add the ProxyPassMatch configuration to the one you'd like to run HHVM on. 
+
+```apacheconf
+<VirtualHost *:80>
+
+    ... 
+
+</VirtualHost>
+<VirtualHost *:8080>
+
+    ... 
+
+    ProxyPassMatch ^/(.+\.(hh|php)(/.*)?)$ fcgi://127.0.0.1:9000/var/www/$1
+
+</VirtualHost>
+```
+
+## Restart Apache and HHVM
+Now, we are ready to kick Apache and HHVM in the head. Restart both services...
+
+```bash
+sudo service apache2 restart
+sudo service hhvm restart
+```
+The web application should load as you would normally expect, only a bit quicker. 
+
+### *I'm getting 503'd!*
+If you jumped over to your web application only to be greeted with a 503 error, this means you just need to fire up the daemon manually this first time or restart. Subsequent restarts will automatically fire this up.
+```bash
+hhvm --mode daemon -vServer.Type=fastcgi -vServer.Port=9000
+```
+
+## Testing
+It's not immediately apparent whether your code is being passed through HHVM. There are a few ways to test this. 
+
+### Client-Side
+The easiest way to check if HHVM is doing it's thing is to inspect the response headers we get back from our web application. At the bottom of the header list, you will find **X-Powered-By** which should show **HHVM/3.2.0**.
+
+To get to this, you can right click on the page, inspect any element, then click the "Network" tab in the developer tool panel. It will appear to be empty or nearly empty. Refresh the page and it will repopulate fully. Scroll to the top of the list and click the first item, it will be labeled with the domain name (hhvm.example.com in my case). 
+
+### Server-Side
+Drop the following into your application root and then access this script. If it returns **PHP**, it's not working. If it returns **HHVM**, you're golden!
+
+```php
+<?php 
+
+if (defined('HHVM_VERSION')) {
+
+	echo "HHVM";
+
+} else {
+
+	echo "PHP";
+
+}
+```

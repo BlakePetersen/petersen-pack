@@ -1,0 +1,109 @@
+---
+title: "OSX Package Management with Homebrew"
+date: "2015-11-29T00:00-07:00"
+description: "Homebrew (http://brew.sh/) is the 'missing package manager for OSX', it brings all the package management niceties to your Mac."
+tags: ["osx", "homebrew", "ubuntu"]
+draft: true
+---
+
+## Ubuntu's Aptitude for Context
+I grew up on the 'PC' side of the computing coin. I was all about Windows, though I knew other options were out there. It wasn't until I started to developing on the full-stack that I was introduced to Linux via CLI which eventually led me to give Ubuntu Desktop a try.
+
+By far, the best part of sliding over to Linux (Ubuntu in my case) was handling most software through Aptitude, Ubuntu's package manager. Amazingly, updating the system is as simple as running two commands...
+
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+```
+
+Aptitude will touch the sky and update my machine to the latest and greatest. Adding and removing applications and libraries is similarly straight-forward, handling all the dependencies as necessary. Life could not be easier! 
+
+Package management is a smart move for handling software dependencies and the approach has been picked up by a number of systems and languages. Some examples include **npm** for NodeJS, **pacman** for Arch Linux, and **pip** for Python. 
+
+##Homebrew, the OSX Package Manager
+Homebrew (http://brew.sh/) is the 'missing package manager for OSX', it brings all the package management niceties to your Mac. You can install Homebrew by typing the following command in Terminal.
+
+```bash
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+After running through the installation script, you will be able to install any of the 'formulas' (Homebrew's name for packages) available at [Homebrew Formulas](http://brewformulas.org) immediately. A popular package you might reach for as a web developer is nginx. If you search 'nginx' on Homebrew Formulas, you'll see just how easy it is to install the web server on your system.
+
+```bash
+brew install nginx
+```
+After Homebrew sets up nginx, you can run `sudo nginx` and your server is up and running on the default configuration. You can test this right in Terminal by using the command `curl localhost:8080`, you will get back the HTML markup for the nginx default page. 
+
+## But wait, there's more!
+You may notice some of your favorite software packages are missing from the Homebrew Formulas list. For example, you won't find Apache or PHP there, but they are some of the most popular software packages on the web! Surely, they must be supported.
+
+And they are, but you need to look for them in different repositories. Additional repositories are available as 'taps', a full list is available at https://github.com/homebrew/repositories. You can add a 'tap' to, say, install PHP, by running the `tap` command.
+```bash
+brew tap homebrew/php
+brew install php56
+```
+[Braumeister](http://braumeister.org/) is a great way to search formulas on some of these taps. 
+
+## Homebrew Commands
+Homebrew's CLI has a number of commands, here's what you'll be using most of the time. 
+
+### See What's Installed
+```bash
+brew list
+```
+Not sure what you already have on your system? Fire off this command and it will return a list of software Homebrew is currently managing. 
+
+
+### Upgrade Formulas
+It's important to stay up to date and Homebrew makes it easy to upgrade software in bulk or piecemeal. 
+
+```bash
+brew update
+```
+The `update` command updates Homebrew and the formulas against the repositories but doesn't actually upgrade any of the software. It just lets Homebrew know what versions the software can upgrade to.
+
+```bash
+brew outdated
+```
+The `outdated` command shows what software packages can be updated. Included information is the current version installed and what version is available to upgrade to.
+
+```bash
+brew upgrade nginx
+```
+You can target specific formulas for upgrade by using the `upgrade` command with the package you'd like to upgrade.
+
+```language-bash
+brew upgrade
+```
+If you'd like to upgrade the whole shabang, just use `upgrade` alone.
+
+```bash
+brew pin nginx
+```
+You can also keep specific formulas from being upgraded when the lone `upgrade` command is used by employing the `pin` command. 
+
+```bash
+brew unpin nginx
+```
+To add pinned software back into the `upgrade` mix, use `unpin`
+
+
+### Remove Formulas
+```bash
+brew uninstall nginx --force
+```
+To remove a formula, you use the `uninstall` command with the `--force` flag. Use this command with care. 
+
+
+### Troubleshooting Issues
+```bash
+brew update
+brew doctor
+```
+Sometimes system software updates or other such upgrades can leave some packages broken and unusable. Homebrew usually just needs to do a quick check of the system and make some changes to the software packages accordingly, or will instruct you on ways to resolve any issues plaguing Homebrew software. You can run `doctor` to do just that. Always run `update` before `doctor`.
+
+---
+Sources:
+ 
+- https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/FAQ.md
+- http://matthewcarriere.com/2013/08/05/how-to-install-and-use-homebrew/
