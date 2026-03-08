@@ -49,7 +49,7 @@ Plans:
   2. Components are split into server-safe and client-safe exports with explicit 'use client' boundaries
   3. A Tailwind preset and MDX component map are exported for consuming apps
   4. The design system builds and can be imported by blakepetersen.io without breaking other monorepo apps
-**Plans**: 3 plans
+**Plans**: 4 plans
 
 Plans:
 - [ ] 02-01-PLAN.md — Package infrastructure, Tailwind v4 theme, test scaffold, 5 core components (Button, Input, Card, Badge, Separator)
@@ -122,12 +122,13 @@ Plans:
   1. Every page has Open Graph metadata, structured data, and SEO-optimized title/description
   2. An RSS/Atom feed is generated at build time from MDX frontmatter
   3. Client-side full-text search returns relevant results across all content pages
-**Plans**: 2 plans
+**Plans**: 4 plans
 
 Plans:
-- [ ] 07-01: TBD
-- [ ] 07-02: TBD
-- [ ] 07-03: TBD
+- [ ] 07-01-PLAN.md — SEO infrastructure (root layout metadata, sitemap, robots, RSS feed, JSON-LD component, metadata helpers)
+- [ ] 07-02-PLAN.md — generateMetadata + JSON-LD structured data on all 10 content routes
+- [ ] 07-03-PLAN.md — Terminal-styled OG images for all 10 content routes
+- [ ] 07-04-PLAN.md — Pagefind search integration with command palette UI
 
 ### Phase 8: Community
 **Goal**: Visitors can discuss content and report problems without leaving the site workflow
@@ -199,7 +200,7 @@ Note: Phases 6, 7, 8 can execute in parallel (all depend on Phase 5 only). Phase
 | 4. Content Rendering | 2/2 | Complete | 2026-03-08 |
 | 5. Site Shell | 2/2 | Complete | 2026-03-08 |
 | 6. Site Navigation | 2/2 | Complete | 2026-03-08 |
-| 7. Site Discovery | 0/3 | Not started | - |
+| 7. Site Discovery | 0/4 | Not started | - |
 | 8. Community | 0/2 | Not started | - |
 | 9. GitHub Automation | 0/2 | Not started | - |
 | 10. CLI Skill | 0/3 | Not started | - |
