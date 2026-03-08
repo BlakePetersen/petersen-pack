@@ -17,7 +17,9 @@
     "**/*.css"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -35,7 +37,12 @@
     "react-dom": "^19.2.0",
     "ts-jest": "^29.4.6",
     "tsconfig": "*",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "storybook": "^10.2.16",
+    "@storybook/react-vite": "^10.2.16",
+    "@storybook/addon-a11y": "^10.2.16",
+    "@storybook/addon-docs": "^10.2.16",
+    "eslint-plugin-storybook": "^10.2.16"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.1",
