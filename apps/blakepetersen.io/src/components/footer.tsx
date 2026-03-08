@@ -16,7 +16,7 @@ export function Footer() {
           >
             $ github
           </a>
-          <Link href="/rss" className="hover:text-amber-accent">
+          <Link href="/feed.xml" className="hover:text-amber-accent">
             $ rss
           </Link>
         </div>
