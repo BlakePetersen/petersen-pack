@@ -1,6 +1,7 @@
 // ABOUTME: Listing page for all skills in the collection.
 // ABOUTME: Displays sorted skills with tags and links to detail pages.
 
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Badge } from 'artax-ui'
 import { getSkills } from '../../lib/content'
@@ -8,6 +9,17 @@ import { ContentShell } from '../../components/content-shell'
 import { Sidebar } from '../../components/sidebar'
 
 export const revalidate = 3600
+
+export function generateMetadata(): Metadata {
+  const count = getSkills().length
+  return {
+    title: 'Skills',
+    description: `Browse ${count} Claude Code skills for AI-first development`,
+    alternates: {
+      canonical: 'https://blakepetersen.io/skills',
+    },
+  }
+}
 
 function stripPrefix(slug: string) {
   return slug.split('/').slice(1).join('/')

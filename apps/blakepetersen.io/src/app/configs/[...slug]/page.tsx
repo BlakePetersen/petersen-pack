@@ -3,6 +3,12 @@
 
 import { notFound } from 'next/navigation'
 import { getConfigs } from '../../../lib/content'
+import {
+  buildMetadata,
+  buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
+} from '../../../lib/metadata'
+import { JsonLd } from '../../../components/json-ld'
 import { DxContentLayout } from '../../../components/dx-content-layout'
 import { ContentShell } from '../../../components/content-shell'
 import { Sidebar } from '../../../components/sidebar'
@@ -15,6 +21,18 @@ export function generateStaticParams() {
   return getConfigs().map((item) => ({
     slug: item.slug.split('/').slice(1),
   }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>
+}) {
+  const { slug } = await params
+  const fullSlug = `configs/${slug.join('/')}`
+  const item = getConfigs().find((c) => c.slug === fullSlug)
+  if (!item) return {}
+  return buildMetadata(item, 'configs')
 }
 
 export default async function ConfigPage({
@@ -30,6 +48,8 @@ export default async function ConfigPage({
 
   return (
     <ContentShell sidebar={<Sidebar />} toc={<TableOfContents />}>
+      <JsonLd data={buildArticleJsonLd(item, 'configs')} />
+      <JsonLd data={buildBreadcrumbJsonLd(`/configs/${slug.join('/')}`)} />
       <DxContentLayout item={item} />
     </ContentShell>
   )

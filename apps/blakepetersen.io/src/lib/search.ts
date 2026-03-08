@@ -30,9 +30,8 @@ async function getPagefind(): Promise<PagefindInstance | null> {
   if (pagefindInstance) return pagefindInstance
 
   try {
-    pagefindInstance = await import(
-      /* webpackIgnore: true */ '/pagefind/pagefind.js'
-    )
+    const pagefindPath = '/pagefind/pagefind.js'
+    pagefindInstance = await import(/* webpackIgnore: true */ pagefindPath)
     return pagefindInstance
   } catch {
     return null

@@ -1,6 +1,7 @@
 // ABOUTME: Listing page for all blog posts.
 // ABOUTME: Displays posts sorted by date with description and reading time.
 
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Badge } from 'artax-ui'
 import { getPosts } from '../../lib/content'
@@ -8,6 +9,17 @@ import { ContentShell } from '../../components/content-shell'
 import { Sidebar } from '../../components/sidebar'
 
 export const revalidate = 3600
+
+export function generateMetadata(): Metadata {
+  const count = getPosts().length
+  return {
+    title: 'Posts',
+    description: `Browse ${count} blog posts on software engineering and AI-first development`,
+    alternates: {
+      canonical: 'https://blakepetersen.io/posts',
+    },
+  }
+}
 
 function stripPrefix(slug: string) {
   return slug.split('/').slice(1).join('/')

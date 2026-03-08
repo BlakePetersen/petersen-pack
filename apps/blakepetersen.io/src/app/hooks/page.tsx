@@ -1,6 +1,7 @@
 // ABOUTME: Listing page for all hooks in the collection.
 // ABOUTME: Displays sorted hooks with tags and links to detail pages.
 
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Badge } from 'artax-ui'
 import { getHooks } from '../../lib/content'
@@ -8,6 +9,17 @@ import { ContentShell } from '../../components/content-shell'
 import { Sidebar } from '../../components/sidebar'
 
 export const revalidate = 3600
+
+export function generateMetadata(): Metadata {
+  const count = getHooks().length
+  return {
+    title: 'Hooks',
+    description: `Browse ${count} Git hooks for automated code quality`,
+    alternates: {
+      canonical: 'https://blakepetersen.io/hooks',
+    },
+  }
+}
 
 function stripPrefix(slug: string) {
   return slug.split('/').slice(1).join('/')

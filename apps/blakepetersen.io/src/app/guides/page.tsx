@@ -1,6 +1,7 @@
 // ABOUTME: Listing page for all guides in the collection.
 // ABOUTME: Displays sorted guides with tags and links to detail pages.
 
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Badge } from 'artax-ui'
 import { getGuides } from '../../lib/content'
@@ -8,6 +9,17 @@ import { ContentShell } from '../../components/content-shell'
 import { Sidebar } from '../../components/sidebar'
 
 export const revalidate = 3600
+
+export function generateMetadata(): Metadata {
+  const count = getGuides().length
+  return {
+    title: 'Guides',
+    description: `Browse ${count} development guides for AI-first workflows`,
+    alternates: {
+      canonical: 'https://blakepetersen.io/guides',
+    },
+  }
+}
 
 function stripPrefix(slug: string) {
   return slug.split('/').slice(1).join('/')

@@ -3,6 +3,12 @@
 
 import { notFound } from 'next/navigation'
 import { getPosts } from '../../../lib/content'
+import {
+  buildMetadata,
+  buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
+} from '../../../lib/metadata'
+import { JsonLd } from '../../../components/json-ld'
 import { PostLayout } from '../../../components/post-layout'
 import { ContentShell } from '../../../components/content-shell'
 import { Sidebar } from '../../../components/sidebar'
@@ -15,6 +21,18 @@ export function generateStaticParams() {
   return getPosts().map((item) => ({
     slug: item.slug.split('/').slice(1),
   }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>
+}) {
+  const { slug } = await params
+  const fullSlug = `posts/${slug.join('/')}`
+  const item = getPosts().find((p) => p.slug === fullSlug)
+  if (!item) return {}
+  return buildMetadata(item, 'posts')
 }
 
 export default async function PostPage({
@@ -30,6 +48,8 @@ export default async function PostPage({
 
   return (
     <ContentShell sidebar={<Sidebar />} toc={<TableOfContents />}>
+      <JsonLd data={buildArticleJsonLd(item, 'posts')} />
+      <JsonLd data={buildBreadcrumbJsonLd(`/posts/${slug.join('/')}`)} />
       <PostLayout post={item} />
     </ContentShell>
   )
