@@ -4,6 +4,8 @@
 import { notFound } from 'next/navigation'
 import { getHooks } from '../../../lib/content'
 import { DxContentLayout } from '../../../components/dx-content-layout'
+import { ContentShell } from '../../../components/content-shell'
+import { Sidebar } from '../../../components/sidebar'
 
 export const dynamicParams = false
 export const revalidate = 3600
@@ -25,5 +27,9 @@ export default async function HookPage({
 
   if (!item) notFound()
 
-  return <DxContentLayout item={item} />
+  return (
+    <ContentShell sidebar={<Sidebar />}>
+      <DxContentLayout item={item} />
+    </ContentShell>
+  )
 }

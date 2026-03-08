@@ -4,6 +4,8 @@
 import { notFound } from 'next/navigation'
 import { getPosts } from '../../../lib/content'
 import { PostLayout } from '../../../components/post-layout'
+import { ContentShell } from '../../../components/content-shell'
+import { Sidebar } from '../../../components/sidebar'
 
 export const dynamicParams = false
 export const revalidate = 3600
@@ -25,5 +27,9 @@ export default async function PostPage({
 
   if (!item) notFound()
 
-  return <PostLayout post={item} />
+  return (
+    <ContentShell sidebar={<Sidebar />}>
+      <PostLayout post={item} />
+    </ContentShell>
+  )
 }
