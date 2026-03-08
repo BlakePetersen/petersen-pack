@@ -80,3 +80,4 @@ export {
   TooltipInteractiveContent
 } from './components/tooltip-interactive'
 export { cn } from './lib/utils'
+export { mdxComponents } from './mdx/components'
