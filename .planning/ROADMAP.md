@@ -200,7 +200,7 @@ Note: Phases 6, 7, 8 can execute in parallel (all depend on Phase 5 only). Phase
 | 4. Content Rendering | 2/2 | Complete | 2026-03-08 |
 | 5. Site Shell | 2/2 | Complete | 2026-03-08 |
 | 6. Site Navigation | 2/2 | Complete | 2026-03-08 |
-| 7. Site Discovery | 0/4 | Not started | - |
+| 7. Site Discovery | 1/4 | In Progress | - |
 | 8. Community | 0/2 | Not started | - |
 | 9. GitHub Automation | 0/2 | Not started | - |
 | 10. CLI Skill | 0/3 | Not started | - |

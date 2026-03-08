@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Completed 07-04-PLAN.md
-last_updated: "2026-03-08T08:31:03.037Z"
-last_activity: 2026-03-08 — Completed Plan 06-02 (Breadcrumbs, prev/next, TOC with scroll spy)
+status: in-progress
+stopped_at: Completed 07-01-PLAN.md
+last_updated: "2026-03-08T08:30:40Z"
+last_activity: 2026-03-08 — Completed Plan 07-01 (SEO infrastructure, RSS, sitemap, robots)
 progress:
   total_phases: 11
   completed_phases: 6
   total_plans: 17
-  completed_plans: 14
-  percent: 100
+  completed_plans: 15
+  percent: 88
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-07)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 6: Site Navigation
+**Current focus:** Phase 7: Site Discovery
 
 ## Current Position
 
-Phase: 6 of 11 (Site Navigation)
-Plan: 2 of 2 in current phase
-Status: Complete
-Last activity: 2026-03-08 — Completed Plan 06-02 (Breadcrumbs, prev/next, TOC with scroll spy)
+Phase: 7 of 11 (Site Discovery)
+Plan: 1 of 4 in current phase
+Status: In Progress
+Last activity: 2026-03-08 — Completed Plan 07-01 (SEO infrastructure, RSS, sitemap, robots)
 
-Progress: [██████████] 100%
+Progress: [████████░░] 88%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [██████████] 100%
 | Phase 05 P02 | 12min | 2 tasks | 16 files |
 | Phase 06 P01 | 8min | 2 tasks | 22 files |
 | Phase 06 P02 | 6min | 2 tasks | 12 files |
+| Phase 07 P01 | 13min | 2 tasks | 9 files |
 | Phase 07 P04 | 12min | 2 tasks | 8 files |
 
 ## Accumulated Context
@@ -101,6 +102,9 @@ Recent decisions affecting current work:
 - [Phase 06]: Plain state with pathname comparison for drawer close instead of useEffect/useRef (React strict mode lint rules)
 - [Phase 06]: SidebarNav uses controlled state array for multi-expand instead of Radix AccordionInteractive
 - [Phase 06]: useSyncExternalStore for TOC heading extraction instead of useState+useEffect (react-hooks/set-state-in-effect lint rule)
+- [Phase 07]: Posts sorted by date descending before DX content (dateless) in RSS feed
+- [Phase 07]: Sitemap uses new Date() for lastModified (git dates are future optimization)
+- [Phase 07]: escapeXml shared helper for feed and future XML generation
 - [Phase 07]: Pagefind lazy-loaded with webpackIgnore dynamic import and try/catch fallback for dev mode
 - [Phase 07]: CommandPalette is self-contained (renders trigger and dialog together) to avoid lifting state to header
 - [Phase 07]: Jest docblock @jest-environment must be first line of file (before ABOUTME comments) for environment detection
@@ -117,6 +121,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T08:31:02.980Z
-Stopped at: Completed 07-04-PLAN.md
-Resume file: None
+Last session: 2026-03-08T08:30:40Z
+Stopped at: Completed 07-01-PLAN.md
+Resume file: .planning/phases/07-site-discovery/07-02-PLAN.md

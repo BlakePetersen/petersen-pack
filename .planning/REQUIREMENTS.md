@@ -29,8 +29,8 @@
 - [x] **SITE-02**: Dark-first theme with grayscale + ASCII-art aesthetic (no purples, monospace typography, box-drawing characters)
 - [x] **SITE-03**: Hierarchical sidebar navigation derived from MDX file structure with collapsible sections
 - [x] **SITE-04**: Previous/Next page navigation derived from sidebar order
-- [ ] **SITE-05**: Open Graph metadata, structured data, and SEO-optimized pages
-- [ ] **SITE-06**: RSS/Atom feed generated from MDX frontmatter at build time
+- [x] **SITE-05**: Open Graph metadata, structured data, and SEO-optimized pages
+- [x] **SITE-06**: RSS/Atom feed generated from MDX frontmatter at build time
 - [x] **SITE-07**: Breadcrumb navigation derived from content path
 - [x] **SITE-08**: Anchor links on headings for deep-linking
 - [x] **SITE-09**: Sub-second page navigations via static generation
@@ -96,8 +96,8 @@
 | SITE-02 | Phase 2 | Complete |
 | SITE-03 | Phase 6 | Complete |
 | SITE-04 | Phase 6 | Complete |
-| SITE-05 | Phase 7 | Pending |
-| SITE-06 | Phase 7 | Pending |
+| SITE-05 | Phase 7 | Complete |
+| SITE-06 | Phase 7 | Complete |
 | SITE-07 | Phase 6 | Complete |
 | SITE-08 | Phase 6 | Complete |
 | SITE-09 | Phase 5 | Complete |
