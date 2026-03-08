@@ -3,6 +3,8 @@
 
 import type { Metadata } from 'next'
 import { JetBrains_Mono, IBM_Plex_Mono, Inter } from 'next/font/google'
+import { Header } from '../components/header'
+import { Footer } from '../components/footer'
 import './globals.css'
 
 const jetbrainsMono = JetBrains_Mono({
@@ -23,7 +25,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Blake Petersen',
-  description: 'Blake Petersen - Software Engineer',
+  description: 'AI-first DX practices, documented and applied',
 }
 
 export default function RootLayout({
@@ -36,8 +38,10 @@ export default function RootLayout({
       lang="en"
       className={`dark ${jetbrainsMono.variable} ${ibmPlexMono.variable} ${inter.variable}`}
     >
-      <body className="bg-terminal-bg text-terminal-text font-mono">
-        {children}
+      <body className="flex min-h-screen flex-col bg-terminal-bg text-sm text-terminal-text font-mono md:text-base">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   )
