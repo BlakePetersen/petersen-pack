@@ -27,12 +27,12 @@
 
 - [x] **SITE-01**: blakepetersen.io rebuilt on Next.js App Router with static generation
 - [x] **SITE-02**: Dark-first theme with grayscale + ASCII-art aesthetic (no purples, monospace typography, box-drawing characters)
-- [ ] **SITE-03**: Hierarchical sidebar navigation derived from MDX file structure with collapsible sections
+- [x] **SITE-03**: Hierarchical sidebar navigation derived from MDX file structure with collapsible sections
 - [ ] **SITE-04**: Previous/Next page navigation derived from sidebar order
 - [ ] **SITE-05**: Open Graph metadata, structured data, and SEO-optimized pages
 - [ ] **SITE-06**: RSS/Atom feed generated from MDX frontmatter at build time
 - [ ] **SITE-07**: Breadcrumb navigation derived from content path
-- [ ] **SITE-08**: Anchor links on headings for deep-linking
+- [x] **SITE-08**: Anchor links on headings for deep-linking
 - [x] **SITE-09**: Sub-second page navigations via static generation
 - [x] **SITE-10**: Responsive layout for mobile reading
 
@@ -94,12 +94,12 @@
 | CONT-07 | Phase 4 | Complete |
 | SITE-01 | Phase 5 | Complete |
 | SITE-02 | Phase 2 | Complete |
-| SITE-03 | Phase 6 | Pending |
+| SITE-03 | Phase 6 | Complete |
 | SITE-04 | Phase 6 | Pending |
 | SITE-05 | Phase 7 | Pending |
 | SITE-06 | Phase 7 | Pending |
 | SITE-07 | Phase 6 | Pending |
-| SITE-08 | Phase 6 | Pending |
+| SITE-08 | Phase 6 | Complete |
 | SITE-09 | Phase 5 | Complete |
 | SITE-10 | Phase 5 | Complete |
 | COMM-01 | Phase 8 | Pending |

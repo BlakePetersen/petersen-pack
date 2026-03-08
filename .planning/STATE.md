@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-03-08T05:50:19.756Z"
-last_activity: 2026-03-08 — Completed Plan 05-02 (Content routes and homepage)
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-03-08T07:13:06.860Z"
+last_activity: 2026-03-08 — Completed Plan 06-01 (Sidebar, drawer, and heading anchors)
 progress:
   total_phases: 11
   completed_phases: 5
-  total_plans: 11
-  completed_plans: 11
-  percent: 91
+  total_plans: 13
+  completed_plans: 12
+  percent: 92
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-07)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 5: Site Shell
+**Current focus:** Phase 6: Site Navigation
 
 ## Current Position
 
-Phase: 5 of 11 (Site Shell)
-Plan: 2 of 2 in current phase
-Status: Phase Complete
-Last activity: 2026-03-08 — Completed Plan 05-02 (Content routes and homepage)
+Phase: 6 of 11 (Site Navigation)
+Plan: 1 of 2 in current phase
+Status: In Progress
+Last activity: 2026-03-08 — Completed Plan 06-01 (Sidebar, drawer, and heading anchors)
 
-Progress: [█████████░] 91%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [█████████░] 91%
 | Phase 04 P02 | 12min | 2 tasks | 6 files |
 | Phase 05 P01 | 7min | 2 tasks | 6 files |
 | Phase 05 P02 | 12min | 2 tasks | 16 files |
+| Phase 06 P01 | 8min | 2 tasks | 22 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,8 @@ Recent decisions affecting current work:
 - [Phase 05]: MDX component Props type changed from ComponentPropsWithoutRef<'div'> to HTMLAttributes<HTMLElement> for cross-element compatibility
 - [Phase 05]: VeliteWebpackPlugin replaces fire-and-forget async build for reliable content availability
 - [Phase 05]: Build uses --webpack flag since Turbopack (Next.js 16 default) does not support Velite import attributes
+- [Phase 06]: Plain state with pathname comparison for drawer close instead of useEffect/useRef (React strict mode lint rules)
+- [Phase 06]: SidebarNav uses controlled state array for multi-expand instead of Radix AccordionInteractive
 
 ### Pending Todos
 
@@ -108,6 +111,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T05:50:19.731Z
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-03-08T07:13:06.836Z
+Stopped at: Completed 06-01-PLAN.md
 Resume file: None
