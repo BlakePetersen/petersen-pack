@@ -19,7 +19,7 @@
 - [x] **CONT-02**: Content directory structure maps to site navigation hierarchy
 - [x] **CONT-03**: Frontmatter schema includes category, applies-to, dependencies, and machine-readable metadata
 - [x] **CONT-04**: Syntax-highlighted code blocks via Shiki with copy button, filename labels, and language tags
-- [ ] **CONT-05**: Client-side full-text search across all content (Flexsearch or Pagefind)
+- [x] **CONT-05**: Client-side full-text search across all content (Flexsearch or Pagefind)
 - [ ] **CONT-06**: Bidirectional Monodex (Obsidian) sync with last-write-wins conflict resolution
 - [x] **CONT-07**: Content dependency graph rendered from frontmatter `requires` fields
 
@@ -89,7 +89,7 @@
 | CONT-02 | Phase 3 | Complete |
 | CONT-03 | Phase 3 | Complete |
 | CONT-04 | Phase 4 | Complete |
-| CONT-05 | Phase 7 | Pending |
+| CONT-05 | Phase 7 | Complete |
 | CONT-06 | Phase 11 | Pending |
 | CONT-07 | Phase 4 | Complete |
 | SITE-01 | Phase 5 | Complete |
