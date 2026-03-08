@@ -23,6 +23,7 @@ const baseComponentFiles = [
 ]
 
 const interactiveFiles = [
+  'copy-button.tsx',
   'accordion-interactive.tsx',
   'dialog-interactive.tsx',
   'dropdown-interactive.tsx',

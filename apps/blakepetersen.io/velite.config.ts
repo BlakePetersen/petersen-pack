@@ -2,6 +2,9 @@
 // ABOUTME: Defines 5 collections (skills, hooks, configs, guides, posts) with Zod validation.
 
 import { defineCollection, defineConfig, s } from 'velite'
+import rehypeShiki from '@shikijs/rehype'
+import { transformerMetaHighlight } from '@shikijs/transformers'
+import { terminalTheme } from './src/lib/shiki-theme'
 
 // Shared fields for DX content types (skills, hooks, configs, guides)
 const dxFields = {
@@ -85,6 +88,15 @@ const config: any = defineConfig({
     assets: 'public/static',
     base: '/static/',
     clean: true,
+  },
+  markdown: {
+    rehypePlugins: [
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      [rehypeShiki as any, {
+        theme: terminalTheme,
+        transformers: [transformerMetaHighlight()],
+      }],
+    ],
   },
   collections: { skills, hooks, configs, guides, posts },
   strict: true,

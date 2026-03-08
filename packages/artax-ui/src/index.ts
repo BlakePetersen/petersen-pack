@@ -24,6 +24,7 @@ export {
 export { Callout } from './components/callout'
 export type { CalloutVariant } from './components/callout'
 export { CodeBlock } from './components/code-block'
+export { CopyButton } from './components/copy-button'
 export {
   AccordionItem,
   AccordionTrigger,

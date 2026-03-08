@@ -2,6 +2,7 @@
 // ABOUTME: Exports mdxComponents object for spreading into MDX providers in consuming apps.
 import React from 'react'
 import { cn } from '../lib/utils'
+import { CodeBlock } from '../components/code-block'
 
 type Props = React.ComponentPropsWithoutRef<'div'> & { children?: React.ReactNode }
 type HeadingProps = React.ComponentPropsWithoutRef<'h1'>
@@ -146,25 +147,60 @@ export const mdxComponents = {
     />
   ),
 
-  code: ({ className, ...props }: Props) => (
-    <code
-      className={cn(
-        'bg-terminal-active text-amber-accent px-1 py-0.5 font-mono text-sm',
-        className
-      )}
-      {...props}
-    />
-  ),
+  code: ({ className, ...props }: Props) => {
+    // Shiki-processed code elements have inline styles; don't apply inline code styling to those
+    const isShikiCode = className?.includes('shiki') || (props as Record<string, unknown>).style
+    if (isShikiCode) {
+      return <code className={className} {...props} />
+    }
+    return (
+      <code
+        className={cn(
+          'bg-terminal-active text-amber-accent px-1 py-0.5 font-mono text-sm',
+          className,
+        )}
+        {...props}
+      />
+    )
+  },
 
-  pre: ({ className, ...props }: Props) => (
-    <pre
-      className={cn(
-        'bg-terminal-surface border border-terminal-border p-4 overflow-x-auto font-mono text-sm my-4',
-        className
-      )}
-      {...props}
-    />
-  ),
+  pre: ({ children, className, ...props }: Props) => {
+    // Extract metadata from the Shiki-generated code child element
+    const codeChild = React.Children.toArray(children).find(
+      (child): child is React.ReactElement =>
+        React.isValidElement(child) && (child as React.ReactElement).type === 'code',
+    ) as React.ReactElement | undefined
+
+    const codeProps = codeChild?.props as Record<string, unknown> | undefined
+    const language = (codeProps?.['data-language'] as string) || undefined
+    const meta = (codeProps?.['data-meta'] as string) || ''
+    const titleMatch = meta.match(/title="([^"]+)"/)
+    const filename = titleMatch?.[1] || undefined
+
+    // Extract raw code text for copy button
+    function extractText(node: React.ReactNode): string {
+      if (typeof node === 'string') return node
+      if (typeof node === 'number') return String(node)
+      if (!React.isValidElement(node)) return ''
+      const el = node as React.ReactElement
+      const elProps = el.props as { children?: React.ReactNode }
+      return React.Children.toArray(elProps.children).map(extractText).join('')
+    }
+    const rawCode = codeChild ? extractText(codeChild) : undefined
+
+    return (
+      <CodeBlock
+        filename={filename}
+        language={language}
+        rawCode={rawCode}
+        className={className}
+      >
+        <pre className={(props as Record<string, unknown>).className as string} {...props}>
+          {children}
+        </pre>
+      </CodeBlock>
+    )
+  },
 
   table: ({ className, ...props }: Props) => (
     <div className="my-4 w-full overflow-auto">
