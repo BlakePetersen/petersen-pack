@@ -24,8 +24,17 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Blake Petersen',
+  metadataBase: new URL('https://blakepetersen.io'),
+  title: {
+    default: 'Blake Petersen',
+    template: '%s | Blake Petersen',
+  },
   description: 'AI-first DX practices, documented and applied',
+  alternates: {
+    types: {
+      'application/rss+xml': '/feed.xml',
+    },
+  },
 }
 
 export default function RootLayout({
