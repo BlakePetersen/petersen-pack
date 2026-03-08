@@ -33,7 +33,7 @@
 - [ ] **SITE-06**: RSS/Atom feed generated from MDX frontmatter at build time
 - [ ] **SITE-07**: Breadcrumb navigation derived from content path
 - [ ] **SITE-08**: Anchor links on headings for deep-linking
-- [ ] **SITE-09**: Sub-second page navigations via static generation
+- [x] **SITE-09**: Sub-second page navigations via static generation
 - [x] **SITE-10**: Responsive layout for mobile reading
 
 ### Community
@@ -100,7 +100,7 @@
 | SITE-06 | Phase 7 | Pending |
 | SITE-07 | Phase 6 | Pending |
 | SITE-08 | Phase 6 | Pending |
-| SITE-09 | Phase 5 | Pending |
+| SITE-09 | Phase 5 | Complete |
 | SITE-10 | Phase 5 | Complete |
 | COMM-01 | Phase 8 | Pending |
 | COMM-02 | Phase 8 | Pending |
