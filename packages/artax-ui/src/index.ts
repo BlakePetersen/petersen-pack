@@ -43,4 +43,40 @@ export {
 export { TabsList, TabsTrigger, TabsContent } from './components/tabs'
 export { ToggleBase } from './components/toggle'
 export { TooltipContent } from './components/tooltip'
+export {
+  AccordionInteractive,
+  AccordionInteractiveItem,
+  AccordionInteractiveTrigger,
+  AccordionInteractiveContent
+} from './components/accordion-interactive'
+export {
+  DialogInteractive,
+  DialogInteractiveTrigger,
+  DialogInteractiveContent,
+  DialogInteractiveOverlay,
+  DialogInteractiveTitle,
+  DialogInteractiveDescription,
+  DialogInteractiveClose
+} from './components/dialog-interactive'
+export {
+  DropdownInteractive,
+  DropdownInteractiveTrigger,
+  DropdownInteractiveContent,
+  DropdownInteractiveItem,
+  DropdownInteractiveSeparator,
+  DropdownInteractiveLabel
+} from './components/dropdown-interactive'
+export {
+  TabsInteractive,
+  TabsInteractiveList,
+  TabsInteractiveTrigger,
+  TabsInteractiveContent
+} from './components/tabs-interactive'
+export { ToggleInteractive } from './components/toggle-interactive'
+export {
+  TooltipInteractiveProvider,
+  TooltipInteractive,
+  TooltipInteractiveTrigger,
+  TooltipInteractiveContent
+} from './components/tooltip-interactive'
 export { cn } from './lib/utils'
