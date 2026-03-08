@@ -1,0 +1,79 @@
+---
+title: "A Better Approach to Content Localization Detection"
+date: "2015-11-12T00:00-07:00"
+description: "Use Accept-Language request headers to localize content. Not only are you more likely to serve the correct content, but it's faster and easier to test. Win-win-win!"
+tags: ["localization", "l12n", "ux"]
+draft: true
+---
+
+Localization, or providing localized content to site visitors, is becoming increasingly important for websites looking to capitalize on the truly global reach of the web. To maximize conversion for a 'global site', you need to treat, for example, users from Japan differently than users from Sweden. Content needs to be translated, ads need to be optimized and [even a different layout](http://webdesign.tutsplus.com/articles/big-in-japan-web-design-in-the-land-of-the-rising-sun--cms-23290 "Big in Japan: Web Design in the Land of the Rising Sun") may need to be employed to truly maximize the website's effectiveness.
+
+To do this, one needs to know what the user expects to see -- but how? We can't simply ask the user what they want to see, so we have to take cues from the user's requests to determine the best experience for the user from a localization standpoint.
+
+## IP-Based Geolocation
+
+Some engineers use IP-based geolocation services to determine the best localized content to serve to user. Not only can these services be costly (in both money and load time), but they don't guarantee the user will even be served the content they want or expect to see. 
+
+### ISP Doesn't Always Know Best
+
+I work for a cloud-based telecommunications company (Switch Communications) which has a fairly robust international data-center setup. As such, even though we're HQ'd in the Financial District of SF, the world sees our requests from the Switch Communications ISP as deriving from somewhere in the UK. Here's what Speedtest.net shows us...
+
+![Speedtest.net shows the closest server being in Waterford, Ireland, not San Jose, California, USA](//images.ctfassets.net/i4hrj10r05o9/6wXuCqGL28sCKcas2YaqYE/3abc59e523fae74ce8d85e3d0fd85f76/Screen-Shot-2015-11-04-at-1-03-44-PM.png)
+
+Taking the ISP's word for it, a website using an IP-based geolocation approach would see me as British, Irish or Welsh, not American. Let's take a look at how this looks on a site I frequent, [Vice](http://www.vice.com). 
+
+From the Switch office connection I see this...
+
+![Notice, the url is rocking en_uk. That's not right...](//images.ctfassets.net/i4hrj10r05o9/2JzzrJTnEkMosEagEguqUc/516a506b3f76afe391b90fcfa6ed983b/Screen-Shot-2015-11-04-at-4-39-33-PM.png)
+
+From my wifi hotspot I see this...
+
+![Ahhh... that's better.](//images.ctfassets.net/i4hrj10r05o9/ORziM2p4aIOuaeEaEMQmO/29794b49f67d8c3620f9a885ec3c4236/Screen-Shot-2015-11-04-at-4-42-16-PM.png)
+
+You can see the first article is entirely different, the UK version showing a very UK article. You can quickly see how this is an issue in this case. Fortunately, the ad being used shows up for both sites so ad revenue is relatively safe, but if you wind up serving location-based ads, this could wind up affecting revenue, no bueno.
+
+### The Waiting Game
+
+Another drawback of using a IP-Based Geolocation service is that you need to reach out to the service to make a determination as to where the user is and then what sort of content the user should see. This information could be cached to reduce page load time down the line, but there will be at least one interaction between the site and the service to figure out where this user is in the world. 
+
+## Accept-Language To The Rescue
+What if I told you the user's request actually contains localization information and is actually more accurate than what the IP-based geolocation can provide?
+
+First, let's take a look at an example of an international traveler to really drive home the point of why this approach is a good idea. 
+
+A traveler is about to catch a flight from Sweden to Japan. They log onto the airport wifi in Stockholm and start in on a series of articles about a new project they are about to start with his colleagues in Japan. Eventually they close their laptop and get on the plane. Once they land, they check into the hotel and start in on more articles ahead of a client meeting. Only, the site now thinks they are in Japan and start serving everything in Japanese, he can't even find a button to reset the language, yikes! 
+
+Not a good experience to say the least. Ideally, he would still be served Swedish content as nothing has really changed about the traveler aside from his location. Everything about him is still Swedish, he just happens to be halfway around the globe. 
+
+Well, there's a way to obtain the user's persistent language preference regardless of where they happen to be loading their webpage from. The magic comes from the **Accept-Language** Header that is sent with the user's request to load a webpage. **This is the default browser language the user has set in the browser they are using to make the request**. 
+
+Remember when you set up the system you're currently reading this on? You were likely asked what language (and probably what region or dialect of that language) you would like to use. This information is then loaded into browsers as they are installed onto the system. When a page is loaded, this information is sent to the server and you can then localize the content in a more ideal fashion.
+
+![My language preferences sent with my request to load blakepetersen.io. No matter where I go in the world, this never changes.](//images.ctfassets.net/i4hrj10r05o9/7tf7wyEuNa8kqgwWIs6OUc/e9fd23831501d2ad1517979e9fc9eedf/Screen-Shot-2015-11-12-at-4-21-13-PM-1.png)
+
+## Localization Testing is a Breeze
+
+Not satisfied with variable overrides when testing your content? Want to see what your users would really see with production code? I got you, fam. 
+
+All you have to do when targetting Accept-Header is to update your browser's default language and you're good to go. For example, in Chrome you head into the advanced settings and open the language tab (or typing in  [chrome://settings/languages](chrome://settings/languages) into the address bar). Here's what it looks like after switching my preferred language to Swedish...
+
+![My language preferences sent with my request to load blakepetersen.io after updating my language preferences.](//images.ctfassets.net/i4hrj10r05o9/79o22AEkDu2YUIGeGQwQcA/054b97f6a40a8bd9c52367a58c376378/Screen-Shot-2015-11-12-at-4-37-51-PM-2.png)
+
+The code will react to any requests sent from my browser as though I was Swedish. 
+
+### Automated Testing
+
+Integration testing is similarly easy to execute as you can set tests up to check how the site/webapp reacts to the language variations. For example, if you are using PhantomJS to drive Selenium tests for example, you would update the Accept-Language headers sent with the test request like so...
+
+```javascript
+capabilities.setCapability(PHANTOMJS_PAGE_CUSTOMHEADERS_PREFIX + "Accept-Language", "sv");
+```
+
+Testing literally couldn't be easier!
+
+---
+
+#### Don't forget to comment!
+Have something to add? Keep the conversation going below!
+
+

@@ -1,0 +1,37 @@
+/* ABOUTME: CSS entry point for the design system. */
+/* ABOUTME: Imports Tailwind v4, theme tokens, animations, and maps shadcn CSS variables to terminal palette. */
+@import 'tailwindcss';
+@import './theme.css';
+@import 'tw-animate-css';
+
+:root {
+  --background: #0A0A0A;
+  --foreground: #FAFAFA;
+
+  --primary: #F59E0B;
+  --primary-foreground: #0A0A0A;
+
+  --secondary: #1F1F1F;
+  --secondary-foreground: #FAFAFA;
+
+  --card: #0F0F0F;
+  --card-foreground: #FAFAFA;
+
+  --popover: #0F0F0F;
+  --popover-foreground: #FAFAFA;
+
+  --muted: #1F1F1F;
+  --muted-foreground: #6B7280;
+
+  --accent: #1F1F1F;
+  --accent-foreground: #FAFAFA;
+
+  --border: #2a2a2a;
+  --input: #2a2a2a;
+  --ring: #F59E0B;
+
+  --destructive: #EF4444;
+  --destructive-foreground: #FAFAFA;
+
+  --radius: 0px;
+}

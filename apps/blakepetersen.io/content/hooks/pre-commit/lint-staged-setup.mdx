@@ -1,0 +1,29 @@
+---
+title: "Setting Up lint-staged with Pre-commit Hooks"
+description: "Configure lint-staged to run ESLint and Prettier on staged files before every commit using Husky git hooks."
+applies_to: ["git", "eslint", "prettier"]
+dependencies: ["configs/eslint-flat-config"]
+order: 1
+draft: false
+tags: ["linting", "formatting", "git-hooks", "automation"]
+---
+
+Running linters on your entire codebase before every commit is slow and discouraging. lint-staged solves this by running your configured tools only on files that are staged in git, keeping the feedback loop tight and the developer experience smooth.
+
+## Installation
+
+Install lint-staged alongside Husky for git hook management. In a monorepo using pnpm workspaces, install both at the root level so the hook applies to all packages.
+
+The `.lintstagedrc` configuration file maps file glob patterns to the commands that should run against matching staged files. A typical setup runs ESLint with the `--fix` flag on TypeScript files and Prettier on everything else.
+
+## Configuration Strategy
+
+Keep your lint-staged configuration focused on catching real issues. Run ESLint in quiet mode to suppress warnings and only block commits on errors. Run Prettier with the `--write` flag so formatting fixes are applied automatically rather than just reported.
+
+For monorepos, use a root-level configuration that covers the common patterns, then add package-level overrides only when a specific package needs different rules. This prevents configuration sprawl and keeps the setup maintainable.
+
+## Handling Edge Cases
+
+Some files should be excluded from pre-commit linting. Generated files, vendored dependencies, and build artifacts should be skipped using ignore patterns. Large files that take too long to lint can use a separate, lighter check.
+
+If a pre-commit hook fails, the commit is blocked and the developer sees the errors. This is intentional, never add `--no-verify` as a workaround. Fix the underlying issue instead.

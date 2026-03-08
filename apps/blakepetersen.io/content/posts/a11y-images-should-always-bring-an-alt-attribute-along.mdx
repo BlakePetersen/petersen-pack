@@ -1,0 +1,32 @@
+---
+title: "A11y: Images should always bring an alt attribute along"
+date: "2018-10-22T21:18-07:00"
+description: "An image's alt attribute is the ideal way to clear the clutter for those who can't see images on your site and should be included in every image tag regardless of whether there's any alternative copy provided for that image. "
+tags: ["a11y", "accessibility", "quick tip", "html"]
+draft: true
+---
+
+Images are a great way to convey information, context, brand indentity and aesthetics on the web but for the visually impaired navigating the web using a screen reader, images can be annoying efficiency bombs that pollute a web-browsing experience with useless information. However, an image's alt attribute is the ideal way to clear the clutter for those who can't see images on your site and should be included in every image tag regardless of whether there's any alternative copy provided for that image. 
+
+## Alt Attributes
+
+```
+<img src="img.png" alt="The incredible copy here describing what's in this image." \>
+```
+
+An alt attribute is a bit of copy that's used in place of an image when it's unavailable or is actively not rendered, as in the case of a screen-reader or text-browser like Lynx (https://lynx.browser.org/). 
+
+### Add Alt Copy Like A Pro
+Alt attribute copy should *describe the image* it's standing in for, the visually impaired and others who use screen-readers rely on this description to get the same context the image provides for those who can see it. Provide enough information to get the point across but it doesn't have to be so detailed it takes thirty seconds to describe. Keep it short and sweet! 
+
+An alt attribute is not a keyword dumping ground -- don't be tempted to use alt attributes to jack-up density on certain words some snake-oil salesman told you would help you sell more widgets. It's a greasy move that should be avoided. Remember to always respect your visitors, respect your site and respect yourself when it comes to SEO.
+
+### No Alt Copy? No problem!
+If you don't have any copy to drop into your alt attribute, **leave an empty attribute in the image tag!!** This is one of the best things you can do for your visually impaired friends. What this does is it tells the screen-reader the image is purely decorative (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#Attributes) and it will skip the image during read-back. If you remove the alt attribute, you are telling the screen-reader this image is important to the context of the page so it will do what it can to provide that context, which is recite the URL provided in the `src` attribute. 
+
+## Always Include An Alt Attribute
+I can't really see a time when one would prefer to have an image spit back long, arcane URLs over simply moving on to the rest of the site's copy. I suggest always having an alt attribute included on your image tag, get in the habit of simply dropping it in when you add your `src` attribute. 
+
+Better yet, if you have an Image component, just drop that in there and simply always include the attr regardless of whether it's copy prop is populated and you're good to go!
+
+*This is a quick n dirty post, edits and code still to come*

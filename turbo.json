@@ -1,23 +1,21 @@
 {
-  "pipeline": {
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "inputs": ["src/**", "content/**/*.mdx", "velite.config.ts"],
+      "outputs": [".next/**", "dist/**", ".velite/**"]
     },
-    "clean": {},
-    "dev": {
+    "clean": {
       "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
     },
     "lint": {},
-    "start": {
-      "dependsOn": ["^build"]
-    },
-    "sanity": {},
     "test": {
       "outputs": []
-    },
-    "test:watch": {
-      "cache": false
     }
   }
 }

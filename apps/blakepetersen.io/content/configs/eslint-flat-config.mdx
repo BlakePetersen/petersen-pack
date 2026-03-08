@@ -1,0 +1,39 @@
+---
+title: "ESLint Flat Config Setup"
+description: "Migrate to ESLint flat config format with TypeScript support, shared configs across monorepo packages."
+applies_to: ["eslint", "typescript"]
+dependencies: []
+order: 1
+draft: false
+tags: ["linting", "typescript", "configuration"]
+---
+
+ESLint's flat config format replaces the legacy `.eslintrc` cascade with a single `eslint.config.js` file that uses explicit JavaScript imports. This makes the configuration transparent, composable, and easier to debug since there is no hidden config merging or extends resolution.
+
+## Migration from Legacy Config
+
+The flat config uses an array of config objects instead of the nested extends and overrides pattern. Each object in the array can specify its own files glob, plugins, and rules. Objects later in the array override earlier ones for matching files.
+
+Start by replacing your `.eslintrc.json` with `eslint.config.js`. Import your TypeScript plugin and parser directly rather than referencing them by string name. This eliminates the "cannot find module" errors that plague legacy configs with shared dependencies.
+
+```ts title="eslint.config.js" {1}
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  ...tseslint.configs.strict,
+)
+```
+
+## Monorepo Configuration
+
+In a monorepo, create a shared base config as a workspace package that other packages import. Each package's `eslint.config.js` imports the shared base and adds package-specific overrides. This is cleaner than the legacy approach of extending from a node_modules path.
+
+The shared config should include rules that apply everywhere: no unused variables, consistent import ordering, and TypeScript strict checks. Package-specific configs add rules for their domain, like React hooks rules for frontend packages or Node.js globals for backend packages.
+
+## TypeScript Integration
+
+Use `typescript-eslint` with the `projectService` option for type-aware linting. This gives you access to rules that understand your type system, like `no-floating-promises` and `no-misused-promises`. The performance cost is worth the safety net these rules provide.
+
+Configure the parser to use your existing `tsconfig.json` rather than maintaining a separate config for ESLint. This ensures the linter sees the same type information as your compiler.

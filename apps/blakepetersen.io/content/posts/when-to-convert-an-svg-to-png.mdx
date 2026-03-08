@@ -1,0 +1,49 @@
+---
+title: "When to Convert an SVG to PNG"
+date: "2019-10-04T00:00-07:00"
+description: "A comprehensive guide to optimizing PNG image assets for use on the web. This will cover use-cases, compression tools and techniques, and responsive considerations."
+tags: ["Optimization", "SVG", "PNG"]
+draft: true
+---
+
+No doubt, SVGs are dope, but they're not the right choice for every situation, and, more times than you'd think, a 2x PNG is the more optimal choice. 
+
+For times when you need to interact with the SVG's markup, you can't switch to PNG. And if the image is served above the fold, it might be best to inline small SVGs so they're served on the initial response and instantly available on first load (think nav logos and icons). 
+
+Past these limited scenarios, the real indicator as to whether you should use an SVG or a PNG is the file size *after* optimization. 
+
+## The Deal Breakers
+### The SVG is really a raster image
+If you pop open the SVG's markup and you find that it's just a wrapper for an inlined, rasterized image, you will want to switch that over to a PNG (or whatever format the inlined image is set to in the markup). SVGs are for vectors and scalin' and `base64`ing a raster image into and SVG serves no practical benefit and makes it dang-near impossible to optimize the image  .
+
+Let's take this Instacart logo as an example...
+
+![instacart-logo](//images.ctfassets.net/i4hrj10r05o9/3nZcyOqidgCcbJi7mvDlqB/816e201de3bee6c0315190cf0adab8fb/instacart-logo.svg)
+
+This first version is a PNG in SVG clothing coming in just under 50kb and it doesn't even scale! What a waste of bandwidth... 
+
+![instacart-logo](//images.ctfassets.net/i4hrj10r05o9/76Tr728bZSracQu56h6EyC/462956e63ff8d00c7bdaaf2861ba078e/instacart-logo.png)
+  
+This next version is an un-optimized PNG that is just the SVG resaved in photoshop. It comes in at around half the weight, 27kb. Getting closer but we can do better.
+
+![instacart-logo-optimized](//images.ctfassets.net/i4hrj10r05o9/5Yiu82lYAFGzeYsUTm20u2/43448bd6d83cf56988726aecb0272643/instacart-logo-optimized.png)
+
+This final optimized version comes in at a mere 3kb and is functionally identical to the first version. This is why we always convert rasterized SVGs to their proper format, PNG in this example.
+ 
+### The SVG is text-heavy
+One of the cool features of SVGs is that you can render text strings right in the markup. But if you don't render the SVG inline and you don't have the proper fonts in the mix, the text won't render correctly everywhere. If this works for your circumstances, roll with it, but from my experience, this proves problematic when trying support all the things. 
+
+One of the fixes to this font-consistency issue is converting the text to vector shapes, but this ratchets up the data required to render the text-heavy image as an SVG. In my opinion, the extra weight in converting the image to use vector shapes such that it no longer needs to be inlined and is free of any sort of web-font dependency.
+
+Another way to fix this font issue is to load and use a custom font but this __requires__ the SVG to be inlined so the font can be applied to the SVG's markup, which is probably not be ideal as you'll read below. 
+
+With the extra weight of that font, forcing all that SVG's file weight into the initial response body *and* the potential for a FOUT, just yuck. I'm just gunna say it, raw text has no place in an SVGs.
+
+In the end, PNG is likely the ideal when working with text-heavy images. PNG is also the better option for text legibility when compared with JPG, so hooray PNG!
+
+### The SVG is below-the-fold
+The value of an SVG being inlined is greatly diminished when that image is served below the fold. As I said previously, there's potential first-load-first-paint benefits for inlined SVGs above-the-fold, but unless users scroll down the page quickly, images further down the page will load quickly in the background and it will seem like it all loaded instantly. 
+
+Inlining SVGs can really weigh down that initial request while also keeping the image from being cached on the user's system, so it's really not something you should do unless it's really speeding up that first-load-first-paint, and that's only if that's critical for you, which it might not be. 
+
+With that edge case being laid to rest, unless the SVG is extremly simple, it's likely the equivalent 2x PNG will be similarly sized or smaller once properly optimized -- go with the smaller file. Just don't inline if you use and SVG.

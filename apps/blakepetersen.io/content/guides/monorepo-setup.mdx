@@ -1,0 +1,33 @@
+---
+title: "Turborepo Monorepo Setup Guide"
+description: "Set up a Turborepo monorepo with pnpm workspaces, shared TypeScript configs, and optimized build pipelines."
+applies_to: ["turborepo", "pnpm"]
+dependencies: ["configs/eslint-flat-config"]
+order: 1
+draft: false
+tags: ["monorepo", "build-tools", "typescript", "infrastructure"]
+---
+
+A well-structured monorepo lets you share code between packages while keeping each package independently buildable and testable. Turborepo adds intelligent caching and task orchestration on top of your existing package manager's workspace support.
+
+## Project Structure
+
+Organize your monorepo with `apps/` for deployable applications and `packages/` for shared libraries. Each directory in `apps/` or `packages/` is a workspace with its own `package.json`, TypeScript config, and build setup.
+
+Shared configurations like TypeScript base configs, ESLint rules, and Prettier settings live in `packages/` as workspace packages that other packages depend on. This ensures configuration changes propagate consistently across the entire monorepo.
+
+## Turborepo Pipeline Configuration
+
+Define your build pipeline in `turbo.json` at the monorepo root. Each task declares its dependencies, inputs, and outputs so Turborepo can determine what to cache and what to rebuild. The `dependsOn` field tells Turborepo to build dependencies before the current package.
+
+Set `inputs` to the file patterns that affect the task's output. For a TypeScript build, this includes `src/**/*.ts`, `tsconfig.json`, and `package.json`. For content builds, include the content directory. This prevents unnecessary rebuilds when unrelated files change.
+
+## Workspace Dependencies
+
+Use `workspace:*` protocol for internal dependencies. This tells pnpm to always use the local version rather than looking up a registry version. The `*` means any version matches, which is appropriate for a monorepo where all packages are versioned together.
+
+Keep shared packages focused and minimal. A `tsconfig` package should only contain TypeScript configuration files. A UI library should export components and nothing else. The more focused your packages are, the better Turborepo can cache and parallelize builds.
+
+## Development Workflow
+
+Run `pnpm dev` at the root to start all applications in development mode with hot reloading. Turborepo runs tasks in parallel by default, so your frontend and backend start simultaneously. Use `--filter` to target specific packages when you only need one application running.

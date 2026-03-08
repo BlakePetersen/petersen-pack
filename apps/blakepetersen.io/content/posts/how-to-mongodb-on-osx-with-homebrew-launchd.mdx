@@ -1,0 +1,129 @@
+---
+title: "How To: Set Up MongoDB on OSX with Homebrew and launchd"
+date: "2015-12-07T00:00-07:00"
+description: "Install and manage a MongoDB data store on OSX using Homebrew and launchd."
+tags: ["how to", "osx", "homebrew", "mongodb"]
+draft: true
+---
+
+This article is intended for those looking to fire up a [MongoDB](https://www.mongodb.org/) data store on OSX and outlines how to install and manage a MongoDB instance using [Homebrew](http://brew.sh) and [launchd](https://wiki.freebsd.org/launchd). This set up is not intended for production, is not secured (I'll cover that in a future post) and should be used only for local development. 
+
+## Prerequisites:
+You're going to need Homebrew. If you don't have it installed yet, you can get set up following the steps outlined in [OSX Package Management with Homebrew](http://blakepetersen.io/homebrew-osx-package-management/).
+
+## 1. Update Homebrew
+Before anything else, always update Homebrew. 
+```bash
+$ brew update
+```
+
+## 2. Install MongoDB
+
+There's a couple options you can pass when installing MongoDB using Homebrew, but to get the standard build on your system, run the following command.
+
+```bash
+$ brew install mongodb 
+```
+
+To include SSL/TLS support in the build, pass the '--with-openssl' flag with the command.
+
+```bash
+$ brew install mongodb --with-openssl
+```
+
+To install the development release, pass the '--devel' flag.
+
+```bash
+$ brew install mongodb --devel
+```
+
+You can check to see whether MongoDB installed by checking the version like so...
+
+```bash
+$ mongod --version
+```
+
+It should return `db version v3.0.7`, for example.
+
+## 3. Fire Up MongoDB
+
+Before we can light this up, we need to ensure MongoDB has a place to store it's data. By default, it seeks to put this data in the `/data/db` folder. Chances are, if you don't already have MongoDB installed, you don't have this folder on your system. To add it, run the following command...
+
+```bash
+$ mkdir -p /data/db
+``` 
+
+Once that's all set, you can start MongoDB using the `mongod` command. 
+
+```bash
+$ mongod
+```
+
+It should blast out a number of lines, the last should state something along the lines of `waiting for connections on port 27017`. If you see this, you're on the right track and can use MongoDB right now! This simple mode is great for quick debugging as you will see logs reported here. Unfortunately, as soon as you kill the terminal window, MongoDB and the console log dies too. 
+
+To persist MongoDB beyond your terminal window, all you have to do is fork a child process; run `mongod` with the `--fork` and `--logpath` flags. If you're using `--fork`, you need to specify `--logpath` otherwise it will bark at you. Plus, you wanna log things, right? ;]
+
+**Run MongoDB Daemon-style like a champ:**
+```bash
+$ mongod --fork --logpath /usr/local/var/log/mongodb/output.log
+```
+
+You should see the following if it starts up correctly.
+
+```bash
+about to fork child process, waiting until server is ready for connections.
+forked process: 24997
+child process started successfully, parent exiting
+```
+
+Killing the MongoDB process is pretty easy too, but you may need to flip some rocks if you lose your post-it. When you fire up the child process, take note of the process ID or PID as it will be how you terminate the process later. In the above example, the PID is `24997`. 
+
+If you don't know the PID, you can run `top` in your terminal and look for `mongod` in the command column. The number just to the left of `mongod` is the PID you're looking for. You can use ctrl+c to hop out of top. 
+
+Equipped with the PID, run the following command replacing `24997` with your own.
+
+**Kill MongoDB like a boss:**
+```bash
+$ kill -9 24997
+```
+
+If you check top again, `mongod` is no longer running. 
+
+## 4. Launch on Boot
+
+If you find you're using MongoDB pretty frequently, you may want to add it to launchd which will start it up every time your system boots. To do this, symlink the mongodb plist file into `~/Library/LaunchAgents` to launch when your current user logs in or `~/Library/LaunchDaemons` to start when any user logs in. 
+
+Current User:
+```bash
+$ ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
+```
+All Users:
+```bash
+$ ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchDaemons
+```
+
+An added benefit of using launchd to manage your MongoDB agents/daemons, you can now load and unload it at will using `launchctl`. 
+
+```bash
+$ launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
+$ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
+$ launchctl unload ~/Library/LaunchDaemons/homebrew.mxcl.mongodb.plist
+$ launchctl load ~/Library/LaunchDaemons/homebrew.mxcl.mongodb.plist
+```
+## 5. Gooey Applications
+I have two goto GUI applications when dealing with MongoDB. Let's power down Terminal and let our beautiful Apple display do it's thing!
+
+##### **LaunchControl** 
+
+[LaunchControl](http://www.soma-zone.com/LaunchControl/) is an amazing tool for visualizing and managing launchd agents and daemons outside the command line. I tend to also lean on this heavily when swapping between versions of PHP. Super handy!
+
+##### **Robomongo**
+[Robomongo](http://robomongo.org/) is a tool used to view and manage MongoDB databases and collections. It offers a lot of flexibility and provides an invaluable window into what your application is actually doing with your data. I first started using Robomongo on Ubuntu as it was the only cross-platform solution out there for this, and came to find it's pretty much the best GUI MongoDB management tool on any platform. 
+
+---
+
+###### Sources
+
+- https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/
+- http://stackoverflow.com/questions/5596521/what-is-the-correct-way-to-start-a-mongod-service-on-linux-os-x
+- https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/launchctl.1.html

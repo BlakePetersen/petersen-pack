@@ -13,6 +13,9 @@ coverage
 out/
 build
 
+# velite
+.velite
+
 # misc
 .DS_Store
 *.pem
@@ -32,5 +35,14 @@ yarn-error.log*
 # turbo
 .turbo
 
+# storybook
+storybook-static
+
 # IDEs
 .idea
+
+# cold storage
+.trash/
+
+# planning
+.planning/
