@@ -1,10 +1,19 @@
 // ABOUTME: Velite content pipeline configuration with typed schemas for all collections.
 // ABOUTME: Defines 5 collections (skills, hooks, configs, guides, posts) with Zod validation.
 
+import fs from 'node:fs'
+import path from 'node:path'
 import { defineCollection, defineConfig, s } from 'velite'
 import rehypeShiki from '@shikijs/rehype'
 import { transformerMetaHighlight } from '@shikijs/transformers'
 import { terminalTheme } from './src/lib/shiki-theme'
+import {
+  buildGraph,
+  getLocalGraph,
+  computeLayout,
+  renderGraphSvg,
+} from './src/lib/graph'
+import type { ContentNode } from './src/lib/graph'
 
 // Shared fields for DX content types (skills, hooks, configs, guides)
 const dxFields = {
@@ -89,7 +98,7 @@ const config: any = defineConfig({
     base: '/static/',
     clean: true,
   },
-  markdown: {
+  mdx: {
     rehypePlugins: [
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [rehypeShiki as any, {

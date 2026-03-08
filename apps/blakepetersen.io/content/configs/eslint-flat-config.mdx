@@ -16,6 +16,16 @@ The flat config uses an array of config objects instead of the nested extends an
 
 Start by replacing your `.eslintrc.json` with `eslint.config.js`. Import your TypeScript plugin and parser directly rather than referencing them by string name. This eliminates the "cannot find module" errors that plague legacy configs with shared dependencies.
 
+```ts title="eslint.config.js" {1}
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  ...tseslint.configs.strict,
+)
+```
+
 ## Monorepo Configuration
 
 In a monorepo, create a shared base config as a workspace package that other packages import. Each package's `eslint.config.js` imports the shared base and adds package-specific overrides. This is cleaner than the legacy approach of extending from a node_modules path.
