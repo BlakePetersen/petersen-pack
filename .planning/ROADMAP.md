@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 4: Content Rendering** - Syntax-highlighted code blocks and content dependency graph
 - [ ] **Phase 5: Site Shell** - Rebuild blakepetersen.io on App Router with static generation
 - [ ] **Phase 6: Site Navigation** - Sidebar, breadcrumbs, prev/next, anchor links
-- [ ] **Phase 7: Site Discovery** - SEO metadata, RSS feed, full-text search
+- [x] **Phase 7: Site Discovery** - SEO metadata, RSS feed, full-text search (completed 2026-03-08)
 - [ ] **Phase 8: Community** - giscus comments and report-a-problem issue links
 - [ ] **Phase 9: GitHub Automation** - Auto-triage bot and AI-assisted PR review
 - [ ] **Phase 10: CLI Skill** - Claude Code skill that applies DX standards to any project
@@ -200,7 +200,7 @@ Note: Phases 6, 7, 8 can execute in parallel (all depend on Phase 5 only). Phase
 | 4. Content Rendering | 2/2 | Complete | 2026-03-08 |
 | 5. Site Shell | 2/2 | Complete | 2026-03-08 |
 | 6. Site Navigation | 2/2 | Complete | 2026-03-08 |
-| 7. Site Discovery | 1/4 | In Progress | - |
+| 7. Site Discovery | 4/4 | Complete   | 2026-03-08 |
 | 8. Community | 0/2 | Not started | - |
 | 9. GitHub Automation | 0/2 | Not started | - |
 | 10. CLI Skill | 0/3 | Not started | - |
