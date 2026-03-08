@@ -1,9 +1,9 @@
-// ABOUTME: Render tests for CommandPalette and SearchTrigger components.
-// ABOUTME: Verifies components render without crashing and have correct accessible elements.
-
 /**
  * @jest-environment jest-environment-jsdom
  */
+
+// ABOUTME: Render tests for CommandPalette and SearchTrigger components.
+// ABOUTME: Verifies components render without crashing and have correct accessible elements.
 
 import React from 'react'
 import { render, screen } from '@testing-library/react'

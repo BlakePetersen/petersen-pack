@@ -3,6 +3,7 @@
 
 import Link from 'next/link'
 import { buildNavSections } from '../lib/navigation'
+import { CommandPalette } from './command-palette'
 import { SidebarDrawer } from './sidebar-drawer'
 
 export function Header() {
@@ -15,7 +16,8 @@ export function Header() {
           <span className="text-terminal-muted">{'// '}</span>
           blake_petersen
         </Link>
-        <nav>
+        <nav className="flex items-center gap-3">
+          <CommandPalette />
           <SidebarDrawer sections={sections} />
         </nav>
       </div>
