@@ -27,6 +27,18 @@ export function buildMetadata(item: ContentItem, collection: string): Metadata &
     alternates: {
       canonical: `${SITE_URL}/${item.slug}`,
     },
+    openGraph: {
+      title,
+      description,
+      images: [
+        {
+          url: `${SITE_URL}/api/og?category=${collection}&slug=${encodeURIComponent(item.slug)}`,
+          width: 1200,
+          height: 630,
+          type: 'image/png',
+        },
+      ],
+    },
   }
 }
 
