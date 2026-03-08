@@ -21,7 +21,7 @@
 - [x] **CONT-04**: Syntax-highlighted code blocks via Shiki with copy button, filename labels, and language tags
 - [ ] **CONT-05**: Client-side full-text search across all content (Flexsearch or Pagefind)
 - [ ] **CONT-06**: Bidirectional Monodex (Obsidian) sync with last-write-wins conflict resolution
-- [ ] **CONT-07**: Content dependency graph rendered from frontmatter `requires` fields
+- [x] **CONT-07**: Content dependency graph rendered from frontmatter `requires` fields
 
 ### Site
 
@@ -91,7 +91,7 @@
 | CONT-04 | Phase 4 | Complete |
 | CONT-05 | Phase 7 | Pending |
 | CONT-06 | Phase 11 | Pending |
-| CONT-07 | Phase 4 | Pending |
+| CONT-07 | Phase 4 | Complete |
 | SITE-01 | Phase 5 | Pending |
 | SITE-02 | Phase 2 | Complete |
 | SITE-03 | Phase 6 | Pending |

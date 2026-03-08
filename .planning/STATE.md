@@ -5,13 +5,13 @@ milestone_name: milestone
 status: completed
 stopped_at: Phase 4 context gathered
 last_updated: "2026-03-08T03:58:58.345Z"
-last_activity: 2026-03-08 — Completed Plan 03-02 (Seed content and pipeline tests)
+last_activity: 2026-03-08 — Completed Plan 04-02 (Dependency graph)
 progress:
   total_phases: 11
-  completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
-  percent: 89
+  completed_phases: 4
+  total_plans: 9
+  completed_plans: 9
+  percent: 91
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 ## Current Position
 
 Phase: 4 of 11 (Content Rendering)
-Plan: 1 of 2 in current phase
-Status: In Progress
-Last activity: 2026-03-08 — Completed Plan 04-01 (Shiki code blocks)
+Plan: 2 of 2 in current phase
+Status: Phase Complete
+Last activity: 2026-03-08 — Completed Plan 04-02 (Dependency graph)
 
-Progress: [█████████░] 89%
+Progress: [█████████░] 91%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [█████████░] 89%
 *Updated after each plan completion*
 | Phase 03 P02 | 13min | 2 tasks | 13 files |
 | Phase 04 P01 | 9min | 2 tasks | 13 files |
+| Phase 04 P02 | 12min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,9 @@ Recent decisions affecting current work:
 - [Phase 04]: Velite mdx config key (not markdown) required for s.mdx() rehype plugins
 - [Phase 04]: CopyButton is 'use client', CodeBlock stays server-safe
 - [Phase 04]: Shiki code elements distinguished from inline code via style attribute presence
+- [Phase 04]: Map.forEach used instead of for...of due to ts-jest Map iterator incompatibility
+- [Phase 04]: Graph data written to .velite/graph.json via process.cwd() (not __dirname or import.meta.url)
+- [Phase 04]: Local graphs only generated for content with at least one dependency edge
 
 ### Pending Todos
 
@@ -98,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T04:23:22Z
-Stopped at: Completed 04-01-PLAN.md
-Resume file: .planning/phases/04-content-rendering/04-01-SUMMARY.md
+Last session: 2026-03-08T04:26:38Z
+Stopped at: Completed 04-02-PLAN.md
+Resume file: .planning/phases/04-content-rendering/04-02-SUMMARY.md
