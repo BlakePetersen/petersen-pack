@@ -3,9 +3,12 @@
 
 import { Badge } from 'artax-ui'
 import { MDXContent } from './mdx-content'
+import { Breadcrumbs } from './breadcrumbs'
+import { PageNavigation } from './page-navigation'
 
 type PostItem = {
   title: string
+  slug: string
   date: string
   tags: string[]
   readingTime: number
@@ -15,6 +18,7 @@ type PostItem = {
 export function PostLayout({ post }: { post: PostItem }) {
   return (
     <article className="mx-auto max-w-[80ch] px-4 py-8">
+      <Breadcrumbs pathname={`/${post.slug}`} />
       <header className="mb-8">
         <h1 className="mb-2 font-mono text-2xl font-bold">{post.title}</h1>
 
@@ -43,6 +47,11 @@ export function PostLayout({ post }: { post: PostItem }) {
       <div className="prose-terminal">
         <MDXContent code={post.code} />
       </div>
+
+      <PageNavigation
+        collection="posts"
+        currentHref={`/${post.slug}`}
+      />
     </article>
   )
 }

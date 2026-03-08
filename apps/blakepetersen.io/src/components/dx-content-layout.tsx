@@ -4,6 +4,8 @@
 import { Badge } from 'artax-ui'
 import { MDXContent } from './mdx-content'
 import { DependencyGraph } from './dependency-graph'
+import { Breadcrumbs } from './breadcrumbs'
+import { PageNavigation } from './page-navigation'
 import { getLocalGraphSvg } from '../lib/content'
 
 type DxItem = {
@@ -22,6 +24,7 @@ export function DxContentLayout({ item }: { item: DxItem }) {
 
   return (
     <article className="mx-auto max-w-[80ch] px-4 py-8">
+      <Breadcrumbs pathname={`/${item.slug}`} />
       <header className="mb-8">
         <h1 className="mb-2 font-mono text-2xl font-bold">{item.title}</h1>
         <p className="mb-4 text-terminal-muted">{item.description}</p>
@@ -68,6 +71,11 @@ export function DxContentLayout({ item }: { item: DxItem }) {
           <DependencyGraph svgContent={graphSvg} />
         </div>
       )}
+
+      <PageNavigation
+        collection={item.slug.split('/')[0]}
+        currentHref={`/${item.slug}`}
+      />
     </article>
   )
 }

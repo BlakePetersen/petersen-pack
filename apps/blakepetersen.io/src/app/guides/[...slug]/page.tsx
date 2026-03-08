@@ -6,6 +6,7 @@ import { getGuides } from '../../../lib/content'
 import { DxContentLayout } from '../../../components/dx-content-layout'
 import { ContentShell } from '../../../components/content-shell'
 import { Sidebar } from '../../../components/sidebar'
+import { TableOfContents } from '../../../components/table-of-contents'
 
 export const dynamicParams = false
 export const revalidate = 3600
@@ -28,7 +29,7 @@ export default async function GuidePage({
   if (!item) notFound()
 
   return (
-    <ContentShell sidebar={<Sidebar />}>
+    <ContentShell sidebar={<Sidebar />} toc={<TableOfContents />}>
       <DxContentLayout item={item} />
     </ContentShell>
   )

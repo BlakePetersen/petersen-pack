@@ -6,6 +6,7 @@ import { getPosts } from '../../../lib/content'
 import { PostLayout } from '../../../components/post-layout'
 import { ContentShell } from '../../../components/content-shell'
 import { Sidebar } from '../../../components/sidebar'
+import { TableOfContents } from '../../../components/table-of-contents'
 
 export const dynamicParams = false
 export const revalidate = 3600
@@ -28,7 +29,7 @@ export default async function PostPage({
   if (!item) notFound()
 
   return (
-    <ContentShell sidebar={<Sidebar />}>
+    <ContentShell sidebar={<Sidebar />} toc={<TableOfContents />}>
       <PostLayout post={item} />
     </ContentShell>
   )
