@@ -80,6 +80,9 @@ importers:
       '@shikijs/rehype':
         specifier: ^4.0.1
         version: 4.0.1
+      '@shikijs/transformers':
+        specifier: ^4.0.1
+        version: 4.0.1
       '@tailwindcss/postcss':
         specifier: ^4.2.1
         version: 4.2.1
@@ -2123,6 +2126,10 @@ packages:
 
   '@shikijs/themes@4.0.1':
     resolution: {integrity: sha512-FW41C/D6j/yKQkzVdjrRPiJCtgeDaYRJFEyCKFCINuRJRj9WcmubhP4KQHPZ4+9eT87jruSrYPyoblNRyDFzvA==}
+    engines: {node: '>=20'}
+
+  '@shikijs/transformers@4.0.1':
+    resolution: {integrity: sha512-oE46W2eHpvD06+C0MBthd2YrDM6cktvJDFl764tOEXxfr3dAJhxMc0uNZ2tQXp+bkMgl4E7IL88Mj9RnSqiayw==}
     engines: {node: '>=20'}
 
   '@shikijs/types@4.0.1':
@@ -7453,6 +7460,11 @@ snapshots:
 
   '@shikijs/themes@4.0.1':
     dependencies:
+      '@shikijs/types': 4.0.1
+
+  '@shikijs/transformers@4.0.1':
+    dependencies:
+      '@shikijs/core': 4.0.1
       '@shikijs/types': 4.0.1
 
   '@shikijs/types@4.0.1':

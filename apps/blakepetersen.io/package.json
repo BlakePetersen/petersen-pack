@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "@shikijs/rehype": "^4.0.1",
+    "@shikijs/transformers": "^4.0.1",
     "@tailwindcss/postcss": "^4.2.1",
     "artax-ui": "workspace:*",
     "lucide-react": "^0.577.0",
