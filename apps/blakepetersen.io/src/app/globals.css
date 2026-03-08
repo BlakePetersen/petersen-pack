@@ -5,3 +5,7 @@
 @import "tw-animate-css";
 
 @source "../../../packages/artax-ui/src/**/*.{ts,tsx}";
+
+html {
+  scroll-behavior: smooth;
+}

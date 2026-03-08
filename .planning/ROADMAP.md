@@ -111,8 +111,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 06-01-PLAN.md — Sidebar with collapsible sections, mobile drawer, three-column layout shell, heading anchor links
+- [ ] 06-02-PLAN.md — Breadcrumbs, prev/next page navigation, table of contents with scroll spy
 
 ### Phase 7: Site Discovery
 **Goal**: Content is discoverable via search engines, feed readers, and on-site search

@@ -4,6 +4,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { defineCollection, defineConfig, s } from 'velite'
+import rehypeSlug from 'rehype-slug'
 import rehypeShiki from '@shikijs/rehype'
 import { transformerMetaHighlight } from '@shikijs/transformers'
 import { terminalTheme } from './src/lib/shiki-theme'
@@ -100,6 +101,7 @@ const config: any = defineConfig({
   },
   mdx: {
     rehypePlugins: [
+      rehypeSlug,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [rehypeShiki as any, {
         theme: terminalTheme,
