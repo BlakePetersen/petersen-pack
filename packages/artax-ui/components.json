@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "artax-ui/components",
+    "utils": "artax-ui/lib/utils",
+    "hooks": "artax-ui/hooks",
+    "lib": "artax-ui/lib",
+    "ui": "artax-ui/components"
+  }
+}

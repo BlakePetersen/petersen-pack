@@ -1,0 +1,33 @@
+/* ABOUTME: Tailwind v4 theme tokens for the terminal aesthetic design system. */
+/* ABOUTME: Defines grayscale palette, amber accent, semantic colors, typography, and zero border-radius. */
+@theme {
+  /* Grayscale palette */
+  --color-terminal-bg: #0A0A0A;
+  --color-terminal-surface: #0F0F0F;
+  --color-terminal-active: #1F1F1F;
+  --color-terminal-border: #2a2a2a;
+  --color-terminal-disabled: #4B5563;
+  --color-terminal-muted: #6B7280;
+  --color-terminal-secondary: #9CA3AF;
+  --color-terminal-text: #FAFAFA;
+
+  /* Amber accent */
+  --color-amber-accent: #F59E0B;
+
+  /* Semantic colors */
+  --color-terminal-error: #EF4444;
+  --color-terminal-warning: #F59E0B;
+  --color-terminal-success: #10B981;
+  --color-terminal-info: #06B6D4;
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono-alt: 'IBM Plex Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
+
+  /* Zero border-radius */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
