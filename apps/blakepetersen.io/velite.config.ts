@@ -118,6 +118,43 @@ const config: any = defineConfig({
       data.guides = data.guides.filter((g) => !g.draft)
       data.posts = data.posts.filter((p) => !p.draft)
     }
+
+    // Collect all DX content items (not posts) for dependency graph
+    const dxItems: ContentNode[] = [
+      ...data.skills,
+      ...data.hooks,
+      ...data.configs,
+      ...data.guides,
+    ].map((item) => ({
+      slug: item.slug,
+      title: item.title,
+      category: item.category,
+      dependencies: item.dependencies,
+    }))
+
+    const fullGraph = buildGraph(dxItems)
+    const fullLayout = computeLayout(fullGraph)
+    const fullGraphSvg = renderGraphSvg(fullLayout, { basePath: '/dx' })
+
+    const localGraphs: Record<string, string> = {}
+    for (const item of dxItems) {
+      const local = getLocalGraph(fullGraph, item.slug)
+      if (local.edges.length > 0) {
+        const localLayout = computeLayout(local)
+        localGraphs[item.slug] = renderGraphSvg(localLayout, {
+          currentSlug: item.slug,
+          basePath: '/dx',
+        })
+      }
+    }
+
+    const graphData = { fullGraphSvg, localGraphs }
+    const outputDir = path.resolve(process.cwd(), '.velite')
+    fs.mkdirSync(outputDir, { recursive: true })
+    fs.writeFileSync(
+      path.join(outputDir, 'graph.json'),
+      JSON.stringify(graphData, null, 2),
+    )
   },
 })
 

@@ -1,8 +1,7 @@
 // ABOUTME: Dependency graph computation from content frontmatter relationships.
 // ABOUTME: Builds adjacency, computes dagre layout, and renders terminal-styled SVG.
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const dagre = require('@dagrejs/dagre') as typeof import('@dagrejs/dagre')
+import dagre from '@dagrejs/dagre'
 
 export type ContentNode = {
   slug: string

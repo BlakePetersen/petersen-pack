@@ -17,6 +17,7 @@ const config: Config = {
       {
         tsconfig: {
           jsx: 'react-jsx',
+          esModuleInterop: true,
         },
       },
     ],

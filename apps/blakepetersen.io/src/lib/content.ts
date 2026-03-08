@@ -1,6 +1,8 @@
 // ABOUTME: Typed content query helpers for Velite-processed collections.
-// ABOUTME: Provides sorted access to skills, hooks, configs, guides, and posts.
+// ABOUTME: Provides sorted access to skills, hooks, configs, guides, posts, and graph data.
 
+import fs from 'node:fs'
+import path from 'node:path'
 import { skills, hooks, configs, guides, posts } from '#content'
 
 type CollectionItem = { slug: string }
@@ -39,4 +41,29 @@ export function getContentBySlug(collection: string, slug: string) {
   const items = collections[collection]
   if (!items) return undefined
   return items.find((item) => item.slug === slug)
+}
+
+type GraphJson = {
+  fullGraphSvg: string
+  localGraphs: Record<string, string>
+}
+
+function readGraphJson(): GraphJson {
+  const filePath = path.resolve(process.cwd(), '.velite/graph.json')
+  const raw = fs.readFileSync(filePath, 'utf-8')
+  return JSON.parse(raw) as GraphJson
+}
+
+export function getGraphData(): GraphJson {
+  return readGraphJson()
+}
+
+export function getLocalGraphSvg(slug: string): string | undefined {
+  const data = readGraphJson()
+  return data.localGraphs[slug]
+}
+
+export function getFullGraphSvg(): string {
+  const data = readGraphJson()
+  return data.fullGraphSvg
 }
