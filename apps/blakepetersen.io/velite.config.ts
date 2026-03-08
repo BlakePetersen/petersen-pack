@@ -15,14 +15,6 @@ const dxFields = {
   category: s.string().optional(),
 }
 
-// Computed fields shared across DX collections
-const withComputedFields = (data: Record<string, unknown>, { meta }: { meta: { path?: string } }) => ({
-  ...data,
-  category: (data.category as string) ?? meta.path?.split('/')[0] ?? 'uncategorized',
-  readingTime: (data.metadata as { readingTime: number }).readingTime,
-  wordCount: (data.metadata as { wordCount: number }).wordCount,
-})
-
 const dxSchema = s
   .object({
     ...dxFields,
@@ -31,7 +23,12 @@ const dxSchema = s
     metadata: s.metadata(),
     code: s.mdx(),
   })
-  .transform(withComputedFields)
+  .transform(({ metadata, ...data }) => ({
+    ...data,
+    category: data.category || data.slug.split('/')[0] || 'uncategorized',
+    readingTime: metadata.readingTime,
+    wordCount: metadata.wordCount,
+  }))
 
 const skills = defineCollection({
   name: 'Skill',
@@ -72,15 +69,16 @@ const posts = defineCollection({
       metadata: s.metadata(),
       code: s.mdx(),
     })
-    .transform((data) => ({
+    .transform(({ metadata, ...data }) => ({
       ...data,
       category: 'posts',
-      readingTime: data.metadata.readingTime,
-      wordCount: data.metadata.wordCount,
+      readingTime: metadata.readingTime,
+      wordCount: metadata.wordCount,
     })),
 })
 
-export default defineConfig({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const config: any = defineConfig({
   root: 'content',
   output: {
     data: '.velite',
@@ -90,16 +88,16 @@ export default defineConfig({
   },
   collections: { skills, hooks, configs, guides, posts },
   strict: true,
-  prepare: ({ skills, hooks, configs, guides, posts }) => {
+  prepare: (data) => {
     const isProduction = process.env.NODE_ENV === 'production'
     if (isProduction) {
-      return {
-        skills: skills.filter((s) => !s.draft),
-        hooks: hooks.filter((h) => !h.draft),
-        configs: configs.filter((c) => !c.draft),
-        guides: guides.filter((g) => !g.draft),
-        posts: posts.filter((p) => !p.draft),
-      }
+      data.skills = data.skills.filter((s) => !s.draft)
+      data.hooks = data.hooks.filter((h) => !h.draft)
+      data.configs = data.configs.filter((c) => !c.draft)
+      data.guides = data.guides.filter((g) => !g.draft)
+      data.posts = data.posts.filter((p) => !p.draft)
     }
   },
 })
+
+export default config

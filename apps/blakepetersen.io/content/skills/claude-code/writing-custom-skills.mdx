@@ -1,0 +1,29 @@
+---
+title: "Writing Custom Claude Code Skills"
+description: "How to structure SKILL.md files and rules directories for teaching Claude Code project-specific patterns and conventions."
+applies_to: ["claude-code"]
+dependencies: []
+order: 1
+draft: false
+tags: ["ai", "developer-tools", "automation"]
+---
+
+Claude Code skills are structured knowledge packages that teach the AI assistant about your project's specific patterns, conventions, and best practices. A well-crafted skill eliminates repetitive instructions and ensures consistent output across sessions.
+
+## Skill Structure
+
+Every skill lives in a directory under `.claude/skills/` or `.agents/skills/`. The directory contains a `SKILL.md` file that serves as a lightweight index, and a `rules/` subdirectory with detailed rule files that Claude loads on demand.
+
+The `SKILL.md` file should be concise, around 130 lines or fewer. It describes what the skill covers, when to apply it, and which rule files contain the detailed guidance. Think of it as a table of contents that helps Claude decide whether the skill is relevant to the current task.
+
+## Rule Files
+
+Rule files in the `rules/` directory contain the actual implementation guidance. Each rule file focuses on a single concern: naming conventions, error handling patterns, test structure, or component architecture. Keep rules atomic and focused so Claude can load only what it needs.
+
+Name rule files descriptively using kebab-case: `naming-conventions.md`, `error-handling.md`, `test-patterns.md`. The filename should tell Claude what the rule covers without opening the file.
+
+## When to Create a Skill
+
+Create a skill when you find yourself repeating the same instructions across multiple conversations. If you keep telling Claude about your project's naming conventions, component structure, or testing approach, those instructions belong in a skill rather than in conversation context.
+
+Skills are particularly valuable for patterns that are non-obvious or project-specific, things that Claude would not infer from reading the codebase alone. Standard practices like "use TypeScript" do not need skills, but "always use the Result pattern for error handling" does.
