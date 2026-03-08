@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 06-01-PLAN.md
-last_updated: "2026-03-08T07:13:06.860Z"
-last_activity: 2026-03-08 — Completed Plan 06-01 (Sidebar, drawer, and heading anchors)
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-03-08T07:21:25Z"
+last_activity: 2026-03-08 — Completed Plan 06-02 (Breadcrumbs, prev/next, TOC with scroll spy)
 progress:
   total_phases: 11
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 13
-  completed_plans: 12
-  percent: 92
+  completed_plans: 13
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 ## Current Position
 
 Phase: 6 of 11 (Site Navigation)
-Plan: 1 of 2 in current phase
-Status: In Progress
-Last activity: 2026-03-08 — Completed Plan 06-01 (Sidebar, drawer, and heading anchors)
+Plan: 2 of 2 in current phase
+Status: Complete
+Last activity: 2026-03-08 — Completed Plan 06-02 (Breadcrumbs, prev/next, TOC with scroll spy)
 
-Progress: [█████████░] 92%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Progress: [█████████░] 92%
 | Phase 05 P01 | 7min | 2 tasks | 6 files |
 | Phase 05 P02 | 12min | 2 tasks | 16 files |
 | Phase 06 P01 | 8min | 2 tasks | 22 files |
+| Phase 06 P02 | 6min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -98,6 +99,7 @@ Recent decisions affecting current work:
 - [Phase 05]: Build uses --webpack flag since Turbopack (Next.js 16 default) does not support Velite import attributes
 - [Phase 06]: Plain state with pathname comparison for drawer close instead of useEffect/useRef (React strict mode lint rules)
 - [Phase 06]: SidebarNav uses controlled state array for multi-expand instead of Radix AccordionInteractive
+- [Phase 06]: useSyncExternalStore for TOC heading extraction instead of useState+useEffect (react-hooks/set-state-in-effect lint rule)
 
 ### Pending Todos
 
@@ -111,6 +113,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T07:13:06.836Z
-Stopped at: Completed 06-01-PLAN.md
+Last session: 2026-03-08T07:21:25Z
+Stopped at: Completed 06-02-PLAN.md
 Resume file: None
