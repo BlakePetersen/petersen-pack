@@ -25,7 +25,7 @@
 
 ### Site
 
-- [ ] **SITE-01**: blakepetersen.io rebuilt on Next.js App Router with static generation
+- [x] **SITE-01**: blakepetersen.io rebuilt on Next.js App Router with static generation
 - [x] **SITE-02**: Dark-first theme with grayscale + ASCII-art aesthetic (no purples, monospace typography, box-drawing characters)
 - [ ] **SITE-03**: Hierarchical sidebar navigation derived from MDX file structure with collapsible sections
 - [ ] **SITE-04**: Previous/Next page navigation derived from sidebar order
@@ -34,7 +34,7 @@
 - [ ] **SITE-07**: Breadcrumb navigation derived from content path
 - [ ] **SITE-08**: Anchor links on headings for deep-linking
 - [ ] **SITE-09**: Sub-second page navigations via static generation
-- [ ] **SITE-10**: Responsive layout for mobile reading
+- [x] **SITE-10**: Responsive layout for mobile reading
 
 ### Community
 
@@ -92,7 +92,7 @@
 | CONT-05 | Phase 7 | Pending |
 | CONT-06 | Phase 11 | Pending |
 | CONT-07 | Phase 4 | Complete |
-| SITE-01 | Phase 5 | Pending |
+| SITE-01 | Phase 5 | Complete |
 | SITE-02 | Phase 2 | Complete |
 | SITE-03 | Phase 6 | Pending |
 | SITE-04 | Phase 6 | Pending |
@@ -101,7 +101,7 @@
 | SITE-07 | Phase 6 | Pending |
 | SITE-08 | Phase 6 | Pending |
 | SITE-09 | Phase 5 | Pending |
-| SITE-10 | Phase 5 | Pending |
+| SITE-10 | Phase 5 | Complete |
 | COMM-01 | Phase 8 | Pending |
 | COMM-02 | Phase 8 | Pending |
 | COMM-03 | Phase 9 | Pending |

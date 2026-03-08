@@ -96,9 +96,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
-- [ ] 05-03: TBD
+- [ ] 05-01-PLAN.md — Page chrome (header, footer), MDX rendering component, responsive root layout
+- [ ] 05-02-PLAN.md — Homepage with category grid, all content routes (listing + detail pages for 5 types)
 
 ### Phase 6: Site Navigation
 **Goal**: Users can orient themselves and move through content via sidebar, breadcrumbs, and page sequencing
@@ -198,7 +197,7 @@ Note: Phases 6, 7, 8 can execute in parallel (all depend on Phase 5 only). Phase
 | 2. Design System | 3/3 | Complete   | 2026-03-08 |
 | 3. Content Engine | 2/2 | Complete   | 2026-03-08 |
 | 4. Content Rendering | 0/2 | Not started | - |
-| 5. Site Shell | 0/3 | Not started | - |
+| 5. Site Shell | 1/2 | In Progress|  |
 | 6. Site Navigation | 0/2 | Not started | - |
 | 7. Site Discovery | 0/3 | Not started | - |
 | 8. Community | 0/2 | Not started | - |
