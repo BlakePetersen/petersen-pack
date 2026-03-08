@@ -4,7 +4,7 @@ import React from 'react'
 import { cn } from '../lib/utils'
 import { CodeBlock } from '../components/code-block'
 
-type Props = React.ComponentPropsWithoutRef<'div'> & { children?: React.ReactNode }
+type Props = React.HTMLAttributes<HTMLElement> & { children?: React.ReactNode }
 type HeadingProps = React.ComponentPropsWithoutRef<'h1'>
 type AnchorProps = React.ComponentPropsWithoutRef<'a'>
 type ImgProps = React.ComponentPropsWithoutRef<'img'>
