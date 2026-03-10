@@ -13,6 +13,8 @@ import { DxContentLayout } from '../../../components/dx-content-layout'
 import { ContentShell } from '../../../components/content-shell'
 import { Sidebar } from '../../../components/sidebar'
 import { TableOfContents } from '../../../components/table-of-contents'
+import { RelatedContent } from '../../../components/related-content'
+import { resolveRelatedSlugs } from '../../../lib/content'
 
 export const dynamicParams = false
 export const revalidate = 3600
@@ -46,11 +48,13 @@ export default async function ConfigPage({
 
   if (!item) notFound()
 
+  const relatedItems = resolveRelatedSlugs(item.related ?? [])
+
   return (
-    <ContentShell sidebar={<Sidebar />} toc={<TableOfContents />}>
+    <ContentShell sidebar={<Sidebar />} toc={<><TableOfContents /><RelatedContent items={relatedItems} /></>}>
       <JsonLd data={buildArticleJsonLd(item, 'configs')} />
       <JsonLd data={buildBreadcrumbJsonLd(`/configs/${slug.join('/')}`)} />
-      <DxContentLayout item={item} />
+      <DxContentLayout item={item} showApplyBar />
     </ContentShell>
   )
 }

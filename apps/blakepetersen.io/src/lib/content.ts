@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { skills, hooks, configs, guides, posts } from '#content'
 
-type CollectionItem = { slug: string }
+type CollectionItem = { slug: string; title: string }
 
 export function getSkills() {
   return [...skills].sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
@@ -41,6 +41,19 @@ export function getContentBySlug(collection: string, slug: string) {
   const items = collections[collection]
   if (!items) return undefined
   return items.find((item) => item.slug === slug)
+}
+
+export function resolveRelatedSlugs(slugs: string[]): { title: string; href: string }[] {
+  const allContent: CollectionItem[] = [
+    ...getSkills(), ...getHooks(), ...getConfigs(), ...getGuides(), ...getPosts(),
+  ]
+  return slugs
+    .map((slug) => {
+      const item = allContent.find((c) => c.slug === slug)
+      if (!item) return null
+      return { title: item.title, href: `/${slug}` }
+    })
+    .filter((item): item is { title: string; href: string } => item !== null)
 }
 
 type GraphJson = {

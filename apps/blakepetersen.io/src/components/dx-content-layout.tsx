@@ -7,6 +7,7 @@ import { DependencyGraph } from './dependency-graph'
 import { Breadcrumbs } from './breadcrumbs'
 import { PageNavigation } from './page-navigation'
 import { getLocalGraphSvg } from '../lib/content'
+import { ApplyActionBar } from './apply-action-bar'
 
 type DxItem = {
   title: string
@@ -22,7 +23,7 @@ type DxItem = {
   updated_context?: string
 }
 
-export function DxContentLayout({ item }: { item: DxItem }) {
+export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; showApplyBar?: boolean }) {
   const graphSvg = getLocalGraphSvg(item.slug)
 
   return (
@@ -54,6 +55,8 @@ export function DxContentLayout({ item }: { item: DxItem }) {
           )}
         </p>
       </header>
+
+      {showApplyBar && <ApplyActionBar slug={item.slug} />}
 
       <div className="prose-terminal">
         <MDXContent code={item.code} />
