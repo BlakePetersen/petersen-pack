@@ -15,6 +15,7 @@ import {
   renderGraphSvg,
 } from './src/lib/graph'
 import type { ContentNode } from './src/lib/graph'
+import { getGitHistoryForFile } from './src/lib/git-history'
 
 // Shared fields for DX content types (skills, hooks, configs, guides)
 const dxFields = {
@@ -161,6 +162,27 @@ const config: any = defineConfig({
     fs.writeFileSync(
       path.join(outputDir, 'graph.json'),
       JSON.stringify(graphData, null, 2),
+    )
+
+    // Extract git history for all content items
+    const contentDir = path.resolve(process.cwd(), 'content')
+    const allItems = [
+      ...data.skills,
+      ...data.hooks,
+      ...data.configs,
+      ...data.guides,
+      ...data.posts,
+    ]
+
+    const gitHistory: Record<string, { lastModified: string; commitCount: number }> = {}
+    for (const item of allItems) {
+      const mdxPath = path.join(contentDir, `${item.slug}.mdx`)
+      gitHistory[item.slug] = getGitHistoryForFile(mdxPath)
+    }
+
+    fs.writeFileSync(
+      path.join(outputDir, 'git-history.json'),
+      JSON.stringify(gitHistory, null, 2),
     )
   },
 })

@@ -19,13 +19,11 @@ export function getGitHistoryForFile(filePath: string): GitHistory {
       { encoding: 'utf-8' },
     ).trim()
 
-    const commitCount = parseInt(
-      execSync(
-        `git rev-list --count --follow HEAD -- "${filePath}"`,
-        { encoding: 'utf-8' },
-      ).trim(),
-      10,
-    )
+    const commitCountOutput = execSync(
+      `git log --follow --oneline -- "${filePath}" | wc -l`,
+      { encoding: 'utf-8', shell: '/bin/sh' },
+    ).trim()
+    const commitCount = parseInt(commitCountOutput, 10)
 
     if (!lastModified || isNaN(commitCount)) {
       return { lastModified: new Date().toISOString(), commitCount: 1 }

@@ -80,3 +80,25 @@ export function getFullGraphSvg(): string {
   const data = readGraphJson()
   return data.fullGraphSvg
 }
+
+type GitHistoryEntry = {
+  lastModified: string
+  commitCount: number
+}
+
+type GitHistoryJson = Record<string, GitHistoryEntry>
+
+function readGitHistoryJson(): GitHistoryJson {
+  const filePath = path.resolve(process.cwd(), '.velite/git-history.json')
+  const raw = fs.readFileSync(filePath, 'utf-8')
+  return JSON.parse(raw) as GitHistoryJson
+}
+
+export function getGitHistory(slug: string): GitHistoryEntry | undefined {
+  const data = readGitHistoryJson()
+  return data[slug]
+}
+
+export function getAllGitHistory(): GitHistoryJson {
+  return readGitHistoryJson()
+}

@@ -5,6 +5,7 @@ import { Badge } from 'artax-ui'
 import { MDXContent } from './mdx-content'
 import { Breadcrumbs } from './breadcrumbs'
 import { PageNavigation } from './page-navigation'
+import { ContentFreshness } from './content-freshness'
 
 type PostItem = {
   title: string
@@ -31,6 +32,7 @@ export function PostLayout({ post }: { post: PostItem }) {
             })}
           </time>
           <span>{post.readingTime} min read</span>
+          <ContentFreshness slug={post.slug} />
         </div>
 
         {post.tags.length > 0 && (

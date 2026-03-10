@@ -2,7 +2,7 @@
 // ABOUTME: Lists homepage, listing pages, and all content items for search engine discovery.
 
 import type { MetadataRoute } from 'next'
-import { getSkills, getHooks, getConfigs, getGuides, getPosts } from '../lib/content'
+import { getSkills, getHooks, getConfigs, getGuides, getPosts, getAllGitHistory } from '../lib/content'
 
 const BASE_URL = 'https://blakepetersen.io'
 
@@ -26,10 +26,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     getPosts(),
   ]
 
+  const gitHistory = getAllGitHistory()
+
   const contentPages: MetadataRoute.Sitemap = collections.flatMap((items) =>
     items.map((item) => ({
       url: `${BASE_URL}/${item.slug}`,
-      lastModified: now,
+      lastModified: gitHistory[item.slug]
+        ? new Date(gitHistory[item.slug].lastModified)
+        : now,
     })),
   )
 

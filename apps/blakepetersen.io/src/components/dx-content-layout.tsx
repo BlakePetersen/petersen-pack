@@ -8,6 +8,7 @@ import { Breadcrumbs } from './breadcrumbs'
 import { PageNavigation } from './page-navigation'
 import { getLocalGraphSvg } from '../lib/content'
 import { ApplyActionBar } from './apply-action-bar'
+import { ContentFreshness } from './content-freshness'
 
 type DxItem = {
   title: string
@@ -48,11 +49,8 @@ export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; 
 
         <p className="mt-2 font-mono text-xs text-terminal-muted">
           {item.readingTime} min read
-          {item.updated_context && (
-            <span>
-              {' \u00b7 '}Updated {new Date(item.updated_context).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-            </span>
-          )}
+          {' \u00b7 '}
+          <ContentFreshness slug={item.slug} />
         </p>
       </header>
 
