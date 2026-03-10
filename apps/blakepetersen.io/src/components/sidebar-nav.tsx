@@ -8,6 +8,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { NavSection } from '../lib/navigation'
 
+const categoryColors: Record<string, string> = {
+  Skills: '#F59E0B',
+  Hooks: '#06B6D4',
+  Configs: '#10B981',
+  Guides: '#9CA3AF',
+  Posts: '#6B7280',
+}
+
 export function SidebarNav({ sections }: { sections: NavSection[] }) {
   const pathname = usePathname()
 
@@ -45,6 +53,7 @@ export function SidebarNav({ sections }: { sections: NavSection[] }) {
               className="flex w-full items-center justify-between py-1.5 font-mono text-xs text-terminal-muted transition-colors hover:text-terminal-text"
             >
               <span>
+                <span className="mr-1.5 text-[8px]" style={{ color: categoryColors[section.label] || '#6B7280' }}>●</span>
                 {'// '}{section.label.toLowerCase()}
               </span>
               <span className="flex items-center gap-1.5">
@@ -64,7 +73,7 @@ export function SidebarNav({ sections }: { sections: NavSection[] }) {
                         href={item.href}
                         className={`block truncate py-1 pl-2 font-mono text-xs transition-colors ${
                           isActive
-                            ? 'font-medium text-amber-accent'
+                            ? 'font-medium text-amber-accent bg-terminal-active -mx-2 px-4'
                             : 'text-terminal-secondary hover:text-terminal-text'
                         }`}
                       >
