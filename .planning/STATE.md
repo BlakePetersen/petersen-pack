@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-03-10)
 Phase: 8 (CI & Foundation) — first of 4 in v1.1
 Plan: 3 of 3 complete
 Status: Phase complete
-Last activity: 2026-03-10 — Completed CI pipeline extension (08-01)
+Last activity: 2026-03-10 — Completed content freshness plan (08-03)
 
 Progress: [██████████] 100%
 
@@ -59,6 +59,8 @@ Recent decisions affecting current work:
 - [v1.1]: `pull_request` trigger (not `pull_request_target`) for AI workflow security
 - [Phase 08]: Used GitHub YAML issue forms (not Markdown templates) for structured input
 - [Phase 08]: Created tsconfig.typecheck.json to exclude tests from typecheck (tests import future modules)
+- [Phase 08]: child_process execSync for git history; git log --follow --oneline | wc -l for commit counting
+- [Phase 08]: git-history.json build artifact pattern (mirrors graph.json)
 
 ### Pending Todos
 
@@ -72,6 +74,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10T18:24:13.079Z
-Stopped at: Completed 08-01-PLAN.md
+Last session: 2026-03-10T18:26:16Z
+Stopped at: Completed 08-03-PLAN.md
 Resume file: None
