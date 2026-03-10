@@ -43,6 +43,19 @@
 - [ ] **COMM-03**: Auto-triage bot labels and categorizes incoming GitHub issues
 - [ ] **COMM-04**: AI-assisted PR review on contributions with human merge approval
 
+### Design Polish
+
+- [ ] **DSGN-01**: Body text uses proportional font (Inter), monospace reserved for chrome, headings, and code
+- [ ] **DSGN-02**: Color palette includes secondary accent (cyan) and annotation surface colors
+- [ ] **DSGN-03**: Content schema supports author_note, decisions, related, and updated_context frontmatter fields
+- [ ] **DSGN-04**: Author note and decision rationale components render on content pages from frontmatter
+- [ ] **DSGN-05**: Apply action bar with copy-to-clipboard CLI command on DX content pages
+- [ ] **DSGN-06**: Related content links in right sidebar resolved from frontmatter
+- [ ] **DSGN-07**: Homepage redesigned as DX workbench (hero, stack snapshot, enriched content grid, activity feed)
+- [ ] **DSGN-08**: Sidebar has category color indicators and stronger active page state
+- [ ] **DSGN-09**: About page with bio and project philosophy
+- [ ] **DSGN-10**: Start-here onboarding guide for newcomers
+
 ### CLI Skill
 
 - [ ] **SKIL-01**: Claude Code skill that applies full DX standard to any project (CLAUDE.md, skills, hooks, linting, CI configs)
@@ -106,16 +119,26 @@
 | COMM-02 | Phase 8 | Pending |
 | COMM-03 | Phase 9 | Pending |
 | COMM-04 | Phase 9 | Pending |
+| DSGN-01 | Phase 7.1 | Pending |
+| DSGN-02 | Phase 7.1 | Pending |
+| DSGN-03 | Phase 7.1 | Pending |
+| DSGN-04 | Phase 7.1 | Pending |
+| DSGN-05 | Phase 7.1 | Pending |
+| DSGN-06 | Phase 7.1 | Pending |
+| DSGN-07 | Phase 7.1 | Pending |
+| DSGN-08 | Phase 7.1 | Pending |
+| DSGN-09 | Phase 7.1 | Pending |
+| DSGN-10 | Phase 7.1 | Pending |
 | SKIL-01 | Phase 10 | Pending |
 | SKIL-02 | Phase 10 | Pending |
 | SKIL-03 | Phase 10 | Pending |
 | SKIL-04 | Phase 10 | Pending |
 
 **Coverage:**
-- v1 requirements: 30 total
-- Mapped to phases: 30
+- v1 requirements: 40 total
+- Mapped to phases: 40
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-07*
-*Last updated: 2026-03-07 after roadmap creation*
+*Last updated: 2026-03-09 after Phase 7.1 (Design Polish) insertion*

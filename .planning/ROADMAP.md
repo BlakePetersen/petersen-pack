@@ -19,6 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 5: Site Shell** - Rebuild blakepetersen.io on App Router with static generation
 - [ ] **Phase 6: Site Navigation** - Sidebar, breadcrumbs, prev/next, anchor links
 - [x] **Phase 7: Site Discovery** - SEO metadata, RSS feed, full-text search (completed 2026-03-08)
+- [ ] **Phase 7.1: Design Polish** - INSERTED — Typography, author voice, homepage workbench, visual refinement
 - [ ] **Phase 8: Community** - giscus comments and report-a-problem issue links
 - [ ] **Phase 9: GitHub Automation** - Auto-triage bot and AI-assisted PR review
 - [ ] **Phase 10: CLI Skill** - Claude Code skill that applies DX standards to any project
@@ -130,6 +131,25 @@ Plans:
 - [ ] 07-03-PLAN.md — Terminal-styled OG images for all 10 content routes
 - [ ] 07-04-PLAN.md — Pagefind search integration with command palette UI
 
+### Phase 7.1: Design Polish (INSERTED)
+**Goal**: The site feels like a personal DX workshop with author voice, decision rationale, and richer information architecture — not a generic docs site
+**Depends on**: Phase 7
+**Requirements**: DSGN-01, DSGN-02, DSGN-03, DSGN-04, DSGN-05, DSGN-06, DSGN-07, DSGN-08, DSGN-09, DSGN-10
+**Success Criteria** (what must be TRUE):
+  1. Body prose uses Inter (proportional), while navigation chrome, headings, code, and terminal decorators use monospace
+  2. Author note callouts and decision rationale sections render on content pages from frontmatter fields
+  3. Apply action bar with copy-to-clipboard appears on DX content pages (skills, hooks, configs)
+  4. Related content links render in the right sidebar from frontmatter `related` field
+  5. Homepage displays hero with identity, stack snapshot, enriched content grid, and contribution callout
+  6. Sidebar shows category color indicators and stronger active page state
+  7. About page and start-here guide exist and are linked from homepage/navigation
+**Plans**: 3 plans
+
+Plans:
+- [ ] 7.1-01-PLAN.md — Foundation: typography swap, color palette, content schema fields, sidebar refinements, metadata enhancement
+- [ ] 7.1-02-PLAN.md — Components: AuthorNote, DecisionList, ApplyAction, RelatedContent
+- [ ] 7.1-03-PLAN.md — Pages: homepage workbench redesign, about page, start-here guide
+
 ### Phase 8: Community
 **Goal**: Visitors can discuss content and report problems without leaving the site workflow
 **Depends on**: Phase 5
@@ -201,6 +221,7 @@ Note: Phases 6, 7, 8 can execute in parallel (all depend on Phase 5 only). Phase
 | 5. Site Shell | 2/2 | Complete | 2026-03-08 |
 | 6. Site Navigation | 2/2 | Complete | 2026-03-08 |
 | 7. Site Discovery | 4/4 | Complete   | 2026-03-08 |
+| 7.1 Design Polish | 0/3 | Not started | - |
 | 8. Community | 0/2 | Not started | - |
 | 9. GitHub Automation | 0/2 | Not started | - |
 | 10. CLI Skill | 0/3 | Not started | - |

@@ -7,11 +7,11 @@ stopped_at: Completed 07-03-PLAN.md
 last_updated: "2026-03-08T08:58:29.231Z"
 last_activity: 2026-03-08 — Completed Plan 07-03 (OG images for all content routes)
 progress:
-  total_phases: 11
+  total_phases: 12
   completed_phases: 7
-  total_plans: 17
+  total_plans: 20
   completed_plans: 17
-  percent: 100
+  percent: 85
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-07)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 7: Site Discovery
+**Current focus:** Phase 7.1: Design Polish
 
 ## Current Position
 
-Phase: 7 of 11 (Site Discovery)
-Plan: 4 of 4 in current phase (phase complete)
-Status: In Progress
-Last activity: 2026-03-08 — Completed Plan 07-03 (OG images for all content routes)
+Phase: 7.1 of 11 (Design Polish — INSERTED)
+Plan: 0 of 3 in current phase
+Status: Not started
+Last activity: 2026-03-09 — Inserted Phase 7.1 (Design Polish) into v1.0 roadmap
 
-Progress: [██████████] 100%
+Progress: [████████░░] 85%
 
 ## Performance Metrics
 

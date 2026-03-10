@@ -26,6 +26,9 @@ const dxFields = {
   draft: s.boolean().default(false),
   tags: s.array(s.string()).default([]),
   category: s.string().optional(),
+  decisions: s.array(s.object({ choice: s.string(), rationale: s.string() })).default([]),
+  related: s.array(s.string()).default([]),
+  updated_context: s.isodate().optional(),
 }
 
 const dxSchema = s
@@ -77,6 +80,8 @@ const posts = defineCollection({
       date: s.isodate(),
       tags: s.array(s.string()).default([]),
       draft: s.boolean().default(false),
+      related: s.array(s.string()).default([]),
+      updated_context: s.isodate().optional(),
       slug: s.path(),
       excerpt: s.excerpt(),
       metadata: s.metadata(),

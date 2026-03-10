@@ -124,7 +124,7 @@ export const mdxComponents = {
 
   li: ({ className, ...props }: Props) => (
     <li
-      className={cn('text-terminal-text', className)}
+      className={cn('font-sans text-terminal-text', className)}
       {...props}
     />
   ),
