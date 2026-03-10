@@ -51,10 +51,10 @@
 - [x] **DSGN-04**: Author note and decision rationale components render on content pages from frontmatter
 - [x] **DSGN-05**: Apply action bar with copy-to-clipboard CLI command on DX content pages
 - [x] **DSGN-06**: Related content links in right sidebar resolved from frontmatter
-- [ ] **DSGN-07**: Homepage redesigned as DX workbench (hero, stack snapshot, enriched content grid, activity feed)
+- [x] **DSGN-07**: Homepage redesigned as DX workbench (hero, stack snapshot, enriched content grid, activity feed)
 - [x] **DSGN-08**: Sidebar has category color indicators and stronger active page state
-- [ ] **DSGN-09**: About page with bio and project philosophy
-- [ ] **DSGN-10**: Start-here onboarding guide for newcomers
+- [x] **DSGN-09**: About page with bio and project philosophy
+- [x] **DSGN-10**: Start-here onboarding guide for newcomers
 
 ### CLI Skill
 
@@ -125,10 +125,10 @@
 | DSGN-04 | Phase 7.1 | Complete |
 | DSGN-05 | Phase 7.1 | Complete |
 | DSGN-06 | Phase 7.1 | Complete |
-| DSGN-07 | Phase 7.1 | Pending |
+| DSGN-07 | Phase 7.1 | Complete |
 | DSGN-08 | Phase 7.1 | Complete |
-| DSGN-09 | Phase 7.1 | Pending |
-| DSGN-10 | Phase 7.1 | Pending |
+| DSGN-09 | Phase 7.1 | Complete |
+| DSGN-10 | Phase 7.1 | Complete |
 | SKIL-01 | Phase 10 | Pending |
 | SKIL-02 | Phase 10 | Pending |
 | SKIL-03 | Phase 10 | Pending |

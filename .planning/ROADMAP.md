@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 5: Site Shell** - Rebuild blakepetersen.io on App Router with static generation
 - [ ] **Phase 6: Site Navigation** - Sidebar, breadcrumbs, prev/next, anchor links
 - [x] **Phase 7: Site Discovery** - SEO metadata, RSS feed, full-text search (completed 2026-03-08)
-- [ ] **Phase 7.1: Design Polish** - INSERTED — Typography, author voice, homepage workbench, visual refinement
+- [x] **Phase 7.1: Design Polish** - INSERTED — Typography, author voice, homepage workbench, visual refinement
 - [ ] **Phase 8: Community** - giscus comments and report-a-problem issue links
 - [ ] **Phase 9: GitHub Automation** - Auto-triage bot and AI-assisted PR review
 - [ ] **Phase 10: CLI Skill** - Claude Code skill that applies DX standards to any project
@@ -148,7 +148,7 @@ Plans:
 Plans:
 - [x] 7.1-01-PLAN.md — Foundation: typography swap, color palette, content schema fields, sidebar refinements, metadata enhancement
 - [x] 7.1-02-PLAN.md — Components: AuthorNote, DecisionList, ApplyAction, RelatedContent
-- [ ] 7.1-03-PLAN.md — Pages: homepage workbench redesign, about page, start-here guide
+- [x] 7.1-03-PLAN.md — Pages: homepage workbench redesign, about page, start-here guide
 
 ### Phase 8: Community
 **Goal**: Visitors can discuss content and report problems without leaving the site workflow
@@ -221,7 +221,7 @@ Note: Phases 6, 7, 8 can execute in parallel (all depend on Phase 5 only). Phase
 | 5. Site Shell | 2/2 | Complete | 2026-03-08 |
 | 6. Site Navigation | 2/2 | Complete | 2026-03-08 |
 | 7. Site Discovery | 4/4 | Complete   | 2026-03-08 |
-| 7.1 Design Polish | 2/3 | In progress | - |
+| 7.1 Design Polish | 3/3 | Complete | - |
 | 8. Community | 0/2 | Not started | - |
 | 9. GitHub Automation | 0/2 | Not started | - |
 | 10. CLI Skill | 0/3 | Not started | - |

@@ -15,7 +15,7 @@ export function ApplyActionBar({ slug }: { slug: string }) {
   }
 
   return (
-    <div className="sticky top-14 z-10 -mx-4 border-b border-terminal-border bg-terminal-bg/95 px-4 py-2 backdrop-blur-sm">
+    <div className="sticky top-14 z-10 -mx-4 mt-4 border-y border-terminal-border bg-terminal-bg/95 px-4 py-2.5 backdrop-blur-sm">
       <div className="flex items-center justify-between">
         <span className="font-mono text-xs text-terminal-muted">
           {'$ '}{command}

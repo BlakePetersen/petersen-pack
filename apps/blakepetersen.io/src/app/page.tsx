@@ -26,7 +26,7 @@ export default function Home() {
   const recentPosts = posts.slice(0, 5)
 
   return (
-    <div className="mx-auto max-w-[1200px] px-4 py-8">
+    <div className="mx-auto max-w-[1600px] px-4 py-8">
       {/* Section 1: Workbench hero */}
       <section className="mb-12">
         <p className="mb-4 font-mono text-xs text-terminal-muted">{'// dx_workbench'}</p>

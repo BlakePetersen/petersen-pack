@@ -58,7 +58,7 @@ export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; 
 
       {showApplyBar && <ApplyActionBar slug={item.slug} />}
 
-      <div className="prose-terminal">
+      <div className={`prose-terminal${showApplyBar ? ' mt-5' : ''}`}>
         <MDXContent code={item.code} />
       </div>
 
