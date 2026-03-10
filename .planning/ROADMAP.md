@@ -221,7 +221,7 @@ Note: Phases 6, 7, 8 can execute in parallel (all depend on Phase 5 only). Phase
 | 5. Site Shell | 2/2 | Complete | 2026-03-08 |
 | 6. Site Navigation | 2/2 | Complete | 2026-03-08 |
 | 7. Site Discovery | 4/4 | Complete   | 2026-03-08 |
-| 7.1 Design Polish | 0/3 | Not started | - |
+| 7.1 Design Polish | 1/3 | In progress | - |
 | 8. Community | 0/2 | Not started | - |
 | 9. GitHub Automation | 0/2 | Not started | - |
 | 10. CLI Skill | 0/3 | Not started | - |
