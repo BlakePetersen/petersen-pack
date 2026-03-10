@@ -2,12 +2,12 @@
 
 ## Overview
 
-Transform the existing Turborepo monorepo from a collection of independent Next.js sites into a DX reference platform.
+Transform the existing Turborepo monorepo from a collection of independent Next.js sites into a DX reference platform with GitHub-native community features, automation, and CI.
 
 ## Milestones
 
 - ✅ **v1.0 DX Reference Platform** — Phases 1-7.1 (shipped 2026-03-10)
-- 📋 **v1.1** — Phases 8-11 (planned)
+- 🚧 **v1.1 GitHub Integration** — Phases 8-11 (in progress)
 
 ## Phases
 
@@ -27,12 +27,66 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full details.
 
 </details>
 
-### 📋 Next Milestone (Planned)
+### 🚧 v1.1 GitHub Integration (In Progress)
 
-- [ ] **Phase 8: Community** - giscus comments and report-a-problem issue links (2 plans)
-- [ ] **Phase 9: GitHub Automation** - Auto-triage bot and AI-assisted PR review (2 plans)
-- [ ] **Phase 10: CLI Skill** - Claude Code skill that applies DX standards to any project (3 plans)
-- [ ] **Phase 11: Monodex Sync** - Bidirectional MDX sync with Obsidian vault (2 plans)
+**Milestone Goal:** Make GitHub the community backbone — discussions, issues, automation, project visibility, and CI — so readers can engage, contribute, and track progress without leaving the GitHub ecosystem.
+
+- [ ] **Phase 8: CI & Foundation** - GitHub Actions pipeline, issue templates, and git-based version indicators
+- [ ] **Phase 9: Community Engagement** - Giscus comments, content voting, and report-a-problem links
+- [ ] **Phase 10: GitHub Data Pages** - Changelog, contributors, and roadmap pages from GitHub API
+- [ ] **Phase 11: AI Automation** - Claude-powered PR review and issue triage with security guardrails
+
+## Phase Details
+
+### Phase 8: CI & Foundation
+**Goal**: Every PR is automatically validated, contributors get structured feedback channels, and readers see how fresh each page is
+**Depends on**: Phase 7.1 (v1.0 complete)
+**Requirements**: CI-01, CI-02, CI-03, CI-04, CI-05
+**Success Criteria** (what must be TRUE):
+  1. Opening a PR triggers automated build, typecheck, lint, and link checking -- broken PRs are caught before review
+  2. The "New Issue" page on GitHub shows structured templates for bug reports, feature requests, and content issues
+  3. Every content page displays when it was last modified (derived from git history, not manual dates)
+  4. Every content page displays a change frequency indicator showing how actively maintained it is
+**Plans:** 3 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — CI pipeline with typecheck, link checking, and status badge
+- [ ] 08-02-PLAN.md — GitHub issue form templates (bug, feature, content)
+- [ ] 08-03-PLAN.md — Git-derived content freshness indicators and sitemap dates
+
+### Phase 9: Community Engagement
+**Goal**: Readers can discuss content, signal what they find valuable, and report problems without leaving the page
+**Depends on**: Phase 8 (CI pipeline catches issues in community feature PRs)
+**Requirements**: COMM-01, COMM-02, COMM-03, COMM-04, COMM-05
+**Success Criteria** (what must be TRUE):
+  1. Every content page has a comment section powered by GitHub Discussions where readers can ask questions and share context
+  2. Comments survive URL restructuring because they use stable content IDs, not pathnames
+  3. The comment widget matches the terminal dark aesthetic (not a jarring light iframe)
+  4. Every content page has a "Report a problem" link that opens a pre-filled GitHub issue with the page title, URL, and content metadata
+  5. Every content page displays reaction counts from its GitHub Discussion as a voting/quality signal
+**Plans**: TBD
+
+### Phase 10: GitHub Data Pages
+**Goal**: Readers can see project history, who contributes, and where the project is headed -- all from GitHub data rendered in the site's terminal aesthetic
+**Depends on**: Phase 8 (octokit patterns established for GitHub API access)
+**Requirements**: DATA-01, DATA-02, DATA-03, DATA-04
+**Success Criteria** (what must be TRUE):
+  1. `/changelog` page displays release notes auto-generated from GitHub Releases (not manually maintained)
+  2. `/contributors` page displays contributor avatars and contribution stats from GitHub API
+  3. `/roadmap` page links to the public GitHub Projects board with styled presentation matching the site
+  4. All three pages use the terminal aesthetic consistent with the rest of the site (dark background, monospace chrome, amber accents)
+**Plans**: TBD
+
+### Phase 11: AI Automation
+**Goal**: Incoming PRs get automated code review and new issues get auto-triaged, with security guardrails preventing abuse and cost spirals
+**Depends on**: Phase 8 (CI pipeline stable, issue templates producing structured input)
+**Requirements**: AI-01, AI-02, AI-03, AI-04, AI-05
+**Success Criteria** (what must be TRUE):
+  1. Every non-bot PR receives an automated Claude code review comment before human review
+  2. New issues are automatically labeled and categorized by a Claude-powered triage bot
+  3. AI workflows use `pull_request` trigger (not `pull_request_target`) and require approval before running on fork PRs
+  4. AI workflows have spending limits and label gates configured to prevent unbounded Anthropic API costs
+**Plans**: TBD
 
 ## Progress
 
@@ -46,7 +100,7 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full details.
 | 6. Site Navigation | v1.0 | 2/2 | Complete | 2026-03-08 |
 | 7. Site Discovery | v1.0 | 4/4 | Complete | 2026-03-08 |
 | 7.1 Design Polish | v1.0 | 3/3 | Complete | 2026-03-09 |
-| 8. Community | — | 0/2 | Not started | - |
-| 9. GitHub Automation | — | 0/2 | Not started | - |
-| 10. CLI Skill | — | 0/3 | Not started | - |
-| 11. Monodex Sync | — | 0/2 | Not started | - |
+| 8. CI & Foundation | v1.1 | 0/3 | Planning | - |
+| 9. Community Engagement | v1.1 | 0/? | Not started | - |
+| 10. GitHub Data Pages | v1.1 | 0/? | Not started | - |
+| 11. AI Automation | v1.1 | 0/? | Not started | - |
