@@ -1,9 +1,9 @@
 ---
 phase: 7
 slug: site-discovery
-status: draft
+status: complete
 nyquist_compliant: true
-wave_0_complete: false
+wave_0_complete: true
 created: 2026-03-07
 ---
 
@@ -38,13 +38,13 @@ created: 2026-03-07
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 07-01-T1 | 01 | 1 | SITE-05 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern sitemap` | ❌ W0 | ⬜ pending |
-| 07-01-T2 | 01 | 1 | SITE-06 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern feed` | ❌ W0 | ⬜ pending |
-| 07-02-T1 | 02 | 2 | SITE-05 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern "metadata\|structured-data"` | ❌ W0 | ⬜ pending |
-| 07-03-T1 | 03 | 2 | SITE-05 | build | `pnpm --filter blakepetersen.io build` | N/A | ⬜ pending |
-| 07-03-T2 | 03 | 2 | SITE-05 | build | `pnpm --filter blakepetersen.io build` | N/A | ⬜ pending |
-| 07-04-T1 | 04 | 1 | CONT-05 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern search` | ❌ W0 | ⬜ pending |
-| 07-04-T2 | 04 | 1 | CONT-05 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern "command-palette\|search"` | ❌ W0 | ⬜ pending |
+| 07-01-T1 | 01 | 1 | SITE-05 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern sitemap` | ✅ | ✅ green |
+| 07-01-T2 | 01 | 1 | SITE-06 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern feed` | ✅ | ✅ green |
+| 07-02-T1 | 02 | 2 | SITE-05 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern "metadata\|structured-data"` | ✅ | ✅ green |
+| 07-03-T1 | 03 | 2 | SITE-05 | build | `pnpm --filter blakepetersen.io build` | N/A | ✅ green |
+| 07-03-T2 | 03 | 2 | SITE-05 | build | `pnpm --filter blakepetersen.io build` | N/A | ✅ green |
+| 07-04-T1 | 04 | 1 | CONT-05 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern search` | ✅ | ✅ green |
+| 07-04-T2 | 04 | 1 | CONT-05 | unit | `pnpm --filter blakepetersen.io test -- --testPathPattern "command-palette\|search"` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -52,12 +52,12 @@ created: 2026-03-07
 
 ## Wave 0 Requirements
 
-- [ ] `tests/sitemap.test.ts` — stubs for SITE-05 sitemap completeness (created in Plan 01)
-- [ ] `tests/feed.test.ts` — stubs for SITE-06 RSS feed generation (created in Plan 01)
-- [ ] `tests/metadata.test.ts` — stubs for SITE-05 metadata generation (created in Plan 02)
-- [ ] `tests/structured-data.test.ts` — stubs for SITE-05 JSON-LD output (created in Plan 02)
-- [ ] `tests/search.test.ts` — stubs for CONT-05 search wrapper (created in Plan 04)
-- [ ] `tests/command-palette.test.tsx` — stubs for CONT-05 palette rendering (created in Plan 04)
+- [x] `tests/sitemap.test.ts` — 6 tests for sitemap and metadata helpers (created in Plan 01)
+- [x] `tests/feed.test.ts` — 7 tests for RSS feed generation (created in Plan 01)
+- [x] `tests/metadata.test.ts` — unit tests for buildMetadata helper (created in Plan 02)
+- [x] `tests/structured-data.test.ts` — unit tests for JSON-LD output (created in Plan 02)
+- [x] `tests/search.test.ts` — tests for search fallback, shaping, and 20-result cap (created in Plan 04)
+- [x] `tests/command-palette.test.tsx` — render tests for CommandPalette and SearchTrigger (created in Plan 04)
 
 *Existing test infrastructure (Jest + ts-jest) covers framework needs.*
 
@@ -82,4 +82,4 @@ created: 2026-03-07
 - [x] Feedback latency < 15s
 - [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved (retroactive — all Wave 0 tests created during execution)
