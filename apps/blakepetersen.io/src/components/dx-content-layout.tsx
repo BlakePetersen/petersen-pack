@@ -17,6 +17,9 @@ type DxItem = {
   tags: string[]
   readingTime: number
   code: string
+  decisions: { choice: string; rationale: string }[]
+  related: string[]
+  updated_context?: string
 }
 
 export function DxContentLayout({ item }: { item: DxItem }) {
@@ -44,12 +47,31 @@ export function DxContentLayout({ item }: { item: DxItem }) {
 
         <p className="mt-2 font-mono text-xs text-terminal-muted">
           {item.readingTime} min read
+          {item.updated_context && (
+            <span>
+              {' \u00b7 '}Updated {new Date(item.updated_context).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+            </span>
+          )}
         </p>
       </header>
 
       <div className="prose-terminal">
         <MDXContent code={item.code} />
       </div>
+
+      {item.decisions.length > 0 && (
+        <section className="mt-8 border border-terminal-border p-4">
+          <h3 className="mb-4 font-mono text-xs text-terminal-info">{'// decisions'}</h3>
+          <div className="space-y-3">
+            {item.decisions.map((d, i) => (
+              <div key={i} className="border-l-2 border-terminal-info/30 pl-3">
+                <p className="font-mono text-sm text-terminal-text">{d.choice}</p>
+                <p className="mt-1 font-sans text-sm text-terminal-muted">{d.rationale}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {item.dependencies.length > 0 && (
         <div className="mt-8 md:hidden">
