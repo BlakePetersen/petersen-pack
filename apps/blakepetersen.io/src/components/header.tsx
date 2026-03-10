@@ -17,6 +17,12 @@ export function Header() {
           blake_petersen
         </Link>
         <nav className="flex items-center gap-3">
+          <Link href="/start-here" className="hidden font-mono text-xs text-terminal-muted transition-colors hover:text-terminal-text sm:block">
+            start_here
+          </Link>
+          <Link href="/about" className="hidden font-mono text-xs text-terminal-muted transition-colors hover:text-terminal-text sm:block">
+            about
+          </Link>
           <CommandPalette />
           <SidebarDrawer sections={sections} />
         </nav>
