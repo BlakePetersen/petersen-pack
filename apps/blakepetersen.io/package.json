@@ -27,6 +27,7 @@
     "lint": "eslint .",
     "start": "next start",
     "test": "jest --passWithNoTests",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
     "velite": "velite build"
   },
   "devDependencies": {
