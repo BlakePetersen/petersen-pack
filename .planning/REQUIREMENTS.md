@@ -54,8 +54,8 @@ Requirements for GitHub Integration milestone. Each maps to roadmap phases.
 
 ### CI & Foundation
 
-- [ ] **CI-01**: GitHub Actions CI pipeline runs build, typecheck, and lint on every PR
-- [ ] **CI-02**: Link checker validates all internal and external links on PR
+- [x] **CI-01**: GitHub Actions CI pipeline runs build, typecheck, and lint on every PR
+- [x] **CI-02**: Link checker validates all internal and external links on PR
 - [x] **CI-03**: GitHub issue templates provide structured feedback forms (bug report, feature request, content issue)
 - [ ] **CI-04**: Content pages display last modified date from git history
 - [ ] **CI-05**: Content pages display change frequency indicator from git commit count
@@ -160,8 +160,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | DSGN-08 | Phase 7.1 | Complete |
 | DSGN-09 | Phase 7.1 | Complete |
 | DSGN-10 | Phase 7.1 | Complete |
-| CI-01 | Phase 8 | Pending |
-| CI-02 | Phase 8 | Pending |
+| CI-01 | Phase 8 | Complete |
+| CI-02 | Phase 8 | Complete |
 | CI-03 | Phase 8 | Complete |
 | CI-04 | Phase 8 | Pending |
 | CI-05 | Phase 8 | Pending |
