@@ -48,9 +48,9 @@
 - [x] **DSGN-01**: Body text uses proportional font (Inter), monospace reserved for chrome, headings, and code
 - [x] **DSGN-02**: Color palette includes secondary accent (cyan) and annotation surface colors
 - [x] **DSGN-03**: Content schema supports author_note, decisions, related, and updated_context frontmatter fields
-- [ ] **DSGN-04**: Author note and decision rationale components render on content pages from frontmatter
-- [ ] **DSGN-05**: Apply action bar with copy-to-clipboard CLI command on DX content pages
-- [ ] **DSGN-06**: Related content links in right sidebar resolved from frontmatter
+- [x] **DSGN-04**: Author note and decision rationale components render on content pages from frontmatter
+- [x] **DSGN-05**: Apply action bar with copy-to-clipboard CLI command on DX content pages
+- [x] **DSGN-06**: Related content links in right sidebar resolved from frontmatter
 - [ ] **DSGN-07**: Homepage redesigned as DX workbench (hero, stack snapshot, enriched content grid, activity feed)
 - [x] **DSGN-08**: Sidebar has category color indicators and stronger active page state
 - [ ] **DSGN-09**: About page with bio and project philosophy
@@ -122,9 +122,9 @@
 | DSGN-01 | Phase 7.1 | Complete |
 | DSGN-02 | Phase 7.1 | Complete |
 | DSGN-03 | Phase 7.1 | Complete |
-| DSGN-04 | Phase 7.1 | Pending |
-| DSGN-05 | Phase 7.1 | Pending |
-| DSGN-06 | Phase 7.1 | Pending |
+| DSGN-04 | Phase 7.1 | Complete |
+| DSGN-05 | Phase 7.1 | Complete |
+| DSGN-06 | Phase 7.1 | Complete |
 | DSGN-07 | Phase 7.1 | Pending |
 | DSGN-08 | Phase 7.1 | Complete |
 | DSGN-09 | Phase 7.1 | Pending |
