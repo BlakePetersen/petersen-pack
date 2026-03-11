@@ -13,14 +13,12 @@ import '@testing-library/jest-dom'
 let capturedOnMetadata: ((data: { reactionCount: number }) => void) | undefined
 jest.mock('@/components/giscus-comments', () => ({
   GiscusComments: ({
-    term,
     onMetadata,
   }: {
-    term: string
     onMetadata?: (data: { reactionCount: number }) => void
   }) => {
     capturedOnMetadata = onMetadata
-    return <div data-testid="giscus-comments" data-term={term} />
+    return <div data-testid="giscus-comments" />
   },
 }))
 
@@ -124,7 +122,7 @@ describe('DiscussionWithReactions', () => {
     expect(screen.getByTestId('report-problem-link')).toBeInTheDocument()
   })
 
-  test('renders GiscusComments with correct term', () => {
+  test('renders GiscusComments', () => {
     render(
       <ReactionCountProvider>
         <DiscussionWithReactions
@@ -136,7 +134,6 @@ describe('DiscussionWithReactions', () => {
     )
     const giscus = screen.getByTestId('giscus-comments')
     expect(giscus).toBeInTheDocument()
-    expect(giscus).toHaveAttribute('data-term', 'skills/test')
   })
 
   test('when giscus postMessage fires, ReactionCount updates to the new value', () => {

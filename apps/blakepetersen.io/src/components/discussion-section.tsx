@@ -21,7 +21,7 @@ export function DiscussionSection({
         </h3>
         <ReportProblemLink title={title} pageUrl={pageUrl} />
       </div>
-      <GiscusComments term={slug} />
+      <GiscusComments />
     </section>
   )
 }

@@ -37,13 +37,13 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
   })
 
   test('renders a container div with class "giscus"', () => {
-    const { container } = render(<GiscusComments term="skills/test-skill" />)
+    const { container } = render(<GiscusComments />)
     const giscusDiv = container.querySelector('.giscus')
     expect(giscusDiv).toBeInTheDocument()
   })
 
   test('injects giscus script when IntersectionObserver triggers', () => {
-    const { container } = render(<GiscusComments term="skills/test-skill" />)
+    const { container } = render(<GiscusComments />)
     const giscusDiv = container.querySelector('.giscus')!
 
     // Simulate intersection -- wrapped in act() so React processes state update + effect
@@ -56,7 +56,7 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
   })
 
   test('script tag has src="https://giscus.app/client.js"', () => {
-    const { container } = render(<GiscusComments term="skills/test-skill" />)
+    const { container } = render(<GiscusComments />)
     act(() => {
       observerCallback([{ isIntersecting: true }])
     })
@@ -65,28 +65,18 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
     expect(script.getAttribute('src')).toBe('https://giscus.app/client.js')
   })
 
-  test('script tag has data-mapping="specific"', () => {
-    const { container } = render(<GiscusComments term="skills/test-skill" />)
+  test('script tag has data-mapping="pathname"', () => {
+    const { container } = render(<GiscusComments />)
     act(() => {
       observerCallback([{ isIntersecting: true }])
     })
 
     const script = container.querySelector('.giscus script')!
-    expect(script.getAttribute('data-mapping')).toBe('specific')
-  })
-
-  test('script tag has data-term matching the provided term prop', () => {
-    const { container } = render(<GiscusComments term="hooks/use-effect" />)
-    act(() => {
-      observerCallback([{ isIntersecting: true }])
-    })
-
-    const script = container.querySelector('.giscus script')!
-    expect(script.getAttribute('data-term')).toBe('hooks/use-effect')
+    expect(script.getAttribute('data-mapping')).toBe('pathname')
   })
 
   test('script tag has data-strict="1"', () => {
-    const { container } = render(<GiscusComments term="skills/test-skill" />)
+    const { container } = render(<GiscusComments />)
     act(() => {
       observerCallback([{ isIntersecting: true }])
     })
@@ -96,7 +86,7 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
   })
 
   test('script tag has data-emit-metadata="1"', () => {
-    const { container } = render(<GiscusComments term="skills/test-skill" />)
+    const { container } = render(<GiscusComments />)
     act(() => {
       observerCallback([{ isIntersecting: true }])
     })
@@ -106,7 +96,7 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
   })
 
   test('script tag has data-reactions-enabled="1"', () => {
-    const { container } = render(<GiscusComments term="skills/test-skill" />)
+    const { container } = render(<GiscusComments />)
     act(() => {
       observerCallback([{ isIntersecting: true }])
     })
@@ -115,20 +105,32 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
     expect(script.getAttribute('data-reactions-enabled')).toBe('1')
   })
 
-  test('script tag has data-theme containing "giscus-theme.css"', () => {
-    const { container } = render(<GiscusComments term="skills/test-skill" />)
+  test('script tag has data-theme fallback when NEXT_PUBLIC_SITE_URL is unset', () => {
+    const { container } = render(<GiscusComments />)
     act(() => {
       observerCallback([{ isIntersecting: true }])
     })
 
     const script = container.querySelector('.giscus script')!
-    expect(script.getAttribute('data-theme')).toContain('giscus-theme.css')
+    expect(script.getAttribute('data-theme')).toBe('dark_tritanopia')
+  })
+
+  test('script tag has data-theme with custom CSS when NEXT_PUBLIC_SITE_URL is set', () => {
+    process.env.NEXT_PUBLIC_SITE_URL = 'https://blakepetersen.io'
+    const { container } = render(<GiscusComments />)
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
+
+    const script = container.querySelector('.giscus script')!
+    expect(script.getAttribute('data-theme')).toBe('https://blakepetersen.io/giscus-theme.css')
+    delete process.env.NEXT_PUBLIC_SITE_URL
   })
 
   test('postMessage handler calls onMetadata with reactionCount', () => {
     const onMetadata = jest.fn()
     render(
-      <GiscusComments term="skills/test-skill" onMetadata={onMetadata} />,
+      <GiscusComments onMetadata={onMetadata} />,
     )
 
     // Dispatch a MessageEvent from giscus origin
@@ -151,7 +153,7 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
   test('postMessage handler uses reactionCount as fallback when THUMBS_UP not available', () => {
     const onMetadata = jest.fn()
     render(
-      <GiscusComments term="skills/test-skill" onMetadata={onMetadata} />,
+      <GiscusComments onMetadata={onMetadata} />,
     )
 
     const event = new MessageEvent('message', {

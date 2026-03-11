@@ -8,6 +8,7 @@ const isDev = process.argv.indexOf('dev') !== -1
 const config: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ['artax-ui'],
+  turbopack: {},
   webpack(config) {
     config.plugins.push(new VeliteWebpackPlugin())
     return config

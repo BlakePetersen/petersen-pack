@@ -27,7 +27,6 @@ export function DiscussionWithReactions({
         <ReportProblemLink title={title} pageUrl={pageUrl} />
       </div>
       <GiscusComments
-        term={slug}
         onMetadata={(data) => setCount(data.reactionCount)}
       />
     </section>

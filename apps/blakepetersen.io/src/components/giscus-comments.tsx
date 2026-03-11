@@ -6,10 +6,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 export function GiscusComments({
-  term,
   onMetadata,
 }: {
-  term: string
   onMetadata?: (data: { reactionCount: number }) => void
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -38,28 +36,25 @@ export function GiscusComments({
     const script = document.createElement('script')
     script.src = 'https://giscus.app/client.js'
     script.setAttribute('data-repo', 'BlakePetersen/petersen-pack')
-    // TODO: Replace with actual values from giscus.app configurator after GitHub setup
-    script.setAttribute('data-repo-id', 'REPLACE_WITH_REPO_ID')
+    script.setAttribute('data-repo-id', 'MDEwOlJlcG9zaXRvcnkxMzg3OTA1NTE=')
     script.setAttribute('data-category', 'Comments')
-    script.setAttribute('data-category-id', 'REPLACE_WITH_CATEGORY_ID')
-    script.setAttribute('data-mapping', 'specific')
-    script.setAttribute('data-term', term)
+    script.setAttribute('data-category-id', 'DIC_kwDOCEXGl84C4IeU')
+    script.setAttribute('data-mapping', 'pathname')
     script.setAttribute('data-strict', '1')
     script.setAttribute('data-reactions-enabled', '1')
     script.setAttribute('data-emit-metadata', '1')
     script.setAttribute('data-input-position', 'bottom')
     script.setAttribute('data-lang', 'en')
-    // Custom theme hosted at the site's public URL.
-    // During local dev the giscus iframe can't reach localhost, so the theme won't load.
-    script.setAttribute(
-      'data-theme',
-      'https://blakepetersen.io/giscus-theme.css',
-    )
+    const theme =
+      process.env.NEXT_PUBLIC_SITE_URL
+        ? `${process.env.NEXT_PUBLIC_SITE_URL}/giscus-theme.css`
+        : 'dark_tritanopia'
+    script.setAttribute('data-theme', theme)
     script.crossOrigin = 'anonymous'
     script.async = true
 
     containerRef.current.appendChild(script)
-  }, [loaded, term])
+  }, [loaded])
 
   useEffect(() => {
     if (!onMetadata) return
