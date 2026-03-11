@@ -6,8 +6,10 @@
 import { useEffect, useRef, useState } from 'react'
 
 export function GiscusComments({
+  term,
   onMetadata,
 }: {
+  term: string
   onMetadata?: (data: { reactionCount: number }) => void
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -39,7 +41,8 @@ export function GiscusComments({
     script.setAttribute('data-repo-id', 'MDEwOlJlcG9zaXRvcnkxMzg3OTA1NTE=')
     script.setAttribute('data-category', 'Comments')
     script.setAttribute('data-category-id', 'DIC_kwDOCEXGl84C4IeU')
-    script.setAttribute('data-mapping', 'pathname')
+    script.setAttribute('data-mapping', 'specific')
+    script.setAttribute('data-term', term)
     script.setAttribute('data-strict', '1')
     script.setAttribute('data-reactions-enabled', '1')
     script.setAttribute('data-emit-metadata', '1')
@@ -54,7 +57,7 @@ export function GiscusComments({
     script.async = true
 
     containerRef.current.appendChild(script)
-  }, [loaded])
+  }, [loaded, term])
 
   useEffect(() => {
     if (!onMetadata) return
