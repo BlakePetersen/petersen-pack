@@ -1,0 +1,56 @@
+/* ABOUTME: Custom dark theme for the giscus comment iframe. */
+/* ABOUTME: Maps terminal aesthetic palette from theme.css to giscus CSS custom properties. */
+
+main {
+  --color-canvas-default: #0A0A0A;
+  --color-canvas-subtle: #0F0F0F;
+  --color-border-default: #2a2a2a;
+  --color-border-muted: #2a2a2a;
+  --color-neutral-muted: rgba(110, 118, 129, 0.2);
+  --color-accent-fg: #F59E0B;
+  --color-accent-emphasis: #F59E0B;
+  --color-attention-subtle: rgba(245, 158, 11, 0.06);
+  --color-fg-default: #FAFAFA;
+  --color-fg-muted: #6B7280;
+  --color-fg-subtle: #6B7280;
+  --color-btn-text: #FAFAFA;
+  --color-btn-bg: #0F0F0F;
+  --color-btn-border: #2a2a2a;
+  --color-btn-hover-bg: #1F1F1F;
+  --color-btn-hover-border: #2a2a2a;
+  --color-btn-primary-text: #0A0A0A;
+  --color-btn-primary-bg: #F59E0B;
+  --color-btn-primary-border: #F59E0B;
+  --color-btn-primary-hover-bg: #D97706;
+  --color-btn-primary-hover-border: #D97706;
+  --color-social-reaction-bg-hover: rgba(245, 158, 11, 0.1);
+  --color-social-reaction-bg-reacted-hover: rgba(245, 158, 11, 0.15);
+}
+
+main .gsc-comment-box {
+  border-color: #2a2a2a;
+}
+
+main .gsc-comment-box textarea {
+  background-color: #0F0F0F;
+  color: #FAFAFA;
+  border-color: #2a2a2a;
+}
+
+main .gsc-header .gsc-left-header em {
+  color: #6B7280;
+}
+
+main .gsc-reactions-count {
+  color: #6B7280;
+}
+
+/* Zero border-radius to match terminal aesthetic */
+main .gsc-comment,
+main .gsc-comment-box,
+main .gsc-reply,
+main .gsc-emoji-button,
+main .gsc-comment-box textarea,
+main .gsc-social-reaction-summary-item {
+  border-radius: 0;
+}
