@@ -6,7 +6,7 @@
 // ABOUTME: Validates COMM-01/02: lazy-load via IntersectionObserver, script attributes, and postMessage metadata.
 
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 // Mock IntersectionObserver
@@ -46,8 +46,10 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
     const { container } = render(<GiscusComments term="skills/test-skill" />)
     const giscusDiv = container.querySelector('.giscus')!
 
-    // Simulate intersection
-    observerCallback([{ isIntersecting: true }])
+    // Simulate intersection -- wrapped in act() so React processes state update + effect
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
 
     const script = giscusDiv.querySelector('script')
     expect(script).not.toBeNull()
@@ -55,7 +57,9 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
 
   test('script tag has src="https://giscus.app/client.js"', () => {
     const { container } = render(<GiscusComments term="skills/test-skill" />)
-    observerCallback([{ isIntersecting: true }])
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
 
     const script = container.querySelector('.giscus script')!
     expect(script.getAttribute('src')).toBe('https://giscus.app/client.js')
@@ -63,7 +67,9 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
 
   test('script tag has data-mapping="specific"', () => {
     const { container } = render(<GiscusComments term="skills/test-skill" />)
-    observerCallback([{ isIntersecting: true }])
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
 
     const script = container.querySelector('.giscus script')!
     expect(script.getAttribute('data-mapping')).toBe('specific')
@@ -71,7 +77,9 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
 
   test('script tag has data-term matching the provided term prop', () => {
     const { container } = render(<GiscusComments term="hooks/use-effect" />)
-    observerCallback([{ isIntersecting: true }])
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
 
     const script = container.querySelector('.giscus script')!
     expect(script.getAttribute('data-term')).toBe('hooks/use-effect')
@@ -79,7 +87,9 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
 
   test('script tag has data-strict="1"', () => {
     const { container } = render(<GiscusComments term="skills/test-skill" />)
-    observerCallback([{ isIntersecting: true }])
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
 
     const script = container.querySelector('.giscus script')!
     expect(script.getAttribute('data-strict')).toBe('1')
@@ -87,7 +97,9 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
 
   test('script tag has data-emit-metadata="1"', () => {
     const { container } = render(<GiscusComments term="skills/test-skill" />)
-    observerCallback([{ isIntersecting: true }])
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
 
     const script = container.querySelector('.giscus script')!
     expect(script.getAttribute('data-emit-metadata')).toBe('1')
@@ -95,7 +107,9 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
 
   test('script tag has data-reactions-enabled="1"', () => {
     const { container } = render(<GiscusComments term="skills/test-skill" />)
-    observerCallback([{ isIntersecting: true }])
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
 
     const script = container.querySelector('.giscus script')!
     expect(script.getAttribute('data-reactions-enabled')).toBe('1')
@@ -103,7 +117,9 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
 
   test('script tag has data-theme containing "giscus-theme.css"', () => {
     const { container } = render(<GiscusComments term="skills/test-skill" />)
-    observerCallback([{ isIntersecting: true }])
+    act(() => {
+      observerCallback([{ isIntersecting: true }])
+    })
 
     const script = container.querySelector('.giscus script')!
     expect(script.getAttribute('data-theme')).toContain('giscus-theme.css')
