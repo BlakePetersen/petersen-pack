@@ -66,7 +66,7 @@ Requirements for GitHub Integration milestone. Each maps to roadmap phases.
 - [x] **COMM-02**: Giscus uses stable content ID mapping (not pathname) to survive URL changes
 - [x] **COMM-03**: Giscus theme matches terminal aesthetic (dark mode)
 - [x] **COMM-04**: "Report a problem" link on content pages pre-fills GitHub issue with page title, URL, and content metadata
-- [ ] **COMM-05**: Content pages display reaction counts from giscus as content voting signal
+- [x] **COMM-05**: Content pages display reaction counts from giscus as content voting signal
 
 ### GitHub Data Pages
 
@@ -169,7 +169,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | COMM-02 | Phase 9 | Complete |
 | COMM-03 | Phase 9 | Complete |
 | COMM-04 | Phase 9 | Complete |
-| COMM-05 | Phase 9 | Pending |
+| COMM-05 | Phase 9 | Complete |
 | DATA-01 | Phase 10 | Pending |
 | DATA-02 | Phase 10 | Pending |
 | DATA-03 | Phase 10 | Pending |
