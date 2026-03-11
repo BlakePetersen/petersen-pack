@@ -9,6 +9,8 @@ import { PageNavigation } from './page-navigation'
 import { getLocalGraphSvg } from '../lib/content'
 import { ApplyActionBar } from './apply-action-bar'
 import { ContentFreshness } from './content-freshness'
+import { ReactionCountProvider, ReactionCount } from './reaction-count'
+import { DiscussionWithReactions } from './content-with-discussion'
 
 type DxItem = {
   title: string
@@ -28,6 +30,7 @@ export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; 
   const graphSvg = getLocalGraphSvg(item.slug)
 
   return (
+    <ReactionCountProvider>
     <article className="mx-auto max-w-[80ch] px-4 py-8">
       <Breadcrumbs pathname={`/${item.slug}`} />
       <header className="mb-8">
@@ -51,6 +54,8 @@ export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; 
           {item.readingTime} min read
           {' \u00b7 '}
           <ContentFreshness slug={item.slug} />
+          {' · '}
+          <ReactionCount />
         </p>
       </header>
 
@@ -95,10 +100,17 @@ export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; 
         </div>
       )}
 
+      <DiscussionWithReactions
+        slug={item.slug}
+        title={item.title}
+        pageUrl={`https://blakepetersen.io/${item.slug}`}
+      />
+
       <PageNavigation
         collection={item.slug.split('/')[0]}
         currentHref={`/${item.slug}`}
       />
     </article>
+    </ReactionCountProvider>
   )
 }

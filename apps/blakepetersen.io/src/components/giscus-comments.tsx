@@ -64,6 +64,7 @@ export function GiscusComments({
   useEffect(() => {
     if (!onMetadata) return
 
+    const callback = onMetadata
     function handleMessage(event: MessageEvent) {
       if (event.origin !== 'https://giscus.app') return
       const discussion = event.data?.giscus?.discussion
@@ -72,7 +73,7 @@ export function GiscusComments({
       // Use THUMBS_UP count if available, fall back to total reactionCount
       const thumbsUp = discussion.reactions?.THUMBS_UP?.count
       const count = thumbsUp ?? discussion.reactionCount ?? 0
-      onMetadata({ reactionCount: count })
+      callback({ reactionCount: count })
     }
 
     window.addEventListener('message', handleMessage)
