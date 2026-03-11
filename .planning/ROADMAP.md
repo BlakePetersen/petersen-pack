@@ -31,7 +31,7 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full details.
 
 **Milestone Goal:** Make GitHub the community backbone — discussions, issues, automation, project visibility, and CI — so readers can engage, contribute, and track progress without leaving the GitHub ecosystem.
 
-- [ ] **Phase 8: CI & Foundation** - GitHub Actions pipeline, issue templates, and git-based version indicators
+- [x] **Phase 8: CI & Foundation** - GitHub Actions pipeline, issue templates, and git-based version indicators — completed 2026-03-10
 - [ ] **Phase 9: Community Engagement** - Giscus comments, content voting, and report-a-problem links
 - [ ] **Phase 10: GitHub Data Pages** - Changelog, contributors, and roadmap pages from GitHub API
 - [ ] **Phase 11: AI Automation** - Claude-powered PR review and issue triage with security guardrails
@@ -50,9 +50,9 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full details.
 **Plans:** 3 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — CI pipeline with typecheck, link checking, and status badge
-- [ ] 08-02-PLAN.md — GitHub issue form templates (bug, feature, content)
-- [ ] 08-03-PLAN.md — Git-derived content freshness indicators and sitemap dates
+- [x] 08-01-PLAN.md — CI pipeline with typecheck, link checking, and status badge
+- [x] 08-02-PLAN.md — GitHub issue form templates (bug, feature, content)
+- [x] 08-03-PLAN.md — Git-derived content freshness indicators and sitemap dates
 
 ### Phase 9: Community Engagement
 **Goal**: Readers can discuss content, signal what they find valuable, and report problems without leaving the page
@@ -64,7 +64,11 @@ Plans:
   3. The comment widget matches the terminal dark aesthetic (not a jarring light iframe)
   4. Every content page has a "Report a problem" link that opens a pre-filled GitHub issue with the page title, URL, and content metadata
   5. Every content page displays reaction counts from its GitHub Discussion as a voting/quality signal
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — Giscus comment widget, custom dark theme, and report-a-problem link components
+- [ ] 09-02-PLAN.md — Layout integration with reaction counts and discussion sections on all content pages
 
 ### Phase 10: GitHub Data Pages
 **Goal**: Readers can see project history, who contributes, and where the project is headed -- all from GitHub data rendered in the site's terminal aesthetic
@@ -100,7 +104,7 @@ Plans:
 | 6. Site Navigation | v1.0 | 2/2 | Complete | 2026-03-08 |
 | 7. Site Discovery | v1.0 | 4/4 | Complete | 2026-03-08 |
 | 7.1 Design Polish | v1.0 | 3/3 | Complete | 2026-03-09 |
-| 8. CI & Foundation | v1.1 | 0/3 | Planning | - |
-| 9. Community Engagement | v1.1 | 0/? | Not started | - |
+| 8. CI & Foundation | v1.1 | 3/3 | Complete | 2026-03-10 |
+| 9. Community Engagement | v1.1 | 0/2 | Not started | - |
 | 10. GitHub Data Pages | v1.1 | 0/? | Not started | - |
 | 11. AI Automation | v1.1 | 0/? | Not started | - |
