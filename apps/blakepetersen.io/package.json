@@ -5,6 +5,7 @@
   "author": "Blake Petersen",
   "license": "MIT",
   "dependencies": {
+    "@octokit/rest": "^22.0.1",
     "@shikijs/rehype": "^4.0.1",
     "@shikijs/transformers": "^4.0.1",
     "@tailwindcss/postcss": "^4.2.1",

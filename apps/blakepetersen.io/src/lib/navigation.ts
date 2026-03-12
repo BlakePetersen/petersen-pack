@@ -62,6 +62,15 @@ export function buildNavSections(): NavSection[] {
       href: '/posts',
       items: collectionToItems('posts', getPosts()),
     },
+    {
+      label: 'Project',
+      href: '/changelog',
+      items: [
+        { title: 'Changelog', slug: 'changelog', href: '/changelog' },
+        { title: 'Contributors', slug: 'contributors', href: '/contributors' },
+        { title: 'Roadmap', slug: 'roadmap', href: '/roadmap' },
+      ],
+    },
   ]
 }
 
