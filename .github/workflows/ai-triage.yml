@@ -1,0 +1,36 @@
+# ABOUTME: GitHub Actions workflow for Claude-powered issue triage.
+# ABOUTME: Auto-labels, auto-assigns, and posts TL;DR summary on new issues.
+
+name: AI Issue Triage
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  triage:
+    if: "!contains(github.event.issue.labels.*.name, 'skip-ai')"
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Triage issue
+        run: npx tsx .github/scripts/ai-triage.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
