@@ -79,7 +79,11 @@ Plans:
   2. `/contributors` page displays contributor avatars and contribution stats from GitHub API
   3. `/roadmap` page links to the public GitHub Projects board with styled presentation matching the site
   4. All three pages use the terminal aesthetic consistent with the rest of the site (dark background, monospace chrome, amber accents)
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 10-01-PLAN.md — GitHub API client, navigation extension, and changelog page with vertical timeline
+- [ ] 10-02-PLAN.md — Contributors page with avatar grid and roadmap page with milestone summary
 
 ### Phase 11: AI Automation
 **Goal**: Incoming PRs get automated code review and new issues get auto-triaged, with security guardrails preventing abuse and cost spirals
@@ -106,5 +110,5 @@ Plans:
 | 7.1 Design Polish | v1.0 | 3/3 | Complete | 2026-03-09 |
 | 8. CI & Foundation | v1.1 | 3/3 | Complete | 2026-03-10 |
 | 9. Community Engagement | v1.1 | 0/2 | Not started | - |
-| 10. GitHub Data Pages | v1.1 | 0/? | Not started | - |
+| 10. GitHub Data Pages | v1.1 | 0/2 | Not started | - |
 | 11. AI Automation | v1.1 | 0/? | Not started | - |
