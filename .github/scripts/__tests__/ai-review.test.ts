@@ -5,7 +5,7 @@ import {
   isLockfileOnlyPR,
   buildReviewPrompt,
   parseReviewResponse,
-} from '../ai-review';
+} from '../lib/review-helpers';
 
 describe('isLockfileOnlyPR', () => {
   it('returns true when all files are lockfiles', () => {

@@ -7,6 +7,10 @@ const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: ['<rootDir>/__tests__'],
+  moduleNameMapper: {
+    '^@actions/core$': '<rootDir>/__mocks__/@actions/core',
+    '^@actions/github$': '<rootDir>/__mocks__/@actions/github',
+  },
 };
 
 export default config;
