@@ -32,7 +32,7 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full details.
 **Milestone Goal:** Make GitHub the community backbone — discussions, issues, automation, project visibility, and CI — so readers can engage, contribute, and track progress without leaving the GitHub ecosystem.
 
 - [x] **Phase 8: CI & Foundation** - GitHub Actions pipeline, issue templates, and git-based version indicators — completed 2026-03-10
-- [ ] **Phase 9: Community Engagement** - Giscus comments, content voting, and report-a-problem links
+- [x] **Phase 9: Community Engagement** - Giscus comments, content voting, and report-a-problem links — completed 2026-03-11
 - [ ] **Phase 10: GitHub Data Pages** - Changelog, contributors, and roadmap pages from GitHub API
 - [ ] **Phase 11: AI Automation** - Claude-powered PR review and issue triage with security guardrails
 
@@ -67,8 +67,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Giscus comment widget, custom dark theme, and report-a-problem link components
-- [ ] 09-02-PLAN.md — Layout integration with reaction counts and discussion sections on all content pages
+- [x] 09-01-PLAN.md — Giscus comment widget, custom dark theme, and report-a-problem link components
+- [x] 09-02-PLAN.md — Layout integration with reaction counts and discussion sections on all content pages
 
 ### Phase 10: GitHub Data Pages
 **Goal**: Readers can see project history, who contributes, and where the project is headed -- all from GitHub data rendered in the site's terminal aesthetic
@@ -82,7 +82,7 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 10-01-PLAN.md — GitHub API client, navigation extension, and changelog page with vertical timeline
+- [x] 10-01-PLAN.md — GitHub API client, navigation extension, and changelog page with vertical timeline
 - [ ] 10-02-PLAN.md — Contributors page with avatar grid and roadmap page with milestone summary
 
 ### Phase 11: AI Automation
@@ -109,6 +109,6 @@ Plans:
 | 7. Site Discovery | v1.0 | 4/4 | Complete | 2026-03-08 |
 | 7.1 Design Polish | v1.0 | 3/3 | Complete | 2026-03-09 |
 | 8. CI & Foundation | v1.1 | 3/3 | Complete | 2026-03-10 |
-| 9. Community Engagement | v1.1 | 0/2 | Not started | - |
-| 10. GitHub Data Pages | v1.1 | 0/2 | Not started | - |
+| 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
+| 10. GitHub Data Pages | v1.1 | 1/2 | In progress | - |
 | 11. AI Automation | v1.1 | 0/? | Not started | - |

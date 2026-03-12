@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: GitHub Integration
-status: unknown
-stopped_at: Completed 09-02-PLAN.md
-last_updated: "2026-03-11T05:01:18.111Z"
-last_activity: 2026-03-11 — Completed layout integration for community engagement (09-02)
+status: in-progress
+stopped_at: Completed 10-01-PLAN.md
+last_updated: "2026-03-12T20:42:22Z"
+last_activity: 2026-03-12 — Completed GitHub API client and changelog page (10-01)
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_plans: 8
+  completed_plans: 6
+  percent: 75
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-10)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 9 - Community Engagement
+**Current focus:** Phase 10 - GitHub Data Pages
 
 ## Current Position
 
-Phase: 9 (Community Engagement) — second of 4 in v1.1 -- COMPLETE
-Plan: 2 of 2 complete
-Next: Phase 10 (GitHub Integration)
-Last activity: 2026-03-11 — Completed layout integration for community engagement (09-02)
+Phase: 10 (GitHub Data Pages) — third of 4 in v1.1
+Plan: 1 of 2 complete
+Next: 10-02-PLAN.md (Contributors and Roadmap pages)
+Last activity: 2026-03-12 — Completed GitHub API client and changelog page (10-01)
 
-Progress: [██████████] 100%
+Progress: [███████░░░] 75%
 
 ## Performance Metrics
 
@@ -65,6 +65,9 @@ Recent decisions affecting current work:
 - [Phase 09]: React Context lifts reaction count from giscus iframe at page bottom to header metadata at top
 - [Phase 09]: Pathname mapping for giscus discussions (simpler than specific/term mapping)
 - [Phase 09]: Env var fallback for giscus theme URL (dark_tritanopia when NEXT_PUBLIC_SITE_URL unset)
+- [Phase 10]: Preformatted text for release body (avoids remark dependency for markdown rendering)
+- [Phase 10]: Native details/summary for expand/collapse (zero JS, accessible)
+- [Phase 10]: Graceful degradation when GITHUB_TOKEN missing (warns, returns empty arrays)
 
 ### Pending Todos
 
@@ -78,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T04:08:17.980Z
-Stopped at: Completed 09-02-PLAN.md
-Resume file: None
+Last session: 2026-03-12T20:42:22Z
+Stopped at: Completed 10-01-PLAN.md
+Resume file: .planning/phases/10-github-data-pages/10-02-PLAN.md

@@ -70,10 +70,10 @@ Requirements for GitHub Integration milestone. Each maps to roadmap phases.
 
 ### GitHub Data Pages
 
-- [ ] **DATA-01**: `/changelog` page displays entries auto-generated from GitHub Releases
+- [x] **DATA-01**: `/changelog` page displays entries auto-generated from GitHub Releases
 - [ ] **DATA-02**: `/contributors` page displays contributor avatars and stats from GitHub API
 - [ ] **DATA-03**: `/roadmap` page links to public GitHub Projects board with styled presentation
-- [ ] **DATA-04**: GitHub data pages use terminal aesthetic consistent with existing site design
+- [x] **DATA-04**: GitHub data pages use terminal aesthetic consistent with existing site design
 
 ### AI Automation
 
@@ -170,10 +170,10 @@ Deferred to future release. Tracked but not in current roadmap.
 | COMM-03 | Phase 9 | Complete |
 | COMM-04 | Phase 9 | Complete |
 | COMM-05 | Phase 9 | Complete |
-| DATA-01 | Phase 10 | Pending |
+| DATA-01 | Phase 10 | Complete |
 | DATA-02 | Phase 10 | Pending |
 | DATA-03 | Phase 10 | Pending |
-| DATA-04 | Phase 10 | Pending |
+| DATA-04 | Phase 10 | Complete |
 | AI-01 | Phase 11 | Pending |
 | AI-02 | Phase 11 | Pending |
 | AI-03 | Phase 11 | Pending |
