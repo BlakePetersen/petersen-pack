@@ -33,7 +33,7 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full details.
 
 - [x] **Phase 8: CI & Foundation** - GitHub Actions pipeline, issue templates, and git-based version indicators — completed 2026-03-10
 - [x] **Phase 9: Community Engagement** - Giscus comments, content voting, and report-a-problem links — completed 2026-03-11
-- [ ] **Phase 10: GitHub Data Pages** - Changelog, contributors, and roadmap pages from GitHub API
+- [x] **Phase 10: GitHub Data Pages** - Changelog, contributors, and roadmap pages from GitHub API (completed 2026-03-12)
 - [ ] **Phase 11: AI Automation** - Claude-powered PR review and issue triage with security guardrails
 
 ## Phase Details
@@ -79,7 +79,7 @@ Plans:
   2. `/contributors` page displays contributor avatars and contribution stats from GitHub API
   3. `/roadmap` page links to the public GitHub Projects board with styled presentation matching the site
   4. All three pages use the terminal aesthetic consistent with the rest of the site (dark background, monospace chrome, amber accents)
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 10-01-PLAN.md — GitHub API client, navigation extension, and changelog page with vertical timeline
@@ -110,5 +110,5 @@ Plans:
 | 7.1 Design Polish | v1.0 | 3/3 | Complete | 2026-03-09 |
 | 8. CI & Foundation | v1.1 | 3/3 | Complete | 2026-03-10 |
 | 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
-| 10. GitHub Data Pages | v1.1 | 1/2 | In progress | - |
+| 10. GitHub Data Pages | 2/2 | Complete   | 2026-03-12 | - |
 | 11. AI Automation | v1.1 | 0/? | Not started | - |
