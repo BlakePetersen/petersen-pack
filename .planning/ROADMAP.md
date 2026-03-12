@@ -83,7 +83,7 @@ Plans:
 
 Plans:
 - [x] 10-01-PLAN.md — GitHub API client, navigation extension, and changelog page with vertical timeline
-- [ ] 10-02-PLAN.md — Contributors page with avatar grid and roadmap page with milestone summary
+- [x] 10-02-PLAN.md — Contributors page with avatar grid and roadmap page with milestone summary
 
 ### Phase 11: AI Automation
 **Goal**: Incoming PRs get automated code review and new issues get auto-triaged, with security guardrails preventing abuse and cost spirals
@@ -94,7 +94,11 @@ Plans:
   2. New issues are automatically labeled and categorized by a Claude-powered triage bot
   3. AI workflows use `pull_request` trigger (not `pull_request_target`) and require approval before running on fork PRs
   4. AI workflows have spending limits and label gates configured to prevent unbounded Anthropic API costs
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [x] 11-01-PLAN.md — Shared library, PR review script, and ai-review workflow
+- [ ] 11-02-PLAN.md — Issue triage script, ai-triage workflow, and human review checkpoint
 
 ## Progress
 
@@ -110,5 +114,5 @@ Plans:
 | 7.1 Design Polish | v1.0 | 3/3 | Complete | 2026-03-09 |
 | 8. CI & Foundation | v1.1 | 3/3 | Complete | 2026-03-10 |
 | 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
-| 10. GitHub Data Pages | 2/2 | Complete   | 2026-03-12 | - |
-| 11. AI Automation | v1.1 | 0/? | Not started | - |
+| 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
+| 11. AI Automation | v1.1 | 1/2 | In progress | - |

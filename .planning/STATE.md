@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: GitHub Integration
 status: in-progress
-stopped_at: Completed 10-02-PLAN.md
-last_updated: "2026-03-12T20:49:45.757Z"
-last_activity: 2026-03-12 — Completed contributors and roadmap pages (10-02)
+stopped_at: Completed 11-01-PLAN.md
+last_updated: "2026-03-12T21:57:21Z"
+last_activity: 2026-03-12 — Completed AI PR review workflow (11-01)
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 8
+  total_plans: 9
   completed_plans: 8
-  percent: 100
+  percent: 89
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-10)
 
 ## Current Position
 
-Phase: 10 (GitHub Data Pages) — COMPLETE (third of 4 in v1.1)
-Plan: 2 of 2 complete
-Next: 11-PLAN.md (AI Workflows)
-Last activity: 2026-03-12 — Completed contributors and roadmap pages (10-02)
+Phase: 11 (AI Automation) — IN PROGRESS (fourth of 4 in v1.1)
+Plan: 1 of 2 complete
+Next: 11-02-PLAN.md (Issue Triage)
+Last activity: 2026-03-12 — Completed AI PR review workflow (11-01)
 
-Progress: [██████████] 100%
+Progress: [████████░░] 89%
 
 ## Performance Metrics
 
@@ -70,6 +70,8 @@ Recent decisions affecting current work:
 - [Phase 10]: Graceful degradation when GITHUB_TOKEN missing (warns, returns empty arrays)
 - [Phase 10]: ContributorCard uses type guard on union prop for full stats vs basic contributor data
 - [Phase 10]: Roadmap milestones grouped by major version via regex tag parsing
+- [Phase 11]: Extracted pure helpers into review-helpers.ts for testability (ESM-only @actions/* packages break ts-jest CJS)
+- [Phase 11]: Jest manual mocks for @actions/core and @actions/github in .github/scripts/__mocks__/
 
 ### Pending Todos
 
@@ -83,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T20:49:45.754Z
-Stopped at: Completed 10-02-PLAN.md
-Resume file: None
+Last session: 2026-03-12T21:57:21Z
+Stopped at: Completed 11-01-PLAN.md
+Resume file: .planning/phases/11-ai-automation/11-01-SUMMARY.md

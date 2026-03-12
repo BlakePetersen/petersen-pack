@@ -77,11 +77,11 @@ Requirements for GitHub Integration milestone. Each maps to roadmap phases.
 
 ### AI Automation
 
-- [ ] **AI-01**: Claude-powered PR review runs on every non-bot PR via GitHub Actions
+- [x] **AI-01**: Claude-powered PR review runs on every non-bot PR via GitHub Actions
 - [ ] **AI-02**: Claude-powered issue triage auto-labels and categorizes new issues
-- [ ] **AI-03**: AI workflows use `pull_request` trigger (not `pull_request_target`) for security
-- [ ] **AI-04**: AI workflows have spending limits and label gates to prevent cost spiral
-- [ ] **AI-05**: AI workflows require approval for fork PRs before running
+- [x] **AI-03**: AI workflows use `pull_request` trigger (not `pull_request_target`) for security
+- [x] **AI-04**: AI workflows have spending limits and label gates to prevent cost spiral
+- [x] **AI-05**: AI workflows require approval for fork PRs before running
 
 ## v1.2 Requirements
 
@@ -174,11 +174,11 @@ Deferred to future release. Tracked but not in current roadmap.
 | DATA-02 | Phase 10 | Complete |
 | DATA-03 | Phase 10 | Complete |
 | DATA-04 | Phase 10 | Complete |
-| AI-01 | Phase 11 | Pending |
+| AI-01 | Phase 11 | Complete |
 | AI-02 | Phase 11 | Pending |
-| AI-03 | Phase 11 | Pending |
-| AI-04 | Phase 11 | Pending |
-| AI-05 | Phase 11 | Pending |
+| AI-03 | Phase 11 | Complete |
+| AI-04 | Phase 11 | Complete |
+| AI-05 | Phase 11 | Complete |
 
 **Coverage:**
 - v1.0 requirements: 31 total (all complete)
