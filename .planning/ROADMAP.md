@@ -98,7 +98,7 @@ Plans:
 
 Plans:
 - [x] 11-01-PLAN.md — Shared library, PR review script, and ai-review workflow
-- [ ] 11-02-PLAN.md — Issue triage script, ai-triage workflow, and human review checkpoint
+- [x] 11-02-PLAN.md — Issue triage script, ai-triage workflow, and human review checkpoint
 
 ## Progress
 
@@ -115,4 +115,4 @@ Plans:
 | 8. CI & Foundation | v1.1 | 3/3 | Complete | 2026-03-10 |
 | 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
 | 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
-| 11. AI Automation | 2/2 | Complete   | 2026-03-13 | - |
+| 11. AI Automation | v1.1 | 2/2 | Complete | 2026-03-13 |

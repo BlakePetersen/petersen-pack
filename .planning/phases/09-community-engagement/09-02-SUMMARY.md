@@ -33,7 +33,7 @@ key-files:
 
 key-decisions:
   - "React Context lifts reaction count from giscus iframe at page bottom to header metadata at top"
-  - "Switched from specific mapping to pathname mapping for giscus discussions"
+  - "Uses specific mapping with slug-based data-term for stable giscus discussion binding"
   - "Environment variable fallback for giscus theme URL (dark_tritanopia when NEXT_PUBLIC_SITE_URL unset)"
 
 patterns-established:
@@ -62,7 +62,7 @@ completed: 2026-03-11
 - React Context (ReactionCountProvider/useReactionCount) lifts reaction count from giscus iframe to header
 - DiscussionWithReactions client wrapper wires giscus onMetadata callback to context
 - Both DxContentLayout and PostLayout render discussion sections before PageNavigation
-- Switched giscus from specific/term mapping to pathname mapping with real repo/category IDs
+- Giscus uses specific mapping with slug-based data-term for stable discussion binding across URL changes
 - Environment-aware giscus theme (custom CSS in production, dark_tritanopia fallback in dev)
 
 ## Task Commits
@@ -80,14 +80,14 @@ Each task was committed atomically:
 - `tests/reaction-count.test.tsx` - Tests for ReactionCount rendering and DiscussionWithReactions wiring
 - `dx-content-layout.tsx` - Added ReactionCountProvider, ReactionCount in metadata, DiscussionWithReactions before nav
 - `post-layout.tsx` - Same integration as DxContentLayout for blog posts
-- `giscus-comments.tsx` - Removed term prop, switched to pathname mapping, added real repo IDs, env-based theme
-- `discussion-section.tsx` - Removed term prop pass-through
-- `tests/giscus-comments.test.tsx` - Updated for pathname mapping and env-based theme tests
+- `giscus-comments.tsx` - Uses specific mapping with slug-based data-term, real repo IDs, env-based theme
+- `discussion-section.tsx` - Passes slug-based term to giscus for stable discussion binding
+- `tests/giscus-comments.test.tsx` - Tests for specific mapping with slug-based term and env-based theme
 - `next.config.ts` - Added turbopack config for Next.js 16 dev server compatibility
 
 ## Decisions Made
 - React Context chosen over prop drilling for reaction count state (spans header to page bottom)
-- Pathname mapping preferred over specific/term mapping for giscus (simpler, no slug wiring needed)
+- Specific mapping with slug-based data-term preferred for giscus (survives URL restructuring per COMM-02)
 - Environment variable fallback ensures giscus theme works in both local dev and production
 
 ## Deviations from Plan
