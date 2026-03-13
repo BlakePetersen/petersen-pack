@@ -34,7 +34,7 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full details.
 - [x] **Phase 8: CI & Foundation** - GitHub Actions pipeline, issue templates, and git-based version indicators — completed 2026-03-10
 - [x] **Phase 9: Community Engagement** - Giscus comments, content voting, and report-a-problem links — completed 2026-03-11
 - [x] **Phase 10: GitHub Data Pages** - Changelog, contributors, and roadmap pages from GitHub API (completed 2026-03-12)
-- [ ] **Phase 11: AI Automation** - Claude-powered PR review and issue triage with security guardrails
+- [x] **Phase 11: AI Automation** - Claude-powered PR review and issue triage with security guardrails (completed 2026-03-13)
 
 ## Phase Details
 
@@ -94,7 +94,7 @@ Plans:
   2. New issues are automatically labeled and categorized by a Claude-powered triage bot
   3. AI workflows use `pull_request` trigger (not `pull_request_target`) and require approval before running on fork PRs
   4. AI workflows have spending limits and label gates configured to prevent unbounded Anthropic API costs
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 11-01-PLAN.md — Shared library, PR review script, and ai-review workflow
@@ -115,4 +115,4 @@ Plans:
 | 8. CI & Foundation | v1.1 | 3/3 | Complete | 2026-03-10 |
 | 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
 | 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
-| 11. AI Automation | v1.1 | 1/2 | In progress | - |
+| 11. AI Automation | 2/2 | Complete   | 2026-03-13 | - |
