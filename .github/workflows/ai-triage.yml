@@ -30,7 +30,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Triage issue
-        run: pnpm tsx .github/scripts/ai-triage.ts
+        run: node --experimental-transform-types .github/scripts/ai-triage.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

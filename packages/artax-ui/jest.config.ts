@@ -15,7 +15,12 @@ const config: Config = {
       'ts-jest',
       {
         tsconfig: {
-          jsx: 'react-jsx'
+          jsx: 'react-jsx',
+          esModuleInterop: true,
+          moduleResolution: 'node',
+          strict: true,
+          skipLibCheck: true,
+          isolatedModules: true
         }
       }
     ]
