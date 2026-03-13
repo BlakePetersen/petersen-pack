@@ -14,14 +14,7 @@ const config: Config = {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
-        tsconfig: {
-          jsx: 'react-jsx',
-          esModuleInterop: true,
-          moduleResolution: 'node',
-          strict: true,
-          skipLibCheck: true,
-          isolatedModules: true
-        }
+        tsconfig: 'tsconfig.test.json'
       }
     ]
   }
