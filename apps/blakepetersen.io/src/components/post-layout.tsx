@@ -5,6 +5,9 @@ import { Badge } from 'artax-ui'
 import { MDXContent } from './mdx-content'
 import { Breadcrumbs } from './breadcrumbs'
 import { PageNavigation } from './page-navigation'
+import { ContentFreshness } from './content-freshness'
+import { ReactionCountProvider, ReactionCount } from './reaction-count'
+import { DiscussionWithReactions } from './content-with-discussion'
 
 type PostItem = {
   title: string
@@ -17,6 +20,7 @@ type PostItem = {
 
 export function PostLayout({ post }: { post: PostItem }) {
   return (
+    <ReactionCountProvider>
     <article className="mx-auto max-w-[80ch] px-4 py-8">
       <Breadcrumbs pathname={`/${post.slug}`} />
       <header className="mb-8">
@@ -31,6 +35,8 @@ export function PostLayout({ post }: { post: PostItem }) {
             })}
           </time>
           <span>{post.readingTime} min read</span>
+          <ContentFreshness slug={post.slug} />
+          <ReactionCount />
         </div>
 
         {post.tags.length > 0 && (
@@ -48,10 +54,17 @@ export function PostLayout({ post }: { post: PostItem }) {
         <MDXContent code={post.code} />
       </div>
 
+      <DiscussionWithReactions
+        slug={post.slug}
+        title={post.title}
+        pageUrl={`https://blakepetersen.io/${post.slug}`}
+      />
+
       <PageNavigation
         collection="posts"
         currentHref={`/${post.slug}`}
       />
     </article>
+    </ReactionCountProvider>
   )
 }

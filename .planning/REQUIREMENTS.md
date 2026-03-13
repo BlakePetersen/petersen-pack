@@ -3,7 +3,7 @@
 **Defined:** 2026-03-07
 **Core Value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
 
-## v1 Requirements
+## v1.0 Requirements (Shipped)
 
 ### Monorepo Modernization
 
@@ -19,8 +19,7 @@
 - [x] **CONT-02**: Content directory structure maps to site navigation hierarchy
 - [x] **CONT-03**: Frontmatter schema includes category, applies-to, dependencies, and machine-readable metadata
 - [x] **CONT-04**: Syntax-highlighted code blocks via Shiki with copy button, filename labels, and language tags
-- [x] **CONT-05**: Client-side full-text search across all content (Flexsearch or Pagefind)
-- [ ] **CONT-06**: Bidirectional Monodex (Obsidian) sync with last-write-wins conflict resolution
+- [x] **CONT-05**: Client-side full-text search across all content (Pagefind)
 - [x] **CONT-07**: Content dependency graph rendered from frontmatter `requires` fields
 
 ### Site
@@ -36,21 +35,68 @@
 - [x] **SITE-09**: Sub-second page navigations via static generation
 - [x] **SITE-10**: Responsive layout for mobile reading
 
-### Community
+### Design Polish
 
-- [ ] **COMM-01**: giscus comments on content pages powered by GitHub Discussions
-- [ ] **COMM-02**: "Report a problem" links pre-fill GitHub issue with page URL, section, and content context
-- [ ] **COMM-03**: Auto-triage bot labels and categorizes incoming GitHub issues
-- [ ] **COMM-04**: AI-assisted PR review on contributions with human merge approval
+- [x] **DSGN-01**: Body text uses proportional font (Inter), monospace reserved for chrome, headings, and code
+- [x] **DSGN-02**: Color palette includes secondary accent (cyan) and annotation surface colors
+- [x] **DSGN-03**: Content schema supports author_note, decisions, related, and updated_context frontmatter fields
+- [x] **DSGN-04**: Author note and decision rationale components render on content pages from frontmatter
+- [x] **DSGN-05**: Apply action bar with copy-to-clipboard CLI command on DX content pages
+- [x] **DSGN-06**: Related content links in right sidebar resolved from frontmatter
+- [x] **DSGN-07**: Homepage redesigned as DX workbench (hero, stack snapshot, enriched content grid, activity feed)
+- [x] **DSGN-08**: Sidebar has category color indicators and stronger active page state
+- [x] **DSGN-09**: About page with bio and project philosophy
+- [x] **DSGN-10**: Start-here onboarding guide for newcomers
 
-### CLI Skill
+## v1.1 Requirements
 
-- [ ] **SKIL-01**: Claude Code skill that applies full DX standard to any project (CLAUDE.md, skills, hooks, linting, CI configs)
-- [ ] **SKIL-02**: Per-page "apply this" commands showing how to apply individual configs, skills, or hooks
-- [ ] **SKIL-03**: Content dependency graph showing prerequisites between skills, hooks, and configs
-- [ ] **SKIL-04**: Version/change indicators per page from git commit history
+Requirements for GitHub Integration milestone. Each maps to roadmap phases.
 
-## v2 Requirements
+### CI & Foundation
+
+- [x] **CI-01**: GitHub Actions CI pipeline runs build, typecheck, and lint on every PR
+- [x] **CI-02**: Link checker validates all internal and external links on PR
+- [x] **CI-03**: GitHub issue templates provide structured feedback forms (bug report, feature request, content issue)
+- [x] **CI-04**: Content pages display last modified date from git history
+- [x] **CI-05**: Content pages display change frequency indicator from git commit count
+
+### Community Engagement
+
+- [x] **COMM-01**: Content pages display giscus comment widget powered by GitHub Discussions
+- [x] **COMM-02**: Giscus uses stable content ID mapping (not pathname) to survive URL changes
+- [x] **COMM-03**: Giscus theme matches terminal aesthetic (dark mode)
+- [x] **COMM-04**: "Report a problem" link on content pages pre-fills GitHub issue with page title, URL, and content metadata
+- [x] **COMM-05**: Content pages display reaction counts from giscus as content voting signal
+
+### GitHub Data Pages
+
+- [x] **DATA-01**: `/changelog` page displays entries auto-generated from GitHub Releases
+- [x] **DATA-02**: `/contributors` page displays contributor avatars and stats from GitHub API
+- [x] **DATA-03**: `/roadmap` page links to public GitHub Projects board with styled presentation
+- [x] **DATA-04**: GitHub data pages use terminal aesthetic consistent with existing site design
+
+### AI Automation
+
+- [x] **AI-01**: Claude-powered PR review runs on every non-bot PR via GitHub Actions
+- [x] **AI-02**: Claude-powered issue triage auto-labels and categorizes new issues
+- [x] **AI-03**: AI workflows use `pull_request` trigger (not `pull_request_target`) for security
+- [x] **AI-04**: AI workflows have spending limits and label gates to prevent cost spiral
+- [x] **AI-05**: AI workflows require approval for fork PRs before running
+
+## v1.2 Requirements
+
+Deferred to future release. Tracked but not in current roadmap.
+
+### CLI & Sync
+
+- **CLI-01**: Claude Code skill that applies DX standards to any project
+- **CLI-02**: Per-page "apply this" commands for individual configs/skills/hooks
+- **SYNC-01**: Bidirectional Monodex (Obsidian) sync with last-write-wins
+
+### Advanced GitHub
+
+- **DATA-05**: Custom-rendered GitHub Projects roadmap page (GraphQL ProjectsV2 API)
+- **DATA-06**: Voting analytics aggregated across pages
 
 ### Design System Adoption
 
@@ -75,6 +121,9 @@
 | Custom CMS / admin panel | MDX in repo IS the CMS; Obsidian is the rich editor |
 | Real-time features | Zero value for a static documentation site |
 | Mobile app | Responsive web only |
+| Custom voting backend | giscus reactions provide voting for free |
+| GitHub Wiki | Site itself is the documentation |
+| GitHub Pages | Hosted on Vercel |
 
 ## Traceability
 
@@ -90,7 +139,6 @@
 | CONT-03 | Phase 3 | Complete |
 | CONT-04 | Phase 4 | Complete |
 | CONT-05 | Phase 7 | Complete |
-| CONT-06 | Phase 11 | Pending |
 | CONT-07 | Phase 4 | Complete |
 | SITE-01 | Phase 5 | Complete |
 | SITE-02 | Phase 2 | Complete |
@@ -102,20 +150,42 @@
 | SITE-08 | Phase 6 | Complete |
 | SITE-09 | Phase 5 | Complete |
 | SITE-10 | Phase 5 | Complete |
-| COMM-01 | Phase 8 | Pending |
-| COMM-02 | Phase 8 | Pending |
-| COMM-03 | Phase 9 | Pending |
-| COMM-04 | Phase 9 | Pending |
-| SKIL-01 | Phase 10 | Pending |
-| SKIL-02 | Phase 10 | Pending |
-| SKIL-03 | Phase 10 | Pending |
-| SKIL-04 | Phase 10 | Pending |
+| DSGN-01 | Phase 7.1 | Complete |
+| DSGN-02 | Phase 7.1 | Complete |
+| DSGN-03 | Phase 7.1 | Complete |
+| DSGN-04 | Phase 7.1 | Complete |
+| DSGN-05 | Phase 7.1 | Complete |
+| DSGN-06 | Phase 7.1 | Complete |
+| DSGN-07 | Phase 7.1 | Complete |
+| DSGN-08 | Phase 7.1 | Complete |
+| DSGN-09 | Phase 7.1 | Complete |
+| DSGN-10 | Phase 7.1 | Complete |
+| CI-01 | Phase 8 | Complete |
+| CI-02 | Phase 8 | Complete |
+| CI-03 | Phase 8 | Complete |
+| CI-04 | Phase 8 | Complete |
+| CI-05 | Phase 8 | Complete |
+| COMM-01 | Phase 9 | Complete |
+| COMM-02 | Phase 9 | Complete |
+| COMM-03 | Phase 9 | Complete |
+| COMM-04 | Phase 9 | Complete |
+| COMM-05 | Phase 9 | Complete |
+| DATA-01 | Phase 10 | Complete |
+| DATA-02 | Phase 10 | Complete |
+| DATA-03 | Phase 10 | Complete |
+| DATA-04 | Phase 10 | Complete |
+| AI-01 | Phase 11 | Complete |
+| AI-02 | Phase 11 | Complete |
+| AI-03 | Phase 11 | Complete |
+| AI-04 | Phase 11 | Complete |
+| AI-05 | Phase 11 | Complete |
 
 **Coverage:**
-- v1 requirements: 30 total
-- Mapped to phases: 30
+- v1.0 requirements: 31 total (all complete)
+- v1.1 requirements: 19 total
+- Mapped to phases: 19/19
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-07*
-*Last updated: 2026-03-07 after roadmap creation*
+*Last updated: 2026-03-10 after v1.1 roadmap created*

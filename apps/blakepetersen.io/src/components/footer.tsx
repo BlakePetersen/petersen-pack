@@ -6,7 +6,7 @@ import Link from 'next/link'
 export function Footer() {
   return (
     <footer className="border-t border-terminal-border">
-      <div className="mx-auto max-w-[1200px] px-4 py-8">
+      <div className="mx-auto max-w-[1600px] px-4 py-8">
         <div className="flex flex-wrap gap-6 font-mono text-sm text-terminal-muted">
           <a
             href="https://github.com/blakepetersen"

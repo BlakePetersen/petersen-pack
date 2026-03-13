@@ -7,6 +7,10 @@ import { DependencyGraph } from './dependency-graph'
 import { Breadcrumbs } from './breadcrumbs'
 import { PageNavigation } from './page-navigation'
 import { getLocalGraphSvg } from '../lib/content'
+import { ApplyActionBar } from './apply-action-bar'
+import { ContentFreshness } from './content-freshness'
+import { ReactionCountProvider, ReactionCount } from './reaction-count'
+import { DiscussionWithReactions } from './content-with-discussion'
 
 type DxItem = {
   title: string
@@ -17,12 +21,16 @@ type DxItem = {
   tags: string[]
   readingTime: number
   code: string
+  decisions: { choice: string; rationale: string }[]
+  related: string[]
+  updated_context?: string
 }
 
-export function DxContentLayout({ item }: { item: DxItem }) {
+export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; showApplyBar?: boolean }) {
   const graphSvg = getLocalGraphSvg(item.slug)
 
   return (
+    <ReactionCountProvider>
     <article className="mx-auto max-w-[80ch] px-4 py-8">
       <Breadcrumbs pathname={`/${item.slug}`} />
       <header className="mb-8">
@@ -44,12 +52,32 @@ export function DxContentLayout({ item }: { item: DxItem }) {
 
         <p className="mt-2 font-mono text-xs text-terminal-muted">
           {item.readingTime} min read
+          {' \u00b7 '}
+          <ContentFreshness slug={item.slug} />
+          {' · '}
+          <ReactionCount />
         </p>
       </header>
 
-      <div className="prose-terminal">
+      {showApplyBar && <ApplyActionBar slug={item.slug} />}
+
+      <div className={`prose-terminal${showApplyBar ? ' mt-5' : ''}`}>
         <MDXContent code={item.code} />
       </div>
+
+      {item.decisions.length > 0 && (
+        <section className="mt-8 border border-terminal-border p-4">
+          <h3 className="mb-4 font-mono text-xs text-terminal-info">{'// decisions'}</h3>
+          <div className="space-y-3">
+            {item.decisions.map((d, i) => (
+              <div key={i} className="border-l-2 border-terminal-info/30 pl-3">
+                <p className="font-mono text-sm text-terminal-text">{d.choice}</p>
+                <p className="mt-1 font-sans text-sm text-terminal-muted">{d.rationale}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {item.dependencies.length > 0 && (
         <div className="mt-8 md:hidden">
@@ -72,10 +100,17 @@ export function DxContentLayout({ item }: { item: DxItem }) {
         </div>
       )}
 
+      <DiscussionWithReactions
+        slug={item.slug}
+        title={item.title}
+        pageUrl={`https://blakepetersen.io/${item.slug}`}
+      />
+
       <PageNavigation
         collection={item.slug.split('/')[0]}
         currentHref={`/${item.slug}`}
       />
     </article>
+    </ReactionCountProvider>
   )
 }

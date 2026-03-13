@@ -19,6 +19,15 @@ jest.mock('@/lib/content', () => ({
     { slug: 'posts/newer-post', title: 'Newer Post', date: '2025-06-15' },
     { slug: 'posts/older-post', title: 'Older Post', date: '2025-01-01' },
   ],
+  getAllGitHistory: () => ({
+    'skills/ai-prompting': { lastModified: '2025-06-01T00:00:00Z' },
+    'skills/cursor-rules': { lastModified: '2025-05-15T00:00:00Z' },
+    'hooks/pre-commit': { lastModified: '2025-04-20T00:00:00Z' },
+    'configs/eslint': { lastModified: '2025-03-10T00:00:00Z' },
+    'guides/monorepo-setup': { lastModified: '2025-02-28T00:00:00Z' },
+    'posts/newer-post': { lastModified: '2025-06-15T00:00:00Z' },
+    'posts/older-post': { lastModified: '2025-01-01T00:00:00Z' },
+  }),
 }))
 
 import sitemap from '@/app/sitemap'

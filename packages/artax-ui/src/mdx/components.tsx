@@ -124,7 +124,7 @@ export const mdxComponents = {
 
   li: ({ className, ...props }: Props) => (
     <li
-      className={cn('text-terminal-text', className)}
+      className={cn('font-sans text-terminal-text', className)}
       {...props}
     />
   ),
@@ -264,5 +264,16 @@ export const mdxComponents = {
 
   em: ({ className, ...props }: Props) => (
     <em className={cn('italic', className)} {...props} />
+  ),
+
+  AuthorNote: ({ children, ...props }: Props) => (
+    <aside
+      className="my-6 border-l-2 border-terminal-info px-4 py-3"
+      style={{ backgroundColor: 'rgba(6, 182, 212, 0.06)' }}
+      {...props}
+    >
+      <p className="mb-2 font-mono text-xs text-terminal-info">{'// author_note'}</p>
+      <div className="font-sans text-sm text-terminal-secondary leading-relaxed">{children}</div>
+    </aside>
   ),
 }

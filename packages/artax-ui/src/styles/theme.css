@@ -14,6 +14,11 @@
   /* Amber accent */
   --color-amber-accent: #F59E0B;
 
+  /* Annotation surface colors */
+  --color-surface-info: rgba(6, 182, 212, 0.06);
+  --color-surface-warning: rgba(245, 158, 11, 0.06);
+  --color-surface-success: rgba(16, 185, 129, 0.06);
+
   /* Semantic colors */
   --color-terminal-error: #EF4444;
   --color-terminal-warning: #F59E0B;

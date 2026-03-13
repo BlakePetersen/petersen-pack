@@ -26,16 +26,17 @@ jest.mock('@/lib/content', () => ({
 }))
 
 describe('buildNavSections', () => {
-  it('returns 5 sections with correct labels and hrefs', () => {
+  it('returns 6 sections with correct labels and hrefs', () => {
     const sections = buildNavSections()
 
-    expect(sections).toHaveLength(5)
+    expect(sections).toHaveLength(6)
     expect(sections.map((s) => s.label)).toEqual([
       'Skills',
       'Hooks',
       'Configs',
       'Guides',
       'Posts',
+      'Project',
     ])
     expect(sections.map((s) => s.href)).toEqual([
       '/skills',
@@ -43,6 +44,7 @@ describe('buildNavSections', () => {
       '/configs',
       '/guides',
       '/posts',
+      '/changelog',
     ])
   })
 

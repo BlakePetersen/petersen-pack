@@ -13,6 +13,8 @@ import { PostLayout } from '../../../components/post-layout'
 import { ContentShell } from '../../../components/content-shell'
 import { Sidebar } from '../../../components/sidebar'
 import { TableOfContents } from '../../../components/table-of-contents'
+import { RelatedContent } from '../../../components/related-content'
+import { resolveRelatedSlugs } from '../../../lib/content'
 
 export const dynamicParams = false
 export const revalidate = 3600
@@ -46,8 +48,10 @@ export default async function PostPage({
 
   if (!item) notFound()
 
+  const relatedItems = resolveRelatedSlugs((item as { related?: string[] }).related ?? [])
+
   return (
-    <ContentShell sidebar={<Sidebar />} toc={<TableOfContents />}>
+    <ContentShell sidebar={<Sidebar />} toc={<><TableOfContents /><RelatedContent items={relatedItems} /></>}>
       <JsonLd data={buildArticleJsonLd(item, 'posts')} />
       <JsonLd data={buildBreadcrumbJsonLd(`/posts/${slug.join('/')}`)} />
       <PostLayout post={item} />

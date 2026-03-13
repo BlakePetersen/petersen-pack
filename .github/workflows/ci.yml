@@ -1,5 +1,5 @@
 # ABOUTME: CI pipeline for petersen-group monorepo.
-# ABOUTME: Runs install, lint, build, and test on push/PR to main.
+# ABOUTME: Runs typecheck, lint, build, test, and link-check on push/PR to main.
 
 name: CI
 
@@ -15,6 +15,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
 
@@ -24,6 +26,13 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm lint
       - run: pnpm build
+      - run: pnpm typecheck
+      - run: pnpm lint
       - run: pnpm test
+
+      - name: Link check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress apps/blakepetersen.io/.next/server/app/**/*.html content/**/*.mdx
+          fail: true

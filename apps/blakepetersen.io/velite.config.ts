@@ -15,6 +15,7 @@ import {
   renderGraphSvg,
 } from './src/lib/graph'
 import type { ContentNode } from './src/lib/graph'
+import { getGitHistoryForFile } from './src/lib/git-history'
 
 // Shared fields for DX content types (skills, hooks, configs, guides)
 const dxFields = {
@@ -26,6 +27,9 @@ const dxFields = {
   draft: s.boolean().default(false),
   tags: s.array(s.string()).default([]),
   category: s.string().optional(),
+  decisions: s.array(s.object({ choice: s.string(), rationale: s.string() })).default([]),
+  related: s.array(s.string()).default([]),
+  updated_context: s.isodate().optional(),
 }
 
 const dxSchema = s
@@ -77,6 +81,8 @@ const posts = defineCollection({
       date: s.isodate(),
       tags: s.array(s.string()).default([]),
       draft: s.boolean().default(false),
+      related: s.array(s.string()).default([]),
+      updated_context: s.isodate().optional(),
       slug: s.path(),
       excerpt: s.excerpt(),
       metadata: s.metadata(),
@@ -156,6 +162,27 @@ const config: any = defineConfig({
     fs.writeFileSync(
       path.join(outputDir, 'graph.json'),
       JSON.stringify(graphData, null, 2),
+    )
+
+    // Extract git history for all content items
+    const contentDir = path.resolve(process.cwd(), 'content')
+    const allItems = [
+      ...data.skills,
+      ...data.hooks,
+      ...data.configs,
+      ...data.guides,
+      ...data.posts,
+    ]
+
+    const gitHistory: Record<string, { lastModified: string; commitCount: number }> = {}
+    for (const item of allItems) {
+      const mdxPath = path.join(contentDir, `${item.slug}.mdx`)
+      gitHistory[item.slug] = getGitHistoryForFile(mdxPath)
+    }
+
+    fs.writeFileSync(
+      path.join(outputDir, 'git-history.json'),
+      JSON.stringify(gitHistory, null, 2),
     )
   },
 })

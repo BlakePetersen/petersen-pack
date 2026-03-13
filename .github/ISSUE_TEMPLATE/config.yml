@@ -1,0 +1,3 @@
+# ABOUTME: GitHub issue template configuration.
+# ABOUTME: Disables blank issues so users must choose a structured template.
+blank_issues_enabled: false

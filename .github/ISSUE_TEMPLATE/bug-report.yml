@@ -1,0 +1,49 @@
+# ABOUTME: GitHub issue form for reporting bugs.
+# ABOUTME: Structured fields for description, reproduction steps, environment, and severity.
+name: Bug Report
+description: Report a bug or broken behavior
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened, and what did you expect to happen?
+      placeholder: |
+        What happened:
+        ...
+
+        What I expected:
+        ...
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Go to ...
+        2. Click on ...
+        3. See error
+    validations:
+      required: true
+  - type: input
+    id: browser-device
+    attributes:
+      label: Browser / Device
+      description: What browser and device are you using?
+      placeholder: "Chrome 120 on macOS, Safari on iPhone 15, etc."
+    validations:
+      required: false
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this issue?
+      options:
+        - Minor - cosmetic or low impact
+        - Major - broken functionality
+        - Critical - site unusable or data loss
+    validations:
+      required: false

@@ -1,0 +1,22 @@
+# ABOUTME: GitHub issue form for reporting content problems.
+# ABOUTME: Low-friction form with only page URL and description required.
+name: Content Issue
+description: Report a problem with site content
+labels: ["content"]
+body:
+  - type: input
+    id: page-url
+    attributes:
+      label: Page URL
+      description: Link to the page with the content issue.
+      placeholder: "https://blakepetersen.io/..."
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What's wrong with this content?
+      placeholder: Describe the issue you found...
+    validations:
+      required: true

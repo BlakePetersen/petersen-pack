@@ -1,0 +1,30 @@
+# ABOUTME: GitHub issue form for suggesting features.
+# ABOUTME: Structured fields for description, use case, and alternatives considered.
+name: Feature Request
+description: Suggest a new feature or improvement
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What would you like to see?
+      placeholder: Describe the feature or improvement...
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Why would this be useful?
+      placeholder: Explain the problem this would solve or how you'd use it...
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternatives or workarounds?
+      placeholder: Describe any alternatives you've thought about...
+    validations:
+      required: false
