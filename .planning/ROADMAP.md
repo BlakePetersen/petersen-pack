@@ -44,7 +44,7 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 
 **Milestone Goal:** Ship a CLI tool (`blink`) and registry API that lets anyone apply, update, and customize DX configurations from blakepetersen.io.
 
-- [ ] **Phase 12: Shared Types & Package Scaffold** - Workspace packages with shared schemas and build pipeline
+- [x] **Phase 12: Shared Types & Package Scaffold** - Workspace packages with shared schemas and build pipeline
 - [ ] **Phase 13: Artifact Pipeline** - Velite integration for dual-content model (MDX docs + distributable artifacts)
 - [ ] **Phase 14: Registry API** - Static JSON endpoints serving artifact data from the site
 - [ ] **Phase 15: CLI Core** - Apply, list, status, and init commands with whole-file mode
@@ -65,8 +65,8 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
   3. `turbo build` and `turbo typecheck` succeed with both new packages in the dependency graph
 **Plans**: 2 plans
 Plans:
-- [ ] 12-01-PLAN.md — blink-registry package with Zod schemas and tests
-- [ ] 12-02-PLAN.md — blink-cli package scaffold with tsup build and turbo pipeline verification
+- [x] 12-01-PLAN.md — blink-registry package with Zod schemas and tests
+- [x] 12-02-PLAN.md — blink-cli package scaffold with tsup build and turbo pipeline verification
 
 ### Phase 13: Artifact Pipeline
 **Goal**: Content authors can define distributable artifacts alongside MDX docs and Velite processes them at build time
@@ -166,7 +166,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
 | 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
 | 11. AI Automation | v1.1 | 2/2 | Complete | 2026-03-13 |
-| 12. Shared Types & Package Scaffold | 1/2 | In Progress|  | - |
+| 12. Shared Types & Package Scaffold | v1.2 | 2/2 | Complete | 2026-03-14 |
 | 13. Artifact Pipeline | v1.2 | 0/? | Not started | - |
 | 14. Registry API | v1.2 | 0/? | Not started | - |
 | 15. CLI Core | v1.2 | 0/? | Not started | - |

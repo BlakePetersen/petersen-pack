@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
 status: executing
-stopped_at: Completed 12-01-PLAN.md
-last_updated: "2026-03-14T22:48:34.771Z"
-last_activity: 2026-03-14 — Completed 12-01 blink-registry schemas
+stopped_at: Completed 12-02-PLAN.md
+last_updated: "2026-03-14T22:57:00Z"
+last_activity: 2026-03-14 — Completed 12-02 blink-cli scaffold
 progress:
   total_phases: 8
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
-  percent: 0
+  completed_plans: 2
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 12 of 19 (Shared Types & Package Scaffold)
-Plan: 01 of 02 complete
-Status: Executing
-Last activity: 2026-03-14 — Completed 12-01 blink-registry schemas
+Plan: 02 of 02 complete
+Status: Phase 12 Complete
+Last activity: 2026-03-14 — Completed 12-02 blink-cli scaffold
 
-Progress: [█████░░░░░] 50% (1/2 plans)
+Progress: [██████████] 100% (2/2 plans)
 
 ## Performance Metrics
 
@@ -52,6 +52,8 @@ Recent decisions affecting current work:
 - Dual-content model (MDX + artifact) — docs annotate, artifacts are production-ready
 - [Phase 12]: Source exports only for blink-registry (no build step), following artax-ui pattern
 - [Phase 12]: Domain-split schemas with shared primitives to avoid circular dependencies
+- [Phase 12]: tsup outExtension for .mjs output with type:module packages
+- [Phase 12]: citty/consola/picocolors as devDeps since tsup bundles via noExternal
 
 ### Pending Todos
 
@@ -65,6 +67,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-14T22:48:34.769Z
-Stopped at: Completed 12-01-PLAN.md
+Last session: 2026-03-14T22:57:00Z
+Stopped at: Completed 12-02-PLAN.md (Phase 12 complete)
 Resume file: None
