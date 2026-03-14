@@ -8,6 +8,7 @@ Transform the existing Turborepo monorepo from a collection of independent Next.
 
 - ✅ **v1.0 DX Reference Platform** — Phases 1-7.1 (shipped 2026-03-10)
 - ✅ **v1.1 GitHub Integration** — Phases 8-11 (shipped 2026-03-14)
+- 🚧 **v1.2 Blink CLI & DX Registry** — Phases 12-19 (in progress)
 
 ## Phases
 
@@ -39,7 +40,117 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 
 </details>
 
+### 🚧 v1.2 Blink CLI & DX Registry (In Progress)
+
+**Milestone Goal:** Ship a CLI tool (`blink`) and registry API that lets anyone apply, update, and customize DX configurations from blakepetersen.io.
+
+- [ ] **Phase 12: Shared Types & Package Scaffold** - Workspace packages with shared schemas and build pipeline
+- [ ] **Phase 13: Artifact Pipeline** - Velite integration for dual-content model (MDX docs + distributable artifacts)
+- [ ] **Phase 14: Registry API** - Static JSON endpoints serving artifact data from the site
+- [ ] **Phase 15: CLI Core** - Apply, list, status, and init commands with whole-file mode
+- [ ] **Phase 16: Section Markers & Lifecycle** - Managed regions, update, eject, diff, and doctor commands
+- [ ] **Phase 17: Starter Content** - Config artifacts (ESLint, Prettier, TypeScript, Husky, CLAUDE.md templates)
+- [ ] **Phase 18: Documentation** - Guides for CLAUDE.md hierarchy, Blink architecture, and companion docs
+- [ ] **Phase 19: Publishing** - npm package publishing as @blink/cli with blink binary
+
+## Phase Details
+
+### Phase 12: Shared Types & Package Scaffold
+**Goal**: Both workspace packages exist with shared type contracts that CLI and web app consume
+**Depends on**: Phase 11 (v1.1 complete)
+**Requirements**: PKG-01, PKG-02, PKG-04
+**Success Criteria** (what must be TRUE):
+  1. `packages/blink-registry` exports Zod schemas for artifact metadata, manifest state, and registry responses
+  2. `packages/blink-cli` builds via tsup into a single-file ESM binary with shebang
+  3. `turbo build` and `turbo typecheck` succeed with both new packages in the dependency graph
+**Plans**: 2 plans
+Plans:
+- [ ] 12-01-PLAN.md — blink-registry package with Zod schemas and tests
+- [ ] 12-02-PLAN.md — blink-cli package scaffold with tsup build and turbo pipeline verification
+
+### Phase 13: Artifact Pipeline
+**Goal**: Content authors can define distributable artifacts alongside MDX docs and Velite processes them at build time
+**Depends on**: Phase 12
+**Requirements**: ART-01, ART-02, ART-03, ART-04, ART-05, REG-01
+**Success Criteria** (what must be TRUE):
+  1. An `.artifact.md` or `.artifact/` directory alongside an MDX doc is processed by Velite into structured artifact data
+  2. Multi-file artifacts with a manifest.json produce correct file listings, destinations, and merge strategies
+  3. Single-file artifacts infer their destination from content type without explicit configuration
+  4. Artifacts can declare npm devDependencies in their metadata
+  5. `pnpm build` produces `.velite/artifacts.json` (or equivalent) containing all artifact data
+**Plans**: TBD
+
+### Phase 14: Registry API
+**Goal**: The CLI (and any HTTP client) can discover and fetch artifact data from static JSON endpoints on blakepetersen.io
+**Depends on**: Phase 13
+**Requirements**: REG-02, REG-03, REG-04, REG-05, PKG-05
+**Success Criteria** (what must be TRUE):
+  1. `/r/index.json` returns a list of all available artifacts with metadata (name, type, version, description)
+  2. `/r/<type>/<slug>.json` returns full artifact data including file contents and dependencies
+  3. Each artifact has a CalVer version derived from its git commit date
+  4. The ApplyActionBar component on content pages shows `blink apply <slug>` as the copy command
+**Plans**: TBD
+
+### Phase 15: CLI Core
+**Goal**: Users can install blink and apply, browse, inspect, and initialize config management in their projects
+**Depends on**: Phase 14
+**Requirements**: CORE-01, CORE-02, CORE-03, CORE-07, CORE-09, CORE-10, CORE-11, SCOPE-02, SCOPE-03
+**Success Criteria** (what must be TRUE):
+  1. `blink apply <slug>` fetches an artifact from the registry, writes files to the project, and installs declared npm dependencies using the detected package manager
+  2. `blink list` displays all available artifacts from the registry with type, name, and description
+  3. `blink status` shows installed items from `.blink/manifest.json` with version and update availability
+  4. `blink init` creates the `.blink/` directory and manifest in the current project
+  5. `--dry-run` on any state-changing command previews operations without writing files, and `--yes` / non-TTY skips interactive prompts
+**Plans**: TBD
+
+### Phase 16: Section Markers & Lifecycle
+**Goal**: Users can update managed configs without losing their customizations, eject from management, and diagnose issues
+**Depends on**: Phase 15
+**Requirements**: CORE-04, CORE-05, CORE-06, CORE-08, CORE-12, SCOPE-01, SCOPE-04, SCOPE-05, SCOPE-06, SCOPE-07, SCOPE-08
+**Success Criteria** (what must be TRUE):
+  1. `blink update [slug]` shows a diff preview of upstream changes and replaces only managed sections (between markers), preserving user content outside markers
+  2. `blink eject <slug>` strips section markers from files and removes the item from the manifest without deleting files
+  3. `blink diff <slug>` displays upstream changes without applying them
+  4. `blink doctor` detects broken markers, orphaned manifest entries, and other integrity issues
+  5. `blink apply --global` targets `~/.claude/` and global config locations; local modifications to managed sections prompt before overwriting; file writes are atomic (temp + rename)
+**Plans**: TBD
+
+### Phase 17: Starter Content
+**Goal**: The registry has a complete starter kit of production-ready config artifacts that users can apply
+**Depends on**: Phase 16
+**Requirements**: CONT-01, CONT-02, CONT-03, CONT-04, CONT-05, CONT-06, CONT-07
+**Success Criteria** (what must be TRUE):
+  1. `blink apply eslint` installs an ESLint flat config with section markers and TypeScript strict rules
+  2. `blink apply prettier` and `blink apply typescript` install opinionated Prettier and TypeScript configs
+  3. `blink apply husky` installs Husky + lint-staged with pre-commit hook setup
+  4. `blink apply claude-global` and `blink apply claude-project` install CLAUDE.md templates to the correct scope
+  5. A "writing custom skills" artifact exists as a companion to the existing MDX guide
+**Plans**: TBD
+
+### Phase 18: Documentation
+**Goal**: Users understand the CLAUDE.md hierarchy, how Blink works, and can find related content through cross-references
+**Depends on**: Phase 17
+**Requirements**: DOCS-01, DOCS-02, DOCS-03, DOCS-04
+**Success Criteria** (what must be TRUE):
+  1. A published guide explains CLAUDE.md hierarchy: global vs project scope, what goes where, and precedence rules
+  2. A published guide explains the Blink system: architecture, files it manages, benefits and risks
+  3. Every starter content artifact has a companion MDX page documenting complementary tools, competitors, and best practices
+  4. Content pages use `dependencies` and `related` frontmatter fields to cross-reference related artifacts and guides
+**Plans**: TBD
+
+### Phase 19: Publishing
+**Goal**: Users can install blink from npm and the package is verified to work from a clean install
+**Depends on**: Phase 18
+**Requirements**: PKG-03
+**Success Criteria** (what must be TRUE):
+  1. `npm install -g @blink/cli` installs successfully and `blink --help` shows available commands
+  2. `blink apply eslint` works end-to-end from the published npm package against the live registry
+**Plans**: TBD
+
 ## Progress
+
+**Execution Order:**
+Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -55,3 +166,11 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 | 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
 | 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
 | 11. AI Automation | v1.1 | 2/2 | Complete | 2026-03-13 |
+| 12. Shared Types & Package Scaffold | v1.2 | 0/2 | Not started | - |
+| 13. Artifact Pipeline | v1.2 | 0/? | Not started | - |
+| 14. Registry API | v1.2 | 0/? | Not started | - |
+| 15. CLI Core | v1.2 | 0/? | Not started | - |
+| 16. Section Markers & Lifecycle | v1.2 | 0/? | Not started | - |
+| 17. Starter Content | v1.2 | 0/? | Not started | - |
+| 18. Documentation | v1.2 | 0/? | Not started | - |
+| 19. Publishing | v1.2 | 0/? | Not started | - |
