@@ -61,8 +61,8 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 
 ### Documentation Content (DOCS)
 
-- [ ] **DOCS-01**: Guide: CLAUDE.md hierarchy — global vs project, what goes where, precedence rules
-- [ ] **DOCS-02**: Guide: Blink system overview — architecture, files in play, benefits and risks
+- [x] **DOCS-01**: Guide: CLAUDE.md hierarchy — global vs project, what goes where, precedence rules
+- [x] **DOCS-02**: Guide: Blink system overview — architecture, files in play, benefits and risks
 - [x] **DOCS-03**: Each starter content artifact has companion MDX with complementary tools, competitors, and best practices
 - [x] **DOCS-04**: Content cross-references via `dependencies` and `related` frontmatter fields
 
@@ -153,8 +153,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONT-05 | Phase 17 | Complete |
 | CONT-06 | Phase 17 | Complete |
 | CONT-07 | Phase 17 | Complete |
-| DOCS-01 | Phase 18 | Pending |
-| DOCS-02 | Phase 18 | Pending |
+| DOCS-01 | Phase 18 | Complete |
+| DOCS-02 | Phase 18 | Complete |
 | DOCS-03 | Phase 18 | Complete |
 | DOCS-04 | Phase 18 | Complete |
 | PKG-03 | Phase 19 | Pending |
