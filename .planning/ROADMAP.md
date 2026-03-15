@@ -107,7 +107,11 @@ Plans:
   3. `blink status` shows installed items from `.blink/manifest.json` with version and update availability
   4. `blink init` creates the `.blink/` directory and manifest in the current project
   5. `--dry-run` on any state-changing command previews operations without writing files, and `--yes` / non-TTY skips interactive prompts
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 15-01-PLAN.md — Utility modules: registry client, manifest manager, PM detection, output formatting
+- [ ] 15-02-PLAN.md — Init, list, and status commands with subcommand routing
+- [ ] 15-03-PLAN.md — Apply command with dry-run, conflict detection, and dependency installation
 
 ### Phase 16: Section Markers & Lifecycle
 **Goal**: Users can update managed configs without losing their customizations, eject from management, and diagnose issues
@@ -119,7 +123,11 @@ Plans:
   3. `blink diff <slug>` displays upstream changes without applying them
   4. `blink doctor` detects broken markers, orphaned manifest entries, and other integrity issues
   5. `blink apply --global` targets `~/.claude/` and global config locations; local modifications to managed sections prompt before overwriting; file writes are atomic (temp + rename)
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 15-01-PLAN.md — Utility modules: registry client, manifest manager, PM detection, output formatting
+- [ ] 15-02-PLAN.md — Init, list, and status commands with subcommand routing
+- [ ] 15-03-PLAN.md — Apply command with dry-run, conflict detection, and dependency installation
 
 ### Phase 17: Starter Content
 **Goal**: The registry has a complete starter kit of production-ready config artifacts that users can apply
@@ -131,7 +139,11 @@ Plans:
   3. `blink apply husky` installs Husky + lint-staged with pre-commit hook setup
   4. `blink apply claude-global` and `blink apply claude-project` install CLAUDE.md templates to the correct scope
   5. A "writing custom skills" artifact exists as a companion to the existing MDX guide
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 15-01-PLAN.md — Utility modules: registry client, manifest manager, PM detection, output formatting
+- [ ] 15-02-PLAN.md — Init, list, and status commands with subcommand routing
+- [ ] 15-03-PLAN.md — Apply command with dry-run, conflict detection, and dependency installation
 
 ### Phase 18: Documentation
 **Goal**: Users understand the CLAUDE.md hierarchy, how Blink works, and can find related content through cross-references
@@ -142,7 +154,11 @@ Plans:
   2. A published guide explains the Blink system: architecture, files it manages, benefits and risks
   3. Every starter content artifact has a companion MDX page documenting complementary tools, competitors, and best practices
   4. Content pages use `dependencies` and `related` frontmatter fields to cross-reference related artifacts and guides
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 15-01-PLAN.md — Utility modules: registry client, manifest manager, PM detection, output formatting
+- [ ] 15-02-PLAN.md — Init, list, and status commands with subcommand routing
+- [ ] 15-03-PLAN.md — Apply command with dry-run, conflict detection, and dependency installation
 
 ### Phase 19: Publishing
 **Goal**: Users can install blink from npm and the package is verified to work from a clean install
@@ -151,7 +167,11 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. `npm install -g @blink/cli` installs successfully and `blink --help` shows available commands
   2. `blink apply eslint` works end-to-end from the published npm package against the live registry
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 15-01-PLAN.md — Utility modules: registry client, manifest manager, PM detection, output formatting
+- [ ] 15-02-PLAN.md — Init, list, and status commands with subcommand routing
+- [ ] 15-03-PLAN.md — Apply command with dry-run, conflict detection, and dependency installation
 
 ## Progress
 
@@ -174,8 +194,8 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 11. AI Automation | v1.1 | 2/2 | Complete | 2026-03-13 |
 | 12. Shared Types & Package Scaffold | v1.2 | Complete    | 2026-03-14 | 2026-03-14 |
 | 13. Artifact Pipeline | 2/2 | Complete    | 2026-03-15 | - |
-| 14. Registry API | 2/2 | Complete   | 2026-03-15 | - |
-| 15. CLI Core | v1.2 | 0/? | Not started | - |
+| 14. Registry API | 2/2 | Complete    | 2026-03-15 | - |
+| 15. CLI Core | v1.2 | 0/3 | Not started | - |
 | 16. Section Markers & Lifecycle | v1.2 | 0/? | Not started | - |
 | 17. Starter Content | v1.2 | 0/? | Not started | - |
 | 18. Documentation | v1.2 | 0/? | Not started | - |
