@@ -155,7 +155,12 @@ Plans:
   2. A published guide explains the Blink system: architecture, files it manages, benefits and risks
   3. Every starter content artifact has a companion MDX page documenting complementary tools, competitors, and best practices
   4. Content pages use `dependencies` and `related` frontmatter fields to cross-reference related artifacts and guides
-**Plans**: [To be planned]
+**Plans**: 4 plans
+Plans:
+- [ ] 18-01-PLAN.md — Interactive MDX components and cross-reference UI
+- [ ] 18-02-PLAN.md — CLAUDE.md hierarchy and Blink overview guides
+- [ ] 18-03-PLAN.md — Companion documentation for starter content artifacts
+- [ ] 18-04-PLAN.md — Cross-reference wiring and visual verification
 
 ### Phase 19: Publishing
 **Goal**: Users can install blink from npm and the package is verified to work from a clean install
@@ -190,6 +195,6 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 14. Registry API | 2/2 | Complete    | 2026-03-15 | - |
 | 15. CLI Core | 4/4 | Complete    | 2026-03-15 | - |
 | 16. Section Markers & Lifecycle | 3/3 | Complete    | 2026-03-15 | - |
-| 17. Starter Content | 3/3 | Complete   | 2026-03-15 | - |
-| 18. Documentation | v1.2 | 0/? | Not started | - |
+| 17. Starter Content | 3/3 | Complete    | 2026-03-15 | - |
+| 18. Documentation | v1.2 | 0/4 | Not started | - |
 | 19. Publishing | v1.2 | 0/? | Not started | - |
