@@ -13,6 +13,9 @@
 # Pagefind search index (generated at build time)
 /public/pagefind/
 
+# Registry JSON endpoints (generated at build time)
+/public/r/
+
 .vercel
 
 # Yarn 2 w/ Zero-Installs
