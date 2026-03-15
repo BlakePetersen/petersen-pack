@@ -12,6 +12,7 @@ const validItem = {
   type: 'config' as const,
   version: '2026.03.14.1',
   description: 'Opinionated ESLint configuration',
+  url: 'https://blakepetersen.io/configs/eslint-config',
 }
 
 const validIndex = {
@@ -38,6 +39,17 @@ describe('RegistryItemSchema', () => {
   it('rejects invalid type', () => {
     expect(
       RegistryItemSchema.safeParse({ ...validItem, type: 'widget' }).success
+    ).toBe(false)
+  })
+
+  it('rejects missing url', () => {
+    const { url: _, ...noUrl } = validItem
+    expect(RegistryItemSchema.safeParse(noUrl).success).toBe(false)
+  })
+
+  it('rejects invalid url', () => {
+    expect(
+      RegistryItemSchema.safeParse({ ...validItem, url: 'not-a-url' }).success
     ).toBe(false)
   })
 })
@@ -68,13 +80,14 @@ describe('RegistryIndexSchema', () => {
 })
 
 describe('RegistryArtifactSchema', () => {
-  it('accepts a full artifact (reuses ArtifactMetadataSchema)', () => {
+  it('accepts a full artifact with url', () => {
     const fullArtifact = {
       slug: 'eslint-config',
       name: 'ESLint Config',
       type: 'config' as const,
       version: '2026.03.14.1',
       description: 'Opinionated ESLint configuration',
+      url: 'https://blakepetersen.io/configs/eslint-config',
       files: [
         { path: 'eslint.config.mjs', content: 'export default {}', merge: 'replace' as const },
       ],
@@ -86,5 +99,19 @@ describe('RegistryArtifactSchema', () => {
     expect(
       RegistryArtifactSchema.safeParse(validItem).success
     ).toBe(false)
+  })
+
+  it('rejects missing url field', () => {
+    const artifactWithoutUrl = {
+      slug: 'eslint-config',
+      name: 'ESLint Config',
+      type: 'config' as const,
+      version: '2026.03.14.1',
+      description: 'Opinionated ESLint configuration',
+      files: [
+        { path: 'eslint.config.mjs', content: 'export default {}', merge: 'replace' as const },
+      ],
+    }
+    expect(RegistryArtifactSchema.safeParse(artifactWithoutUrl).success).toBe(false)
   })
 })
