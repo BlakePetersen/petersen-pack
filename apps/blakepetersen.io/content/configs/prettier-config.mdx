@@ -1,0 +1,62 @@
+---
+title: "Prettier Configuration"
+description: "Opinionated Prettier setup with rationale for each formatting choice and ESLint integration guidance."
+applies_to: ["prettier"]
+dependencies: []
+related: ["configs/eslint-flat-config", "configs/typescript-config"]
+order: 2
+draft: false
+tags: ["formatting", "prettier", "configuration"]
+---
+
+Prettier ends formatting debates by removing them entirely. You pick your rules once, and Prettier enforces them on every save, every commit, and every CI run. The specific rules matter less than having rules at all — but I still chose these deliberately.
+
+## What This Config Does
+
+The artifact applies a `.prettierrc.json` with opinionated defaults and a `.prettierignore` that keeps Prettier focused on source code. The settings are minimal because Prettier's defaults are already good — I only override where the defaults create friction.
+
+## Why These Specific Rules
+
+- **`printWidth: 100`** — Prettier's default of 80 is a holdover from terminal constraints that haven't mattered in a decade. 100 characters hits the sweet spot where most statements fit on one line without encouraging excessively long lines. You can read it comfortably in a side-by-side diff.
+- **`singleQuote: true`** — Single quotes are one fewer keystrokes, look cleaner in import statements, and are the convention in most modern JavaScript/TypeScript projects. JSON still requires double quotes, which Prettier handles automatically.
+- **`trailingCommas: "all"`** — Trailing commas make diffs cleaner. Adding a new item to a list or object only shows one changed line instead of two. They also eliminate the "comma-first" versus "comma-last" debate entirely.
+- **`semi: true`** — ASI (Automatic Semicolon Insertion) has well-known gotchas with lines starting with `(`, `[`, or template literals. Semicolons cost nothing and prevent an entire class of subtle bugs. Omitting them is a style choice that trades safety for aesthetics.
+- **`tabWidth: 2`** — Two-space indentation is the JavaScript community standard. It keeps deeply nested JSX and callback chains readable without excessive horizontal scrolling.
+
+## How It Integrates with ESLint
+
+Prettier handles formatting. ESLint handles logic. These are separate concerns and should stay that way.
+
+The key rule: never use ESLint for formatting. Disable any ESLint rules that conflict with Prettier (like `indent`, `quotes`, `semi`). The `eslint-config-prettier` package does this automatically, but if you're using the flat config artifact from this site, the rule sets are already compatible — Prettier formats, ESLint catches bugs.
+
+Run them in sequence: ESLint first (to catch logic errors and auto-fix what it can), then Prettier (to format the result). In your pre-commit hook, lint-staged handles this ordering automatically.
+
+## Installation
+
+<TabbedCode group="pkg">
+  <Tab label="pnpm">
+    ```bash
+    pnpm add -D prettier
+    ```
+  </Tab>
+  <Tab label="npm">
+    ```bash
+    npm install -D prettier
+    ```
+  </Tab>
+  <Tab label="yarn">
+    ```bash
+    yarn add -D prettier
+    ```
+  </Tab>
+</TabbedCode>
+
+## Alternatives
+
+<Collapsible title="Biome">
+Biome bundles formatting and linting into one Rust binary. Its formatter is Prettier-compatible for most cases and significantly faster. If you're starting a new project and don't need Prettier plugin support (for Tailwind class sorting, for example), Biome is a compelling choice. The gap is shrinking, but Prettier's plugin ecosystem is still larger.
+</Collapsible>
+
+<Collapsible title="dprint">
+dprint is a pluggable formatter written in Rust that uses WebAssembly plugins for language support. It's fast and highly configurable — you can tune formatting behavior at a level Prettier intentionally doesn't expose. The trade-off is adoption: fewer editors have native dprint support, and you'll spend time configuring what Prettier decides for you.
+</Collapsible>

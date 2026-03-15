@@ -3,6 +3,7 @@ title: "ESLint Flat Config Setup"
 description: "Migrate to ESLint flat config format with TypeScript support, shared configs across monorepo packages."
 applies_to: ["eslint", "typescript"]
 dependencies: []
+related: ["configs/prettier-config", "configs/typescript-config", "hooks/husky-lint-staged"]
 order: 1
 draft: false
 tags: ["linting", "typescript", "configuration"]
@@ -37,3 +38,46 @@ The shared config should include rules that apply everywhere: no unused variable
 Use `typescript-eslint` with the `projectService` option for type-aware linting. This gives you access to rules that understand your type system, like `no-floating-promises` and `no-misused-promises`. The performance cost is worth the safety net these rules provide.
 
 Configure the parser to use your existing `tsconfig.json` rather than maintaining a separate config for ESLint. This ensures the linter sees the same type information as your compiler.
+
+## Why These Rules
+
+I chose `strictTypeChecked` over the milder `recommended` preset because half-measures in type-aware linting defeat the purpose. If you're going to pay the performance cost of feeding your type graph to ESLint, you should get the full benefit.
+
+Some specific choices worth calling out:
+
+- **`no-floating-promises: error`** — Unhandled promise rejections are the async equivalent of swallowed exceptions. This rule catches them at lint time instead of letting them silently crash in production.
+- **`consistent-type-imports: error`** — Enforcing `import type` for type-only imports makes the boundary between runtime and type-level code explicit. Bundlers can strip these more reliably, and it communicates intent to other developers.
+- **`no-unused-vars` as error (not warn)** — Warnings are noise you learn to ignore. If a variable is unused, it's dead code. Delete it. The `_` prefix escape hatch covers intentional omissions like unused callback parameters.
+- **Ignores for `dist/`, `node_modules/`, `*.config.*`** — Config files often use patterns that conflict with strict rules (like `require()`). Linting generated output is pointless. Keep the scope tight.
+
+The strictest preset catches real bugs: unsafe `any` usage, redundant type assertions, unnecessary conditions that indicate logic errors. The false positive rate is low enough that it's worth the occasional `// eslint-disable-next-line` on genuinely intentional patterns.
+
+## Installation
+
+<TabbedCode group="pkg">
+  <Tab label="pnpm">
+    ```bash
+    pnpm add -D eslint @eslint/js typescript-eslint
+    ```
+  </Tab>
+  <Tab label="npm">
+    ```bash
+    npm install -D eslint @eslint/js typescript-eslint
+    ```
+  </Tab>
+  <Tab label="yarn">
+    ```bash
+    yarn add -D eslint @eslint/js typescript-eslint
+    ```
+  </Tab>
+</TabbedCode>
+
+## Alternatives
+
+<Collapsible title="Biome">
+Biome is an all-in-one linter and formatter written in Rust. It's significantly faster than ESLint and replaces both ESLint and Prettier with a single tool. The trade-off is ecosystem maturity — Biome's rule coverage is still catching up, and the plugin ecosystem is nonexistent compared to ESLint's. If you don't need type-aware rules or niche plugins, Biome is worth evaluating. If you depend on `typescript-eslint`'s type-checked rules, ESLint is still the only option.
+</Collapsible>
+
+<Collapsible title="dprint">
+dprint is a Rust-based formatter (not a linter) that uses WebAssembly plugins. It's fast and configurable, but it only handles formatting — you'd still need ESLint for code quality rules. It's a Prettier alternative, not an ESLint alternative. Mentioned here because people often conflate the two concerns.
+</Collapsible>

@@ -1,0 +1,84 @@
+---
+title: "TypeScript Strict Configuration"
+description: "Strict TypeScript compiler configuration with rationale for each non-obvious option and when to relax rules."
+applies_to: ["typescript"]
+dependencies: []
+related: ["configs/eslint-flat-config", "configs/prettier-config"]
+order: 3
+draft: false
+tags: ["typescript", "compiler", "configuration"]
+---
+
+TypeScript's `strict` flag is a bundle of individual checks that enforce type safety. Turning it on is the easy part. Understanding why each check exists — and what it catches — is what turns strict mode from an annoyance into a safety net.
+
+## What Strict Mode Actually Enables
+
+The `strict` flag is shorthand for seven individual compiler options: `strictNullChecks`, `strictFunctionTypes`, `strictBindCallApply`, `strictPropertyInitialization`, `noImplicitAny`, `noImplicitThis`, and `useUnknownInCatchVariables`. Each one closes a different hole in the type system. Turning on `strict` is the baseline — this config goes further.
+
+## Why Each Non-Obvious Option
+
+### `noUncheckedIndexedAccess`
+
+This is the single most impactful option beyond `strict`. Without it, `array[0]` has type `T` even though it could be `undefined` at runtime. With it, the type becomes `T | undefined`, forcing you to handle the case where the index doesn't exist.
+
+The objection is always "but I know the array isn't empty." You know it *right now*. The person who modifies the code upstream in six months doesn't. This option catches off-by-one errors and missing-data bugs that `strict` alone misses.
+
+### `exactOptionalPropertyTypes`
+
+Without this, `{ name?: string }` allows `name` to be `string`, `undefined`, or explicitly set to `undefined`. With this option, there's a real distinction between "property is missing" and "property is present but undefined." These are semantically different in many APIs — `Object.hasOwn()`, `JSON.stringify()`, and spread operators all treat them differently.
+
+This one has the highest false-positive rate. You'll encounter APIs where the types don't distinguish between missing and undefined. When that happens, use a type assertion at the call site rather than disabling the option globally.
+
+### `verbatimModuleSyntax`
+
+This replaces the older `importsNotUsedAsValues` and `preserveValueImports` flags with a cleaner model: if you write `import type`, it's erased. If you write `import`, it's preserved. No compiler guessing, no surprising side effects from import elision.
+
+This pairs well with the ESLint `consistent-type-imports` rule — between the two, every import explicitly declares whether it's a runtime dependency or a type-only reference.
+
+### `noEmit`
+
+In a bundler-based workflow (Next.js, Vite, tsup), the bundler handles emit. TypeScript's job is type-checking only. Setting `noEmit` makes this explicit and prevents accidentally generating `.js` files that conflict with your bundler's output.
+
+### `isolatedModules`
+
+Ensures every file can be transpiled independently, which is a requirement for tools like esbuild, SWC, and Babel that process files in isolation rather than analyzing the full program. Without this, you can write TypeScript that type-checks but fails to transpile — `const enum` across files is the classic example.
+
+## Common Objections
+
+<Collapsible title="Strict mode slows me down">
+It slows you down *at the right time*. Catching a null access during development costs seconds. Catching it in production costs hours. The initial friction disappears once you internalize the patterns — nullable checks, type narrowing, and explicit assertions become muscle memory within a few weeks.
+</Collapsible>
+
+<Collapsible title="Too many type errors on existing code">
+Migrate incrementally. Enable `strict` in your base `tsconfig.json` and use per-file `@ts-expect-error` comments for existing violations. Track them as tech debt. Each PR that touches a file with suppression comments should fix at least one. The count goes down over time without blocking feature work.
+</Collapsible>
+
+<Collapsible title="Third-party types don't work with exactOptionalPropertyTypes">
+This is a legitimate pain point. Some libraries ship types that conflate missing and undefined. Use `skipLibCheck: true` (already in this config) to avoid errors in node_modules, and add targeted type assertions at the boundary where you call into the library. Don't weaken your own types to match theirs.
+</Collapsible>
+
+## When to Relax Rules
+
+Not every project needs every option. A quick prototype or scripting project can get away with `strict: true` alone. The extra options in this config target production codebases where multiple developers will maintain the code over months or years.
+
+If you're porting a large JavaScript codebase, start with `strict: true` and `noUncheckedIndexedAccess: false`. Add the stricter options as you clear the backlog of existing type errors. The goal is directional progress, not purity.
+
+## Installation
+
+<TabbedCode group="pkg">
+  <Tab label="pnpm">
+    ```bash
+    pnpm add -D typescript
+    ```
+  </Tab>
+  <Tab label="npm">
+    ```bash
+    npm install -D typescript
+    ```
+  </Tab>
+  <Tab label="yarn">
+    ```bash
+    yarn add -D typescript
+    ```
+  </Tab>
+</TabbedCode>
