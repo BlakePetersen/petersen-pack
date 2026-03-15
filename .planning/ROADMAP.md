@@ -48,7 +48,7 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 - [x] **Phase 13: Artifact Pipeline** - Velite integration for dual-content model (MDX docs + distributable artifacts) (completed 2026-03-15)
 - [x] **Phase 14: Registry API** - Static JSON endpoints serving artifact data from the site (completed 2026-03-15)
 - [x] **Phase 15: CLI Core** - Apply, list, status, and init commands with whole-file mode (completed 2026-03-15)
-- [ ] **Phase 16: Section Markers & Lifecycle** - Managed regions, update, eject, diff, and doctor commands
+- [x] **Phase 16: Section Markers & Lifecycle** - Managed regions, update, eject, diff, and doctor commands (completed 2026-03-15)
 - [ ] **Phase 17: Starter Content** - Config artifacts (ESLint, Prettier, TypeScript, Husky, CLAUDE.md templates)
 - [ ] **Phase 18: Documentation** - Guides for CLAUDE.md hierarchy, Blink architecture, and companion docs
 - [ ] **Phase 19: Publishing** - npm package publishing as @blink/cli with blink binary
@@ -185,7 +185,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 13. Artifact Pipeline | 2/2 | Complete    | 2026-03-15 | - |
 | 14. Registry API | 2/2 | Complete    | 2026-03-15 | - |
 | 15. CLI Core | 4/4 | Complete    | 2026-03-15 | - |
-| 16. Section Markers & Lifecycle | v1.2 | 2/3 | In Progress | - |
+| 16. Section Markers & Lifecycle | 3/3 | Complete   | 2026-03-15 | - |
 | 17. Starter Content | v1.2 | 0/? | Not started | - |
 | 18. Documentation | v1.2 | 0/? | Not started | - |
 | 19. Publishing | v1.2 | 0/? | Not started | - |
