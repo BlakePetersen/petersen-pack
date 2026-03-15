@@ -1,6 +1,7 @@
-// ABOUTME: Shared CLI output formatting helpers for tables and labels.
-// ABOUTME: Provides consistent styling for list, status, and dry-run output.
+// ABOUTME: Shared CLI output formatting helpers for tables, labels, and diffs.
+// ABOUTME: Provides consistent styling for list, status, dry-run, and diff output.
 import pc from 'picocolors'
+import { createPatch } from 'diff'
 import type { RegistryItem, ManifestEntry } from 'blink-registry'
 
 export function formatListTable(items: RegistryItem[]): string {
@@ -55,4 +56,23 @@ export function formatActionLabel(
   action: 'write' | 'install' | 'manifest'
 ): string {
   return pc.dim(`[${action}]`)
+}
+
+export function formatColoredDiff(
+  oldContent: string,
+  newContent: string,
+  filename: string
+): string {
+  const patch = createPatch(filename, oldContent, newContent, 'installed', 'upstream')
+
+  return patch
+    .split('\n')
+    .map((line) => {
+      if (line.startsWith('+++') || line.startsWith('---')) return pc.dim(line)
+      if (line.startsWith('+')) return pc.green(line)
+      if (line.startsWith('-')) return pc.red(line)
+      if (line.startsWith('@@')) return pc.cyan(line)
+      return line
+    })
+    .join('\n')
 }

@@ -8,6 +8,8 @@ import {
   writeManifest,
   createEmptyManifest,
   addManifestEntry,
+  removeManifestEntry,
+  updateManifestEntry,
   checksum,
   BLINK_DIR,
 } from '@/manifest'
@@ -110,6 +112,77 @@ describe('addManifestEntry', () => {
     expect(result.items[0]).toEqual(sampleEntry)
     // Verify immutability
     expect(base.items).toHaveLength(0)
+  })
+})
+
+describe('removeManifestEntry', () => {
+  it('removes entry by slug', () => {
+    const manifest: Manifest = { version: 1, items: [sampleEntry] }
+    const result = removeManifestEntry(manifest, 'prettier')
+
+    expect(result.items).toHaveLength(0)
+    // Verify immutability
+    expect(manifest.items).toHaveLength(1)
+  })
+
+  it('returns manifest unchanged when slug not found', () => {
+    const manifest: Manifest = { version: 1, items: [sampleEntry] }
+    const result = removeManifestEntry(manifest, 'nonexistent')
+
+    expect(result.items).toHaveLength(1)
+    expect(result.items[0].slug).toBe('prettier')
+  })
+
+  it('removes only the matching entry', () => {
+    const eslintEntry: ManifestEntry = {
+      ...sampleEntry,
+      slug: 'eslint',
+      name: 'ESLint',
+    }
+    const manifest: Manifest = {
+      version: 1,
+      items: [sampleEntry, eslintEntry],
+    }
+    const result = removeManifestEntry(manifest, 'prettier')
+
+    expect(result.items).toHaveLength(1)
+    expect(result.items[0].slug).toBe('eslint')
+  })
+})
+
+describe('updateManifestEntry', () => {
+  it('replaces entry matching slug with new entry', () => {
+    const manifest: Manifest = { version: 1, items: [sampleEntry] }
+    const updated: ManifestEntry = {
+      ...sampleEntry,
+      version: '2026.03.15.1',
+    }
+    const result = updateManifestEntry(manifest, 'prettier', updated)
+
+    expect(result.items).toHaveLength(1)
+    expect(result.items[0].version).toBe('2026.03.15.1')
+    // Verify immutability
+    expect(manifest.items[0].version).toBe('2026.03.14.1')
+  })
+
+  it('does not modify entries with different slugs', () => {
+    const eslintEntry: ManifestEntry = {
+      ...sampleEntry,
+      slug: 'eslint',
+      name: 'ESLint',
+    }
+    const manifest: Manifest = {
+      version: 1,
+      items: [sampleEntry, eslintEntry],
+    }
+    const updated: ManifestEntry = {
+      ...sampleEntry,
+      version: '2026.03.15.1',
+    }
+    const result = updateManifestEntry(manifest, 'prettier', updated)
+
+    expect(result.items[0].version).toBe('2026.03.15.1')
+    expect(result.items[1].slug).toBe('eslint')
   })
 })
 

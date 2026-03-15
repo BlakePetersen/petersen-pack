@@ -62,3 +62,21 @@ export function addManifestEntry(
 export function checksum(content: string): string {
   return createHash('sha256').update(content).digest('hex')
 }
+
+export function removeManifestEntry(
+  manifest: Manifest,
+  slug: string
+): Manifest {
+  return { ...manifest, items: manifest.items.filter((e) => e.slug !== slug) }
+}
+
+export function updateManifestEntry(
+  manifest: Manifest,
+  slug: string,
+  entry: ManifestEntry
+): Manifest {
+  return {
+    ...manifest,
+    items: manifest.items.map((e) => (e.slug === slug ? entry : e)),
+  }
+}
