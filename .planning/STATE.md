@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
-status: completed
-stopped_at: Completed 15-04-PLAN.md
-last_updated: "2026-03-15T03:22:03.998Z"
-last_activity: 2026-03-15 — Completed 15-04 --project flag gap closure
+status: in-progress
+stopped_at: Completed 16-01-PLAN.md
+last_updated: "2026-03-15T03:54:50.000Z"
+last_activity: 2026-03-15 — Completed 16-01 foundation modules
 progress:
   total_phases: 8
   completed_phases: 4
-  total_plans: 10
-  completed_plans: 10
-  percent: 100
+  total_plans: 13
+  completed_plans: 11
+  percent: 85
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 15 — CLI Core
+**Current focus:** Phase 16 — Section Markers & Lifecycle
 
 ## Current Position
 
-Phase: 15 of 19 (CLI Core)
-Plan: 04 of 04 complete
-Status: Complete
-Last activity: 2026-03-15 — Completed 15-04 --project flag gap closure
+Phase: 16 of 19 (Section Markers & Lifecycle)
+Plan: 01 of 03 complete
+Status: In Progress
+Last activity: 2026-03-15 — Completed 16-01 foundation modules
 
-Progress: [██████████] 100% (10/10 plans)
+Progress: [████████░░] 85% (11/13 plans)
 
 ## Performance Metrics
 
@@ -68,6 +68,9 @@ Recent decisions affecting current work:
 - [Phase 15]: Named consola import ({ consola }) required for TypeScript compatibility
 - [Phase 15]: Mock citty/consola/picocolors in command tests to avoid Jest ESM issues
 - [Phase 15]: --project flag defaults true, scope derived from args.project ternary
+- [Phase 16]: diff v8 has built-in TypeScript types; @types/diff deprecated and unnecessary
+- [Phase 16]: Line-based marker parsing (not single regex) for debuggability
+- [Phase 16]: Trailing newline normalization in extracted content for consistent checksumming
 
 ### Pending Todos
 
@@ -81,6 +84,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T03:22:03.996Z
-Stopped at: Completed 15-04-PLAN.md
+Last session: 2026-03-15T03:54:50.000Z
+Stopped at: Completed 16-01-PLAN.md
 Resume file: None
