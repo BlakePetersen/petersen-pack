@@ -47,7 +47,7 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 - [ ] **ART-02**: Multi-file artifacts include a `manifest.json` specifying files, destinations, and merge strategy
 - [ ] **ART-03**: Artifact metadata integrated into Velite pipeline via prepare step
 - [ ] **ART-04**: Single-file artifacts (skills) infer destination from content type
-- [ ] **ART-05**: Artifacts can declare npm devDependencies that the CLI prompts to install
+- [x] **ART-05**: Artifacts can declare npm devDependencies that the CLI prompts to install
 
 ### Starter Content (CONT)
 
@@ -119,7 +119,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ART-02 | Phase 13 | Pending |
 | ART-03 | Phase 13 | Pending |
 | ART-04 | Phase 13 | Pending |
-| ART-05 | Phase 13 | Pending |
+| ART-05 | Phase 13 | Complete |
 | REG-01 | Phase 13 | Pending |
 | REG-02 | Phase 14 | Pending |
 | REG-03 | Phase 14 | Pending |
