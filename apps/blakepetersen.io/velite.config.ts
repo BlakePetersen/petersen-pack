@@ -96,6 +96,49 @@ const posts = defineCollection({
     })),
 })
 
+const singleArtifacts = defineCollection({
+  name: 'SingleArtifact',
+  pattern: '**/*.artifact.md',
+  schema: s.object({
+    name: s.string(),
+    description: s.string(),
+    type: s.enum(['config', 'skill', 'hook', 'guide']),
+    merge: s.enum(['replace', 'section']),
+    destination: s.string(),
+    devDependencies: s.record(s.string(), s.string()).optional().default({}),
+    slug: s.path(),
+    body: s.raw(),
+  }),
+})
+
+const multiArtifacts = defineCollection({
+  name: 'MultiArtifact',
+  pattern: '**/*.artifact/manifest.json',
+  schema: s
+    .object({
+      name: s.string(),
+      description: s.string(),
+      type: s.enum(['config', 'skill', 'hook', 'guide']),
+      devDependencies: s.record(s.string(), s.string()).optional().default({}),
+      files: s.array(
+        s.object({
+          path: s.string(),
+          merge: s.enum(['replace', 'section']),
+        }),
+      ),
+      slug: s.path(),
+    })
+    .transform((data, { meta }) => {
+      const manifestDir = path.dirname(meta.path)
+      const resolvedFiles = data.files.map((f) => {
+        const filePath = path.join(manifestDir, f.path)
+        const content = fs.readFileSync(filePath, 'utf-8')
+        return { path: f.path, content, merge: f.merge }
+      })
+      return { ...data, files: resolvedFiles }
+    }),
+})
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const config: any = defineConfig({
   root: 'content',
@@ -115,7 +158,7 @@ const config: any = defineConfig({
       }],
     ],
   },
-  collections: { skills, hooks, configs, guides, posts },
+  collections: { skills, hooks, configs, guides, posts, singleArtifacts, multiArtifacts },
   strict: true,
   prepare: (data) => {
     const isProduction = process.env.NODE_ENV === 'production'

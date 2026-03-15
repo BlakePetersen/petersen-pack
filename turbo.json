@@ -3,7 +3,13 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "content/**/*.mdx", "velite.config.ts"],
+      "inputs": [
+        "src/**",
+        "content/**/*.mdx",
+        "content/**/*.artifact.md",
+        "content/**/*.artifact/**",
+        "velite.config.ts"
+      ],
       "outputs": [".next/**", "dist/**", ".velite/**"]
     },
     "clean": {
