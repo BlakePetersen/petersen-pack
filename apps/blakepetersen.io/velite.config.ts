@@ -310,7 +310,79 @@ const config: any = defineConfig({
       path.join(outputDir, 'artifacts.json'),
       JSON.stringify(allArtifacts, null, 2),
     )
+
+    // Generate static registry JSON files for CLI and HTTP consumption
+    writeRegistryFiles(allArtifacts)
   },
 })
+
+function writeRegistryFiles(
+  allArtifacts: Array<{
+    slug: string
+    name: string
+    type: string
+    version: string
+    description: string
+    files: Array<{ path: string; content: string; merge: string }>
+    devDependencies?: Record<string, string>
+    dependencies?: string[]
+  }>,
+) {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://blakepetersen.io'
+  const registryDir = path.resolve(process.cwd(), 'public', 'r')
+
+  // Clean stale files
+  fs.rmSync(registryDir, { recursive: true, force: true })
+  fs.mkdirSync(registryDir, { recursive: true })
+
+  // Build index with url per item
+  const items = allArtifacts.map((artifact) => ({
+    slug: artifact.slug,
+    name: artifact.name,
+    type: artifact.type,
+    version: artifact.version,
+    description: artifact.description,
+    url: `${baseUrl}/${artifact.type}s/${artifact.slug}`,
+  }))
+
+  // Use max CalVer version as generatedAt (avoids noisy git diffs from wall-clock time)
+  const maxVersion =
+    allArtifacts.length > 0
+      ? allArtifacts
+          .map((a) => a.version)
+          .sort()
+          .pop()!
+      : new Date().toISOString()
+
+  // CalVer versions aren't ISO datetimes, so convert to a stable ISO timestamp
+  // Format: YYYY.MM.DD.N -> YYYY-MM-DDT00:00:00Z
+  const generatedAt = maxVersion.match(/^\d{4}\.\d{2}\.\d{2}\.\d+$/)
+    ? `${maxVersion.split('.').slice(0, 3).join('-')}T00:00:00Z`
+    : maxVersion
+
+  const index = { items, generatedAt }
+
+  fs.writeFileSync(
+    path.join(registryDir, 'index.json'),
+    JSON.stringify(index, null, 2),
+  )
+
+  // Write per-artifact detail files
+  for (const artifact of allArtifacts) {
+    const typeDir = path.join(registryDir, artifact.type)
+    fs.mkdirSync(typeDir, { recursive: true })
+
+    const detail = {
+      ...artifact,
+      url: `${baseUrl}/${artifact.type}s/${artifact.slug}`,
+    }
+
+    fs.writeFileSync(
+      path.join(typeDir, `${artifact.slug}.json`),
+      JSON.stringify(detail, null, 2),
+    )
+  }
+}
 
 export default config
