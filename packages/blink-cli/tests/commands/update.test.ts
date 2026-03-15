@@ -114,23 +114,7 @@ function createManifestWithItem(slug: string, files: Array<{ path: string; conte
 
 function mockFetchForUpdate(artifact: any) {
   fetchMock = jest.fn()
-    .mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({
-        items: [
-          {
-            slug: artifact.slug,
-            name: artifact.name,
-            type: artifact.type,
-            version: artifact.version,
-            description: artifact.description,
-            url: artifact.url,
-          },
-        ],
-        generatedAt: '2026-03-15T00:00:00.000Z',
-      }),
-    })
-    .mockResolvedValueOnce({
+    .mockResolvedValue({
       ok: true,
       json: async () => artifact,
     })
