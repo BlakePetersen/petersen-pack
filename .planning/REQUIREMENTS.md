@@ -10,15 +10,15 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 ### CLI Core (CORE)
 
 - [ ] **CORE-01**: User can run `blink apply <slug>` to fetch and apply a config/skill/hook from the registry
-- [ ] **CORE-02**: User can run `blink list` to browse all available items in the registry
-- [ ] **CORE-03**: User can run `blink status` to see installed items, versions, and update availability
+- [x] **CORE-02**: User can run `blink list` to browse all available items in the registry
+- [x] **CORE-03**: User can run `blink status` to see installed items, versions, and update availability
 - [ ] **CORE-04**: User can run `blink update [slug]` to update managed items with diff preview
 - [ ] **CORE-05**: User can run `blink eject <slug>` to stop managing an item and transfer full ownership
 - [ ] **CORE-06**: User can run `blink diff <slug>` to preview upstream changes without applying
-- [ ] **CORE-07**: User can run `blink init` to initialize blink tracking in a project
+- [x] **CORE-07**: User can run `blink init` to initialize blink tracking in a project
 - [ ] **CORE-08**: User can run `blink doctor` to check for broken markers, orphaned manifests, and issues
-- [ ] **CORE-09**: User can pass `--dry-run` to any state-changing command to preview operations
-- [ ] **CORE-10**: User can pass `--yes` or run in non-TTY to skip interactive prompts
+- [x] **CORE-09**: User can pass `--dry-run` to any state-changing command to preview operations
+- [x] **CORE-10**: User can pass `--yes` or run in non-TTY to skip interactive prompts
 - [x] **CORE-11**: CLI detects package manager (pnpm/npm/yarn) from lockfile and uses correct install command
 - [ ] **CORE-12**: CLI resolves artifact dependencies and prompts to apply missing deps in topological order
 
@@ -127,11 +127,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REG-05 | Phase 14 | Complete |
 | PKG-05 | Phase 14 | Complete |
 | CORE-01 | Phase 15 | Pending |
-| CORE-02 | Phase 15 | Pending |
-| CORE-03 | Phase 15 | Pending |
-| CORE-07 | Phase 15 | Pending |
-| CORE-09 | Phase 15 | Pending |
-| CORE-10 | Phase 15 | Pending |
+| CORE-02 | Phase 15 | Complete |
+| CORE-03 | Phase 15 | Complete |
+| CORE-07 | Phase 15 | Complete |
+| CORE-09 | Phase 15 | Complete |
+| CORE-10 | Phase 15 | Complete |
 | CORE-11 | Phase 15 | Complete |
 | SCOPE-02 | Phase 15 | Pending |
 | SCOPE-03 | Phase 15 | Complete |
