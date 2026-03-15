@@ -2,7 +2,7 @@
 // ABOUTME: Defines artifact types, slug format, calendar versioning, merge strategies, and scopes.
 import { z } from 'zod'
 
-export const ArtifactTypeSchema = z.enum(['config', 'skill', 'hook'])
+export const ArtifactTypeSchema = z.enum(['config', 'skill', 'hook', 'guide'])
 
 export const SlugSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
 
