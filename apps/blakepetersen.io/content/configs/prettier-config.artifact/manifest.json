@@ -1,0 +1,12 @@
+{
+  "name": "Prettier Config",
+  "description": "Opinionated Prettier configuration with editor integration",
+  "type": "config",
+  "devDependencies": {
+    "prettier": "^3.0.0"
+  },
+  "files": [
+    { "path": ".prettierrc.json", "merge": "replace" },
+    { "path": ".prettierignore", "merge": "replace" }
+  ]
+}
