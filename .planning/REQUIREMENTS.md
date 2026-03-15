@@ -35,7 +35,7 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 
 ### Registry & Distribution (REG)
 
-- [ ] **REG-01**: Static JSON registry files generated at Velite build time from artifact metadata
+- [x] **REG-01**: Static JSON registry files generated at Velite build time from artifact metadata
 - [ ] **REG-02**: Registry index at `/r/index.json` lists all available items with metadata
 - [ ] **REG-03**: Individual artifact data served at `/r/<type>/<slug>.json` with file contents
 - [ ] **REG-04**: Registry includes CalVer version (from git commit date) per artifact
@@ -43,10 +43,10 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 
 ### Artifact System (ART)
 
-- [ ] **ART-01**: Each distributable content item has a companion `.artifact.md` or `.artifact/` directory
-- [ ] **ART-02**: Multi-file artifacts include a `manifest.json` specifying files, destinations, and merge strategy
-- [ ] **ART-03**: Artifact metadata integrated into Velite pipeline via prepare step
-- [ ] **ART-04**: Single-file artifacts (skills) infer destination from content type
+- [x] **ART-01**: Each distributable content item has a companion `.artifact.md` or `.artifact/` directory
+- [x] **ART-02**: Multi-file artifacts include a `manifest.json` specifying files, destinations, and merge strategy
+- [x] **ART-03**: Artifact metadata integrated into Velite pipeline via prepare step
+- [x] **ART-04**: Single-file artifacts (skills) infer destination from content type
 - [x] **ART-05**: Artifacts can declare npm devDependencies that the CLI prompts to install
 
 ### Starter Content (CONT)
@@ -115,12 +115,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PKG-01 | Phase 12 | Complete |
 | PKG-02 | Phase 12 | Complete |
 | PKG-04 | Phase 12 | Complete |
-| ART-01 | Phase 13 | Pending |
-| ART-02 | Phase 13 | Pending |
-| ART-03 | Phase 13 | Pending |
-| ART-04 | Phase 13 | Pending |
+| ART-01 | Phase 13 | Complete |
+| ART-02 | Phase 13 | Complete |
+| ART-03 | Phase 13 | Complete |
+| ART-04 | Phase 13 | Complete |
 | ART-05 | Phase 13 | Complete |
-| REG-01 | Phase 13 | Pending |
+| REG-01 | Phase 13 | Complete |
 | REG-02 | Phase 14 | Pending |
 | REG-03 | Phase 14 | Pending |
 | REG-04 | Phase 14 | Pending |
