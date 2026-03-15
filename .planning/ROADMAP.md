@@ -45,7 +45,7 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 **Milestone Goal:** Ship a CLI tool (`blink`) and registry API that lets anyone apply, update, and customize DX configurations from blakepetersen.io.
 
 - [x] **Phase 12: Shared Types & Package Scaffold** - Workspace packages with shared schemas and build pipeline
-- [ ] **Phase 13: Artifact Pipeline** - Velite integration for dual-content model (MDX docs + distributable artifacts)
+- [x] **Phase 13: Artifact Pipeline** - Velite integration for dual-content model (MDX docs + distributable artifacts) (completed 2026-03-15)
 - [ ] **Phase 14: Registry API** - Static JSON endpoints serving artifact data from the site
 - [ ] **Phase 15: CLI Core** - Apply, list, status, and init commands with whole-file mode
 - [ ] **Phase 16: Section Markers & Lifecycle** - Managed regions, update, eject, diff, and doctor commands
@@ -170,7 +170,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
 | 11. AI Automation | v1.1 | 2/2 | Complete | 2026-03-13 |
 | 12. Shared Types & Package Scaffold | v1.2 | Complete    | 2026-03-14 | 2026-03-14 |
-| 13. Artifact Pipeline | 1/2 | In Progress|  | - |
+| 13. Artifact Pipeline | 2/2 | Complete   | 2026-03-15 | - |
 | 14. Registry API | v1.2 | 0/? | Not started | - |
 | 15. CLI Core | v1.2 | 0/? | Not started | - |
 | 16. Section Markers & Lifecycle | v1.2 | 0/? | Not started | - |

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
 status: executing
-stopped_at: Completed 13-01-PLAN.md
-last_updated: "2026-03-15T00:52:00.490Z"
-last_activity: 2026-03-15 — Completed 13-01 guide type and CalVer
+stopped_at: Completed 13-02-PLAN.md
+last_updated: "2026-03-15T00:57:00.000Z"
+last_activity: 2026-03-15 — Completed 13-02 artifact pipeline
 progress:
   total_phases: 8
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
+  completed_plans: 4
   percent: 25
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 13 of 19 (Artifact Pipeline)
-Plan: 01 of 04 complete
+Plan: 02 of 04 complete
 Status: In Progress
-Last activity: 2026-03-15 — Completed 13-01 guide type and CalVer
+Last activity: 2026-03-15 — Completed 13-02 artifact pipeline
 
-Progress: [███-------] 25% (1/4 plans)
+Progress: [█████-----] 50% (2/4 plans)
 
 ## Performance Metrics
 
@@ -55,6 +55,8 @@ Recent decisions affecting current work:
 - [Phase 12]: tsup outExtension for .mjs output with type:module packages
 - [Phase 12]: citty/consola/picocolors as devDeps since tsup bundles via noExternal
 - [Phase 13]: Pure calverFromDate helper wraps date logic for testability; deriveCalVer handles git integration
+- [Phase 13]: Inline artifact validation in velite prepare hook (avoids blink-registry ESM resolution issues)
+- [Phase 13]: Artifact slugs use filename-only (no directory prefix) to match SlugSchema
 
 ### Pending Todos
 
@@ -63,11 +65,11 @@ None.
 ### Blockers/Concerns
 
 - @blink npm org scope must be registered before Phase 19 (publishing)
-- Velite prepare hook extension needs prototyping (Phase 13)
+- Velite prepare hook extension validated (Phase 13-02 complete)
 - Section marker survival across formatters needs validation (Phase 16)
 
 ## Session Continuity
 
-Last session: 2026-03-15T00:52:00.488Z
-Stopped at: Completed 13-01-PLAN.md
+Last session: 2026-03-15T00:57:00.000Z
+Stopped at: Completed 13-02-PLAN.md
 Resume file: None
