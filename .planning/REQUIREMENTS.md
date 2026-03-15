@@ -51,13 +51,13 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 
 ### Starter Content (CONT)
 
-- [ ] **CONT-01**: ESLint flat config artifact with section markers and TypeScript strict rules
-- [ ] **CONT-02**: Prettier config artifact with opinionated formatting rules
-- [ ] **CONT-03**: TypeScript strict config artifact with rationale for each compiler option
-- [ ] **CONT-04**: Husky + lint-staged hook artifact with pre-commit setup
-- [ ] **CONT-05**: Global CLAUDE.md template artifact with best practices for `~/.claude/CLAUDE.md`
-- [ ] **CONT-06**: Project CLAUDE.md template artifact with best practices for project-level CLAUDE.md
-- [ ] **CONT-07**: Writing custom skills artifact (companion to existing MDX)
+- [x] **CONT-01**: ESLint flat config artifact with section markers and TypeScript strict rules
+- [x] **CONT-02**: Prettier config artifact with opinionated formatting rules
+- [x] **CONT-03**: TypeScript strict config artifact with rationale for each compiler option
+- [x] **CONT-04**: Husky + lint-staged hook artifact with pre-commit setup
+- [x] **CONT-05**: Global CLAUDE.md template artifact with best practices for `~/.claude/CLAUDE.md`
+- [x] **CONT-06**: Project CLAUDE.md template artifact with best practices for project-level CLAUDE.md
+- [x] **CONT-07**: Writing custom skills artifact (companion to existing MDX)
 
 ### Documentation Content (DOCS)
 
@@ -146,13 +146,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SCOPE-06 | Phase 16 | Complete |
 | SCOPE-07 | Phase 16 | Complete |
 | SCOPE-08 | Phase 16 | Complete |
-| CONT-01 | Phase 17 | Pending |
-| CONT-02 | Phase 17 | Pending |
-| CONT-03 | Phase 17 | Pending |
-| CONT-04 | Phase 17 | Pending |
-| CONT-05 | Phase 17 | Pending |
-| CONT-06 | Phase 17 | Pending |
-| CONT-07 | Phase 17 | Pending |
+| CONT-01 | Phase 17 | Complete |
+| CONT-02 | Phase 17 | Complete |
+| CONT-03 | Phase 17 | Complete |
+| CONT-04 | Phase 17 | Complete |
+| CONT-05 | Phase 17 | Complete |
+| CONT-06 | Phase 17 | Complete |
+| CONT-07 | Phase 17 | Complete |
 | DOCS-01 | Phase 18 | Pending |
 | DOCS-02 | Phase 18 | Pending |
 | DOCS-03 | Phase 18 | Pending |
