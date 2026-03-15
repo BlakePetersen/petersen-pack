@@ -5,13 +5,13 @@ milestone_name: Blink CLI & DX Registry
 status: executing
 stopped_at: Completed 15-01-PLAN.md
 last_updated: "2026-03-15T02:48:47.997Z"
-last_activity: 2026-03-15 — Completed 15-01 shared utility modules
+last_activity: 2026-03-15 — Completed 15-02 init/list/status commands
 progress:
   total_phases: 8
   completed_phases: 3
   total_plans: 9
-  completed_plans: 7
-  percent: 93
+  completed_plans: 8
+  percent: 96
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 15 of 19 (CLI Core)
-Plan: 01 of 03 complete
+Plan: 02 of 03 complete
 Status: In Progress
-Last activity: 2026-03-15 — Completed 15-01 shared utility modules
+Last activity: 2026-03-15 — Completed 15-02 init/list/status commands
 
-Progress: [█████████░] 93% (7/9 plans)
+Progress: [█████████░] 96% (8/9 plans)
 
 ## Performance Metrics
 
@@ -64,6 +64,9 @@ Recent decisions affecting current work:
 - [Phase 15]: Read BASE_URL from env at call time for dynamic BLINK_REGISTRY_URL override
 - [Phase 15]: PM detection uses ordered config array for priority (pnpm > yarn > npm)
 - [Phase 15]: Output formatters return strings (not print) for testability
+- [Phase 15]: splitting: false in tsup config to maintain single-file binary with lazy imports
+- [Phase 15]: Named consola import ({ consola }) required for TypeScript compatibility
+- [Phase 15]: Mock citty/consola/picocolors in command tests to avoid Jest ESM issues
 
 ### Pending Todos
 
@@ -77,6 +80,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T02:48:47.996Z
-Stopped at: Completed 15-01-PLAN.md
+Last session: 2026-03-15T02:57:33Z
+Stopped at: Completed 15-02-PLAN.md
 Resume file: None
