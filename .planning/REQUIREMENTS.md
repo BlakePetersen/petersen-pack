@@ -72,7 +72,7 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 - [x] **PKG-02**: `packages/blink-cli` workspace package with tsup build producing single-file ESM binary
 - [ ] **PKG-03**: CLI published as `@blink/cli` to npm with `blink` binary name
 - [x] **PKG-04**: Turbo pipeline updated with build/test/typecheck tasks for new packages
-- [ ] **PKG-05**: ApplyActionBar component updated to show `blink apply <slug>` instead of `claude skill apply`
+- [x] **PKG-05**: ApplyActionBar component updated to show `blink apply <slug>` instead of `claude skill apply`
 
 ## Future Requirements (v2+)
 
@@ -125,7 +125,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REG-03 | Phase 14 | Pending |
 | REG-04 | Phase 14 | Pending |
 | REG-05 | Phase 14 | Pending |
-| PKG-05 | Phase 14 | Pending |
+| PKG-05 | Phase 14 | Complete |
 | CORE-01 | Phase 15 | Pending |
 | CORE-02 | Phase 15 | Pending |
 | CORE-03 | Phase 15 | Pending |

@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
-status: executing
-stopped_at: Completed 13-02-PLAN.md
-last_updated: "2026-03-15T00:57:00.000Z"
-last_activity: 2026-03-15 — Completed 13-02 artifact pipeline
+status: completed
+stopped_at: Completed 14-02-PLAN.md
+last_updated: "2026-03-15T01:50:59.203Z"
+last_activity: 2026-03-15 — Completed 14-02 apply action bar update
 progress:
   total_phases: 8
   completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
-  percent: 25
+  total_plans: 6
+  completed_plans: 6
+  percent: 96
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 13 — Artifact Pipeline
+**Current focus:** Phase 14 — Registry API
 
 ## Current Position
 
-Phase: 13 of 19 (Artifact Pipeline)
-Plan: 02 of 04 complete
-Status: In Progress
-Last activity: 2026-03-15 — Completed 13-02 artifact pipeline
+Phase: 14 of 19 (Registry API)
+Plan: 02 of 02 complete
+Status: Complete
+Last activity: 2026-03-15 — Completed 14-02 apply action bar update
 
-Progress: [█████-----] 50% (2/4 plans)
+Progress: [██████████] 96% (6/6 plans)
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Recent decisions affecting current work:
 - [Phase 13]: Pure calverFromDate helper wraps date logic for testability; deriveCalVer handles git integration
 - [Phase 13]: Inline artifact validation in velite prepare hook (avoids blink-registry ESM resolution issues)
 - [Phase 13]: Artifact slugs use filename-only (no directory prefix) to match SlugSchema
+- [Phase 14]: Consistent artifact lookup across all page types including guides
 
 ### Pending Todos
 
@@ -70,6 +71,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T00:57:00.000Z
-Stopped at: Completed 13-02-PLAN.md
+Last session: 2026-03-15T01:50:59.200Z
+Stopped at: Completed 14-02-PLAN.md
 Resume file: None
