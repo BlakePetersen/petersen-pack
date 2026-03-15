@@ -2,7 +2,7 @@
 name: ESLint Flat Config
 description: Modern ESLint flat config with TypeScript and strict rules
 type: config
-merge: replace
+merge: section
 destination: eslint.config.js
 devDependencies:
   eslint: '^9.0.0'
@@ -22,6 +22,14 @@ parserOptions: {
 projectService: true,
 tsconfigRootDir: import.meta.dirname,
 },
+},
+rules: {
+'@typescript-eslint/no-floating-promises': 'error',
+'@typescript-eslint/consistent-type-imports': 'error',
+'@typescript-eslint/no-unused-vars': [
+'error',
+{ argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+],
 },
 },
 {
