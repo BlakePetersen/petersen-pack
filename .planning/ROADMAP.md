@@ -126,8 +126,8 @@ Plans:
   5. `blink apply --global` targets `~/.claude/` and global config locations; local modifications to managed sections prompt before overwriting; file writes are atomic (temp + rename)
 **Plans**: 3 plans
 Plans:
-- [ ] 16-01-PLAN.md — Foundation modules: markers engine, atomic writer, scope resolver, dependency resolver, manifest helpers
-- [ ] 16-02-PLAN.md — Apply modifications (markers, global, atomic, deps) + update and diff commands
+- [x] 16-01-PLAN.md — Foundation modules: markers engine, atomic writer, scope resolver, dependency resolver, manifest helpers
+- [x] 16-02-PLAN.md — Apply modifications (markers, global, atomic, deps) + update and diff commands
 - [ ] 16-03-PLAN.md — Eject and doctor commands
 
 ### Phase 17: Starter Content
@@ -185,7 +185,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 13. Artifact Pipeline | 2/2 | Complete    | 2026-03-15 | - |
 | 14. Registry API | 2/2 | Complete    | 2026-03-15 | - |
 | 15. CLI Core | 4/4 | Complete    | 2026-03-15 | - |
-| 16. Section Markers & Lifecycle | v1.2 | 1/3 | In Progress | - |
+| 16. Section Markers & Lifecycle | v1.2 | 2/3 | In Progress | - |
 | 17. Starter Content | v1.2 | 0/? | Not started | - |
 | 18. Documentation | v1.2 | 0/? | Not started | - |
 | 19. Publishing | v1.2 | 0/? | Not started | - |
