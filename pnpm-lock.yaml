@@ -110,6 +110,9 @@ importers:
       artax-ui:
         specifier: workspace:*
         version: link:../../packages/artax-ui
+      blink-registry:
+        specifier: workspace:^
+        version: link:../../packages/blink-registry
       lucide-react:
         specifier: ^0.577.0
         version: 0.577.0(react@19.2.0)
