@@ -1,0 +1,11 @@
+{
+  "name": "Writing Custom Skills",
+  "description": "Example skills demonstrating range from simple to complex, companion to the writing custom skills guide",
+  "type": "skill",
+  "files": [
+    { "path": ".claude/skills/code-review.md", "merge": "replace" },
+    { "path": ".claude/skills/commit-message.md", "merge": "replace" },
+    { "path": ".claude/skills/deploy-checklist.md", "merge": "replace" },
+    { "path": ".claude/skills/starter-template.md", "merge": "replace" }
+  ]
+}
