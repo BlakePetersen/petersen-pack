@@ -9,7 +9,7 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 
 ### CLI Core (CORE)
 
-- [ ] **CORE-01**: User can run `blink apply <slug>` to fetch and apply a config/skill/hook from the registry
+- [x] **CORE-01**: User can run `blink apply <slug>` to fetch and apply a config/skill/hook from the registry
 - [x] **CORE-02**: User can run `blink list` to browse all available items in the registry
 - [x] **CORE-03**: User can run `blink status` to see installed items, versions, and update availability
 - [ ] **CORE-04**: User can run `blink update [slug]` to update managed items with diff preview
@@ -25,7 +25,7 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 ### Scope & Lifecycle (SCOPE)
 
 - [ ] **SCOPE-01**: User can apply items with `--global` flag targeting `~/.claude/` and global configs
-- [ ] **SCOPE-02**: User can apply items with `--project` flag (default) targeting project root and `.claude/`
+- [x] **SCOPE-02**: User can apply items with `--project` flag (default) targeting project root and `.claude/`
 - [x] **SCOPE-03**: Applied items are tracked in `.blink/manifest.json` with state, version, and checksums
 - [ ] **SCOPE-04**: Managed items use section markers (`<!-- blink:managed -->`) to delimit managed regions
 - [ ] **SCOPE-05**: User content outside managed markers is preserved during `blink update`
@@ -126,14 +126,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REG-04 | Phase 14 | Complete |
 | REG-05 | Phase 14 | Complete |
 | PKG-05 | Phase 14 | Complete |
-| CORE-01 | Phase 15 | Pending |
+| CORE-01 | Phase 15 | Complete |
 | CORE-02 | Phase 15 | Complete |
 | CORE-03 | Phase 15 | Complete |
 | CORE-07 | Phase 15 | Complete |
 | CORE-09 | Phase 15 | Complete |
 | CORE-10 | Phase 15 | Complete |
 | CORE-11 | Phase 15 | Complete |
-| SCOPE-02 | Phase 15 | Pending |
+| SCOPE-02 | Phase 15 | Complete |
 | SCOPE-03 | Phase 15 | Complete |
 | CORE-04 | Phase 16 | Pending |
 | CORE-05 | Phase 16 | Pending |
