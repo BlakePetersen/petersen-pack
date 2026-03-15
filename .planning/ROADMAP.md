@@ -92,7 +92,10 @@ Plans:
   2. `/r/<type>/<slug>.json` returns full artifact data including file contents and dependencies
   3. Each artifact has a CalVer version derived from its git commit date
   4. The ApplyActionBar component on content pages shows `blink apply <slug>` as the copy command
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 14-01-PLAN.md — Registry schema url field and Velite prepare hook endpoint generation
+- [ ] 14-02-PLAN.md — ApplyActionBar command update and artifact-conditional rendering
 
 ### Phase 15: CLI Core
 **Goal**: Users can install blink and apply, browse, inspect, and initialize config management in their projects
@@ -170,8 +173,8 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
 | 11. AI Automation | v1.1 | 2/2 | Complete | 2026-03-13 |
 | 12. Shared Types & Package Scaffold | v1.2 | Complete    | 2026-03-14 | 2026-03-14 |
-| 13. Artifact Pipeline | 2/2 | Complete   | 2026-03-15 | - |
-| 14. Registry API | v1.2 | 0/? | Not started | - |
+| 13. Artifact Pipeline | 2/2 | Complete    | 2026-03-15 | - |
+| 14. Registry API | v1.2 | 0/2 | Not started | - |
 | 15. CLI Core | v1.2 | 0/? | Not started | - |
 | 16. Section Markers & Lifecycle | v1.2 | 0/? | Not started | - |
 | 17. Starter Content | v1.2 | 0/? | Not started | - |
