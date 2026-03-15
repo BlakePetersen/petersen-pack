@@ -1,7 +1,7 @@
-dist/
-node_modules/
-.next/
-.velite/
-coverage/
-*.min.js
+dist
+node_modules
+.next
+coverage
 pnpm-lock.yaml
+*.min.*
+.velite

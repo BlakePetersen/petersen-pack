@@ -7,6 +7,6 @@
   },
   "files": [
     { "path": ".prettierrc.json", "merge": "replace" },
-    { "path": ".prettierignore", "merge": "replace" }
+    { "path": ".prettierignore", "merge": "section" }
   ]
 }
