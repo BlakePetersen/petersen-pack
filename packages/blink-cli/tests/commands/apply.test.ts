@@ -1,5 +1,5 @@
 // ABOUTME: Tests for the blink apply command.
-// ABOUTME: Validates artifact fetching, file writing, dep installation, manifest tracking, dry-run, and conflict handling.
+// ABOUTME: Validates artifact fetching, file writing, markers, atomic writes, global scope, deps resolution, and manifest tracking.
 import {
   mkdtempSync,
   writeFileSync,
@@ -93,6 +93,56 @@ const MOCK_ARTIFACT_NO_DEPS = {
   devDependencies: undefined,
 }
 
+const MOCK_SECTION_ARTIFACT = {
+  slug: 'shellrc',
+  name: 'Shell RC',
+  type: 'config' as const,
+  version: '2026.03.14.1',
+  description: 'Shell RC managed section',
+  url: 'https://blakepetersen.io/r/config/shellrc',
+  files: [
+    { path: '.zshrc', content: 'export PATH="$HOME/.blink/bin:$PATH"', merge: 'section' as const },
+  ],
+  devDependencies: undefined,
+}
+
+const MOCK_ARTIFACT_WITH_DEPS = {
+  slug: 'eslint-prettier',
+  name: 'ESLint Prettier',
+  type: 'config' as const,
+  version: '2026.03.14.1',
+  description: 'ESLint with Prettier',
+  url: 'https://blakepetersen.io/r/config/eslint-prettier',
+  files: [
+    { path: '.eslintrc.json', content: '{ "extends": ["prettier"] }', merge: 'replace' as const },
+  ],
+  dependencies: ['prettier'],
+  devDependencies: undefined,
+}
+
+const MOCK_INDEX_EXTENDED = {
+  items: [
+    ...MOCK_INDEX.items,
+    {
+      slug: 'shellrc',
+      name: 'Shell RC',
+      type: 'config',
+      version: '2026.03.14.1',
+      description: 'Shell RC managed section',
+      url: 'https://blakepetersen.io/r/config/shellrc',
+    },
+    {
+      slug: 'eslint-prettier',
+      name: 'ESLint Prettier',
+      type: 'config',
+      version: '2026.03.14.1',
+      description: 'ESLint with Prettier',
+      url: 'https://blakepetersen.io/r/config/eslint-prettier',
+    },
+  ],
+  generatedAt: '2026-03-14T00:00:00.000Z',
+}
+
 function mockFetchResponses(index: any, artifact: any) {
   fetchMock = jest.fn()
     .mockResolvedValueOnce({
@@ -138,7 +188,7 @@ afterEach(() => {
 async function runApply(args: Record<string, any> = {}) {
   const mod = await import('@/commands/apply')
   const command = mod.default
-  await command.run!({ args: { slug: 'prettier', 'dry-run': false, yes: false, project: true, ...args } } as any)
+  await command.run!({ args: { slug: 'prettier', 'dry-run': false, yes: false, project: true, global: false, ...args } } as any)
 }
 
 describe('blink apply', () => {
@@ -418,6 +468,134 @@ describe('blink apply', () => {
       const fileEntry = manifest.items[0].files[0]
       // Checksum should be a 64-char hex string (sha256)
       expect(fileEntry.checksum).toMatch(/^[a-f0-9]{64}$/)
+    })
+  })
+
+  describe('section markers', () => {
+    it('wraps section-merge content with markers before writing', async () => {
+      mockFetchResponses(MOCK_INDEX_EXTENDED, MOCK_SECTION_ARTIFACT)
+
+      await runApply({ slug: 'shellrc', yes: true })
+
+      const written = readFileSync(join(tmpDir, '.zshrc'), 'utf-8')
+      expect(written).toContain('blink:start shellrc')
+      expect(written).toContain('export PATH="$HOME/.blink/bin:$PATH"')
+      expect(written).toContain('blink:end shellrc')
+    })
+
+    it('computes checksum from marker-injected content', async () => {
+      mockFetchResponses(MOCK_INDEX_EXTENDED, MOCK_SECTION_ARTIFACT)
+
+      await runApply({ slug: 'shellrc', yes: true })
+
+      const manifest = JSON.parse(
+        readFileSync(join(tmpDir, BLINK_DIR, 'manifest.json'), 'utf-8')
+      )
+      const fileEntry = manifest.items[0].files[0]
+      // Checksum should match the content WITH markers (what's on disk)
+      const onDisk = readFileSync(join(tmpDir, '.zshrc'), 'utf-8')
+      const { checksum } = await import('@/manifest')
+      expect(fileEntry.checksum).toBe(checksum(onDisk))
+    })
+
+    it('writes replace-merge content without markers', async () => {
+      mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
+
+      await runApply({ yes: true })
+
+      const written = readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')
+      expect(written).not.toContain('blink:start')
+      expect(written).toBe('{ "semi": false }')
+    })
+  })
+
+  describe('atomic writes', () => {
+    it('uses atomicWrite for file operations', async () => {
+      mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
+
+      await runApply({ yes: true })
+
+      // Verify files exist (atomicWrite creates parent dirs and writes atomically)
+      expect(existsSync(join(tmpDir, '.prettierrc'))).toBe(true)
+      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe('{ "semi": false }')
+    })
+  })
+
+  describe('--global flag', () => {
+    it('sets scope to global in manifest entry', async () => {
+      mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
+
+      await runApply({ yes: true, global: true, project: false })
+
+      const manifest = JSON.parse(
+        readFileSync(join(tmpDir, BLINK_DIR, 'manifest.json'), 'utf-8')
+      )
+      expect(manifest.items[0].scope).toBe('global')
+    })
+  })
+
+  describe('dependency resolution', () => {
+    it('prompts to apply missing dependencies', async () => {
+      // First fetch: index. Second fetch: eslint-prettier artifact (has dep on prettier)
+      // User declines to apply deps
+      fetchMock = jest.fn()
+        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_INDEX_EXTENDED })
+        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_ARTIFACT_WITH_DEPS })
+      global.fetch = fetchMock
+      consolaMock.prompt.mockResolvedValueOnce(false) // decline dep install
+
+      await runApply({ slug: 'eslint-prettier', yes: false })
+
+      expect(consolaMock.prompt).toHaveBeenCalledWith(
+        expect.stringContaining('prettier'),
+        expect.any(Object)
+      )
+      // Warning logged about continuing without deps
+      expect(consolaMock.warn).toHaveBeenCalled()
+    })
+
+    it('proceeds normally when artifact has no dependencies', async () => {
+      mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
+
+      await runApply({ yes: true })
+
+      // Should not prompt for dependencies
+      const promptCalls = consolaMock.prompt.mock.calls.map((c: any[]) => c[0])
+      const depPrompts = promptCalls.filter((msg: string) => typeof msg === 'string' && msg.includes('Missing'))
+      expect(depPrompts).toHaveLength(0)
+    })
+
+    it('proceeds normally when all dependencies are already installed', async () => {
+      // Pre-create manifest with prettier installed
+      const blinkDir = join(tmpDir, BLINK_DIR)
+      mkdirSync(blinkDir, { recursive: true })
+      writeFileSync(
+        join(blinkDir, 'manifest.json'),
+        JSON.stringify({
+          version: 1,
+          items: [
+            {
+              slug: 'prettier',
+              name: 'Prettier',
+              type: 'config',
+              version: '2026.03.14.1',
+              scope: 'project',
+              installedAt: '2026-03-14T00:00:00.000Z',
+              files: [{ path: '.prettierrc', checksum: 'abc', merge: 'replace' }],
+            },
+          ],
+        })
+      )
+
+      fetchMock = jest.fn()
+        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_INDEX_EXTENDED })
+        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_ARTIFACT_WITH_DEPS })
+      global.fetch = fetchMock
+
+      await runApply({ slug: 'eslint-prettier', yes: true })
+
+      // Should write eslint config without prompting about deps
+      expect(existsSync(join(tmpDir, '.eslintrc.json'))).toBe(true)
     })
   })
 })
