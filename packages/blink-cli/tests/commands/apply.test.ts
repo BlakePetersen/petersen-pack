@@ -138,7 +138,7 @@ afterEach(() => {
 async function runApply(args: Record<string, any> = {}) {
   const mod = await import('@/commands/apply')
   const command = mod.default
-  await command.run!({ args: { slug: 'prettier', 'dry-run': false, yes: false, ...args } } as any)
+  await command.run!({ args: { slug: 'prettier', 'dry-run': false, yes: false, project: true, ...args } } as any)
 }
 
 describe('blink apply', () => {

@@ -84,6 +84,11 @@ export default defineCommand({
       description: 'Skip confirmation prompts',
       default: false,
     },
+    project: {
+      type: 'boolean',
+      description: 'Apply to project scope (default)',
+      default: true,
+    },
   },
   async run({ args }) {
     const slug = args.slug as string
@@ -215,7 +220,7 @@ export default defineCommand({
       name: artifact.name,
       type: artifact.type,
       version: artifact.version,
-      scope: 'project',
+      scope: args.project ? 'project' : 'global',
       installedAt: new Date().toISOString(),
       files: fileEntries,
     }
