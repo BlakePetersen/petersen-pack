@@ -1,12 +1,12 @@
 // ABOUTME: Fetches an artifact from the registry and applies it to the project.
-// ABOUTME: Handles file writing, dependency installation, and manifest tracking.
+// ABOUTME: Handles section markers, atomic writes, global scope, dependency resolution, and manifest tracking.
 import { defineCommand } from 'citty'
 import { consola } from 'consola'
 import pc from 'picocolors'
-import { writeFile, mkdir, stat } from 'node:fs/promises'
-import { join, dirname } from 'node:path'
+import { stat } from 'node:fs/promises'
 import { execSync } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 import { fetchIndex, fetchArtifact } from '@/registry'
 import {
   readManifest,
@@ -18,7 +18,12 @@ import {
 } from '@/manifest'
 import { detectPackageManager, installDevCommand } from '@/pm'
 import { formatActionLabel, formatDryRunHeader } from '@/output'
-import type { ManifestEntry, ManifestFileEntry } from 'blink-registry'
+import { atomicWrite } from '@/writer'
+import { injectMarkers, findManagedSections } from '@/markers'
+import { resolveDestination, resolveManifestRoot } from '@/scope'
+import { findMissingDeps } from '@/deps'
+import type { ManifestEntry, ManifestFileEntry, RegistryArtifact } from 'blink-registry'
+import { writeFile } from 'node:fs/promises'
 
 async function confirmAction(
   message: string,
@@ -89,11 +94,17 @@ export default defineCommand({
       description: 'Apply to project scope (default)',
       default: true,
     },
+    global: {
+      type: 'boolean',
+      description: 'Apply to global scope (~/.claude/)',
+      default: false,
+    },
   },
   async run({ args }) {
     const slug = args.slug as string
     const skipPrompt = args.yes || !process.stdout.isTTY
     const dryRun = args['dry-run']
+    const scope = args.global ? 'global' : 'project'
 
     // 1. Resolve artifact
     const index = await fetchIndex()
@@ -108,7 +119,8 @@ export default defineCommand({
 
     // 2. Check already installed
     const cwd = process.cwd()
-    let manifest = await readManifest(cwd)
+    const manifestRoot = resolveManifestRoot(scope, cwd)
+    let manifest = await readManifest(manifestRoot)
 
     if (manifest && manifest.items.find((i) => i.slug === slug)) {
       consola.warn(
@@ -128,26 +140,60 @@ export default defineCommand({
     if (!manifest) {
       manifest = createEmptyManifest()
       if (!dryRun) {
-        await writeManifest(cwd, manifest)
+        await writeManifest(manifestRoot, manifest)
         await addToGitignore(cwd)
       }
     }
 
-    // 5. Write files
+    // 5. Dependency resolution
+    if (artifact.dependencies && artifact.dependencies.length > 0) {
+      const installedSlugs = manifest.items.map((i) => i.slug)
+      const missing = findMissingDeps(artifact.dependencies, installedSlugs)
+
+      if (missing.length > 0) {
+        const confirmed = await confirmAction(
+          `Missing dependencies: ${missing.join(', ')}. Apply them first?`,
+          skipPrompt
+        )
+
+        if (!confirmed) {
+          consola.warn('Continuing without dependencies. Some features may not work.')
+        }
+      }
+    }
+
+    // 6. Write files
     const fileEntries: ManifestFileEntry[] = []
 
     for (const file of artifact.files) {
-      const destPath = join(cwd, file.path)
+      const destPath = resolveDestination(file.path, scope, cwd)
       const exists = await fileExists(destPath)
 
-      if (exists) {
+      // Prepare content: inject markers for section-merge files
+      let content = file.content
+      if (file.merge === 'section') {
+        // Check if markers already exist for this slug
+        if (exists) {
+          const currentContent = await readFile(destPath, 'utf-8')
+          const sections = findManagedSections(currentContent, slug)
+          if (sections.length > 0) {
+            consola.error(
+              `${pc.bold(slug)} is already installed in ${file.path}. Use ${pc.dim('blink update')} to update.`
+            )
+            return
+          }
+        }
+        content = injectMarkers(file.content, slug, file.path)
+      }
+
+      if (exists && file.merge === 'replace') {
         if (dryRun) {
           consola.log(
             `${formatActionLabel('write')} ${pc.dim(file.path)} ${pc.yellow('(exists, would overwrite)')}`
           )
           fileEntries.push({
             path: file.path,
-            checksum: checksum(file.content),
+            checksum: checksum(content),
             merge: file.merge,
           })
           continue
@@ -164,23 +210,22 @@ export default defineCommand({
         consola.log(`${formatActionLabel('write')} ${pc.dim(file.path)}`)
         fileEntries.push({
           path: file.path,
-          checksum: checksum(file.content),
+          checksum: checksum(content),
           merge: file.merge,
         })
         continue
       }
 
-      await mkdir(dirname(destPath), { recursive: true })
-      await writeFile(destPath, file.content)
+      await atomicWrite(destPath, content)
       consola.success(`${formatActionLabel('write')} ${pc.dim(file.path)}`)
       fileEntries.push({
         path: file.path,
-        checksum: checksum(file.content),
+        checksum: checksum(content),
         merge: file.merge,
       })
     }
 
-    // 6. Install dependencies
+    // 7. Install dependencies
     if (
       artifact.devDependencies &&
       Object.keys(artifact.devDependencies).length > 0
@@ -214,13 +259,13 @@ export default defineCommand({
       }
     }
 
-    // 7. Update manifest
+    // 8. Update manifest
     const entry: ManifestEntry = {
       slug: artifact.slug,
       name: artifact.name,
       type: artifact.type,
       version: artifact.version,
-      scope: args.project ? 'project' : 'global',
+      scope,
       installedAt: new Date().toISOString(),
       files: fileEntries,
     }
@@ -234,7 +279,7 @@ export default defineCommand({
     }
 
     manifest = addManifestEntry(manifest, entry)
-    await writeManifest(cwd, manifest)
+    await writeManifest(manifestRoot, manifest)
     consola.success(
       `Applied ${pc.bold(artifact.name)} ${pc.dim(artifact.version)}`
     )

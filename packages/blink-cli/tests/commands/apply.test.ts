@@ -444,15 +444,26 @@ describe('blink apply', () => {
       expect(manifest.items[0].scope).toBe('project')
     })
 
-    it('sets scope to global when --project=false', async () => {
+    it('sets scope to global when --global is true', async () => {
       mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
 
-      await runApply({ yes: true, project: false })
+      // For global scope tests, mock scope module to avoid writing to real $HOME
+      const scopeMod = await import('@/scope')
+      const origResolveManifest = scopeMod.resolveManifestRoot
+      const origResolveDest = scopeMod.resolveDestination
+      jest.spyOn(scopeMod, 'resolveManifestRoot').mockImplementation((_scope, cwd) => cwd)
+      jest.spyOn(scopeMod, 'resolveDestination').mockImplementation((filePath, _scope, cwd) => join(cwd, filePath))
+
+      await runApply({ yes: true, global: true, project: false })
 
       const manifest = JSON.parse(
         readFileSync(join(tmpDir, BLINK_DIR, 'manifest.json'), 'utf-8')
       )
       expect(manifest.items[0].scope).toBe('global')
+
+      // Restore
+      ;(scopeMod.resolveManifestRoot as jest.Mock).mockRestore()
+      ;(scopeMod.resolveDestination as jest.Mock).mockRestore()
     })
   })
 
@@ -522,15 +533,25 @@ describe('blink apply', () => {
   })
 
   describe('--global flag', () => {
-    it('sets scope to global in manifest entry', async () => {
+    it('resolves destinations via scope module for global scope', async () => {
       mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
+
+      // Mock scope module to verify it's called with 'global' and to avoid writing to real $HOME
+      const scopeMod = await import('@/scope')
+      const resolveDestSpy = jest.spyOn(scopeMod, 'resolveDestination').mockImplementation((filePath, _scope, cwd) => join(cwd, filePath))
+      jest.spyOn(scopeMod, 'resolveManifestRoot').mockImplementation((_scope, cwd) => cwd)
 
       await runApply({ yes: true, global: true, project: false })
 
-      const manifest = JSON.parse(
-        readFileSync(join(tmpDir, BLINK_DIR, 'manifest.json'), 'utf-8')
+      expect(resolveDestSpy).toHaveBeenCalledWith(
+        expect.any(String),
+        'global',
+        expect.any(String)
       )
-      expect(manifest.items[0].scope).toBe('global')
+
+      // Restore
+      ;(scopeMod.resolveManifestRoot as jest.Mock).mockRestore()
+      ;(scopeMod.resolveDestination as jest.Mock).mockRestore()
     })
   })
 
