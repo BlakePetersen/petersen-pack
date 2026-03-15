@@ -10,9 +10,11 @@ const main = defineCommand({
   },
   subCommands: {
     apply: () => import('./commands/apply').then((m) => m.default),
+    diff: () => import('./commands/diff').then((m) => m.default),
     init: () => import('./commands/init').then((m) => m.default),
     list: () => import('./commands/list').then((m) => m.default),
     status: () => import('./commands/status').then((m) => m.default),
+    update: () => import('./commands/update').then((m) => m.default),
   },
 })
 
