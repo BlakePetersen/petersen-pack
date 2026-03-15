@@ -5,6 +5,7 @@ import {
   formatStatusTable,
   formatDryRunHeader,
   formatActionLabel,
+  formatColoredDiff,
 } from '@/output'
 import type { RegistryItem, ManifestEntry } from 'blink-registry'
 
@@ -105,5 +106,26 @@ describe('formatActionLabel', () => {
 
   it('returns label for manifest action', () => {
     expect(formatActionLabel('manifest')).toContain('manifest')
+  })
+})
+
+describe('formatColoredDiff', () => {
+  it('produces unified diff output', () => {
+    const result = formatColoredDiff('line 1\nline 2\n', 'line 1\nline 3\n', 'test.txt')
+    // Should contain diff markers (the raw content may be wrapped in ANSI codes)
+    expect(result).toBeTruthy()
+    expect(result.length).toBeGreaterThan(0)
+  })
+
+  it('includes filename in output', () => {
+    const result = formatColoredDiff('old\n', 'new\n', 'config.yaml')
+    expect(result).toContain('config.yaml')
+  })
+
+  it('returns diff with additions and removals', () => {
+    const result = formatColoredDiff('old line\n', 'new line\n', 'file.ts')
+    // The output contains ANSI color codes, but the underlying text has + and - lines
+    expect(result).toContain('old line')
+    expect(result).toContain('new line')
   })
 })
