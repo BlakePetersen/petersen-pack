@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
-status: completed
-stopped_at: Completed 16-03-PLAN.md
-last_updated: "2026-03-15T04:14:00.722Z"
-last_activity: 2026-03-15 — Completed 16-03 eject and doctor commands
+status: executing
+stopped_at: Completed 17-02-PLAN.md
+last_updated: "2026-03-15T07:52:58.917Z"
+last_activity: 2026-03-15 — Completed 17-02 hooks and CLAUDE.md artifacts
 progress:
   total_phases: 8
-  completed_phases: 5
-  total_plans: 13
-  completed_plans: 13
+  completed_phases: 6
+  total_plans: 16
+  completed_plans: 16
   percent: 100
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 16 — Section Markers & Lifecycle
+**Current focus:** Phase 17 — Starter Content
 
 ## Current Position
 
-Phase: 16 of 19 (Section Markers & Lifecycle)
-Plan: 03 of 03 complete
-Status: Phase Complete
-Last activity: 2026-03-15 — Completed 16-03 eject and doctor commands
+Phase: 17 of 19 (Starter Content)
+Plan: 02 of 03 complete
+Status: In Progress
+Last activity: 2026-03-15 — Completed 17-02 hooks and CLAUDE.md artifacts
 
 Progress: [██████████] 100% (13/13 plans)
 
@@ -74,6 +74,11 @@ Recent decisions affecting current work:
 - [Phase 16]: Scope derived from --global flag (not inverted --project) for clarity
 - [Phase 16]: Global scope tests mock @/scope to avoid writing to real $HOME
 - [Phase 16]: Update uses entry.scope from manifest for per-item resolution
+- [Phase 17]: Skill files nested at .claude/skills/ inside artifact dir to match manifest destination paths
+- [Phase 17]: lint-staged patterns: JS/TS get eslint+prettier, JSON/MD/YAML/CSS get prettier only
+- [Phase 17]: CLAUDE.md templates use blink markers for section-based managed updates
+- [Phase 17]: Prettier .prettierignore uses merge: section while .prettierrc.json uses merge: replace per JSON limitation
+- [Phase 17]: TypeScript artifact uses JSONC comments for rationale on non-obvious strict options
 
 ### Pending Todos
 
@@ -87,6 +92,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T04:14:00.720Z
-Stopped at: Completed 16-03-PLAN.md
+Last session: 2026-03-15T07:52:58.915Z
+Stopped at: Completed 17-02-PLAN.md
 Resume file: None
