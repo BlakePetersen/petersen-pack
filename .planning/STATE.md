@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
 status: in-progress
-stopped_at: Completed 16-01-PLAN.md
-last_updated: "2026-03-15T03:54:50.000Z"
-last_activity: 2026-03-15 — Completed 16-01 foundation modules
+stopped_at: Completed 16-02-PLAN.md
+last_updated: "2026-03-15T04:06:06.000Z"
+last_activity: 2026-03-15 — Completed 16-02 lifecycle commands
 progress:
   total_phases: 8
   completed_phases: 4
   total_plans: 13
-  completed_plans: 11
-  percent: 85
+  completed_plans: 12
+  percent: 92
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 16 of 19 (Section Markers & Lifecycle)
-Plan: 01 of 03 complete
+Plan: 02 of 03 complete
 Status: In Progress
-Last activity: 2026-03-15 — Completed 16-01 foundation modules
+Last activity: 2026-03-15 — Completed 16-02 lifecycle commands
 
-Progress: [████████░░] 85% (11/13 plans)
+Progress: [█████████░] 92% (12/13 plans)
 
 ## Performance Metrics
 
@@ -71,6 +71,9 @@ Recent decisions affecting current work:
 - [Phase 16]: diff v8 has built-in TypeScript types; @types/diff deprecated and unnecessary
 - [Phase 16]: Line-based marker parsing (not single regex) for debuggability
 - [Phase 16]: Trailing newline normalization in extracted content for consistent checksumming
+- [Phase 16]: Scope derived from --global flag (not inverted --project) for clarity
+- [Phase 16]: Global scope tests mock @/scope to avoid writing to real $HOME
+- [Phase 16]: Update uses entry.scope from manifest for per-item resolution
 
 ### Pending Todos
 
@@ -84,6 +87,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T03:54:50.000Z
-Stopped at: Completed 16-01-PLAN.md
+Last session: 2026-03-15T04:06:06.000Z
+Stopped at: Completed 16-02-PLAN.md
 Resume file: None
