@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
 status: executing
-stopped_at: Completed 18-01-PLAN.md
-last_updated: "2026-03-15T08:59:13.056Z"
-last_activity: 2026-03-15 — Completed 18-01 interactive MDX components
+stopped_at: Completed 18-03-PLAN.md
+last_updated: "2026-03-15T09:06:03.000Z"
+last_activity: 2026-03-15 — Completed 18-03 companion documentation pages
 progress:
   total_phases: 8
   completed_phases: 6
   total_plans: 20
-  completed_plans: 17
-  percent: 93
+  completed_plans: 19
+  percent: 95
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 18 of 19 (Documentation)
-Plan: 01 complete
+Plan: 03 complete
 Status: In Progress
-Last activity: 2026-03-15 — Completed 18-01 interactive MDX components
+Last activity: 2026-03-15 — Completed 18-03 companion documentation pages
 
-Progress: [█████████░] 93% (17/20 plans)
+Progress: [█████████░] 95% (19/20 plans)
 
 ## Performance Metrics
 
@@ -80,6 +80,7 @@ Recent decisions affecting current work:
 - [Phase 17]: Prettier .prettierignore uses merge: section while .prettierrc.json uses merge: replace per JSON limitation
 - [Phase 17]: TypeScript artifact uses JSONC comments for rationale on non-obvious strict options
 - [Phase 18]: useSyncExternalStore for localStorage tab persistence (avoids setState-in-effect lint violation)
+- [Phase 18]: Callout component registered in MDX map from artax-ui (was exported but not mapped)
 
 ### Pending Todos
 
@@ -93,6 +94,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T08:59:13.054Z
-Stopped at: Completed 18-01-PLAN.md
+Last session: 2026-03-15T09:06:03Z
+Stopped at: Completed 18-03-PLAN.md
 Resume file: None
