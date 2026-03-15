@@ -20,18 +20,18 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 - [x] **CORE-09**: User can pass `--dry-run` to any state-changing command to preview operations
 - [x] **CORE-10**: User can pass `--yes` or run in non-TTY to skip interactive prompts
 - [x] **CORE-11**: CLI detects package manager (pnpm/npm/yarn) from lockfile and uses correct install command
-- [ ] **CORE-12**: CLI resolves artifact dependencies and prompts to apply missing deps in topological order
+- [x] **CORE-12**: CLI resolves artifact dependencies and prompts to apply missing deps in topological order
 
 ### Scope & Lifecycle (SCOPE)
 
-- [ ] **SCOPE-01**: User can apply items with `--global` flag targeting `~/.claude/` and global configs
+- [x] **SCOPE-01**: User can apply items with `--global` flag targeting `~/.claude/` and global configs
 - [x] **SCOPE-02**: User can apply items with `--project` flag (default) targeting project root and `.claude/`
 - [x] **SCOPE-03**: Applied items are tracked in `.blink/manifest.json` with state, version, and checksums
-- [ ] **SCOPE-04**: Managed items use section markers (`<!-- blink:managed -->`) to delimit managed regions
-- [ ] **SCOPE-05**: User content outside managed markers is preserved during `blink update`
+- [x] **SCOPE-04**: Managed items use section markers (`<!-- blink:managed -->`) to delimit managed regions
+- [x] **SCOPE-05**: User content outside managed markers is preserved during `blink update`
 - [ ] **SCOPE-06**: `blink eject` strips markers and removes item from manifest without deleting files
 - [ ] **SCOPE-07**: CLI detects local modifications to managed sections and prompts before overwriting
-- [ ] **SCOPE-08**: Atomic file writes (temp file + rename) prevent corruption on interrupted operations
+- [x] **SCOPE-08**: Atomic file writes (temp file + rename) prevent corruption on interrupted operations
 
 ### Registry & Distribution (REG)
 
@@ -139,13 +139,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CORE-05 | Phase 16 | Pending |
 | CORE-06 | Phase 16 | Pending |
 | CORE-08 | Phase 16 | Pending |
-| CORE-12 | Phase 16 | Pending |
-| SCOPE-01 | Phase 16 | Pending |
-| SCOPE-04 | Phase 16 | Pending |
-| SCOPE-05 | Phase 16 | Pending |
+| CORE-12 | Phase 16 | Complete |
+| SCOPE-01 | Phase 16 | Complete |
+| SCOPE-04 | Phase 16 | Complete |
+| SCOPE-05 | Phase 16 | Complete |
 | SCOPE-06 | Phase 16 | Pending |
 | SCOPE-07 | Phase 16 | Pending |
-| SCOPE-08 | Phase 16 | Pending |
+| SCOPE-08 | Phase 16 | Complete |
 | CONT-01 | Phase 17 | Pending |
 | CONT-02 | Phase 17 | Pending |
 | CONT-03 | Phase 17 | Pending |
