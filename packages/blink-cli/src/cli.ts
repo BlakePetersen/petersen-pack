@@ -1,10 +1,6 @@
 // ABOUTME: Entry point for the blink CLI tool.
-// ABOUTME: Defines the main command using citty and validates the blink-registry workspace dependency.
+// ABOUTME: Defines the main command with subcommand routing using citty.
 import { defineCommand, runMain } from 'citty'
-import type { ArtifactType } from 'blink-registry'
-
-// Type-level usage to prove the workspace dependency resolves
-type _VerifyImport = ArtifactType
 
 const main = defineCommand({
   meta: {
@@ -12,8 +8,10 @@ const main = defineCommand({
     version: '0.0.0',
     description: 'Apply opinionated DX configs, skills, and hooks',
   },
-  run() {
-    console.log('blink: no command specified. Run blink --help for usage.')
+  subCommands: {
+    init: () => import('./commands/init').then((m) => m.default),
+    list: () => import('./commands/list').then((m) => m.default),
+    status: () => import('./commands/status').then((m) => m.default),
   },
 })
 

@@ -10,6 +10,7 @@ export default defineConfig({
   outDir: 'dist',
   clean: true,
   noExternal: [/.*/],
+  splitting: false,
   outExtension: () => ({ js: '.mjs' }),
   banner: { js: '#!/usr/bin/env node' },
 })
