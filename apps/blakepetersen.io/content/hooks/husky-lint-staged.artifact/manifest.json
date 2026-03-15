@@ -1,0 +1,13 @@
+{
+  "name": "Husky + lint-staged",
+  "description": "Pre-commit hooks with Husky and lint-staged for automated code quality",
+  "type": "hook",
+  "devDependencies": {
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0"
+  },
+  "files": [
+    { "path": ".husky/pre-commit", "merge": "section" },
+    { "path": ".lintstagedrc.json", "merge": "replace" }
+  ]
+}

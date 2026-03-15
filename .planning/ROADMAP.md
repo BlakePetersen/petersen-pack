@@ -140,7 +140,11 @@ Plans:
   3. `blink apply husky` installs Husky + lint-staged with pre-commit hook setup
   4. `blink apply claude-global` and `blink apply claude-project` install CLAUDE.md templates to the correct scope
   5. A "writing custom skills" artifact exists as a companion to the existing MDX guide
-**Plans**: [To be planned]
+**Plans**: 3 plans
+Plans:
+- [ ] 17-01-PLAN.md — ESLint, Prettier, and TypeScript config artifacts
+- [ ] 17-02-PLAN.md — Husky + lint-staged hook and CLAUDE.md template artifacts
+- [ ] 17-03-PLAN.md — Writing custom skills artifact and build validation
 
 ### Phase 18: Documentation
 **Goal**: Users understand the CLAUDE.md hierarchy, how Blink works, and can find related content through cross-references
@@ -185,7 +189,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 13. Artifact Pipeline | 2/2 | Complete    | 2026-03-15 | - |
 | 14. Registry API | 2/2 | Complete    | 2026-03-15 | - |
 | 15. CLI Core | 4/4 | Complete    | 2026-03-15 | - |
-| 16. Section Markers & Lifecycle | 3/3 | Complete   | 2026-03-15 | - |
-| 17. Starter Content | v1.2 | 0/? | Not started | - |
+| 16. Section Markers & Lifecycle | 3/3 | Complete    | 2026-03-15 | - |
+| 17. Starter Content | v1.2 | 0/3 | Not started | - |
 | 18. Documentation | v1.2 | 0/? | Not started | - |
 | 19. Publishing | v1.2 | 0/? | Not started | - |
