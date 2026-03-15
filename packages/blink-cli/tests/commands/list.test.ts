@@ -37,9 +37,9 @@ const consolaMock = {
 }
 
 jest.mock('consola', () => ({
+  consola: consolaMock,
   default: consolaMock,
   __esModule: true,
-  ...consolaMock,
 }))
 
 jest.mock('picocolors', () => ({

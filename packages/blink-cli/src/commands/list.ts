@@ -1,7 +1,7 @@
 // ABOUTME: Displays available artifacts from the Blink registry.
 // ABOUTME: Supports grouped table output and raw JSON output.
 import { defineCommand } from 'citty'
-import consola from 'consola'
+import { consola } from 'consola'
 import { fetchIndex } from '@/registry'
 import { formatListTable } from '@/output'
 

@@ -27,7 +27,7 @@ jest.mock('consola', () => {
     log: jest.fn(),
     warn: jest.fn(),
   }
-  return { default: mock, __esModule: true, ...mock }
+  return { consola: mock, default: mock, __esModule: true }
 })
 
 jest.mock('picocolors', () => ({
@@ -49,7 +49,7 @@ beforeEach(() => {
   writeFileSync(join(tmpDir, 'pnpm-lock.yaml'), '')
 
   const consola = jest.requireMock('consola')
-  consolaMock = consola.default || consola
+  consolaMock = consola.consola
   consolaMock.info.mockClear()
   consolaMock.success.mockClear()
   consolaMock.log.mockClear()
