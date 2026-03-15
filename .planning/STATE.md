@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
-status: completed
-stopped_at: Completed 14-01-PLAN.md
-last_updated: "2026-03-15T01:52:14.336Z"
-last_activity: 2026-03-15 — Completed 14-02 apply action bar update
+status: executing
+stopped_at: Completed 15-01-PLAN.md
+last_updated: "2026-03-15T02:48:47.997Z"
+last_activity: 2026-03-15 — Completed 15-01 shared utility modules
 progress:
   total_phases: 8
   completed_phases: 3
-  total_plans: 6
-  completed_plans: 6
-  percent: 96
+  total_plans: 9
+  completed_plans: 7
+  percent: 93
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 14 — Registry API
+**Current focus:** Phase 15 — CLI Core
 
 ## Current Position
 
-Phase: 14 of 19 (Registry API)
-Plan: 02 of 02 complete
-Status: Complete
-Last activity: 2026-03-15 — Completed 14-02 apply action bar update
+Phase: 15 of 19 (CLI Core)
+Plan: 01 of 03 complete
+Status: In Progress
+Last activity: 2026-03-15 — Completed 15-01 shared utility modules
 
-Progress: [██████████] 96% (6/6 plans)
+Progress: [█████████░] 93% (7/9 plans)
 
 ## Performance Metrics
 
@@ -61,6 +61,9 @@ Recent decisions affecting current work:
 - [Phase 14]: CalVer max version as generatedAt for deterministic registry output
 - [Phase 14]: No blink-registry import in velite.config.ts (ESM resolution, per Phase 13)
 - [Phase 14]: CalVer max version as generatedAt for deterministic registry output
+- [Phase 15]: Read BASE_URL from env at call time for dynamic BLINK_REGISTRY_URL override
+- [Phase 15]: PM detection uses ordered config array for priority (pnpm > yarn > npm)
+- [Phase 15]: Output formatters return strings (not print) for testability
 
 ### Pending Todos
 
@@ -74,6 +77,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T01:52:14.334Z
-Stopped at: Completed 14-01-PLAN.md
+Last session: 2026-03-15T02:48:47.996Z
+Stopped at: Completed 15-01-PLAN.md
 Resume file: None

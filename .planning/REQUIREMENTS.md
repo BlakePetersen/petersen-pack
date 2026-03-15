@@ -19,14 +19,14 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 - [ ] **CORE-08**: User can run `blink doctor` to check for broken markers, orphaned manifests, and issues
 - [ ] **CORE-09**: User can pass `--dry-run` to any state-changing command to preview operations
 - [ ] **CORE-10**: User can pass `--yes` or run in non-TTY to skip interactive prompts
-- [ ] **CORE-11**: CLI detects package manager (pnpm/npm/yarn) from lockfile and uses correct install command
+- [x] **CORE-11**: CLI detects package manager (pnpm/npm/yarn) from lockfile and uses correct install command
 - [ ] **CORE-12**: CLI resolves artifact dependencies and prompts to apply missing deps in topological order
 
 ### Scope & Lifecycle (SCOPE)
 
 - [ ] **SCOPE-01**: User can apply items with `--global` flag targeting `~/.claude/` and global configs
 - [ ] **SCOPE-02**: User can apply items with `--project` flag (default) targeting project root and `.claude/`
-- [ ] **SCOPE-03**: Applied items are tracked in `.blink/manifest.json` with state, version, and checksums
+- [x] **SCOPE-03**: Applied items are tracked in `.blink/manifest.json` with state, version, and checksums
 - [ ] **SCOPE-04**: Managed items use section markers (`<!-- blink:managed -->`) to delimit managed regions
 - [ ] **SCOPE-05**: User content outside managed markers is preserved during `blink update`
 - [ ] **SCOPE-06**: `blink eject` strips markers and removes item from manifest without deleting files
@@ -132,9 +132,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CORE-07 | Phase 15 | Pending |
 | CORE-09 | Phase 15 | Pending |
 | CORE-10 | Phase 15 | Pending |
-| CORE-11 | Phase 15 | Pending |
+| CORE-11 | Phase 15 | Complete |
 | SCOPE-02 | Phase 15 | Pending |
-| SCOPE-03 | Phase 15 | Pending |
+| SCOPE-03 | Phase 15 | Complete |
 | CORE-04 | Phase 16 | Pending |
 | CORE-05 | Phase 16 | Pending |
 | CORE-06 | Phase 16 | Pending |
