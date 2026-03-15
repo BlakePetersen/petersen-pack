@@ -1,0 +1,151 @@
+---
+title: "The CLAUDE.md File Hierarchy: Global vs Project Scope"
+description: "A decision tree for placing rules in global or project CLAUDE.md files, with precedence rules and common mistakes to avoid."
+applies_to: ["claude", "ai", "configuration"]
+dependencies: []
+related: ["configs/claude-md-templates"]
+tags: ["claude", "ai-tooling", "configuration"]
+draft: false
+---
+
+Claude reads instructions from CLAUDE.md files at multiple levels of your filesystem. Where you put a rule determines which projects it affects, how it interacts with other rules, and whether it causes confusion when Claude switches contexts. I spent months getting this wrong before landing on a system that works.
+
+This guide walks through the decision tree I use every time I add a new instruction to my CLAUDE.md setup.
+
+## The Decision Tree
+
+Every rule you write for Claude belongs in exactly one place. Walk through these steps to figure out where.
+
+<Steps>
+  <Step title="Does this apply to ALL your projects?">
+    Think about every repo you work on. Would this instruction make sense in a Python project, a Go service, and a React app? If yes, it's global. If you hesitated, it's probably project-level.
+
+    **Global examples:** "Address me as Blake", "Commit frequently", "Never skip pre-commit hooks", "Prefer simple solutions over clever ones."
+
+    **Not global:** "Use Tailwind v4", "Run pnpm test before committing", "Components live in src/components."
+  </Step>
+  <Step title="Is this a personal preference or a project constraint?">
+    Personal preferences travel with you across projects. Project constraints are dictated by the codebase.
+
+    **Personal preferences (global):** Communication style, how you want Claude to handle disagreements, coding philosophy like YAGNI or DRY priorities.
+
+    **Project constraints (project-level):** Test framework, file structure, deployment procedures, API conventions, framework-specific patterns.
+  </Step>
+  <Step title="Would this confuse Claude in a different project?">
+    This is the tiebreaker. If you're unsure, ask: "Would this instruction cause Claude to do something wrong in my other projects?"
+
+    If the answer is yes, it must be project-level. "Always use server components" makes perfect sense in a Next.js app but would be nonsensical in a CLI tool.
+  </Step>
+</Steps>
+
+## Global CLAUDE.md
+
+The global file lives at `~/.claude/CLAUDE.md`. Claude reads it for every project, every conversation. Think of it as your working relationship with Claude -- the stuff that doesn't change when you switch repos.
+
+<Callout variant="info">
+The global CLAUDE.md is about *you*, not your code. It defines how Claude communicates, how aggressively it should push back on bad ideas, and what universal coding principles you care about.
+</Callout>
+
+What belongs here:
+
+- **Communication style.** How Claude addresses you, how formal or informal the tone should be, whether you want emoji in output.
+- **Collaboration rules.** Should Claude ask before making big changes? Should it commit to opinions or hedge? Do you want it to flag bad ideas proactively?
+- **Universal coding principles.** "Prefer readable code over clever code." "Never skip tests." "Fix broken things immediately." These apply everywhere.
+- **Tool behavior.** "Commit frequently." "Never use `git add -A` without checking status first." "Don't disable pre-commit hooks."
+
+Example global CLAUDE.md:
+
+```markdown
+You are an experienced, pragmatic software engineer.
+
+## Communication
+- Address me as "Blake"
+- Don't be a sycophant -- push back when I'm wrong
+- Speak up when you don't know something
+
+## Coding principles
+- YAGNI. Don't add features we don't need right now.
+- Simple, readable solutions over clever ones.
+- Fix broken things immediately when you find them.
+
+## Version control
+- Commit frequently throughout development
+- Never skip or disable pre-commit hooks
+- Never use git add -A without running git status first
+```
+
+## Project CLAUDE.md
+
+The project file lives at `./CLAUDE.md` in the repo root. Claude reads it when working in that specific project. This is where framework-specific rules, testing conventions, and codebase structure live.
+
+What belongs here:
+
+- **Framework and tooling rules.** "This is a Next.js 16 project using Tailwind v4." "We use Jest for testing." "ESLint flat config with strict TypeScript rules."
+- **File structure expectations.** "Components go in `src/components/`." "Content lives in `content/{type}/{slug}.mdx`." "Shared packages are in `packages/`."
+- **Testing conventions.** "All tests must cover edge cases." "Never mock in e2e tests." "Test output must be pristine."
+- **Naming conventions.** "Use kebab-case for file names." "React components use PascalCase." "Every file starts with an ABOUTME comment."
+- **Deployment and CI rules.** "Run `pnpm build` before pushing." "The staging branch auto-deploys."
+
+Example project CLAUDE.md:
+
+```markdown
+## Stack
+- Next.js 16, Tailwind v4, TypeScript strict
+- Monorepo: Turborepo + pnpm workspaces
+- Content: Velite-powered MDX collections
+
+## File structure
+- Apps in apps/, shared packages in packages/
+- Components in src/components/, utilities in src/lib/
+- Content in content/{type}/{slug}.mdx
+
+## Code style
+- Every file starts with a 2-line ABOUTME comment
+- Zero border-radius everywhere (terminal aesthetic)
+- Use JetBrains Mono for code, Inter for prose
+
+## Testing
+- Jest + ts-jest for unit tests
+- Never mock in e2e tests
+- Test output must be pristine -- capture expected errors
+```
+
+## Precedence Rules
+
+When Claude finds instructions in both global and project CLAUDE.md files, it merges them. The rules are straightforward:
+
+1. **Project overrides global.** If your global file says "prefer tabs" and your project file says "use 2-space indentation," Claude follows the project rule.
+2. **Non-conflicting rules merge.** If global defines communication style and project defines testing conventions, Claude follows both.
+3. **Specificity wins.** A project rule about "how to test React components" is more specific than a global rule about "always write tests," so the project rule takes priority for React testing details.
+
+<Callout variant="info">
+Claude also reads CLAUDE.md files in subdirectories. A file at `packages/api/CLAUDE.md` would apply only when Claude is working in that package. The same precedence rules apply: more specific (deeper) files override less specific (shallower) ones.
+</Callout>
+
+## Common Mistakes
+
+<Callout variant="warning">
+**Putting project rules in global scope.** "Use Tailwind utility classes" in your global CLAUDE.md means Claude will try to write Tailwind in your Go backend. Every rule in global scope applies to every project -- no exceptions.
+</Callout>
+
+<Callout variant="warning">
+**Duplicating rules across both files.** If your global CLAUDE.md says "commit frequently" and your project file says the same thing, you now have two places to update if you change your mind. Keep each rule in exactly one place.
+</Callout>
+
+<Callout variant="warning">
+**Overloading the global file.** The global CLAUDE.md should be short. If it's more than a page, you've probably put project-specific rules in it. I keep mine under 40 lines.
+</Callout>
+
+<Callout variant="warning">
+**Forgetting project CLAUDE.md exists.** I've seen people put everything in global and wonder why Claude ignores their Next.js conventions when working on a Python project. The project file exists for a reason -- use it.
+</Callout>
+
+## Example Configurations
+
+Here's how I split my actual setup. The global file handles the relationship and universal principles. Each project file handles that project's specifics.
+
+**Global (`~/.claude/CLAUDE.md`)** -- 30 lines covering communication, coding philosophy, and tool behavior. Things I'd want in any codebase.
+
+**Project (`./CLAUDE.md`)** -- Variable length depending on the project. A simple CLI tool might have 15 lines. A full-stack monorepo with multiple packages might have 80 lines covering the stack, file conventions, testing rules, and deployment procedures.
+
+The key insight: if you delete your project CLAUDE.md and Claude's behavior would be fine for a different project in a different language, your global file is scoped correctly. If Claude would do something wrong, you've leaked project-specific rules into global scope.
