@@ -1,5 +1,5 @@
 // ABOUTME: Velite content pipeline configuration with typed schemas for all collections.
-// ABOUTME: Defines 5 collections (skills, hooks, configs, guides, posts) with Zod validation.
+// ABOUTME: Defines content and artifact collections, merges artifacts in prepare hook into artifacts.json.
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -16,6 +16,7 @@ import {
 } from './src/lib/graph'
 import type { ContentNode } from './src/lib/graph'
 import { getGitHistoryForFile } from './src/lib/git-history'
+import { deriveCalVer } from './src/lib/calver'
 
 // Shared fields for DX content types (skills, hooks, configs, guides)
 const dxFields = {
@@ -226,6 +227,88 @@ const config: any = defineConfig({
     fs.writeFileSync(
       path.join(outputDir, 'git-history.json'),
       JSON.stringify(gitHistory, null, 2),
+    )
+
+    // Merge single-file and multi-file artifacts into unified artifacts.json
+    function deriveArtifactSlug(velitePath: string): string {
+      const cleaned = velitePath
+        .replace(/\.artifact\/manifest$/, '')
+        .replace(/\.artifact$/, '')
+      // Extract just the filename portion to produce a valid slug (no slashes)
+      return cleaned.split('/').pop() || cleaned
+    }
+
+    const dateCounters = new Map<string, number>()
+
+    const singles = (data.singleArtifacts ?? []).map((artifact) => {
+      const slug = deriveArtifactSlug(artifact.slug)
+      const filePath = path.join(contentDir, `${artifact.slug}.md`)
+      const version = deriveCalVer(filePath, dateCounters)
+
+      return {
+        slug,
+        name: artifact.name,
+        type: artifact.type,
+        version,
+        description: artifact.description,
+        files: [
+          {
+            path: artifact.destination,
+            content: artifact.body,
+            merge: artifact.merge,
+          },
+        ],
+        devDependencies: artifact.devDependencies,
+      }
+    })
+
+    const multis = (data.multiArtifacts ?? []).map((artifact) => {
+      const slug = deriveArtifactSlug(artifact.slug)
+      const manifestPath = path.join(contentDir, `${artifact.slug}.json`)
+      const version = deriveCalVer(manifestPath, dateCounters)
+
+      return {
+        slug,
+        name: artifact.name,
+        type: artifact.type,
+        version,
+        description: artifact.description,
+        files: artifact.files,
+        devDependencies: artifact.devDependencies,
+      }
+    })
+
+    const allArtifacts = [...singles, ...multis]
+
+    // Validate artifact shape at build time (fail-fast)
+    const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+    const calverPattern = /^\d{4}\.\d{2}\.\d{2}\.\d+$/
+    const validTypes = ['config', 'skill', 'hook', 'guide']
+    const validMerges = ['replace', 'section']
+
+    for (const artifact of allArtifacts) {
+      if (!slugPattern.test(artifact.slug)) {
+        throw new Error(`Invalid artifact slug: "${artifact.slug}"`)
+      }
+      if (!calverPattern.test(artifact.version)) {
+        throw new Error(`Invalid artifact version: "${artifact.version}" for ${artifact.slug}`)
+      }
+      if (!validTypes.includes(artifact.type)) {
+        throw new Error(`Invalid artifact type: "${artifact.type}" for ${artifact.slug}`)
+      }
+      for (const file of artifact.files) {
+        if (!validMerges.includes(file.merge)) {
+          throw new Error(`Invalid merge strategy: "${file.merge}" in ${artifact.slug}`)
+        }
+        if (!file.content) {
+          throw new Error(`Empty file content for "${file.path}" in ${artifact.slug}`)
+        }
+      }
+    }
+
+    fs.writeFileSync(
+      path.join(outputDir, 'artifacts.json'),
+      JSON.stringify(allArtifacts, null, 2),
     )
   },
 })
