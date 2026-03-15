@@ -8,6 +8,10 @@ import * as runtime from 'react/jsx-runtime'
 import { mdxComponents } from 'artax-ui'
 import type { MDXComponents } from 'mdx/types'
 import { HeadingAnchor } from './heading-anchor'
+import { TabbedCode, Tab } from './mdx/tabbed-code'
+import { Collapsible } from './mdx/collapsible'
+import { Steps, Step } from './mdx/steps'
+import { TerminalDemo } from './mdx/terminal-demo'
 
 type HeadingProps = React.ComponentPropsWithoutRef<'h2'>
 
@@ -52,6 +56,16 @@ export function MDXContent({
 }) {
   const Component = useMemo(() => getMDXComponent(code), [code])
   return createElement(Component, {
-    components: { ...mdxComponents, ...headingOverrides, ...components },
+    components: {
+      ...mdxComponents,
+      ...headingOverrides,
+      TabbedCode,
+      Tab,
+      Collapsible,
+      Steps,
+      Step,
+      TerminalDemo,
+      ...components,
+    },
   })
 }

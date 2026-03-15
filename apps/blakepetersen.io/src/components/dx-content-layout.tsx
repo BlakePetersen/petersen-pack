@@ -8,6 +8,8 @@ import { Breadcrumbs } from './breadcrumbs'
 import { PageNavigation } from './page-navigation'
 import { getLocalGraphSvg } from '../lib/content'
 import { ApplyActionBar } from './apply-action-bar'
+import { PrerequisitesBanner } from './mdx/prerequisites-banner'
+import { RelatedCards } from './mdx/related-cards'
 import { ContentFreshness } from './content-freshness'
 import { ReactionCountProvider, ReactionCount } from './reaction-count'
 import { DiscussionWithReactions } from './content-with-discussion'
@@ -61,9 +63,13 @@ export function DxContentLayout({ item, artifact }: { item: DxItem; artifact?: {
 
       {artifact && <ApplyActionBar type={artifact.type} slug={artifact.slug} />}
 
+      <PrerequisitesBanner slugs={item.dependencies} />
+
       <div className={`prose-terminal${artifact ? ' mt-5' : ''}`}>
         <MDXContent code={item.code} />
       </div>
+
+      <RelatedCards slugs={item.related} />
 
       {item.decisions.length > 0 && (
         <section className="mt-8 border border-terminal-border p-4">
@@ -77,21 +83,6 @@ export function DxContentLayout({ item, artifact }: { item: DxItem; artifact?: {
             ))}
           </div>
         </section>
-      )}
-
-      {item.dependencies.length > 0 && (
-        <div className="mt-8 md:hidden">
-          <h3 className="mb-2 font-mono text-sm text-zinc-500">
-            {'// '}dependencies
-          </h3>
-          <ul className="space-y-1">
-            {item.dependencies.map((dep) => (
-              <li key={dep} className="font-mono text-xs text-terminal-muted">
-                {'> '}{dep}
-              </li>
-            ))}
-          </ul>
-        </div>
       )}
 
       {graphSvg && (
