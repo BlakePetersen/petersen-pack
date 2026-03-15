@@ -24,11 +24,19 @@ describe('blink-cli build output', () => {
     expect(files[0]).toBe('cli.mjs')
   })
 
-  it('running node dist/cli.mjs exits cleanly', () => {
-    const output = execSync(`node ${CLI_PATH}`, {
-      encoding: 'utf-8',
-      cwd: join(__dirname, '..'),
-    })
-    expect(output).toContain('blink: no command specified')
+  it('running node dist/cli.mjs shows help with subcommands', () => {
+    let output: string
+    try {
+      output = execSync(`node ${CLI_PATH} 2>&1`, {
+        encoding: 'utf-8',
+        cwd: join(__dirname, '..'),
+      })
+    } catch (error: any) {
+      // citty exits with code 1 when no subcommand given
+      output = error.stdout || error.stderr || ''
+    }
+    expect(output).toContain('init')
+    expect(output).toContain('list')
+    expect(output).toContain('status')
   })
 })
