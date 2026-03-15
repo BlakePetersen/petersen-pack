@@ -1,7 +1,7 @@
 // ABOUTME: Shows installed blink items with version and update status.
 // ABOUTME: Compares manifest entries against registry for update availability.
 import { defineCommand } from 'citty'
-import consola from 'consola'
+import { consola } from 'consola'
 import { readManifest } from '@/manifest'
 import { fetchIndex } from '@/registry'
 import { formatStatusTable } from '@/output'

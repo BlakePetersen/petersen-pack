@@ -1,7 +1,7 @@
 // ABOUTME: Initializes blink tracking in a project.
 // ABOUTME: Creates .blink/manifest.json, adds .blink/ to .gitignore, detects package manager.
 import { defineCommand } from 'citty'
-import consola from 'consola'
+import { consola } from 'consola'
 import pc from 'picocolors'
 import { readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
