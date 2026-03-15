@@ -196,5 +196,5 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 15. CLI Core | 4/4 | Complete    | 2026-03-15 | - |
 | 16. Section Markers & Lifecycle | 3/3 | Complete    | 2026-03-15 | - |
 | 17. Starter Content | 3/3 | Complete    | 2026-03-15 | - |
-| 18. Documentation | v1.2 | 0/4 | Not started | - |
+| 18. Documentation | 1/4 | In Progress|  | - |
 | 19. Publishing | v1.2 | 0/? | Not started | - |

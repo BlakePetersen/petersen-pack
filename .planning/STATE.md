@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
 status: executing
-stopped_at: Completed 17-02-PLAN.md
-last_updated: "2026-03-15T07:52:58.917Z"
-last_activity: 2026-03-15 — Completed 17-02 hooks and CLAUDE.md artifacts
+stopped_at: Completed 18-01-PLAN.md
+last_updated: "2026-03-15T08:59:13.056Z"
+last_activity: 2026-03-15 — Completed 18-01 interactive MDX components
 progress:
   total_phases: 8
   completed_phases: 6
-  total_plans: 16
-  completed_plans: 16
-  percent: 100
+  total_plans: 20
+  completed_plans: 17
+  percent: 93
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 17 — Starter Content
+**Current focus:** Phase 18 — Documentation
 
 ## Current Position
 
-Phase: 17 of 19 (Starter Content)
-Plan: 02 of 03 complete
+Phase: 18 of 19 (Documentation)
+Plan: 01 complete
 Status: In Progress
-Last activity: 2026-03-15 — Completed 17-02 hooks and CLAUDE.md artifacts
+Last activity: 2026-03-15 — Completed 18-01 interactive MDX components
 
-Progress: [██████████] 100% (13/13 plans)
+Progress: [█████████░] 93% (17/20 plans)
 
 ## Performance Metrics
 
@@ -79,6 +79,7 @@ Recent decisions affecting current work:
 - [Phase 17]: CLAUDE.md templates use blink markers for section-based managed updates
 - [Phase 17]: Prettier .prettierignore uses merge: section while .prettierrc.json uses merge: replace per JSON limitation
 - [Phase 17]: TypeScript artifact uses JSONC comments for rationale on non-obvious strict options
+- [Phase 18]: useSyncExternalStore for localStorage tab persistence (avoids setState-in-effect lint violation)
 
 ### Pending Todos
 
@@ -92,6 +93,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T07:52:58.915Z
-Stopped at: Completed 17-02-PLAN.md
+Last session: 2026-03-15T08:59:13.054Z
+Stopped at: Completed 18-01-PLAN.md
 Resume file: None
