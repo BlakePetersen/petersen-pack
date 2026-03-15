@@ -78,7 +78,10 @@ Plans:
   3. Single-file artifacts infer their destination from content type without explicit configuration
   4. Artifacts can declare npm devDependencies in their metadata
   5. `pnpm build` produces `.velite/artifacts.json` (or equivalent) containing all artifact data
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 13-01-PLAN.md — Schema updates, CalVer utility, and workspace dependency wiring
+- [ ] 13-02-PLAN.md — Velite artifact collections, prepare hook merge, query helpers, and test content
 
 ### Phase 14: Registry API
 **Goal**: The CLI (and any HTTP client) can discover and fetch artifact data from static JSON endpoints on blakepetersen.io
@@ -166,8 +169,8 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
 | 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
 | 11. AI Automation | v1.1 | 2/2 | Complete | 2026-03-13 |
-| 12. Shared Types & Package Scaffold | v1.2 | 2/2 | Complete | 2026-03-14 |
-| 13. Artifact Pipeline | v1.2 | 0/? | Not started | - |
+| 12. Shared Types & Package Scaffold | v1.2 | Complete    | 2026-03-14 | 2026-03-14 |
+| 13. Artifact Pipeline | v1.2 | 0/2 | Not started | - |
 | 14. Registry API | v1.2 | 0/? | Not started | - |
 | 15. CLI Core | v1.2 | 0/? | Not started | - |
 | 16. Section Markers & Lifecycle | v1.2 | 0/? | Not started | - |

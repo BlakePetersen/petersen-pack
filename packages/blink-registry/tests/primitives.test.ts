@@ -9,7 +9,7 @@ import {
 } from '../src/index'
 
 describe('ArtifactTypeSchema', () => {
-  it.each(['config', 'skill', 'hook'])('accepts "%s"', (value) => {
+  it.each(['config', 'skill', 'hook', 'guide'])('accepts "%s"', (value) => {
     expect(ArtifactTypeSchema.safeParse(value).success).toBe(true)
   })
 
