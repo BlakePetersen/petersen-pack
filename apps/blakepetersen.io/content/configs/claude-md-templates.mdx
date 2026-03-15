@@ -1,0 +1,92 @@
+---
+title: "CLAUDE.md Templates"
+description: "Opinionated starter templates for global and project-level CLAUDE.md files with rationale for each section."
+applies_to: ["claude", "ai"]
+dependencies: []
+related: ["guides/claude-md-hierarchy"]
+order: 4
+draft: false
+tags: ["claude", "ai-tooling", "templates"]
+---
+
+These two templates give Claude a foundation to work from. The global template sets your personal preferences — how you communicate, how you write code, how you test. The project template adds project-specific context — tech stack, conventions, development commands. Together, they make Claude useful from the first prompt instead of requiring a warm-up conversation.
+
+## What These Templates Provide
+
+Two artifacts, two scopes:
+
+- **Global template** (`~/.claude/CLAUDE.md`) — Your personal defaults that apply to every project. Communication style, coding principles, version control habits, testing philosophy.
+- **Project template** (`CLAUDE.md` at project root) — Project-specific context. Tech stack, directory structure, conventions, dev commands.
+
+The hierarchy guide explains where each type of instruction belongs. This page explains why these specific templates contain what they contain.
+
+## Why Opinionated Templates
+
+Starting from a blank CLAUDE.md is like configuring Vim from scratch — technically possible, but you'll spend the first hour rediscovering what everyone else already knows works. These templates encode patterns that make Claude more effective based on real-world usage:
+
+- Claude follows explicit rules more reliably than implicit expectations
+- Specific examples produce better output than abstract principles
+- Constraints prevent overengineering more effectively than asking for simplicity
+
+A template you customize is better than instructions you write from memory.
+
+## Global Template Rationale
+
+### Coding Style
+
+The five rules in the coding style section target Claude's most common failure modes. "Prefer simple, readable code" counteracts Claude's tendency to reach for abstractions. "Handle errors explicitly" prevents silent failures. "Delete dead code" stops Claude from commenting things out "just in case."
+
+### Communication
+
+These rules shape how Claude talks to you, not how it writes code. "Be direct and concise" eliminates the preamble that wastes context window. "Push back on approaches you disagree with" is critical — Claude defaults to agreement, which means it'll implement bad ideas without objection unless told otherwise.
+
+### Version Control
+
+Atomic commits and meaningful messages matter because Claude generates a lot of code quickly. Without these rules, you get monolithic commits with messages like "implement feature" that are impossible to review or revert selectively.
+
+### Testing
+
+"Write tests for behavior, not implementation details" prevents the most common testing antipattern: tests that break when you refactor without changing behavior. "Keep tests independent" prevents the second most common: flaky tests from shared state.
+
+## Project Template Rationale
+
+### Tech Stack
+
+Claude needs to know your specific versions. "TypeScript 5.x with strict mode" is actionable — Claude will use `satisfies`, `const` type parameters, and other modern features. "TypeScript" without version context means Claude might use patterns from TypeScript 3.
+
+### Project Structure
+
+Directory layout tells Claude where to put new files. Without this, Claude guesses, and it guesses differently every time. Listing your directories once eliminates a class of "I put the file in the wrong place" corrections.
+
+### Conventions
+
+"Use named exports over default exports" is the kind of rule that prevents inconsistency across a codebase. Claude won't remember your preference from a previous conversation — the CLAUDE.md makes it persistent.
+
+### Development Commands
+
+Listing your exact dev commands (`pnpm dev`, `pnpm test`) prevents Claude from guessing `npm run start` or `yarn build`. Small but frequent source of friction.
+
+## How to Customize
+
+**Keep:** The section structure. Global for personal preferences, project for project context. The separation matters because your coding style doesn't change between projects, but your tech stack does.
+
+**Change:** Every specific rule. These templates reflect one person's preferences. Replace `singleQuote: true` rationale with your actual formatting choices. Replace `pnpm` with whatever you actually use.
+
+**Add:** Project-specific sections your template doesn't cover. Database conventions, API design patterns, deployment workflows, environment variables. The more context Claude has about your specific project, the less you correct it.
+
+## Applying the Templates
+
+<TabbedCode group="blink">
+  <Tab label="Global">
+    ```bash
+    blink apply claude-global
+    ```
+  </Tab>
+  <Tab label="Project">
+    ```bash
+    blink apply claude-project
+    ```
+  </Tab>
+</TabbedCode>
+
+The global template writes to `~/.claude/CLAUDE.md`. The project template writes to `CLAUDE.md` in your current directory. Both use blink's section markers, so running `blink update` later will merge upstream changes without overwriting your customizations.

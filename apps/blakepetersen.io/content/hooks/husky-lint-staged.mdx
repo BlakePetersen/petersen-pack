@@ -1,0 +1,67 @@
+---
+title: "Husky + lint-staged Pre-commit Hooks"
+description: "Git pre-commit hooks with Husky and lint-staged for automated linting and formatting on every commit."
+applies_to: ["husky", "lint-staged", "git"]
+dependencies: ["configs/eslint-flat-config", "configs/prettier-config"]
+related: ["configs/eslint-flat-config", "configs/prettier-config"]
+order: 1
+draft: false
+tags: ["git-hooks", "automation", "pre-commit"]
+---
+
+Pre-commit hooks are the last line of defense before code enters your repository. They catch formatting errors, lint violations, and type errors locally — seconds after you run `git commit` instead of minutes later in CI.
+
+## Why Pre-commit Hooks
+
+The argument for running checks locally is speed. CI pipelines take minutes to start, run in a queue, and give you feedback after you've already context-switched. A pre-commit hook runs instantly, on the files you just changed, while you're still thinking about them.
+
+<Callout variant="info">
+Local catches are instant. CI catches cost minutes. Pre-commit hooks don't replace CI — they catch the easy stuff before it gets that far.
+</Callout>
+
+The counterargument is "developers can skip hooks with `--no-verify`." True. But the goal isn't enforcement — it's convenience. Most formatting and lint issues are accidental. A pre-commit hook fixes them automatically without the developer ever seeing a CI failure.
+
+## The Git Hook Lifecycle
+
+Git hooks are scripts that run at specific points in the Git workflow. The most relevant ones for code quality:
+
+- **pre-commit** — Runs before the commit is created. If it exits non-zero, the commit is aborted. This is where linting and formatting belong.
+- **commit-msg** — Runs after you write the message, before the commit finalizes. Used for enforcing commit message conventions.
+- **pre-push** — Runs before `git push`. Used for slower checks like full test suites that would be too slow for every commit.
+
+Husky makes these hooks portable. Git hooks live in `.git/hooks/`, which isn't tracked by version control. Husky solves this by installing a runner that delegates to hook scripts in your repository's `.husky/` directory.
+
+## What lint-staged Does
+
+lint-staged runs your linters only on files that are staged for commit — not the entire repository. This is critical for performance in large codebases. If you change three files, only those three files get linted and formatted.
+
+The configuration maps file patterns to commands:
+
+- **`*.{js,ts,jsx,tsx}`** — Run ESLint with `--fix`, then Prettier with `--write`. ESLint catches logic errors and auto-fixes what it can. Prettier formats the result.
+- **`*.{json,md,yaml,css}`** — Run Prettier only. These file types don't need linting, just consistent formatting.
+
+The order matters. ESLint's auto-fix can introduce formatting changes that Prettier then normalizes. Running ESLint first, then Prettier, ensures the final result is both lint-clean and properly formatted.
+
+## What the Artifact Installs
+
+The Husky + lint-staged artifact sets up:
+
+1. **Husky** as a dev dependency with a `prepare` script that runs `husky` on `npm install` / `pnpm install`
+2. **A `.husky/pre-commit` hook** that invokes `npx lint-staged`
+3. **lint-staged configuration** in `package.json` with file pattern mappings
+
+The `prepare` script ensures hooks are installed automatically when anyone clones the repo and installs dependencies. No manual setup, no "did you remember to set up hooks?" in your README.
+
+## Alternatives
+
+<Collapsible title="lefthook">
+lefthook is a Go binary that manages Git hooks without a Node.js dependency. It's faster than Husky for hook execution and supports parallel command execution out of the box. It has built-in glob filtering similar to lint-staged, so you don't need a separate tool. The trade-off is that it's another binary to install — if your team is already in a Node.js ecosystem, Husky is one fewer moving part.
+</Collapsible>
+
+<Collapsible title="simple-git-hooks">
+simple-git-hooks is a minimal alternative to Husky. It maps hook names to commands in your `package.json` with zero abstraction. No `.husky/` directory, no lifecycle scripts. The limitation is that it runs a single command per hook — no glob-based file filtering like lint-staged provides. Works well for simple "run all tests" hooks, less well for targeted per-file linting.
+</Collapsible>
+
+<Collapsible title="pre-commit (Python)">
+The `pre-commit` framework is popular in polyglot repositories. It manages hooks as isolated environments with their own dependencies, which means you can run Python linters, Go formatters, and JavaScript checks without polluting your project's dependency tree. The trade-off is that it's a Python tool — adding a Python dependency to a JavaScript project is a hard sell unless you already have Python in your stack.
+</Collapsible>
