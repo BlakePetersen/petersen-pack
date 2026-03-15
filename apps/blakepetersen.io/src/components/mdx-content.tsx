@@ -5,7 +5,7 @@
 
 import { createElement, useMemo } from 'react'
 import * as runtime from 'react/jsx-runtime'
-import { mdxComponents } from 'artax-ui'
+import { mdxComponents, Callout } from 'artax-ui'
 import type { MDXComponents } from 'mdx/types'
 import { HeadingAnchor } from './heading-anchor'
 import { TabbedCode, Tab } from './mdx/tabbed-code'
@@ -65,6 +65,7 @@ export function MDXContent({
       Steps,
       Step,
       TerminalDemo,
+      Callout,
       ...components,
     },
   })
