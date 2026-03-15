@@ -11,6 +11,8 @@ const main = defineCommand({
   subCommands: {
     apply: () => import('./commands/apply').then((m) => m.default),
     diff: () => import('./commands/diff').then((m) => m.default),
+    doctor: () => import('./commands/doctor').then((m) => m.default),
+    eject: () => import('./commands/eject').then((m) => m.default),
     init: () => import('./commands/init').then((m) => m.default),
     list: () => import('./commands/list').then((m) => m.default),
     status: () => import('./commands/status').then((m) => m.default),
