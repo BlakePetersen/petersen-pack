@@ -1,0 +1,180 @@
+---
+title: "Blink: A Config Registry That Manages Your Files"
+description: "How Blink works -- the registry, section markers, manifest tracking, and the apply-track-update-eject lifecycle."
+applies_to: ["blink", "cli", "configuration"]
+dependencies: []
+related: ["configs/eslint-flat-config", "configs/prettier-config", "configs/typescript-config", "hooks/husky-lint-staged"]
+tags: ["blink", "cli", "dx-tooling"]
+draft: false
+---
+
+I built Blink because I was tired of copying config files between projects and forgetting which version I copied from. ESLint configs, Prettier rules, TypeScript strict settings, git hooks -- they all started as one canonical setup that slowly drifted across a dozen repos. Blink is a CLI that fetches opinionated configs from a registry, writes them to your project, tracks what it wrote, and updates managed sections without touching your customizations.
+
+The mental model is simple: **registry, fetch, write, track, markers, update**.
+
+## Quick Start
+
+Apply a config from the registry:
+
+<TerminalDemo
+  title="blink apply"
+  lines={[
+    { text: "blink apply eslint-flat-config", type: "input", typing: true },
+    { text: "[write] eslint.config.js", type: "output", delay: 400 },
+    { text: "[write] .eslintignore", type: "output", delay: 150 },
+    { text: "Installing dependencies via pnpm...", type: "output", delay: 200 },
+    { text: "Applied ESLint Flat Config 2025.03.1", type: "output", delay: 300 },
+    { text: "", type: "prompt", delay: 400 }
+  ]}
+/>
+
+Check what's installed:
+
+<TerminalDemo
+  title="blink status"
+  lines={[
+    { text: "blink status", type: "input", typing: true },
+    { text: "  \u2713 ESLint Flat Config        2025.03.1  project", type: "output", delay: 400 },
+    { text: "  \u2713 Prettier Config           2025.03.1  project", type: "output", delay: 100 },
+    { text: "  \u2191 TypeScript Strict Config  2025.02.1  project", type: "output", delay: 100 },
+    { text: "", type: "prompt", delay: 300 }
+  ]}
+/>
+
+The arrow on TypeScript means an update is available from the registry.
+
+## What Blink Manages
+
+Blink tracks state in two places: a manifest file and section markers inside your config files.
+
+### The Manifest
+
+When you first run `blink apply`, Blink creates a `.blink/` directory with a `manifest.json` inside. This file records everything Blink has installed: which artifacts, which version, which files were written, and checksums of the content at install time.
+
+```json
+{
+  "version": 1,
+  "items": [
+    {
+      "slug": "eslint-flat-config",
+      "name": "ESLint Flat Config",
+      "type": "configs",
+      "version": "2025.03.1",
+      "scope": "project",
+      "installedAt": "2025-03-15T08:00:00.000Z",
+      "files": [
+        {
+          "path": "eslint.config.js",
+          "checksum": "a1b2c3d4",
+          "merge": "replace"
+        }
+      ]
+    }
+  ]
+}
+```
+
+The `.blink/` directory is automatically added to `.gitignore`. It's local tracking state, not something you commit.
+
+### Section Markers
+
+Some config files support **section markers** -- comment-delimited regions that Blink manages while leaving the rest of the file alone. This is how Blink updates its content without destroying your customizations.
+
+Here's what markers look like in a JavaScript file:
+
+```javascript
+// blink:start eslint-flat-config
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
+
+export default tseslint.config(
+  js.configs.recommended,
+  ...tseslint.configs.strict
+);
+// blink:end eslint-flat-config
+
+// Your custom rules below -- Blink won't touch these
+export const customRules = {
+  // ...
+};
+```
+
+The comment syntax adapts to the file type. CSS files use `/* blink:start slug */`, YAML files use `# blink:start slug`, and HTML files use `<!-- blink:start slug -->`.
+
+<Callout variant="info">
+When Blink updates a file with section markers, it replaces *only* the content between the markers. Everything outside the markers -- your custom rules, your overrides, your comments -- stays exactly where you put it.
+</Callout>
+
+## The Lifecycle
+
+<Steps>
+  <Step title="Apply">
+    `blink apply <slug>` fetches the artifact from the registry, writes its files to your project, installs any required devDependencies, and records everything in the manifest. If a file already exists and uses `replace` merge strategy, Blink asks for confirmation before overwriting.
+  </Step>
+  <Step title="Track">
+    After apply, the manifest records the artifact slug, version, file paths, checksums, and merge strategy. Blink uses checksums to detect whether you've modified managed files since installation -- this matters during updates.
+  </Step>
+  <Step title="Update">
+    `blink update` fetches the latest version from the registry and compares it against your installed version. For section-managed files, it replaces only the managed content. For replace-managed files, it overwrites the whole file (with confirmation if you've made local changes). Either way, you see a diff preview before anything changes.
+  </Step>
+  <Step title="Eject">
+    `blink eject <slug>` strips the section markers from your files and removes the entry from the manifest. Your config files stay exactly as they are, minus the marker comments. You now own those files completely -- Blink won't touch them again.
+  </Step>
+</Steps>
+
+## Commands at a Glance
+
+| Command | What it does |
+|---------|-------------|
+| `blink apply <slug>` | Fetch and install an artifact from the registry |
+| `blink apply <slug> --dry-run` | Preview what apply would do without writing anything |
+| `blink apply <slug> --global` | Apply to global scope (`~/.claude/`) instead of project |
+| `blink status` | Show installed artifacts with version and update availability |
+| `blink update [slug]` | Update one or all installed artifacts to latest upstream |
+| `blink update --dry-run` | Preview update changes without applying |
+| `blink diff <slug>` | Show diff between installed and upstream versions |
+| `blink eject <slug>` | Strip markers, remove from manifest, keep files |
+| `blink list` | Show all available artifacts in the registry |
+| `blink doctor` | Validate manifest integrity and file checksums |
+
+## Benefits and Risks
+
+<Callout variant="info">
+**One source of truth.** Every project pulls from the same registry. When I improve my ESLint config, I update it once and `blink update` propagates the change to every repo. No more config drift between projects.
+</Callout>
+
+<Callout variant="info">
+**Customization survives updates.** Section markers mean your project-specific overrides live outside the managed region. Blink updates its section; your customizations stay put.
+</Callout>
+
+<Callout variant="warning">
+**Blink writes to your files.** This is the fundamental tradeoff. You're giving a CLI tool permission to modify config files in your project. The `--dry-run` flag and confirmation prompts exist because this power needs guardrails. Always review what Blink plans to write before confirming.
+</Callout>
+
+<Callout variant="warning">
+**The registry is opinionated.** These aren't community-consensus configs. They're my configs -- strict TypeScript, specific ESLint rules, particular Prettier formatting. If you disagree with the defaults, you'll need to customize after applying, and those customizations need to live outside the managed sections.
+</Callout>
+
+## Deep Dives
+
+<Collapsible title="How section markers work">
+Blink detects the file extension and generates markers using the appropriate comment syntax. A `.js` file gets `//` comments, a `.css` file gets `/* */` comments, and a `.yaml` file gets `#` comments.
+
+When applying, Blink wraps the artifact's content in start/end markers and writes the result. When updating, Blink finds the existing markers, extracts the managed content, computes a diff against the upstream version, and replaces only the managed region.
+
+The marker format is always `blink:start <slug>` and `blink:end <slug>`, where the slug matches the artifact identifier from the registry. This means multiple artifacts can have managed sections in the same file without interfering with each other.
+</Collapsible>
+
+<Collapsible title="Global vs project scope">
+By default, `blink apply` installs to project scope -- files land in your current working directory and the manifest lives at `.blink/manifest.json`.
+
+With `--global`, files install to `~/.claude/` and the manifest lives at `~/.claude/.blink/manifest.json`. Global scope is designed for CLAUDE.md templates and other user-level configuration that applies across all projects.
+
+Each manifest is independent. A project manifest knows nothing about your global installs, and vice versa. The `blink status` command shows only the manifest for the scope you're checking (project by default).
+</Collapsible>
+
+<Collapsible title="How update preserves your changes">
+Blink stores a checksum of each file at install time. When you run `blink update`, it compares the current file checksum against the stored one. If they differ, Blink knows you've made local changes and asks for confirmation before overwriting.
+
+For section-managed files, this check is more granular. Blink compares only the content between the markers, so changes outside the managed region don't trigger the "local modifications detected" warning. Your customizations outside the markers are invisible to the update process -- exactly as intended.
+</Collapsible>
