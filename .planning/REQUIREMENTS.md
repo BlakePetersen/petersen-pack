@@ -36,10 +36,10 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 ### Registry & Distribution (REG)
 
 - [x] **REG-01**: Static JSON registry files generated at Velite build time from artifact metadata
-- [ ] **REG-02**: Registry index at `/r/index.json` lists all available items with metadata
-- [ ] **REG-03**: Individual artifact data served at `/r/<type>/<slug>.json` with file contents
-- [ ] **REG-04**: Registry includes CalVer version (from git commit date) per artifact
-- [ ] **REG-05**: CLI fetches from registry API with actionable error messages on failure
+- [x] **REG-02**: Registry index at `/r/index.json` lists all available items with metadata
+- [x] **REG-03**: Individual artifact data served at `/r/<type>/<slug>.json` with file contents
+- [x] **REG-04**: Registry includes CalVer version (from git commit date) per artifact
+- [x] **REG-05**: CLI fetches from registry API with actionable error messages on failure
 
 ### Artifact System (ART)
 
@@ -121,10 +121,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ART-04 | Phase 13 | Complete |
 | ART-05 | Phase 13 | Complete |
 | REG-01 | Phase 13 | Complete |
-| REG-02 | Phase 14 | Pending |
-| REG-03 | Phase 14 | Pending |
-| REG-04 | Phase 14 | Pending |
-| REG-05 | Phase 14 | Pending |
+| REG-02 | Phase 14 | Complete |
+| REG-03 | Phase 14 | Complete |
+| REG-04 | Phase 14 | Complete |
+| REG-05 | Phase 14 | Complete |
 | PKG-05 | Phase 14 | Complete |
 | CORE-01 | Phase 15 | Pending |
 | CORE-02 | Phase 15 | Pending |
