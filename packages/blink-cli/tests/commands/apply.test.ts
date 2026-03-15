@@ -371,6 +371,41 @@ describe('blink apply', () => {
     })
   })
 
+  describe('--project flag', () => {
+    it('defaults scope to project in manifest entry', async () => {
+      mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
+
+      await runApply({ yes: true })
+
+      const manifest = JSON.parse(
+        readFileSync(join(tmpDir, BLINK_DIR, 'manifest.json'), 'utf-8')
+      )
+      expect(manifest.items[0].scope).toBe('project')
+    })
+
+    it('sets scope to project when --project is explicit', async () => {
+      mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
+
+      await runApply({ yes: true, project: true })
+
+      const manifest = JSON.parse(
+        readFileSync(join(tmpDir, BLINK_DIR, 'manifest.json'), 'utf-8')
+      )
+      expect(manifest.items[0].scope).toBe('project')
+    })
+
+    it('sets scope to global when --project=false', async () => {
+      mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
+
+      await runApply({ yes: true, project: false })
+
+      const manifest = JSON.parse(
+        readFileSync(join(tmpDir, BLINK_DIR, 'manifest.json'), 'utf-8')
+      )
+      expect(manifest.items[0].scope).toBe('global')
+    })
+  })
+
   describe('checksum', () => {
     it('computes checksum from exact file content', async () => {
       mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
