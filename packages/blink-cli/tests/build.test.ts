@@ -35,8 +35,23 @@ describe('blink-cli build output', () => {
       // citty exits with code 1 when no subcommand given
       output = error.stdout || error.stderr || ''
     }
+    expect(output).toContain('apply')
     expect(output).toContain('init')
     expect(output).toContain('list')
     expect(output).toContain('status')
+  })
+
+  it('apply --help shows slug positional arg and flags', () => {
+    let output: string
+    try {
+      output = execSync(`node ${CLI_PATH} apply --help 2>&1`, {
+        encoding: 'utf-8',
+        cwd: join(__dirname, '..'),
+      })
+    } catch (error: any) {
+      output = error.stdout || error.stderr || ''
+    }
+    expect(output).toContain('dry-run')
+    expect(output).toContain('yes')
   })
 })
