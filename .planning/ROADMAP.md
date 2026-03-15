@@ -195,7 +195,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 12. Shared Types & Package Scaffold | v1.2 | Complete    | 2026-03-14 | 2026-03-14 |
 | 13. Artifact Pipeline | 2/2 | Complete    | 2026-03-15 | - |
 | 14. Registry API | 2/2 | Complete    | 2026-03-15 | - |
-| 15. CLI Core | v1.2 | 0/3 | Not started | - |
+| 15. CLI Core | 1/3 | In Progress|  | - |
 | 16. Section Markers & Lifecycle | v1.2 | 0/? | Not started | - |
 | 17. Starter Content | v1.2 | 0/? | Not started | - |
 | 18. Documentation | v1.2 | 0/? | Not started | - |
