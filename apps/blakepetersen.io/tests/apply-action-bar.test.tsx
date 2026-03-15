@@ -14,17 +14,29 @@ import { ApplyActionBar } from '@/components/apply-action-bar'
 describe('ApplyActionBar', () => {
   it('renders blink apply command with config type', () => {
     render(<ApplyActionBar type="config" slug="eslint-flat-config" />)
-    expect(screen.getByText('blink apply config/eslint-flat-config')).toBeInTheDocument()
+    const el = screen.getByText((_, element) =>
+      element?.tagName === 'SPAN' &&
+      element?.textContent === '$ blink apply config/eslint-flat-config'
+    )
+    expect(el).toBeInTheDocument()
   })
 
   it('renders blink apply command with skill type', () => {
     render(<ApplyActionBar type="skill" slug="test-driven-development" />)
-    expect(screen.getByText('blink apply skill/test-driven-development')).toBeInTheDocument()
+    const el = screen.getByText((_, element) =>
+      element?.tagName === 'SPAN' &&
+      element?.textContent === '$ blink apply skill/test-driven-development'
+    )
+    expect(el).toBeInTheDocument()
   })
 
   it('renders the $ prefix before the command', () => {
     render(<ApplyActionBar type="config" slug="eslint-flat-config" />)
-    expect(screen.getByText('$ ')).toBeInTheDocument()
+    const el = screen.getByText((_, element) =>
+      element?.tagName === 'SPAN' &&
+      element?.textContent?.startsWith('$ ')
+    )
+    expect(el).toBeInTheDocument()
   })
 
   it('renders a copy button', () => {

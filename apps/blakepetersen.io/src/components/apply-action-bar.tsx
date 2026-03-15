@@ -1,12 +1,12 @@
 'use client'
-// ABOUTME: Sticky action bar showing the claude skill apply command with copy-to-clipboard.
+// ABOUTME: Sticky action bar showing the blink apply command with copy-to-clipboard.
 // ABOUTME: Displayed on DX content pages (skills, hooks, configs) below the page title.
 
 import { useState } from 'react'
 
-export function ApplyActionBar({ slug }: { slug: string }) {
+export function ApplyActionBar({ type, slug }: { type: string; slug: string }) {
   const [copied, setCopied] = useState(false)
-  const command = `claude skill apply ${slug}`
+  const command = `blink apply ${type}/${slug}`
 
   async function handleCopy() {
     await navigator.clipboard.writeText(command)

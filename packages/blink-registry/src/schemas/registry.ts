@@ -11,6 +11,7 @@ export const RegistryItemSchema = z.object({
   type: ArtifactTypeSchema,
   version: CalVerSchema,
   description: z.string(),
+  url: z.string().url(),
 })
 
 export const RegistryIndexSchema = z.object({
@@ -18,7 +19,9 @@ export const RegistryIndexSchema = z.object({
   generatedAt: z.string().datetime(),
 })
 
-export const RegistryArtifactSchema = ArtifactMetadataSchema
+export const RegistryArtifactSchema = ArtifactMetadataSchema.extend({
+  url: z.string().url(),
+})
 
 export type RegistryItem = z.infer<typeof RegistryItemSchema>
 export type RegistryIndex = z.infer<typeof RegistryIndexSchema>

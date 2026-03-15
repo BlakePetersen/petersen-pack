@@ -26,7 +26,7 @@ type DxItem = {
   updated_context?: string
 }
 
-export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; showApplyBar?: boolean }) {
+export function DxContentLayout({ item, artifact }: { item: DxItem; artifact?: { type: string; slug: string } }) {
   const graphSvg = getLocalGraphSvg(item.slug)
 
   return (
@@ -59,9 +59,9 @@ export function DxContentLayout({ item, showApplyBar = false }: { item: DxItem; 
         </p>
       </header>
 
-      {showApplyBar && <ApplyActionBar slug={item.slug} />}
+      {artifact && <ApplyActionBar type={artifact.type} slug={artifact.slug} />}
 
-      <div className={`prose-terminal${showApplyBar ? ' mt-5' : ''}`}>
+      <div className={`prose-terminal${artifact ? ' mt-5' : ''}`}>
         <MDXContent code={item.code} />
       </div>
 
