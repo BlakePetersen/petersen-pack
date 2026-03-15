@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Blink CLI & DX Registry
 status: completed
-stopped_at: Completed 14-02-PLAN.md
-last_updated: "2026-03-15T01:50:59.203Z"
+stopped_at: Completed 14-01-PLAN.md
+last_updated: "2026-03-15T01:52:14.336Z"
 last_activity: 2026-03-15 — Completed 14-02 apply action bar update
 progress:
   total_phases: 8
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 6
   completed_plans: 6
   percent: 96
@@ -58,6 +58,9 @@ Recent decisions affecting current work:
 - [Phase 13]: Inline artifact validation in velite prepare hook (avoids blink-registry ESM resolution issues)
 - [Phase 13]: Artifact slugs use filename-only (no directory prefix) to match SlugSchema
 - [Phase 14]: Consistent artifact lookup across all page types including guides
+- [Phase 14]: CalVer max version as generatedAt for deterministic registry output
+- [Phase 14]: No blink-registry import in velite.config.ts (ESM resolution, per Phase 13)
+- [Phase 14]: CalVer max version as generatedAt for deterministic registry output
 
 ### Pending Todos
 
@@ -71,6 +74,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T01:50:59.200Z
-Stopped at: Completed 14-02-PLAN.md
+Last session: 2026-03-15T01:52:14.334Z
+Stopped at: Completed 14-01-PLAN.md
 Resume file: None
