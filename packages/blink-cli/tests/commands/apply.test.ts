@@ -7,6 +7,7 @@ import {
   mkdirSync,
   rmSync,
   existsSync,
+  realpathSync,
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -106,7 +107,7 @@ function mockFetchResponses(index: any, artifact: any) {
 }
 
 beforeEach(() => {
-  tmpDir = mkdtempSync(join(tmpdir(), 'blink-apply-'))
+  tmpDir = realpathSync(mkdtempSync(join(tmpdir(), 'blink-apply-')))
   originalCwd = process.cwd()
   process.chdir(tmpDir)
 

@@ -9,6 +9,7 @@ const main = defineCommand({
     description: 'Apply opinionated DX configs, skills, and hooks',
   },
   subCommands: {
+    apply: () => import('./commands/apply').then((m) => m.default),
     init: () => import('./commands/init').then((m) => m.default),
     list: () => import('./commands/list').then((m) => m.default),
     status: () => import('./commands/status').then((m) => m.default),
