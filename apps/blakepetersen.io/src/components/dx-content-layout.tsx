@@ -61,7 +61,7 @@ export function DxContentLayout({ item, artifact }: { item: DxItem; artifact?: {
         </p>
       </header>
 
-      {artifact && <ApplyActionBar type={artifact.type} slug={artifact.slug} />}
+      {artifact && <ApplyActionBar slug={artifact.slug} />}
 
       <PrerequisitesBanner slugs={item.dependencies} />
 

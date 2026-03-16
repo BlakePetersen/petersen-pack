@@ -4,9 +4,9 @@
 
 import { useState } from 'react'
 
-export function ApplyActionBar({ type, slug }: { type: string; slug: string }) {
+export function ApplyActionBar({ slug }: { slug: string }) {
   const [copied, setCopied] = useState(false)
-  const command = `blink apply ${type}/${slug}`
+  const command = `blink apply ${slug}`
 
   async function handleCopy() {
     await navigator.clipboard.writeText(command)
