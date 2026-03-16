@@ -8,7 +8,7 @@ Transform the existing Turborepo monorepo from a collection of independent Next.
 
 - ✅ **v1.0 DX Reference Platform** — Phases 1-7.1 (shipped 2026-03-10)
 - ✅ **v1.1 GitHub Integration** — Phases 8-11 (shipped 2026-03-14)
-- 🚧 **v1.2 Blink CLI & DX Registry** — Phases 12-19 (in progress)
+- 🚧 **v1.2 Blink CLI & DX Registry** — Phases 12-20 (in progress)
 
 ## Phases
 
@@ -52,6 +52,7 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 - [x] **Phase 17: Starter Content** - Config artifacts (ESLint, Prettier, TypeScript, Husky, CLAUDE.md templates) (completed 2026-03-15)
 - [x] **Phase 18: Documentation** - Guides for CLAUDE.md hierarchy, Blink architecture, and companion docs (completed 2026-03-15)
 - [x] **Phase 19: Publishing** - npm package publishing as @blink-dx/cli with blink binary (completed 2026-03-16)
+- [ ] **Phase 20: Fix Integration Gaps** - Gap closure for audit-identified issues (ApplyActionBar slug, turbo cache, registry connectivity)
 
 ## Phase Details
 
@@ -174,6 +175,19 @@ Plans:
 - [ ] 19-01-PLAN.md — Package rename, build config, READMEs, and publish preparation
 - [ ] 19-02-PLAN.md — Publish to npm and end-to-end verification
 
+### Phase 20: Fix Integration Gaps
+**Goal**: All E2E flows from web to CLI work correctly against the live deployment
+**Depends on**: Phase 19
+**Requirements**: PKG-05, CORE-01, CORE-02
+**Gap Closure:** Closes gaps from v1.2 audit
+**Success Criteria** (what must be TRUE):
+  1. ApplyActionBar renders `blink apply <slug>` (bare slug, no type prefix) — user copies command and it works in CLI
+  2. `turbo.json` build outputs include `public/r/**` so turbo cache correctly invalidates registry files
+  3. `blink list` succeeds against live `https://blakepetersen.io/r/index.json` endpoint
+**Plans**: TBD
+Plans:
+- [ ] 20-01-PLAN.md — ApplyActionBar slug fix, turbo.json outputs, registry connectivity
+
 ## Progress
 
 **Execution Order:**
@@ -201,3 +215,4 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 17. Starter Content | 3/3 | Complete    | 2026-03-15 | - |
 | 18. Documentation | 4/4 | Complete    | 2026-03-15 | - |
 | 19. Publishing | 2/2 | Complete    | 2026-03-16 | - |
+| 20. Fix Integration Gaps | 0/1 | Pending | - | - |
