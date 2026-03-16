@@ -51,7 +51,7 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 - [x] **Phase 16: Section Markers & Lifecycle** - Managed regions, update, eject, diff, and doctor commands (completed 2026-03-15)
 - [x] **Phase 17: Starter Content** - Config artifacts (ESLint, Prettier, TypeScript, Husky, CLAUDE.md templates) (completed 2026-03-15)
 - [x] **Phase 18: Documentation** - Guides for CLAUDE.md hierarchy, Blink architecture, and companion docs (completed 2026-03-15)
-- [ ] **Phase 19: Publishing** - npm package publishing as @blink/cli with blink binary
+- [ ] **Phase 19: Publishing** - npm package publishing as @blink-dx/cli with blink binary
 
 ## Phase Details
 
@@ -167,9 +167,12 @@ Plans:
 **Depends on**: Phase 18
 **Requirements**: PKG-03
 **Success Criteria** (what must be TRUE):
-  1. `npm install -g @blink/cli` installs successfully and `blink --help` shows available commands
+  1. `npm install -g @blink-dx/cli` installs successfully and `blink --help` shows available commands
   2. `blink apply eslint` works end-to-end from the published npm package against the live registry
-**Plans**: [To be planned]
+**Plans**: 2 plans
+Plans:
+- [ ] 19-01-PLAN.md — Package rename, build config, READMEs, and publish preparation
+- [ ] 19-02-PLAN.md — Publish to npm and end-to-end verification
 
 ## Progress
 
@@ -196,5 +199,5 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 15. CLI Core | 4/4 | Complete    | 2026-03-15 | - |
 | 16. Section Markers & Lifecycle | 3/3 | Complete    | 2026-03-15 | - |
 | 17. Starter Content | 3/3 | Complete    | 2026-03-15 | - |
-| 18. Documentation | 4/4 | Complete   | 2026-03-15 | - |
-| 19. Publishing | v1.2 | 0/? | Not started | - |
+| 18. Documentation | 4/4 | Complete    | 2026-03-15 | - |
+| 19. Publishing | 1/2 | In Progress|  | - |

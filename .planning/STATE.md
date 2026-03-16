@@ -10,8 +10,8 @@ progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 20
-  completed_plans: 20
-  percent: 100
+  completed_plans: 21
+  percent: 95
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 18 — Documentation
+**Current focus:** Phase 19 — Publishing
 
 ## Current Position
 
-Phase: 18 of 19 (Documentation)
-Plan: 04 complete (phase complete)
-Status: Phase Complete
-Last activity: 2026-03-15 — Completed 18-04 cross-references and validation
+Phase: 19 of 19 (Publishing)
+Plan: 01 of 02 complete
+Status: In Progress
+Last activity: 2026-03-16 — Completed 19-01 package rename and publishing config
 
-Progress: [██████████] 100% (20/20 plans)
+Progress: [██████████] 95% (21/22 plans)
 
 ## Performance Metrics
 
@@ -82,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 18]: useSyncExternalStore for localStorage tab persistence (avoids setState-in-effect lint violation)
 - [Phase 18]: Callout component registered in MDX map from artax-ui (was exported but not mapped)
 - [Phase 18]: Bidirectional cross-references use full slug format matching resolveRelatedSlugs
+- [Phase 19]: blink-registry moved to CLI devDependencies since tsup bundles it (no runtime dep)
+- [Phase 19]: Jest moduleNameMapper needed for @blink-dx/registry resolution in test configs
 
 ### Pending Todos
 
@@ -95,6 +97,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-16T00:56:42.198Z
-Stopped at: Phase 19 context gathered
-Resume file: .planning/phases/19-publishing/19-CONTEXT.md
+Last session: 2026-03-16T01:15:01Z
+Stopped at: Completed 19-01-PLAN.md
+Resume file: .planning/phases/19-publishing/19-02-PLAN.md
