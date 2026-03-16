@@ -2,6 +2,7 @@
 // ABOUTME: Sets data-theme attribute on document element, defaults to system preference.
 'use client'
 
+import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark' | 'system'
@@ -18,17 +19,11 @@ function ThemeProvider({
   children,
   defaultTheme = 'system',
 }: {
-  children: React.ReactNode
+  children: ReactNode
   defaultTheme?: Theme
 }) {
   const [theme, setTheme] = useState<Theme>(defaultTheme)
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(() => {
-    if (typeof window === 'undefined') return 'dark'
-    if (defaultTheme === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    }
-    return defaultTheme === 'dark' ? 'dark' : 'light'
-  })
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark')
 
   useEffect(() => {
     const resolve = (): 'light' | 'dark' => {
@@ -55,9 +50,9 @@ function ThemeProvider({
   }, [theme])
 
   return (
-    <ThemeContext value={{ theme, resolvedTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme }}>
       {children}
-    </ThemeContext>
+    </ThemeContext.Provider>
   )
 }
 
