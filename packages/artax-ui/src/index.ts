@@ -88,3 +88,7 @@ export {
 } from './components/organisms/dropdown/dropdown-interactive'
 export { cn } from './lib/utils'
 export { mdxComponents } from './mdx/components'
+
+// Providers
+export { ThemeProvider, useTheme } from './providers/theme-provider'
+export type { Theme } from './providers/theme-provider'
