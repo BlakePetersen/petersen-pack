@@ -3,7 +3,7 @@
  */
 
 // ABOUTME: Tests for ApplyActionBar component command construction.
-// ABOUTME: Validates that blink apply commands use type/slug format.
+// ABOUTME: Validates that blink apply commands use bare slug format.
 
 import React from 'react'
 import { render, screen } from '@testing-library/react'
@@ -12,26 +12,26 @@ import '@testing-library/jest-dom'
 import { ApplyActionBar } from '@/components/apply-action-bar'
 
 describe('ApplyActionBar', () => {
-  it('renders blink apply command with config type', () => {
-    render(<ApplyActionBar type="config" slug="eslint-flat-config" />)
+  it('renders blink apply command with bare slug', () => {
+    render(<ApplyActionBar slug="eslint-flat-config" />)
     const el = screen.getByText((_, element) =>
       element?.tagName === 'SPAN' &&
-      element?.textContent === '$ blink apply config/eslint-flat-config'
+      element?.textContent === '$ blink apply eslint-flat-config'
     )
     expect(el).toBeInTheDocument()
   })
 
-  it('renders blink apply command with skill type', () => {
-    render(<ApplyActionBar type="skill" slug="test-driven-development" />)
+  it('renders blink apply command with skill slug', () => {
+    render(<ApplyActionBar slug="test-driven-development" />)
     const el = screen.getByText((_, element) =>
       element?.tagName === 'SPAN' &&
-      element?.textContent === '$ blink apply skill/test-driven-development'
+      element?.textContent === '$ blink apply test-driven-development'
     )
     expect(el).toBeInTheDocument()
   })
 
   it('renders the $ prefix before the command', () => {
-    render(<ApplyActionBar type="config" slug="eslint-flat-config" />)
+    render(<ApplyActionBar slug="eslint-flat-config" />)
     const el = screen.getByText((_, element) =>
       element?.tagName === 'SPAN' &&
       element?.textContent?.startsWith('$ ')
@@ -40,7 +40,7 @@ describe('ApplyActionBar', () => {
   })
 
   it('renders a copy button', () => {
-    render(<ApplyActionBar type="config" slug="eslint-flat-config" />)
+    render(<ApplyActionBar slug="eslint-flat-config" />)
     expect(screen.getByText('copy')).toBeInTheDocument()
   })
 })
