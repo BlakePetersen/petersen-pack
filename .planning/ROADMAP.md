@@ -51,7 +51,7 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 - [x] **Phase 16: Section Markers & Lifecycle** - Managed regions, update, eject, diff, and doctor commands (completed 2026-03-15)
 - [x] **Phase 17: Starter Content** - Config artifacts (ESLint, Prettier, TypeScript, Husky, CLAUDE.md templates) (completed 2026-03-15)
 - [x] **Phase 18: Documentation** - Guides for CLAUDE.md hierarchy, Blink architecture, and companion docs (completed 2026-03-15)
-- [ ] **Phase 19: Publishing** - npm package publishing as @blink-dx/cli with blink binary
+- [x] **Phase 19: Publishing** - npm package publishing as @blink-dx/cli with blink binary (completed 2026-03-16)
 
 ## Phase Details
 
@@ -200,4 +200,4 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 16. Section Markers & Lifecycle | 3/3 | Complete    | 2026-03-15 | - |
 | 17. Starter Content | 3/3 | Complete    | 2026-03-15 | - |
 | 18. Documentation | 4/4 | Complete    | 2026-03-15 | - |
-| 19. Publishing | 1/2 | In Progress|  | - |
+| 19. Publishing | 2/2 | Complete   | 2026-03-16 | - |
