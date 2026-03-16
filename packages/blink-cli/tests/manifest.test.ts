@@ -13,7 +13,7 @@ import {
   checksum,
   BLINK_DIR,
 } from '@/manifest'
-import type { Manifest, ManifestEntry } from 'blink-registry'
+import type { Manifest, ManifestEntry } from '@blink-dx/registry'
 
 let tmpDir: string
 

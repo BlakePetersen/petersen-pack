@@ -1,20 +1,41 @@
 {
-  "name": "@blink/cli",
-  "version": "0.0.0",
-  "private": true,
+  "name": "@blink-dx/cli",
+  "version": "0.1.0",
   "type": "module",
+  "license": "MIT",
+  "description": "Apply opinionated DX configs from the command line",
   "bin": {
     "blink": "./dist/cli.mjs"
   },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blakepetersen/petersen-group",
+    "directory": "packages/blink-cli"
+  },
+  "homepage": "https://blakepetersen.io",
+  "keywords": [
+    "cli",
+    "dx",
+    "developer-experience",
+    "config",
+    "dotfiles",
+    "claude",
+    "ai"
+  ],
   "scripts": {
     "build": "tsup",
+    "prepublishOnly": "pnpm run build",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "blink-registry": "workspace:*"
-  },
   "devDependencies": {
+    "@blink-dx/registry": "workspace:*",
     "@types/jest": "^30.0.0",
     "citty": "^0.2.1",
     "consola": "^3.4.2",

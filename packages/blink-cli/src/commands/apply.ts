@@ -22,7 +22,7 @@ import { atomicWrite } from '@/writer'
 import { injectMarkers, findManagedSections } from '@/markers'
 import { resolveDestination, resolveManifestRoot } from '@/scope'
 import { findMissingDeps } from '@/deps'
-import type { ManifestEntry, ManifestFileEntry, RegistryArtifact } from 'blink-registry'
+import type { ManifestEntry, ManifestFileEntry, RegistryArtifact } from '@blink-dx/registry'
 import { writeFile } from 'node:fs/promises'
 
 async function confirmAction(

@@ -7,7 +7,7 @@ import {
   formatActionLabel,
   formatColoredDiff,
 } from '@/output'
-import type { RegistryItem, ManifestEntry } from 'blink-registry'
+import type { RegistryItem, ManifestEntry } from '@blink-dx/registry'
 
 const registryItems: RegistryItem[] = [
   {

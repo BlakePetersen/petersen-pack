@@ -9,6 +9,7 @@ const config: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^#content$': '<rootDir>/.velite',
+    '^@blink-dx/registry$': '<rootDir>/../../packages/blink-registry/src/index.ts',
   },
   testTimeout: 30000,
   transform: {

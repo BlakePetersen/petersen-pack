@@ -6,7 +6,7 @@ import {
   type RegistryIndex,
   type RegistryArtifact,
   type ArtifactType,
-} from 'blink-registry'
+} from '@blink-dx/registry'
 
 const TIMEOUT_MS = 10_000
 const MAX_RETRIES = 3

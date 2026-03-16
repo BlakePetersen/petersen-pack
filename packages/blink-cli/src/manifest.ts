@@ -3,7 +3,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { createHash } from 'node:crypto'
-import { ManifestSchema, type Manifest, type ManifestEntry } from 'blink-registry'
+import { ManifestSchema, type Manifest, type ManifestEntry } from '@blink-dx/registry'
 
 export const BLINK_DIR = '.blink'
 const MANIFEST_FILE = 'manifest.json'

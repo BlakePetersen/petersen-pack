@@ -2,7 +2,7 @@
 // ABOUTME: Provides consistent styling for list, status, dry-run, and diff output.
 import pc from 'picocolors'
 import { createPatch } from 'diff'
-import type { RegistryItem, ManifestEntry } from 'blink-registry'
+import type { RegistryItem, ManifestEntry } from '@blink-dx/registry'
 
 export function formatListTable(items: RegistryItem[]): string {
   if (items.length === 0) return ''

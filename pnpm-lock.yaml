@@ -92,6 +92,9 @@ importers:
 
   apps/blakepetersen.io:
     dependencies:
+      '@blink-dx/registry':
+        specifier: workspace:^
+        version: link:../../packages/blink-registry
       '@octokit/rest':
         specifier: ^22.0.1
         version: 22.0.1
@@ -110,9 +113,6 @@ importers:
       artax-ui:
         specifier: workspace:*
         version: link:../../packages/artax-ui
-      blink-registry:
-        specifier: workspace:^
-        version: link:../../packages/blink-registry
       lucide-react:
         specifier: ^0.577.0
         version: 0.577.0(react@19.2.0)
@@ -255,11 +255,10 @@ importers:
         version: 5.9.3
 
   packages/blink-cli:
-    dependencies:
-      blink-registry:
+    devDependencies:
+      '@blink-dx/registry':
         specifier: workspace:*
         version: link:../blink-registry
-    devDependencies:
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0

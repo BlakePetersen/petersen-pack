@@ -1,6 +1,6 @@
 // ABOUTME: Tests for the blink list command.
 // ABOUTME: Validates registry item listing, --json output, and network error handling.
-import type { RegistryIndex } from 'blink-registry'
+import type { RegistryIndex } from '@blink-dx/registry'
 
 const validIndex: RegistryIndex = {
   items: [

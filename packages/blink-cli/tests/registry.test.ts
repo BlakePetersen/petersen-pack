@@ -1,7 +1,7 @@
 // ABOUTME: Tests for the registry API client module.
 // ABOUTME: Validates fetch, retry, timeout, Zod validation, and configurable base URL.
 import { fetchIndex, fetchArtifact } from '@/registry'
-import type { RegistryIndex, RegistryArtifact } from 'blink-registry'
+import type { RegistryIndex, RegistryArtifact } from '@blink-dx/registry'
 
 const validIndex: RegistryIndex = {
   items: [

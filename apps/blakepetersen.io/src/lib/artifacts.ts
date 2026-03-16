@@ -3,7 +3,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import type { ArtifactMetadata } from 'blink-registry'
+import type { ArtifactMetadata } from '@blink-dx/registry'
 
 function readArtifactsJson(): ArtifactMetadata[] {
   const filePath = path.resolve(process.cwd(), '.velite/artifacts.json')

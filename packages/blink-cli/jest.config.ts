@@ -8,6 +8,7 @@ const config: Config = {
   roots: ['<rootDir>/tests'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^@blink-dx/registry$': '<rootDir>/../blink-registry/src/index.ts',
   },
   transform: {
     '^.+\\.tsx?$': [

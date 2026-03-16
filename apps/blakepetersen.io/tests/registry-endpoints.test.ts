@@ -6,7 +6,7 @@ import { join } from 'path'
 import {
   RegistryIndexSchema,
   RegistryArtifactSchema,
-} from 'blink-registry'
+} from '@blink-dx/registry'
 
 const appRoot = join(__dirname, '..')
 const registryDir = join(appRoot, 'public', 'r')

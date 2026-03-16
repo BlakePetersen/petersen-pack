@@ -37,7 +37,7 @@ export default defineCommand({
       return
     }
 
-    let registryItems: import('blink-registry').RegistryItem[] = []
+    let registryItems: import('@blink-dx/registry').RegistryItem[] = []
     try {
       const index = await fetchIndex()
       registryItems = index.items

@@ -9,7 +9,7 @@ import {
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR } from '@/manifest'
-import type { Manifest, ManifestEntry, RegistryIndex } from 'blink-registry'
+import type { Manifest, ManifestEntry, RegistryIndex } from '@blink-dx/registry'
 
 const sampleEntry: ManifestEntry = {
   slug: 'prettier',

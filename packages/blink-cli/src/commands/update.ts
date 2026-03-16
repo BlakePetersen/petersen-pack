@@ -15,7 +15,7 @@ import { atomicWrite } from '@/writer'
 import { findManagedSections, replaceManagedContent } from '@/markers'
 import { resolveDestination, resolveManifestRoot } from '@/scope'
 import { formatColoredDiff } from '@/output'
-import type { ManifestEntry, ManifestFileEntry } from 'blink-registry'
+import type { ManifestEntry, ManifestFileEntry } from '@blink-dx/registry'
 
 async function confirmAction(
   message: string,
