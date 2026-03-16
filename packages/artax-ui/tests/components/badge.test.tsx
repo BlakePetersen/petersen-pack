@@ -2,7 +2,7 @@
 // ABOUTME: Validates monospace font and variant rendering (default, outline, secondary).
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { Badge } from '../../src/components/badge'
+import { Badge } from '../../src/components/atoms/badge/badge'
 
 describe('Badge', () => {
   it('renders with children', () => {

@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent
-} from '../../src/components/accordion'
+} from '../../src/components/organisms/accordion/accordion'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -39,7 +39,7 @@ describe('Accordion base components', () => {
 
   it('is server-safe (no use client)', () => {
     const content = readFileSync(
-      resolve(__dirname, '../../src/components/accordion.tsx'),
+      resolve(__dirname, '../../src/components/organisms/accordion/accordion.tsx'),
       'utf-8'
     )
     expect(content).not.toContain("'use client'")

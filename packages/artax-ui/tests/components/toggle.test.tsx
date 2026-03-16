@@ -1,7 +1,7 @@
 // ABOUTME: Tests for the server-safe Toggle base component.
 // ABOUTME: Validates structure component renders without 'use client'.
 import { render, screen } from '@testing-library/react'
-import { ToggleBase } from '../../src/components/toggle'
+import { ToggleBase } from '../../src/components/atoms/toggle/toggle'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -20,7 +20,7 @@ describe('Toggle base component', () => {
 
   it('is server-safe (no use client)', () => {
     const content = readFileSync(
-      resolve(__dirname, '../../src/components/toggle.tsx'),
+      resolve(__dirname, '../../src/components/atoms/toggle/toggle.tsx'),
       'utf-8'
     )
     expect(content).not.toContain("'use client'")

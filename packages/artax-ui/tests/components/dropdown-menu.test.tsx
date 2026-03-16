@@ -5,7 +5,7 @@ import {
   DropdownContent,
   DropdownItem,
   DropdownSeparator
-} from '../../src/components/dropdown-menu'
+} from '../../src/components/organisms/dropdown/dropdown-menu'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -32,7 +32,7 @@ describe('DropdownMenu base components', () => {
 
   it('is server-safe (no use client)', () => {
     const content = readFileSync(
-      resolve(__dirname, '../../src/components/dropdown-menu.tsx'),
+      resolve(__dirname, '../../src/components/organisms/dropdown/dropdown-menu.tsx'),
       'utf-8'
     )
     expect(content).not.toContain("'use client'")

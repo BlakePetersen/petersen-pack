@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter
-} from '../../src/components/card'
+} from '../../src/components/molecules/card/card'
 
 describe('Card', () => {
   it('renders with children', () => {

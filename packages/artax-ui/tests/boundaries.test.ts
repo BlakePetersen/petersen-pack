@@ -1,36 +1,49 @@
 // ABOUTME: Boundary tests for server/client component safety.
 // ABOUTME: Verifies base components have no 'use client' and interactive wrappers do.
-import { readFileSync, readdirSync } from 'fs'
-import { resolve } from 'path'
+import { readFileSync, readdirSync, statSync } from 'fs'
+import { resolve, relative } from 'path'
 
 const componentsDir = resolve(__dirname, '../src/components')
 
 const baseComponentFiles = [
-  'button.tsx',
-  'input.tsx',
-  'card.tsx',
-  'badge.tsx',
-  'separator.tsx',
-  'table.tsx',
-  'callout.tsx',
-  'code-block.tsx',
-  'accordion.tsx',
-  'dialog.tsx',
-  'dropdown-menu.tsx',
-  'tabs.tsx',
-  'toggle.tsx',
-  'tooltip.tsx'
+  'atoms/badge/badge.tsx',
+  'atoms/button/button.tsx',
+  'atoms/input/input.tsx',
+  'atoms/separator/separator.tsx',
+  'atoms/toggle/toggle.tsx',
+  'molecules/card/card.tsx',
+  'molecules/callout/callout.tsx',
+  'molecules/code-block/code-block.tsx',
+  'molecules/table/table.tsx',
+  'molecules/tabs/tabs.tsx',
+  'molecules/tooltip/tooltip.tsx',
+  'organisms/accordion/accordion.tsx',
+  'organisms/dialog/dialog.tsx',
+  'organisms/dropdown/dropdown-menu.tsx'
 ]
 
 const interactiveFiles = [
-  'copy-button.tsx',
-  'accordion-interactive.tsx',
-  'dialog-interactive.tsx',
-  'dropdown-interactive.tsx',
-  'tabs-interactive.tsx',
-  'toggle-interactive.tsx',
-  'tooltip-interactive.tsx'
+  'atoms/copy-button/copy-button.tsx',
+  'atoms/toggle/toggle-interactive.tsx',
+  'molecules/tabs/tabs-interactive.tsx',
+  'molecules/tooltip/tooltip-interactive.tsx',
+  'organisms/accordion/accordion-interactive.tsx',
+  'organisms/dialog/dialog-interactive.tsx',
+  'organisms/dropdown/dropdown-interactive.tsx'
 ]
+
+function walkTsx(dir: string): string[] {
+  const results: string[] = []
+  for (const entry of readdirSync(dir)) {
+    const full = resolve(dir, entry)
+    if (statSync(full).isDirectory()) {
+      results.push(...walkTsx(full))
+    } else if (entry.endsWith('.tsx')) {
+      results.push(relative(componentsDir, full))
+    }
+  }
+  return results
+}
 
 describe('server/client boundaries', () => {
   describe('base components are server-safe', () => {
@@ -71,7 +84,7 @@ describe('server/client boundaries', () => {
   })
 
   it('every component file is covered by boundary tests', () => {
-    const allFiles = readdirSync(componentsDir).filter(f => f.endsWith('.tsx'))
+    const allFiles = walkTsx(componentsDir)
     const coveredFiles = [...baseComponentFiles, ...interactiveFiles]
     const uncovered = allFiles.filter(f => !coveredFiles.includes(f))
     expect(uncovered).toEqual([])

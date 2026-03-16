@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
-import storybook from 'eslint-plugin-storybook'
+import importPlugin from 'eslint-plugin-import-x'
 
 export default tseslint.config(
   js.configs.recommended,
@@ -43,6 +43,20 @@ export default tseslint.config(
     },
   },
   {
+    files: ['packages/artax-ui/src/**/*.ts', 'packages/artax-ui/src/**/*.tsx'],
+    plugins: {
+      'import-x': importPlugin,
+    },
+    settings: {
+      'import-x/resolver': {
+        typescript: true,
+      },
+    },
+    rules: {
+      'import-x/no-cycle': ['error', { maxDepth: 3, ignoreExternal: true }],
+    },
+  },
+  {
     ignores: [
       '**/*.js',
       '**/*.mjs',
@@ -55,5 +69,4 @@ export default tseslint.config(
       '.trash/**',
     ],
   },
-  ...storybook.configs['flat/recommended']
 )

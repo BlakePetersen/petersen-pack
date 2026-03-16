@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription
-} from '../../src/components/dialog'
+} from '../../src/components/organisms/dialog/dialog'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -37,7 +37,7 @@ describe('Dialog base components', () => {
 
   it('is server-safe (no use client)', () => {
     const content = readFileSync(
-      resolve(__dirname, '../../src/components/dialog.tsx'),
+      resolve(__dirname, '../../src/components/organisms/dialog/dialog.tsx'),
       'utf-8'
     )
     expect(content).not.toContain("'use client'")
