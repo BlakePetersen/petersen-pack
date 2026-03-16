@@ -34,7 +34,7 @@ describe('Accordion base components', () => {
 
   it('applies terminal border to AccordionItem', () => {
     render(<AccordionItem data-testid="item">content</AccordionItem>)
-    expect(screen.getByTestId('item').className).toContain('terminal-border')
+    expect(screen.getByTestId('item').className).toContain('border-border')
   })
 
   it('is server-safe (no use client)', () => {

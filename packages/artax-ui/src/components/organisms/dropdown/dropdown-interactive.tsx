@@ -18,7 +18,7 @@ function DropdownInteractiveContent({
       <DropdownMenu.Content
         sideOffset={sideOffset}
         className={cn(
-          'z-50 min-w-[8rem] bg-terminal-surface border border-terminal-border p-1 shadow-md',
+          'z-50 min-w-[8rem] bg-popover border border-border p-1 shadow-md',
           className
         )}
         {...props}
@@ -34,7 +34,7 @@ function DropdownInteractiveItem({
   return (
     <DropdownMenu.Item
       className={cn(
-        'cursor-pointer px-3 py-2 font-mono text-sm text-terminal-text outline-none transition-colors hover:bg-terminal-active focus:bg-terminal-active',
+        'cursor-pointer px-3 py-2 font-mono text-sm text-popover-foreground outline-none transition-colors hover:bg-muted focus:bg-muted',
         className
       )}
       {...props}
@@ -48,7 +48,7 @@ function DropdownInteractiveSeparator({
 }: React.ComponentProps<typeof DropdownMenu.Separator>) {
   return (
     <DropdownMenu.Separator
-      className={cn('my-1 h-px bg-terminal-border', className)}
+      className={cn('my-1 h-px bg-border', className)}
       {...props}
     />
   )
@@ -61,7 +61,7 @@ function DropdownInteractiveLabel({
   return (
     <DropdownMenu.Label
       className={cn(
-        'px-3 py-2 font-mono text-xs text-terminal-muted',
+        'px-3 py-2 font-mono text-xs text-muted-foreground',
         className
       )}
       {...props}

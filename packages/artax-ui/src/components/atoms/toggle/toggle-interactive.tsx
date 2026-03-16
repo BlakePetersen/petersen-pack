@@ -11,7 +11,7 @@ function ToggleInteractive({
   return (
     <Toggle.Root
       className={cn(
-        'inline-flex items-center justify-center border border-terminal-border px-3 py-2 font-mono text-sm text-terminal-text transition-colors hover:bg-terminal-active data-[state=on]:bg-terminal-active data-[state=on]:text-amber-accent',
+        'inline-flex items-center justify-center border border-border px-3 py-2 font-mono text-sm text-foreground transition-colors hover:bg-muted data-[state=on]:bg-muted data-[state=on]:text-primary',
         className
       )}
       {...props}

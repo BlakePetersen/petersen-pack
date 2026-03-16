@@ -23,7 +23,7 @@ function TabsInteractiveList({
   return (
     <Tabs.List
       className={cn(
-        'flex border-b border-terminal-border',
+        'flex border-b border-border',
         className
       )}
       {...props}
@@ -38,7 +38,7 @@ function TabsInteractiveTrigger({
   return (
     <Tabs.Trigger
       className={cn(
-        'px-4 py-2 font-mono text-sm text-terminal-muted transition-colors hover:text-terminal-text data-[state=active]:text-amber-accent data-[state=active]:border-b-2 data-[state=active]:border-amber-accent',
+        'px-4 py-2 font-mono text-sm text-muted-foreground transition-colors hover:text-foreground data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary',
         className
       )}
       {...props}
@@ -52,7 +52,7 @@ function TabsInteractiveContent({
 }: React.ComponentProps<typeof Tabs.Content>) {
   return (
     <Tabs.Content
-      className={cn('pt-4 text-sm text-terminal-text', className)}
+      className={cn('pt-4 text-sm text-foreground', className)}
       {...props}
     />
   )

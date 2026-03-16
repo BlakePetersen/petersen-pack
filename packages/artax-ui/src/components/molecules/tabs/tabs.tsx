@@ -9,7 +9,7 @@ function TabsList({
   return (
     <div
       className={cn(
-        'flex border-b border-terminal-border',
+        'flex border-b border-border',
         className
       )}
       {...props}
@@ -24,7 +24,7 @@ function TabsTrigger({
   return (
     <button
       className={cn(
-        'px-4 py-2 font-mono text-sm text-terminal-muted transition-colors hover:text-terminal-text',
+        'px-4 py-2 font-mono text-sm text-muted-foreground transition-colors hover:text-foreground',
         className
       )}
       {...props}
@@ -38,7 +38,7 @@ function TabsContent({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn('pt-4 text-sm text-terminal-text', className)}
+      className={cn('pt-4 text-sm text-foreground', className)}
       {...props}
     />
   )

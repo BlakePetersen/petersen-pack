@@ -1,5 +1,5 @@
 /* ABOUTME: Tailwind v4 static theme tokens for the terminal aesthetic design system. */
-/* ABOUTME: Defines typography, zero border-radius, and legacy color tokens (temporary until Plan 03 component migration). */
+/* ABOUTME: Defines typography, zero border-radius, and semantic color aliases for utility generation. */
 @theme {
   /* Typography */
   --font-mono: 'JetBrains Mono', monospace;
@@ -11,23 +11,14 @@
   --radius-md: 0px;
   --radius-lg: 0px;
   --radius-xl: 0px;
+}
 
-  /* Legacy color tokens — kept until Plan 03 migrates all component classes. */
-  /* Do NOT add new references to these tokens. */
-  --color-terminal-bg: #0A0A0A;
-  --color-terminal-surface: #0F0F0F;
-  --color-terminal-active: #1F1F1F;
-  --color-terminal-border: #2a2a2a;
-  --color-terminal-disabled: #4B5563;
-  --color-terminal-muted: #6B7280;
-  --color-terminal-secondary: #9CA3AF;
-  --color-terminal-text: #FAFAFA;
-  --color-amber-accent: #F59E0B;
-  --color-surface-info: rgba(6, 182, 212, 0.06);
-  --color-surface-warning: rgba(245, 158, 11, 0.06);
-  --color-surface-success: rgba(16, 185, 129, 0.06);
-  --color-terminal-error: #EF4444;
-  --color-terminal-warning: #F59E0B;
-  --color-terminal-success: #10B981;
-  --color-terminal-info: #06B6D4;
+/* Register semantic status colors so Tailwind v4 generates bg-*, text-*, border-* utilities */
+@theme inline {
+  --color-success: var(--success);
+  --color-info: var(--info);
+  --color-warning: var(--warning);
+  --color-surface-info: var(--surface-info);
+  --color-surface-warning: var(--surface-warning);
+  --color-surface-success: var(--surface-success);
 }

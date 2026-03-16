@@ -9,7 +9,7 @@ function DropdownContent({
   return (
     <div
       className={cn(
-        'bg-terminal-surface border border-terminal-border p-1 shadow-md',
+        'bg-popover border border-border p-1 shadow-md',
         className
       )}
       {...props}
@@ -24,7 +24,7 @@ function DropdownItem({
   return (
     <div
       className={cn(
-        'cursor-pointer px-3 py-2 font-mono text-sm text-terminal-text transition-colors hover:bg-terminal-active',
+        'cursor-pointer px-3 py-2 font-mono text-sm text-popover-foreground transition-colors hover:bg-muted',
         className
       )}
       {...props}
@@ -38,7 +38,7 @@ function DropdownSeparator({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn('my-1 h-px bg-terminal-border', className)}
+      className={cn('my-1 h-px bg-border', className)}
       {...props}
     />
   )
