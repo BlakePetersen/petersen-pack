@@ -1,84 +1,51 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.2
-milestone_name: Blink CLI & DX Registry
+milestone: v1.3
+milestone_name: Artax Design System
 status: executing
-stopped_at: Completed 17-02-PLAN.md
-last_updated: "2026-03-15T07:52:58.917Z"
-last_activity: 2026-03-15 — Completed 17-02 hooks and CLAUDE.md artifacts
+stopped_at: Completed 21-01-PLAN.md
+last_updated: "2026-03-16T08:48:00Z"
+last_activity: 2026-03-16 — Plan 21-01 complete (restructure + Storybook removal)
 progress:
-  total_phases: 8
-  completed_phases: 6
-  total_plans: 16
-  completed_plans: 16
-  percent: 100
+  total_phases: 6
+  completed_phases: 0
+  total_plans: 3
+  completed_plans: 1
+  percent: 5
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-14)
+See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 17 — Starter Content
+**Current focus:** Phase 21 — artax-ui Restructure & Theming
 
 ## Current Position
 
-Phase: 17 of 19 (Starter Content)
-Plan: 02 of 03 complete
-Status: In Progress
-Last activity: 2026-03-15 — Completed 17-02 hooks and CLAUDE.md artifacts
+Phase: 21 (artax-ui Restructure & Theming) — first of 6 in v1.3
+Plan: 1 of 3 complete
+Status: Executing
+Last activity: 2026-03-16 — Plan 21-01 complete (restructure + Storybook removal)
 
-Progress: [██████████] 100% (13/13 plans)
+Progress: [▓░░░░░░░░░] 5%
 
 ## Performance Metrics
 
-**Velocity (v1.0 + v1.1):**
-- v1.0: 20 plans in ~3.3 hours
+**Velocity:**
+- v1.0: 20 plans in ~3 days
 - v1.1: 9 plans in ~3 days
-- Combined: 29 plans across 2 milestones
+- v1.2: 23 plans in ~4 days
+- Combined: 52 plans across 3 milestones, 20 phases
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
-- Blink CLI as @blink/cli npm package — clean namespace for future tools
-- API-first distribution with static JSON — always fresh from site, no dynamic routes
-- Section markers for managed updates — preserve user customizations
-- Dual-content model (MDX + artifact) — docs annotate, artifacts are production-ready
-- [Phase 12]: Source exports only for blink-registry (no build step), following artax-ui pattern
-- [Phase 12]: Domain-split schemas with shared primitives to avoid circular dependencies
-- [Phase 12]: tsup outExtension for .mjs output with type:module packages
-- [Phase 12]: citty/consola/picocolors as devDeps since tsup bundles via noExternal
-- [Phase 13]: Pure calverFromDate helper wraps date logic for testability; deriveCalVer handles git integration
-- [Phase 13]: Inline artifact validation in velite prepare hook (avoids blink-registry ESM resolution issues)
-- [Phase 13]: Artifact slugs use filename-only (no directory prefix) to match SlugSchema
-- [Phase 14]: Consistent artifact lookup across all page types including guides
-- [Phase 14]: CalVer max version as generatedAt for deterministic registry output
-- [Phase 14]: No blink-registry import in velite.config.ts (ESM resolution, per Phase 13)
-- [Phase 14]: CalVer max version as generatedAt for deterministic registry output
-- [Phase 15]: Read BASE_URL from env at call time for dynamic BLINK_REGISTRY_URL override
-- [Phase 15]: PM detection uses ordered config array for priority (pnpm > yarn > npm)
-- [Phase 15]: Output formatters return strings (not print) for testability
-- [Phase 15]: splitting: false in tsup config to maintain single-file binary with lazy imports
-- [Phase 15]: Named consola import ({ consola }) required for TypeScript compatibility
-- [Phase 15]: Mock citty/consola/picocolors in command tests to avoid Jest ESM issues
-- [Phase 15]: --project flag defaults true, scope derived from args.project ternary
-- [Phase 16]: diff v8 has built-in TypeScript types; @types/diff deprecated and unnecessary
-- [Phase 16]: Line-based marker parsing (not single regex) for debuggability
-- [Phase 16]: Trailing newline normalization in extracted content for consistent checksumming
-- [Phase 16]: Scope derived from --global flag (not inverted --project) for clarity
-- [Phase 16]: Global scope tests mock @/scope to avoid writing to real $HOME
-- [Phase 16]: Update uses entry.scope from manifest for per-item resolution
-- [Phase 17]: Skill files nested at .claude/skills/ inside artifact dir to match manifest destination paths
-- [Phase 17]: lint-staged patterns: JS/TS get eslint+prettier, JSON/MD/YAML/CSS get prettier only
-- [Phase 17]: CLAUDE.md templates use blink markers for section-based managed updates
-- [Phase 17]: Prettier .prettierignore uses merge: section while .prettierrc.json uses merge: replace per JSON limitation
-- [Phase 17]: TypeScript artifact uses JSONC comments for rationale on non-obvious strict options
+- **21-01:** Direct file imports in barrel (no tier-level index.ts files)
+- **21-01:** import-x/no-cycle scoped to artax-ui only with maxDepth 3
 
 ### Pending Todos
 
@@ -86,12 +53,11 @@ None.
 
 ### Blockers/Concerns
 
-- @blink npm org scope must be registered before Phase 19 (publishing)
-- Velite prepare hook extension validated (Phase 13-02 complete)
-- Section marker survival across formatters needs validation (Phase 16)
+- **react-live React 19 compat (Phase 24):** Unverified. Must check before Phase 24 begins. Falls back to static previews if incompatible.
+- **Pencil light-mode token values (Phase 21):** Light-mode CSS custom property values depend on Blake's Pencil design sign-off. Design must precede implementation.
 
 ## Session Continuity
 
-Last session: 2026-03-15T07:52:58.915Z
-Stopped at: Completed 17-02-PLAN.md
-Resume file: None
+Last session: 2026-03-16T08:48:00Z
+Stopped at: Completed 21-01-PLAN.md
+Resume file: .planning/phases/21-artax-ui-restructure-theming/21-02-PLAN.md

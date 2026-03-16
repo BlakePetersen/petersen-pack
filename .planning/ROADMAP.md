@@ -81,7 +81,7 @@ See: `.planning/milestones/v1.2-ROADMAP.md` for full details.
   3. theme.css contains `:root` (light) and `[data-theme=dark]` CSS custom property pairs for all mode-sensitive colors
   4. No hardcoded hex color values remain in any artax-ui component — all use semantic CSS custom properties
   5. Storybook is fully removed (no devDeps, scripts, stories/, or .storybook/ in artax-ui) and `import/no-cycle` ESLint rule passes
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 Plans:
 - [ ] 21-01-PLAN.md — Atomic Design restructure, Storybook removal, ESLint import/no-cycle
 - [ ] 21-02-PLAN.md — Light/dark token system and ThemeProvider component
@@ -172,7 +172,7 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 18. Documentation | v1.2 | 4/4 | Complete | 2026-03-15 |
 | 19. Publishing | v1.2 | 2/2 | Complete | 2026-03-16 |
 | 20. Fix Integration Gaps | v1.2 | 1/1 | Complete | 2026-03-16 |
-| 21. artax-ui Restructure & Theming | v1.3 | 0/3 | Not started | - |
+| 21. artax-ui Restructure & Theming | 1/3 | In Progress|  | - |
 | 22. Artax Reference Site Scaffold | v1.3 | 0/? | Not started | - |
 | 23. Component Catalog & Documentation | v1.3 | 0/? | Not started | - |
 | 24. Editable Previews | v1.3 | 0/? | Not started | - |
