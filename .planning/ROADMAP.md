@@ -184,7 +184,7 @@ Plans:
   1. ApplyActionBar renders `blink apply <slug>` (bare slug, no type prefix) — user copies command and it works in CLI
   2. `turbo.json` build outputs include `public/r/**` so turbo cache correctly invalidates registry files
   3. `blink list` succeeds against live `https://blakepetersen.io/r/index.json` endpoint
-**Plans**: TBD
+**Plans**: 1 plan
 Plans:
 - [ ] 20-01-PLAN.md — ApplyActionBar slug fix, turbo.json outputs, registry connectivity
 
