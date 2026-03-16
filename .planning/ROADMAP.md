@@ -172,7 +172,7 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 18. Documentation | v1.2 | 4/4 | Complete | 2026-03-15 |
 | 19. Publishing | v1.2 | 2/2 | Complete | 2026-03-16 |
 | 20. Fix Integration Gaps | v1.2 | 1/1 | Complete | 2026-03-16 |
-| 21. artax-ui Restructure & Theming | 3/3 | Complete   | 2026-03-16 | - |
+| 21. artax-ui Restructure & Theming | 3/3 | Complete    | 2026-03-16 | - |
 | 22. Artax Reference Site Scaffold | v1.3 | 0/? | Not started | - |
 | 23. Component Catalog & Documentation | v1.3 | 0/? | Not started | - |
 | 24. Editable Previews | v1.3 | 0/? | Not started | - |
