@@ -10,7 +10,7 @@
         "content/**/*.artifact/**",
         "velite.config.ts"
       ],
-      "outputs": [".next/**", "dist/**", ".velite/**"]
+      "outputs": [".next/**", "dist/**", ".velite/**", "public/r/**"]
     },
     "clean": {
       "cache": false
