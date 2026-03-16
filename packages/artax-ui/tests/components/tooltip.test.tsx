@@ -11,8 +11,8 @@ describe('Tooltip base component', () => {
       <TooltipContent data-testid="tooltip">Hint text</TooltipContent>
     )
     const content = screen.getByTestId('tooltip')
-    expect(content.className).toContain('terminal-surface')
-    expect(content.className).toContain('terminal-border')
+    expect(content.className).toContain('bg-popover')
+    expect(content.className).toContain('border-border')
     expect(content.className).toContain('font-mono')
   })
 

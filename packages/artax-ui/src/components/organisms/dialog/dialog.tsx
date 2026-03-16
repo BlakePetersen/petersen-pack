@@ -22,7 +22,7 @@ function DialogContent({
   return (
     <div
       className={cn(
-        'bg-terminal-surface border border-terminal-border p-6 shadow-lg',
+        'bg-card border border-border p-6 shadow-lg',
         className
       )}
       {...props}
@@ -39,7 +39,7 @@ function DialogTitle({
   return (
     <h2
       className={cn(
-        'font-mono text-lg font-medium text-terminal-text',
+        'font-mono text-lg font-medium text-foreground',
         className
       )}
       {...props}
@@ -53,7 +53,7 @@ function DialogDescription({
 }: React.ComponentProps<'p'>) {
   return (
     <p
-      className={cn('text-sm text-terminal-muted', className)}
+      className={cn('text-sm text-muted-foreground', className)}
       {...props}
     />
   )

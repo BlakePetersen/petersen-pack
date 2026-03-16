@@ -33,7 +33,7 @@ function DialogInteractiveContent({
       <DialogInteractiveOverlay />
       <Dialog.Content
         className={cn(
-          'fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] bg-terminal-surface border border-terminal-border p-6 shadow-lg',
+          'fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] bg-card border border-border p-6 shadow-lg',
           className
         )}
         {...props}
@@ -51,7 +51,7 @@ function DialogInteractiveTitle({
   return (
     <Dialog.Title
       className={cn(
-        'font-mono text-lg font-medium text-terminal-text',
+        'font-mono text-lg font-medium text-foreground',
         className
       )}
       {...props}
@@ -65,7 +65,7 @@ function DialogInteractiveDescription({
 }: React.ComponentProps<typeof Dialog.Description>) {
   return (
     <Dialog.Description
-      className={cn('text-sm text-terminal-muted', className)}
+      className={cn('text-sm text-muted-foreground', className)}
       {...props}
     />
   )
@@ -78,7 +78,7 @@ function DialogInteractiveClose({
   return (
     <Dialog.Close
       className={cn(
-        'absolute right-4 top-4 font-mono text-terminal-muted hover:text-amber-accent transition-colors',
+        'absolute right-4 top-4 font-mono text-muted-foreground hover:text-primary transition-colors',
         className
       )}
       {...props}

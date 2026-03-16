@@ -1,5 +1,5 @@
 // ABOUTME: Tests that theme.css and globals.css implement the dual-mode token system.
-// ABOUTME: Validates static tokens in @theme, light/dark color tokens, and custom-variant dark directive.
+// ABOUTME: Validates static tokens in @theme, semantic color aliases, light/dark tokens, and custom-variant dark.
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -43,35 +43,40 @@ describe('theme.css', () => {
     })
   })
 
-  // TEMPORARY: Legacy tokens kept until Plan 03 migrates all components.
-  // These tests verify old tokens still exist so existing component utilities resolve.
-  // Remove these tests when Plan 03 completes the component migration.
-  describe('legacy color tokens (temporary - remove in Plan 03)', () => {
-    const legacyTokens = [
-      'terminal-bg',
-      'terminal-surface',
-      'terminal-active',
-      'terminal-border',
-      'terminal-disabled',
-      'terminal-muted',
-      'terminal-secondary',
-      'terminal-text',
-      'amber-accent',
-      'terminal-error',
-      'terminal-warning',
-      'terminal-success',
-      'terminal-info',
-      'surface-info',
-      'surface-warning',
-      'surface-success',
-    ]
+  describe('no legacy color tokens', () => {
+    it('has no --color-terminal-* tokens', () => {
+      expect(themeCss).not.toMatch(/--color-terminal-/)
+    })
 
-    it.each(legacyTokens)(
-      'still contains --color-%s legacy token',
-      token => {
-        expect(themeCss).toContain(`--color-${token}`)
-      }
-    )
+    it('has no --color-amber-accent token', () => {
+      expect(themeCss).not.toContain('--color-amber-accent')
+    })
+  })
+
+  describe('semantic color aliases (@theme inline)', () => {
+    it('registers --color-success as alias for --success', () => {
+      expect(themeCss).toContain('--color-success: var(--success)')
+    })
+
+    it('registers --color-info as alias for --info', () => {
+      expect(themeCss).toContain('--color-info: var(--info)')
+    })
+
+    it('registers --color-warning as alias for --warning', () => {
+      expect(themeCss).toContain('--color-warning: var(--warning)')
+    })
+
+    it('registers --color-surface-info as alias for --surface-info', () => {
+      expect(themeCss).toContain('--color-surface-info: var(--surface-info)')
+    })
+
+    it('registers --color-surface-warning as alias for --surface-warning', () => {
+      expect(themeCss).toContain('--color-surface-warning: var(--surface-warning)')
+    })
+
+    it('registers --color-surface-success as alias for --surface-success', () => {
+      expect(themeCss).toContain('--color-surface-success: var(--surface-success)')
+    })
   })
 
   it('does NOT import tailwindcss', () => {

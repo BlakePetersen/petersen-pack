@@ -48,7 +48,7 @@ describe('Table', () => {
         </TableBody>
       </Table>
     )
-    expect(screen.getByRole('table').className).toContain('terminal-border')
+    expect(screen.getByRole('table').className).toContain('border-border')
   })
 
   it('renders TableHeader with thead', () => {

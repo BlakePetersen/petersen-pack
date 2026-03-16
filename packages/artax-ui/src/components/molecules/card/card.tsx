@@ -9,7 +9,7 @@ function Card({
   return (
     <div
       className={cn(
-        'border border-terminal-border bg-terminal-surface text-terminal-text',
+        'border border-border bg-card text-card-foreground',
         className
       )}
       {...props}
@@ -42,7 +42,7 @@ function CardTitle({
       )}
       {...props}
     >
-      <span className="text-terminal-muted">// </span>
+      <span className="text-muted-foreground">// </span>
       {children}
     </div>
   )
@@ -54,7 +54,7 @@ function CardDescription({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn('text-sm text-terminal-muted', className)}
+      className={cn('text-sm text-muted-foreground', className)}
       {...props}
     />
   )
