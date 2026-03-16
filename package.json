@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@actions/core": "2.0.3",
-    "@actions/github": "^9.0.0",
+    "@actions/github": "6.0.1",
     "@anthropic-ai/sdk": "^0.78.0",
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
