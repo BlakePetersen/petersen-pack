@@ -1,5 +1,5 @@
-// ABOUTME: Tests that theme.css contains the complete terminal design token palette.
-// ABOUTME: Validates grayscale, accent, semantic colors, typography, and zero border-radius.
+// ABOUTME: Tests that theme.css and globals.css implement the dual-mode token system.
+// ABOUTME: Validates static tokens in @theme, light/dark color tokens, and custom-variant dark directive.
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -8,48 +8,17 @@ const themeCss = readFileSync(
   'utf-8'
 )
 
+const globalsCss = readFileSync(
+  resolve(__dirname, '../src/styles/globals.css'),
+  'utf-8'
+)
+
 describe('theme.css', () => {
-  describe('grayscale palette', () => {
-    const grayscaleTokens = [
-      'terminal-bg',
-      'terminal-surface',
-      'terminal-active',
-      'terminal-border',
-      'terminal-disabled',
-      'terminal-muted',
-      'terminal-secondary',
-      'terminal-text'
-    ]
-
-    it.each(grayscaleTokens)(
-      'contains %s color token',
-      token => {
-        expect(themeCss).toContain(`--color-${token}`)
-      }
-    )
+  it('uses @theme directive', () => {
+    expect(themeCss).toContain('@theme')
   })
 
-  it('contains amber-accent color token', () => {
-    expect(themeCss).toContain('--color-amber-accent')
-  })
-
-  describe('semantic colors', () => {
-    const semanticTokens = [
-      'terminal-error',
-      'terminal-warning',
-      'terminal-success',
-      'terminal-info'
-    ]
-
-    it.each(semanticTokens)(
-      'contains %s color token',
-      token => {
-        expect(themeCss).toContain(`--color-${token}`)
-      }
-    )
-  })
-
-  describe('typography', () => {
+  describe('typography (static tokens)', () => {
     it('contains font-mono for JetBrains Mono', () => {
       expect(themeCss).toContain('--font-mono')
       expect(themeCss).toContain('JetBrains Mono')
@@ -66,7 +35,7 @@ describe('theme.css', () => {
     })
   })
 
-  describe('border radius', () => {
+  describe('border radius (static tokens)', () => {
     it('sets all radius values to 0px', () => {
       const radiusMatches = themeCss.match(/--radius-\w+:\s*0px/g)
       expect(radiusMatches).not.toBeNull()
@@ -74,12 +43,186 @@ describe('theme.css', () => {
     })
   })
 
+  // TEMPORARY: Legacy tokens kept until Plan 03 migrates all components.
+  // These tests verify old tokens still exist so existing component utilities resolve.
+  // Remove these tests when Plan 03 completes the component migration.
+  describe('legacy color tokens (temporary - remove in Plan 03)', () => {
+    const legacyTokens = [
+      'terminal-bg',
+      'terminal-surface',
+      'terminal-active',
+      'terminal-border',
+      'terminal-disabled',
+      'terminal-muted',
+      'terminal-secondary',
+      'terminal-text',
+      'amber-accent',
+      'terminal-error',
+      'terminal-warning',
+      'terminal-success',
+      'terminal-info',
+      'surface-info',
+      'surface-warning',
+      'surface-success',
+    ]
+
+    it.each(legacyTokens)(
+      'still contains --color-%s legacy token',
+      token => {
+        expect(themeCss).toContain(`--color-${token}`)
+      }
+    )
+  })
+
   it('does NOT import tailwindcss', () => {
     expect(themeCss).not.toContain('@import')
     expect(themeCss).not.toContain('tailwindcss')
   })
+})
 
-  it('uses @theme directive', () => {
-    expect(themeCss).toContain('@theme')
+describe('globals.css', () => {
+  it('imports tailwindcss', () => {
+    expect(globalsCss).toContain("@import 'tailwindcss'")
+  })
+
+  it('imports theme.css', () => {
+    expect(globalsCss).toContain("@import './theme.css'")
+  })
+
+  it('has @custom-variant dark directive for data-theme attribute', () => {
+    expect(globalsCss).toContain('@custom-variant dark')
+    expect(globalsCss).toContain('data-theme=dark')
+  })
+
+  describe(':root block (light mode)', () => {
+    // Extract the :root block content
+    const rootMatch = globalsCss.match(/:root\s*\{([^}]+)\}/)
+    const rootBlock = rootMatch ? rootMatch[1] : ''
+
+    it('has :root block', () => {
+      expect(rootMatch).not.toBeNull()
+    })
+
+    const lightTokens: [string, string][] = [
+      ['--background', '#F5F5F5'],
+      ['--foreground', '#171717'],
+      ['--primary', '#D97706'],
+      ['--primary-foreground', '#F5F5F5'],
+      ['--secondary', '#E5E5E5'],
+      ['--secondary-foreground', '#171717'],
+      ['--card', '#EBEBEB'],
+      ['--card-foreground', '#171717'],
+      ['--popover', '#EBEBEB'],
+      ['--popover-foreground', '#171717'],
+      ['--muted', '#E5E5E5'],
+      ['--muted-foreground', '#737373'],
+      ['--accent', '#E5E5E5'],
+      ['--accent-foreground', '#171717'],
+      ['--border', '#D4D4D4'],
+      ['--input', '#D4D4D4'],
+      ['--ring', '#D97706'],
+      ['--destructive', '#DC2626'],
+      ['--destructive-foreground', '#F5F5F5'],
+    ]
+
+    it.each(lightTokens)(
+      'contains %s with light-mode value %s',
+      (token, value) => {
+        expect(rootBlock).toContain(`${token}: ${value}`)
+      }
+    )
+
+    it('contains --success light-mode token', () => {
+      expect(rootBlock).toContain('--success: #059669')
+    })
+
+    it('contains --info light-mode token', () => {
+      expect(rootBlock).toContain('--info: #0891B2')
+    })
+
+    it('contains --warning light-mode token', () => {
+      expect(rootBlock).toContain('--warning: #D97706')
+    })
+
+    it('contains --surface-info light-mode token', () => {
+      expect(rootBlock).toContain('--surface-info')
+      expect(rootBlock).toContain('rgba(8, 145, 178, 0.08)')
+    })
+
+    it('contains --surface-warning light-mode token', () => {
+      expect(rootBlock).toContain('--surface-warning')
+      expect(rootBlock).toContain('rgba(217, 119, 6, 0.08)')
+    })
+
+    it('contains --surface-success light-mode token', () => {
+      expect(rootBlock).toContain('--surface-success')
+      expect(rootBlock).toContain('rgba(5, 150, 105, 0.08)')
+    })
+  })
+
+  describe('[data-theme=dark] block (dark mode)', () => {
+    // Extract the [data-theme=dark] block content
+    const darkMatch = globalsCss.match(/\[data-theme=dark\]\s*\{([^}]+)\}/)
+    const darkBlock = darkMatch ? darkMatch[1] : ''
+
+    it('has [data-theme=dark] block', () => {
+      expect(darkMatch).not.toBeNull()
+    })
+
+    const darkTokens: [string, string][] = [
+      ['--background', '#0A0A0A'],
+      ['--foreground', '#FAFAFA'],
+      ['--primary', '#F59E0B'],
+      ['--primary-foreground', '#0A0A0A'],
+      ['--secondary', '#1F1F1F'],
+      ['--secondary-foreground', '#FAFAFA'],
+      ['--card', '#0F0F0F'],
+      ['--card-foreground', '#FAFAFA'],
+      ['--popover', '#0F0F0F'],
+      ['--popover-foreground', '#FAFAFA'],
+      ['--muted', '#1F1F1F'],
+      ['--muted-foreground', '#6B7280'],
+      ['--accent', '#1F1F1F'],
+      ['--accent-foreground', '#FAFAFA'],
+      ['--border', '#2a2a2a'],
+      ['--input', '#2a2a2a'],
+      ['--ring', '#F59E0B'],
+      ['--destructive', '#EF4444'],
+      ['--destructive-foreground', '#FAFAFA'],
+    ]
+
+    it.each(darkTokens)(
+      'contains %s with dark-mode value %s',
+      (token, value) => {
+        expect(darkBlock).toContain(`${token}: ${value}`)
+      }
+    )
+
+    it('contains --success dark-mode token', () => {
+      expect(darkBlock).toContain('--success: #10B981')
+    })
+
+    it('contains --info dark-mode token', () => {
+      expect(darkBlock).toContain('--info: #06B6D4')
+    })
+
+    it('contains --warning dark-mode token', () => {
+      expect(darkBlock).toContain('--warning: #F59E0B')
+    })
+
+    it('contains --surface-info dark-mode token', () => {
+      expect(darkBlock).toContain('--surface-info')
+      expect(darkBlock).toContain('rgba(6, 182, 212, 0.06)')
+    })
+
+    it('contains --surface-warning dark-mode token', () => {
+      expect(darkBlock).toContain('--surface-warning')
+      expect(darkBlock).toContain('rgba(245, 158, 11, 0.06)')
+    })
+
+    it('contains --surface-success dark-mode token', () => {
+      expect(darkBlock).toContain('--surface-success')
+      expect(darkBlock).toContain('rgba(16, 185, 129, 0.06)')
+    })
   })
 })
