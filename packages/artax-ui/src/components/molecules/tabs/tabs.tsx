@@ -1,6 +1,6 @@
 // ABOUTME: Server-safe Tabs structure components with terminal aesthetic.
 // ABOUTME: Visual shells for tab layout; interactivity added by tabs-interactive.tsx.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function TabsList({
   className,

@@ -1,6 +1,6 @@
 // ABOUTME: Terminal-styled Callout/admonition with left border accent.
 // ABOUTME: Supports info, warning, error, success variants with semantic terminal colors.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 const variantStyles = {
   info: 'border-l-terminal-cyan',

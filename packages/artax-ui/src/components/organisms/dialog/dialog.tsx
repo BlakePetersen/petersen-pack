@@ -1,6 +1,6 @@
 // ABOUTME: Server-safe Dialog structure components with terminal aesthetic.
 // ABOUTME: Visual shells for dialog layout; interactivity added by dialog-interactive.tsx.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function DialogOverlay({
   className,

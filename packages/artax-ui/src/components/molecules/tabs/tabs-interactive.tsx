@@ -2,7 +2,7 @@
 // ABOUTME: Client-side Tabs with Radix primitive for accessible tab navigation.
 // ABOUTME: Wraps Radix Tabs with terminal border, amber active indicator, and monospace styling.
 import { Tabs } from 'radix-ui'
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function TabsInteractive({
   className,

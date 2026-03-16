@@ -2,7 +2,7 @@
 // ABOUTME: Client-side Accordion with Radix primitive for keyboard/focus management.
 // ABOUTME: Wraps Radix Accordion with terminal aesthetic styling.
 import { Accordion } from 'radix-ui'
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function AccordionInteractive({
   className,

@@ -1,6 +1,6 @@
 // ABOUTME: Server-safe DropdownMenu structure components with terminal aesthetic.
 // ABOUTME: Visual shells for dropdown layout; interactivity added by dropdown-interactive.tsx.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function DropdownContent({
   className,

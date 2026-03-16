@@ -2,7 +2,7 @@
 // ABOUTME: Client-side Tooltip with Radix primitive for accessible tooltip behavior.
 // ABOUTME: Wraps Radix Tooltip with terminal surface, border, and monospace styling.
 import { Tooltip } from 'radix-ui'
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 const TooltipInteractiveProvider = Tooltip.Provider
 

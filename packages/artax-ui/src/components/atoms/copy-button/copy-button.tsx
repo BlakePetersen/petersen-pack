@@ -4,7 +4,7 @@
 // ABOUTME: Always visible in code block top-right corner, reverts to copy icon after 2s.
 
 import { useState } from 'react'
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function CopyButton({
   text,

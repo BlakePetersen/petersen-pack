@@ -1,6 +1,6 @@
 // ABOUTME: Server-safe Tooltip structure component with terminal aesthetic.
 // ABOUTME: Visual shell for tooltip content; interactivity added by tooltip-interactive.tsx.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function TooltipContent({
   className,

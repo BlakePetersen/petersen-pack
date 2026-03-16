@@ -1,6 +1,6 @@
 // ABOUTME: Terminal-styled Card with surface background, border, and // header prefix.
 // ABOUTME: Exports Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function Card({
   className,

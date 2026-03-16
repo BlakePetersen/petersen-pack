@@ -2,7 +2,7 @@
 // ABOUTME: Client-side Dialog with Radix primitive for accessible modal behavior.
 // ABOUTME: Wraps Radix Dialog with terminal overlay, surface, and border styling.
 import { Dialog } from 'radix-ui'
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 const DialogInteractive = Dialog.Root
 

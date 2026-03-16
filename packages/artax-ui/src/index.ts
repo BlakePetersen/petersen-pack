@@ -1,7 +1,16 @@
 // ABOUTME: Public API entry point for the artax-ui design system.
 // ABOUTME: Exports all components, variants, and utilities.
-export { Button, buttonVariants } from './components/button'
-export { Input } from './components/input'
+
+// Atoms
+export { Button, buttonVariants } from './components/atoms/button/button'
+export { Input } from './components/atoms/input/input'
+export { Badge, badgeVariants } from './components/atoms/badge/badge'
+export { Separator } from './components/atoms/separator/separator'
+export { CopyButton } from './components/atoms/copy-button/copy-button'
+export { ToggleBase } from './components/atoms/toggle/toggle'
+export { ToggleInteractive } from './components/atoms/toggle/toggle-interactive'
+
+// Molecules
 export {
   Card,
   CardHeader,
@@ -9,9 +18,7 @@ export {
   CardDescription,
   CardContent,
   CardFooter
-} from './components/card'
-export { Badge, badgeVariants } from './components/badge'
-export { Separator } from './components/separator'
+} from './components/molecules/card/card'
 export {
   Table,
   TableHeader,
@@ -20,36 +27,48 @@ export {
   TableHead,
   TableCell,
   TableCaption
-} from './components/table'
-export { Callout } from './components/callout'
-export type { CalloutVariant } from './components/callout'
-export { CodeBlock } from './components/code-block'
-export { CopyButton } from './components/copy-button'
+} from './components/molecules/table/table'
+export { Callout } from './components/molecules/callout/callout'
+export type { CalloutVariant } from './components/molecules/callout/callout'
+export { CodeBlock } from './components/molecules/code-block/code-block'
+export { TabsList, TabsTrigger, TabsContent } from './components/molecules/tabs/tabs'
+export { TooltipContent } from './components/molecules/tooltip/tooltip'
+export {
+  TabsInteractive,
+  TabsInteractiveList,
+  TabsInteractiveTrigger,
+  TabsInteractiveContent
+} from './components/molecules/tabs/tabs-interactive'
+export {
+  TooltipInteractiveProvider,
+  TooltipInteractive,
+  TooltipInteractiveTrigger,
+  TooltipInteractiveContent
+} from './components/molecules/tooltip/tooltip-interactive'
+
+// Organisms
 export {
   AccordionItem,
   AccordionTrigger,
   AccordionContent
-} from './components/accordion'
+} from './components/organisms/accordion/accordion'
 export {
   DialogOverlay,
   DialogContent,
   DialogTitle,
   DialogDescription
-} from './components/dialog'
+} from './components/organisms/dialog/dialog'
 export {
   DropdownContent,
   DropdownItem,
   DropdownSeparator
-} from './components/dropdown-menu'
-export { TabsList, TabsTrigger, TabsContent } from './components/tabs'
-export { ToggleBase } from './components/toggle'
-export { TooltipContent } from './components/tooltip'
+} from './components/organisms/dropdown/dropdown-menu'
 export {
   AccordionInteractive,
   AccordionInteractiveItem,
   AccordionInteractiveTrigger,
   AccordionInteractiveContent
-} from './components/accordion-interactive'
+} from './components/organisms/accordion/accordion-interactive'
 export {
   DialogInteractive,
   DialogInteractiveTrigger,
@@ -58,7 +77,7 @@ export {
   DialogInteractiveTitle,
   DialogInteractiveDescription,
   DialogInteractiveClose
-} from './components/dialog-interactive'
+} from './components/organisms/dialog/dialog-interactive'
 export {
   DropdownInteractive,
   DropdownInteractiveTrigger,
@@ -66,19 +85,6 @@ export {
   DropdownInteractiveItem,
   DropdownInteractiveSeparator,
   DropdownInteractiveLabel
-} from './components/dropdown-interactive'
-export {
-  TabsInteractive,
-  TabsInteractiveList,
-  TabsInteractiveTrigger,
-  TabsInteractiveContent
-} from './components/tabs-interactive'
-export { ToggleInteractive } from './components/toggle-interactive'
-export {
-  TooltipInteractiveProvider,
-  TooltipInteractive,
-  TooltipInteractiveTrigger,
-  TooltipInteractiveContent
-} from './components/tooltip-interactive'
+} from './components/organisms/dropdown/dropdown-interactive'
 export { cn } from './lib/utils'
 export { mdxComponents } from './mdx/components'

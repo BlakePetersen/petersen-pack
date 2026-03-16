@@ -1,6 +1,6 @@
 // ABOUTME: Terminal-styled Separator rendered as a horizontal rule.
 // ABOUTME: Uses terminal border color with box-drawing aesthetic.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function Separator({
   className,

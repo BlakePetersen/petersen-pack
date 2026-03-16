@@ -1,6 +1,6 @@
 // ABOUTME: Terminal-styled Table with box-drawing border aesthetic and monospace font.
 // ABOUTME: Exports Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (

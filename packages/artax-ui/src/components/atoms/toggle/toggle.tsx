@@ -1,6 +1,6 @@
 // ABOUTME: Server-safe Toggle structure component with terminal aesthetic.
 // ABOUTME: Visual shell for toggle button; interactivity added by toggle-interactive.tsx.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function ToggleBase({
   className,

@@ -1,7 +1,7 @@
 // ABOUTME: Server-safe code block wrapper with header bar, filename, and language badge.
 // ABOUTME: Renders Shiki-processed HTML output with terminal chrome and copy button.
-import { cn } from '../lib/utils'
-import { CopyButton } from './copy-button'
+import { cn } from '../../../lib/utils'
+import { CopyButton } from '../../atoms/copy-button/copy-button'
 
 function CodeBlock({
   className,

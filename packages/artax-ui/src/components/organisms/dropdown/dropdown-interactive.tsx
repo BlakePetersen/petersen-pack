@@ -2,7 +2,7 @@
 // ABOUTME: Client-side DropdownMenu with Radix primitive for accessible menu behavior.
 // ABOUTME: Wraps Radix DropdownMenu with terminal surface, border, and hover styling.
 import { DropdownMenu } from 'radix-ui'
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 const DropdownInteractive = DropdownMenu.Root
 

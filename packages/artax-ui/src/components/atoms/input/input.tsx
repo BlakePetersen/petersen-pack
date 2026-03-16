@@ -1,6 +1,6 @@
 // ABOUTME: Terminal-styled Input with monospace font and amber focus ring.
 // ABOUTME: Uses cn() for class merging with terminal border and placeholder styling.
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function Input({
   className,

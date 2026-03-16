@@ -2,7 +2,7 @@
 // ABOUTME: Client-side Toggle with Radix primitive for accessible toggle behavior.
 // ABOUTME: Wraps Radix Toggle with terminal border and amber pressed state.
 import { Toggle } from 'radix-ui'
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
 function ToggleInteractive({
   className,
