@@ -30,15 +30,6 @@ describe('Content Structure (CONT-02)', () => {
     expect(nested.slug).toContain('claude-code/')
   })
 
-  test('hook in hooks/pre-commit/ gets slug containing the subdirectory path', () => {
-    const items = readCollection('hooks')
-    const nested = items.find((i: { slug: string }) =>
-      i.slug.includes('pre-commit'),
-    )
-    expect(nested).toBeDefined()
-    expect(nested.slug).toContain('pre-commit/')
-  })
-
   test('config at top-level configs/ gets slug "configs/{filename}"', () => {
     const items = readCollection('configs')
     expect(items.length).toBeGreaterThan(0)

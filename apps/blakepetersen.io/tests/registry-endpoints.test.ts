@@ -1,5 +1,5 @@
 // ABOUTME: Integration tests for static JSON registry endpoint generation.
-// ABOUTME: Validates registry output files against blink-registry Zod schemas after Velite build.
+// ABOUTME: Validates registry output files against @blink-dx/registry Zod schemas after Velite build.
 
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import { join } from 'path'

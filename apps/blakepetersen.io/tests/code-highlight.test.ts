@@ -50,8 +50,8 @@ describe('Code Highlighting (CONT-04b)', () => {
     )
     expect(eslintConfig).toBeDefined()
 
-    // Compiled MDX wraps tokens in i.span calls with style color objects
-    expect(eslintConfig!.code).toMatch(/i\.span,\{style:\{color:/)
+    // Compiled MDX wraps tokens in span calls with style color objects
+    expect(eslintConfig!.code).toMatch(/\.span,\{style:\{color:/)
   })
 })
 

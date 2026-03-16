@@ -137,8 +137,6 @@ export default defineCommand({
           }
 
           const currentManaged = sections[0].content
-          const currentManagedChecksum = checksum(currentManaged)
-
           // Check if upstream content differs from local managed content
           if (currentManaged === file.content) {
             newFileEntries.push(
@@ -156,23 +154,15 @@ export default defineCommand({
           // Detect local modifications
           if (
             manifestFileEntry &&
-            currentManagedChecksum !== checksum(manifestFileEntry.path)
+            manifestFileEntry.checksum !== checksum(currentContent)
           ) {
-            // Compare current managed checksum against what we last wrote
-            const lastWrittenContent = currentManaged
-            const lastWrittenChecksum = checksum(lastWrittenContent)
-
-            if (
-              manifestFileEntry.checksum !== checksum(currentContent)
-            ) {
-              const confirmed = await confirmAction(
-                `Local changes detected in managed section of ${file.path}. Overwrite?`,
-                skipPrompt
-              )
-              if (!confirmed) {
-                newFileEntries.push(manifestFileEntry)
-                continue
-              }
+            const confirmed = await confirmAction(
+              `Local changes detected in managed section of ${file.path}. Overwrite?`,
+              skipPrompt
+            )
+            if (!confirmed) {
+              newFileEntries.push(manifestFileEntry)
+              continue
             }
           }
 

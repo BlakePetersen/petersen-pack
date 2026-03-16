@@ -9,8 +9,8 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 
 ### CLI Core (CORE)
 
-- [ ] **CORE-01**: User can run `blink apply <slug>` to fetch and apply a config/skill/hook from the registry
-- [ ] **CORE-02**: User can run `blink list` to browse all available items in the registry
+- [x] **CORE-01**: User can run `blink apply <slug>` to fetch and apply a config/skill/hook from the registry
+- [x] **CORE-02**: User can run `blink list` to browse all available items in the registry
 - [x] **CORE-03**: User can run `blink status` to see installed items, versions, and update availability
 - [x] **CORE-04**: User can run `blink update [slug]` to update managed items with diff preview
 - [x] **CORE-05**: User can run `blink eject <slug>` to stop managing an item and transfer full ownership
@@ -70,9 +70,9 @@ Requirements for the Blink CLI, registry API, artifact system, and starter conte
 
 - [x] **PKG-01**: `packages/blink-registry` workspace package with shared Zod schemas and TypeScript types
 - [x] **PKG-02**: `packages/blink-cli` workspace package with tsup build producing single-file ESM binary
-- [x] **PKG-03**: CLI published as `@blink/cli` to npm with `blink` binary name
+- [x] **PKG-03**: CLI published as `@blink-dx/cli` to npm with `blink` binary name
 - [x] **PKG-04**: Turbo pipeline updated with build/test/typecheck tasks for new packages
-- [ ] **PKG-05**: ApplyActionBar component updated to show `blink apply <slug>` instead of `claude skill apply`
+- [x] **PKG-05**: ApplyActionBar component updated to show `blink apply <slug>` instead of `claude skill apply`
 
 ## Future Requirements (v2+)
 
@@ -125,9 +125,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REG-03 | Phase 14 | Complete |
 | REG-04 | Phase 14 | Complete |
 | REG-05 | Phase 14 | Complete |
-| PKG-05 | Phase 20 | Pending |
-| CORE-01 | Phase 20 | Pending |
-| CORE-02 | Phase 20 | Pending |
+| PKG-05 | Phase 20 | Complete |
+| CORE-01 | Phase 20 | Complete |
+| CORE-02 | Phase 20 | Complete |
 | CORE-03 | Phase 15 | Complete |
 | CORE-07 | Phase 15 | Complete |
 | CORE-09 | Phase 15 | Complete |

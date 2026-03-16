@@ -5,7 +5,7 @@ import { defineCommand, runMain } from 'citty'
 const main = defineCommand({
   meta: {
     name: 'blink',
-    version: '0.0.0',
+    version: __CLI_VERSION__,
     description: 'Apply opinionated DX configs, skills, and hooks',
   },
   subCommands: {
