@@ -19,9 +19,9 @@ export function DiscussionWithReactions({
   const { setCount } = useReactionCount()
 
   return (
-    <section className="mt-8 border border-terminal-border p-4">
+    <section className="mt-8 border border-border p-4">
       <div className="flex items-baseline justify-between">
-        <h3 className="font-mono text-xs text-terminal-info">
+        <h3 className="font-mono text-xs text-info">
           {'// discussion'}
         </h3>
         <ReportProblemLink title={title} pageUrl={pageUrl} />

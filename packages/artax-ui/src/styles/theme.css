@@ -13,11 +13,49 @@
   --radius-xl: 0px;
 }
 
-/* Register semantic status colors so Tailwind v4 generates bg-*, text-*, border-* utilities */
+/* Register design system colors so Tailwind v4 generates bg-*, text-*, border-* utilities */
 @theme inline {
+  /* Core surfaces and text */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Primary (amber accent) */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  /* Secondary */
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Cards and popovers */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Muted */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  /* Accent */
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Borders and inputs */
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Destructive */
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /* Semantic status */
   --color-success: var(--success);
   --color-info: var(--info);
   --color-warning: var(--warning);
+
+  /* Semantic surfaces */
   --color-surface-info: var(--surface-info);
   --color-surface-warning: var(--surface-warning);
   --color-surface-success: var(--surface-success);

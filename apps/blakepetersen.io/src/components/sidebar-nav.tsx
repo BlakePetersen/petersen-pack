@@ -50,14 +50,14 @@ export function SidebarNav({ sections }: { sections: NavSection[] }) {
           <div key={section.label} className="mb-2">
             <button
               onClick={() => toggleSection(section.label)}
-              className="flex w-full items-center justify-between py-1.5 font-mono text-xs text-terminal-muted transition-colors hover:text-terminal-text"
+              className="flex w-full items-center justify-between py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
               <span>
                 <span className="mr-1.5 text-[8px]" style={{ color: categoryColors[section.label] || '#6B7280' }}>●</span>
                 {'// '}{section.label.toLowerCase()}
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="text-terminal-muted/60">{section.items.length}</span>
+                <span className="text-muted-foreground/60">{section.items.length}</span>
                 <span>{isOpen ? '▼' : '▶'}</span>
               </span>
             </button>
@@ -73,8 +73,8 @@ export function SidebarNav({ sections }: { sections: NavSection[] }) {
                         href={item.href}
                         className={`block truncate py-1 pl-2 font-mono text-xs transition-colors ${
                           isActive
-                            ? 'font-medium text-amber-accent bg-terminal-active -mx-2 px-4'
-                            : 'text-terminal-secondary hover:text-terminal-text'
+                            ? 'font-medium text-primary bg-accent -mx-2 px-4'
+                            : 'text-secondary-foreground hover:text-foreground'
                         }`}
                       >
                         {item.title}

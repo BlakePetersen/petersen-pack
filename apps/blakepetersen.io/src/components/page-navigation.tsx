@@ -29,14 +29,14 @@ export function PageNavigation({
   return (
     <nav
       aria-label="Page navigation"
-      className="mt-8 border-t border-terminal-border pt-6"
+      className="mt-8 border-t border-border pt-6"
     >
       <div className="flex justify-between font-mono text-sm">
         <div>
           {prev && (
             <Link
               href={prev.href}
-              className="text-terminal-muted hover:text-terminal-text"
+              className="text-muted-foreground hover:text-foreground"
             >
               {'< '}
               {prev.title}
@@ -47,7 +47,7 @@ export function PageNavigation({
           {next && (
             <Link
               href={next.href}
-              className="text-terminal-muted hover:text-terminal-text"
+              className="text-muted-foreground hover:text-foreground"
             >
               {next.title}
               {' >'}

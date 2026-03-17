@@ -43,18 +43,18 @@ export default async function ContributorsPage() {
   return (
     <ContentShell sidebar={<Sidebar />}>
       <div className="px-4 py-8">
-        <h1 className="mb-1 font-mono text-sm text-terminal-muted">
+        <h1 className="mb-1 font-mono text-sm text-muted-foreground">
           {'// '}contributors
         </h1>
-        <p className="mb-8 font-mono text-xs text-terminal-muted">
+        <p className="mb-8 font-mono text-xs text-muted-foreground">
           {contributors.length} contributor
           {contributors.length !== 1 ? 's' : ''}
         </p>
 
         {contributors.length === 0 ? (
           <div className="py-8 font-mono text-sm">
-            <p className="text-terminal-muted">$ git shortlog -sn</p>
-            <p className="mt-1 text-terminal-secondary">
+            <p className="text-muted-foreground">$ git shortlog -sn</p>
+            <p className="mt-1 text-secondary-foreground">
               No contributors found.
             </p>
           </div>

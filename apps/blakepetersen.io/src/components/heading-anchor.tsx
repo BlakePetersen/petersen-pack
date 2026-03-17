@@ -31,7 +31,7 @@ export function HeadingAnchor({ id }: { id?: string }) {
     <a
       href={`#${id}`}
       onClick={handleClick}
-      className="absolute -left-6 top-0 opacity-0 transition-opacity group-hover:opacity-100 text-terminal-muted hover:text-amber-accent"
+      className="absolute -left-6 top-0 opacity-0 transition-opacity group-hover:opacity-100 text-muted-foreground hover:text-primary"
       aria-label={`Link to ${id}`}
     >
       {copied ? '✓' : '#'}
