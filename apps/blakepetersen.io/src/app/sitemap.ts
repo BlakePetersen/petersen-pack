@@ -2,29 +2,22 @@
 // ABOUTME: Lists homepage, listing pages, and all content items for search engine discovery.
 
 import type { MetadataRoute } from 'next'
-import { getSkills, getHooks, getConfigs, getGuides, getPosts, getAllGitHistory } from '../lib/content'
+import { getAllGitHistory } from '../lib/content'
+import { getAllCollections } from '../lib/collection-registry'
 
 const BASE_URL = 'https://blakepetersen.io'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
+  const allCollections = getAllCollections().filter((c) => c.showInSitemap)
+
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: now },
-    { url: `${BASE_URL}/skills`, lastModified: now },
-    { url: `${BASE_URL}/hooks`, lastModified: now },
-    { url: `${BASE_URL}/configs`, lastModified: now },
-    { url: `${BASE_URL}/guides`, lastModified: now },
-    { url: `${BASE_URL}/posts`, lastModified: now },
+    ...allCollections.map((c) => ({ url: `${BASE_URL}${c.href}`, lastModified: now })),
   ]
 
-  const collections = [
-    getSkills(),
-    getHooks(),
-    getConfigs(),
-    getGuides(),
-    getPosts(),
-  ]
+  const collections = allCollections.map((c) => c.getter())
 
   const gitHistory = getAllGitHistory()
 

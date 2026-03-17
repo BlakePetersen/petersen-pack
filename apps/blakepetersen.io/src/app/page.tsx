@@ -2,17 +2,12 @@
 // ABOUTME: Displays dynamic counts and recent items from all content collections.
 
 import Link from 'next/link'
-import { getSkills, getHooks, getConfigs, getGuides, getPosts } from '../lib/content'
+import { getAllCollections, getCollection } from '../lib/collection-registry'
 import { CategoryCard } from '../components/category-card'
 
 export const revalidate = 3600
 
-const categories = [
-  { name: 'skills', label: 'skills', getter: getSkills, href: '/skills' },
-  { name: 'hooks', label: 'hooks', getter: getHooks, href: '/hooks' },
-  { name: 'configs', label: 'configs', getter: getConfigs, href: '/configs' },
-  { name: 'guides', label: 'guides', getter: getGuides, href: '/guides' },
-] as const
+const categories = getAllCollections().filter((c) => c.slug !== 'posts')
 
 const stackTools = ['Next.js', 'TypeScript', 'Tailwind', 'Claude', 'pnpm', 'Velite', 'Turborepo', 'ESLint', 'Prettier']
 
@@ -22,7 +17,8 @@ function stripPrefix(slug: string) {
 }
 
 export default function Home() {
-  const posts = getPosts()
+  // Cast needed: posts have date/readingTime fields beyond the base getter return type
+  const posts = getCollection('posts').getter() as { slug: string; title: string; description: string; date: string; readingTime: number; [key: string]: unknown }[]
   const recentPosts = posts.slice(0, 5)
 
   return (
@@ -59,13 +55,13 @@ export default function Home() {
       <section className="mb-12">
         <p className="mb-4 font-mono text-xs text-muted-foreground">{'// collections'}</p>
         <div className="grid gap-4 md:grid-cols-2">
-          {categories.map(({ name, label, getter, href }) => {
+          {categories.map(({ slug, label, getter, href }) => {
             const items = getter()
             return (
               <CategoryCard
-                key={name}
-                name={name}
-                label={label}
+                key={slug}
+                name={slug}
+                label={label.toLowerCase()}
                 count={items.length}
                 recentItems={items.slice(0, 3).map((item) => ({
                   title: item.title,
