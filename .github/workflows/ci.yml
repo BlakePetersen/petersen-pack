@@ -34,5 +34,5 @@ jobs:
       - name: Link check
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --offline --no-progress apps/blakepetersen.io/.next/server/app/**/*.html content/**/*.mdx
+          args: --offline --no-progress --base apps/blakepetersen.io/.next/server/app apps/blakepetersen.io/.next/server/app/**/*.html apps/blakepetersen.io/content/**/*.mdx
           fail: true
