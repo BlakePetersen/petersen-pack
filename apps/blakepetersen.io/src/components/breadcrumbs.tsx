@@ -31,20 +31,20 @@ export function Breadcrumbs({ pathname }: { pathname: string }) {
 
   return (
     <nav aria-label="Breadcrumb" className="mb-4 font-mono text-sm">
-      <span className="text-terminal-muted">{'// '}</span>
+      <span className="text-muted-foreground">{'// '}</span>
       {crumbs.map((crumb, index) => {
         const isLast = index === crumbs.length - 1
         return (
           <span key={crumb.href}>
             {index > 0 && (
-              <span className="text-terminal-muted">{' / '}</span>
+              <span className="text-muted-foreground">{' / '}</span>
             )}
             <Link
               href={crumb.href}
               className={
                 isLast
-                  ? 'text-terminal-text'
-                  : 'text-terminal-muted hover:text-terminal-text'
+                  ? 'text-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
               }
             >
               {crumb.label}

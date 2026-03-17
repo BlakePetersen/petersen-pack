@@ -21,10 +21,10 @@ export function CategoryCard({
 }: CategoryCardProps) {
   return (
     <Link href={href} className="group block">
-      <Card className="transition-colors group-hover:border-amber-accent">
+      <Card className="transition-colors group-hover:border-primary">
         <CardHeader>
           <CardTitle>{label}</CardTitle>
-          <p className="font-mono text-xs text-terminal-muted">
+          <p className="font-mono text-xs text-muted-foreground">
             {count} {count === 1 ? 'entry' : 'entries'}
           </p>
         </CardHeader>
@@ -32,11 +32,11 @@ export function CategoryCard({
           <ul className="space-y-3">
             {recentItems.map((item) => (
               <li key={item.slug} className="min-w-0">
-                <p className="truncate font-mono text-xs text-terminal-secondary">
-                  <span className="text-terminal-muted">{'> '}</span>
+                <p className="truncate font-mono text-xs text-secondary-foreground">
+                  <span className="text-muted-foreground">{'> '}</span>
                   {item.title}
                 </p>
-                <p className="mt-0.5 truncate text-xs text-terminal-muted">
+                <p className="mt-0.5 truncate text-xs text-muted-foreground">
                   {item.description}
                 </p>
                 {item.applies_to && item.applies_to.length > 0 && (
@@ -44,7 +44,7 @@ export function CategoryCard({
                     {item.applies_to.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="border border-terminal-border px-1 py-0.5 font-mono text-[10px] text-terminal-muted"
+                        className="border border-border px-1 py-0.5 font-mono text-[10px] text-muted-foreground"
                       >
                         {tag}
                       </span>

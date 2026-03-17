@@ -12,7 +12,7 @@ export function ReleaseBody({ body }: { body: string }) {
 
   if (!hasMore) {
     return (
-      <pre className="mt-2 whitespace-pre-wrap font-mono text-xs text-terminal-secondary">
+      <pre className="mt-2 whitespace-pre-wrap font-mono text-xs text-secondary-foreground">
         {body}
       </pre>
     )
@@ -20,13 +20,13 @@ export function ReleaseBody({ body }: { body: string }) {
 
   return (
     <details className="mt-2">
-      <summary className="cursor-pointer font-mono text-xs text-terminal-muted hover:text-amber-accent">
+      <summary className="cursor-pointer font-mono text-xs text-muted-foreground hover:text-primary">
         <span className="ml-1">
           {preview.slice(0, 120)}
           {preview.length > 120 ? '...' : ''}
         </span>
       </summary>
-      <pre className="mt-2 whitespace-pre-wrap font-mono text-xs text-terminal-secondary">
+      <pre className="mt-2 whitespace-pre-wrap font-mono text-xs text-secondary-foreground">
         {body}
       </pre>
     </details>

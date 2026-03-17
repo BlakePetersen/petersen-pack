@@ -26,7 +26,7 @@ export function ReportProblemLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="font-mono text-xs text-terminal-muted hover:text-terminal-text"
+      className="font-mono text-xs text-muted-foreground hover:text-foreground"
     >
       Report a problem &#8599;
     </a>

@@ -154,7 +154,7 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
           <Dialog.Content
-            className="fixed left-[50%] top-[20%] z-50 w-full max-w-lg translate-x-[-50%] border border-terminal-border bg-terminal-bg shadow-lg"
+            className="fixed left-[50%] top-[20%] z-50 w-full max-w-lg translate-x-[-50%] border border-border bg-background shadow-lg"
             onKeyDown={handleKeyDown}
             onOpenAutoFocus={(e) => {
               e.preventDefault()
@@ -163,21 +163,21 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
           >
             <Dialog.Title className="sr-only">Search content</Dialog.Title>
 
-            <div className="border-b border-terminal-border p-3">
+            <div className="border-b border-border p-3">
               <input
                 ref={inputRef}
                 type="text"
                 value={query}
                 onChange={(e) => handleQueryChange(e.target.value)}
                 placeholder="Search content..."
-                className="w-full bg-transparent font-mono text-sm text-terminal-text outline-none placeholder:text-terminal-muted"
+                className="w-full bg-transparent font-mono text-sm text-foreground outline-none placeholder:text-muted-foreground"
               />
             </div>
 
             <div className="max-h-80 overflow-y-auto p-2">
               {!query.trim() && recentPages.length > 0 && (
                 <>
-                  <div className="px-2 py-1.5 font-mono text-xs text-terminal-muted">
+                  <div className="px-2 py-1.5 font-mono text-xs text-muted-foreground">
                     Recent
                   </div>
                   {recentPages.map((page, i) => (
@@ -186,8 +186,8 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
                       onClick={() => navigateTo(page.url, page.title)}
                       className={`flex w-full items-center rounded px-2 py-1.5 text-left font-mono text-sm transition-colors ${
                         selectedIndex === i
-                          ? 'border-l-2 border-amber-accent bg-terminal-surface text-terminal-text'
-                          : 'text-terminal-muted hover:bg-terminal-surface'
+                          ? 'border-l-2 border-primary bg-accent text-foreground'
+                          : 'text-muted-foreground hover:bg-accent'
                       }`}
                     >
                       {page.title || page.url}
@@ -197,7 +197,7 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
               )}
 
               {query.trim() && results.length === 0 && (
-                <div className="px-2 py-4 text-center font-mono text-sm text-terminal-muted">
+                <div className="px-2 py-4 text-center font-mono text-sm text-muted-foreground">
                   No results found
                 </div>
               )}
@@ -205,7 +205,7 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
               {grouped &&
                 Array.from(grouped.entries()).map(([group, items]) => (
                   <div key={group}>
-                    <div className="px-2 py-1.5 font-mono text-xs text-terminal-muted">
+                    <div className="px-2 py-1.5 font-mono text-xs text-muted-foreground">
                       {group}
                     </div>
                     {items.map((result) => {
@@ -216,15 +216,15 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
                           onClick={() => navigateTo(result.url, result.title)}
                           className={`flex w-full flex-col rounded px-2 py-1.5 text-left transition-colors ${
                             selectedIndex === currentIndex
-                              ? 'border-l-2 border-amber-accent bg-terminal-surface'
-                              : 'hover:bg-terminal-surface'
+                              ? 'border-l-2 border-primary bg-accent'
+                              : 'hover:bg-accent'
                           }`}
                         >
-                          <span className="font-mono text-sm text-terminal-text">
+                          <span className="font-mono text-sm text-foreground">
                             {result.title}
                           </span>
                           <span
-                            className="line-clamp-1 text-xs text-terminal-muted [&_mark]:bg-amber-accent/30 [&_mark]:text-terminal-text"
+                            className="line-clamp-1 text-xs text-muted-foreground [&_mark]:bg-primary/30 [&_mark]:text-foreground"
                             dangerouslySetInnerHTML={{ __html: result.excerpt }}
                           />
                         </button>
@@ -234,14 +234,14 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
                 ))}
 
               {!query.trim() && recentPages.length === 0 && (
-                <div className="px-2 py-4 text-center font-mono text-sm text-terminal-muted">
+                <div className="px-2 py-4 text-center font-mono text-sm text-muted-foreground">
                   Type to search content
                 </div>
               )}
             </div>
 
-            <div className="border-t border-terminal-border px-3 py-2">
-              <div className="flex gap-3 font-mono text-xs text-terminal-muted">
+            <div className="border-t border-border px-3 py-2">
+              <div className="flex gap-3 font-mono text-xs text-muted-foreground">
                 <span>↑↓ navigate</span>
                 <span>↵ open</span>
                 <span>esc close</span>

@@ -50,16 +50,16 @@ export default async function RoadmapPage() {
   return (
     <ContentShell sidebar={<Sidebar />}>
       <div className="px-4 py-8">
-        <h1 className="mb-1 font-mono text-sm text-terminal-muted">
+        <h1 className="mb-1 font-mono text-sm text-muted-foreground">
           {'// '}roadmap
         </h1>
-        <p className="mb-8 font-mono text-xs text-terminal-muted">
+        <p className="mb-8 font-mono text-xs text-muted-foreground">
           Project direction and milestone history
         </p>
 
         {/* GitHub Projects link */}
         <section className="mb-10">
-          <p className="mb-3 font-mono text-xs text-terminal-muted">
+          <p className="mb-3 font-mono text-xs text-muted-foreground">
             $ open github.com/projects
           </p>
           {PROJECTS_URL ? (
@@ -67,24 +67,24 @@ export default async function RoadmapPage() {
               href={PROJECTS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="block border border-terminal-border p-6 transition-colors hover:border-amber-accent"
+              className="block border border-border p-6 transition-colors hover:border-primary"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-mono text-sm text-amber-accent">
+                  <p className="font-mono text-sm text-primary">
                     GitHub Projects Board
                   </p>
-                  <p className="mt-1 font-mono text-xs text-terminal-muted">
+                  <p className="mt-1 font-mono text-xs text-muted-foreground">
                     View active work, upcoming plans, and project priorities
                   </p>
                 </div>
-                <span className="font-mono text-sm text-terminal-muted">
+                <span className="font-mono text-sm text-muted-foreground">
                   ↗
                 </span>
               </div>
             </a>
           ) : (
-            <div className="border border-terminal-border p-6 font-mono text-sm text-terminal-muted">
+            <div className="border border-border p-6 font-mono text-sm text-muted-foreground">
               Projects board coming soon.
             </div>
           )}
@@ -92,13 +92,13 @@ export default async function RoadmapPage() {
 
         {/* Milestone history */}
         <section>
-          <p className="mb-4 font-mono text-xs text-terminal-muted">
+          <p className="mb-4 font-mono text-xs text-muted-foreground">
             {'// '}milestones
           </p>
           {releases.length === 0 ? (
             <div className="py-8 font-mono text-sm">
-              <p className="text-terminal-muted">$ gh project view</p>
-              <p className="mt-1 text-terminal-secondary">
+              <p className="text-muted-foreground">$ gh project view</p>
+              <p className="mt-1 text-secondary-foreground">
                 No milestones recorded yet.
               </p>
             </div>
@@ -106,28 +106,28 @@ export default async function RoadmapPage() {
             <div className="space-y-6">
               {Array.from(groups.entries()).map(([version, entries]) => (
                 <div key={version}>
-                  <h2 className="mb-2 font-mono text-sm text-terminal-secondary">
+                  <h2 className="mb-2 font-mono text-sm text-secondary-foreground">
                     {version}
                   </h2>
                   <div className="space-y-0">
                     {entries.map((release) => (
                       <div
                         key={release.tagName}
-                        className="flex items-baseline gap-3 border-l border-terminal-border py-1 pl-3"
+                        className="flex items-baseline gap-3 border-l border-border py-1 pl-3"
                       >
-                        <span className="font-mono text-sm text-amber-accent">
+                        <span className="font-mono text-sm text-primary">
                           {release.tagName}
                         </span>
                         {release.publishedAt && (
                           <time
                             dateTime={release.publishedAt}
-                            className="font-mono text-xs text-terminal-muted"
+                            className="font-mono text-xs text-muted-foreground"
                           >
                             {formatDate(release.publishedAt)}
                           </time>
                         )}
                         {release.name && release.name !== release.tagName && (
-                          <span className="truncate font-mono text-xs text-terminal-secondary">
+                          <span className="truncate font-mono text-xs text-secondary-foreground">
                             {release.name}
                           </span>
                         )}
