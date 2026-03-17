@@ -5,12 +5,12 @@ import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
 const interactiveFiles = [
-  'accordion-interactive.tsx',
-  'dialog-interactive.tsx',
-  'dropdown-interactive.tsx',
-  'tabs-interactive.tsx',
-  'toggle-interactive.tsx',
-  'tooltip-interactive.tsx'
+  ['organisms/accordion/accordion-interactive.tsx'],
+  ['organisms/dialog/dialog-interactive.tsx'],
+  ['organisms/dropdown/dropdown-interactive.tsx'],
+  ['molecules/tabs/tabs-interactive.tsx'],
+  ['atoms/toggle/toggle-interactive.tsx'],
+  ['molecules/tooltip/tooltip-interactive.tsx']
 ]
 
 describe('interactive wrappers have use client', () => {
@@ -30,7 +30,7 @@ describe('interactive wrappers have use client', () => {
 describe('AccordionInteractive', () => {
   it('renders with terminal styling', async () => {
     const { AccordionInteractive } = await import(
-      '../../src/components/accordion-interactive'
+      '../../src/components/organisms/accordion/accordion-interactive'
     )
     render(
       <AccordionInteractive type="single" collapsible data-testid="accordion">
@@ -44,7 +44,7 @@ describe('AccordionInteractive', () => {
 
 describe('DialogInteractive', () => {
   it('exports DialogInteractive component', async () => {
-    const mod = await import('../../src/components/dialog-interactive')
+    const mod = await import('../../src/components/organisms/dialog/dialog-interactive')
     expect(mod.DialogInteractive).toBeDefined()
     expect(mod.DialogInteractiveContent).toBeDefined()
     expect(mod.DialogInteractiveTrigger).toBeDefined()
@@ -54,7 +54,7 @@ describe('DialogInteractive', () => {
 
 describe('DropdownInteractive', () => {
   it('exports DropdownInteractive component', async () => {
-    const mod = await import('../../src/components/dropdown-interactive')
+    const mod = await import('../../src/components/organisms/dropdown/dropdown-interactive')
     expect(mod.DropdownInteractive).toBeDefined()
     expect(mod.DropdownInteractiveTrigger).toBeDefined()
     expect(mod.DropdownInteractiveContent).toBeDefined()
@@ -65,7 +65,7 @@ describe('DropdownInteractive', () => {
 describe('TabsInteractive', () => {
   it('renders with terminal styling', async () => {
     const { TabsInteractive, TabsInteractiveList, TabsInteractiveTrigger, TabsInteractiveContent } = await import(
-      '../../src/components/tabs-interactive'
+      '../../src/components/molecules/tabs/tabs-interactive'
     )
     render(
       <TabsInteractive defaultValue="tab1" data-testid="tabs">
@@ -82,7 +82,7 @@ describe('TabsInteractive', () => {
 describe('ToggleInteractive', () => {
   it('renders with terminal styling', async () => {
     const { ToggleInteractive } = await import(
-      '../../src/components/toggle-interactive'
+      '../../src/components/atoms/toggle/toggle-interactive'
     )
     render(<ToggleInteractive data-testid="toggle">Bold</ToggleInteractive>)
     const el = screen.getByTestId('toggle')
@@ -93,7 +93,7 @@ describe('ToggleInteractive', () => {
 
 describe('TooltipInteractive', () => {
   it('exports TooltipInteractive components', async () => {
-    const mod = await import('../../src/components/tooltip-interactive')
+    const mod = await import('../../src/components/molecules/tooltip/tooltip-interactive')
     expect(mod.TooltipInteractiveProvider).toBeDefined()
     expect(mod.TooltipInteractive).toBeDefined()
     expect(mod.TooltipInteractiveTrigger).toBeDefined()

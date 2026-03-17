@@ -1,7 +1,7 @@
 // ABOUTME: Tests for the server-safe Tooltip base component.
 // ABOUTME: Validates structure component renders without 'use client'.
 import { render, screen } from '@testing-library/react'
-import { TooltipContent } from '../../src/components/tooltip'
+import { TooltipContent } from '../../src/components/molecules/tooltip/tooltip'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -23,7 +23,7 @@ describe('Tooltip base component', () => {
 
   it('is server-safe (no use client)', () => {
     const content = readFileSync(
-      resolve(__dirname, '../../src/components/tooltip.tsx'),
+      resolve(__dirname, '../../src/components/molecules/tooltip/tooltip.tsx'),
       'utf-8'
     )
     expect(content).not.toContain("'use client'")

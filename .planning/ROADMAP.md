@@ -8,7 +8,8 @@ Transform the existing Turborepo monorepo from a collection of independent Next.
 
 - ✅ **v1.0 DX Reference Platform** — Phases 1-7.1 (shipped 2026-03-10)
 - ✅ **v1.1 GitHub Integration** — Phases 8-11 (shipped 2026-03-14)
-- 🚧 **v1.2 Blink CLI & DX Registry** — Phases 12-19 (in progress)
+- ✅ **v1.2 Blink CLI & DX Registry** — Phases 12-20 (shipped 2026-03-16)
+- 🚧 **v1.3 Artax Design System** — Phases 21-26 (in progress)
 
 ## Phases
 
@@ -40,136 +41,113 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 
 </details>
 
-### 🚧 v1.2 Blink CLI & DX Registry (In Progress)
+<details>
+<summary>✅ v1.2 Blink CLI & DX Registry (Phases 12-20) — SHIPPED 2026-03-16</summary>
 
-**Milestone Goal:** Ship a CLI tool (`blink`) and registry API that lets anyone apply, update, and customize DX configurations from blakepetersen.io.
+- [x] Phase 12: Shared Types & Package Scaffold (2/2 plans) — completed 2026-03-14
+- [x] Phase 13: Artifact Pipeline (2/2 plans) — completed 2026-03-15
+- [x] Phase 14: Registry API (2/2 plans) — completed 2026-03-15
+- [x] Phase 15: CLI Core (4/4 plans) — completed 2026-03-15
+- [x] Phase 16: Section Markers & Lifecycle (3/3 plans) — completed 2026-03-15
+- [x] Phase 17: Starter Content (3/3 plans) — completed 2026-03-15
+- [x] Phase 18: Documentation (4/4 plans) — completed 2026-03-15
+- [x] Phase 19: Publishing (2/2 plans) — completed 2026-03-16
+- [x] Phase 20: Fix Integration Gaps (1/1 plan) — completed 2026-03-16
 
-- [x] **Phase 12: Shared Types & Package Scaffold** - Workspace packages with shared schemas and build pipeline
-- [x] **Phase 13: Artifact Pipeline** - Velite integration for dual-content model (MDX docs + distributable artifacts) (completed 2026-03-15)
-- [x] **Phase 14: Registry API** - Static JSON endpoints serving artifact data from the site (completed 2026-03-15)
-- [x] **Phase 15: CLI Core** - Apply, list, status, and init commands with whole-file mode (completed 2026-03-15)
-- [x] **Phase 16: Section Markers & Lifecycle** - Managed regions, update, eject, diff, and doctor commands (completed 2026-03-15)
-- [x] **Phase 17: Starter Content** - Config artifacts (ESLint, Prettier, TypeScript, Husky, CLAUDE.md templates) (completed 2026-03-15)
-- [ ] **Phase 18: Documentation** - Guides for CLAUDE.md hierarchy, Blink architecture, and companion docs
-- [ ] **Phase 19: Publishing** - npm package publishing as @blink/cli with blink binary
+See: `.planning/milestones/v1.2-ROADMAP.md` for full details.
+
+</details>
+
+### v1.3 Artax Design System (In Progress)
+
+**Milestone Goal:** Evolve artax-ui into a mature, themed design system with Atomic Design primitives, light/dark mode, a Shadcn-style reference site, and updated page implementations.
+
+- [ ] **Phase 21: artax-ui Restructure & Theming** - Atomic Design hierarchy, ThemeProvider, semantic tokens, Storybook removal
+- [ ] **Phase 22: Artax Reference Site Scaffold** - New apps/artax Next.js app with theme toggle and turbo pipeline
+- [ ] **Phase 23: Component Catalog & Documentation** - Sidebar navigation, live previews, code snippets, props tables, token reference
+- [ ] **Phase 24: Editable Previews** - react-live compat check; editable mock data on previews (falls back to static)
+- [ ] **Phase 25: blakepetersen.io Theming** - ThemeProvider, theme toggle, FOUT prevention
+- [ ] **Phase 26: blakepetersen.io Page Updates** - Homepage, Skills Detail, About, Start Here, Collection Listing matched to Pencil designs
 
 ## Phase Details
 
-### Phase 12: Shared Types & Package Scaffold
-**Goal**: Both workspace packages exist with shared type contracts that CLI and web app consume
-**Depends on**: Phase 11 (v1.1 complete)
-**Requirements**: PKG-01, PKG-02, PKG-04
+### Phase 21: artax-ui Restructure & Theming
+**Goal**: artax-ui is reorganized into Atomic Design layers with a complete light/dark token system, ready for consumption by both apps
+**Depends on**: Nothing (first phase of v1.3)
+**Requirements**: FOUND-01, FOUND-02, FOUND-03, FOUND-04, FOUND-05, FOUND-06
 **Success Criteria** (what must be TRUE):
-  1. `packages/blink-registry` exports Zod schemas for artifact metadata, manifest state, and registry responses
-  2. `packages/blink-cli` builds via tsup into a single-file ESM binary with shebang
-  3. `turbo build` and `turbo typecheck` succeed with both new packages in the dependency graph
-**Plans**: 2 plans
+  1. All artax-ui components live under atoms/, molecules/, or organisms/ directories and `index.ts` public API is unchanged (consumers see no breakage)
+  2. A ThemeProvider component exists in artax-ui that sets `data-theme` on the HTML element and supports light/dark switching
+  3. theme.css contains `:root` (light) and `[data-theme=dark]` CSS custom property pairs for all mode-sensitive colors
+  4. No hardcoded hex color values remain in any artax-ui component — all use semantic CSS custom properties
+  5. Storybook is fully removed (no devDeps, scripts, stories/, or .storybook/ in artax-ui) and `import/no-cycle` ESLint rule passes
+**Plans:** 1/3 plans executed
 Plans:
-- [x] 12-01-PLAN.md — blink-registry package with Zod schemas and tests
-- [x] 12-02-PLAN.md — blink-cli package scaffold with tsup build and turbo pipeline verification
+- [ ] 21-01-PLAN.md — Atomic Design restructure, Storybook removal, ESLint import/no-cycle
+- [ ] 21-02-PLAN.md — Light/dark token system and ThemeProvider component
+- [ ] 21-03-PLAN.md — Component token migration and dev preview page
 
-### Phase 13: Artifact Pipeline
-**Goal**: Content authors can define distributable artifacts alongside MDX docs and Velite processes them at build time
-**Depends on**: Phase 12
-**Requirements**: ART-01, ART-02, ART-03, ART-04, ART-05, REG-01
+### Phase 22: Artax Reference Site Scaffold
+**Goal**: A running apps/artax Next.js app exists in the monorepo with working theme toggle, turbo pipeline, and FOUT-free rendering
+**Depends on**: Phase 21
+**Requirements**: ARTAX-01, ARTAX-07
 **Success Criteria** (what must be TRUE):
-  1. An `.artifact.md` or `.artifact/` directory alongside an MDX doc is processed by Velite into structured artifact data
-  2. Multi-file artifacts with a manifest.json produce correct file listings, destinations, and merge strategies
-  3. Single-file artifacts declare their destination in frontmatter
-  4. Artifacts can declare npm devDependencies in their metadata
-  5. `pnpm build` produces `.velite/artifacts.json` (or equivalent) containing all artifact data
-**Plans**: 2 plans
-Plans:
-- [x] 13-01-PLAN.md — Schema updates, CalVer utility, and workspace dependency wiring
-- [x] 13-02-PLAN.md — Velite artifact collections, prepare hook merge, query helpers, and test content
+  1. `apps/artax` builds and runs as a Next.js app consuming artax-ui as a workspace dependency
+  2. Turbo pipeline is configured with correct outputs for apps/artax (separate from blakepetersen.io)
+  3. Site-wide light/dark theme toggle works and persists across page navigations via next-themes
+  4. No flash of wrong theme (FOUT) on initial page load in either light or dark mode
+**Plans**: TBD
 
-### Phase 14: Registry API
-**Goal**: The CLI (and any HTTP client) can discover and fetch artifact data from static JSON endpoints on blakepetersen.io
-**Depends on**: Phase 13
-**Requirements**: REG-02, REG-03, REG-04, REG-05, PKG-05
+### Phase 23: Component Catalog & Documentation
+**Goal**: Every artax-ui component has a reference page with live preview, code example, and props documentation, organized by Atomic Design layer
+**Depends on**: Phase 22
+**Requirements**: ARTAX-02, ARTAX-03, ARTAX-04, ARTAX-05, ARTAX-06
 **Success Criteria** (what must be TRUE):
-  1. `/r/index.json` returns a list of all available artifacts with metadata (name, type, version, description)
-  2. `/r/<type>/<slug>.json` returns full artifact data including file contents and dependencies
-  3. Each artifact has a CalVer version derived from its git commit date
-  4. The ApplyActionBar component on content pages shows `blink apply <slug>` as the copy command
-**Plans**: 2 plans
-Plans:
-- [x] 14-01-PLAN.md — Registry schema url field and Velite prepare hook endpoint generation
-- [x] 14-02-PLAN.md — ApplyActionBar command update and artifact-conditional rendering
+  1. Sidebar navigation groups all components under Atoms / Molecules / Organisms headings
+  2. Each component page shows a live in-page preview rendering the actual component in both light and dark themes
+  3. Each component page includes a copyable code snippet showing usage
+  4. Each component page displays a props/API table documenting its interface
+  5. A design token reference page shows color, typography, and spacing values from theme.css with visual swatches
+**Plans**: TBD
 
-### Phase 15: CLI Core
-**Goal**: Users can install blink and apply, browse, inspect, and initialize config management in their projects
-**Depends on**: Phase 14
-**Requirements**: CORE-01, CORE-02, CORE-03, CORE-07, CORE-09, CORE-10, CORE-11, SCOPE-02, SCOPE-03
+### Phase 24: Editable Previews
+**Goal**: Component previews support editable mock data (if react-live is React 19 compatible) or confirm static-only with clear documentation
+**Depends on**: Phase 23
+**Requirements**: ARTAX-08
 **Success Criteria** (what must be TRUE):
-  1. `blink apply <slug>` fetches an artifact from the registry, writes files to the project, and installs declared npm dependencies using the detected package manager
-  2. `blink list` displays all available artifacts from the registry with type, name, and description
-  3. `blink status` shows installed items from `.blink/manifest.json` with version and update availability
-  4. `blink init` creates the `.blink/` directory and manifest in the current project
-  5. `--dry-run` on any state-changing command previews operations without writing files, and `--yes` / non-TTY skips interactive prompts
-**Plans**: 4 plans
-Plans:
-- [x] 15-01-PLAN.md — Utility modules: registry client, manifest manager, PM detection, output formatting
-- [x] 15-02-PLAN.md — Init, list, and status commands with subcommand routing
-- [x] 15-03-PLAN.md — Apply command with dry-run, conflict detection, and dependency installation
-- [x] 15-04-PLAN.md — Gap closure: add --project flag to apply command (SCOPE-02)
+  1. react-live React 19 compatibility has been verified (pass/fail documented)
+  2. If compatible: component previews accept user-editable props/data that update the preview in real time
+  3. If incompatible: previews remain static (from Phase 23) and ARTAX-08 is deferred to future requirements as ARTAX-F01
+**Plans**: TBD
 
-### Phase 16: Section Markers & Lifecycle
-**Goal**: Users can update managed configs without losing their customizations, eject from management, and diagnose issues
-**Depends on**: Phase 15
-**Requirements**: CORE-04, CORE-05, CORE-06, CORE-08, CORE-12, SCOPE-01, SCOPE-04, SCOPE-05, SCOPE-06, SCOPE-07, SCOPE-08
+### Phase 25: blakepetersen.io Theming
+**Goal**: blakepetersen.io supports light/dark mode switching with no visual regressions from its current dark-only appearance
+**Depends on**: Phase 21
+**Requirements**: SITE-01, SITE-02, SITE-08
 **Success Criteria** (what must be TRUE):
-  1. `blink update [slug]` shows a diff preview of upstream changes and replaces only managed sections (between markers), preserving user content outside markers
-  2. `blink eject <slug>` strips section markers from files and removes the item from the manifest without deleting files
-  3. `blink diff <slug>` displays upstream changes without applying them
-  4. `blink doctor` detects broken markers, orphaned manifest entries, and other integrity issues
-  5. `blink apply --global` targets `~/.claude/` and global config locations; local modifications to managed sections prompt before overwriting; file writes are atomic (temp + rename)
-**Plans**: 3 plans
-Plans:
-- [x] 16-01-PLAN.md — Foundation modules: markers engine, atomic writer, scope resolver, dependency resolver, manifest helpers
-- [x] 16-02-PLAN.md — Apply modifications (markers, global, atomic, deps) + update and diff commands
-- [ ] 16-03-PLAN.md — Eject and doctor commands
+  1. blakepetersen.io layout is wrapped with ThemeProvider and next-themes, defaulting to dark mode
+  2. A user-facing theme toggle is visible in the site header and persists the user's choice
+  3. No flash of wrong theme on initial load or page navigation (blocking script active)
+  4. All existing pages render correctly in both light and dark modes with no hardcoded color artifacts
+**Plans**: TBD
 
-### Phase 17: Starter Content
-**Goal**: The registry has a complete starter kit of production-ready config artifacts that users can apply
-**Depends on**: Phase 16
-**Requirements**: CONT-01, CONT-02, CONT-03, CONT-04, CONT-05, CONT-06, CONT-07
+### Phase 26: blakepetersen.io Page Updates
+**Goal**: Five key pages on blakepetersen.io match their Pencil designs, taking advantage of the themed design system
+**Depends on**: Phase 25
+**Requirements**: SITE-03, SITE-04, SITE-05, SITE-06, SITE-07
 **Success Criteria** (what must be TRUE):
-  1. `blink apply eslint` installs an ESLint flat config with section markers and TypeScript strict rules
-  2. `blink apply prettier` and `blink apply typescript` install opinionated Prettier and TypeScript configs
-  3. `blink apply husky` installs Husky + lint-staged with pre-commit hook setup
-  4. `blink apply claude-global` and `blink apply claude-project` install CLAUDE.md templates to the correct scope
-  5. A "writing custom skills" artifact exists as a companion to the existing MDX guide
-**Plans**: 3 plans
-Plans:
-- [ ] 17-01-PLAN.md — ESLint, Prettier, and TypeScript config artifacts
-- [ ] 17-02-PLAN.md — Husky + lint-staged hook and CLAUDE.md template artifacts
-- [ ] 17-03-PLAN.md — Writing custom skills artifact and build validation
-
-### Phase 18: Documentation
-**Goal**: Users understand the CLAUDE.md hierarchy, how Blink works, and can find related content through cross-references
-**Depends on**: Phase 17
-**Requirements**: DOCS-01, DOCS-02, DOCS-03, DOCS-04
-**Success Criteria** (what must be TRUE):
-  1. A published guide explains CLAUDE.md hierarchy: global vs project scope, what goes where, and precedence rules
-  2. A published guide explains the Blink system: architecture, files it manages, benefits and risks
-  3. Every starter content artifact has a companion MDX page documenting complementary tools, competitors, and best practices
-  4. Content pages use `dependencies` and `related` frontmatter fields to cross-reference related artifacts and guides
-**Plans**: [To be planned]
-
-### Phase 19: Publishing
-**Goal**: Users can install blink from npm and the package is verified to work from a clean install
-**Depends on**: Phase 18
-**Requirements**: PKG-03
-**Success Criteria** (what must be TRUE):
-  1. `npm install -g @blink/cli` installs successfully and `blink --help` shows available commands
-  2. `blink apply eslint` works end-to-end from the published npm package against the live registry
-**Plans**: [To be planned]
+  1. Homepage matches the approved Pencil design in both light and dark modes
+  2. Skills Detail page matches the approved Pencil design in both light and dark modes
+  3. About page matches the approved Pencil design in both light and dark modes
+  4. Start Here page matches the approved Pencil design in both light and dark modes
+  5. Collection Listing page matches the approved Pencil design in both light and dark modes
+**Plans**: TBD
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19
+Phases execute in numeric order: 21 → 22 → 23 → 24 → 25 → 26
+Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks after Phase 21. Both depend on Phase 21 but not on each other.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -185,11 +163,18 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 → 16 → 17 → 18 �
 | 9. Community Engagement | v1.1 | 2/2 | Complete | 2026-03-11 |
 | 10. GitHub Data Pages | v1.1 | 2/2 | Complete | 2026-03-12 |
 | 11. AI Automation | v1.1 | 2/2 | Complete | 2026-03-13 |
-| 12. Shared Types & Package Scaffold | v1.2 | Complete    | 2026-03-14 | 2026-03-14 |
-| 13. Artifact Pipeline | 2/2 | Complete    | 2026-03-15 | - |
-| 14. Registry API | 2/2 | Complete    | 2026-03-15 | - |
-| 15. CLI Core | 4/4 | Complete    | 2026-03-15 | - |
-| 16. Section Markers & Lifecycle | 3/3 | Complete    | 2026-03-15 | - |
-| 17. Starter Content | 3/3 | Complete   | 2026-03-15 | - |
-| 18. Documentation | v1.2 | 0/? | Not started | - |
-| 19. Publishing | v1.2 | 0/? | Not started | - |
+| 12. Shared Types & Package Scaffold | v1.2 | 2/2 | Complete | 2026-03-14 |
+| 13. Artifact Pipeline | v1.2 | 2/2 | Complete | 2026-03-15 |
+| 14. Registry API | v1.2 | 2/2 | Complete | 2026-03-15 |
+| 15. CLI Core | v1.2 | 4/4 | Complete | 2026-03-15 |
+| 16. Section Markers & Lifecycle | v1.2 | 3/3 | Complete | 2026-03-15 |
+| 17. Starter Content | v1.2 | 3/3 | Complete | 2026-03-15 |
+| 18. Documentation | v1.2 | 4/4 | Complete | 2026-03-15 |
+| 19. Publishing | v1.2 | 2/2 | Complete | 2026-03-16 |
+| 20. Fix Integration Gaps | v1.2 | 1/1 | Complete | 2026-03-16 |
+| 21. artax-ui Restructure & Theming | 1/3 | In Progress|  | - |
+| 22. Artax Reference Site Scaffold | v1.3 | 0/? | Not started | - |
+| 23. Component Catalog & Documentation | v1.3 | 0/? | Not started | - |
+| 24. Editable Previews | v1.3 | 0/? | Not started | - |
+| 25. blakepetersen.io Theming | v1.3 | 0/? | Not started | - |
+| 26. blakepetersen.io Page Updates | v1.3 | 0/? | Not started | - |

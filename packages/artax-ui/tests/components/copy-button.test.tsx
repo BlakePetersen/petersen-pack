@@ -1,7 +1,7 @@
 // ABOUTME: Tests for the CopyButton client component with clipboard interaction.
 // ABOUTME: Validates CONT-04e: copy button copies text and shows checkmark confirmation.
 import { render, screen, fireEvent, act } from '@testing-library/react'
-import { CopyButton } from '../../src/components/copy-button'
+import { CopyButton } from '../../src/components/atoms/copy-button/copy-button'
 
 // Mock clipboard API
 const mockWriteText = jest.fn().mockResolvedValue(undefined)

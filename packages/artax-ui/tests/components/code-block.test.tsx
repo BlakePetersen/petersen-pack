@@ -1,7 +1,7 @@
 // ABOUTME: Tests for the CodeBlock component with Shiki integration and terminal chrome.
 // ABOUTME: Validates CONT-04d: header bar with filename, language badge, and terminal styling.
 import { render, screen } from '@testing-library/react'
-import { CodeBlock } from '../../src/components/code-block'
+import { CodeBlock } from '../../src/components/molecules/code-block/code-block'
 
 describe('CodeBlock', () => {
   it('renders children (Shiki HTML output) inside the code container', () => {

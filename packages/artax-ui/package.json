@@ -9,7 +9,6 @@
     ".": "./src/index.ts",
     "./styles/theme.css": "./src/styles/theme.css",
     "./styles/globals.css": "./src/styles/globals.css",
-    "./components/*": "./src/components/*",
     "./mdx": "./src/mdx/components.tsx",
     "./lib/utils": "./src/lib/utils.ts"
   },
@@ -17,30 +16,23 @@
     "**/*.css"
   ],
   "scripts": {
-    "test": "jest",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test": "jest"
   },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "^10.2.16",
-    "@storybook/addon-docs": "^10.2.16",
-    "@storybook/react-vite": "^10.2.16",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
     "@types/jest": "^30.0.0",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.1.6",
-    "eslint-plugin-storybook": "^10.2.16",
     "jest": "30.2.0",
     "jest-environment-jsdom": "30.2.0",
     "react": "19.2.0",
     "react-dom": "^19.2.0",
-    "storybook": "^10.2.16",
     "ts-jest": "^29.4.6",
     "tsconfig": "workspace:*",
     "typescript": "5.9.3"

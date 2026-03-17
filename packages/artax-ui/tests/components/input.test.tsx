@@ -2,7 +2,7 @@
 // ABOUTME: Validates monospace font, terminal border styling, and prop passthrough.
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { Input } from '../../src/components/input'
+import { Input } from '../../src/components/atoms/input/input'
 
 describe('Input', () => {
   it('renders an input element', () => {

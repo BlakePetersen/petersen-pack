@@ -1,7 +1,7 @@
 // ABOUTME: Tests for the terminal-styled Callout component.
 // ABOUTME: Validates variant rendering and left border accent styling.
 import { render, screen } from '@testing-library/react'
-import { Callout } from '../../src/components/callout'
+import { Callout } from '../../src/components/molecules/callout/callout'
 
 describe('Callout', () => {
   it('renders with default info variant', () => {

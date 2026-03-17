@@ -9,7 +9,7 @@ import {
   TableHead,
   TableCell,
   TableCaption
-} from '../../src/components/table'
+} from '../../src/components/molecules/table/table'
 
 describe('Table', () => {
   it('renders a table element', () => {

@@ -2,7 +2,7 @@
 // ABOUTME: Exports mdxComponents object for spreading into MDX providers in consuming apps.
 import React from 'react'
 import { cn } from '../lib/utils'
-import { CodeBlock } from '../components/code-block'
+import { CodeBlock } from '../components/molecules/code-block/code-block'
 
 type Props = React.HTMLAttributes<HTMLElement> & { children?: React.ReactNode }
 type HeadingProps = React.ComponentPropsWithoutRef<'h1'>
