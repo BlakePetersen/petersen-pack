@@ -23,11 +23,9 @@ function ThemeProvider({
 }) {
   const [theme, setTheme] = useState<Theme>(defaultTheme)
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(() => {
+    if (defaultTheme !== 'system') return defaultTheme
     if (typeof window === 'undefined') return 'dark'
-    if (defaultTheme === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    }
-    return defaultTheme === 'dark' ? 'dark' : 'light'
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   })
 
   useEffect(() => {

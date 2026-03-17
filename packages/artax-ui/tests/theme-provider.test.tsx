@@ -98,6 +98,30 @@ describe('ThemeProvider', () => {
     )
     expect(document.documentElement.getAttribute('data-theme')).toBe('light')
   })
+
+  it('updates resolvedTheme and data-theme when system preference changes', () => {
+    const mql = createMatchMedia(true)
+    let captured: { theme: Theme; resolvedTheme: 'light' | 'dark' } | null = null
+    render(
+      <ThemeProvider>
+        <ThemeConsumer onTheme={(val) => { captured = val }} />
+      </ThemeProvider>
+    )
+    expect(captured!.resolvedTheme).toBe('dark')
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
+
+    act(() => {
+      mql.dispatchChange(false)
+    })
+    expect(captured!.resolvedTheme).toBe('light')
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light')
+
+    act(() => {
+      mql.dispatchChange(true)
+    })
+    expect(captured!.resolvedTheme).toBe('dark')
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
+  })
 })
 
 describe('useTheme', () => {
