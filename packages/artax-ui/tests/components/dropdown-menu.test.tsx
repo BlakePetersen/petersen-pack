@@ -15,8 +15,8 @@ describe('DropdownMenu base components', () => {
       <DropdownContent data-testid="content">items</DropdownContent>
     )
     const content = screen.getByTestId('content')
-    expect(content.className).toContain('terminal-surface')
-    expect(content.className).toContain('terminal-border')
+    expect(content.className).toContain('bg-popover')
+    expect(content.className).toContain('border-border')
   })
 
   it('renders DropdownItem with monospace font', () => {
@@ -27,7 +27,7 @@ describe('DropdownMenu base components', () => {
   it('renders DropdownSeparator', () => {
     render(<DropdownSeparator data-testid="sep" />)
     expect(screen.getByTestId('sep')).toBeInTheDocument()
-    expect(screen.getByTestId('sep').className).toContain('terminal-border')
+    expect(screen.getByTestId('sep').className).toContain('bg-border')
   })
 
   it('is server-safe (no use client)', () => {

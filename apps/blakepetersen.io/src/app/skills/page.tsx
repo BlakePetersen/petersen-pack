@@ -31,7 +31,7 @@ export default function SkillsPage() {
   return (
     <ContentShell sidebar={<Sidebar />}>
       <div className="px-4 py-8">
-        <h1 className="mb-6 font-mono text-sm text-terminal-muted">
+        <h1 className="mb-6 font-mono text-sm text-muted-foreground">
           {'// '}skills
         </h1>
         <div className="space-y-4">
@@ -39,12 +39,12 @@ export default function SkillsPage() {
             <Link
               key={item.slug}
               href={`/skills/${stripPrefix(item.slug)}`}
-              className="group block border border-terminal-border p-4 transition-colors hover:border-amber-accent"
+              className="group block border border-border p-4 transition-colors hover:border-primary"
             >
-              <h2 className="font-mono text-sm font-medium group-hover:text-amber-accent">
+              <h2 className="font-mono text-sm font-medium group-hover:text-primary">
                 {item.title}
               </h2>
-              <p className="mt-1 text-sm text-terminal-muted">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {item.description}
               </p>
               <div className="mt-2 flex flex-wrap gap-1">

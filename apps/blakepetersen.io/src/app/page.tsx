@@ -29,26 +29,26 @@ export default function Home() {
     <div className="mx-auto max-w-[1600px] px-4 py-8">
       {/* Section 1: Workbench hero */}
       <section className="mb-12">
-        <p className="mb-4 font-mono text-xs text-terminal-muted">{'// dx_workbench'}</p>
-        <div className="border border-terminal-border p-6">
-          <p className="font-mono text-lg text-terminal-text">
+        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// dx_workbench'}</p>
+        <div className="border border-border p-6">
+          <p className="font-mono text-lg text-foreground">
             Opinionated AI-first DX practices,<br />documented and ready to apply.
           </p>
           <nav className="mt-4 flex flex-wrap gap-3 font-mono text-sm">
-            <Link href="/skills" className="text-amber-accent hover:underline">[skills]</Link>
-            <Link href="/hooks" className="text-amber-accent hover:underline">[hooks]</Link>
-            <Link href="/configs" className="text-amber-accent hover:underline">[configs]</Link>
-            <Link href="/guides" className="text-amber-accent hover:underline">[guides]</Link>
+            <Link href="/skills" className="text-primary hover:underline">[skills]</Link>
+            <Link href="/hooks" className="text-primary hover:underline">[hooks]</Link>
+            <Link href="/configs" className="text-primary hover:underline">[configs]</Link>
+            <Link href="/guides" className="text-primary hover:underline">[guides]</Link>
           </nav>
         </div>
       </section>
 
       {/* Section 2: Stack snapshot */}
       <section className="mb-12">
-        <p className="mb-4 font-mono text-xs text-terminal-muted">{'// stack'}</p>
+        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// stack'}</p>
         <div className="flex flex-wrap gap-2">
           {stackTools.map(tool => (
-            <span key={tool} className="border border-terminal-border px-2 py-1 font-mono text-xs text-terminal-secondary">
+            <span key={tool} className="border border-border px-2 py-1 font-mono text-xs text-secondary-foreground">
               {tool}
             </span>
           ))}
@@ -57,7 +57,7 @@ export default function Home() {
 
       {/* Section 3: Enriched content grid */}
       <section className="mb-12">
-        <p className="mb-4 font-mono text-xs text-terminal-muted">{'// collections'}</p>
+        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// collections'}</p>
         <div className="grid gap-4 md:grid-cols-2">
           {categories.map(({ name, label, getter, href }) => {
             const items = getter()
@@ -83,21 +83,21 @@ export default function Home() {
       {/* Recent posts */}
       {recentPosts.length > 0 && (
         <section className="mb-12">
-          <p className="mb-4 font-mono text-xs text-terminal-muted">{'// recent_posts'}</p>
+          <p className="mb-4 font-mono text-xs text-muted-foreground">{'// recent_posts'}</p>
           <div className="space-y-6">
             {recentPosts.map((post) => (
               <Link
                 key={post.slug}
                 href={`/posts/${stripPrefix(post.slug)}`}
-                className="group block border border-terminal-border p-4 transition-colors hover:border-amber-accent"
+                className="group block border border-border p-4 transition-colors hover:border-primary"
               >
                 <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="font-mono text-sm font-medium group-hover:text-amber-accent">
+                  <h3 className="font-mono text-sm font-medium group-hover:text-primary">
                     {post.title}
                   </h3>
                   <time
                     dateTime={post.date}
-                    className="shrink-0 font-mono text-xs text-terminal-muted"
+                    className="shrink-0 font-mono text-xs text-muted-foreground"
                   >
                     {new Date(post.date).toLocaleDateString('en-US', {
                       year: 'numeric',
@@ -106,10 +106,10 @@ export default function Home() {
                     })}
                   </time>
                 </div>
-                <p className="mt-1 text-sm text-terminal-muted">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {post.description}
                 </p>
-                <span className="mt-2 inline-block font-mono text-xs text-terminal-muted">
+                <span className="mt-2 inline-block font-mono text-xs text-muted-foreground">
                   {post.readingTime} min read
                 </span>
               </Link>
@@ -120,16 +120,16 @@ export default function Home() {
 
       {/* Section 4: Contribution callout */}
       <section className="mt-12">
-        <p className="mb-4 font-mono text-xs text-terminal-muted">{'// contribute'}</p>
-        <div className="border border-terminal-border p-6">
-          <p className="mb-4 font-mono text-sm text-terminal-secondary">
+        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// contribute'}</p>
+        <div className="border border-border p-6">
+          <p className="mb-4 font-mono text-sm text-secondary-foreground">
             Found something useful? Have feedback?
           </p>
           <div className="flex flex-wrap gap-4 font-mono text-sm">
-            <a href="https://github.com/BlakePetersen/petersen-pack/issues/new" className="text-amber-accent hover:underline">
+            <a href="https://github.com/BlakePetersen/petersen-pack/issues/new" className="text-primary hover:underline">
               $ report-problem
             </a>
-            <a href="https://github.com/BlakePetersen/petersen-pack/discussions" className="text-amber-accent hover:underline">
+            <a href="https://github.com/BlakePetersen/petersen-pack/discussions" className="text-primary hover:underline">
               $ suggest-improvement
             </a>
           </div>

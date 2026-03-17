@@ -26,7 +26,7 @@ function CopyButton({
       onClick={handleCopy}
       aria-label="Copy code"
       className={cn(
-        'text-terminal-muted hover:text-terminal-text transition-colors p-1 font-mono text-xs',
+        'text-muted-foreground hover:text-foreground transition-colors p-1 font-mono text-xs',
         className,
       )}
     >

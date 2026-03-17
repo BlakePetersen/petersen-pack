@@ -11,7 +11,7 @@ export function ContentFreshness({ slug }: { slug: string }) {
   const label = getFreshnessLabel(history.commitCount, history.lastModified)
 
   if (label === 'New') {
-    return <span className="font-mono text-xs text-terminal-accent">New</span>
+    return <span className="font-mono text-xs text-primary">New</span>
   }
 
   const absoluteDate = new Date(history.lastModified).toLocaleDateString(
@@ -21,7 +21,7 @@ export function ContentFreshness({ slug }: { slug: string }) {
   const relativeDate = formatRelativeDate(history.lastModified)
 
   return (
-    <span className="font-mono text-xs text-terminal-muted">
+    <span className="font-mono text-xs text-muted-foreground">
       <span title={absoluteDate}>Updated {relativeDate}</span>
       {' \u00b7 '}
       {label}

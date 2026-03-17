@@ -10,7 +10,7 @@ describe('Toggle base component', () => {
     render(<ToggleBase data-testid="toggle">Option</ToggleBase>)
     const toggle = screen.getByTestId('toggle')
     expect(toggle.className).toContain('font-mono')
-    expect(toggle.className).toContain('terminal-border')
+    expect(toggle.className).toContain('border-border')
   })
 
   it('renders children', () => {

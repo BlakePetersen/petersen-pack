@@ -32,17 +32,17 @@ export default async function ChangelogPage() {
   return (
     <ContentShell sidebar={<Sidebar />}>
       <div className="px-4 py-8">
-        <h1 className="mb-1 font-mono text-sm text-terminal-muted">
+        <h1 className="mb-1 font-mono text-sm text-muted-foreground">
           {'// '}changelog
         </h1>
-        <p className="mb-8 font-mono text-xs text-terminal-muted">
+        <p className="mb-8 font-mono text-xs text-muted-foreground">
           Release history
         </p>
 
         {releases.length === 0 ? (
           <div className="py-8 font-mono text-sm">
-            <p className="text-terminal-muted">$ git log --releases</p>
-            <p className="mt-1 text-terminal-secondary">No releases found.</p>
+            <p className="text-muted-foreground">$ git log --releases</p>
+            <p className="mt-1 text-secondary-foreground">No releases found.</p>
           </div>
         ) : (
           <div className="relative">
@@ -51,25 +51,25 @@ export default async function ChangelogPage() {
               return (
                 <div key={release.tagName} className="flex gap-4 pb-8">
                   {/* Timeline connector */}
-                  <div className="flex flex-col items-center font-mono text-terminal-muted">
+                  <div className="flex flex-col items-center font-mono text-muted-foreground">
                     <span className="text-sm">
                       {isLast ? '└─' : '├─'}
                     </span>
                     {!isLast && (
-                      <div className="w-px flex-1 border-l border-terminal-border" />
+                      <div className="w-px flex-1 border-l border-border" />
                     )}
                   </div>
 
                   {/* Release content */}
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline gap-3">
-                      <span className="font-mono text-sm text-amber-accent">
+                      <span className="font-mono text-sm text-primary">
                         {release.tagName}
                       </span>
                       {release.publishedAt && (
                         <time
                           dateTime={release.publishedAt}
-                          className="font-mono text-xs text-terminal-muted"
+                          className="font-mono text-xs text-muted-foreground"
                         >
                           {formatDate(release.publishedAt)}
                         </time>
@@ -78,13 +78,13 @@ export default async function ChangelogPage() {
                         href={release.htmlUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-mono text-xs text-terminal-muted hover:text-amber-accent"
+                        className="font-mono text-xs text-muted-foreground hover:text-primary"
                       >
                         ↗ GitHub
                       </a>
                     </div>
                     {release.name && release.name !== release.tagName && (
-                      <p className="mt-1 text-sm text-terminal-secondary">
+                      <p className="mt-1 text-sm text-secondary-foreground">
                         {release.name}
                       </p>
                     )}

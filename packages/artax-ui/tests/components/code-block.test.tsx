@@ -36,11 +36,11 @@ describe('CodeBlock', () => {
     expect(headerBar).toBeNull()
   })
 
-  it('has terminal-surface background and terminal-border styling', () => {
+  it('has card background and border styling', () => {
     render(<CodeBlock data-testid="codeblock">code</CodeBlock>)
     const wrapper = screen.getByTestId('codeblock')
-    expect(wrapper.className).toContain('terminal-surface')
-    expect(wrapper.className).toContain('terminal-border')
+    expect(wrapper.className).toContain('bg-card')
+    expect(wrapper.className).toContain('border-border')
   })
 
   it('passes custom className', () => {

@@ -10,9 +10,9 @@ Requirements for milestone v1.3 Artax Design System. Each maps to roadmap phases
 ### Design System Foundation
 
 - [x] **FOUND-01**: artax-ui components reorganized into Atomic Design hierarchy (atoms/molecules/organisms) with unchanged public API
-- [ ] **FOUND-02**: ThemeProvider component added to artax-ui supporting light/dark mode switching
-- [ ] **FOUND-03**: theme.css extended with light/dark CSS custom property pairs matching Pencil design tokens
-- [ ] **FOUND-04**: All existing artax-ui components updated to use semantic color tokens (no hardcoded colors)
+- [x] **FOUND-02**: ThemeProvider component added to artax-ui supporting light/dark mode switching
+- [x] **FOUND-03**: theme.css extended with light/dark CSS custom property pairs matching Pencil design tokens
+- [x] **FOUND-04**: All existing artax-ui components updated to use semantic color tokens (no hardcoded colors)
 - [x] **FOUND-05**: Storybook removed from artax-ui (devDeps, scripts, stories, .storybook/)
 - [x] **FOUND-06**: ESLint import/no-cycle rule enforced to prevent circular dependencies in Atomic Design layers
 
@@ -64,9 +64,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 | Phase 21 | Complete |
-| FOUND-02 | Phase 21 | Pending |
-| FOUND-03 | Phase 21 | Pending |
-| FOUND-04 | Phase 21 | Pending |
+| FOUND-02 | Phase 21 | Complete |
+| FOUND-03 | Phase 21 | Complete |
+| FOUND-04 | Phase 21 | Complete |
 | FOUND-05 | Phase 21 | Complete |
 | FOUND-06 | Phase 21 | Complete |
 | ARTAX-01 | Phase 22 | Pending |

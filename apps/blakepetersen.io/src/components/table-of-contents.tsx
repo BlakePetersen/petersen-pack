@@ -64,7 +64,7 @@ export function TableOfContents() {
 
   return (
     <nav aria-label="Table of contents" className="p-4 font-mono text-xs">
-      <p className="mb-3 text-terminal-muted">{'// on this page'}</p>
+      <p className="mb-3 text-muted-foreground">{'// on this page'}</p>
       <ul className="space-y-1.5">
         {entries.map((entry) => (
           <li key={entry.id} className={entry.level === 3 ? 'pl-3' : ''}>
@@ -72,8 +72,8 @@ export function TableOfContents() {
               href={`#${entry.id}`}
               className={
                 activeId === entry.id
-                  ? 'text-amber-accent'
-                  : 'text-terminal-muted hover:text-terminal-text'
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-foreground'
               }
             >
               {entry.text}

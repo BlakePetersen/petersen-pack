@@ -22,7 +22,7 @@ function AccordionInteractiveItem({
 }: React.ComponentProps<typeof Accordion.Item>) {
   return (
     <Accordion.Item
-      className={cn('border-b border-terminal-border', className)}
+      className={cn('border-b border-border', className)}
       {...props}
     />
   )
@@ -37,7 +37,7 @@ function AccordionInteractiveTrigger({
     <Accordion.Header className="flex">
       <Accordion.Trigger
         className={cn(
-          'flex flex-1 items-center justify-between py-4 font-mono text-sm text-terminal-text transition-colors hover:text-amber-accent [&[data-state=open]]:text-amber-accent',
+          'flex flex-1 items-center justify-between py-4 font-mono text-sm text-foreground transition-colors hover:text-primary [&[data-state=open]]:text-primary',
           className
         )}
         {...props}
@@ -56,7 +56,7 @@ function AccordionInteractiveContent({
   return (
     <Accordion.Content
       className={cn(
-        'overflow-hidden text-sm text-terminal-secondary data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
+        'overflow-hidden text-sm text-secondary-foreground data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
         className
       )}
       {...props}

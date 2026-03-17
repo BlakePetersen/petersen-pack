@@ -26,7 +26,7 @@ export function PostLayout({ post }: { post: PostItem }) {
       <header className="mb-8">
         <h1 className="mb-2 font-mono text-2xl font-bold">{post.title}</h1>
 
-        <div className="mb-4 flex items-center gap-4 font-mono text-xs text-terminal-muted">
+        <div className="mb-4 flex items-center gap-4 font-mono text-xs text-muted-foreground">
           <time dateTime={post.date}>
             {new Date(post.date).toLocaleDateString('en-US', {
               year: 'numeric',

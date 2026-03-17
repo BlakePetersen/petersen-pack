@@ -13,7 +13,7 @@ describe('Tabs base components', () => {
       </TabsList>
     )
     const list = screen.getByTestId('list')
-    expect(list.className).toContain('terminal-border')
+    expect(list.className).toContain('border-border')
   })
 
   it('renders TabsTrigger with monospace font', () => {

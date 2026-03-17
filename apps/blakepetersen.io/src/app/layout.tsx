@@ -1,8 +1,9 @@
 // ABOUTME: Root layout for blakepetersen.io.
-// ABOUTME: Loads terminal aesthetic fonts and sets dark theme with artax-ui design system.
+// ABOUTME: Loads fonts, wraps app in ThemeProvider for light/dark mode switching.
 
 import type { Metadata } from 'next'
 import { JetBrains_Mono, IBM_Plex_Mono, Inter } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 import { Analytics } from '@vercel/analytics/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
@@ -46,12 +47,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${jetbrainsMono.variable} ${ibmPlexMono.variable} ${inter.variable}`}
+      suppressHydrationWarning
+      className={`${jetbrainsMono.variable} ${ibmPlexMono.variable} ${inter.variable}`}
     >
-      <body className="flex min-h-screen flex-col bg-terminal-bg text-sm text-terminal-text font-mono md:text-base">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="flex min-h-screen flex-col bg-background text-sm text-foreground font-mono md:text-base">
+        <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

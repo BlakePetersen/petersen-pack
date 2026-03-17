@@ -35,7 +35,7 @@ export function useReactionCount(): ReactionCountContextValue {
 export function ReactionCount() {
   const { count } = useReactionCount()
   return (
-    <span className="font-mono text-xs text-terminal-muted">
+    <span className="font-mono text-xs text-muted-foreground">
       <span>👍</span> <span>{count}</span>
     </span>
   )

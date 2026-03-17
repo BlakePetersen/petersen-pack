@@ -1,10 +1,56 @@
-/* ABOUTME: CSS entry point for the design system. */
-/* ABOUTME: Imports Tailwind v4, theme tokens, animations, and maps shadcn CSS variables to terminal palette. */
+/* ABOUTME: CSS entry point for the design system with dual light/dark mode tokens. */
+/* ABOUTME: Imports Tailwind v4, theme tokens, animations, and defines shadcn CSS variables for both modes. */
 @import 'tailwindcss';
 @import './theme.css';
 @import 'tw-animate-css';
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Light mode (default) */
 :root {
+  --background: #F5F5F5;
+  --foreground: #171717;
+
+  --primary: #D97706;
+  --primary-foreground: #F5F5F5;
+
+  --secondary: #E5E5E5;
+  --secondary-foreground: #171717;
+
+  --card: #EBEBEB;
+  --card-foreground: #171717;
+
+  --popover: #EBEBEB;
+  --popover-foreground: #171717;
+
+  --muted: #E5E5E5;
+  --muted-foreground: #737373;
+
+  --accent: #E5E5E5;
+  --accent-foreground: #171717;
+
+  --border: #D4D4D4;
+  --input: #D4D4D4;
+  --ring: #D97706;
+
+  --destructive: #DC2626;
+  --destructive-foreground: #F5F5F5;
+
+  --radius: 0px;
+
+  /* Semantic status colors */
+  --success: #059669;
+  --info: #0891B2;
+  --warning: #D97706;
+
+  /* Semantic surface overlays */
+  --surface-info: rgba(8, 145, 178, 0.08);
+  --surface-warning: rgba(217, 119, 6, 0.08);
+  --surface-success: rgba(5, 150, 105, 0.08);
+}
+
+/* Dark mode */
+[data-theme=dark] {
   --background: #0A0A0A;
   --foreground: #FAFAFA;
 
@@ -33,5 +79,13 @@
   --destructive: #EF4444;
   --destructive-foreground: #FAFAFA;
 
-  --radius: 0px;
+  /* Semantic status colors */
+  --success: #10B981;
+  --info: #06B6D4;
+  --warning: #F59E0B;
+
+  /* Semantic surface overlays */
+  --surface-info: rgba(6, 182, 212, 0.06);
+  --surface-warning: rgba(245, 158, 11, 0.06);
+  --surface-success: rgba(16, 185, 129, 0.06);
 }

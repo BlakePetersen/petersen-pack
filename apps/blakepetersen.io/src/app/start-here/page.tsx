@@ -57,21 +57,21 @@ export default function StartHerePage() {
   return (
     <div className="mx-auto max-w-[80ch] px-4 py-8">
       <section className="mb-12">
-        <p className="mb-4 font-mono text-xs text-terminal-muted">{'// start_here'}</p>
-        <p className="mb-8 text-sm text-terminal-secondary">
+        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// start_here'}</p>
+        <p className="mb-8 text-sm text-secondary-foreground">
           A guided path through the DX practices in recommended order.
         </p>
 
         <div className="space-y-6">
           {resolved.map((step) => (
-            <div key={step.href} className="border border-terminal-border p-4">
+            <div key={step.href} className="border border-border p-4">
               <Link
                 href={step.href}
-                className="font-mono text-sm text-amber-accent hover:underline"
+                className="font-mono text-sm text-primary hover:underline"
               >
                 {String(step.number).padStart(2, '0')}. {step.title}
               </Link>
-              <p className="mt-2 text-sm text-terminal-muted">
+              <p className="mt-2 text-sm text-muted-foreground">
                 {step.why}
               </p>
             </div>
@@ -79,7 +79,7 @@ export default function StartHerePage() {
         </div>
 
         {resolved.length === 0 && (
-          <p className="font-mono text-sm text-terminal-muted">
+          <p className="font-mono text-sm text-muted-foreground">
             No content available yet. Check back soon.
           </p>
         )}

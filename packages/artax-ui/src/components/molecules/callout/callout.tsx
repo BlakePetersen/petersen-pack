@@ -3,10 +3,10 @@
 import { cn } from '../../../lib/utils'
 
 const variantStyles = {
-  info: 'border-l-terminal-cyan',
-  warning: 'border-l-amber-accent',
-  error: 'border-l-terminal-red',
-  success: 'border-l-terminal-green'
+  info: 'border-l-info',
+  warning: 'border-l-warning',
+  error: 'border-l-destructive',
+  success: 'border-l-success'
 } as const
 
 type CalloutVariant = keyof typeof variantStyles
@@ -20,7 +20,7 @@ function Callout({
   return (
     <div
       className={cn(
-        'bg-terminal-surface border border-terminal-border border-l-4 p-4 font-mono text-sm text-terminal-text',
+        'bg-card border border-border border-l-4 p-4 font-mono text-sm text-foreground',
         variantStyles[variant],
         className
       )}

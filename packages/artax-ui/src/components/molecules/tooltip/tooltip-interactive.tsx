@@ -20,7 +20,7 @@ function TooltipInteractiveContent({
       <Tooltip.Content
         sideOffset={sideOffset}
         className={cn(
-          'z-50 bg-terminal-surface border border-terminal-border px-3 py-1.5 font-mono text-xs text-terminal-text shadow-md',
+          'z-50 bg-popover border border-border px-3 py-1.5 font-mono text-xs text-popover-foreground shadow-md',
           className
         )}
         {...props}

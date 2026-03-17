@@ -24,7 +24,7 @@ export function ContributorCard({
   const full = isContributorStats(contributor)
 
   return (
-    <div className="border border-terminal-border p-4">
+    <div className="border border-border p-4">
       <div className="flex gap-3">
         <Image
           src={contributor.avatarUrl}
@@ -39,17 +39,17 @@ export function ContributorCard({
               href={contributor.htmlUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-sm text-amber-accent hover:underline"
+              className="font-mono text-sm text-primary hover:underline"
             >
               {contributor.login}
             </a>
             {contributor.isBot && (
-              <span className="border border-terminal-border px-1 font-mono text-xs text-terminal-muted">
+              <span className="border border-border px-1 font-mono text-xs text-muted-foreground">
                 [bot]
               </span>
             )}
           </div>
-          <div className="mt-1 space-y-0.5 font-mono text-xs text-terminal-muted">
+          <div className="mt-1 space-y-0.5 font-mono text-xs text-muted-foreground">
             <p>
               {full
                 ? `${contributor.totalCommits} commits`

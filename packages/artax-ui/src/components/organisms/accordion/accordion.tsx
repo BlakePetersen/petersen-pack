@@ -8,7 +8,7 @@ function AccordionItem({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn('border-b border-terminal-border', className)}
+      className={cn('border-b border-border', className)}
       {...props}
     />
   )
@@ -22,7 +22,7 @@ function AccordionTrigger({
   return (
     <button
       className={cn(
-        'flex w-full items-center justify-between py-4 font-mono text-sm text-terminal-text transition-colors hover:text-amber-accent',
+        'flex w-full items-center justify-between py-4 font-mono text-sm text-foreground transition-colors hover:text-primary',
         className
       )}
       {...props}
@@ -38,7 +38,7 @@ function AccordionContent({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn('pb-4 text-sm text-terminal-secondary', className)}
+      className={cn('pb-4 text-sm text-secondary-foreground', className)}
       {...props}
     />
   )

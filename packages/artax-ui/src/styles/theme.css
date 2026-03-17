@@ -1,30 +1,6 @@
-/* ABOUTME: Tailwind v4 theme tokens for the terminal aesthetic design system. */
-/* ABOUTME: Defines grayscale palette, amber accent, semantic colors, typography, and zero border-radius. */
+/* ABOUTME: Tailwind v4 static theme tokens for the terminal aesthetic design system. */
+/* ABOUTME: Defines typography, zero border-radius, and semantic color aliases for utility generation. */
 @theme {
-  /* Grayscale palette */
-  --color-terminal-bg: #0A0A0A;
-  --color-terminal-surface: #0F0F0F;
-  --color-terminal-active: #1F1F1F;
-  --color-terminal-border: #2a2a2a;
-  --color-terminal-disabled: #4B5563;
-  --color-terminal-muted: #6B7280;
-  --color-terminal-secondary: #9CA3AF;
-  --color-terminal-text: #FAFAFA;
-
-  /* Amber accent */
-  --color-amber-accent: #F59E0B;
-
-  /* Annotation surface colors */
-  --color-surface-info: rgba(6, 182, 212, 0.06);
-  --color-surface-warning: rgba(245, 158, 11, 0.06);
-  --color-surface-success: rgba(16, 185, 129, 0.06);
-
-  /* Semantic colors */
-  --color-terminal-error: #EF4444;
-  --color-terminal-warning: #F59E0B;
-  --color-terminal-success: #10B981;
-  --color-terminal-info: #06B6D4;
-
   /* Typography */
   --font-mono: 'JetBrains Mono', monospace;
   --font-mono-alt: 'IBM Plex Mono', monospace;
@@ -35,4 +11,52 @@
   --radius-md: 0px;
   --radius-lg: 0px;
   --radius-xl: 0px;
+}
+
+/* Register design system colors so Tailwind v4 generates bg-*, text-*, border-* utilities */
+@theme inline {
+  /* Core surfaces and text */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Primary (amber accent) */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  /* Secondary */
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Cards and popovers */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Muted */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  /* Accent */
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Borders and inputs */
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Destructive */
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /* Semantic status */
+  --color-success: var(--success);
+  --color-info: var(--info);
+  --color-warning: var(--warning);
+
+  /* Semantic surfaces */
+  --color-surface-info: var(--surface-info);
+  --color-surface-warning: var(--surface-warning);
+  --color-surface-success: var(--surface-success);
 }

@@ -9,7 +9,7 @@ function TooltipContent({
   return (
     <div
       className={cn(
-        'bg-terminal-surface border border-terminal-border px-3 py-1.5 font-mono text-xs text-terminal-text shadow-md',
+        'bg-popover border border-border px-3 py-1.5 font-mono text-xs text-popover-foreground shadow-md',
         className
       )}
       {...props}

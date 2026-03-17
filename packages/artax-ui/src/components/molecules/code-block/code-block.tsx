@@ -20,21 +20,21 @@ function CodeBlock({
   return (
     <div
       className={cn(
-        'bg-terminal-surface border border-terminal-border my-4 overflow-hidden font-mono text-sm',
+        'bg-card border border-border my-4 overflow-hidden font-mono text-sm',
         className,
       )}
       {...props}
     >
       {showHeader && (
         <div
-          className="flex items-center justify-between border-b border-terminal-border px-4 py-2"
+          className="flex items-center justify-between border-b border-border px-4 py-2"
           data-testid="code-header"
         >
-          <span className="text-terminal-muted text-xs">
+          <span className="text-muted-foreground text-xs">
             {filename ? `// ${filename}` : ''}
           </span>
           {language && (
-            <span className="bg-terminal-active text-terminal-secondary px-1.5 py-0.5 text-xs rounded">
+            <span className="bg-muted text-secondary-foreground px-1.5 py-0.5 text-xs rounded">
               {language}
             </span>
           )}
@@ -45,7 +45,7 @@ function CodeBlock({
           className={cn(
             'overflow-x-auto',
             '[&_pre]:!bg-transparent [&_pre]:!p-4 [&_pre]:!m-0',
-            '[&_.highlighted]:bg-amber-500/10',
+            '[&_.highlighted]:bg-primary/10',
           )}
         >
           {children}

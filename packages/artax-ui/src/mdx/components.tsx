@@ -15,26 +15,26 @@ export const mdxComponents = {
   h1: ({ className, children, ...props }: HeadingProps) => (
     <h1
       className={cn(
-        'font-mono text-2xl font-bold text-terminal-text mt-10 mb-4',
+        'font-mono text-2xl font-bold text-foreground mt-10 mb-4',
         className
       )}
       {...props}
     >
-      <span className="text-terminal-muted">┌───</span>{' '}
+      <span className="text-muted-foreground">┌───</span>{' '}
       {children}{' '}
-      <span className="text-terminal-muted">───┐</span>
+      <span className="text-muted-foreground">───┐</span>
     </h1>
   ),
 
   h2: ({ className, children, ...props }: HeadingProps) => (
     <h2
       className={cn(
-        'font-mono text-xl font-bold text-terminal-text mt-8 mb-3',
+        'font-mono text-xl font-bold text-foreground mt-8 mb-3',
         className
       )}
       {...props}
     >
-      <span className="text-terminal-muted">// </span>
+      <span className="text-muted-foreground">// </span>
       {children}
     </h2>
   ),
@@ -42,12 +42,12 @@ export const mdxComponents = {
   h3: ({ className, children, ...props }: HeadingProps) => (
     <h3
       className={cn(
-        'font-mono text-lg font-semibold text-terminal-text mt-6 mb-2',
+        'font-mono text-lg font-semibold text-foreground mt-6 mb-2',
         className
       )}
       {...props}
     >
-      <span className="text-terminal-muted">&gt; </span>
+      <span className="text-muted-foreground">&gt; </span>
       {children}
     </h3>
   ),
@@ -55,12 +55,12 @@ export const mdxComponents = {
   h4: ({ className, children, ...props }: HeadingProps) => (
     <h4
       className={cn(
-        'font-mono text-base font-semibold text-terminal-secondary mt-4 mb-2',
+        'font-mono text-base font-semibold text-secondary-foreground mt-4 mb-2',
         className
       )}
       {...props}
     >
-      <span className="text-terminal-muted">&gt; </span>
+      <span className="text-muted-foreground">&gt; </span>
       {children}
     </h4>
   ),
@@ -68,12 +68,12 @@ export const mdxComponents = {
   h5: ({ className, children, ...props }: HeadingProps) => (
     <h5
       className={cn(
-        'font-mono text-sm font-medium text-terminal-secondary mt-4 mb-1',
+        'font-mono text-sm font-medium text-secondary-foreground mt-4 mb-1',
         className
       )}
       {...props}
     >
-      <span className="text-terminal-disabled">&gt; </span>
+      <span className="text-muted-foreground">&gt; </span>
       {children}
     </h5>
   ),
@@ -81,19 +81,19 @@ export const mdxComponents = {
   h6: ({ className, children, ...props }: HeadingProps) => (
     <h6
       className={cn(
-        'font-mono text-sm font-medium text-terminal-muted mt-4 mb-1',
+        'font-mono text-sm font-medium text-muted-foreground mt-4 mb-1',
         className
       )}
       {...props}
     >
-      <span className="text-terminal-disabled">&gt; </span>
+      <span className="text-muted-foreground">&gt; </span>
       {children}
     </h6>
   ),
 
   p: ({ className, ...props }: Props) => (
     <p
-      className={cn('font-sans text-terminal-text leading-7 mb-4', className)}
+      className={cn('font-sans text-foreground leading-7 mb-4', className)}
       {...props}
     />
   ),
@@ -101,7 +101,7 @@ export const mdxComponents = {
   a: ({ className, ...props }: AnchorProps) => (
     <a
       className={cn(
-        'text-amber-accent underline-offset-4 hover:underline font-mono',
+        'text-primary underline-offset-4 hover:underline font-mono',
         className
       )}
       {...props}
@@ -110,21 +110,21 @@ export const mdxComponents = {
 
   ul: ({ className, ...props }: Props) => (
     <ul
-      className={cn('list-disc list-inside mb-4 space-y-1 text-terminal-text', className)}
+      className={cn('list-disc list-inside mb-4 space-y-1 text-foreground', className)}
       {...props}
     />
   ),
 
   ol: ({ className, ...props }: Props) => (
     <ol
-      className={cn('list-decimal list-inside mb-4 space-y-1 text-terminal-text', className)}
+      className={cn('list-decimal list-inside mb-4 space-y-1 text-foreground', className)}
       {...props}
     />
   ),
 
   li: ({ className, ...props }: Props) => (
     <li
-      className={cn('font-sans text-terminal-text', className)}
+      className={cn('font-sans text-foreground', className)}
       {...props}
     />
   ),
@@ -132,7 +132,7 @@ export const mdxComponents = {
   blockquote: ({ className, ...props }: Props) => (
     <blockquote
       className={cn(
-        'border-l-2 border-amber-accent bg-terminal-surface pl-4 py-2 my-4 italic text-terminal-secondary',
+        'border-l-2 border-primary bg-card pl-4 py-2 my-4 italic text-secondary-foreground',
         className
       )}
       {...props}
@@ -141,7 +141,7 @@ export const mdxComponents = {
 
   hr: ({ className, ...props }: React.ComponentPropsWithoutRef<'hr'>) => (
     <hr
-      className={cn('border-none text-terminal-muted my-6', className)}
+      className={cn('border-none text-muted-foreground my-6', className)}
       {...props}
       style={{ display: 'none' }}
     />
@@ -156,7 +156,7 @@ export const mdxComponents = {
     return (
       <code
         className={cn(
-          'bg-terminal-active text-amber-accent px-1 py-0.5 font-mono text-sm',
+          'bg-muted text-primary px-1 py-0.5 font-mono text-sm',
           className,
         )}
         {...props}
@@ -213,7 +213,7 @@ export const mdxComponents = {
 
   thead: ({ className, ...props }: Props) => (
     <thead
-      className={cn('border-b border-terminal-border', className)}
+      className={cn('border-b border-border', className)}
       {...props}
     />
   ),
@@ -224,7 +224,7 @@ export const mdxComponents = {
 
   tr: ({ className, ...props }: Props) => (
     <tr
-      className={cn('border-b border-terminal-border', className)}
+      className={cn('border-b border-border', className)}
       {...props}
     />
   ),
@@ -232,7 +232,7 @@ export const mdxComponents = {
   th: ({ className, ...props }: TableHeaderCellProps) => (
     <th
       className={cn(
-        'text-left p-2 font-bold text-terminal-muted',
+        'text-left p-2 font-bold text-muted-foreground',
         className
       )}
       {...props}
@@ -241,7 +241,7 @@ export const mdxComponents = {
 
   td: ({ className, ...props }: TableCellProps) => (
     <td
-      className={cn('p-2 text-terminal-text', className)}
+      className={cn('p-2 text-foreground', className)}
       {...props}
     />
   ),
@@ -249,7 +249,7 @@ export const mdxComponents = {
   img: ({ className, alt, ...props }: ImgProps) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className={cn('border border-terminal-border my-4', className)}
+      className={cn('border border-border my-4', className)}
       alt={alt}
       {...props}
     />
@@ -257,7 +257,7 @@ export const mdxComponents = {
 
   strong: ({ className, ...props }: Props) => (
     <strong
-      className={cn('text-terminal-text font-bold', className)}
+      className={cn('text-foreground font-bold', className)}
       {...props}
     />
   ),
@@ -268,12 +268,11 @@ export const mdxComponents = {
 
   AuthorNote: ({ children, ...props }: Props) => (
     <aside
-      className="my-6 border-l-2 border-terminal-info px-4 py-3"
-      style={{ backgroundColor: 'rgba(6, 182, 212, 0.06)' }}
+      className="my-6 border-l-2 border-info bg-[var(--surface-info)] px-4 py-3"
       {...props}
     >
-      <p className="mb-2 font-mono text-xs text-terminal-info">{'// author_note'}</p>
-      <div className="font-sans text-sm text-terminal-secondary leading-relaxed">{children}</div>
+      <p className="mb-2 font-mono text-xs text-info">{'// author_note'}</p>
+      <div className="font-sans text-sm text-secondary-foreground leading-relaxed">{children}</div>
     </aside>
   ),
 }

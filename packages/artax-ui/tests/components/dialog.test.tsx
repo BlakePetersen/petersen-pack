@@ -19,8 +19,8 @@ describe('Dialog base components', () => {
   it('renders DialogContent with terminal styling', () => {
     render(<DialogContent data-testid="content">Dialog body</DialogContent>)
     const content = screen.getByTestId('content')
-    expect(content.className).toContain('terminal-surface')
-    expect(content.className).toContain('terminal-border')
+    expect(content.className).toContain('bg-card')
+    expect(content.className).toContain('border-border')
   })
 
   it('renders DialogTitle with monospace font', () => {
