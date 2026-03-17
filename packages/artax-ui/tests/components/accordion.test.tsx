@@ -1,48 +1,37 @@
-// ABOUTME: Tests for the server-safe Accordion base component.
-// ABOUTME: Validates structure components render without 'use client'.
+// ABOUTME: Tests for the Accordion components and their server-safe primitives.
+// ABOUTME: Validates terminal styling on primitive variants.
 import { render, screen } from '@testing-library/react'
 import {
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent
+  AccordionItemPrimitive,
+  AccordionTriggerPrimitive,
+  AccordionContentPrimitive
 } from '../../src/components/organisms/accordion/accordion'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
 
-describe('Accordion base components', () => {
-  it('renders AccordionItem as a div', () => {
-    render(<AccordionItem data-testid="item">content</AccordionItem>)
+describe('Accordion primitive components', () => {
+  it('renders AccordionItemPrimitive as a div', () => {
+    render(<AccordionItemPrimitive data-testid="item">content</AccordionItemPrimitive>)
     expect(screen.getByTestId('item')).toBeInTheDocument()
   })
 
-  it('renders AccordionTrigger with terminal styling', () => {
+  it('renders AccordionTriggerPrimitive with terminal styling', () => {
     render(
-      <AccordionTrigger data-testid="trigger">Toggle</AccordionTrigger>
+      <AccordionTriggerPrimitive data-testid="trigger">Toggle</AccordionTriggerPrimitive>
     )
     const trigger = screen.getByTestId('trigger')
     expect(trigger.textContent).toContain('Toggle')
     expect(trigger.className).toContain('font-mono')
   })
 
-  it('renders AccordionContent', () => {
+  it('renders AccordionContentPrimitive', () => {
     render(
-      <AccordionContent data-testid="content">Body text</AccordionContent>
+      <AccordionContentPrimitive data-testid="content">Body text</AccordionContentPrimitive>
     )
     expect(screen.getByTestId('content')).toBeInTheDocument()
     expect(screen.getByText('Body text')).toBeInTheDocument()
   })
 
-  it('applies terminal border to AccordionItem', () => {
-    render(<AccordionItem data-testid="item">content</AccordionItem>)
+  it('applies terminal border to AccordionItemPrimitive', () => {
+    render(<AccordionItemPrimitive data-testid="item">content</AccordionItemPrimitive>)
     expect(screen.getByTestId('item').className).toContain('border-border')
-  })
-
-  it('is server-safe (no use client)', () => {
-    const content = readFileSync(
-      resolve(__dirname, '../../src/components/organisms/accordion/accordion.tsx'),
-      'utf-8'
-    )
-    expect(content).not.toContain("'use client'")
-    expect(content).not.toContain('"use client"')
   })
 })

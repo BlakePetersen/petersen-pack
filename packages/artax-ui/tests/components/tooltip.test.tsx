@@ -1,14 +1,12 @@
-// ABOUTME: Tests for the server-safe Tooltip base component.
-// ABOUTME: Validates structure component renders without 'use client'.
+// ABOUTME: Tests for the Tooltip component and its server-safe primitive.
+// ABOUTME: Validates terminal styling on the primitive variant.
 import { render, screen } from '@testing-library/react'
-import { TooltipContent } from '../../src/components/molecules/tooltip/tooltip'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
+import { TooltipContentPrimitive } from '../../src/components/molecules/tooltip/tooltip'
 
-describe('Tooltip base component', () => {
-  it('renders TooltipContent with terminal styling', () => {
+describe('Tooltip primitive component', () => {
+  it('renders TooltipContentPrimitive with terminal styling', () => {
     render(
-      <TooltipContent data-testid="tooltip">Hint text</TooltipContent>
+      <TooltipContentPrimitive data-testid="tooltip">Hint text</TooltipContentPrimitive>
     )
     const content = screen.getByTestId('tooltip')
     expect(content.className).toContain('bg-popover')
@@ -17,16 +15,7 @@ describe('Tooltip base component', () => {
   })
 
   it('renders children', () => {
-    render(<TooltipContent>Help text</TooltipContent>)
+    render(<TooltipContentPrimitive>Help text</TooltipContentPrimitive>)
     expect(screen.getByText('Help text')).toBeInTheDocument()
-  })
-
-  it('is server-safe (no use client)', () => {
-    const content = readFileSync(
-      resolve(__dirname, '../../src/components/molecules/tooltip/tooltip.tsx'),
-      'utf-8'
-    )
-    expect(content).not.toContain("'use client'")
-    expect(content).not.toContain('"use client"')
   })
 })

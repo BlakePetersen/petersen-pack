@@ -1,46 +1,35 @@
-// ABOUTME: Tests for the server-safe Dialog base component.
-// ABOUTME: Validates structure components render without 'use client'.
+// ABOUTME: Tests for the Dialog components and their server-safe primitives.
+// ABOUTME: Validates terminal styling on primitive variants.
 import { render, screen } from '@testing-library/react'
 import {
-  DialogOverlay,
-  DialogContent,
-  DialogTitle,
-  DialogDescription
+  DialogOverlayPrimitive,
+  DialogContentPrimitive,
+  DialogTitlePrimitive,
+  DialogDescriptionPrimitive
 } from '../../src/components/organisms/dialog/dialog'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
 
-describe('Dialog base components', () => {
-  it('renders DialogOverlay', () => {
-    render(<DialogOverlay data-testid="overlay" />)
+describe('Dialog primitive components', () => {
+  it('renders DialogOverlayPrimitive', () => {
+    render(<DialogOverlayPrimitive data-testid="overlay" />)
     expect(screen.getByTestId('overlay')).toBeInTheDocument()
   })
 
-  it('renders DialogContent with terminal styling', () => {
-    render(<DialogContent data-testid="content">Dialog body</DialogContent>)
+  it('renders DialogContentPrimitive with terminal styling', () => {
+    render(<DialogContentPrimitive data-testid="content">Dialog body</DialogContentPrimitive>)
     const content = screen.getByTestId('content')
     expect(content.className).toContain('bg-card')
     expect(content.className).toContain('border-border')
   })
 
-  it('renders DialogTitle with monospace font', () => {
-    render(<DialogTitle data-testid="title">Title</DialogTitle>)
+  it('renders DialogTitlePrimitive with monospace font', () => {
+    render(<DialogTitlePrimitive data-testid="title">Title</DialogTitlePrimitive>)
     expect(screen.getByTestId('title').className).toContain('font-mono')
   })
 
-  it('renders DialogDescription', () => {
+  it('renders DialogDescriptionPrimitive', () => {
     render(
-      <DialogDescription data-testid="desc">Description</DialogDescription>
+      <DialogDescriptionPrimitive data-testid="desc">Description</DialogDescriptionPrimitive>
     )
     expect(screen.getByText('Description')).toBeInTheDocument()
-  })
-
-  it('is server-safe (no use client)', () => {
-    const content = readFileSync(
-      resolve(__dirname, '../../src/components/organisms/dialog/dialog.tsx'),
-      'utf-8'
-    )
-    expect(content).not.toContain("'use client'")
-    expect(content).not.toContain('"use client"')
   })
 })

@@ -20,19 +20,19 @@ import {
   TableRow,
   TableHead,
   TableCell,
-  TabsInteractive,
-  TabsInteractiveList,
-  TabsInteractiveTrigger,
-  TabsInteractiveContent,
-  AccordionInteractive,
-  AccordionInteractiveItem,
-  AccordionInteractiveTrigger,
-  AccordionInteractiveContent,
-  ToggleInteractive,
-  TooltipInteractiveProvider,
-  TooltipInteractive,
-  TooltipInteractiveTrigger,
-  TooltipInteractiveContent,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  Toggle,
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
 } from 'artax-ui'
 
 export default function DevComponentsPage() {
@@ -84,7 +84,7 @@ function ThemeColumn({ theme }: { theme: 'light' | 'dark' }) {
       </Section>
 
       <Section title="Toggle">
-        <ToggleInteractive aria-label="Bold">B</ToggleInteractive>
+        <Toggle aria-label="Bold">B</Toggle>
       </Section>
 
       <Section title="Card">
@@ -147,48 +147,48 @@ function ThemeColumn({ theme }: { theme: 'light' | 'dark' }) {
       </Section>
 
       <Section title="Tabs">
-        <TabsInteractive defaultValue="tab1">
-          <TabsInteractiveList>
-            <TabsInteractiveTrigger value="tab1">Tab 1</TabsInteractiveTrigger>
-            <TabsInteractiveTrigger value="tab2">Tab 2</TabsInteractiveTrigger>
-            <TabsInteractiveTrigger value="tab3">Tab 3</TabsInteractiveTrigger>
-          </TabsInteractiveList>
-          <TabsInteractiveContent value="tab1">Content for tab 1</TabsInteractiveContent>
-          <TabsInteractiveContent value="tab2">Content for tab 2</TabsInteractiveContent>
-          <TabsInteractiveContent value="tab3">Content for tab 3</TabsInteractiveContent>
-        </TabsInteractive>
+        <Tabs defaultValue="tab1">
+          <TabsList>
+            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab1">Content for tab 1</TabsContent>
+          <TabsContent value="tab2">Content for tab 2</TabsContent>
+          <TabsContent value="tab3">Content for tab 3</TabsContent>
+        </Tabs>
       </Section>
 
       <Section title="Accordion">
-        <AccordionInteractive type="single" collapsible>
-          <AccordionInteractiveItem value="item-1">
-            <AccordionInteractiveTrigger>What is artax-ui?</AccordionInteractiveTrigger>
-            <AccordionInteractiveContent>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>What is artax-ui?</AccordionTrigger>
+            <AccordionContent>
               A terminal-aesthetic design system for Next.js.
-            </AccordionInteractiveContent>
-          </AccordionInteractiveItem>
-          <AccordionInteractiveItem value="item-2">
-            <AccordionInteractiveTrigger>Does it support theming?</AccordionInteractiveTrigger>
-            <AccordionInteractiveContent>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Does it support theming?</AccordionTrigger>
+            <AccordionContent>
               Yes, both light and dark modes via CSS custom properties.
-            </AccordionInteractiveContent>
-          </AccordionInteractiveItem>
-        </AccordionInteractive>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </Section>
 
       <Section title="Tooltip">
-        <TooltipInteractiveProvider>
-          <TooltipInteractive>
-            <TooltipInteractiveTrigger asChild>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <span className="cursor-help underline decoration-dotted font-mono text-sm">
                 hover for tooltip
               </span>
-            </TooltipInteractiveTrigger>
-            <TooltipInteractiveContent>
+            </TooltipTrigger>
+            <TooltipContent>
               Tooltip content here
-            </TooltipInteractiveContent>
-          </TooltipInteractive>
-        </TooltipInteractiveProvider>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </Section>
     </div>
   )
