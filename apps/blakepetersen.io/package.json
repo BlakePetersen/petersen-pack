@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "next build --webpack",
-    "postbuild": "pagefind --site .next --output-path public/pagefind",
+    "postbuild": "pagefind --site .next/server/app --output-path public/pagefind",
     "clean": "rm -rf .next && rm -rf .turbo && rm -rf node_modules",
     "dev": "next dev",
     "lint": "eslint .",

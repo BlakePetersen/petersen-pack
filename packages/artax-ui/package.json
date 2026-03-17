@@ -42,7 +42,7 @@
     "react-dom": "^19.2.0",
     "storybook": "^10.2.16",
     "ts-jest": "^29.4.6",
-    "tsconfig": "*",
+    "tsconfig": "workspace:*",
     "typescript": "5.9.3"
   },
   "dependencies": {
