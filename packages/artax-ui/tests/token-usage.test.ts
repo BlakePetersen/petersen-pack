@@ -1,7 +1,7 @@
 // ABOUTME: Tests that no component files contain legacy terminal-* or amber-accent token references.
 // ABOUTME: Validates the complete migration from old @theme tokens to semantic CSS custom properties.
 import { readFileSync, readdirSync, statSync } from 'fs'
-import { resolve, join } from 'path'
+import { resolve, join, relative } from 'path'
 
 const SRC_DIR = resolve(__dirname, '../src')
 
@@ -28,12 +28,12 @@ describe('token-usage: no legacy tokens in components', () => {
 
   describe('no terminal-* class references in components', () => {
     it.each(
-      componentFiles.map(f => [f.replace(componentDir + '/', ''), f])
+      componentFiles.map(f => [relative(componentDir, f), f])
     )('%s has no terminal-* classes', (_name, filePath) => {
       const content = readFileSync(filePath as string, 'utf-8')
       // Strip ABOUTME and comment lines to avoid false positives
       const lines = content.split('\n').filter(
-        line => !line.trimStart().startsWith('//') && !line.trimStart().startsWith('*')
+        line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line)
       )
       const codeContent = lines.join('\n')
       expect(codeContent).not.toMatch(/terminal-/)
@@ -42,11 +42,11 @@ describe('token-usage: no legacy tokens in components', () => {
 
   describe('no amber-accent class references in components', () => {
     it.each(
-      componentFiles.map(f => [f.replace(componentDir + '/', ''), f])
+      componentFiles.map(f => [relative(componentDir, f), f])
     )('%s has no amber-accent classes', (_name, filePath) => {
       const content = readFileSync(filePath as string, 'utf-8')
       const lines = content.split('\n').filter(
-        line => !line.trimStart().startsWith('//') && !line.trimStart().startsWith('*')
+        line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line)
       )
       const codeContent = lines.join('\n')
       expect(codeContent).not.toMatch(/amber-accent/)
@@ -59,7 +59,7 @@ describe('token-usage: no legacy tokens in mdx/components.tsx', () => {
   const content = readFileSync(mdxPath, 'utf-8')
   // Strip comments
   const lines = content.split('\n').filter(
-    line => !line.trimStart().startsWith('//') && !line.trimStart().startsWith('*')
+    line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line)
   )
   const codeContent = lines.join('\n')
 
