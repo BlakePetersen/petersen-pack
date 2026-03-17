@@ -128,35 +128,32 @@ describe('globals.css', () => {
     it.each(lightTokens)(
       'contains %s with light-mode value %s',
       (token, value) => {
-        expect(rootBlock).toContain(`${token}: ${value}`)
+        expect(rootBlock).toMatch(new RegExp(`${token}\\s*:\\s*${value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`))
       }
     )
 
     it('contains --success light-mode token', () => {
-      expect(rootBlock).toContain('--success: #059669')
+      expect(rootBlock).toMatch(/--success\s*:\s*#059669/)
     })
 
     it('contains --info light-mode token', () => {
-      expect(rootBlock).toContain('--info: #0891B2')
+      expect(rootBlock).toMatch(/--info\s*:\s*#0891B2/)
     })
 
     it('contains --warning light-mode token', () => {
-      expect(rootBlock).toContain('--warning: #D97706')
+      expect(rootBlock).toMatch(/--warning\s*:\s*#D97706/)
     })
 
     it('contains --surface-info light-mode token', () => {
-      expect(rootBlock).toContain('--surface-info')
-      expect(rootBlock).toContain('rgba(8, 145, 178, 0.08)')
+      expect(rootBlock).toMatch(/--surface-info\s*:\s*rgba\(8,\s*145,\s*178,\s*0\.08\)/)
     })
 
     it('contains --surface-warning light-mode token', () => {
-      expect(rootBlock).toContain('--surface-warning')
-      expect(rootBlock).toContain('rgba(217, 119, 6, 0.08)')
+      expect(rootBlock).toMatch(/--surface-warning\s*:\s*rgba\(217,\s*119,\s*6,\s*0\.08\)/)
     })
 
     it('contains --surface-success light-mode token', () => {
-      expect(rootBlock).toContain('--surface-success')
-      expect(rootBlock).toContain('rgba(5, 150, 105, 0.08)')
+      expect(rootBlock).toMatch(/--surface-success\s*:\s*rgba\(5,\s*150,\s*105,\s*0\.08\)/)
     })
   })
 
@@ -194,35 +191,32 @@ describe('globals.css', () => {
     it.each(darkTokens)(
       'contains %s with dark-mode value %s',
       (token, value) => {
-        expect(darkBlock).toContain(`${token}: ${value}`)
+        expect(darkBlock).toMatch(new RegExp(`${token}\\s*:\\s*${value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`))
       }
     )
 
     it('contains --success dark-mode token', () => {
-      expect(darkBlock).toContain('--success: #10B981')
+      expect(darkBlock).toMatch(/--success\s*:\s*#10B981/)
     })
 
     it('contains --info dark-mode token', () => {
-      expect(darkBlock).toContain('--info: #06B6D4')
+      expect(darkBlock).toMatch(/--info\s*:\s*#06B6D4/)
     })
 
     it('contains --warning dark-mode token', () => {
-      expect(darkBlock).toContain('--warning: #F59E0B')
+      expect(darkBlock).toMatch(/--warning\s*:\s*#F59E0B/)
     })
 
     it('contains --surface-info dark-mode token', () => {
-      expect(darkBlock).toContain('--surface-info')
-      expect(darkBlock).toContain('rgba(6, 182, 212, 0.06)')
+      expect(darkBlock).toMatch(/--surface-info\s*:\s*rgba\(6,\s*182,\s*212,\s*0\.06\)/)
     })
 
     it('contains --surface-warning dark-mode token', () => {
-      expect(darkBlock).toContain('--surface-warning')
-      expect(darkBlock).toContain('rgba(245, 158, 11, 0.06)')
+      expect(darkBlock).toMatch(/--surface-warning\s*:\s*rgba\(245,\s*158,\s*11,\s*0\.06\)/)
     })
 
     it('contains --surface-success dark-mode token', () => {
-      expect(darkBlock).toContain('--surface-success')
-      expect(darkBlock).toContain('rgba(16, 185, 129, 0.06)')
+      expect(darkBlock).toMatch(/--surface-success\s*:\s*rgba\(16,\s*185,\s*129,\s*0\.06\)/)
     })
   })
 })
