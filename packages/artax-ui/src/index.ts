@@ -87,6 +87,8 @@ export {
   DropdownInteractiveLabel
 } from './components/organisms/dropdown/dropdown-interactive'
 export { cn } from './lib/utils'
+export { tokens } from './styles/tokens'
+export type { BgToken, TextToken, BorderToken, RingToken, FontToken } from './styles/tokens'
 export { mdxComponents } from './mdx/components'
 
 // Providers
