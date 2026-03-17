@@ -9,7 +9,6 @@
     ".": "./src/index.ts",
     "./styles/theme.css": "./src/styles/theme.css",
     "./styles/globals.css": "./src/styles/globals.css",
-    "./components/*": "./src/components/*",
     "./mdx": "./src/mdx/components.tsx",
     "./lib/utils": "./src/lib/utils.ts"
   },
