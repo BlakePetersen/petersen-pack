@@ -34,5 +34,5 @@ jobs:
       - name: Link check
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --offline --no-progress --root-dir apps/blakepetersen.io/.next/server/app --exclude '_next/.*' --exclude 'feed\.xml' apps/blakepetersen.io/.next/server/app/**/*.html apps/blakepetersen.io/content/**/*.mdx
+          args: --offline --no-progress --root-dir apps/blakepetersen.io/.next/server/app --fallback-extensions html --exclude '_next/.*' --exclude 'feed\.xml' --exclude 'images\.ctfassets\.net' apps/blakepetersen.io/.next/server/app/**/*.html apps/blakepetersen.io/content/**/*.mdx
           fail: true
