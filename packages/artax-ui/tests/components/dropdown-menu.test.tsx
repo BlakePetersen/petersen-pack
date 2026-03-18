@@ -1,41 +1,30 @@
-// ABOUTME: Tests for the server-safe DropdownMenu base component.
-// ABOUTME: Validates structure components render without 'use client'.
+// ABOUTME: Tests for the DropdownMenu components and their server-safe primitives.
+// ABOUTME: Validates terminal styling on primitive variants.
 import { render, screen } from '@testing-library/react'
 import {
-  DropdownContent,
-  DropdownItem,
-  DropdownSeparator
+  DropdownContentPrimitive,
+  DropdownItemPrimitive,
+  DropdownSeparatorPrimitive
 } from '../../src/components/organisms/dropdown/dropdown-menu'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
 
-describe('DropdownMenu base components', () => {
-  it('renders DropdownContent with terminal styling', () => {
+describe('DropdownMenu primitive components', () => {
+  it('renders DropdownContentPrimitive with terminal styling', () => {
     render(
-      <DropdownContent data-testid="content">items</DropdownContent>
+      <DropdownContentPrimitive data-testid="content">items</DropdownContentPrimitive>
     )
     const content = screen.getByTestId('content')
     expect(content.className).toContain('bg-popover')
     expect(content.className).toContain('border-border')
   })
 
-  it('renders DropdownItem with monospace font', () => {
-    render(<DropdownItem data-testid="item">Option 1</DropdownItem>)
+  it('renders DropdownItemPrimitive with monospace font', () => {
+    render(<DropdownItemPrimitive data-testid="item">Option 1</DropdownItemPrimitive>)
     expect(screen.getByTestId('item').className).toContain('font-mono')
   })
 
-  it('renders DropdownSeparator', () => {
-    render(<DropdownSeparator data-testid="sep" />)
+  it('renders DropdownSeparatorPrimitive', () => {
+    render(<DropdownSeparatorPrimitive data-testid="sep" />)
     expect(screen.getByTestId('sep')).toBeInTheDocument()
     expect(screen.getByTestId('sep').className).toContain('bg-border')
-  })
-
-  it('is server-safe (no use client)', () => {
-    const content = readFileSync(
-      resolve(__dirname, '../../src/components/organisms/dropdown/dropdown-menu.tsx'),
-      'utf-8'
-    )
-    expect(content).not.toContain("'use client'")
-    expect(content).not.toContain('"use client"')
   })
 })

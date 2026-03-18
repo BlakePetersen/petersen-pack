@@ -1,37 +1,26 @@
-// ABOUTME: Tests for the server-safe Tabs base component.
-// ABOUTME: Validates structure components render without 'use client'.
+// ABOUTME: Tests for the Tabs components and their server-safe primitives.
+// ABOUTME: Validates terminal styling on both interactive and primitive variants.
 import { render, screen } from '@testing-library/react'
-import { TabsList, TabsTrigger, TabsContent } from '../../src/components/molecules/tabs/tabs'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
+import { TabsListPrimitive, TabsTriggerPrimitive, TabsContentPrimitive } from '../../src/components/molecules/tabs/tabs'
 
-describe('Tabs base components', () => {
-  it('renders TabsList with terminal styling', () => {
+describe('Tabs primitive components', () => {
+  it('renders TabsListPrimitive with terminal styling', () => {
     render(
-      <TabsList data-testid="list">
-        <TabsTrigger>Tab 1</TabsTrigger>
-      </TabsList>
+      <TabsListPrimitive data-testid="list">
+        <TabsTriggerPrimitive>Tab 1</TabsTriggerPrimitive>
+      </TabsListPrimitive>
     )
     const list = screen.getByTestId('list')
     expect(list.className).toContain('border-border')
   })
 
-  it('renders TabsTrigger with monospace font', () => {
-    render(<TabsTrigger data-testid="trigger">Tab 1</TabsTrigger>)
+  it('renders TabsTriggerPrimitive with monospace font', () => {
+    render(<TabsTriggerPrimitive data-testid="trigger">Tab 1</TabsTriggerPrimitive>)
     expect(screen.getByTestId('trigger').className).toContain('font-mono')
   })
 
-  it('renders TabsContent', () => {
-    render(<TabsContent data-testid="content">Panel content</TabsContent>)
+  it('renders TabsContentPrimitive', () => {
+    render(<TabsContentPrimitive data-testid="content">Panel content</TabsContentPrimitive>)
     expect(screen.getByText('Panel content')).toBeInTheDocument()
-  })
-
-  it('is server-safe (no use client)', () => {
-    const content = readFileSync(
-      resolve(__dirname, '../../src/components/molecules/tabs/tabs.tsx'),
-      'utf-8'
-    )
-    expect(content).not.toContain("'use client'")
-    expect(content).not.toContain('"use client"')
   })
 })

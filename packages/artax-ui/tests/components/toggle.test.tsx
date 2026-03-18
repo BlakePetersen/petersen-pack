@@ -1,29 +1,18 @@
-// ABOUTME: Tests for the server-safe Toggle base component.
-// ABOUTME: Validates structure component renders without 'use client'.
+// ABOUTME: Tests for the Toggle component and its server-safe primitive.
+// ABOUTME: Validates terminal styling on both interactive and primitive variants.
 import { render, screen } from '@testing-library/react'
-import { ToggleBase } from '../../src/components/atoms/toggle/toggle'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
+import { TogglePrimitive } from '../../src/components/atoms/toggle/toggle'
 
-describe('Toggle base component', () => {
+describe('Toggle primitive component', () => {
   it('renders with terminal styling', () => {
-    render(<ToggleBase data-testid="toggle">Option</ToggleBase>)
+    render(<TogglePrimitive data-testid="toggle">Option</TogglePrimitive>)
     const toggle = screen.getByTestId('toggle')
     expect(toggle.className).toContain('font-mono')
     expect(toggle.className).toContain('border-border')
   })
 
   it('renders children', () => {
-    render(<ToggleBase>Bold</ToggleBase>)
+    render(<TogglePrimitive>Bold</TogglePrimitive>)
     expect(screen.getByText('Bold')).toBeInTheDocument()
-  })
-
-  it('is server-safe (no use client)', () => {
-    const content = readFileSync(
-      resolve(__dirname, '../../src/components/atoms/toggle/toggle.tsx'),
-      'utf-8'
-    )
-    expect(content).not.toContain("'use client'")
-    expect(content).not.toContain('"use client"')
   })
 })

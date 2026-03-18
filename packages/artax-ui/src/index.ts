@@ -7,8 +7,7 @@ export { Input } from './components/atoms/input/input'
 export { Badge, badgeVariants } from './components/atoms/badge/badge'
 export { Separator } from './components/atoms/separator/separator'
 export { CopyButton } from './components/atoms/copy-button/copy-button'
-export { ToggleBase } from './components/atoms/toggle/toggle'
-export { ToggleInteractive } from './components/atoms/toggle/toggle-interactive'
+export { Toggle, TogglePrimitive } from './components/atoms/toggle/toggle'
 
 // Molecules
 export {
@@ -31,61 +30,57 @@ export {
 export { Callout } from './components/molecules/callout/callout'
 export type { CalloutVariant } from './components/molecules/callout/callout'
 export { CodeBlock } from './components/molecules/code-block/code-block'
-export { TabsList, TabsTrigger, TabsContent } from './components/molecules/tabs/tabs'
-export { TooltipContent } from './components/molecules/tooltip/tooltip'
 export {
-  TabsInteractive,
-  TabsInteractiveList,
-  TabsInteractiveTrigger,
-  TabsInteractiveContent
-} from './components/molecules/tabs/tabs-interactive'
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  TabsListPrimitive,
+  TabsTriggerPrimitive,
+  TabsContentPrimitive
+} from './components/molecules/tabs/tabs'
 export {
-  TooltipInteractiveProvider,
-  TooltipInteractive,
-  TooltipInteractiveTrigger,
-  TooltipInteractiveContent
-} from './components/molecules/tooltip/tooltip-interactive'
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipContentPrimitive
+} from './components/molecules/tooltip/tooltip'
 
 // Organisms
 export {
+  Accordion,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent
+  AccordionContent,
+  AccordionItemPrimitive,
+  AccordionTriggerPrimitive,
+  AccordionContentPrimitive
 } from './components/organisms/accordion/accordion'
 export {
-  DialogOverlay,
+  Dialog,
+  DialogTrigger,
   DialogContent,
+  DialogOverlay,
   DialogTitle,
-  DialogDescription
+  DialogDescription,
+  DialogClose,
+  DialogOverlayPrimitive,
+  DialogContentPrimitive,
+  DialogTitlePrimitive,
+  DialogDescriptionPrimitive
 } from './components/organisms/dialog/dialog'
 export {
+  Dropdown,
+  DropdownTrigger,
   DropdownContent,
   DropdownItem,
-  DropdownSeparator
+  DropdownSeparator,
+  DropdownLabel,
+  DropdownContentPrimitive,
+  DropdownItemPrimitive,
+  DropdownSeparatorPrimitive
 } from './components/organisms/dropdown/dropdown-menu'
-export {
-  AccordionInteractive,
-  AccordionInteractiveItem,
-  AccordionInteractiveTrigger,
-  AccordionInteractiveContent
-} from './components/organisms/accordion/accordion-interactive'
-export {
-  DialogInteractive,
-  DialogInteractiveTrigger,
-  DialogInteractiveContent,
-  DialogInteractiveOverlay,
-  DialogInteractiveTitle,
-  DialogInteractiveDescription,
-  DialogInteractiveClose
-} from './components/organisms/dialog/dialog-interactive'
-export {
-  DropdownInteractive,
-  DropdownInteractiveTrigger,
-  DropdownInteractiveContent,
-  DropdownInteractiveItem,
-  DropdownInteractiveSeparator,
-  DropdownInteractiveLabel
-} from './components/organisms/dropdown/dropdown-interactive'
 export { cn } from './lib/utils'
 export { mdxComponents } from './mdx/components'
 
