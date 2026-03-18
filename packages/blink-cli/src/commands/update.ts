@@ -11,24 +11,12 @@ import {
   updateManifestEntry,
   checksum,
 } from '@/manifest'
+import { confirmAction } from '@/modules/prompt'
 import { atomicWrite } from '@/writer'
 import { findManagedSections, replaceManagedContent } from '@/markers'
 import { resolveDestination, resolveManifestRoot } from '@/scope'
 import { formatColoredDiff } from '@/output'
 import type { ManifestEntry, ManifestFileEntry } from 'blink-registry'
-
-async function confirmAction(
-  message: string,
-  skipPrompt: boolean
-): Promise<boolean> {
-  if (skipPrompt) return true
-  const result = await consola.prompt(message, { type: 'confirm' })
-  if (typeof result === 'symbol') {
-    consola.info('Cancelled.')
-    process.exit(0)
-  }
-  return result as boolean
-}
 
 async function readFileSafe(path: string): Promise<string | null> {
   try {

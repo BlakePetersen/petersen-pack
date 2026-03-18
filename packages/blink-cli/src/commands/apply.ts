@@ -18,25 +18,13 @@ import {
 } from '@/manifest'
 import { detectPackageManager, installDevCommand } from '@/pm'
 import { formatActionLabel, formatDryRunHeader } from '@/output'
+import { confirmAction } from '@/modules/prompt'
 import { atomicWrite } from '@/writer'
 import { injectMarkers, findManagedSections } from '@/markers'
 import { resolveDestination, resolveManifestRoot } from '@/scope'
 import { findMissingDeps } from '@/deps'
 import type { ManifestEntry, ManifestFileEntry, RegistryArtifact } from 'blink-registry'
 import { writeFile } from 'node:fs/promises'
-
-async function confirmAction(
-  message: string,
-  skipPrompt: boolean
-): Promise<boolean> {
-  if (skipPrompt) return true
-  const result = await consola.prompt(message, { type: 'confirm' })
-  if (typeof result === 'symbol') {
-    consola.info('Cancelled.')
-    process.exit(0)
-  }
-  return result as boolean
-}
 
 async function addToGitignore(cwd: string): Promise<void> {
   const gitignorePath = join(cwd, '.gitignore')
