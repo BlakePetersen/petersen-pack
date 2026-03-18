@@ -1,13 +1,7 @@
 // ABOUTME: Navigation data types and builder functions for sidebar and prev/next links.
 // ABOUTME: Transforms content collections into hierarchical navigation sections.
 
-import {
-  getSkills,
-  getHooks,
-  getConfigs,
-  getGuides,
-  getPosts,
-} from './content'
+import { getVisibleCollections } from './collection-registry'
 
 export type NavItem = {
   title: string
@@ -18,6 +12,7 @@ export type NavItem = {
 export type NavSection = {
   label: string
   href: string
+  color: string
   items: NavItem[]
 }
 
@@ -36,35 +31,19 @@ function collectionToItems(
 }
 
 export function buildNavSections(): NavSection[] {
+  const collectionSections: NavSection[] = getVisibleCollections().map((c) => ({
+    label: c.label,
+    href: c.href,
+    color: c.color,
+    items: collectionToItems(c.slug, c.getter()),
+  }))
+
   return [
-    {
-      label: 'Skills',
-      href: '/skills',
-      items: collectionToItems('skills', getSkills()),
-    },
-    {
-      label: 'Hooks',
-      href: '/hooks',
-      items: collectionToItems('hooks', getHooks()),
-    },
-    {
-      label: 'Configs',
-      href: '/configs',
-      items: collectionToItems('configs', getConfigs()),
-    },
-    {
-      label: 'Guides',
-      href: '/guides',
-      items: collectionToItems('guides', getGuides()),
-    },
-    {
-      label: 'Posts',
-      href: '/posts',
-      items: collectionToItems('posts', getPosts()),
-    },
+    ...collectionSections,
     {
       label: 'Project',
       href: '/changelog',
+      color: '#6B7280',
       items: [
         { title: 'Changelog', slug: 'changelog', href: '/changelog' },
         { title: 'Contributors', slug: 'contributors', href: '/contributors' },

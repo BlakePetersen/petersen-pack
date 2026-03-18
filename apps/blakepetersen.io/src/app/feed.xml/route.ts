@@ -1,7 +1,7 @@
 // ABOUTME: RSS 2.0 feed generator for all content collections.
 // ABOUTME: Statically generated at build time, serves XML at /feed.xml.
 
-import { getSkills, getHooks, getConfigs, getGuides, getPosts } from '../../lib/content'
+import { getAllCollections } from '../../lib/collection-registry'
 import { escapeXml } from '../../lib/metadata'
 
 export const dynamic = 'force-static'
@@ -36,13 +36,12 @@ function buildItem(item: FeedItem): string {
 }
 
 export async function GET(): Promise<Response> {
-  const posts = getPosts()
-  const dxItems = [
-    ...getSkills(),
-    ...getHooks(),
-    ...getConfigs(),
-    ...getGuides(),
-  ]
+  const feedCollections = getAllCollections().filter((c) => c.showInFeed)
+  const postCollection = feedCollections.find((c) => c.slug === 'posts')
+  const posts = postCollection ? postCollection.getter() : []
+  const dxItems = feedCollections
+    .filter((c) => c.slug !== 'posts')
+    .flatMap((c) => c.getter())
 
   // Posts sorted by date descending (already sorted from getPosts), then DX content
   const items = [...posts, ...dxItems]

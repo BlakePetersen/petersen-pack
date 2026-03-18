@@ -3,7 +3,7 @@
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getSkills, getHooks, getConfigs, getGuides } from '../../lib/content'
+import { getCollection } from '../../lib/collection-registry'
 
 export const metadata: Metadata = {
   title: 'Start Here',
@@ -23,19 +23,12 @@ const steps: Step[] = [
   { collection: 'skills', slug: 'skills/claude-code/writing-custom-skills', why: 'Teach your AI assistant project-specific patterns.' },
 ]
 
-const collectionGetters = {
-  configs: getConfigs,
-  hooks: getHooks,
-  skills: getSkills,
-  guides: getGuides,
-} as const
-
 function resolveSteps() {
   const resolved: { title: string; href: string; why: string; number: number }[] = []
   let number = 1
 
   for (const step of steps) {
-    const items = collectionGetters[step.collection]()
+    const items = getCollection(step.collection).getter()
     const match = items.find((item) => item.slug === step.slug)
     if (match) {
       resolved.push({
