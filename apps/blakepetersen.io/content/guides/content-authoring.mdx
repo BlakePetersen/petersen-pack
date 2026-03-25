@@ -1,0 +1,263 @@
+---
+title: "Content Authoring and Artifact Publishing"
+description: "How to write MDX content entries and publishable artifacts for the Blink registry — schemas, conventions, and the build pipeline."
+applies_to: ["velite", "mdx", "blink-registry"]
+dependencies: []
+order: 3
+draft: false
+tags: ["content", "mdx", "artifacts", "blink-registry", "authoring"]
+decisions:
+  - choice: "Use Velite for content processing rather than contentlayer or next-mdx-remote"
+    rationale: "Velite provides type-safe schema validation at build time, supports custom transformations in the prepare hook, and handles both MDX content pages and raw artifact files in a single pipeline."
+  - choice: "Separate content pages (.mdx) from artifacts (.artifact.md)"
+    rationale: "Content pages are for reading on the site. Artifacts are for applying to projects via the Blink CLI. A single entry can have both — the .mdx explains the config, the .artifact.md contains the actual file content."
+  - choice: "Use CalVer (YYYY.MM.DD.N) instead of SemVer for artifact versions"
+    rationale: "Artifacts are configs and templates, not libraries. Calendar versioning communicates freshness (when was this last updated?) which is what consumers actually care about."
+  - choice: "Publish the registry as static JSON in public/r/"
+    rationale: "No API server needed. The registry is a build artifact served from the CDN. The Blink CLI fetches JSON files over HTTP — simple, cacheable, and works offline with a local clone."
+related: ["configs/eslint-flat-config", "skills/claude-code/writing-custom-skills"]
+---
+
+The site serves two purposes: human-readable documentation (MDX content pages) and machine-consumable artifacts (config files, skills, hooks published via the Blink registry). This guide covers both authoring workflows.
+
+## Content Collections
+
+Five collections, each a directory under `apps/blakepetersen.io/content/`:
+
+| Collection | Directory | Purpose |
+|-----------|-----------|---------|
+| Configs | `content/configs/` | Tool and environment configuration references |
+| Guides | `content/guides/` | Setup walkthroughs and process documentation |
+| Skills | `content/skills/` | Claude Code skill documentation |
+| Hooks | `content/hooks/` | Git hooks and automation setup |
+| Posts | `content/posts/` | Blog posts and articles |
+
+## DX Content Schema
+
+Configs, guides, skills, and hooks all share the same frontmatter schema:
+
+```yaml
+---
+title: "Human-Readable Title"              # Required, max 120 chars
+description: "One-line summary"            # Required, max 260 chars
+applies_to: ["tool-a", "tool-b"]           # Required, what this applies to
+dependencies: ["configs/other-entry"]       # Optional, cross-references
+order: 1                                    # Optional, sort order within collection
+draft: false                                # Optional, default false
+tags: ["tag-a", "tag-b"]                   # Optional, for search and filtering
+category: "sub-category"                   # Optional, auto-derived from first slug segment
+decisions:                                  # Optional, architectural decision records
+  - choice: "What was decided"
+    rationale: "Why it was decided"
+related: ["configs/other", "guides/setup"]  # Optional, cross-references
+updated_context: "2026-03-25"              # Optional, ISO date of last review
+---
+```
+
+**Key fields for agent adoption:**
+
+- `applies_to` — declares what tools or technologies this entry is relevant to. Agents can filter by this field to find entries matching their current context.
+- `dependencies` — declares prerequisite entries. An agent should read dependencies before applying this entry.
+- `decisions` — captures the rationale behind choices. Agents can evaluate whether the rationale still applies before adopting the configuration.
+- `related` — links to related entries for broader context.
+
+## Post Schema
+
+Posts use a simpler schema with `date` instead of `applies_to`:
+
+```yaml
+---
+title: "Post Title"                        # Required, max 120 chars
+description: "One-line summary"            # Required, max 260 chars
+date: "2026-03-25T12:00-07:00"            # Required, ISO date
+tags: ["tag-a"]                            # Optional
+draft: false                                # Optional
+---
+```
+
+## Writing Content Pages
+
+Content pages are standard MDX files. Write them as you would any markdown document with optional JSX components.
+
+```
+content/configs/my-tool-config.mdx
+```
+
+The filename becomes the URL slug: `/dx/configs/my-tool-config`.
+
+For nested content, use directories:
+
+```
+content/skills/claude-code/writing-custom-skills.mdx
+```
+
+This becomes: `/dx/skills/claude-code/writing-custom-skills`.
+
+## Artifact System
+
+Artifacts are distributable file bundles — the actual config files, skill definitions, or hook scripts that the Blink CLI can apply to a project. Two formats exist.
+
+### Single-File Artifacts
+
+For artifacts that produce one file. Use the `.artifact.md` extension:
+
+```
+content/configs/eslint-flat-config.artifact.md
+```
+
+**Frontmatter:**
+
+```yaml
+---
+name: ESLint Flat Config
+description: Modern ESLint flat config with TypeScript and strict rules
+type: config                              # config | skill | hook | guide
+merge: section                            # replace | section
+destination: eslint.config.js             # target file path
+devDependencies:                          # optional, installed on apply
+  eslint: "^9.0.0"
+  typescript-eslint: "^8.0.0"
+---
+```
+
+**Body:** The raw file content to write. Not MDX — the literal bytes that go into the destination file.
+
+**Merge strategies:**
+- `replace` — overwrite the entire destination file
+- `section` — wrap content with markers (`<!-- blink:start:slug -->` / `<!-- blink:end:slug -->`) and only replace that section, preserving the rest of the file
+
+### Multi-File Artifacts
+
+For artifacts that produce multiple files. Use a `.artifact/` directory with a `manifest.json`:
+
+```
+content/configs/prettier-config.artifact/
+├── manifest.json
+├── .prettierrc.json
+└── .prettierignore
+```
+
+**manifest.json:**
+
+```json
+{
+  "name": "Prettier Config",
+  "description": "Opinionated Prettier configuration with editor integration",
+  "type": "config",
+  "devDependencies": {
+    "prettier": "^3.0.0"
+  },
+  "files": [
+    { "path": ".prettierrc.json", "merge": "replace" },
+    { "path": ".prettierignore", "merge": "section" }
+  ]
+}
+```
+
+Content files are siblings to `manifest.json`. Each file listed in the `files` array must exist in the artifact directory.
+
+### Pairing Content Pages with Artifacts
+
+A content page and its artifact can coexist. The page explains the configuration; the artifact distributes it:
+
+```
+content/configs/eslint-flat-config.mdx           # Human-readable explanation
+content/configs/eslint-flat-config.artifact.md    # Machine-applicable config
+```
+
+Both share the same slug (`eslint-flat-config`) but serve different purposes.
+
+## Registry Pipeline
+
+At build time, Velite processes all artifacts and generates a JSON registry:
+
+1. **Slug derivation** — filename without `.artifact.md` or `.artifact/manifest` suffix
+2. **CalVer versioning** — `YYYY.MM.DD.N` based on file modification dates (N increments for same-day changes)
+3. **Content extraction** — file bodies read verbatim and embedded in the registry JSON
+4. **Validation** — slugs must match `^[a-z0-9]+(?:-[a-z0-9]+)*$`, all files must have content
+
+**Output structure:**
+
+```
+public/r/
+├── index.json                    # Master index with all artifacts
+├── config/
+│   ├── eslint-flat-config.json   # Full artifact with file contents
+│   └── prettier-config.json
+├── skill/
+│   └── writing-custom-skills.json
+└── hook/
+    └── husky-lint-staged.json
+```
+
+**Index format** (`public/r/index.json`):
+
+```json
+{
+  "items": [
+    {
+      "slug": "eslint-flat-config",
+      "name": "ESLint Flat Config",
+      "type": "config",
+      "version": "2026.03.15.2",
+      "description": "Modern ESLint flat config...",
+      "url": "https://blakepetersen.io/configs/eslint-flat-config"
+    }
+  ],
+  "generatedAt": "2026-03-25T00:00:00Z"
+}
+```
+
+**Detail format** (`public/r/config/eslint-flat-config.json`):
+
+```json
+{
+  "slug": "eslint-flat-config",
+  "name": "ESLint Flat Config",
+  "type": "config",
+  "version": "2026.03.15.2",
+  "description": "Modern ESLint flat config...",
+  "files": [
+    {
+      "path": "eslint.config.js",
+      "content": "import js from '@eslint/js'\n...",
+      "merge": "section"
+    }
+  ],
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  },
+  "url": "https://blakepetersen.io/configs/eslint-flat-config"
+}
+```
+
+## Blink CLI Consumption
+
+The Blink CLI (`packages/blink-cli`) fetches artifacts from the registry and applies them:
+
+```bash
+blink apply eslint-flat-config          # Apply to current project
+blink apply eslint-flat-config --global # Apply to global scope (~/.claude/)
+blink update                            # Update all installed artifacts
+blink list                              # Show installed artifacts
+blink diff eslint-flat-config           # Show changes since install
+```
+
+**Manifest tracking:** Applied artifacts are tracked in `.blink/manifest.json` (project) or `~/.blink/manifest.json` (global) with per-file SHA-256 checksums. The CLI detects local modifications before updating and shows a diff preview.
+
+**Scope:**
+- Project scope writes to the current working directory
+- Global scope writes to `~/.claude/` (skills, CLAUDE.md) or `~/` (configs)
+
+## Authoring Checklist
+
+When creating a new content entry:
+
+1. Choose the correct collection directory based on content type
+2. Write the `.mdx` file with proper frontmatter (all required fields)
+3. If the entry has distributable files, create a matching `.artifact.md` or `.artifact/` directory
+4. Use `decisions` to capture rationale — this is what makes entries useful for agents, not just humans
+5. Set `applies_to` accurately — agents filter by this field
+6. Add `dependencies` and `related` cross-references
+7. Run `pnpm build` to verify Velite processes the entry without errors
+8. Check `public/r/index.json` to confirm artifacts appear in the registry

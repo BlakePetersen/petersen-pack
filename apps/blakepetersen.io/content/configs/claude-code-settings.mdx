@@ -1,0 +1,179 @@
+---
+title: "Claude Code Settings Configuration"
+description: "Global and project-level Claude Code settings — model selection, effort level, permissions, hooks, and environment variables."
+applies_to: ["claude-code"]
+dependencies: ["configs/claude-code-plugins"]
+order: 5
+draft: false
+tags: ["claude-code", "settings", "permissions", "hooks", "configuration"]
+decisions:
+  - choice: "Use opus with 1M context window and high effort"
+    rationale: "Complex monorepo work benefits from the largest context window and highest reasoning effort. The cost tradeoff is worth it for architectural decisions and multi-file refactors."
+  - choice: "Enable always-thinking mode"
+    rationale: "Extended thinking produces better plans and catches edge cases that quick responses miss. The latency cost is acceptable for development work."
+  - choice: "Use tmux as teammate mode"
+    rationale: "tmux sessions provide visible parallel agent work with persistent output. Easier to monitor and debug than background processes."
+  - choice: "Explicitly deny curl/wget and secrets file reads"
+    rationale: "Network requests should go through MCP tools or dedicated fetch tools for auditability. Secret files should never be readable — even accidentally."
+  - choice: "Put destructive git operations in the ask list rather than deny"
+    rationale: "Force push, rebase, and reset are sometimes necessary but should require explicit confirmation every time. Denying them entirely would require manual terminal switching."
+  - choice: "Set defaultMode to acceptEdits"
+    rationale: "File edits are the primary operation and low-risk since git tracks everything. Requiring approval for every edit would destroy flow."
+related: ["configs/claude-code-plugins", "configs/claude-code-mcp-servers", "guides/claude-code-stack-setup"]
+---
+
+Claude Code's behavior is controlled by two configuration layers: global settings (`~/.claude/settings.json`) for machine-wide defaults and project settings (`.claude/settings.local.json`) for per-repo overrides. This documents the full configuration with rationale for each choice.
+
+## Model and Reasoning
+
+```json
+{
+  "model": "opus[1m]",
+  "effortLevel": "high",
+  "alwaysThinkingEnabled": true
+}
+```
+
+**Model:** Opus with 1M token context window. The extended context is essential for monorepo work where understanding cross-package dependencies requires holding many files in context simultaneously.
+
+**Effort:** High. This trades speed for thoroughness — Claude spends more time reasoning through edge cases before responding. Worth the latency for development tasks where correctness matters more than speed.
+
+**Always thinking:** Extended thinking is always active, not just for complex prompts. This catches subtle issues in seemingly simple tasks and produces more considered plans.
+
+## Environment Variables
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
+```
+
+Enables the experimental agent teams feature for coordinated multi-agent work. Teams allow agents to collaborate on parallel tasks with shared context.
+
+## Teammate Mode
+
+```json
+{
+  "teammateMode": "tmux"
+}
+```
+
+When spawning teammate agents, they run in tmux panes rather than background processes. This gives visibility into what each agent is doing and makes debugging multi-agent workflows easier.
+
+## Permission Structure
+
+Permissions follow a three-tier model: allow (automatic), ask (requires confirmation), deny (blocked entirely).
+
+### Allow — Friction-Free Operations
+
+Everything that's read-only, local, or easily reversible:
+
+**File operations:** `ls`, `cat`, `head`, `tail`, `find`, `cp`, `mv`, `rm`, `mkdir`, `touch`, `stat`, `file`, `realpath`
+
+**Text processing:** `grep`, `rg`, `sed`, `awk`, `jq`, `sort`, `uniq`, `cut`, `tr`, `wc`
+
+**Development:** `node`, `tsx`, `pnpm test`, `pnpm build`, `pnpm lint`
+
+**Git (non-destructive):** `status`, `diff`, `log`, `branch`, `checkout`, `add`, `commit`, `fetch`, `pull`, `stash`, `show`, `rev-parse`, `remote`
+
+**GitHub CLI:** All `gh` commands (PR management, issue tracking, etc.)
+
+**Process management:** `lsof`, `pkill`, `sleep`
+
+**MCP:** All Pencil MCP tools (`mcp__pencil`)
+
+### Ask — Requires Confirmation
+
+Destructive or irreversible git operations:
+
+```json
+{
+  "ask": [
+    "Bash(git push:*)",
+    "Bash(git rebase:*)",
+    "Bash(git reset:*)",
+    "Bash(rm -rf:*)",
+    "Bash(rm -r:*)"
+  ]
+}
+```
+
+These are allowed but require explicit confirmation each time. Prevents accidental force pushes, history rewrites, and recursive deletions.
+
+### Deny — Blocked Entirely
+
+**Secret files:** `.env`, `.env.*`, `secrets/`, `*credentials*`, `*.pem`, `*.key`, `*secret*` — all blocked from `Read` operations.
+
+**Network requests:** `curl` and `wget` are blocked. Network access should go through MCP tools (context-mode's `ctx_fetch_and_index`) or dedicated fetch tools for auditability and context management.
+
+### Default Permission Mode
+
+```json
+{
+  "defaultMode": "acceptEdits"
+}
+```
+
+File edits are automatically accepted without confirmation. Since git tracks all changes, edits are easily reversible and low-risk. This keeps the development flow smooth.
+
+## Project-Level Overrides
+
+Project settings (`.claude/settings.local.json`) add permissions specific to the current repo. These accumulate on top of global settings:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm:*)",
+      "Bash(pnpm install:*)",
+      "WebSearch",
+      "mcp__playwright__playwright_navigate",
+      "mcp__playwright__playwright_screenshot",
+      "mcp__playwright__playwright_click",
+      "mcp__playwright__playwright_resize"
+    ]
+  }
+}
+```
+
+Project-level allows broader `pnpm` access (not just test/build/lint), web search for research, and specific Playwright MCP tools for UI verification.
+
+## Hooks
+
+Three hooks extend Claude Code's behavior at session and tool boundaries.
+
+### Session Start — Update Checker
+
+Runs on session start to check for plugin updates. Spawns a background process so it never blocks session startup. Writes update availability to a cache file that the statusline reads.
+
+### Post Tool Use — Context Monitor
+
+Runs after every tool invocation to track context window usage. Reads context metrics from the statusline bridge file and injects warnings when context is running low:
+
+- **WARNING at 35% remaining:** wrap up current task, consider saving state
+- **CRITICAL at 25% remaining:** stop immediately, save state before context compaction
+
+Debounces warnings (5 tool uses between messages) to avoid spam, but escalates immediately from WARNING to CRITICAL.
+
+### Pre Tool Use — Agent Audit Log
+
+Logs all Agent and Task tool invocations with timestamps to `~/.claude/agent-audit.log`. Useful for reviewing what agents did during long sessions.
+
+### Statusline
+
+Custom statusline showing model name, current task, working directory, and a color-coded context usage bar. Writes context metrics to a bridge file that the PostToolUse hook reads. Color thresholds: green (under 50%), yellow (under 65%), orange (under 80%), red with blink (80%+).
+
+## Plugin Enable/Disable State
+
+Not all installed plugins are enabled. Two are explicitly disabled:
+
+```json
+{
+  "claude-md-management@claude-plugins-official": false,
+  "claude-code-setup@claude-plugins-official": false
+}
+```
+
+These are useful for initial setup but add noise during regular development. Disable after your CLAUDE.md files are established and your environment is configured.

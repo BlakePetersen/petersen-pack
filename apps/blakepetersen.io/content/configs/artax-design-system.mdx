@@ -1,0 +1,169 @@
+---
+title: "Artax Design System"
+description: "Terminal-inspired design system — theme tokens, typography, component conventions, and the aesthetic rules that define the UI."
+applies_to: ["artax-ui", "tailwind", "css"]
+dependencies: []
+order: 6
+draft: false
+tags: ["design-system", "tailwind", "css", "components", "theme", "terminal-aesthetic"]
+decisions:
+  - choice: "Zero border-radius on all components"
+    rationale: "The terminal aesthetic demands sharp edges. Rounded corners signal consumer software; square corners signal developer tooling. Every radius variable is explicitly set to 0px."
+  - choice: "Amber as the sole accent color"
+    rationale: "Single-accent constraint forces hierarchy through typography and spacing rather than color variation. Amber reads as warm-terminal without being as aggressive as green-on-black."
+  - choice: "JetBrains Mono as primary font, Inter as fallback sans"
+    rationale: "Monospace-first reinforces the terminal aesthetic. JetBrains Mono has excellent readability at small sizes and distinctive ligatures. Inter is only used where monospace would look wrong (long-form prose)."
+  - choice: "Dark mode as default, light mode as alternative"
+    rationale: "The terminal aesthetic is inherently dark. Light mode exists for accessibility and outdoor use but is not the design target."
+  - choice: "Use cva (class-variance-authority) for all component variants"
+    rationale: "cva provides type-safe variant definitions that compile to Tailwind classes. Eliminates the ternary soup that variant logic usually becomes."
+related: ["guides/monorepo-setup"]
+---
+
+The Artax design system powers all UI across the petersen-group monorepo. It lives in `packages/artax-ui` and implements a terminal/CLI-inspired aesthetic: monospace typography, zero border-radius, amber accent, and dark backgrounds. Every component follows these conventions.
+
+## Aesthetic Principles
+
+**Terminal-first.** The UI should feel like a well-designed terminal application, not a web app with a dark theme bolted on. This means:
+
+- Monospace font everywhere except long-form prose
+- Square corners on everything — no border-radius, ever
+- Single accent color (amber) for interactive elements
+- Minimal decoration — let content and type create hierarchy
+- Borders are functional (separation), not decorative (embellishment)
+
+**Component personality.** Buttons prefix with `$` in default variant and wrap with `[ ]` brackets in ghost variant, like terminal prompts and commands. This is subtle but reinforces the aesthetic throughout the interface.
+
+## Theme Tokens
+
+All tokens are defined as CSS custom properties in `packages/artax-ui/src/styles/theme.css` using Tailwind v4's `@theme` directive. The token names map directly to Tailwind utility classes.
+
+### Colors — Dark Mode (default)
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--background` | `#0A0A0A` | Page background |
+| `--foreground` | `#FAFAFA` | Primary text |
+| `--card` | `#0F0F0F` | Card/panel backgrounds |
+| `--card-foreground` | `#FAFAFA` | Card text |
+| `--popover` | `#0F0F0F` | Popover/dropdown backgrounds |
+| `--primary` | `#F59E0B` | Interactive elements, links, focus rings |
+| `--primary-foreground` | `#0A0A0A` | Text on primary backgrounds |
+| `--secondary` | `#1F1F1F` | Secondary backgrounds |
+| `--secondary-foreground` | `#FAFAFA` | Secondary text |
+| `--muted` | `#1F1F1F` | Muted backgrounds |
+| `--muted-foreground` | `#6B7280` | Muted/placeholder text |
+| `--accent` | `#1F1F1F` | Accent backgrounds |
+| `--accent-foreground` | `#FAFAFA` | Accent text |
+| `--border` | `#2A2A2A` | Borders and dividers |
+| `--input` | `#2A2A2A` | Input borders |
+| `--ring` | `#F59E0B` | Focus rings |
+| `--destructive` | `#EF4444` | Destructive actions |
+| `--success` | `#10B981` | Success states |
+| `--info` | `#06B6D4` | Info states |
+| `--warning` | `#F59E0B` | Warning states (same as primary) |
+
+### Colors — Light Mode
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--background` | `#F5F5F5` | Page background |
+| `--foreground` | `#171717` | Primary text |
+| `--primary` | `#D97706` | Amber, slightly darker for contrast |
+| `--card` | `#EBEBEB` | Card backgrounds |
+| `--border` | `#D4D4D4` | Borders |
+| `--muted-foreground` | `#737373` | Muted text |
+
+### Surface Colors
+
+Semi-transparent backgrounds for status banners and badges:
+
+| Token | Dark | Light |
+|-------|------|-------|
+| `--surface-info` | `rgba(6, 182, 212, 0.06)` | `rgba(8, 145, 178, 0.08)` |
+| `--surface-warning` | `rgba(245, 158, 11, 0.06)` | `rgba(217, 119, 6, 0.08)` |
+| `--surface-success` | `rgba(16, 185, 129, 0.06)` | `rgba(5, 150, 105, 0.08)` |
+
+### Border Radius
+
+All zero. No exceptions.
+
+```css
+--radius: 0px;
+--radius-sm: 0px;
+--radius-md: 0px;
+--radius-lg: 0px;
+--radius-xl: 0px;
+```
+
+## Typography
+
+Three font families, loaded via CSS custom properties:
+
+| Property | Font | Usage |
+|----------|------|-------|
+| `--font-mono` | JetBrains Mono | Primary — UI text, labels, navigation, buttons |
+| `--font-mono-alt` | IBM Plex Mono | Alternative mono — code blocks, technical content |
+| `--font-sans` | Inter | Long-form prose only (blog posts, documentation body) |
+
+All components default to `font-mono`. The `font-sans` class is explicitly applied only in article/prose contexts.
+
+## Type-Safe Token Access
+
+The `tokens.ts` module in `packages/artax-ui/src/styles/` exports typed constants for programmatic access:
+
+```typescript
+import { tokens } from '@petersen-group/artax-ui/styles/tokens'
+
+tokens.bg.background    // 'var(--background)'
+tokens.text.primary     // 'var(--primary)'
+tokens.border.border    // 'var(--border)'
+tokens.font.mono        // 'var(--font-mono)'
+```
+
+Organized by namespace: `bg`, `text`, `border`, `ring`, `font`. Use these in inline styles or dynamic class generation instead of hardcoding CSS variable names.
+
+## Component Conventions
+
+Components live in `packages/artax-ui/src/components/` organized by atomic design:
+
+```
+components/
+├── atoms/       # Badge, Button, Input, etc.
+├── molecules/   # SearchInput, NavItem, etc.
+└── organisms/   # Header, Sidebar, etc.
+```
+
+### Required Patterns
+
+Every component file follows these conventions:
+
+1. **ABOUTME comment** at the top — two lines describing what the file does
+2. **cva for variants** — all variant logic uses `class-variance-authority`
+3. **cn() for class merging** — never concatenate class strings manually
+4. **Export both component and variants** — consumers may need the variants object for composition
+5. **font-mono by default** — all components use monospace unless explicitly overridden
+6. **Focus states** — `focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring`
+7. **Disabled states** — `disabled:pointer-events-none disabled:opacity-50`
+
+### Example: Button Personality
+
+```tsx
+// Default variant: terminal prompt style
+<Button>deploy</Button>        // renders: "$ deploy"
+
+// Ghost variant: command bracket style
+<Button variant="ghost">help</Button>  // renders: "[ help ]"
+```
+
+The `$` prefix and `[ ]` brackets are added via the variant definitions in cva, not as children. This keeps the terminal personality consistent without requiring every consumer to remember the convention.
+
+## CSS Architecture
+
+**Tailwind v4** with PostCSS plugin (no `tailwind.config.js`). All customization via CSS custom properties:
+
+- `packages/artax-ui/src/styles/theme.css` — token definitions under `@theme`
+- `packages/artax-ui/src/styles/globals.css` — imports Tailwind, theme, animations
+- `apps/blakepetersen.io/src/app/globals.css` — imports artax-ui globals, sources component files
+
+Theme switching uses `[data-theme=dark]` selector on the root element, not a `class="dark"` approach.
