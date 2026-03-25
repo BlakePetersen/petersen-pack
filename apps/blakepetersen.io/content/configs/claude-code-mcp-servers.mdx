@@ -1,0 +1,107 @@
+---
+title: "Claude Code MCP Server Configuration"
+description: "MCP servers connected to Claude Code for browser automation, platform management, design tooling, and context optimization."
+applies_to: ["claude-code", "mcp"]
+dependencies: ["configs/claude-code-plugins"]
+order: 4
+draft: false
+tags: ["claude-code", "mcp", "developer-tools", "browser-automation", "design-tools"]
+decisions:
+  - choice: "Run two Playwright MCP servers with different capabilities"
+    rationale: "The official @playwright/mcp provides snapshot-driven interaction ideal for dev-server verification. The @executeautomation/playwright-mcp-server adds codegen sessions and additional assertion tools. They complement rather than duplicate each other."
+  - choice: "Use Vercel MCP via HTTP transport rather than local proxy"
+    rationale: "The Vercel MCP server at mcp.vercel.com uses OAuth 2.1 with automatic token refresh. No local server process to manage, and it stays current with Vercel's API without manual updates."
+  - choice: "Connect Pencil as an MCP server for design-to-code workflow"
+    rationale: "Pencil .pen files are encrypted and only accessible via MCP tools. Direct MCP integration lets Claude read designs, validate layouts, and update design tokens without leaving the conversation."
+related: ["configs/claude-code-plugins", "guides/claude-code-stack-setup"]
+---
+
+MCP (Model Context Protocol) servers extend Claude Code with external tool access. Each server runs as a separate process and exposes tools that Claude can invoke during conversations. These five servers cover browser testing, platform management, design tooling, and context optimization.
+
+## Browser Automation
+
+### Playwright MCP (Official) `plugin:playwright:playwright`
+
+```
+npx @playwright/mcp@latest
+```
+
+The official Playwright MCP server from Microsoft. Provides snapshot-driven browser interaction — navigates pages, clicks elements, fills forms, takes screenshots, and reads accessibility snapshots. Primary use cases:
+
+- **Dev-server verification** after starting `next dev` or `vite`
+- **Visual regression checks** during UI work
+- **Form and interaction testing** for end-to-end validation
+- **Console log and network request inspection** for debugging
+
+Installed via the `playwright` plugin from claude-plugins-official.
+
+### Playwright MCP (ExecuteAutomation) `playwright`
+
+```
+npx -y @executeautomation/playwright-mcp-server
+```
+
+A community Playwright MCP server with additional capabilities beyond the official one:
+
+- **Codegen sessions** — record browser interactions and generate test code
+- **Response assertions** — verify API responses during browser navigation
+- **PDF export** — save pages as PDF for documentation
+- **Visible HTML/text extraction** — get rendered content without full DOM dumps
+
+Installed directly as an MCP server (not via a plugin). Complements the official Playwright MCP with features oriented toward test generation and content extraction.
+
+## Platform Management
+
+### Vercel MCP `plugin:vercel:vercel`
+
+```
+https://mcp.vercel.com (HTTP transport)
+```
+
+Official Vercel MCP server providing read access to the Vercel platform. Uses OAuth 2.1 authentication — requires initial browser-based authorization, then tokens refresh automatically. Capabilities:
+
+- **Search and navigate** Vercel, Next.js, and AI SDK documentation
+- **List and inspect** projects, deployments, and their status
+- **Query build logs** and function invocation logs for debugging
+- **List domains** and environment variables
+- **View team members** and project settings
+
+Installed via the `vercel` plugin from claude-plugins-official. Note: currently read-only (beta). For write operations, use the Vercel CLI directly.
+
+## Design Tooling
+
+### Pencil MCP `pencil`
+
+```
+/Applications/Pencil.app/Contents/Resources/app.asar.unpacked/out/mcp-server-darwin-arm64 --app desktop
+```
+
+MCP server for the Pencil design application. Pencil `.pen` files are encrypted and can only be read/written through these MCP tools — standard `Read`/`Grep` tools cannot access their contents. Capabilities:
+
+- **batch_get** — search and read node trees by pattern or ID
+- **batch_design** — insert, copy, update, replace, move, delete, and generate image operations
+- **get_screenshot** — visual validation of design nodes
+- **snapshot_layout** — inspect computed layout rectangles for positioning
+- **get_variables / set_variables** — read and update design tokens (colors, spacing, typography)
+- **get_style_guide** — retrieve design guidelines and style references
+- **get_editor_state** — check active document and selection context
+
+Central to the design-first workflow: all UI changes are designed in Pencil, approved visually, then implemented in code. Design system variables in Pencil map directly to theme CSS custom properties.
+
+## Context Optimization
+
+### Context-mode MCP `plugin:context-mode:context-mode`
+
+```
+node ~/.claude/plugins/marketplaces/context-mode/start.mjs
+```
+
+Installed via the `context-mode` third-party plugin. Provides a sandboxed execution environment that keeps raw command output out of the conversation context. Key tools:
+
+- **ctx_batch_execute** — run multiple shell commands and queries in parallel, auto-index results
+- **ctx_search** — search previously indexed content with multiple queries
+- **ctx_execute / ctx_execute_file** — run code in sandbox, only printed output enters context
+- **ctx_fetch_and_index** — fetch and index web content without polluting context
+- **ctx_stats** — show context savings for the current session
+
+The most impactful tool for long sessions. Without it, complex multi-step tasks (debugging, exploration, large refactors) exhaust the context window and trigger compaction, losing important earlier context.

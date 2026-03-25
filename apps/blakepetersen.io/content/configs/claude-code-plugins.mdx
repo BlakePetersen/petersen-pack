@@ -1,0 +1,110 @@
+---
+title: "Claude Code Plugin Stack"
+description: "Complete inventory of Claude Code plugins for a production development workflow — official, third-party, and local."
+applies_to: ["claude-code"]
+dependencies: []
+order: 3
+draft: false
+tags: ["claude-code", "plugins", "developer-tools", "ai-assisted-development"]
+decisions:
+  - choice: "Install superpowers, feature-dev, and code-review as the core workflow trio"
+    rationale: "These three cover the full development loop: planning/brainstorming (superpowers), implementation (feature-dev), and validation (code-review). Each adds structured discipline that prevents ad-hoc work."
+  - choice: "Use context-mode as a third-party plugin rather than managing context manually"
+    rationale: "Context window exhaustion during complex tasks was the #1 productivity killer. context-mode keeps raw tool output in a sandbox and only surfaces summaries, dramatically extending effective context."
+  - choice: "Maintain blink and worktree-dx as local plugins"
+    rationale: "Session persistence (blink) and git worktree management (worktree-dx) are workflow preferences that vary per developer. Local plugins let us iterate on these without marketplace publishing overhead."
+  - choice: "Install all pr-review-toolkit agents rather than cherry-picking"
+    rationale: "The silent-failure-hunter and type-design-analyzer catch classes of bugs that standard code review misses. The cost of installing unused agents is zero; the cost of missing a silent failure in production is high."
+related: ["configs/claude-code-mcp-servers", "guides/claude-code-stack-setup"]
+---
+
+A curated set of Claude Code plugins that form a complete AI-assisted development workflow. Each plugin is listed with its source, purpose, and the reasoning behind including it. A new machine can replicate this stack by following the [setup guide](/dx/guides/claude-code-stack-setup).
+
+## Core Workflow
+
+These plugins define how work gets done — planning, implementation, and review.
+
+### superpowers `claude-plugins-official`
+
+The backbone of the workflow. Provides structured skills for TDD (red-green-refactor loops), systematic debugging (scientific method with hypotheses), brainstorming (divergent thinking before convergence), writing and executing plans, dispatching parallel subagents, code review requests, and git worktree isolation. Almost every task touches at least one superpowers skill.
+
+### feature-dev `claude-plugins-official`
+
+Guided feature development with deep codebase exploration. Uses specialized agents — a code explorer that traces execution paths, a code architect that designs implementations matching existing patterns, and a code reviewer that validates against project conventions. Prevents the "just start coding" trap on unfamiliar codebases.
+
+### code-review `claude-plugins-official`
+
+Structured code review against project guidelines and CLAUDE.md rules. Runs as a post-implementation gate before commits. Catches style violations, convention drift, and logic errors that are easy to miss when you wrote the code yourself.
+
+## Code Quality
+
+Specialized reviewers that catch what general code review misses.
+
+### pr-review-toolkit `claude-plugins-official`
+
+A suite of focused review agents, each targeting a specific failure mode:
+
+- **code-reviewer** — general quality, style, and convention adherence
+- **silent-failure-hunter** — finds swallowed errors, empty catch blocks, fallbacks that hide bugs
+- **type-design-analyzer** — rates type encapsulation, invariant expression, and enforcement
+- **pr-test-analyzer** — identifies test coverage gaps and missing edge cases
+- **comment-analyzer** — checks comment accuracy and long-term maintainability
+- **code-simplifier** — simplifies code for clarity while preserving functionality
+
+### code-simplifier `claude-plugins-official`
+
+Post-implementation pass that simplifies recently modified code for clarity, consistency, and maintainability. Focuses on the diff, not the whole file. Useful as a final step before committing.
+
+### security-guidance `claude-plugins-official`
+
+Security review targeting OWASP top 10, injection vulnerabilities, authentication flaws, and secrets exposure. Runs against pending changes on the current branch.
+
+## Development Environment
+
+Plugins that improve the development experience itself.
+
+### typescript-lsp `claude-plugins-official`
+
+TypeScript language server integration that gives Claude real-time type checking, go-to-definition, and diagnostics. Catches type errors during development rather than at build time. Essential for any TypeScript project.
+
+### context-mode `context-mode` (third-party)
+
+Context window management via MCP. Routes command output and file analysis through a sandbox, indexing results for search and only surfacing summaries into the conversation. Prevents context exhaustion during complex multi-step tasks. Includes `ctx_batch_execute` for parallel command execution, `ctx_search` for indexed content queries, and `ctx_execute_file` for sandboxed analysis.
+
+### worktree-dx `local`
+
+Git worktree lifecycle management. Handles creation, setup (dependency installation, env syncing, builds), status monitoring, and cleanup of merged worktrees. Tracks setup timing history to identify performance regressions. Enables parallel feature work without branch switching.
+
+### blink `local`
+
+Session persistence — save snapshots of conversation state with tags, browse saved sessions, and restore context when resuming work. Prevents the "where was I?" problem when returning to a task after interruption.
+
+## UI and Design
+
+### frontend-design `claude-plugins-official`
+
+Generates distinctive, production-grade frontend interfaces. Focuses on high-fidelity output using the project's design system rather than generic Bootstrap-style layouts. Integrates with the Pencil design tool workflow.
+
+### learning-output-style `claude-plugins-official`
+
+Configures output for educational mode — combines interactive learning with explanatory insights. Instead of silently implementing, identifies opportunities for the developer to write meaningful code (5-10 lines) at decision points. Adds `★ Insight` blocks explaining implementation choices.
+
+## Platform Integration
+
+### vercel `claude-plugins-official`
+
+The largest plugin in the stack. Covers the entire Vercel ecosystem: Next.js App Router, AI SDK, deployment/CI-CD, storage, security, observability, and 40+ specialized skills. Injects context based on file patterns — editing a `next.config.ts` triggers Next.js guidance, touching an API route with AI SDK imports triggers AI SDK guidance. Essential for any Vercel-deployed project.
+
+### playwright `claude-plugins-official`
+
+Browser automation for testing and verification. Provides both an MCP server for direct browser control and skills for automated dev-server verification. Used for visual testing, form validation, and end-to-end workflow verification.
+
+## Setup and Management
+
+### claude-code-setup `claude-plugins-official`
+
+Initial Claude Code configuration assistance. Helps with settings, permissions, environment variables, and hook setup. Most useful on first install; rarely invoked after initial setup.
+
+### claude-md-management `claude-plugins-official`
+
+CLAUDE.md file management — creating, updating, and organizing the instruction files that define project behavior. Handles both global (`~/.claude/CLAUDE.md`) and project-level (`.claude/CLAUDE.md`) files.

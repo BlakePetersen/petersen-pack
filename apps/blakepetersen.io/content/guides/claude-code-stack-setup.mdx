@@ -1,0 +1,225 @@
+---
+title: "Claude Code Stack Setup"
+description: "Step-by-step guide to replicating a production Claude Code development environment — plugins, MCP servers, permissions, and workflow configuration."
+applies_to: ["claude-code"]
+dependencies: ["configs/claude-code-plugins", "configs/claude-code-mcp-servers"]
+order: 2
+draft: false
+tags: ["claude-code", "setup", "developer-tools", "ai-assisted-development", "onboarding"]
+decisions:
+  - choice: "Install plugins in dependency order rather than alphabetically"
+    rationale: "Some plugins depend on others being present (e.g., vercel plugin provides MCP server that context-mode can index). Installing in order prevents confusing first-run errors."
+  - choice: "Configure permissions explicitly rather than using blanket allow-all"
+    rationale: "Granular permissions prevent accidental destructive operations while keeping common workflows frictionless. The deny list for secrets files is non-negotiable."
+related: ["configs/claude-code-plugins", "configs/claude-code-mcp-servers"]
+---
+
+This guide walks through setting up a Claude Code environment from scratch that matches the stack documented in the [plugin inventory](/dx/configs/claude-code-plugins) and [MCP server configuration](/dx/configs/claude-code-mcp-servers). Follow these steps on a new machine to get a fully operational AI-assisted development workflow.
+
+## Prerequisites
+
+- Node.js 20+ and pnpm installed
+- Claude Code CLI installed (`npm i -g @anthropic-ai/claude-code`)
+- Git configured with SSH keys
+- A Vercel account (for Vercel MCP OAuth)
+- Pencil.app installed (for design workflow — optional)
+
+## Step 1: Official Marketplace Plugins
+
+Install the official plugins from the claude-plugins-official marketplace. These are maintained by Anthropic and the community.
+
+### Core Workflow (install first)
+
+```bash
+claude plugin install superpowers
+claude plugin install feature-dev
+claude plugin install code-review
+```
+
+### Code Quality
+
+```bash
+claude plugin install pr-review-toolkit
+claude plugin install code-simplifier
+claude plugin install security-guidance
+```
+
+### Development Environment
+
+```bash
+claude plugin install typescript-lsp
+claude plugin install playwright
+```
+
+### Platform and UI
+
+```bash
+claude plugin install vercel
+claude plugin install frontend-design
+claude plugin install learning-output-style
+```
+
+### Setup and Management
+
+```bash
+claude plugin install claude-code-setup
+claude plugin install claude-md-management
+```
+
+## Step 2: Third-Party Plugins
+
+### context-mode
+
+Context window management. Install from the context-mode marketplace:
+
+```bash
+claude plugin install context-mode --marketplace context-mode
+```
+
+After installation, verify the MCP server is running:
+
+```bash
+claude mcp list
+```
+
+You should see `plugin:context-mode:context-mode` with status `Connected`.
+
+## Step 3: Local Plugins
+
+Local plugins live in `~/.claude/plugins/local/` and are not published to any marketplace.
+
+### blink (session persistence)
+
+```bash
+mkdir -p ~/.claude/plugins/local/blink
+# Copy blink plugin files to this directory
+```
+
+### worktree-dx (git worktree management)
+
+```bash
+mkdir -p ~/.claude/plugins/local/worktree-dx
+# Copy worktree-dx plugin files to this directory
+```
+
+These require the plugin source files. If migrating from an existing machine, copy the directories directly from `~/.claude/plugins/local/`.
+
+## Step 4: Additional MCP Server
+
+The official Playwright, Vercel, and context-mode MCP servers are auto-configured by their plugins. One additional MCP server needs manual setup:
+
+### ExecuteAutomation Playwright
+
+```bash
+claude mcp add playwright "npx -y @executeautomation/playwright-mcp-server"
+```
+
+This provides codegen sessions, response assertions, and PDF export capabilities that complement the official Playwright MCP.
+
+## Step 5: Permission Configuration
+
+Configure granular permissions in `~/.claude/settings.json`. The goal is to allow common read/navigation operations automatically while gating destructive actions behind confirmation.
+
+### Allow List (friction-free operations)
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)", "Bash(cat:*)", "Bash(head:*)", "Bash(tail:*)",
+      "Bash(grep:*)", "Bash(rg:*)", "Bash(find:*)",
+      "Bash(pwd:*)", "Bash(which:*)", "Bash(file:*)", "Bash(stat:*)",
+      "Bash(echo:*)", "Bash(printf:*)", "Bash(wc:*)",
+      "Bash(sort:*)", "Bash(uniq:*)", "Bash(cut:*)", "Bash(tr:*)",
+      "Bash(sed:*)", "Bash(awk:*)", "Bash(jq:*)",
+      "Bash(node:*)", "Bash(tsx:*)",
+      "Bash(touch:*)", "Bash(mkdir:*)", "Bash(cp:*)", "Bash(mv:*)", "Bash(rm:*)",
+      "Bash(realpath:*)", "Bash(dirname:*)", "Bash(basename:*)",
+      "Bash(test:*)", "Bash([:*)", "Bash(true:*)", "Bash(false:*)",
+      "Bash(lsof:*)", "Bash(pkill:*)", "Bash(sleep:*)",
+      "Bash(date:*)",
+      "Bash(docker ps:*)", "Bash(docker exec:*)", "Bash(docker inspect:*)",
+      "Bash(pnpm test:*)", "Bash(pnpm build:*)", "Bash(pnpm lint:*)",
+      "Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)",
+      "Bash(git branch:*)", "Bash(git checkout:*)",
+      "Bash(git add:*)", "Bash(git commit:*)",
+      "Bash(git fetch:*)", "Bash(git pull:*)", "Bash(git stash:*)",
+      "Bash(git show:*)", "Bash(git rev-parse:*)", "Bash(git remote:*)",
+      "Bash(gh:*)",
+      "mcp__pencil"
+    ]
+  }
+}
+```
+
+### Deny List (protect secrets)
+
+```json
+{
+  "permissions": {
+    "deny": [
+      "Read(.env)", "Read(.env.*)",
+      "Read(**/.env)", "Read(**/.env.*)",
+      "Read(**/secrets/**)", "Read(**/*credentials*)",
+      "Read(**/*.pem)", "Read(**/*.key)", "Read(**/*secret*)",
+      "Bash(curl:*)", "Bash(wget:*)"
+    ]
+  }
+}
+```
+
+The deny list prevents reading secret files and blocks network requests via curl/wget (use MCP tools or dedicated fetch tools instead).
+
+## Step 6: Environment Configuration
+
+Enable experimental features:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
+```
+
+## Step 7: Verify Installation
+
+Run a health check to confirm everything is connected:
+
+```bash
+claude mcp list
+```
+
+Expected output should show five MCP servers:
+
+| Server | Transport | Status |
+|--------|-----------|--------|
+| `plugin:playwright:playwright` | stdio | Connected |
+| `plugin:vercel:vercel` | HTTP | Connected (or Needs authentication) |
+| `plugin:context-mode:context-mode` | stdio | Connected |
+| `playwright` | stdio | Connected |
+| `pencil` | stdio | Connected |
+
+If the Vercel MCP shows "Needs authentication", run `claude` and it will prompt for OAuth authorization on first use.
+
+## Step 8: CLAUDE.md Configuration
+
+The plugins provide tools and skills, but the CLAUDE.md files define how they are used. Key rules to include in your global `~/.claude/CLAUDE.md`:
+
+- **Mandate TDD** via the `tdd` skill for all new features and bugfixes
+- **Mandate systematic-debugging** via the `systematic-debugging` skill for all debugging
+- **Mandate design-system** via the `design-system` skill for UI component work
+- **Require subagent-driven development** for any feature work involving 2+ tasks
+- **Set context efficiency rules** to work with context-mode (delegate heavy output to agents or sandbox)
+
+See the [Global CLAUDE.md config](/dx/configs/claude-global) and [Project CLAUDE.md config](/dx/configs/claude-project) entries for complete templates.
+
+## Post-Setup
+
+After installation, the workflow is:
+
+1. **Start a session** — plugins load automatically based on session hooks
+2. **Skills inject on demand** — touching a Next.js file triggers Vercel/Next.js guidance, running tests triggers TDD guidance
+3. **MCP servers respond to tool calls** — browser automation, platform queries, and design operations are available in every conversation
+4. **Context-mode manages capacity** — heavy output stays in sandbox, only summaries enter context
+5. **Blink saves progress** — snapshot sessions before breaks, restore when resuming
