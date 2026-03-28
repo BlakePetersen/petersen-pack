@@ -1,43 +1,26 @@
-// ABOUTME: Tests for the ThemeProvider component and useTheme hook.
-// ABOUTME: Validates theme switching, system preference detection, and data-theme attribute management.
-import { render, screen, act } from '@testing-library/react'
+// ABOUTME: Tests for the ThemeProvider next-themes wrapper and useTheme re-export.
+// ABOUTME: Validates that artax-ui pre-configures next-themes with data-theme attribute.
+import { render, screen } from '@testing-library/react'
 import { ThemeProvider, useTheme } from '../src/providers/theme-provider'
 import type { Theme } from '../src/providers/theme-provider'
 
-// Mock matchMedia
-function createMatchMedia(matches: boolean) {
-  const listeners: Array<(e: MediaQueryListEvent) => void> = []
-  const mql = {
-    matches,
-    media: '(prefers-color-scheme: dark)',
-    addEventListener: (_event: string, listener: (e: MediaQueryListEvent) => void) => {
-      listeners.push(listener)
-    },
-    removeEventListener: (_event: string, listener: (e: MediaQueryListEvent) => void) => {
-      const idx = listeners.indexOf(listener)
-      if (idx >= 0) listeners.splice(idx, 1)
-    },
-    dispatchChange: (newMatches: boolean) => {
-      listeners.forEach(l => l({ matches: newMatches } as MediaQueryListEvent))
-    },
-  }
-  window.matchMedia = jest.fn().mockReturnValue(mql)
-  return mql
-}
+// Mock next-themes since it requires a Next.js runtime (blocking script injection)
+const mockUseTheme = jest.fn().mockReturnValue({
+  theme: 'system',
+  setTheme: jest.fn(),
+  resolvedTheme: 'dark',
+})
 
-// Component that exposes useTheme values for testing
-function ThemeConsumer({ onTheme }: { onTheme: (val: { theme: Theme; resolvedTheme: 'light' | 'dark'; setTheme: (t: Theme) => void }) => void }) {
-  const value = useTheme()
-  onTheme(value)
-  return <div data-testid="consumer">theme: {value.theme}, resolved: {value.resolvedTheme}</div>
-}
+jest.mock('next-themes', () => ({
+  ThemeProvider: jest.fn(({ children, ...props }: Record<string, unknown>) => (
+    <div data-testid="next-theme-provider" data-props={JSON.stringify(props)}>
+      {children as React.ReactNode}
+    </div>
+  )),
+  useTheme: (...args: unknown[]) => mockUseTheme(...args),
+}))
 
 describe('ThemeProvider', () => {
-  beforeEach(() => {
-    document.documentElement.removeAttribute('data-theme')
-    createMatchMedia(true) // default: system prefers dark
-  })
-
   it('renders children', () => {
     render(
       <ThemeProvider>
@@ -47,94 +30,74 @@ describe('ThemeProvider', () => {
     expect(screen.getByTestId('child')).toBeInTheDocument()
   })
 
-  it('defaults to system theme', () => {
-    let captured: { theme: Theme; resolvedTheme: 'light' | 'dark' } | null = null
-    render(
-      <ThemeProvider>
-        <ThemeConsumer onTheme={(val) => { captured = val }} />
-      </ThemeProvider>
-    )
-    expect(captured!.theme).toBe('system')
-  })
-
-  it('resolves system theme to dark when prefers-color-scheme is dark', () => {
-    createMatchMedia(true)
-    let captured: { theme: Theme; resolvedTheme: 'light' | 'dark' } | null = null
-    render(
-      <ThemeProvider>
-        <ThemeConsumer onTheme={(val) => { captured = val }} />
-      </ThemeProvider>
-    )
-    expect(captured!.resolvedTheme).toBe('dark')
-  })
-
-  it('resolves system theme to light when prefers-color-scheme is light', () => {
-    createMatchMedia(false)
-    let captured: { theme: Theme; resolvedTheme: 'light' | 'dark' } | null = null
-    render(
-      <ThemeProvider>
-        <ThemeConsumer onTheme={(val) => { captured = val }} />
-      </ThemeProvider>
-    )
-    expect(captured!.resolvedTheme).toBe('light')
-  })
-
-  it('sets data-theme attribute on document.documentElement', () => {
-    createMatchMedia(true)
+  it('passes attribute="data-theme" to the underlying next-themes provider', () => {
     render(
       <ThemeProvider>
         <div>test</div>
       </ThemeProvider>
     )
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
+    const provider = screen.getByTestId('next-theme-provider')
+    const props = JSON.parse(provider.getAttribute('data-props')!)
+    expect(props.attribute).toBe('data-theme')
   })
 
-  it('sets data-theme to light when system prefers light', () => {
-    createMatchMedia(false)
+  it('defaults to defaultTheme="system"', () => {
     render(
       <ThemeProvider>
         <div>test</div>
       </ThemeProvider>
     )
-    expect(document.documentElement.getAttribute('data-theme')).toBe('light')
+    const provider = screen.getByTestId('next-theme-provider')
+    const props = JSON.parse(provider.getAttribute('data-props')!)
+    expect(props.defaultTheme).toBe('system')
   })
 
-  it('updates resolvedTheme and data-theme when system preference changes', () => {
-    const mql = createMatchMedia(true)
-    let captured: { theme: Theme; resolvedTheme: 'light' | 'dark' } | null = null
+  it('passes enableSystem to next-themes provider', () => {
     render(
       <ThemeProvider>
-        <ThemeConsumer onTheme={(val) => { captured = val }} />
+        <div>test</div>
       </ThemeProvider>
     )
-    expect(captured!.resolvedTheme).toBe('dark')
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
+    const provider = screen.getByTestId('next-theme-provider')
+    const props = JSON.parse(provider.getAttribute('data-props')!)
+    expect(props.enableSystem).toBe(true)
+  })
 
-    act(() => {
-      mql.dispatchChange(false)
-    })
-    expect(captured!.resolvedTheme).toBe('light')
-    expect(document.documentElement.getAttribute('data-theme')).toBe('light')
-
-    act(() => {
-      mql.dispatchChange(true)
-    })
-    expect(captured!.resolvedTheme).toBe('dark')
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
+  it('accepts and forwards a custom defaultTheme', () => {
+    render(
+      <ThemeProvider defaultTheme="dark">
+        <div>test</div>
+      </ThemeProvider>
+    )
+    const provider = screen.getByTestId('next-theme-provider')
+    const props = JSON.parse(provider.getAttribute('data-props')!)
+    expect(props.defaultTheme).toBe('dark')
   })
 })
 
 describe('useTheme', () => {
-  beforeEach(() => {
-    document.documentElement.removeAttribute('data-theme')
-    createMatchMedia(true)
-  })
-
-  it('returns theme, resolvedTheme, and setTheme', () => {
-    let captured: { theme: Theme; resolvedTheme: 'light' | 'dark'; setTheme: (t: Theme) => void } | null = null
+  it('is re-exported and callable', () => {
+    function Consumer() {
+      const value = useTheme()
+      return <div data-testid="consumer">{value.theme}</div>
+    }
     render(
       <ThemeProvider>
-        <ThemeConsumer onTheme={(val) => { captured = val }} />
+        <Consumer />
+      </ThemeProvider>
+    )
+    expect(screen.getByTestId('consumer')).toHaveTextContent('system')
+  })
+
+  it('returns theme, setTheme, and resolvedTheme', () => {
+    let captured: ReturnType<typeof useTheme> | null = null
+    function Consumer() {
+      captured = useTheme()
+      return null
+    }
+    render(
+      <ThemeProvider>
+        <Consumer />
       </ThemeProvider>
     )
     expect(captured).not.toBeNull()
@@ -142,52 +105,23 @@ describe('useTheme', () => {
     expect(captured!.resolvedTheme).toBeDefined()
     expect(typeof captured!.setTheme).toBe('function')
   })
+})
 
-  it('setTheme(dark) updates resolvedTheme to dark', () => {
-    let captured: { theme: Theme; resolvedTheme: 'light' | 'dark'; setTheme: (t: Theme) => void } | null = null
-    render(
-      <ThemeProvider defaultTheme="light">
-        <ThemeConsumer onTheme={(val) => { captured = val }} />
-      </ThemeProvider>
-    )
-    expect(captured!.resolvedTheme).toBe('light')
-
-    act(() => {
-      captured!.setTheme('dark')
-    })
-    expect(captured!.resolvedTheme).toBe('dark')
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark')
+describe('Theme type', () => {
+  it('accepts light, dark, and system values', () => {
+    // TypeScript compile-time check — if this compiles, the type is correct
+    const light: Theme = 'light'
+    const dark: Theme = 'dark'
+    const system: Theme = 'system'
+    expect([light, dark, system]).toEqual(['light', 'dark', 'system'])
   })
+})
 
-  it('setTheme(light) updates resolvedTheme to light', () => {
-    let captured: { theme: Theme; resolvedTheme: 'light' | 'dark'; setTheme: (t: Theme) => void } | null = null
-    render(
-      <ThemeProvider defaultTheme="dark">
-        <ThemeConsumer onTheme={(val) => { captured = val }} />
-      </ThemeProvider>
-    )
-    expect(captured!.resolvedTheme).toBe('dark')
-
-    act(() => {
-      captured!.setTheme('light')
-    })
-    expect(captured!.resolvedTheme).toBe('light')
-    expect(document.documentElement.getAttribute('data-theme')).toBe('light')
-  })
-
-  it('throws when used outside ThemeProvider', () => {
-    // Suppress console.error for the expected error
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
-
-    function BadConsumer() {
-      useTheme()
-      return null
-    }
-
-    expect(() => {
-      render(<BadConsumer />)
-    }).toThrow('useTheme must be used within ThemeProvider')
-
-    spy.mockRestore()
+describe('index.ts exports', () => {
+  it('exports ThemeProvider, useTheme, and Theme from the package barrel', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const barrel = require('../src/index')
+    expect(barrel.ThemeProvider).toBeDefined()
+    expect(barrel.useTheme).toBeDefined()
   })
 })
