@@ -237,6 +237,9 @@ importers:
       jest-environment-jsdom:
         specifier: 30.2.0
         version: 30.2.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      next-themes:
+        specifier: 0.3.0
+        version: 0.3.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: 19.2.0
         version: 19.2.0

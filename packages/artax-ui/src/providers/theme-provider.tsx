@@ -1,19 +1,11 @@
-// ABOUTME: ThemeProvider component and useTheme hook for light/dark mode switching.
-// ABOUTME: Sets data-theme attribute on document element, defaults to system preference.
+// ABOUTME: Pre-configured next-themes wrapper for the artax-ui design system.
+// ABOUTME: Exports ThemeProvider (with data-theme attribute) and useTheme hook.
 'use client'
 
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes'
 
 type Theme = 'light' | 'dark' | 'system'
-
-interface ThemeContextValue {
-  theme: Theme
-  resolvedTheme: 'light' | 'dark'
-  setTheme: (theme: Theme) => void
-}
-
-const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
 function ThemeProvider({
   children,
@@ -22,50 +14,15 @@ function ThemeProvider({
   children: ReactNode
   defaultTheme?: Theme
 }) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme)
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(() => {
-    if (defaultTheme !== 'system') return defaultTheme
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    }
-    return 'dark'
-  })
-
-  useEffect(() => {
-    const resolve = (): 'light' | 'dark' => {
-      if (theme === 'system') {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      }
-      return theme
-    }
-    const resolved = resolve()
-    setResolvedTheme(resolved)
-    document.documentElement.setAttribute('data-theme', resolved)
-  }, [theme])
-
-  useEffect(() => {
-    if (theme !== 'system') return
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const handler = (e: MediaQueryListEvent) => {
-      const resolved = e.matches ? 'dark' : 'light'
-      setResolvedTheme(resolved)
-      document.documentElement.setAttribute('data-theme', resolved)
-    }
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [theme])
-
   return (
-    <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme }}>
+    <NextThemeProvider
+      attribute="data-theme"
+      defaultTheme={defaultTheme}
+      enableSystem
+    >
       {children}
-    </ThemeContext.Provider>
+    </NextThemeProvider>
   )
-}
-
-function useTheme(): ThemeContextValue {
-  const context = useContext(ThemeContext)
-  if (!context) throw new Error('useTheme must be used within ThemeProvider')
-  return context
 }
 
 export { ThemeProvider, useTheme }
