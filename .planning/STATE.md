@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
-status: planning
-stopped_at: Completed 21-03-PLAN.md (Phase 21 complete)
-last_updated: "2026-03-16T09:09:17.179Z"
-last_activity: 2026-03-16 — Plan 21-03 complete (component token migration + dev preview)
+status: executing
+stopped_at: Completed 22-01-PLAN.md
+last_updated: "2026-03-28T06:47:22.264Z"
+last_activity: 2026-03-28 — Completed 22-01 ThemeProvider next-themes wrapper
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 17
+  total_plans: 5
+  completed_plans: 4
+  percent: 96
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 21 — artax-ui Restructure & Theming
+**Current focus:** Phase 22 — Artax Reference Site Scaffold
 
 ## Current Position
 
-Phase: 21 (artax-ui Restructure & Theming) — first of 6 in v1.3, COMPLETE
-Plan: 3 of 3 complete
-Status: Phase 21 complete, awaiting Phase 22 planning
-Last activity: 2026-03-16 — Plan 21-03 complete (component token migration + dev preview)
+Phase: 22 (Artax Reference Site Scaffold) — second of 6 in v1.3, IN PROGRESS
+Plan: 1 of 2 executed
+Status: Executing — completed 22-01
+Last activity: 2026-03-28 — Completed 22-01 ThemeProvider next-themes wrapper
 
-Progress: [▓▓░░░░░░░░] 17%
+Progress: [██████████] 96%
 
 ## Performance Metrics
 
@@ -47,7 +47,9 @@ Progress: [▓▓░░░░░░░░] 17%
 - **21-01:** Direct file imports in barrel (no tier-level index.ts files)
 - **21-01:** import-x/no-cycle scoped to artax-ui only with maxDepth 3
 - **21-02:** Legacy --color-terminal-* tokens kept in @theme until Plan 03 migration
-- **21-02:** ThemeProvider uses useState + useEffect for simplicity
+- **21-02:** ThemeProvider uses useState + useEffect for simplicity (superseded by 22-01)
+- **22-01:** next-themes as peerDependency since it requires Next.js runtime context
+- **22-01:** ThemeProvider wrapper pre-configures attribute="data-theme" to prevent misconfiguration
 - **21-03:** @theme inline used for semantic status color utility aliases
 - **21-03:** Popover tokens for tooltip/dropdown, card tokens for dialog/callout
 
@@ -62,6 +64,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-16T09:05:00Z
-Stopped at: Completed 21-03-PLAN.md (Phase 21 complete)
-Resume file: Next phase planning needed
+Last session: 2026-03-28T06:47:21.520Z
+Stopped at: Completed 22-01-PLAN.md
+Resume file: .planning/phases/22-artax-reference-site-scaffold/22-02-PLAN.md

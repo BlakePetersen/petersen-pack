@@ -96,7 +96,10 @@ Plans:
   2. Turbo pipeline is configured with correct outputs for apps/artax (separate from blakepetersen.io)
   3. Site-wide light/dark theme toggle works and persists across page navigations via next-themes
   4. No flash of wrong theme (FOUT) on initial page load in either light or dark mode
-**Plans**: TBD
+**Plans:** 1/2 plans executed
+Plans:
+- [ ] 22-01-PLAN.md — Replace artax-ui ThemeProvider with next-themes wrapper
+- [ ] 22-02-PLAN.md — Create apps/artax Next.js app with landing page, theme toggle, and stub pages
 
 ### Phase 23: Component Catalog & Documentation
 **Goal**: Every artax-ui component has a reference page with live preview, code example, and props documentation, organized by Atomic Design layer
@@ -173,7 +176,7 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 19. Publishing | v1.2 | 2/2 | Complete | 2026-03-16 |
 | 20. Fix Integration Gaps | v1.2 | 1/1 | Complete | 2026-03-16 |
 | 21. artax-ui Restructure & Theming | 3/3 | Complete    | 2026-03-16 | - |
-| 22. Artax Reference Site Scaffold | v1.3 | 0/? | Not started | - |
+| 22. Artax Reference Site Scaffold | 1/2 | In Progress|  | - |
 | 23. Component Catalog & Documentation | v1.3 | 0/? | Not started | - |
 | 24. Editable Previews | v1.3 | 0/? | Not started | - |
 | 25. blakepetersen.io Theming | v1.3 | 0/? | Not started | - |

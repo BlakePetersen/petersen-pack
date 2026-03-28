@@ -1,0 +1,9 @@
+/* ABOUTME: Global CSS entry point for the Artax UI reference site. */
+/* ABOUTME: Imports artax-ui design system (Tailwind v4, theme tokens, color variables, animations). */
+@import "artax-ui/styles/globals.css";
+
+@source "../../../packages/artax-ui/src/**/*.{ts,tsx}";
+
+html {
+  scroll-behavior: smooth;
+}
