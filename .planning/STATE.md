@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
-status: completed
-stopped_at: Completed 22-02-PLAN.md
-last_updated: "2026-03-28T07:19:16.411Z"
-last_activity: 2026-03-28 — Completed 22-02 Artax reference site scaffold
+status: in-progress
+stopped_at: Completed 23-01-PLAN.md
+last_updated: "2026-03-29T06:29:39Z"
+last_activity: 2026-03-29 — Completed 23-01 catalog navigation and display infrastructure
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_plans: 8
+  completed_plans: 6
+  percent: 75
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 22 complete — ready for Phase 23
+**Current focus:** Phase 23 in progress — catalog navigation and display infrastructure complete
 
 ## Current Position
 
-Phase: 22 (Artax Reference Site Scaffold) — second of 6 in v1.3, COMPLETE
-Plan: 2 of 2 executed
-Status: Phase complete — all plans executed
-Last activity: 2026-03-28 — Completed 22-02 Artax reference site scaffold
+Phase: 23 (Component Catalog Documentation) — third of 6 in v1.3, IN PROGRESS
+Plan: 1 of 3 executed
+Status: Plan 01 complete — navigation shell, display components, and registry built
+Last activity: 2026-03-29 — Completed 23-01 catalog navigation and display infrastructure
 
-Progress: [██████████] 100%
+Progress: [███████░░░] 75%
 
 ## Performance Metrics
 
@@ -55,6 +55,9 @@ Progress: [██████████] 100%
 - **22-02:** Hidden sidebar placeholder in layout reserves space for Phase 23
 - **21-03:** @theme inline used for semantic status color utility aliases
 - **21-03:** Popover tokens for tooltip/dropdown, card tokens for dialog/callout
+- **23-01:** Server/client split for component page to avoid function serialization across boundary
+- **23-01:** Key-based remount pattern for drawer auto-close (lint-safe alternative to setState-in-effect)
+- **23-01:** Placeholder registry with 2 components for testing; Plan 02 populates all 15
 
 ### Pending Todos
 
@@ -67,6 +70,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-28T07:19:15.468Z
-Stopped at: Completed 22-02-PLAN.md
+Last session: 2026-03-29T06:29:39Z
+Stopped at: Completed 23-01-PLAN.md
 Resume file: None

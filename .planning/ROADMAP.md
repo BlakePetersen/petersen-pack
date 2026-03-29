@@ -111,7 +111,11 @@ Plans:
   3. Each component page includes a copyable code snippet showing usage
   4. Each component page displays a props/API table documenting its interface
   5. A design token reference page shows color, typography, and spacing values from theme.css with visual swatches
-**Plans**: TBD
+**Plans:** 1/3 plans executed
+Plans:
+- [ ] 23-01-PLAN.md — Navigation infrastructure, reusable display components, and dynamic route template
+- [ ] 23-02-PLAN.md — Complete component registry (all 15 components) and overview/getting-started pages
+- [ ] 23-03-PLAN.md — Design token reference page with swatches, typography specimens, and spacing docs
 
 ### Phase 24: Editable Previews
 **Goal**: Component previews support editable mock data (if react-live is React 19 compatible) or confirm static-only with clear documentation
@@ -176,8 +180,8 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 19. Publishing | v1.2 | 2/2 | Complete | 2026-03-16 |
 | 20. Fix Integration Gaps | v1.2 | 1/1 | Complete | 2026-03-16 |
 | 21. artax-ui Restructure & Theming | 3/3 | Complete    | 2026-03-16 | - |
-| 22. Artax Reference Site Scaffold | 2/2 | Complete   | 2026-03-28 | - |
-| 23. Component Catalog & Documentation | v1.3 | 0/? | Not started | - |
+| 22. Artax Reference Site Scaffold | 2/2 | Complete    | 2026-03-28 | - |
+| 23. Component Catalog & Documentation | 1/3 | In Progress|  | - |
 | 24. Editable Previews | v1.3 | 0/? | Not started | - |
 | 25. blakepetersen.io Theming | v1.3 | 0/? | Not started | - |
 | 26. blakepetersen.io Page Updates | v1.3 | 0/? | Not started | - |

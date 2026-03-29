@@ -19,10 +19,10 @@ Requirements for milestone v1.3 Artax Design System. Each maps to roadmap phases
 ### Artax Reference Site
 
 - [x] **ARTAX-01**: New `apps/artax` Next.js app in monorepo consuming artax-ui as workspace dependency
-- [ ] **ARTAX-02**: Component catalog with Atomic Design sidebar navigation (Atoms / Molecules / Organisms)
-- [ ] **ARTAX-03**: Live in-page component previews for all artax-ui components in both light and dark themes
-- [ ] **ARTAX-04**: Code snippet display with copy-to-clipboard for each component example
-- [ ] **ARTAX-05**: Props/API table documentation for each component
+- [x] **ARTAX-02**: Component catalog with Atomic Design sidebar navigation (Atoms / Molecules / Organisms)
+- [x] **ARTAX-03**: Live in-page component previews for all artax-ui components in both light and dark themes
+- [x] **ARTAX-04**: Code snippet display with copy-to-clipboard for each component example
+- [x] **ARTAX-05**: Props/API table documentation for each component
 - [ ] **ARTAX-06**: Design token reference page (colors, typography, spacing, radii)
 - [x] **ARTAX-07**: Site-wide light/dark theme toggle persisted via next-themes
 - [ ] **ARTAX-08**: Editable mock data on component previews (gated on react-live React 19 compat; falls back to static)
@@ -70,10 +70,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-05 | Phase 21 | Complete |
 | FOUND-06 | Phase 21 | Complete |
 | ARTAX-01 | Phase 22 | Complete |
-| ARTAX-02 | Phase 23 | Pending |
-| ARTAX-03 | Phase 23 | Pending |
-| ARTAX-04 | Phase 23 | Pending |
-| ARTAX-05 | Phase 23 | Pending |
+| ARTAX-02 | Phase 23 | Complete |
+| ARTAX-03 | Phase 23 | Complete |
+| ARTAX-04 | Phase 23 | Complete |
+| ARTAX-05 | Phase 23 | Complete |
 | ARTAX-06 | Phase 23 | Pending |
 | ARTAX-07 | Phase 22 | Complete |
 | ARTAX-08 | Phase 24 | Pending |
