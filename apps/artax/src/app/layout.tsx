@@ -5,6 +5,8 @@ import type { Metadata } from 'next'
 import { JetBrains_Mono, Inter } from 'next/font/google'
 import { ThemeProvider } from 'artax-ui'
 import { Header } from '@/components/header'
+import { SidebarNav } from '@/components/sidebar-nav'
+import { getSidebarSections } from '@/lib/component-registry'
 import './globals.css'
 
 const jetbrainsMono = JetBrains_Mono({
@@ -30,6 +32,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const sections = getSidebarSections()
+
   return (
     <html
       lang="en"
@@ -40,7 +44,9 @@ export default function RootLayout({
         <ThemeProvider>
           <Header />
           <div className="flex flex-1">
-            <aside className="hidden w-64 shrink-0" />
+            <aside className="hidden md:block w-64 shrink-0 border-r border-border overflow-y-auto">
+              <SidebarNav sections={sections} />
+            </aside>
             <main className="flex-1 p-6 md:p-8">{children}</main>
           </div>
         </ThemeProvider>
