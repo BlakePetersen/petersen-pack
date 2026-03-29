@@ -18,7 +18,7 @@ Requirements for milestone v1.3 Artax Design System. Each maps to roadmap phases
 
 ### Artax Reference Site
 
-- [ ] **ARTAX-01**: New `apps/artax` Next.js app in monorepo consuming artax-ui as workspace dependency
+- [x] **ARTAX-01**: New `apps/artax` Next.js app in monorepo consuming artax-ui as workspace dependency
 - [ ] **ARTAX-02**: Component catalog with Atomic Design sidebar navigation (Atoms / Molecules / Organisms)
 - [ ] **ARTAX-03**: Live in-page component previews for all artax-ui components in both light and dark themes
 - [ ] **ARTAX-04**: Code snippet display with copy-to-clipboard for each component example
@@ -69,7 +69,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-04 | Phase 21 | Complete |
 | FOUND-05 | Phase 21 | Complete |
 | FOUND-06 | Phase 21 | Complete |
-| ARTAX-01 | Phase 22 | Pending |
+| ARTAX-01 | Phase 22 | Complete |
 | ARTAX-02 | Phase 23 | Pending |
 | ARTAX-03 | Phase 23 | Pending |
 | ARTAX-04 | Phase 23 | Pending |

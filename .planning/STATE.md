@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
-status: executing
-stopped_at: Completed 22-01-PLAN.md
-last_updated: "2026-03-28T06:47:22.264Z"
-last_activity: 2026-03-28 — Completed 22-01 ThemeProvider next-themes wrapper
+status: completed
+stopped_at: Completed 22-02-PLAN.md
+last_updated: "2026-03-28T07:19:16.411Z"
+last_activity: 2026-03-28 — Completed 22-02 Artax reference site scaffold
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 5
-  completed_plans: 4
-  percent: 96
+  completed_plans: 5
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 22 — Artax Reference Site Scaffold
+**Current focus:** Phase 22 complete — ready for Phase 23
 
 ## Current Position
 
-Phase: 22 (Artax Reference Site Scaffold) — second of 6 in v1.3, IN PROGRESS
-Plan: 1 of 2 executed
-Status: Executing — completed 22-01
-Last activity: 2026-03-28 — Completed 22-01 ThemeProvider next-themes wrapper
+Phase: 22 (Artax Reference Site Scaffold) — second of 6 in v1.3, COMPLETE
+Plan: 2 of 2 executed
+Status: Phase complete — all plans executed
+Last activity: 2026-03-28 — Completed 22-02 Artax reference site scaffold
 
-Progress: [██████████] 96%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -50,6 +50,9 @@ Progress: [██████████] 96%
 - **21-02:** ThemeProvider uses useState + useEffect for simplicity (superseded by 22-01)
 - **22-01:** next-themes as peerDependency since it requires Next.js runtime context
 - **22-01:** ThemeProvider wrapper pre-configures attribute="data-theme" to prevent misconfiguration
+- **22-02:** ThemeProvider imported from artax-ui (dogfooding the wrapper) rather than next-themes directly
+- **22-02:** Component counts derived dynamically by parsing artax-ui barrel file comment markers
+- **22-02:** Hidden sidebar placeholder in layout reserves space for Phase 23
 - **21-03:** @theme inline used for semantic status color utility aliases
 - **21-03:** Popover tokens for tooltip/dropdown, card tokens for dialog/callout
 
@@ -64,6 +67,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-28T06:47:21.520Z
-Stopped at: Completed 22-01-PLAN.md
-Resume file: .planning/phases/22-artax-reference-site-scaffold/22-02-PLAN.md
+Last session: 2026-03-28T07:19:15.468Z
+Stopped at: Completed 22-02-PLAN.md
+Resume file: None
