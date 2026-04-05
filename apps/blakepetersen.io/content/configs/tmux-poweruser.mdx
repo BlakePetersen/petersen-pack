@@ -1,0 +1,188 @@
+---
+title: "Tmux Power-User Configuration"
+description: "Opinionated tmux config with Catppuccin theme, TPM plugins, popup-driven workflows, and zoxide-powered session switching for terminal-heavy development."
+applies_to: ["tmux", "terminal", "dotfiles"]
+dependencies: []
+order: 1
+draft: false
+tags: ["terminal", "tmux", "dotfiles", "developer-experience"]
+decisions:
+  - choice: "Backtick prefix instead of Ctrl+b or Ctrl+Space"
+    rationale: "Single keystroke, ergonomic, and the common modern terminal (Warp) intercepts Ctrl+Space and swallows Ctrl+symbol chords. Bare backtick is rock-solid across every terminal emulator."
+  - choice: "XDG directory layout at ~/.config/tmux/ instead of ~/.tmux.conf"
+    rationale: "Keeps the home directory tidy, matches other modern tools (Neovim, Git, zoxide), and is supported natively by tmux 3.1+. TPM plugins land at ~/.config/tmux/plugins/ alongside the config."
+  - choice: "Hand-rolled Catppuccin Mocha palette instead of a theme plugin"
+    rationale: "Theme plugins add a dependency and can break on version bumps. A dozen hex codes inlined into the status bar format gives identical results with zero surface area for failure."
+  - choice: "Extrakto instead of tmux-thumbs"
+    rationale: "Thumbs requires a Rust toolchain which adds friction on machines that otherwise don't need one. Extrakto fills the same role (fzf-based token picker for URLs, paths, words, hashes) using Python, which is almost always available."
+---
+
+Tmux is the single highest-leverage terminal tool for anyone who lives in a shell. It turns a single terminal window into a persistent workspace of named sessions, split panes, and background work that survives disconnects. This config turns a fresh `brew install tmux` into a power-user environment: popup-driven git, instant session switching, regex scrollback search, and a calm Catppuccin Mocha status bar.
+
+## Prerequisites
+
+The config assumes a handful of Homebrew tools that most terminal-heavy developers already have installed. None are strictly required — tmux will still boot without them — but popups and plugins that depend on missing binaries will silently no-op.
+
+```bash
+brew install tmux git fzf zoxide lazygit
+```
+
+`python3` is required for the extrakto token picker. Any recent Python works, including one managed by `mise` or `asdf`. `git` is needed for TPM plugin clones. `fzf` powers the session switcher and extrakto. `zoxide` powers the smart session picker. `lazygit` is what opens in the `prefix + g` popup.
+
+## Prefix Key Selection
+
+The default tmux prefix of `Ctrl+b` is famously awkward to reach and conflicts with readline's "back one character" in the shell. The two most common replacements are `Ctrl+a` (screen-style) and `Ctrl+Space`. Both of these have real problems on modern machines.
+
+`Ctrl+a` shadows the shell's "jump to beginning of line," which most people use constantly. The workaround is a double-tap passthrough binding, but that's friction every time you want to reach the start of a long command.
+
+`Ctrl+Space` is popular for ergonomic reasons but is intercepted by several modern terminal emulators — Warp, for example, binds it to the AI command palette. On top of that, `Ctrl+<symbol>` chords in general don't reliably forward distinct escape sequences through every terminal. `Ctrl+backtick`, `Ctrl+slash`, and similar bindings often look identical to bare key events on the tmux side, so tmux can't tell them apart.
+
+The pragmatic answer is the bare backtick. A single keystroke, zero modifier gymnastics, no escape sequence ambiguity, and no terminal interception. The cost is that typing a literal backtick in the shell now requires a double-tap — which is a non-issue for anyone who uses `$()` over backtick command substitution (which is almost everyone in 2026).
+
+```tmux
+set -g prefix '`'
+unbind C-b
+bind-key '`' send-prefix  # double-tap ` to type a literal backtick
+```
+
+## Core Configuration
+
+The core block sets behaviors that apply everywhere: mouse support, vi-style copy mode, true color, fast escape handling, and a 50,000-line scrollback buffer. `base-index 1` and `pane-base-index 1` make windows and panes number from 1, which matches the row of number keys on a standard keyboard. `renumber-windows on` keeps those numbers contiguous when you close windows in the middle of a session.
+
+```tmux
+set -g default-terminal "tmux-256color"
+set -ag terminal-overrides ",xterm-256color:RGB,alacritty:RGB,ghostty:RGB"
+
+set -g mouse on
+set -g base-index 1
+setw -g pane-base-index 1
+set -g renumber-windows on
+set -g history-limit 50000
+set -sg escape-time 10
+set -g focus-events on
+setw -g mode-keys vi
+```
+
+Three additional settings unlock modern terminal features that most tmux configs miss. `set-clipboard on` allows programs running inside tmux — vim, bat, fzf previews, anything that emits OSC 52 — to push text directly to the system clipboard without needing a wrapper script. `allow-passthrough on` lets image protocols like kitty graphics and sixel pass through tmux, so tools like `imgcat`, `chafa`, and `presenterm` continue to work inside a tmux session. And the activity monitor emits a subtle status-bar indicator when an inactive window produces output, without the jarring visual-activity flash that most people disable immediately after enabling.
+
+```tmux
+set -g set-clipboard on
+set -g allow-passthrough on
+set -g display-time 3000
+set -g display-panes-time 2000
+setw -g monitor-activity on
+set -g visual-activity off
+```
+
+## Key Bindings
+
+The binding block rewrites the parts of default tmux that feel wrong in 2026. Splits open in the current pane's working directory so that `prefix + |` followed by `prefix + -` gives you three panes all sitting in the same project. New windows behave the same way. The pane navigation keys use the `-r` flag for repeatable bindings, so pressing `prefix` once and then tapping `hjkl` lets you move through panes without re-pressing the prefix each time.
+
+```tmux
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
+```
+
+Resize gets two bindings because there are two different ergonomics. `Alt+arrow` (no prefix) is instant for quick nudges while you're already focused on a pane. `prefix + H/J/K/L` is repeatable for larger adjustments and works without requiring the Alt key, which some terminals or keyboard layouts consume.
+
+```tmux
+bind -n M-Left  resize-pane -L 5
+bind -n M-Right resize-pane -R 5
+bind -n M-Up    resize-pane -U 3
+bind -n M-Down  resize-pane -D 3
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 3
+bind -r K resize-pane -U 3
+bind -r L resize-pane -R 5
+```
+
+## Popup-Driven Workflows
+
+Tmux 3.2 introduced `display-popup`, which is the single most underused tmux feature. A popup is a floating window that appears over your current pane layout, runs a command, and disappears when the command exits. Unlike opening a new pane or window, popups are ephemeral — they don't restructure your layout or pollute your session with temporary state.
+
+The lazygit popup is the killer application. Press `prefix + g` from anywhere in any pane, and a full-screen lazygit TUI opens over your current layout, automatically scoped to the working directory of the pane you came from. Quit lazygit with `q` and you're back exactly where you started, with your panes, scrollback, and running commands untouched. For a workflow that switches between editing code and git operations many times an hour, this is transformative.
+
+```tmux
+bind g display-popup -E -w 90% -h 90% -d "#{pane_current_path}" "lazygit"
+bind P display-popup -E -w 80% -h 75% -d "#{pane_current_path}"
+```
+
+The second binding opens an empty scratch shell in a popup. It inherits the current directory and is genuinely ephemeral — close it and nothing is saved. Good for one-off commands you don't want cluttering the scrollback of your main pane.
+
+## Status Bar
+
+The status bar uses a hand-rolled Catppuccin Mocha palette inlined as hex values. The left side shows the session name on a mauve background. The right side composes a series of conditional segments that appear only when relevant: a yellow zoom indicator when a pane is zoomed, a red `SYNC` badge when `synchronize-panes` is active, the hostname, and the date/time in `YYYY-MM-DD HH:MM` format. Window tabs render with a subtle highlight for the current window.
+
+```tmux
+set -g status-style "bg=#1e1e2e,fg=#cdd6f4"
+set -g status-left "#[bg=#cba6f7,fg=#11111b,bold] #S #[bg=#1e1e2e,fg=#cba6f7] "
+set -g status-right "#{?pane_synchronized,#[bg=#f38ba8#,fg=#11111b#,bold] SYNC #[bg=#1e1e2e#,fg=#f38ba8] ,}#{?window_zoomed_flag,#[fg=#f9e2af]  ,}#[fg=#89b4fa]#[bg=#89b4fa,fg=#11111b,bold] #h #[bg=#1e1e2e,fg=#fab387] #[bg=#fab387,fg=#11111b,bold] %Y-%m-%d %H:%M "
+```
+
+The pane border format is equally useful. Each pane border shows the pane index and the currently-running command — so instead of staring at three identical borders and wondering which one has your dev server, you see ` 1: next `, ` 2: vitest `, ` 3: zsh ` rendered directly on the borders themselves. Auto-rename tracks window names to the basename of the current directory, which makes `prefix + w` and the session picker meaningful instead of showing a bunch of windows all called `zsh`.
+
+```tmux
+set -g pane-border-status top
+set -g pane-border-format " #{?pane_active,#[fg=#cba6f7#,bold],#[fg=#6c7086]}#{pane_index}: #{pane_current_command}#{?pane_active,,} "
+setw -g automatic-rename on
+setw -g automatic-rename-format '#{b:pane_current_path}'
+```
+
+## Plugin Roster
+
+TPM (the Tmux Plugin Manager) handles everything from this point. The full plugin list is curated for usefulness, not novelty — every plugin earns its spot because it either prevents a class of annoyance or enables a workflow that would otherwise be painful.
+
+`tmux-sensible` provides the opinionated defaults that everyone agrees on and that you'd manually set otherwise. `tmux-resurrect` saves the entire session state — windows, panes, working directories, running processes — to a snapshot file that can be restored after a reboot or a `tmux kill-server`. `tmux-continuum` turns resurrect into an automatic save-every-15-minutes-and-restore-on-launch loop, so your workspace persists through machine restarts with zero manual intervention. `tmux-yank` routes copy-mode yanks to the system clipboard. `tmux-fzf` gives you a fuzzy picker for sessions, windows, and panes.
+
+`tmux-copycat` adds regex search to scrollback plus specialized jump-through modes for URLs, file paths, and git SHAs. It's old but stable and fills a genuine gap. `laktak/extrakto` is the newer and more powerful alternative — press `prefix + Tab` and every extractable token in the current pane (URLs, paths, git hashes, words, lines) appears in an fzf picker. Select something and it's either copied to the clipboard or pasted into the current pane.
+
+`joshmedeski/t-smart-tmux-session-manager` is the session-management upgrade that makes tmux feel like a real workspace. Press `prefix + T` and a zoxide-powered fzf picker shows every project directory you've visited, ranked by recency and frequency. Pick one, and you're instantly in a tmux session for that project — creating it on the fly if it doesn't exist.
+
+```tmux
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'sainnhe/tmux-fzf'
+set -g @plugin 'tmux-plugins/tmux-copycat'
+set -g @plugin 'laktak/extrakto'
+set -g @plugin 'joshmedeski/t-smart-tmux-session-manager'
+```
+
+## Session Persistence
+
+The resurrect and continuum configuration tells the plugins to capture pane contents (not just process trees), store snapshots in the XDG config directory alongside everything else, and restart a curated list of dev-relevant processes when restoring. Without the `resurrect-processes` setting, restore only re-opens shells — so an SSH session or a `psql` prompt you had open before a reboot is lost. With it, continuum will relaunch those processes in their original panes when it restores the session.
+
+```tmux
+set -g @resurrect-capture-pane-contents 'on'
+set -g @resurrect-dir '~/.config/tmux/resurrect'
+set -g @resurrect-processes 'ssh psql mysql sqlite3 "~docker compose~"'
+set -g @continuum-restore 'on'
+set -g @continuum-save-interval '15'
+```
+
+## Installation
+
+Clone TPM into the XDG plugins directory, install the config, then bootstrap plugins via the TPM install script. Everything lives under `~/.config/tmux/`.
+
+```bash
+mkdir -p ~/.config/tmux/plugins
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+# save tmux.conf to ~/.config/tmux/tmux.conf
+~/.config/tmux/plugins/tpm/bin/install_plugins
+```
+
+Inside a running tmux session, `prefix + Shift+I` triggers the TPM plugin installer interactively. `prefix + Shift+U` updates all plugins. `prefix + Alt+u` removes plugins that have been deleted from the config.
+
+## Terminal Compatibility Notes
+
+Not every modern terminal forwards every key combination identically. The prefix key choice of bare backtick sidesteps the most common pitfalls, but there are a few gotchas worth knowing. Warp does not forward `Ctrl+Space` to the underlying shell — the terminal captures it for the command palette. `Ctrl+<symbol>` chords (backtick, slash, minus, etc.) often produce the same escape sequence as the bare key, so tmux cannot distinguish them. If a binding silently does nothing, the first suspect is always the terminal eating the key before tmux sees it.
+
+True color requires the `terminal-overrides` entry to match whatever your terminal reports as its `TERM` value. The config covers `xterm-256color`, `alacritty`, and `ghostty`. For a terminal not in the list, add its `TERM` string with `:RGB` appended. Confirm with `tmux info | grep -i rgb` — it should show `Tc: (flag) true`.
