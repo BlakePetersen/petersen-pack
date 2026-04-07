@@ -93,10 +93,7 @@ export function DxContentLayout({ item, artifact }: { item: DxContent; artifact?
         pageUrl={`https://blakepetersen.io/${item.slug}`}
       />
 
-      <PageNavigation
-        collection={item.slug.split('/')[0]}
-        currentHref={`/${item.slug}`}
-      />
+      <PageNavigation slug={item.slug} />
     </article>
     </ReactionCountProvider>
   )

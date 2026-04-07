@@ -1,5 +1,5 @@
-// ABOUTME: Navigation data types and builder functions for sidebar and prev/next links.
-// ABOUTME: Transforms content collections into hierarchical navigation sections.
+// ABOUTME: Navigation data builder that transforms content collections into renderable nav data.
+// ABOUTME: Single buildNavData() call provides sections, per-collection items, and slug lookup.
 
 import { getVisibleCollections } from './collection-registry'
 
@@ -16,6 +16,12 @@ export type NavSection = {
   items: NavItem[]
 }
 
+export type NavData = {
+  sections: NavSection[]
+  itemsByCollection: Record<string, NavItem[]>
+  findBySlug: (slug: string) => { collection: string; item: NavItem } | null
+}
+
 function collectionToItems(
   collection: string,
   items: { slug: string; title: string }[],
@@ -30,27 +36,40 @@ function collectionToItems(
   })
 }
 
-export function buildNavSections(): NavSection[] {
-  const collectionSections: NavSection[] = getVisibleCollections().map((c) => ({
-    label: c.label,
-    href: c.href,
-    color: c.color,
-    items: collectionToItems(c.slug, c.getter()),
-  }))
+export function buildNavData(): NavData {
+  const itemsByCollection: Record<string, NavItem[]> = {}
 
-  return [
-    ...collectionSections,
-    {
-      label: 'Project',
-      href: '/changelog',
-      color: '#6B7280',
-      items: [
-        { title: 'Changelog', slug: 'changelog', href: '/changelog' },
-        { title: 'Contributors', slug: 'contributors', href: '/contributors' },
-        { title: 'Roadmap', slug: 'roadmap', href: '/roadmap' },
-      ],
-    },
+  const collectionSections: NavSection[] = getVisibleCollections().map((c) => {
+    const items = collectionToItems(c.slug, c.getter())
+    itemsByCollection[c.slug] = items
+    return { label: c.label, href: c.href, color: c.color, items }
+  })
+
+  const projectItems: NavItem[] = [
+    { title: 'Changelog', slug: 'changelog', href: '/changelog' },
+    { title: 'Contributors', slug: 'contributors', href: '/contributors' },
+    { title: 'Roadmap', slug: 'roadmap', href: '/roadmap' },
   ]
+  itemsByCollection['project'] = projectItems
+
+  const sections: NavSection[] = [
+    ...collectionSections,
+    { label: 'Project', href: '/changelog', color: '#6B7280', items: projectItems },
+  ]
+
+  function findBySlug(slug: string): { collection: string; item: NavItem } | null {
+    for (const [collection, items] of Object.entries(itemsByCollection)) {
+      const item = items.find((i) => i.slug === slug)
+      if (item) return { collection, item }
+    }
+    return null
+  }
+
+  return { sections, itemsByCollection, findBySlug }
+}
+
+export function buildNavSections(): NavSection[] {
+  return buildNavData().sections
 }
 
 export function getPrevNext(
