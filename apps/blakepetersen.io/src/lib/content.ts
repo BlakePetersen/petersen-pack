@@ -5,6 +5,45 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { skills, hooks, configs, guides, posts } from '#content'
 
+// Centralized content types matching the Velite schema output.
+// Velite's .transform() rest-spread loses type precision (_output fields become any),
+// so we declare these explicitly as the single source of truth for the component layer.
+
+export type DxContent = {
+  title: string
+  description: string
+  slug: string
+  excerpt: string
+  code: string
+  readingTime: number
+  wordCount: number
+  order?: number
+  draft: boolean
+  category: string
+  applies_to: string[]
+  dependencies: string[]
+  tags: string[]
+  decisions: { choice: string; rationale: string }[]
+  related: string[]
+  updated_context?: string
+}
+
+export type PostContent = {
+  title: string
+  description: string
+  slug: string
+  excerpt: string
+  code: string
+  date: string
+  readingTime: number
+  wordCount: number
+  draft: boolean
+  category: string
+  tags: string[]
+  related: string[]
+  updated_context?: string
+}
+
 type CollectionItem = { slug: string; title: string }
 
 export function getSkills() {
