@@ -60,10 +60,7 @@ export function PostLayout({ post }: { post: PostItem }) {
         pageUrl={`https://blakepetersen.io/${post.slug}`}
       />
 
-      <PageNavigation
-        collection="posts"
-        currentHref={`/${post.slug}`}
-      />
+      <PageNavigation slug={post.slug} />
     </article>
     </ReactionCountProvider>
   )

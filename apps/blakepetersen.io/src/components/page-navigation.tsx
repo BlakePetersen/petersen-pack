@@ -2,25 +2,18 @@
 // ABOUTME: Uses terminal arrow style and navigates within the same content type.
 
 import Link from 'next/link'
-import { buildNavSections, getPrevNext } from '../lib/navigation'
+import { buildNavData, getPrevNext } from '../lib/navigation'
 
-export function PageNavigation({
-  collection,
-  currentHref,
-}: {
-  collection: string
-  currentHref: string
-}) {
-  const sections = buildNavSections()
-  const section = sections.find(
-    (s) => s.label.toLowerCase() === collection.toLowerCase(),
-  )
+export function PageNavigation({ slug }: { slug: string }) {
+  const navData = buildNavData()
+  const found = navData.findBySlug(slug)
 
-  if (!section) {
+  if (!found) {
     return null
   }
 
-  const { prev, next } = getPrevNext(section.items, currentHref)
+  const items = navData.itemsByCollection[found.collection]
+  const { prev, next } = getPrevNext(items, found.item.href)
 
   if (!prev && !next) {
     return null

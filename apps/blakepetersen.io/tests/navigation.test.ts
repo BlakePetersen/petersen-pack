@@ -1,7 +1,7 @@
 // ABOUTME: Tests for navigation data helpers used by sidebar and prev/next links.
 // ABOUTME: Validates section building, item ordering, and prev/next boundary behavior.
 
-import { buildNavSections, getPrevNext, type NavItem } from '@/lib/navigation'
+import { buildNavSections, buildNavData, getPrevNext, type NavItem } from '@/lib/navigation'
 
 // Mock the content module
 jest.mock('@/lib/content', () => ({
@@ -73,6 +73,38 @@ describe('buildNavSections', () => {
     // getPosts() already returns newest first
     expect(posts.items[0].title).toBe('Newer Post')
     expect(posts.items[1].title).toBe('Older Post')
+  })
+})
+
+describe('buildNavData', () => {
+  it('returns sections matching buildNavSections', () => {
+    const navData = buildNavData()
+    const sections = buildNavSections()
+    expect(navData.sections).toEqual(sections)
+  })
+
+  it('populates itemsByCollection for each collection', () => {
+    const navData = buildNavData()
+    expect(Object.keys(navData.itemsByCollection)).toEqual(
+      expect.arrayContaining(['skills', 'hooks', 'configs', 'guides', 'posts', 'project']),
+    )
+    expect(navData.itemsByCollection['skills']).toHaveLength(2)
+    expect(navData.itemsByCollection['posts']).toHaveLength(2)
+    expect(navData.itemsByCollection['project']).toHaveLength(3)
+  })
+
+  it('findBySlug resolves a known slug to its collection', () => {
+    const navData = buildNavData()
+    const result = navData.findBySlug('skills/ai-prompting')
+    expect(result).toEqual({
+      collection: 'skills',
+      item: { title: 'AI Prompting', slug: 'skills/ai-prompting', href: '/skills/ai-prompting' },
+    })
+  })
+
+  it('findBySlug returns null for unknown slug', () => {
+    const navData = buildNavData()
+    expect(navData.findBySlug('unknown/slug')).toBeNull()
   })
 })
 
