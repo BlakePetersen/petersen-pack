@@ -1,63 +1,10 @@
 // ABOUTME: Listing page for all configs in the collection.
-// ABOUTME: Displays sorted configs with tags and links to detail pages.
+// ABOUTME: Delegates to collection page engine for metadata and rendering.
 
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Badge } from 'artax-ui'
-import { getConfigs } from '../../lib/content'
-import { ContentShell } from '../../components/content-shell'
-import { Sidebar } from '../../components/sidebar'
+import { createCollectionIndexPage } from '../../lib/collection-pages'
 
 export const revalidate = 3600
 
-export function generateMetadata(): Metadata {
-  const count = getConfigs().length
-  return {
-    title: 'Configs',
-    description: `Browse ${count} tool configurations for consistent development environments`,
-    alternates: {
-      canonical: 'https://blakepetersen.io/configs',
-    },
-  }
-}
-
-function stripPrefix(slug: string) {
-  return slug.split('/').slice(1).join('/')
-}
-
-export default function ConfigsPage() {
-  const items = getConfigs()
-
-  return (
-    <ContentShell sidebar={<Sidebar />}>
-      <div className="px-4 py-8">
-        <h1 className="mb-6 font-mono text-sm text-muted-foreground">
-          {'// '}configs
-        </h1>
-        <div className="space-y-4">
-          {items.map((item) => (
-            <Link
-              key={item.slug}
-              href={`/configs/${stripPrefix(item.slug)}`}
-              className="group block border border-border p-4 transition-colors hover:border-primary"
-            >
-              <h2 className="font-mono text-sm font-medium group-hover:text-primary">
-                {item.title}
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {item.description}
-              </p>
-              <div className="mt-2 flex flex-wrap gap-1">
-                {item.tags.map((tag: string) => (
-                  <Badge key={tag} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </ContentShell>
-  )
-}
+const { generateMetadata, Page } = createCollectionIndexPage('configs')
+export { generateMetadata }
+export default Page

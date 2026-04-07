@@ -8,17 +8,9 @@ import { PageNavigation } from './page-navigation'
 import { ContentFreshness } from './content-freshness'
 import { ReactionCountProvider, ReactionCount } from './reaction-count'
 import { DiscussionWithReactions } from './content-with-discussion'
+import type { PostContent } from '../lib/content'
 
-type PostItem = {
-  title: string
-  slug: string
-  date: string
-  tags: string[]
-  readingTime: number
-  code: string
-}
-
-export function PostLayout({ post }: { post: PostItem }) {
+export function PostLayout({ post }: { post: PostContent }) {
   return (
     <ReactionCountProvider>
     <article className="mx-auto max-w-[80ch] px-4 py-8">
@@ -60,10 +52,7 @@ export function PostLayout({ post }: { post: PostItem }) {
         pageUrl={`https://blakepetersen.io/${post.slug}`}
       />
 
-      <PageNavigation
-        collection="posts"
-        currentHref={`/${post.slug}`}
-      />
+      <PageNavigation slug={post.slug} />
     </article>
     </ReactionCountProvider>
   )
