@@ -14,6 +14,8 @@ export type CollectionDefinition = {
   slug: string
   label: string
   color: string
+  layout: 'dx' | 'post'
+  indexDescription: (count: number) => string
   showInNav: boolean
   showInSitemap: boolean
   showInFeed: boolean
@@ -26,6 +28,8 @@ const collections: Record<string, CollectionDefinition> = {
     slug: 'skills',
     label: 'Skills',
     color: '#F59E0B',
+    layout: 'dx',
+    indexDescription: (n) => `Browse ${n} Claude Code skills for AI-first development`,
     showInNav: true,
     showInSitemap: true,
     showInFeed: true,
@@ -36,6 +40,8 @@ const collections: Record<string, CollectionDefinition> = {
     slug: 'hooks',
     label: 'Hooks',
     color: '#06B6D4',
+    layout: 'dx',
+    indexDescription: (n) => `Browse ${n} Git hooks for automated code quality`,
     showInNav: true,
     showInSitemap: true,
     showInFeed: true,
@@ -46,6 +52,8 @@ const collections: Record<string, CollectionDefinition> = {
     slug: 'configs',
     label: 'Configs',
     color: '#10B981',
+    layout: 'dx',
+    indexDescription: (n) => `Browse ${n} tool configurations for consistent development environments`,
     showInNav: true,
     showInSitemap: true,
     showInFeed: true,
@@ -56,6 +64,8 @@ const collections: Record<string, CollectionDefinition> = {
     slug: 'guides',
     label: 'Guides',
     color: '#9CA3AF',
+    layout: 'dx',
+    indexDescription: (n) => `Browse ${n} development guides for AI-first workflows`,
     showInNav: true,
     showInSitemap: true,
     showInFeed: true,
@@ -66,6 +76,8 @@ const collections: Record<string, CollectionDefinition> = {
     slug: 'posts',
     label: 'Posts',
     color: '#6B7280',
+    layout: 'post',
+    indexDescription: (n) => `Browse ${n} blog posts on software engineering and AI-first development`,
     showInNav: true,
     showInSitemap: true,
     showInFeed: true,
