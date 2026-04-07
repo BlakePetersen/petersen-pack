@@ -3,33 +3,10 @@
 import { defineCommand } from 'citty'
 import { consola } from 'consola'
 import pc from 'picocolors'
-import { readFile, writeFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { readManifest, writeManifest, createEmptyManifest } from '@/manifest'
 import { detectPackageManager } from '@/pm'
 import { formatDryRunHeader } from '@/output'
-
-async function addToGitignore(cwd: string): Promise<void> {
-  const gitignorePath = join(cwd, '.gitignore')
-  let content: string
-
-  try {
-    content = await readFile(gitignorePath, 'utf-8')
-  } catch {
-    content = ''
-  }
-
-  if (content.includes('.blink/')) {
-    return
-  }
-
-  if (content.length > 0 && !content.endsWith('\n')) {
-    content += '\n'
-  }
-
-  content += '.blink/\n'
-  await writeFile(gitignorePath, content)
-}
+import { addToGitignore } from '@/gitignore'
 
 export default defineCommand({
   meta: {
