@@ -3,6 +3,7 @@
 
 import Link from 'next/link'
 import { getAllCollections, getCollection } from '../lib/collection-registry'
+import type { PostContent } from '../lib/content'
 import { CategoryCard } from '../components/category-card'
 
 export const revalidate = 3600
@@ -17,8 +18,7 @@ function stripPrefix(slug: string) {
 }
 
 export default function Home() {
-  // Cast needed: posts have date/readingTime fields beyond the base getter return type
-  const posts = getCollection('posts').getter() as { slug: string; title: string; description: string; date: string; readingTime: number; [key: string]: unknown }[]
+  const posts = getCollection('posts').getter() as PostContent[]
   const recentPosts = posts.slice(0, 5)
 
   return (
@@ -67,7 +67,7 @@ export default function Home() {
                   title: item.title,
                   slug: item.slug,
                   description: item.description,
-                  applies_to: 'applies_to' in item ? (item as { applies_to?: string[] }).applies_to : undefined,
+                  applies_to: 'applies_to' in item ? item.applies_to : undefined,
                 }))}
                 href={href}
               />
