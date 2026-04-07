@@ -3,9 +3,7 @@
 
 import js from '@eslint/js'
 import tseslint from 'typescript-eslint'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
+import eslintReact from '@eslint-react/eslint-plugin'
 import importPlugin from 'eslint-plugin-import-x'
 
 export default tseslint.config(
@@ -13,32 +11,21 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx'],
-    plugins: {
-      react,
-      'react-hooks': reactHooks,
-      'jsx-a11y': jsxA11y,
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
+    ...eslintReact.configs['recommended-typescript'],
     languageOptions: {
+      ...eslintReact.configs['recommended-typescript'].languageOptions,
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
     rules: {
-      ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
+      ...eslintReact.configs['recommended-typescript'].rules,
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
       'no-console': 'warn',
     },
   },
@@ -54,6 +41,12 @@ export default tseslint.config(
     },
     rules: {
       'import-x/no-cycle': ['error', { maxDepth: 3, ignoreExternal: true }],
+    },
+  },
+  {
+    files: ['**/tests/**/*.ts', '**/tests/**/*.tsx'],
+    rules: {
+      '@eslint-react/component-hook-factories': 'off',
     },
   },
   {
