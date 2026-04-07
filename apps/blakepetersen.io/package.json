@@ -33,7 +33,7 @@
     "velite": "velite build"
   },
   "devDependencies": {
-    "@dagrejs/dagre": "^2.0.4",
+    "@dagrejs/dagre": "^3.0.0",
     "@types/jest": "^30.0.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
