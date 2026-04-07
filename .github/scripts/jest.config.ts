@@ -11,7 +11,7 @@ const config: Config = {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
-        tsconfig: '.github/scripts/tsconfig.test.json',
+        tsconfig: './tsconfig.test.json',
       },
     ],
   },
