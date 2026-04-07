@@ -11,22 +11,9 @@ import { ApplyActionBar } from './apply-action-bar'
 import { ContentFreshness } from './content-freshness'
 import { ReactionCountProvider, ReactionCount } from './reaction-count'
 import { DiscussionWithReactions } from './content-with-discussion'
+import type { DxContent } from '../lib/content'
 
-type DxItem = {
-  title: string
-  description: string
-  slug: string
-  applies_to: string[]
-  dependencies: string[]
-  tags: string[]
-  readingTime: number
-  code: string
-  decisions: { choice: string; rationale: string }[]
-  related: string[]
-  updated_context?: string
-}
-
-export function DxContentLayout({ item, artifact }: { item: DxItem; artifact?: { type: string; slug: string } }) {
+export function DxContentLayout({ item, artifact }: { item: DxContent; artifact?: { type: string; slug: string } }) {
   const graphSvg = getLocalGraphSvg(item.slug)
 
   return (

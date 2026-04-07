@@ -8,6 +8,7 @@ import {
   getGuides,
   getPosts,
 } from './content'
+import type { DxContent, PostContent } from './content'
 
 export type CollectionDefinition = {
   slug: string
@@ -17,7 +18,7 @@ export type CollectionDefinition = {
   showInSitemap: boolean
   showInFeed: boolean
   href: string
-  getter: () => { slug: string; title: string; description: string; [key: string]: unknown }[]
+  getter: () => (DxContent | PostContent)[]
 }
 
 const collections: Record<string, CollectionDefinition> = {
