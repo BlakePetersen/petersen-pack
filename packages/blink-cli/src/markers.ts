@@ -1,6 +1,14 @@
 // ABOUTME: Section marker engine for parsing, injecting, and managing blink-managed regions in files.
-// ABOUTME: Supports comment-style detection by file extension and line-based marker parsing.
+// ABOUTME: Provides parse-once model via MarkerEngine/ParsedFile and pluggable comment styles.
+
 import { extname } from 'node:path'
+
+// --- Types ---
+
+export interface CommentStyle {
+  open: string
+  close: string
+}
 
 export interface MarkerBounds {
   slug: string
@@ -14,173 +22,225 @@ export interface MarkerValidation {
   errors: string[]
 }
 
+// --- Comment Style Registry ---
+
+export class CommentStyleRegistry {
+  private styles = new Map<string, CommentStyle>()
+
+  static default(): CommentStyleRegistry {
+    const registry = new CommentStyleRegistry()
+    registry.register('.md', { open: '<!--', close: '-->' })
+    registry.register('.html', { open: '<!--', close: '-->' })
+    registry.register('.svg', { open: '<!--', close: '-->' })
+    registry.register('.css', { open: '/*', close: '*/' })
+    registry.register('.scss', { open: '/*', close: '*/' })
+    registry.register('.yaml', { open: '#', close: '' })
+    registry.register('.yml', { open: '#', close: '' })
+    registry.register('.toml', { open: '#', close: '' })
+    registry.register('.sh', { open: '#', close: '' })
+    registry.register('.bash', { open: '#', close: '' })
+    registry.register('.zsh', { open: '#', close: '' })
+    return registry
+  }
+
+  register(ext: string, style: CommentStyle): void {
+    this.styles.set(ext, style)
+  }
+
+  forExtension(ext: string): CommentStyle {
+    return this.styles.get(ext) ?? { open: '//', close: '' }
+  }
+}
+
+// --- Parsed File (parse-once, operate many) ---
+
 const MARKER_START = /blink:start\s+([\w-]+)/
 const MARKER_END = /blink:end\s+([\w-]+)/
 
-export function getCommentStyle(ext: string): { open: string; close: string } {
-  switch (ext) {
-    case '.md':
-    case '.html':
-    case '.svg':
-      return { open: '<!--', close: '-->' }
-    case '.css':
-    case '.scss':
-      return { open: '/*', close: '*/' }
-    case '.yaml':
-    case '.yml':
-    case '.toml':
-    case '.sh':
-    case '.bash':
-    case '.zsh':
-      return { open: '#', close: '' }
-    default:
-      return { open: '//', close: '' }
+interface LineInfo {
+  text: string
+  startSlug: string | null
+  endSlug: string | null
+}
+
+function parseLines(fileContent: string): LineInfo[] {
+  return fileContent.split('\n').map((text) => {
+    const startMatch = text.match(MARKER_START)
+    const endMatch = text.match(MARKER_END)
+    return {
+      text,
+      startSlug: startMatch ? startMatch[1] : null,
+      endSlug: endMatch ? endMatch[1] : null,
+    }
+  })
+}
+
+export class ParsedFile {
+  readonly sections: MarkerBounds[]
+  private readonly lines: LineInfo[]
+  private readonly raw: string
+
+  constructor(fileContent: string) {
+    this.raw = fileContent
+    this.lines = parseLines(fileContent)
+    this.sections = this.buildSections()
+  }
+
+  private buildSections(): MarkerBounds[] {
+    const sections: MarkerBounds[] = []
+    const openStarts = new Map<string, number>()
+
+    for (let i = 0; i < this.lines.length; i++) {
+      const { startSlug, endSlug } = this.lines[i]
+
+      if (startSlug) {
+        openStarts.set(startSlug, i)
+        continue
+      }
+
+      if (endSlug && openStarts.has(endSlug)) {
+        const startLine = openStarts.get(endSlug)!
+        const contentLines = this.lines
+          .slice(startLine + 1, i)
+          .map((l) => l.text)
+        const content = contentLines.join('\n').replace(/\n+$/, '')
+
+        sections.push({ slug: endSlug, startLine, endLine: i, content })
+        openStarts.delete(endSlug)
+      }
+    }
+
+    return sections
+  }
+
+  sectionsForSlug(slug: string): MarkerBounds[] {
+    return this.sections.filter((s) => s.slug === slug)
+  }
+
+  replace(slug: string, newContent: string): string {
+    const slugSections = this.sectionsForSlug(slug)
+    if (slugSections.length === 0) {
+      throw new Error(`No managed section found for slug "${slug}"`)
+    }
+
+    const result: string[] = []
+    let skip = false
+
+    for (const line of this.lines) {
+      if (line.startSlug === slug) {
+        result.push(line.text)
+        result.push(newContent)
+        skip = true
+        continue
+      }
+
+      if (line.endSlug === slug) {
+        result.push(line.text)
+        skip = false
+        continue
+      }
+
+      if (!skip) {
+        result.push(line.text)
+      }
+    }
+
+    return result.join('\n')
+  }
+
+  strip(slug: string): string {
+    return this.lines
+      .filter((line) => line.startSlug !== slug && line.endSlug !== slug)
+      .map((line) => line.text)
+      .join('\n')
+  }
+
+  validate(): MarkerValidation {
+    const errors: string[] = []
+    const openSlugs = new Map<string, number>()
+
+    for (let i = 0; i < this.lines.length; i++) {
+      const { startSlug, endSlug } = this.lines[i]
+
+      if (startSlug) {
+        if (openSlugs.has(startSlug)) {
+          errors.push(
+            `Nested blink:start for "${startSlug}" at line ${i + 1} (already opened at line ${openSlugs.get(startSlug)! + 1})`
+          )
+        }
+        openSlugs.set(startSlug, i)
+        continue
+      }
+
+      if (endSlug) {
+        if (!openSlugs.has(endSlug)) {
+          errors.push(
+            `blink:end for "${endSlug}" at line ${i + 1} without matching blink:start`
+          )
+        } else {
+          openSlugs.delete(endSlug)
+        }
+      }
+    }
+
+    for (const [slug, line] of openSlugs) {
+      errors.push(
+        `blink:start for "${slug}" at line ${line + 1} without matching blink:end`
+      )
+    }
+
+    return { valid: errors.length === 0, errors }
   }
 }
 
-export function injectMarkers(
-  content: string,
-  slug: string,
-  filePath: string
-): string {
-  const ext = extname(filePath).toLowerCase()
-  const { open, close } = getCommentStyle(ext)
+// --- Marker Engine ---
 
-  const startMarker = `${open} blink:start ${slug} ${close}`.trimEnd()
-  const endMarker = `${open} blink:end ${slug} ${close}`.trimEnd()
+export class MarkerEngine {
+  readonly styles: CommentStyleRegistry
 
-  return `${startMarker}\n${content}\n${endMarker}`
+  constructor(styles?: CommentStyleRegistry) {
+    this.styles = styles ?? CommentStyleRegistry.default()
+  }
+
+  inject(content: string, slug: string, filePath: string): string {
+    const ext = extname(filePath).toLowerCase()
+    const { open, close } = this.styles.forExtension(ext)
+
+    const startMarker = `${open} blink:start ${slug} ${close}`.trimEnd()
+    const endMarker = `${open} blink:end ${slug} ${close}`.trimEnd()
+
+    return `${startMarker}\n${content}\n${endMarker}`
+  }
+
+  parse(fileContent: string): ParsedFile {
+    return new ParsedFile(fileContent)
+  }
 }
 
-export function findManagedSections(
-  fileContent: string,
-  slug: string
-): MarkerBounds[] {
-  const lines = fileContent.split('\n')
-  const sections: MarkerBounds[] = []
-  let startLine: number | null = null
+// --- Backward-compatible free functions ---
 
-  for (let i = 0; i < lines.length; i++) {
-    const startMatch = lines[i].match(MARKER_START)
-    if (startMatch && startMatch[1] === slug) {
-      startLine = i
-      continue
-    }
+const defaultEngine = new MarkerEngine()
 
-    const endMatch = lines[i].match(MARKER_END)
-    if (endMatch && endMatch[1] === slug && startLine !== null) {
-      const contentLines = lines.slice(startLine + 1, i)
-      const content = contentLines.join('\n').replace(/\n+$/, '')
-
-      sections.push({
-        slug,
-        startLine,
-        endLine: i,
-        content,
-      })
-      startLine = null
-    }
-  }
-
-  return sections
+export function getCommentStyle(ext: string): CommentStyle {
+  return defaultEngine.styles.forExtension(ext)
 }
 
-export function replaceManagedContent(
-  fileContent: string,
-  slug: string,
-  newContent: string
-): string {
-  const sections = findManagedSections(fileContent, slug)
+export function injectMarkers(content: string, slug: string, filePath: string): string {
+  return defaultEngine.inject(content, slug, filePath)
+}
 
-  if (sections.length === 0) {
-    throw new Error(`No managed section found for slug "${slug}"`)
-  }
+export function findManagedSections(fileContent: string, slug: string): MarkerBounds[] {
+  return defaultEngine.parse(fileContent).sectionsForSlug(slug)
+}
 
-  const lines = fileContent.split('\n')
-  const result: string[] = []
-  let skip = false
-
-  for (let i = 0; i < lines.length; i++) {
-    const startMatch = lines[i].match(MARKER_START)
-    if (startMatch && startMatch[1] === slug) {
-      result.push(lines[i])
-      result.push(newContent)
-      skip = true
-      continue
-    }
-
-    const endMatch = lines[i].match(MARKER_END)
-    if (endMatch && endMatch[1] === slug) {
-      result.push(lines[i])
-      skip = false
-      continue
-    }
-
-    if (!skip) {
-      result.push(lines[i])
-    }
-  }
-
-  return result.join('\n')
+export function replaceManagedContent(fileContent: string, slug: string, newContent: string): string {
+  return defaultEngine.parse(fileContent).replace(slug, newContent)
 }
 
 export function stripMarkers(fileContent: string, slug: string): string {
-  const lines = fileContent.split('\n')
-  const result: string[] = []
-
-  for (const line of lines) {
-    const startMatch = line.match(MARKER_START)
-    if (startMatch && startMatch[1] === slug) {
-      continue
-    }
-
-    const endMatch = line.match(MARKER_END)
-    if (endMatch && endMatch[1] === slug) {
-      continue
-    }
-
-    result.push(line)
-  }
-
-  return result.join('\n')
+  return defaultEngine.parse(fileContent).strip(slug)
 }
 
 export function validateMarkers(fileContent: string): MarkerValidation {
-  const lines = fileContent.split('\n')
-  const errors: string[] = []
-  const openSlugs = new Map<string, number>()
-
-  for (let i = 0; i < lines.length; i++) {
-    const startMatch = lines[i].match(MARKER_START)
-    if (startMatch) {
-      const slug = startMatch[1]
-      if (openSlugs.has(slug)) {
-        errors.push(
-          `Nested blink:start for "${slug}" at line ${i + 1} (already opened at line ${openSlugs.get(slug)! + 1})`
-        )
-      }
-      openSlugs.set(slug, i)
-      continue
-    }
-
-    const endMatch = lines[i].match(MARKER_END)
-    if (endMatch) {
-      const slug = endMatch[1]
-      if (!openSlugs.has(slug)) {
-        errors.push(
-          `blink:end for "${slug}" at line ${i + 1} without matching blink:start`
-        )
-      } else {
-        openSlugs.delete(slug)
-      }
-    }
-  }
-
-  for (const [slug, line] of openSlugs) {
-    errors.push(
-      `blink:start for "${slug}" at line ${line + 1} without matching blink:end`
-    )
-  }
-
-  return { valid: errors.length === 0, errors }
+  return defaultEngine.parse(fileContent).validate()
 }
