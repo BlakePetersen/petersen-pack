@@ -41,6 +41,12 @@ storybook-static
 # IDEs
 .idea
 
+# claude code
+.claude/
+
+# typescript build cache
+*.tsbuildinfo
+
 # cold storage
 .trash/
 
