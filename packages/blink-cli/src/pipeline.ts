@@ -165,7 +165,6 @@ export async function record(
   const { artifact, manifest, manifestRoot, wasAutoInit } = resolved
 
   if (wasAutoInit) {
-    await writeManifest(manifestRoot, manifest)
     await addToGitignore(cwd)
   }
 
