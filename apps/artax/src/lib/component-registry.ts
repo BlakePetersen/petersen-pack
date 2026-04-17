@@ -807,20 +807,24 @@ const components: ComponentDef[] = [
       'Provide a real accessible label on the trigger — tooltip text is supplementary, not primary.',
     ],
     preview: () =>
-      h(
-        TooltipProvider,
-        { delayDuration: 100 },
-        h(
-          Tooltip,
-          { open: true },
-          h(
-            TooltipTrigger,
-            { asChild: true },
-            h(Button, { variant: 'outline' }, 'hover'),
-          ),
-          h(TooltipContent, { side: 'right' }, 'keyboard shortcut: ⌘K'),
-        ),
-      ),
+      h(TooltipProvider, {
+        delayDuration: 100,
+        children: h(Tooltip, {
+          open: true,
+          children: [
+            h(
+              TooltipTrigger,
+              { asChild: true, key: 'trigger' },
+              h(Button, { variant: 'outline' }, 'hover'),
+            ),
+            h(
+              TooltipContent,
+              { side: 'right', key: 'content' },
+              'keyboard shortcut: ⌘K',
+            ),
+          ],
+        }),
+      }),
   },
   // ─────────────────────────────────────────────────────── Organisms ──
   {
