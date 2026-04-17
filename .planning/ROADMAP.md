@@ -64,7 +64,7 @@ See: `.planning/milestones/v1.2-ROADMAP.md` for full details.
 
 - [x] **Phase 21: artax-ui Restructure & Theming** - Atomic Design hierarchy, ThemeProvider, semantic tokens, Storybook removal (completed 2026-03-16)
 - [x] **Phase 22: Artax Reference Site Scaffold** - New apps/artax Next.js app with theme toggle and turbo pipeline (completed 2026-03-28)
-- [ ] **Phase 23: Component Catalog & Documentation** - Sidebar navigation, live previews, code snippets, props tables, token reference
+- [x] **Phase 23: Component Catalog & Documentation** - Sidebar navigation, live previews, code snippets, props tables, token reference (completed 2026-04-17)
 - [ ] **Phase 24: Editable Previews** - react-live compat check; editable mock data on previews (falls back to static)
 - [ ] **Phase 25: blakepetersen.io Theming** - ThemeProvider, theme toggle, FOUT prevention
 - [ ] **Phase 26: blakepetersen.io Page Updates** - Homepage, Skills Detail, About, Start Here, Collection Listing matched to Pencil designs
@@ -111,11 +111,11 @@ Plans:
   3. Each component page includes a copyable code snippet showing usage
   4. Each component page displays a props/API table documenting its interface
   5. A design token reference page shows color, typography, and spacing values from theme.css with visual swatches
-**Plans:** 1/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
-- [ ] 23-01-PLAN.md — Navigation infrastructure, reusable display components, and dynamic route template
-- [ ] 23-02-PLAN.md — Complete component registry (all 15 components) and overview/getting-started pages
-- [ ] 23-03-PLAN.md — Design token reference page with swatches, typography specimens, and spacing docs
+- [x] 23-01-PLAN.md — Navigation infrastructure, reusable display components, and dynamic route template
+- [x] 23-02-PLAN.md — Complete component registry (all 15 components) and overview/getting-started pages
+- [x] 23-03-PLAN.md — Design token reference page with swatches, typography specimens, and spacing docs
 
 ### Phase 24: Editable Previews
 **Goal**: Component previews support editable mock data (if react-live is React 19 compatible) or confirm static-only with clear documentation
