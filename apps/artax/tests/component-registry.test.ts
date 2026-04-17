@@ -1,5 +1,5 @@
 // ABOUTME: Tests for the component registry module.
-// ABOUTME: Validates types, lookup functions, sidebar sections, and static params generation.
+// ABOUTME: Validates types, lookup functions, sidebar sections, and completeness of all 15 components.
 
 import {
   getComponent,
@@ -8,6 +8,25 @@ import {
   getAllComponents,
 } from '@/lib/component-registry'
 import type { ComponentDef } from '@/lib/component-registry'
+
+// All 15 components expected in the registry, grouped by tier.
+const EXPECTED_ATOMS = ['button', 'input', 'badge', 'separator', 'copy-button', 'toggle']
+const EXPECTED_MOLECULES = ['card', 'table', 'callout', 'code-block', 'tabs', 'tooltip']
+const EXPECTED_ORGANISMS = ['accordion', 'dialog', 'dropdown']
+
+// Components with cva variant enums that must include a "Variants" code example.
+const VARIANT_COMPONENTS = ['button', 'badge', 'toggle', 'callout']
+
+// Multi-part components that must include a "Composition" code example showing sub-component usage.
+const COMPOSITION_COMPONENTS = [
+  'card',
+  'table',
+  'tabs',
+  'tooltip',
+  'accordion',
+  'dialog',
+  'dropdown',
+]
 
 describe('component-registry', () => {
   it('ComponentDef has required fields', () => {
@@ -72,14 +91,111 @@ describe('component-registry', () => {
     expect(lastSection.items.some((i) => i.name === 'Tokens')).toBe(true)
   })
 
-  it('getAllComponents generates params for static generation', () => {
-    const components = getAllComponents()
-    // Should have at least 2 placeholder components (Button and Card)
-    expect(components.length).toBeGreaterThanOrEqual(2)
+  it('registry contains exactly 15 components', () => {
+    expect(getAllComponents()).toHaveLength(15)
+  })
 
-    components.forEach((c) => {
-      expect(['atoms', 'molecules', 'organisms']).toContain(c.tier)
-      expect(c.slug).toBeTruthy()
+  it('has 6 atoms, 6 molecules, and 3 organisms', () => {
+    expect(getComponentsByTier('atoms')).toHaveLength(6)
+    expect(getComponentsByTier('molecules')).toHaveLength(6)
+    expect(getComponentsByTier('organisms')).toHaveLength(3)
+  })
+
+  it('has every expected atom slug registered', () => {
+    const atoms = getComponentsByTier('atoms').map((c) => c.slug)
+    EXPECTED_ATOMS.forEach((slug) => {
+      expect(atoms).toContain(slug)
     })
+  })
+
+  it('has every expected molecule slug registered', () => {
+    const molecules = getComponentsByTier('molecules').map((c) => c.slug)
+    EXPECTED_MOLECULES.forEach((slug) => {
+      expect(molecules).toContain(slug)
+    })
+  })
+
+  it('has every expected organism slug registered', () => {
+    const organisms = getComponentsByTier('organisms').map((c) => c.slug)
+    EXPECTED_ORGANISMS.forEach((slug) => {
+      expect(organisms).toContain(slug)
+    })
+  })
+
+  it('every component has non-empty description, imports, props, codeExamples, and a11y', () => {
+    const all = getAllComponents()
+    all.forEach((c) => {
+      expect(c.description.length).toBeGreaterThan(0)
+      expect(c.imports.length).toBeGreaterThan(0)
+      expect(c.imports).toMatch(/from ['"]artax-ui['"]/)
+      expect(Array.isArray(c.props)).toBe(true)
+      expect(c.props.length).toBeGreaterThan(0)
+      expect(Array.isArray(c.codeExamples)).toBe(true)
+      expect(c.codeExamples.length).toBeGreaterThan(0)
+      expect(Array.isArray(c.a11y)).toBe(true)
+      expect(c.a11y.length).toBeGreaterThan(0)
+    })
+  })
+
+  it('every component has at least a "Basic" code example', () => {
+    const all = getAllComponents()
+    all.forEach((c) => {
+      const labels = c.codeExamples.map((ex) => ex.label)
+      expect(labels).toContain('Basic')
+      // Each example must carry real code
+      c.codeExamples.forEach((ex) => expect(ex.code.length).toBeGreaterThan(0))
+    })
+  })
+
+  it('components with variants include a "Variants" code example', () => {
+    VARIANT_COMPONENTS.forEach((slug) => {
+      const comp = getAllComponents().find((c) => c.slug === slug)
+      expect(comp).toBeDefined()
+      const labels = comp!.codeExamples.map((ex) => ex.label)
+      expect(labels).toContain('Variants')
+    })
+  })
+
+  it('multi-part components include a "Composition" code example', () => {
+    COMPOSITION_COMPONENTS.forEach((slug) => {
+      const comp = getAllComponents().find((c) => c.slug === slug)
+      expect(comp).toBeDefined()
+      const labels = comp!.codeExamples.map((ex) => ex.label)
+      expect(labels).toContain('Composition')
+    })
+  })
+
+  it('every component has a preview function that returns a truthy ReactNode', () => {
+    const all = getAllComponents()
+    all.forEach((c) => {
+      expect(typeof c.preview).toBe('function')
+      const node = c.preview()
+      // ReactNode can be many shapes; it must at minimum not be null or undefined
+      expect(node).not.toBeNull()
+      expect(node).not.toBeUndefined()
+    })
+  })
+
+  it('every component slug is unique per tier', () => {
+    const all = getAllComponents()
+    const seen = new Set<string>()
+    all.forEach((c) => {
+      const key = `${c.tier}/${c.slug}`
+      expect(seen.has(key)).toBe(false)
+      seen.add(key)
+    })
+  })
+
+  it('getComponent returns the right component for every registered pair', () => {
+    getAllComponents().forEach((c) => {
+      const found = getComponent(c.tier, c.slug)
+      expect(found).toBeDefined()
+      expect(found?.name).toBe(c.name)
+    })
+  })
+
+  it('getComponent returns undefined for non-existent slug or tier', () => {
+    expect(getComponent('atoms', 'does-not-exist')).toBeUndefined()
+    expect(getComponent('unknown-tier', 'button')).toBeUndefined()
   })
 })
