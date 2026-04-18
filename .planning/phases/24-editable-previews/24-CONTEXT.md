@@ -38,8 +38,8 @@ Component pages in `apps/artax` gain a **Playground** experience where users can
   2. Stricter Suspense behavior does not throw inside `react-live` internals.
   3. HMR still works in dev and build still succeeds (no sucrase SSR bailouts).
 - **Pass criteria for spike:** All three items green, no console errors, preview updates on keystroke.
-- **Fail path:** If the spike fails, stop — do NOT pivot to sandpack in this phase. Ship the props-form-only outcome (see hybrid decision below), document the failure, and defer the JSX editor portion of ARTAX-08 to ARTAX-F01.
-- **Precedent:** `@giscus/react` was skipped in v1.2 for the same class of React 19 compatibility unknown (see `.planning/PROJECT.md` → Key Decisions). Same caution applies.
+- **Fail path (revised 2026-04-17):** **Fix-forward, do not defer.** If the spike fails, do NOT pivot to sandpack and do NOT ship the props-form-only outcome as the closure of ARTAX-08. Instead: investigate the failure, file targeted fixes against react-live or the integration code, and re-run the spike until it passes. Rationale: ROADMAP success criterion #2 ("previews accept user-editable props/data that update the preview in real time") is only fully satisfied via the JSX editor (24-06). Ship-partial would leave criterion #2 unmet. The props-form (24-04/24-05) still ships unconditionally — it provides URL-shareable prop state and is independently valuable — but it is not the canonical satisfaction of criterion #2.
+- **Precedent vs revision:** `@giscus/react` was skipped in v1.2 for the same class of React 19 compatibility unknown (see `.planning/PROJECT.md` → Key Decisions). The revised fix-forward stance here is intentional — Blake's call: research evidence (Sucrase issue #405 confirms warning is non-fatal, dev-only) supports confidence that react-live can be made to work in React 19, even if a workaround is needed.
 
 ### Editable surface shape — Hybrid
 
@@ -50,7 +50,7 @@ Component pages in `apps/artax` gain a **Playground** experience where users can
   - `number` → number input
   - anything else → freeform string input, coerced as `unknown`
 - **Power view:** An "Edit JSX" toggle (artax-ui `Toggle`) reveals a `react-live` editor alongside the props form. Toggling off reverts to props-form control.
-- **Graceful degradation:** Props-form works even if the compat spike fails — it does not depend on react-live. The "Edit JSX" toggle is the only surface gated on the spike passing. If spike fails, the toggle is removed; props-form ships alone and still closes ARTAX-08 in spirit (partial).
+- **Graceful degradation:** Props-form works even if the compat spike fails — it does not depend on react-live. The "Edit JSX" toggle is the only surface gated on the spike passing. Per the revised fail-path policy above, a spike fail means **fix-forward** (don't ship the toggle-removed surface as a closure of ARTAX-08); the props-form is shipped because it's independently valuable (URL-shareable state), not as a partial substitute for the JSX editor.
 
 ### Integration point
 
