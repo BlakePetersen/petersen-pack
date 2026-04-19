@@ -45,13 +45,13 @@ describe('ComponentPlayground', () => {
   it('renders dot-grid preview canvas and props form for an enabled component', () => {
     const comp = getComponent('atoms', 'button')!
 
-    render(<ComponentPlayground comp={comp} />)
+    const { container } = render(<ComponentPlayground comp={comp} />)
 
     const canvas = screen.getByTestId('playground-canvas')
     expect(canvas).toBeInTheDocument()
     expect(canvas.className).toContain('bg-[radial-gradient')
     // PlaygroundPropsForm renders a <select> for variant (literal-union).
-    expect(screen.getByRole('combobox')).toBeInTheDocument()
+    expect(container.querySelector('select[name="variant"]')).toBeInTheDocument()
   })
 
   it('returns null for excluded components (tooltip, no playground field)', () => {
@@ -79,18 +79,26 @@ describe('ComponentPlayground', () => {
     setSearchParams('p[variant]=outline&p[size]=sm')
     const comp = getComponent('atoms', 'button')!
 
-    render(<ComponentPlayground comp={comp} />)
+    const { container } = render(<ComponentPlayground comp={comp} />)
 
-    const select = screen.getByRole('combobox') as HTMLSelectElement
-    expect(select).toHaveValue('outline')
+    const variantSelect = container.querySelector(
+      'select[name="variant"]'
+    ) as HTMLSelectElement
+    const sizeSelect = container.querySelector(
+      'select[name="size"]'
+    ) as HTMLSelectElement
+    expect(variantSelect).toHaveValue('outline')
+    expect(sizeSelect).toHaveValue('sm')
   })
 
   it('debounces pushPlaygroundParams by 300ms on form change', () => {
     const comp = getComponent('atoms', 'button')!
 
-    render(<ComponentPlayground comp={comp} />)
+    const { container } = render(<ComponentPlayground comp={comp} />)
 
-    const select = screen.getByRole('combobox') as HTMLSelectElement
+    const select = container.querySelector(
+      'select[name="variant"]'
+    ) as HTMLSelectElement
     fireEvent.change(select, { target: { value: 'outline' } })
 
     // Before the debounce window elapses: no push.
@@ -109,9 +117,11 @@ describe('ComponentPlayground', () => {
   it('collapses multiple rapid changes into a single debounced push with final value', () => {
     const comp = getComponent('atoms', 'button')!
 
-    render(<ComponentPlayground comp={comp} />)
+    const { container } = render(<ComponentPlayground comp={comp} />)
 
-    const select = screen.getByRole('combobox') as HTMLSelectElement
+    const select = container.querySelector(
+      'select[name="variant"]'
+    ) as HTMLSelectElement
     fireEvent.change(select, { target: { value: 'outline' } })
     act(() => {
       jest.advanceTimersByTime(100)

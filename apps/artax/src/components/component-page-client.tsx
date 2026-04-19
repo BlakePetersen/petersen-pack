@@ -8,6 +8,7 @@ import { getComponent } from '@/lib/component-registry'
 import { ComponentPreview } from '@/components/component-preview'
 import { PropsTable } from '@/components/props-table'
 import { CodeExamples } from '@/components/code-examples'
+import { ComponentPlayground } from '@/components/component-playground'
 
 export function ComponentPageClient({
   tier,
@@ -43,6 +44,9 @@ export function ComponentPageClient({
         <TabsList>
           <TabsTrigger value="code">Code</TabsTrigger>
           <TabsTrigger value="props">Props</TabsTrigger>
+          {comp.playground?.enabled && (
+            <TabsTrigger value="playground">Playground</TabsTrigger>
+          )}
         </TabsList>
         <TabsContent value="code">
           <CodeExamples examples={comp.codeExamples} />
@@ -50,6 +54,11 @@ export function ComponentPageClient({
         <TabsContent value="props">
           <PropsTable props={comp.props} />
         </TabsContent>
+        {comp.playground?.enabled && (
+          <TabsContent value="playground">
+            <ComponentPlayground comp={comp} />
+          </TabsContent>
+        )}
       </Tabs>
 
       <Separator />
