@@ -112,12 +112,46 @@ export function createCollectionIndexPage(collectionSlug: string) {
   function Page() {
     const items = collection.getter()
 
+    if (items.length === 0) {
+      return (
+        <ContentShell sidebar={<Sidebar />}>
+          <div className="px-4 py-8">
+            <header className="mb-8">
+              <p className="mb-2 font-mono text-xs text-muted-foreground">
+                {'// empty_collection'}
+              </p>
+              <h1 className="font-mono-alt text-3xl leading-tight">
+                {collection.label}
+              </h1>
+            </header>
+            <p className="font-mono text-base">
+              No entries yet. Check back, or contribute one →{' '}
+              <Link href="/start-here" className="text-primary hover:underline">
+                [contribute]
+              </Link>
+            </p>
+          </div>
+        </ContentShell>
+      )
+    }
+
     return (
       <ContentShell sidebar={<Sidebar />}>
         <div className="px-4 py-8">
-          <h1 className="mb-6 font-mono text-sm text-muted-foreground">
-            {'// '}{collectionSlug}
-          </h1>
+          <header className="mb-8">
+            <p className="mb-2 font-mono text-xs text-muted-foreground">
+              {'// '}{collectionSlug}
+            </p>
+            <div className="flex items-baseline gap-3">
+              <h1 className="font-mono-alt text-3xl leading-tight">
+                {collection.label}
+              </h1>
+              <Badge variant="secondary">{items.length}</Badge>
+            </div>
+            <p className="mt-2 font-mono text-base text-muted-foreground">
+              {collection.indexDescription(items.length)}
+            </p>
+          </header>
           <div className="space-y-4">
             {items.map((item) => {
               const a = item as unknown as Record<string, unknown>
@@ -130,7 +164,7 @@ export function createCollectionIndexPage(collectionSlug: string) {
                   {collection.layout === 'post' ? (
                     <>
                       <div className="flex items-baseline justify-between gap-4">
-                        <h2 className="font-mono text-sm font-medium group-hover:text-primary">
+                        <h2 className="text-base font-medium text-foreground group-hover:text-primary">
                           {item.title}
                         </h2>
                         <time
@@ -144,10 +178,10 @@ export function createCollectionIndexPage(collectionSlug: string) {
                           })}
                         </time>
                       </div>
-                      <p className="mt-1 text-sm text-muted-foreground">
+                      <p className="mt-1 font-mono text-base text-muted-foreground">
                         {item.description}
                       </p>
-                      <div className="mt-2 flex items-center gap-2">
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
                         <span className="font-mono text-xs text-muted-foreground">
                           {a.readingTime as number} min read
                         </span>
@@ -160,10 +194,10 @@ export function createCollectionIndexPage(collectionSlug: string) {
                     </>
                   ) : (
                     <>
-                      <h2 className="font-mono text-sm font-medium group-hover:text-primary">
+                      <h2 className="text-base font-medium text-foreground group-hover:text-primary">
                         {item.title}
                       </h2>
-                      <p className="mt-1 text-sm text-muted-foreground">
+                      <p className="mt-1 font-mono text-base text-muted-foreground">
                         {item.description}
                       </p>
                       <div className="mt-2 flex flex-wrap gap-1">
