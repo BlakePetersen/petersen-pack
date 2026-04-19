@@ -71,7 +71,7 @@ export interface ComponentDef {
   variants?: string[]
   codeExamples: CodeExample[]
   a11y: string[]
-  preview: (variant?: string) => ReactNode
+  preview: (values?: Record<string, string>) => ReactNode
   playground?: {
     enabled: boolean
     defaultExampleIndex?: number
@@ -140,10 +140,16 @@ const components: ComponentDef[] = [
       'Focus ring uses the amber accent ring for high-contrast visibility.',
       'disabled removes pointer events and reduces opacity but retains the role.',
     ],
-    preview: (variant) =>
+    preview: (values) =>
       h(
         Button,
-        { variant: (variant as 'default' | 'outline' | 'ghost') ?? 'default' },
+        {
+          variant:
+            (values?.variant as 'default' | 'outline' | 'ghost') ?? 'default',
+          size: (values?.size as 'default' | 'sm' | 'lg') ?? 'default',
+          disabled: values?.disabled === 'true',
+          className: values?.className,
+        },
         'Run',
       ),
     playground: { enabled: true },
@@ -194,7 +200,13 @@ const components: ComponentDef[] = [
       'Associate with a <label htmlFor> or aria-label for assistive-tech access.',
       'Disabled state sets cursor-not-allowed and reduces opacity.',
     ],
-    preview: () => h(Input, { placeholder: 'username', className: 'max-w-xs' }),
+    preview: (values) =>
+      h(Input, {
+        type: values?.type ?? 'text',
+        placeholder: values?.placeholder ?? 'username',
+        disabled: values?.disabled === 'true',
+        className: values?.className ?? 'max-w-xs',
+      }),
     playground: { enabled: true },
   },
   {
@@ -237,10 +249,15 @@ const components: ComponentDef[] = [
       'Decorative by default; wrap with aria-label on the parent if it conveys status.',
       'Pair with role="status" on a live region when the badge reflects dynamic state.',
     ],
-    preview: (variant) =>
+    preview: (values) =>
       h(
         Badge,
-        { variant: (variant as 'default' | 'outline' | 'secondary') ?? 'default' },
+        {
+          variant:
+            (values?.variant as 'default' | 'outline' | 'secondary') ??
+            'default',
+          className: values?.className,
+        },
         'NEW',
       ),
     playground: { enabled: true },
@@ -277,12 +294,16 @@ const components: ComponentDef[] = [
       'Renders a div with role="separator" and aria-orientation set correctly.',
       'Not focusable; purely presentational but announced as a divider by screen readers.',
     ],
-    preview: () =>
+    preview: (values) =>
       h(
         'div',
         { className: 'w-full max-w-sm space-y-2' },
         h('p', { className: 'font-mono text-xs text-muted-foreground' }, 'above'),
-        h(Separator, null),
+        h(Separator, {
+          orientation:
+            (values?.orientation as 'horizontal' | 'vertical') ?? 'horizontal',
+          className: values?.className,
+        }),
         h('p', { className: 'font-mono text-xs text-muted-foreground' }, 'below'),
       ),
     playground: { enabled: true },
@@ -320,7 +341,11 @@ const components: ComponentDef[] = [
       'Uses the async Clipboard API; requires a user-gesture to succeed in browsers.',
       'State revert after 2s is purely visual; announce copy success with a live region if needed.',
     ],
-    preview: () => h(CopyButton, { text: 'echo "hello, artax"' }),
+    preview: (values) =>
+      h(CopyButton, {
+        text: values?.text ?? 'echo "hello, artax"',
+        className: values?.className,
+      }),
     playground: { enabled: true },
   },
   {
@@ -375,12 +400,19 @@ const components: ComponentDef[] = [
       'Space and Enter toggle the state; keyboard focus ring is visible.',
       'Always provide an aria-label when the child content is an icon or glyph.',
     ],
-    preview: (variant) =>
+    preview: (values) =>
       h(
         Toggle,
         {
           'aria-label': 'bold',
-          defaultPressed: variant === 'pressed',
+          pressed:
+            values?.pressed !== undefined ? values.pressed === 'true' : undefined,
+          defaultPressed:
+            values?.pressed === undefined
+              ? values?.defaultPressed === 'true'
+              : undefined,
+          disabled: values?.disabled === 'true',
+          className: values?.className,
         },
         'B',
       ),
@@ -427,10 +459,10 @@ const components: ComponentDef[] = [
       'Composed of semantic <div> elements; add a landmark role (e.g. region) when meaningful.',
       'CardTitle renders terminal-style text with a // prefix; pair with heading levels if the card is a true section.',
     ],
-    preview: () =>
+    preview: (values) =>
       h(
         Card,
-        { className: 'w-72' },
+        { className: values?.className ?? 'w-72' },
         h(
           CardHeader,
           null,
@@ -507,10 +539,10 @@ const components: ComponentDef[] = [
       'Use <TableHead> inside <TableHeader> so the <th> elements have scope="col" by convention.',
       'Wrap dense tables in a scroll container that keeps the header visible when needed.',
     ],
-    preview: () =>
+    preview: (values) =>
       h(
         Table,
-        { className: 'max-w-sm' },
+        { className: values?.className ?? 'max-w-sm' },
         h(
           TableHeader,
           null,
@@ -592,12 +624,14 @@ const components: ComponentDef[] = [
       'Rendered as a plain <div>; add role="note" or role="status" when the callout conveys semantic meaning.',
       'Color alone distinguishes variants — always pair with a text prefix (e.g. "warning:") for users who cannot perceive the accent.',
     ],
-    preview: (variant) =>
+    preview: (values) =>
       h(
         Callout,
         {
-          variant: (variant as 'info' | 'warning' | 'error' | 'success') ?? 'info',
-          className: 'max-w-md',
+          variant:
+            (values?.variant as 'info' | 'warning' | 'error' | 'success') ??
+            'info',
+          className: values?.className ?? 'max-w-md',
         },
         'Shells close automatically after 15 minutes of inactivity.',
       ),
@@ -665,21 +699,19 @@ const components: ComponentDef[] = [
       'Wrap highlighted output in <pre><code>; screen readers announce the code region correctly.',
       'Language pill is decorative — convey language elsewhere if critical.',
     ],
-    preview: () =>
-      h(
+    preview: (values) => {
+      const rawCode = values?.rawCode ?? 'pnpm install\npnpm -F artax build'
+      return h(
         CodeBlock,
         {
-          filename: 'install.sh',
-          language: 'bash',
-          rawCode: 'pnpm install\npnpm -F artax build',
-          className: 'max-w-lg my-0',
+          filename: values?.filename ?? 'install.sh',
+          language: values?.language ?? 'bash',
+          rawCode,
+          className: values?.className ?? 'max-w-lg my-0',
         },
-        h(
-          'pre',
-          null,
-          h('code', null, 'pnpm install\npnpm -F artax build'),
-        ),
-      ),
+        h('pre', null, h('code', null, rawCode)),
+      )
+    },
     playground: { enabled: true },
   },
   {
@@ -747,10 +779,14 @@ const components: ComponentDef[] = [
       'ArrowLeft/ArrowRight cycle focus between tabs; Home/End jump to first/last.',
       'Active tab is indicated by aria-selected and a visible amber underline.',
     ],
-    preview: () =>
+    preview: (values) =>
       h(
         Tabs,
-        { defaultValue: 'code', className: 'w-full max-w-md' },
+        {
+          defaultValue: values?.defaultValue ?? 'code',
+          value: values?.value,
+          className: values?.className ?? 'w-full max-w-md',
+        },
         h(
           TabsList,
           null,

@@ -138,8 +138,7 @@ function PlaygroundBody({ comp }: { comp: ComponentDef }) {
           className="bg-[radial-gradient(circle,var(--color-border)_1px,transparent_1px)] bg-[length:16px_16px] border border-border"
         >
           <div className="flex items-center justify-center min-h-[120px] p-6">
-            {/* NOTE: preview renders the registry default; form values flow to URL for shareability. Full prop→preview wiring deferred — see plan 24-05 <deferred> block. */}
-            {comp.preview()}
+            {comp.preview(values)}
           </div>
         </div>
       </div>

@@ -30,8 +30,8 @@ describe('ComponentPreview', () => {
     render(
       createElement(ComponentPreview, {
         variants: ['default', 'outline', 'ghost'],
-        renderPreview: (variant?: string) =>
-          createElement('span', null, `Variant: ${variant}`),
+        renderPreview: (values?: Record<string, string>) =>
+          createElement('span', null, `Variant: ${values?.variant}`),
       })
     )
 
@@ -55,8 +55,12 @@ describe('ComponentPreview', () => {
     render(
       createElement(ComponentPreview, {
         variants: ['default', 'outline'],
-        renderPreview: (variant?: string) =>
-          createElement('span', { 'data-testid': 'preview-content' }, `Variant: ${variant}`),
+        renderPreview: (values?: Record<string, string>) =>
+          createElement(
+            'span',
+            { 'data-testid': 'preview-content' },
+            `Variant: ${values?.variant}`,
+          ),
       })
     )
 

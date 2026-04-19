@@ -10,7 +10,7 @@ export function ComponentPreview({
   renderPreview,
 }: {
   variants?: string[]
-  renderPreview: (variant?: string) => ReactNode
+  renderPreview: (values?: Record<string, string>) => ReactNode
 }) {
   const [activeVariant, setActiveVariant] = useState(variants?.[0])
 
@@ -39,7 +39,7 @@ export function ComponentPreview({
         </div>
       )}
       <div className="flex items-center justify-center min-h-[120px] p-6">
-        {renderPreview(activeVariant)}
+        {renderPreview(activeVariant ? { variant: activeVariant } : undefined)}
       </div>
     </div>
   )
