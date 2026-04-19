@@ -78,8 +78,12 @@ describe('PlaygroundPropsForm', () => {
       />
     )
 
-    const toggle = screen.getByRole('button', { name: /disabled/i })
-    expect(toggle).toBeInTheDocument()
+    // Radix Toggle renders a native <button> with aria-pressed. The wrapping
+    // <label> does not propagate an accessible name to a <button> child in the
+    // dom-accessibility-api RTL uses, so we locate the toggle by its visible
+    // text content and assert role/state from there.
+    const toggle = screen.getByText('disabled')
+    expect(toggle.tagName).toBe('BUTTON')
     expect(toggle).toHaveAttribute('aria-pressed', 'false')
   })
 
@@ -175,7 +179,7 @@ describe('PlaygroundPropsForm', () => {
       />
     )
 
-    const toggle = screen.getByRole('button', { name: /disabled/i })
+    const toggle = screen.getByText('disabled')
     fireEvent.click(toggle)
 
     expect(onChange).toHaveBeenCalledWith({ disabled: 'true' })
