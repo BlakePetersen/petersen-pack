@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: executing
-stopped_at: Completed 24-04-PLAN.md (PlaygroundPropsForm)
-last_updated: "2026-04-19T04:20:50.981Z"
+stopped_at: Completed 24-05-PLAN.md (ComponentPlayground tab integration)
+last_updated: "2026-04-19T04:31:54.855Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 15
-  completed_plans: 12
-  percent: 80
+  completed_plans: 13
+  percent: 87
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 24 (editable-previews) — EXECUTING
-Plan: 4 of 7
+Plan: 5 of 7
 Plans: 7 plans across 5 waves; ARTAX-08 covered; checker verification passed iteration 2/3
 Status: Ready to execute
 Last activity: 2026-04-19
@@ -75,6 +75,9 @@ Progress: [█████░░░░░] 50%
 - [Phase 24]: 24-04: corrected plan text setupFilesAfterEach -> Jest's actual option setupFilesAfterEnv (not a config key)
 - [Phase 24]: 24-04: Radix Toggle tests use getByText instead of getByRole name (label wrap does not give button accessible name)
 - [Phase 24]: 24-04: boolean prop values serialized to 'true'/'false' strings so Record<string,string> stays flat for URL encoding
+- [Phase 24]: 24-05: Body-split gate pattern — outer component returns null on disabled, inner body owns all hooks (keeps rules-of-hooks clean)
+- [Phase 24]: 24-05: Hand-rolled setTimeout-ref debounce (300ms) for URL pushes — single call site, no use-debounce dep
+- [Phase 24]: 24-05: useSearchParams readonly bridged via new URLSearchParams(searchParams.toString()) for Next 16 typing
 
 ### Pending Todos
 
@@ -87,6 +90,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T04:20:50.979Z
-Stopped at: Completed 24-04-PLAN.md (PlaygroundPropsForm)
+Last session: 2026-04-19T04:31:54.852Z
+Stopped at: Completed 24-05-PLAN.md (ComponentPlayground tab integration)
 Resume file: None
