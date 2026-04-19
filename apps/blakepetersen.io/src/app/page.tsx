@@ -2,6 +2,7 @@
 // ABOUTME: Displays dynamic counts and recent items from all content collections.
 
 import Link from 'next/link'
+import { Badge } from 'artax-ui'
 import { getAllCollections, getCollection } from '../lib/collection-registry'
 import type { PostContent } from '../lib/content'
 import { CategoryCard } from '../components/category-card'
@@ -44,9 +45,9 @@ export default function Home() {
         <p className="mb-4 font-mono text-xs text-muted-foreground">{'// stack'}</p>
         <div className="flex flex-wrap gap-2">
           {stackTools.map(tool => (
-            <span key={tool} className="border border-border px-2 py-1 font-mono text-xs text-secondary-foreground">
+            <Badge key={tool} variant="outline">
               {tool}
-            </span>
+            </Badge>
           ))}
         </div>
       </section>
@@ -88,7 +89,7 @@ export default function Home() {
                 className="group block border border-border p-4 transition-colors hover:border-primary"
               >
                 <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="font-mono text-sm font-medium group-hover:text-primary">
+                  <h3 className="font-mono text-base font-medium group-hover:text-primary">
                     {post.title}
                   </h3>
                   <time
