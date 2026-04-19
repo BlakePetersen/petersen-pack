@@ -33,13 +33,23 @@ export function decodePlaygroundParams(
 /**
  * Update the URL's search params to reflect the given props using
  * `window.history.pushState` rather than `router.replace`, which keeps the
- * update shallow (no RSC re-fetch). See RESEARCH.md Pattern 2 / Next.js
- * discussion #49540.
+ * update shallow (no RSC re-fetch). Preserves all non-`p[*]` query params
+ * AND the URL hash so sibling features (e.g. analytics utm params, page
+ * anchors) survive every playground state write. See RESEARCH.md Pattern 2
+ * / Next.js discussion #49540.
  */
 export function pushPlaygroundParams(props: Record<string, string>): void {
-  const encoded = encodePlaygroundParams(props)
-  const url = encoded
-    ? `${window.location.pathname}?${encoded}`
-    : window.location.pathname
+  const next = new URLSearchParams(window.location.search)
+  // Drop any stale p[*] keys before setting the new ones.
+  for (const key of [...next.keys()]) {
+    if (/^p\[.+\]$/.test(key)) next.delete(key)
+  }
+  for (const [k, v] of Object.entries(props)) {
+    next.set(`p[${k}]`, v)
+  }
+  const qs = next.toString()
+  const url = qs
+    ? `${window.location.pathname}?${qs}${window.location.hash}`
+    : `${window.location.pathname}${window.location.hash}`
   window.history.pushState(null, '', url)
 }
