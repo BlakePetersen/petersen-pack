@@ -34,3 +34,25 @@ describe('component dynamic route generateStaticParams', () => {
     })
   })
 })
+
+describe('registry size guard', () => {
+  it('registry contains exactly 15 components', () => {
+    expect(getAllComponents()).toHaveLength(15)
+  })
+
+  it('static params match registry slugs (no drift)', () => {
+    const params = generateStaticParams()
+    const paramKeys = new Set(params.map((p) => `${p.tier}/${p.component}`))
+    const registryKeys = new Set(
+      getAllComponents().map((c) => `${c.tier}/${c.slug}`),
+    )
+
+    expect(paramKeys.size).toBe(registryKeys.size)
+    registryKeys.forEach((key) => {
+      expect(paramKeys.has(key)).toBe(true)
+    })
+    paramKeys.forEach((key) => {
+      expect(registryKeys.has(key)).toBe(true)
+    })
+  })
+})
