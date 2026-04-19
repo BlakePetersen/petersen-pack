@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: in_progress
-stopped_at: Phase 24.1 complete — all three follow-ups closed (WR-01, WR-02, Header hydration via mounted-flag gate in SidebarDrawer); resuming with Phase 25 (blakepetersen.io theming)
-last_updated: "2026-04-18T00:00:00.000Z"
-last_activity: 2026-04-18
+stopped_at: Phase 25 complete — bp.io theming audit passed (2 violations replaced, 8 theme-static cases annotated, visual smoke test confirmed by Blake across all 17 routes × 3 modes); ready for Phase 26 (Pencil-matched page updates)
+last_updated: "2026-04-19T00:00:00.000Z"
+last_activity: 2026-04-19
 progress:
   total_phases: 7
-  completed_phases: 5
-  total_plans: 18
-  completed_plans: 19
-  percent: 71
+  completed_phases: 6
+  total_plans: 19
+  completed_plans: 20
+  percent: 86
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 25 — blakepetersen.io theming
+**Current focus:** Phase 26 — blakepetersen.io page updates
 
 ## Current Position
 
-Phase: 25
+Phase: 26
 Plan: Not started
 Plans: TBD (planning step pending)
-Status: Phase 24.1 complete; starting Phase 25 (blakepetersen.io theming)
-Last activity: 2026-04-18
+Status: Phase 25 complete (audit-only — theming infra was already shipped during Phase 22); ready for Phase 26 (5 Pencil-matched page rewrites)
+Last activity: 2026-04-19
 
-Progress: [███████░░░] 71% (5 of 7 phases complete)
+Progress: [████████░░] 86% (6 of 7 phases complete)
 
 ## Performance Metrics
 

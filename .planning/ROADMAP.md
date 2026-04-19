@@ -67,7 +67,7 @@ See: `.planning/milestones/v1.2-ROADMAP.md` for full details.
 - [x] **Phase 23: Component Catalog & Documentation** - Sidebar navigation, live previews, code snippets, props tables, token reference (completed 2026-04-17)
 - [x] **Phase 24: Editable Previews** - react-live compat check; editable mock data on previews (falls back to static) (completed 2026-04-19)
 - [x] **Phase 24.1: Editable Previews Polish** *(INSERTED)* - close WR-01 (pushPlaygroundParams query-param wipe), WR-02 (Radix Toggle label double-dispatch), pre-existing Header hydration mismatch (completed 2026-04-19)
-- [ ] **Phase 25: blakepetersen.io Theming** - ThemeProvider, theme toggle, FOUT prevention
+- [x] **Phase 25: blakepetersen.io Theming** - Audit-only: theming infra (ThemeProvider, toggle, FOUT prevention, artax-ui token import) was already shipped during Phase 22; this phase replaced 2 hardcoded literals, annotated 8 theme-static cases, and visually verified all 17 routes in both modes (completed 2026-04-19)
 - [ ] **Phase 26: blakepetersen.io Page Updates** - Homepage, Skills Detail, About, Start Here, Collection Listing matched to Pencil designs
 
 ## Phase Details
@@ -196,5 +196,5 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 23. Component Catalog & Documentation | 1/3 | In Progress|  | - |
 | 24. Editable Previews | v1.3 | 7/7 | Complete   | 2026-04-19 |
 | 24.1 Editable Previews Polish | v1.3 | 4/3 | Complete    | 2026-04-19 |
-| 25. blakepetersen.io Theming | v1.3 | 0/? | Not started | - |
+| 25. blakepetersen.io Theming | v1.3 | 1/1 | Complete   | 2026-04-19 |
 | 26. blakepetersen.io Page Updates | v1.3 | 0/? | Not started | - |

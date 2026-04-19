@@ -1,11 +1,14 @@
 ---
 phase: 25
 title: "blakepetersen.io Theming"
-status: human_needed
-verified_at: 2026-04-18
+status: passed
+verified_at: 2026-04-19
+human_verified_at: 2026-04-19
 plans:
   - 25-01 (complete)
 ---
+
+> **2026-04-19 update:** Blake completed the 17-route × 3-mode visual walkthrough against the dev server. No untokenized backgrounds, low-contrast text, broken borders, or visible color artifacts surfaced. All four success criteria now verified — Phase 25 closes as `passed`.
 
 # Phase 25 Verification
 
