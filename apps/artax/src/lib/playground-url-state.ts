@@ -24,7 +24,7 @@ export function decodePlaygroundParams(
 ): Record<string, string> {
   const result: Record<string, string> = {}
   for (const [key, value] of searchParams.entries()) {
-    const match = key.match(/^p\[(.+)\]$/)
+    const match = key.match(/^p\[([^\]]+)\]$/)
     if (match) result[match[1]] = value
   }
   return result
@@ -45,7 +45,7 @@ export function pushPlaygroundParams(props: Record<string, string>): void {
   const next = new URLSearchParams(window.location.search)
   // Drop any stale p[*] keys before setting the new ones.
   for (const key of [...next.keys()]) {
-    if (/^p\[.+\]$/.test(key)) next.delete(key)
+    if (/^p\[[^\]]+\]$/.test(key)) next.delete(key)
   }
   for (const [k, v] of Object.entries(props)) {
     next.set(`p[${k}]`, v)
