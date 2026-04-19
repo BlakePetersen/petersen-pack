@@ -221,4 +221,35 @@ describe('ComponentPlayground', () => {
 
     expect(mockedPush).not.toHaveBeenCalled()
   })
+
+  it('re-renders preview with updated prop values when form changes (ARTAX-08 criterion #2)', () => {
+    // Button's `default` variant renders a `$` command-prefix span; `outline`
+    // does NOT render the `$` span and instead uses `border-border` styling.
+    // Assertion target: after changing the variant select to `outline`, the
+    // preview canvas's rendered Button should no longer contain the `$` prefix
+    // and should carry the outline class marker.
+    const comp = getComponent('atoms', 'button')!
+
+    const { container } = render(<ComponentPlayground comp={comp} />)
+
+    const canvas = screen.getByTestId('playground-canvas')
+
+    // Initial state: default variant renders the `$` command prefix.
+    expect(canvas.textContent).toContain('$')
+
+    // Change variant to outline via the form control.
+    const variantSelect = container.querySelector(
+      'select[name="variant"]'
+    ) as HTMLSelectElement
+    fireEvent.change(variantSelect, { target: { value: 'outline' } })
+
+    // After the change, the preview canvas's Button should reflect the new
+    // variant immediately (no debounce on the render path — the debounce only
+    // gates the URL push). The outline variant does NOT render the `$` prefix.
+    const previewButton = canvas.querySelector('button') as HTMLButtonElement
+    expect(previewButton).not.toBeNull()
+    expect(previewButton.className).toContain('border-border')
+    expect(previewButton.className).not.toContain('bg-primary')
+    expect(previewButton.textContent).not.toContain('$')
+  })
 })
