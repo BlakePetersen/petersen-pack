@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: executing
-stopped_at: Phase 24 complete — all 7 plans shipped, ready for /gsd-verify-work
-last_updated: "2026-04-19T04:56:30.445Z"
-last_activity: 2026-04-19
+stopped_at: Phase 24 gap closed — ARTAX-08 criterion #2 satisfied; ready for /gsd-verify-work rerun
+last_updated: "2026-04-17T00:00:00Z"
+last_activity: 2026-04-17
 progress:
   total_phases: 6
   completed_phases: 4
@@ -83,6 +83,7 @@ Progress: [█████░░░░░] 50%
 - [Phase 24]: 24-06: JSX editor reset uses key={resetCounter} remount — LiveEditor owns its contenteditable buffer and ignores seed-prop changes post-mount
 - [Phase 24]: 24-06: PrismThemeEntry does not accept fontFamily/fontSize — font applied via font-mono text-sm Tailwind classes on the editor wrapper instead
 - [Phase 24]: Route tests .tsx not .ts (JSX under ts-jest requires .tsx); locality-of-intent partition duplication for drift detection
+- [Phase 24 gap-closure]: preview(values) signature lets playground edits drive preview in real time — closes ARTAX-08 criterion #2 gap from 24-VERIFICATION. ComponentDef.preview signature widened from `(variant?: string)` to `(values?: Record<string, string>)`; 11 enabled components destructure from bag with `as` casts for literal unions and `=== 'true'` for booleans; 4 excluded components unchanged (structural subtyping). Supersedes the 24-05 deferral note above.
 
 ### Pending Todos
 
@@ -95,6 +96,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T04:56:30.442Z
-Stopped at: Phase 24 complete — all 7 plans shipped, ready for /gsd-verify-work
+Last session: 2026-04-17T00:00:00Z
+Stopped at: Phase 24 gap closed — ARTAX-08 criterion #2 satisfied via preview(values) wiring; ready for /gsd-verify-work rerun
 Resume file: None
