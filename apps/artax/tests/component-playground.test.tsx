@@ -3,6 +3,7 @@
 // ABOUTME: Validates canvas/form layout, excluded-component guard, URL hydration, and debounced pushPlaygroundParams writes.
 
 import { render, screen, fireEvent, act } from '@testing-library/react'
+import type { ReactNode } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 jest.mock('next/navigation', () => ({
@@ -12,6 +13,30 @@ jest.mock('next/navigation', () => ({
 jest.mock('@/lib/playground-url-state', () => ({
   ...jest.requireActual('@/lib/playground-url-state'),
   pushPlaygroundParams: jest.fn(),
+}))
+
+// Track the last `code` prop passed to the mocked LiveProvider so tests can
+// assert that reset flushes the seed JSX back to codeExamples[0].code.
+const liveProviderCodeHistory: string[] = []
+
+jest.mock('react-live', () => ({
+  LiveProvider: ({
+    code,
+    children,
+  }: {
+    code: string
+    children: ReactNode
+  }) => {
+    liveProviderCodeHistory.push(code)
+    return (
+      <div data-testid="live-provider" data-code={code}>
+        {children}
+      </div>
+    )
+  },
+  LiveEditor: () => <div data-testid="live-editor" />,
+  LivePreview: () => <div data-testid="live-preview" />,
+  LiveError: () => null,
 }))
 
 import { ComponentPlayground } from '@/components/component-playground'
@@ -35,6 +60,7 @@ describe('ComponentPlayground', () => {
   beforeEach(() => {
     jest.useFakeTimers()
     mockedPush.mockClear()
+    liveProviderCodeHistory.length = 0
     setSearchParams('')
   })
 
@@ -136,5 +162,63 @@ describe('ComponentPlayground', () => {
     expect(mockedPush).toHaveBeenCalledWith(
       expect.objectContaining({ variant: 'ghost' })
     )
+  })
+
+  it('renders the Edit JSX toggle in the off state by default (no JSX editor mounted)', () => {
+    const comp = getComponent('atoms', 'button')!
+
+    render(<ComponentPlayground comp={comp} />)
+
+    const toggle = screen.getByText('Edit JSX')
+    expect(toggle).toBeInTheDocument()
+    expect(screen.queryByTestId('live-provider')).toBeNull()
+  })
+
+  it('mounts PlaygroundJsxEditor when Edit JSX is toggled on', () => {
+    const comp = getComponent('atoms', 'button')!
+
+    render(<ComponentPlayground comp={comp} />)
+
+    fireEvent.click(screen.getByText('Edit JSX'))
+
+    expect(screen.getByTestId('live-provider')).toBeInTheDocument()
+  })
+
+  it('unmounts PlaygroundJsxEditor when Edit JSX is toggled off again', () => {
+    const comp = getComponent('atoms', 'button')!
+
+    render(<ComponentPlayground comp={comp} />)
+
+    const toggle = screen.getByText('Edit JSX')
+    fireEvent.click(toggle)
+    expect(screen.getByTestId('live-provider')).toBeInTheDocument()
+
+    fireEvent.click(toggle)
+    expect(screen.queryByTestId('live-provider')).toBeNull()
+  })
+
+  it('seeds the JSX editor with codeExamples[0].code on first mount', () => {
+    const comp = getComponent('atoms', 'button')!
+    const expectedSeed = comp.codeExamples[0]!.code
+
+    render(<ComponentPlayground comp={comp} />)
+
+    fireEvent.click(screen.getByText('Edit JSX'))
+
+    const provider = screen.getByTestId('live-provider')
+    expect(provider.getAttribute('data-code')).toBe(expectedSeed)
+  })
+
+  it('does NOT trigger pushPlaygroundParams when the JSX toggle is flipped (URL stays clean per D-04)', () => {
+    const comp = getComponent('atoms', 'button')!
+
+    render(<ComponentPlayground comp={comp} />)
+
+    fireEvent.click(screen.getByText('Edit JSX'))
+    act(() => {
+      jest.advanceTimersByTime(500)
+    })
+
+    expect(mockedPush).not.toHaveBeenCalled()
   })
 })
