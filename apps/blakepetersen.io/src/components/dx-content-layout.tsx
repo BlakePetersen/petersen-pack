@@ -1,11 +1,11 @@
 // ABOUTME: Server layout for DX content pages (skills, hooks, configs, guides).
 // ABOUTME: Renders metadata badges, MDX body, and dependency graph when available.
 
-import { Badge } from 'artax-ui'
+import { Badge, PrevNextNav } from 'artax-ui'
 import { MDXContent } from './mdx-content'
 import { DependencyGraph } from './dependency-graph'
 import { Breadcrumbs } from './breadcrumbs'
-import { PageNavigation } from './page-navigation'
+import { buildNavData, getPrevNext } from '../lib/navigation'
 import { getLocalGraphSvg } from '../lib/content'
 import { ApplyActionBar } from './apply-action-bar'
 import { ContentFreshness } from './content-freshness'
@@ -15,6 +15,15 @@ import type { DxContent } from '../lib/content'
 
 export function DxContentLayout({ item, artifact }: { item: DxContent; artifact?: { type: string; slug: string } }) {
   const graphSvg = getLocalGraphSvg(item.slug)
+
+  const navData = buildNavData()
+  const found = navData.findBySlug(item.slug)
+  const siblings = found ? navData.itemsByCollection[found.collection] : []
+  const { prev, next } = found
+    ? getPrevNext(siblings, found.item.href)
+    : { prev: null, next: null }
+  const prevSlot = prev ? { href: prev.href, label: prev.title } : undefined
+  const nextSlot = next ? { href: next.href, label: next.title } : undefined
 
   return (
     <ReactionCountProvider>
@@ -93,7 +102,7 @@ export function DxContentLayout({ item, artifact }: { item: DxContent; artifact?
         pageUrl={`https://blakepetersen.io/${item.slug}`}
       />
 
-      <PageNavigation slug={item.slug} />
+      <PrevNextNav prev={prevSlot} next={nextSlot} />
     </article>
     </ReactionCountProvider>
   )

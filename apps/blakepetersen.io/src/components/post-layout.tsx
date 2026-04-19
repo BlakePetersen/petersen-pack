@@ -1,16 +1,25 @@
 // ABOUTME: Server layout for blog post pages.
 // ABOUTME: Renders post header with date, reading time, tags, and MDX body.
 
-import { Badge } from 'artax-ui'
+import { Badge, PrevNextNav } from 'artax-ui'
 import { MDXContent } from './mdx-content'
 import { Breadcrumbs } from './breadcrumbs'
-import { PageNavigation } from './page-navigation'
+import { buildNavData, getPrevNext } from '../lib/navigation'
 import { ContentFreshness } from './content-freshness'
 import { ReactionCountProvider, ReactionCount } from './reaction-count'
 import { DiscussionWithReactions } from './content-with-discussion'
 import type { PostContent } from '../lib/content'
 
 export function PostLayout({ post }: { post: PostContent }) {
+  const navData = buildNavData()
+  const found = navData.findBySlug(post.slug)
+  const siblings = found ? navData.itemsByCollection[found.collection] : []
+  const { prev, next } = found
+    ? getPrevNext(siblings, found.item.href)
+    : { prev: null, next: null }
+  const prevSlot = prev ? { href: prev.href, label: prev.title } : undefined
+  const nextSlot = next ? { href: next.href, label: next.title } : undefined
+
   return (
     <ReactionCountProvider>
     <article className="mx-auto max-w-[80ch] px-4 py-8">
@@ -52,7 +61,7 @@ export function PostLayout({ post }: { post: PostContent }) {
         pageUrl={`https://blakepetersen.io/${post.slug}`}
       />
 
-      <PageNavigation slug={post.slug} />
+      <PrevNextNav prev={prevSlot} next={nextSlot} />
     </article>
     </ReactionCountProvider>
   )
