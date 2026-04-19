@@ -3,7 +3,7 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Dialog, DialogTrigger, DialogTitle } from 'artax-ui'
 import { Dialog as RadixDialog } from 'radix-ui'
@@ -40,6 +40,19 @@ export function SidebarDrawer({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
+  // Mounted flag gates the Radix Dialog subtree (24.1-03): Radix seeds
+  // aria-controls/aria-labelledby IDs from @radix-ui/react-id, whose
+  // SSR output diverges from the client hydrator under React 19 + Next 16.
+  // On SSR we emit the plain <button> children directly so hydration sees
+  // an identical DOM shape; Radix wires up the full Dialog tree post-mount.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return <>{children}</>
+  }
 
   // Key on pathname forces remount, resetting open state to false on navigation
   return (
