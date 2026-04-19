@@ -33,7 +33,7 @@ Requirements for milestone v1.3 Artax Design System. Each maps to roadmap phases
 - [ ] **SITE-02**: User-facing theme toggle in site header
 - [ ] **SITE-03**: Homepage updated to match Pencil design
 - [ ] **SITE-04**: Skills Detail page updated to match Pencil design
-- [ ] **SITE-05**: About page updated to match Pencil design
+- [x] **SITE-05**: About page updated to match Pencil design
 - [ ] **SITE-06**: Start Here page updated to match Pencil design
 - [ ] **SITE-07**: Collection Listing page updated to match Pencil design
 - [ ] **SITE-08**: FOUT prevention via next-themes blocking script on both apps
@@ -81,7 +81,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SITE-02 | Phase 25 | Pending |
 | SITE-03 | Phase 26 | Pending |
 | SITE-04 | Phase 26 | Pending |
-| SITE-05 | Phase 26 | Pending |
+| SITE-05 | Phase 26 | Complete |
 | SITE-06 | Phase 26 | Pending |
 | SITE-07 | Phase 26 | Pending |
 | SITE-08 | Phase 25 | Pending |

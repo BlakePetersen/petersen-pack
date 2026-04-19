@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: in_progress
-stopped_at: Phase 26-03 complete — PrevNextNav swap landed in dx-content-layout + post-layout; page-navigation.tsx deleted (54 lines); 210/210 bp.io tests green; build clean. D-07 consolidated smoke check still pending phase-end batch (02/03 deferred, 04/05/06 upcoming).
-last_updated: "2026-04-19T20:22:54.000Z"
+stopped_at: Phase 26-04 complete — About page (SITE-05) recomposed to Pencil frame: Badge meta row + interests grid, max-w-prose reading column, Lead-role mono prose, shell-command contact CTAs. Typecheck + build clean. AuthorNote skipped (Pencil MCP unavailable, no discrete personal-aside). D-07 still batched for phase end (02/03/04 deferred, 05/06 upcoming).
+last_updated: "2026-04-19T20:30:00.000Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 7
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 26
-Plan: 01, 01b, 02, 03 complete; 04 next
-Plans: 7 total — 01 ✓, 01b ✓, 02 ✓, 03 ✓, 04–06 (About, Start Here, Collection Listing)
-Status: 26-03 shipped PrevNextNav swap across both detail layouts; page-navigation.tsx retired; 210/210 bp.io tests green; build clean; D-07 still batched for phase end
+Plan: 01, 01b, 02, 03, 04 complete; 05 next
+Plans: 7 total — 01 ✓, 01b ✓, 02 ✓, 03 ✓, 04 ✓, 05–06 (Start Here, Collection Listing)
+Status: 26-04 shipped About recompose (SITE-05) — Badge chips, max-w-prose, Lead-role mono prose, shell CTAs; typecheck + build clean; D-07 still batched for phase end
 Last activity: 2026-04-19
 
 Progress: [████████░░] 86% (6 of 7 phases complete)
@@ -93,6 +93,8 @@ Progress: [████████░░] 86% (6 of 7 phases complete)
 - [Phase 26]: 26-01: Any new `*.tsx` under `packages/artax-ui/src/components` must be registered in `tests/boundaries.test.ts` (server-safe vs client) in the same commit as the file itself — enforced by a coverage assertion.
 - [Phase 26]: 26-03: PrevNextNav slot derivation follows `findBySlug(slug) → itemsByCollection[collection] → getPrevNext(items, found.item.href) → { href, label }` — NavItem.href is pre-built by `collectionToItems()` so consumers never reconstruct URLs. Resolution logic lifted verbatim from retired `page-navigation.tsx` into `dx-content-layout.tsx` and `post-layout.tsx`.
 - [Phase 26]: 26-03: Skills Detail header recompose (H1 `text-3xl`, `max-w-[72ch]`) DEFERRED — `dx-content-layout.tsx` is shared across skills/hooks/configs/guides; cross-collection typography change needs its own Pencil-driven plan. Logged in 26-03-SUMMARY.md Deviations #1.
+- [Phase 26]: 26-04: About recompose (SITE-05) — Badge meta row + interests grid, max-w-prose column, Lead-role mono prose, `$ email-blake`/`$ find-me-on-github` shell CTAs. AuthorNote skipped (Pencil MCP unavailable; no discrete personal-aside in current prose). TODO scaffolding preserved per D-01. GitHub URL canonical-cased to `BlakePetersen` (matches homepage).
+- [Phase 26]: 26-04: D-07 smoke check deferred to phase-end batch per Plan 02/03 precedent. `// interests` chip list (6 secondary-variant labels) is the only executor-authored stub — Blake can edit post-D-07.
 
 ### Roadmap Evolution
 
@@ -109,6 +111,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T20:22:54Z
-Stopped at: Completed 26-03 — PrevNextNav swap in dx-content-layout + post-layout, page-navigation.tsx deleted, 210/210 bp.io tests green, build clean. D-07 batched at phase end.
-Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-04-PLAN.md
+Last session: 2026-04-19T20:30:00Z
+Stopped at: Completed 26-04 — About page recompose (SITE-05) landed in `apps/blakepetersen.io/src/app/about/page.tsx` (commit 11307f8). Typecheck + build clean. D-07 smoke check deferred. AuthorNote unused (conditional skipped).
+Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-05-PLAN.md
