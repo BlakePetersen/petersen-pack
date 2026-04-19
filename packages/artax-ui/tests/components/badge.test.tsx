@@ -34,4 +34,24 @@ describe('Badge', () => {
     render(<Badge data-testid="badge" variant="secondary">archived</Badge>)
     expect(screen.getByTestId('badge')).toBeInTheDocument()
   })
+
+  it('renders info variant with info token', () => {
+    render(<Badge data-testid="badge" variant="info">info</Badge>)
+    expect(screen.getByTestId('badge').className).toContain('text-info')
+  })
+
+  it('renders success variant with success token', () => {
+    render(<Badge data-testid="badge" variant="success">shipped</Badge>)
+    expect(screen.getByTestId('badge').className).toContain('text-success')
+  })
+
+  it('renders warning variant with warning token', () => {
+    render(<Badge data-testid="badge" variant="warning">beta</Badge>)
+    expect(screen.getByTestId('badge').className).toContain('text-warning')
+  })
+
+  it('renders destructive variant with destructive token', () => {
+    render(<Badge data-testid="badge" variant="destructive">danger</Badge>)
+    expect(screen.getByTestId('badge').className).toContain('text-destructive')
+  })
 })
