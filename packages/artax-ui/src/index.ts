@@ -47,6 +47,10 @@ export {
   TooltipContentPrimitive
 } from './components/molecules/tooltip/tooltip'
 export { PrevNextNav } from './components/molecules/prev-next-nav/prev-next-nav'
+export { AuthorNote } from './components/molecules/author-note/author-note'
+export type { AuthorNoteProps } from './components/molecules/author-note/author-note'
+export { DecisionRationale } from './components/molecules/decision-rationale/decision-rationale'
+export type { DecisionRationaleProps, Alternative } from './components/molecules/decision-rationale/decision-rationale'
 
 // Organisms
 export {

@@ -3,6 +3,8 @@
 import React from 'react'
 import { cn } from '../lib/utils'
 import { CodeBlock } from '../components/molecules/code-block/code-block'
+import { AuthorNote as AuthorNoteMolecule } from '../components/molecules/author-note/author-note'
+import { DecisionRationale as DecisionRationaleMolecule } from '../components/molecules/decision-rationale/decision-rationale'
 
 type Props = React.HTMLAttributes<HTMLElement> & { children?: React.ReactNode }
 type HeadingProps = React.ComponentPropsWithoutRef<'h1'>
@@ -266,13 +268,7 @@ export const mdxComponents = {
     <em className={cn('italic', className)} {...props} />
   ),
 
-  AuthorNote: ({ children, ...props }: Props) => (
-    <aside
-      className="my-6 border-l-2 border-info bg-[var(--surface-info)] px-4 py-3"
-      {...props}
-    >
-      <p className="mb-2 font-mono text-xs text-info">{'// author_note'}</p>
-      <div className="font-sans text-sm text-secondary-foreground leading-relaxed">{children}</div>
-    </aside>
-  ),
+  AuthorNote: AuthorNoteMolecule,
+
+  DecisionRationale: DecisionRationaleMolecule,
 }

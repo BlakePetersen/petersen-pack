@@ -10,9 +10,11 @@ const serverSafeFiles = [
   'atoms/button/button.tsx',
   'atoms/input/input.tsx',
   'atoms/separator/separator.tsx',
+  'molecules/author-note/author-note.tsx',
   'molecules/card/card.tsx',
   'molecules/callout/callout.tsx',
   'molecules/code-block/code-block.tsx',
+  'molecules/decision-rationale/decision-rationale.tsx',
   'molecules/prev-next-nav/prev-next-nav.tsx',
   'molecules/table/table.tsx'
 ]
