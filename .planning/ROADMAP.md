@@ -66,7 +66,7 @@ See: `.planning/milestones/v1.2-ROADMAP.md` for full details.
 - [x] **Phase 22: Artax Reference Site Scaffold** - New apps/artax Next.js app with theme toggle and turbo pipeline (completed 2026-03-28)
 - [x] **Phase 23: Component Catalog & Documentation** - Sidebar navigation, live previews, code snippets, props tables, token reference (completed 2026-04-17)
 - [x] **Phase 24: Editable Previews** - react-live compat check; editable mock data on previews (falls back to static) (completed 2026-04-19)
-- [ ] **Phase 24.1: Editable Previews Polish** *(INSERTED)* - close WR-01 (pushPlaygroundParams query-param wipe), WR-02 (Radix Toggle label double-dispatch), pre-existing Header hydration mismatch
+- [x] **Phase 24.1: Editable Previews Polish** *(INSERTED)* - close WR-01 (pushPlaygroundParams query-param wipe), WR-02 (Radix Toggle label double-dispatch), pre-existing Header hydration mismatch (completed 2026-04-19)
 - [ ] **Phase 25: blakepetersen.io Theming** - ThemeProvider, theme toggle, FOUT prevention
 - [ ] **Phase 26: blakepetersen.io Page Updates** - Homepage, Skills Detail, About, Start Here, Collection Listing matched to Pencil designs
 
@@ -128,16 +128,16 @@ Plans:
   3. If incompatible: previews remain static (from Phase 23) and ARTAX-08 is deferred to future requirements as ARTAX-F01
 **Plans**: TBD
 
-### Phase 24.1: Editable Previews Polish *(INSERTED)*
+### Phase 24.1: Editable Previews Polish *(INSERTED)* — COMPLETE
 **Goal**: Resolve the three follow-ups surfaced by Phase 24's review + verification cycles without delaying Phase 25
 **Depends on**: Phase 24
 **Requirements**: ARTAX-08 (hardening), none new
-**Success Criteria** (what must be TRUE):
-  1. `pushPlaygroundParams` preserves non-playground query params and the URL hash when writing playground state (WR-01)
-  2. `PlaygroundPropsForm` no longer wraps Radix `Toggle` (a native `<button>`) in a `<label>` — resolves the native-label click-forwarding risk (WR-02)
-  3. The hydration mismatch in `Header.tsx` mobile nav (Radix Dialog trigger) is either fixed or the root-cause is documented with an accepted workaround
-  4. Full test suite stays green; build stays clean; no regressions on the 11 enabled playground components
-**Plans**: TBD
+**Success Criteria** (all TRUE):
+  1. ✅ `pushPlaygroundParams` preserves non-playground query params and the URL hash when writing playground state (WR-01 — closed by plan 24.1-01)
+  2. ✅ `PlaygroundPropsForm` no longer wraps Radix `Toggle` in a `<label>` (WR-02 — closed by plan 24.1-02)
+  3. ✅ Header hydration mismatch fixed via mounted-flag gate in `SidebarDrawer`; SSR emits plain hamburger shell, Radix wires aria-controls post-mount (plan 24.1-03 Path A)
+  4. ✅ Full test suite green (914 tests monorepo-wide); turbo build clean (0 hydration warnings); 11 enabled playground components unregressed
+**Plans**: 3/3 complete (24.1-01, 24.1-02, 24.1-03)
 
 ### Phase 25: blakepetersen.io Theming
 **Goal**: blakepetersen.io supports light/dark mode switching with no visual regressions from its current dark-only appearance
@@ -195,5 +195,6 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 22. Artax Reference Site Scaffold | 2/2 | Complete    | 2026-03-28 | - |
 | 23. Component Catalog & Documentation | 1/3 | In Progress|  | - |
 | 24. Editable Previews | v1.3 | 7/7 | Complete   | 2026-04-19 |
+| 24.1 Editable Previews Polish | v1.3 | 4/3 | Complete    | 2026-04-19 |
 | 25. blakepetersen.io Theming | v1.3 | 0/? | Not started | - |
 | 26. blakepetersen.io Page Updates | v1.3 | 0/? | Not started | - |

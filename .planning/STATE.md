@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
-status: executing
-stopped_at: "Phase 24.1 plan 02 complete — WR-02 closed (Toggle no longer in <label>); plan 03 (Header hydration) next"
-last_updated: "2026-04-19T06:09:48Z"
-last_activity: 2026-04-19 -- Phase 24.1 plan 02 (WR-02) complete
+status: in_progress
+stopped_at: Phase 24.1 complete — all three follow-ups closed (WR-01, WR-02, Header hydration via mounted-flag gate in SidebarDrawer); resuming with Phase 25 (blakepetersen.io theming)
+last_updated: "2026-04-18T00:00:00.000Z"
+last_activity: 2026-04-18
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 18
-  completed_plans: 16
-  percent: 89
+  completed_plans: 19
+  percent: 71
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 24.1 — editable-previews-polish
+**Current focus:** Phase 25 — blakepetersen.io theming
 
 ## Current Position
 
-Phase: 24.1 (editable-previews-polish) — EXECUTING
-Plan: 2 of 3
-Plans: 7 plans across 5 waves; ARTAX-08 covered; checker verification passed iteration 2/3
-Status: Executing Phase 24.1
-Last activity: 2026-04-19 -- Phase 24.1 plan 02 (WR-02) complete
+Phase: 25
+Plan: Not started
+Plans: TBD (planning step pending)
+Status: Phase 24.1 complete; starting Phase 25 (blakepetersen.io theming)
+Last activity: 2026-04-18
 
-Progress: [█████░░░░░] 50%
+Progress: [███████░░░] 71% (5 of 7 phases complete)
 
 ## Performance Metrics
 
@@ -85,6 +85,8 @@ Progress: [█████░░░░░] 50%
 - [Phase 24]: Route tests .tsx not .ts (JSX under ts-jest requires .tsx); locality-of-intent partition duplication for drift detection
 - [Phase 24 gap-closure]: preview(values) signature lets playground edits drive preview in real time — closes ARTAX-08 criterion #2 gap from 24-VERIFICATION. ComponentDef.preview signature widened from `(variant?: string)` to `(values?: Record<string, string>)`; 11 enabled components destructure from bag with `as` casts for literal unions and `=== 'true'` for booleans; 4 excluded components unchanged (structural subtyping). Supersedes the 24-05 deferral note above.
 - [Phase 24.1]: 24.1-02: Radix-backed button primitives (Toggle) must not be `<label>` children — aria-label carries accessible name. Boolean branch of PlaygroundPropsForm switched from `<label><Toggle>` to `<div><Toggle aria-label={prop.name}>`; select/number/text branches untouched (real form controls, native label semantics are correct).
+- [Phase 24.1]: 24.1-03: Mounted-flag gate on Radix primitives above the fold. SidebarDrawer wraps the Radix Dialog tree behind `useState(false) + useEffect(() => setMounted(true), [])`; SSR returns `{children}` verbatim so aria-controls (derived from @radix-ui/react-id useId) is absent from server output. Header remains a server component. Reusable pattern for any Radix primitive rendered in initial viewport (Tooltip, Popover, DropdownMenu) in Phase 25+.
+- [Phase 24.1]: 24.1-03: Hydration-safety regression test pattern — `renderToString(<Component />)` + `.not.toMatch(/aria-controls="radix-/)` asserts the SSR contract invariant rather than chasing console.error patterns (RTL jsdom cannot replay SSR, so warning-spy tests are insufficient).
 
 ### Roadmap Evolution
 
@@ -101,6 +103,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T06:09:48Z
-Stopped at: Phase 24.1 plan 02 complete — WR-02 closed (Toggle no longer in <label>); plan 03 (Header hydration) next
+Last session: 2026-04-19T06:24:00Z
+Stopped at: Phase 24.1 complete — all three follow-ups closed (WR-01, WR-02, Header hydration via mounted-flag gate in SidebarDrawer); ready for Phase 25 (theming)
 Resume file: None
