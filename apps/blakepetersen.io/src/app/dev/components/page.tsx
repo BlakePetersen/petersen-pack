@@ -41,6 +41,8 @@ export default function DevComponentsPage() {
   }
 
   return (
+    // theme-static: dev-only page wrapper uses a fixed mid-gray background so the side-by-side
+    // light + dark theme columns below render with consistent contrast for visual diffing
     <div className="min-h-screen bg-neutral-500 p-8">
       <h1 className="mb-8 text-center font-mono text-2xl text-white">
         artax-ui Component Preview

@@ -152,6 +152,7 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
 
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Portal>
+          {/* theme-static: modal scrim is conventionally a dark semi-transparent layer in both modes; artax-ui has no overlay token */}
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
           <Dialog.Content
             className="fixed left-[50%] top-[20%] z-50 w-full max-w-lg translate-x-[-50%] border border-border bg-background shadow-lg"

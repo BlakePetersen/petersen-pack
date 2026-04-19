@@ -1,5 +1,7 @@
 // ABOUTME: Dependency graph computation from content frontmatter relationships.
 // ABOUTME: Builds adjacency, computes dagre layout, and renders terminal-styled SVG.
+// theme-static: graph SVG is generated server-side as a string and shipped as an inline image;
+// hardcoded fill/stroke values render the same in both light and dark site modes by design.
 
 import dagre from '@dagrejs/dagre'
 

@@ -1,5 +1,8 @@
 // ABOUTME: Custom Shiki TextMate theme mapping terminal palette colors to syntax scopes.
 // ABOUTME: Used by the Velite rehype pipeline for build-time syntax highlighting.
+// theme-static: site renders code blocks with a single dark "terminal" syntax theme in both
+// light and dark site modes, by deliberate aesthetic choice. A light-syntax companion is
+// future scope and intentionally not in Phase 25.
 
 import type { ThemeRegistration } from 'shiki'
 

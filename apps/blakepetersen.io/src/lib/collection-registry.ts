@@ -23,6 +23,9 @@ export type CollectionDefinition = {
   getter: () => (DxContent | PostContent)[]
 }
 
+// theme-static: per-collection brand accent colors render as section indicator dots in
+// the sidebar; intentionally consistent across light and dark site modes so collections
+// stay recognizable when readers switch themes.
 const collections: Record<string, CollectionDefinition> = {
   skills: {
     slug: 'skills',

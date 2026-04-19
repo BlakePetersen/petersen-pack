@@ -1,5 +1,7 @@
 // ABOUTME: Shared Open Graph image renderer with terminal aesthetic.
 // ABOUTME: Generates 1200x630 PNG images for social sharing on all content routes.
+// theme-static: OG images render server-side to PNG and are theme-independent by design;
+// social platforms preview the same image regardless of the visitor's site theme.
 
 import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'

@@ -54,6 +54,7 @@ export function buildNavData(): NavData {
 
   const sections: NavSection[] = [
     ...collectionSections,
+    // theme-static: same brand-accent pattern as collection-registry — fixed across themes
     { label: 'Project', href: '/changelog', color: '#6B7280', items: projectItems },
   ]
 
