@@ -54,7 +54,11 @@ export function SidebarDrawer({
     return <>{children}</>
   }
 
-  // Key on pathname forces remount, resetting open state to false on navigation
+  // Key on pathname forces remount, resetting open state to false on navigation.
+  // Tradeoff (24.1 IN-01): this also resets any internal Radix Dialog state
+  // (focus trap, animation). That is desired here — the drawer should fully
+  // dismiss on route change — and simpler than a `setOpen(false)` effect
+  // coordinated with Radix's close animation.
   return (
     <DrawerInner key={pathname} sections={sections}>
       {children}
