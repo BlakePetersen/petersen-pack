@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: executing
-stopped_at: Completed 24-02-PLAN.md (URL-state + prop-coercion modules)
-last_updated: "2026-04-19T03:45:32.021Z"
+stopped_at: Completed 24-03-PLAN.md (ComponentDef playground opt-in)
+last_updated: "2026-04-19T04:15:02.304Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 15
-  completed_plans: 10
-  percent: 67
+  completed_plans: 11
+  percent: 73
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 24 (editable-previews) — EXECUTING
-Plan: 2 of 7
+Plan: 3 of 7
 Plans: 7 plans across 5 waves; ARTAX-08 covered; checker verification passed iteration 2/3
 Status: Ready to execute
 Last activity: 2026-04-19
@@ -70,6 +70,8 @@ Progress: [█████░░░░░] 50%
 - [Phase 24]: 24-02: Pure-module TDD pattern — test RED commit → feat GREEN commit; no refactor when initial impl already extracts named constants
 - [Phase 24]: 24-02: URL state ownership is scoped to p[*] namespace; callers merge any non-playground query params themselves
 - [Phase 24]: 24-02: Data-driven coercion test carries explicit EXPECTED_KIND_BY_TYPE table — new registry prop.type shapes fail loudly in review
+- [Phase 24]: 24-03: Playground exclusion encoded by field omission (not enabled:false) — minimal data surface for the 4 excluded components; partition test catches drift
+- [Phase 24]: 24-03: defaultExampleIndex intentionally unpopulated on all 11 enabled entries — index 0 is sensible default; YAGNI until 24-05 proves otherwise
 
 ### Pending Todos
 
@@ -82,6 +84,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T03:45:21.028Z
-Stopped at: Completed 24-02-PLAN.md (URL-state + prop-coercion modules)
+Last session: 2026-04-19T04:15:02.302Z
+Stopped at: Completed 24-03-PLAN.md (ComponentDef playground opt-in)
 Resume file: None
