@@ -12,7 +12,7 @@ export function DependencyGraph({
 }: DependencyGraphProps) {
   return (
     <section className="mt-8">
-      <h3 className="mb-4 font-mono text-sm text-zinc-500">{'// '}{label}</h3>
+      <h3 className="mb-4 font-mono text-sm text-muted-foreground">{'// '}{label}</h3>
       <div
         className="overflow-x-auto"
         dangerouslySetInnerHTML={{ __html: svgContent }}

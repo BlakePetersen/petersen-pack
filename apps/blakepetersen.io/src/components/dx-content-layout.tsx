@@ -68,7 +68,7 @@ export function DxContentLayout({ item, artifact }: { item: DxContent; artifact?
 
       {item.dependencies.length > 0 && (
         <div className="mt-8 md:hidden">
-          <h3 className="mb-2 font-mono text-sm text-zinc-500">
+          <h3 className="mb-2 font-mono text-sm text-muted-foreground">
             {'// '}dependencies
           </h3>
           <ul className="space-y-1">
