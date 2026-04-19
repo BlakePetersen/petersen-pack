@@ -66,6 +66,7 @@ See: `.planning/milestones/v1.2-ROADMAP.md` for full details.
 - [x] **Phase 22: Artax Reference Site Scaffold** - New apps/artax Next.js app with theme toggle and turbo pipeline (completed 2026-03-28)
 - [x] **Phase 23: Component Catalog & Documentation** - Sidebar navigation, live previews, code snippets, props tables, token reference (completed 2026-04-17)
 - [x] **Phase 24: Editable Previews** - react-live compat check; editable mock data on previews (falls back to static) (completed 2026-04-19)
+- [ ] **Phase 24.1: Editable Previews Polish** *(INSERTED)* - close WR-01 (pushPlaygroundParams query-param wipe), WR-02 (Radix Toggle label double-dispatch), pre-existing Header hydration mismatch
 - [ ] **Phase 25: blakepetersen.io Theming** - ThemeProvider, theme toggle, FOUT prevention
 - [ ] **Phase 26: blakepetersen.io Page Updates** - Homepage, Skills Detail, About, Start Here, Collection Listing matched to Pencil designs
 
@@ -125,6 +126,17 @@ Plans:
   1. react-live React 19 compatibility has been verified (pass/fail documented)
   2. If compatible: component previews accept user-editable props/data that update the preview in real time
   3. If incompatible: previews remain static (from Phase 23) and ARTAX-08 is deferred to future requirements as ARTAX-F01
+**Plans**: TBD
+
+### Phase 24.1: Editable Previews Polish *(INSERTED)*
+**Goal**: Resolve the three follow-ups surfaced by Phase 24's review + verification cycles without delaying Phase 25
+**Depends on**: Phase 24
+**Requirements**: ARTAX-08 (hardening), none new
+**Success Criteria** (what must be TRUE):
+  1. `pushPlaygroundParams` preserves non-playground query params and the URL hash when writing playground state (WR-01)
+  2. `PlaygroundPropsForm` no longer wraps Radix `Toggle` (a native `<button>`) in a `<label>` — resolves the native-label click-forwarding risk (WR-02)
+  3. The hydration mismatch in `Header.tsx` mobile nav (Radix Dialog trigger) is either fixed or the root-cause is documented with an accepted workaround
+  4. Full test suite stays green; build stays clean; no regressions on the 11 enabled playground components
 **Plans**: TBD
 
 ### Phase 25: blakepetersen.io Theming

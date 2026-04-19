@@ -85,6 +85,10 @@ Progress: [█████░░░░░] 50%
 - [Phase 24]: Route tests .tsx not .ts (JSX under ts-jest requires .tsx); locality-of-intent partition duplication for drift detection
 - [Phase 24 gap-closure]: preview(values) signature lets playground edits drive preview in real time — closes ARTAX-08 criterion #2 gap from 24-VERIFICATION. ComponentDef.preview signature widened from `(variant?: string)` to `(values?: Record<string, string>)`; 11 enabled components destructure from bag with `as` casts for literal unions and `=== 'true'` for booleans; 4 excluded components unchanged (structural subtyping). Supersedes the 24-05 deferral note above.
 
+### Roadmap Evolution
+
+- Phase 24.1 inserted after Phase 24: Editable Previews Polish — close WR-01 (query-param wipe), WR-02 (Toggle/label), pre-existing Header hydration mismatch (URGENT — surfaced by 24-REVIEW.md and carried into Phase 24.1 rather than deferred)
+
 ### Pending Todos
 
 None.
