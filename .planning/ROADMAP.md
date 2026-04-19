@@ -160,7 +160,15 @@ Plans:
   3. About page matches the approved Pencil design in both light and dark modes
   4. Start Here page matches the approved Pencil design in both light and dark modes
   5. Collection Listing page matches the approved Pencil design in both light and dark modes
-**Plans**: TBD
+**Plans:** 7 plans (01 split into 01 + 01b per checker recommendation)
+Plans:
+- [ ] 26-01-PLAN.md — Extract generic primitives (Badge extension, Modal, PrevNextNav) into artax-ui
+- [ ] 26-01b-PLAN.md — Extract editorial primitives (AuthorNote, DecisionRationale) behind D-05 gate + reconcile mdxComponents
+- [ ] 26-02-PLAN.md — Homepage surgical rewrite (SITE-03)
+- [ ] 26-03-PLAN.md — Skills Detail + retire page-navigation.tsx, wire PrevNextNav (SITE-04)
+- [ ] 26-04-PLAN.md — About page recompose with Badge chips + terminal CTAs (SITE-05)
+- [ ] 26-05-PLAN.md — Start Here numbered walkthrough recompose (SITE-06)
+- [ ] 26-06-PLAN.md — Collection Listing factory recompose across 5 routes + empty-state unit test (SITE-07)
 
 ## Progress
 
