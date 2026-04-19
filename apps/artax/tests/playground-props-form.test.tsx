@@ -184,4 +184,30 @@ describe('PlaygroundPropsForm', () => {
 
     expect(onChange).toHaveBeenCalledWith({ disabled: 'true' })
   })
+
+  it('fires onPressedChange exactly once per click and does not wrap Toggle in <label>', () => {
+    const onChange = jest.fn()
+    render(
+      <PlaygroundPropsForm
+        props={[disabledProp]}
+        values={{ disabled: 'false' }}
+        onChange={onChange}
+      />
+    )
+
+    // After the fix, aria-label="disabled" gives the button an accessible name.
+    // Before the fix, the visible text "disabled" gives it an accessible name
+    // via name-from-contents. Either way, the role=button query resolves.
+    const toggle = screen.getByRole('button', { name: 'disabled' })
+
+    // Deterministic RED assertion: Radix Toggle must NOT have a <label>
+    // ancestor. Native <label> click-forwarding to a <button> child is the
+    // latent double-dispatch risk that WR-02 closes.
+    expect(toggle.closest('label')).toBeNull()
+
+    fireEvent.click(toggle)
+
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith({ disabled: 'true' })
+  })
 })
