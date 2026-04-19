@@ -8,6 +8,18 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { SidebarDrawer } from '@/components/sidebar-drawer'
 import { getSidebarSections } from '@/lib/component-registry'
 
+// Hydration mismatch root cause (24.1-03 investigation):
+// Radix Dialog (used inside SidebarDrawer) seeds its internal aria-controls/
+// aria-labelledby/aria-describedby IDs from @radix-ui/react-id, which calls
+// React.useId() for its initial useState value and then replaces it in a
+// useLayoutEffect with a module-scoped counter fallback. The React 19 +
+// Next 16 runtime produces a different aria-controls string between the
+// server-rendered hamburger button and the client's hydrated trigger, firing
+// a "hydrat ... did not match" warning against apps/artax/src/components/
+// header.tsx:17 (the <SidebarDrawer> → Radix DialogTrigger subtree).
+// Mitigation: gate the Radix subtree on a mounted flag inside SidebarDrawer
+// so SSR emits a plain <button> shell with identical className + aria-label
+// and the Radix-managed IDs only appear post-mount on the client.
 export function Header() {
   const sections = getSidebarSections()
 
