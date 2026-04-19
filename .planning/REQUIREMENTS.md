@@ -25,7 +25,7 @@ Requirements for milestone v1.3 Artax Design System. Each maps to roadmap phases
 - [x] **ARTAX-05**: Props/API table documentation for each component
 - [x] **ARTAX-06**: Design token reference page (colors, typography, spacing, radii)
 - [x] **ARTAX-07**: Site-wide light/dark theme toggle persisted via next-themes
-- [ ] **ARTAX-08**: Editable mock data on component previews (gated on react-live React 19 compat; falls back to static)
+- [x] **ARTAX-08**: Editable mock data on component previews (gated on react-live React 19 compat; falls back to static)
 
 ### Site Updates
 
@@ -76,7 +76,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ARTAX-05 | Phase 23 | Complete |
 | ARTAX-06 | Phase 23 | Complete |
 | ARTAX-07 | Phase 22 | Complete |
-| ARTAX-08 | Phase 24 | Pending |
+| ARTAX-08 | Phase 24 | Complete |
 | SITE-01 | Phase 25 | Pending |
 | SITE-02 | Phase 25 | Pending |
 | SITE-03 | Phase 26 | Pending |
