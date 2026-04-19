@@ -72,6 +72,10 @@ export interface ComponentDef {
   codeExamples: CodeExample[]
   a11y: string[]
   preview: (variant?: string) => ReactNode
+  playground?: {
+    enabled: boolean
+    defaultExampleIndex?: number
+  }
 }
 
 // Short helper to keep the registry data dense and readable.
@@ -142,6 +146,7 @@ const components: ComponentDef[] = [
         { variant: (variant as 'default' | 'outline' | 'ghost') ?? 'default' },
         'Run',
       ),
+    playground: { enabled: true },
   },
   {
     name: 'Input',
@@ -190,6 +195,7 @@ const components: ComponentDef[] = [
       'Disabled state sets cursor-not-allowed and reduces opacity.',
     ],
     preview: () => h(Input, { placeholder: 'username', className: 'max-w-xs' }),
+    playground: { enabled: true },
   },
   {
     name: 'Badge',
@@ -237,6 +243,7 @@ const components: ComponentDef[] = [
         { variant: (variant as 'default' | 'outline' | 'secondary') ?? 'default' },
         'NEW',
       ),
+    playground: { enabled: true },
   },
   {
     name: 'Separator',
@@ -278,6 +285,7 @@ const components: ComponentDef[] = [
         h(Separator, null),
         h('p', { className: 'font-mono text-xs text-muted-foreground' }, 'below'),
       ),
+    playground: { enabled: true },
   },
   {
     name: 'CopyButton',
@@ -313,6 +321,7 @@ const components: ComponentDef[] = [
       'State revert after 2s is purely visual; announce copy success with a live region if needed.',
     ],
     preview: () => h(CopyButton, { text: 'echo "hello, artax"' }),
+    playground: { enabled: true },
   },
   {
     name: 'Toggle',
@@ -375,6 +384,7 @@ const components: ComponentDef[] = [
         },
         'B',
       ),
+    playground: { enabled: true },
   },
   // ─────────────────────────────────────────────────────── Molecules ──
   {
@@ -434,6 +444,7 @@ const components: ComponentDef[] = [
           'connected',
         ),
       ),
+    playground: { enabled: true },
   },
   {
     name: 'Table',
@@ -527,6 +538,7 @@ const components: ComponentDef[] = [
           ),
         ),
       ),
+    playground: { enabled: true },
   },
   {
     name: 'Callout',
@@ -589,6 +601,7 @@ const components: ComponentDef[] = [
         },
         'Shells close automatically after 15 minutes of inactivity.',
       ),
+    playground: { enabled: true },
   },
   {
     name: 'CodeBlock',
@@ -667,6 +680,7 @@ const components: ComponentDef[] = [
           h('code', null, 'pnpm install\npnpm -F artax build'),
         ),
       ),
+    playground: { enabled: true },
   },
   {
     name: 'Tabs',
@@ -746,6 +760,7 @@ const components: ComponentDef[] = [
         h(TabsContent, { value: 'code' }, 'Code examples live here.'),
         h(TabsContent, { value: 'props' }, 'Props reference lives here.'),
       ),
+    playground: { enabled: true },
   },
   {
     name: 'Tooltip',
