@@ -162,7 +162,7 @@ Plans:
   5. Collection Listing page matches the approved Pencil design in both light and dark modes
 **Plans:** 7 plans (01 split into 01 + 01b per checker recommendation)
 Plans:
-- [ ] 26-01-PLAN.md — Extract generic primitives (Badge extension, Modal, PrevNextNav) into artax-ui
+- [x] 26-01-PLAN.md — Extract generic primitives (Badge extension, Modal, PrevNextNav) into artax-ui
 - [ ] 26-01b-PLAN.md — Extract editorial primitives (AuthorNote, DecisionRationale) behind D-05 gate + reconcile mdxComponents
 - [ ] 26-02-PLAN.md — Homepage surgical rewrite (SITE-03)
 - [ ] 26-03-PLAN.md — Skills Detail + retire page-navigation.tsx, wire PrevNextNav (SITE-04)
@@ -205,4 +205,4 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 24. Editable Previews | v1.3 | 7/7 | Complete   | 2026-04-19 |
 | 24.1 Editable Previews Polish | v1.3 | 4/3 | Complete    | 2026-04-19 |
 | 25. blakepetersen.io Theming | v1.3 | 1/1 | Complete   | 2026-04-19 |
-| 26. blakepetersen.io Page Updates | v1.3 | 0/? | Not started | - |
+| 26. blakepetersen.io Page Updates | v1.3 | 1/7 | In progress | - |

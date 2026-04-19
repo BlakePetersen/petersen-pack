@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: in_progress
-stopped_at: Phase 26 planned — UI-SPEC (6/6 dims, 1 revision) + RESEARCH (open questions RESOLVED) + PATTERNS (20/21 analogs) + VALIDATION (Nyquist compliant) + 7 plans (01 generic primitives, 01b editorial primitives + D-05 gate, 02–06 pages) verified 12/12 dimensions clean on re-check; ready to execute Wave 1
-last_updated: "2026-04-19T19:30:00.000Z"
+stopped_at: Phase 26-01 complete — Badge extended with info/success/warning/destructive; Modal primitive composes Dialog with mounted-flag SSR gate; PrevNextNav extracted as presentation-only molecule; barrel exports Modal + PrevNextNav; 293/293 artax-ui tests green; ready for 26-01b (AuthorNote + DecisionRationale + D-05 gate)
+last_updated: "2026-04-19T20:10:00.000Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 7
   completed_phases: 6
-  total_plans: 26
-  completed_plans: 20
+  total_plans: 27
+  completed_plans: 21
   percent: 86
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 26
-Plan: Not started
-Plans: 7 total — 01 + 01b (Wave 1 primitives), 02–06 (Wave 2 pages)
-Status: Phase 26 planned — context, UI-SPEC, research, patterns, validation, and 7 PLANs committed; verification passed 12/12; ready to execute
+Plan: 01 complete; 01b next
+Plans: 7 total — 01 ✓, 01b (editorial-voice gate), 02–06 (Wave 2 pages)
+Status: 26-01 shipped Badge extension + Modal + PrevNextNav to artax-ui; 293/293 tests green; ready for 26-01b
 Last activity: 2026-04-19
 
 Progress: [████████░░] 86% (6 of 7 phases complete)
@@ -87,6 +87,10 @@ Progress: [████████░░] 86% (6 of 7 phases complete)
 - [Phase 24.1]: 24.1-02: Radix-backed button primitives (Toggle) must not be `<label>` children — aria-label carries accessible name. Boolean branch of PlaygroundPropsForm switched from `<label><Toggle>` to `<div><Toggle aria-label={prop.name}>`; select/number/text branches untouched (real form controls, native label semantics are correct).
 - [Phase 24.1]: 24.1-03: Mounted-flag gate on Radix primitives above the fold. SidebarDrawer wraps the Radix Dialog tree behind `useState(false) + useEffect(() => setMounted(true), [])`; SSR returns `{children}` verbatim so aria-controls (derived from @radix-ui/react-id useId) is absent from server output. Header remains a server component. Reusable pattern for any Radix primitive rendered in initial viewport (Tooltip, Popover, DropdownMenu) in Phase 25+.
 - [Phase 24.1]: 24.1-03: Hydration-safety regression test pattern — `renderToString(<Component />)` + `.not.toMatch(/aria-controls="radix-/)` asserts the SSR contract invariant rather than chasing console.error patterns (RTL jsdom cannot replay SSR, so warning-spy tests are insufficient).
+- [Phase 26]: 26-01: Modal is a composition over artax-ui Dialog (not a parallel Radix wrapper); mounted-flag SSR gate applied at the primitive boundary so every consumer inherits the fix automatically. Slot re-exports (Modal.Title/Description/Close) pointing at Dialog's tagged titles keep the a11y contract intact.
+- [Phase 26]: 26-01: SSR regression assertion colocated in `modal.test.tsx` (not a separate hydration test file) — single-file contract reduces drift between render and SSR tests.
+- [Phase 26]: 26-01: `next/link` is reachable from artax-ui's jest-jsdom context via pnpm hoisting; PrevNextNav keeps the direct `<Link>` import (not the asChild fallback) to preserve client-side transitions for bp.io consumers.
+- [Phase 26]: 26-01: Any new `*.tsx` under `packages/artax-ui/src/components` must be registered in `tests/boundaries.test.ts` (server-safe vs client) in the same commit as the file itself — enforced by a coverage assertion.
 
 ### Roadmap Evolution
 
@@ -103,6 +107,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T18:00:00Z
-Stopped at: Phase 26 context gathered — 4 gray areas discussed (rewrite strategy, plan granularity, primitive placement, Pencil fidelity); 7 decisions locked; ready for UI-SPEC + plan-phase
-Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-CONTEXT.md
+Last session: 2026-04-19T20:10:00Z
+Stopped at: Completed 26-01 — Badge info/success/warning/destructive variants (additive), Modal composition over Dialog with Phase 24.1 mounted-flag SSR gate, PrevNextNav extracted as dumb presentation-only molecule, barrel + boundaries updated; 293/293 artax-ui tests green
+Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-01b-PLAN.md
