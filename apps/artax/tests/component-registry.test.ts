@@ -199,3 +199,61 @@ describe('component-registry', () => {
     expect(getComponent('unknown-tier', 'button')).toBeUndefined()
   })
 })
+
+// Playground opt-in exclusion list — mirrors 24-CONTEXT.md D-05 and 24-RESEARCH.md Pattern 5.
+// Kept as literal arrays (not derived from the registry) so drift fails loudly in review.
+const ENABLED_PLAYGROUND_SLUGS = [
+  'button',
+  'input',
+  'badge',
+  'separator',
+  'copy-button',
+  'toggle',
+  'card',
+  'table',
+  'callout',
+  'code-block',
+  'tabs',
+]
+const EXCLUDED_PLAYGROUND_SLUGS = ['tooltip', 'accordion', 'dialog', 'dropdown']
+
+describe('playground opt-in', () => {
+  it('exactly 11 components have playground.enabled === true', () => {
+    const enabled = getAllComponents().filter((c) => c.playground?.enabled)
+    expect(enabled).toHaveLength(11)
+  })
+
+  it('enabled playground slugs match the agreed list exactly', () => {
+    const enabledSlugs = getAllComponents()
+      .filter((c) => c.playground?.enabled)
+      .map((c) => c.slug)
+      .sort()
+    expect(enabledSlugs).toEqual([...ENABLED_PLAYGROUND_SLUGS].sort())
+  })
+
+  it('excluded components have no enabled playground (undefined or enabled === false)', () => {
+    const excluded = getAllComponents().filter(
+      (c) => c.playground === undefined || c.playground.enabled === false,
+    )
+    const excludedSlugs = excluded.map((c) => c.slug).sort()
+    expect(excludedSlugs).toEqual([...EXCLUDED_PLAYGROUND_SLUGS].sort())
+  })
+
+  it('enabled and excluded lists partition the registry exactly (no overlap, no gap)', () => {
+    const all = getAllComponents().map((c) => c.slug).sort()
+    const partition = [...ENABLED_PLAYGROUND_SLUGS, ...EXCLUDED_PLAYGROUND_SLUGS].sort()
+    expect(all).toEqual(partition)
+  })
+
+  it('every playground.defaultExampleIndex (when present) is a valid codeExamples index', () => {
+    const all = getAllComponents()
+    all.forEach((c) => {
+      const idx = c.playground?.defaultExampleIndex
+      if (idx !== undefined) {
+        expect(Number.isInteger(idx)).toBe(true)
+        expect(idx).toBeGreaterThanOrEqual(0)
+        expect(idx).toBeLessThan(c.codeExamples.length)
+      }
+    })
+  })
+})
