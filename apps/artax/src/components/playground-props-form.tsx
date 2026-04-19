@@ -39,17 +39,18 @@ export function PlaygroundPropsForm({
         switch (control.kind) {
           case 'boolean':
             return (
-              <label
+              <div
                 key={prop.name}
                 className="flex items-center gap-2 font-mono text-xs"
               >
                 <Toggle
+                  aria-label={prop.name}
                   pressed={current === 'true'}
                   onPressedChange={(v) => update(prop.name, String(v))}
                 >
                   {prop.name}
                 </Toggle>
-              </label>
+              </div>
             )
           case 'select':
             return (
