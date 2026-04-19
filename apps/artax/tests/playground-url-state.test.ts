@@ -68,21 +68,46 @@ describe('playground-url-state', () => {
 
   describe('pushPlaygroundParams', () => {
     let pushStateSpy: jest.SpyInstance
+    const originalHref = window.location.href
 
     beforeEach(() => {
-      pushStateSpy = jest.spyOn(window.history, 'pushState').mockImplementation(() => {})
+      // Don't spy yet — we use the real pushState below in stubLocation to
+      // move jsdom to the desired URL, then spy so the SUT's pushState call
+      // is the only one captured.
     })
 
     afterEach(() => {
-      pushStateSpy.mockRestore()
+      if (pushStateSpy) pushStateSpy.mockRestore()
+      // Reset jsdom URL to the original so tests stay isolated.
+      window.history.pushState(null, '', originalHref)
     })
 
+    /**
+     * Move jsdom to the given pathname/search/hash via the real pushState,
+     * then install the spy. After this returns, exactly one subsequent
+     * pushState call (the one under test) is captured in pushStateSpy.
+     */
+    function stubLocation(parts: { pathname?: string; search?: string; hash?: string }) {
+      const pathname = parts.pathname ?? '/'
+      const search = parts.search ?? ''
+      const hash = parts.hash ?? ''
+      window.history.pushState(null, '', `${pathname}${search}${hash}`)
+      pushStateSpy = jest.spyOn(window.history, 'pushState').mockImplementation(() => {})
+    }
+
+    /** Used by the three pre-existing tests that don't need a stubbed URL. */
+    function spyOnly() {
+      pushStateSpy = jest.spyOn(window.history, 'pushState').mockImplementation(() => {})
+    }
+
     it('invokes window.history.pushState exactly once', () => {
+      spyOnly()
       pushPlaygroundParams({ variant: 'outline' })
       expect(pushStateSpy).toHaveBeenCalledTimes(1)
     })
 
     it('pushes a URL containing the encoded p[*] params', () => {
+      spyOnly()
       pushPlaygroundParams({ variant: 'outline' })
       const urlArg = pushStateSpy.mock.calls[0][2] as string
       // URLSearchParams may encode brackets as %5B / %5D — accept either.
@@ -90,10 +115,59 @@ describe('playground-url-state', () => {
     })
 
     it('does not trigger a real navigation in jsdom', () => {
+      spyOnly()
       const before = window.location.href
       pushPlaygroundParams({ variant: 'outline' })
       // pushState is stubbed so window.location.href is unchanged.
       expect(window.location.href).toBe(before)
+    })
+
+    it('preserves non-playground query params', () => {
+      stubLocation({
+        pathname: '/components/button',
+        search: '?utm=test&ref=email',
+      })
+      pushPlaygroundParams({ variant: 'outline' })
+      const urlArg = pushStateSpy.mock.calls[0][2] as string
+      expect(urlArg).toMatch(/utm=test/)
+      expect(urlArg).toMatch(/ref=email/)
+      expect(urlArg).toMatch(/p(\[|%5B)variant(\]|%5D)=outline/)
+    })
+
+    it('preserves window.location.hash verbatim', () => {
+      stubLocation({
+        pathname: '/components/button',
+        search: '',
+        hash: '#examples',
+      })
+      pushPlaygroundParams({ variant: 'outline' })
+      const urlArg = pushStateSpy.mock.calls[0][2] as string
+      expect(urlArg).toMatch(/#examples$/)
+    })
+
+    it('drops stale p[*] keys before overlaying new payload', () => {
+      stubLocation({
+        pathname: '/components/button',
+        search: '?p[variant]=ghost&p[size]=lg&utm=test',
+      })
+      pushPlaygroundParams({ variant: 'outline' })
+      const urlArg = pushStateSpy.mock.calls[0][2] as string
+      expect(urlArg).toMatch(/p(\[|%5B)variant(\]|%5D)=outline/)
+      expect(urlArg).toMatch(/utm=test/)
+      expect(urlArg).not.toMatch(/p(\[|%5B)size(\]|%5D)=lg/)
+    })
+
+    it('keeps non-playground params and hash when props is empty', () => {
+      stubLocation({
+        pathname: '/components/button',
+        search: '?utm=test',
+        hash: '#anchor',
+      })
+      pushPlaygroundParams({})
+      const urlArg = pushStateSpy.mock.calls[0][2] as string
+      expect(urlArg).toMatch(/utm=test/)
+      expect(urlArg).toMatch(/#anchor$/)
+      expect(urlArg).not.toMatch(/p(\[|%5B)/)
     })
   })
 })
