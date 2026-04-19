@@ -46,6 +46,7 @@ export {
   TooltipContent,
   TooltipContentPrimitive
 } from './components/molecules/tooltip/tooltip'
+export { PrevNextNav } from './components/molecules/prev-next-nav/prev-next-nav'
 
 // Organisms
 export {
@@ -70,6 +71,7 @@ export {
   DialogTitlePrimitive,
   DialogDescriptionPrimitive
 } from './components/organisms/dialog/dialog'
+export { Modal } from './components/organisms/modal/modal'
 export {
   Dropdown,
   DropdownTrigger,

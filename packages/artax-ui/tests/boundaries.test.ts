@@ -13,6 +13,7 @@ const serverSafeFiles = [
   'molecules/card/card.tsx',
   'molecules/callout/callout.tsx',
   'molecules/code-block/code-block.tsx',
+  'molecules/prev-next-nav/prev-next-nav.tsx',
   'molecules/table/table.tsx'
 ]
 
@@ -23,7 +24,8 @@ const clientFiles = [
   'molecules/tooltip/tooltip.tsx',
   'organisms/accordion/accordion.tsx',
   'organisms/dialog/dialog.tsx',
-  'organisms/dropdown/dropdown-menu.tsx'
+  'organisms/dropdown/dropdown-menu.tsx',
+  'organisms/modal/modal.tsx'
 ]
 
 function walkTsx(dir: string): string[] {
