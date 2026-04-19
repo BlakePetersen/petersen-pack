@@ -65,7 +65,7 @@ See: `.planning/milestones/v1.2-ROADMAP.md` for full details.
 - [x] **Phase 21: artax-ui Restructure & Theming** - Atomic Design hierarchy, ThemeProvider, semantic tokens, Storybook removal (completed 2026-03-16)
 - [x] **Phase 22: Artax Reference Site Scaffold** - New apps/artax Next.js app with theme toggle and turbo pipeline (completed 2026-03-28)
 - [x] **Phase 23: Component Catalog & Documentation** - Sidebar navigation, live previews, code snippets, props tables, token reference (completed 2026-04-17)
-- [ ] **Phase 24: Editable Previews** - react-live compat check; editable mock data on previews (falls back to static)
+- [x] **Phase 24: Editable Previews** - react-live compat check; editable mock data on previews (falls back to static) (completed 2026-04-19)
 - [ ] **Phase 25: blakepetersen.io Theming** - ThemeProvider, theme toggle, FOUT prevention
 - [ ] **Phase 26: blakepetersen.io Page Updates** - Homepage, Skills Detail, About, Start Here, Collection Listing matched to Pencil designs
 
@@ -182,6 +182,6 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 21. artax-ui Restructure & Theming | 3/3 | Complete    | 2026-03-16 | - |
 | 22. Artax Reference Site Scaffold | 2/2 | Complete    | 2026-03-28 | - |
 | 23. Component Catalog & Documentation | 1/3 | In Progress|  | - |
-| 24. Editable Previews | v1.3 | 6/7 | In Progress|  |
+| 24. Editable Previews | v1.3 | 7/7 | Complete   | 2026-04-19 |
 | 25. blakepetersen.io Theming | v1.3 | 0/? | Not started | - |
 | 26. blakepetersen.io Page Updates | v1.3 | 0/? | Not started | - |
