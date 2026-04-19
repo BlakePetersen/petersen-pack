@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: executing
-stopped_at: Completed 24-05-PLAN.md (ComponentPlayground tab integration)
-last_updated: "2026-04-19T04:31:54.855Z"
+stopped_at: Completed 24-06-PLAN.md (JSX editor via react-live)
+last_updated: "2026-04-19T04:50:31.910Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 15
-  completed_plans: 13
-  percent: 87
+  completed_plans: 14
+  percent: 93
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 24 (editable-previews) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Plans: 7 plans across 5 waves; ARTAX-08 covered; checker verification passed iteration 2/3
 Status: Ready to execute
 Last activity: 2026-04-19
@@ -78,6 +78,10 @@ Progress: [█████░░░░░] 50%
 - [Phase 24]: 24-05: Body-split gate pattern — outer component returns null on disabled, inner body owns all hooks (keeps rules-of-hooks clean)
 - [Phase 24]: 24-05: Hand-rolled setTimeout-ref debounce (300ms) for URL pushes — single call site, no use-debounce dep
 - [Phase 24]: 24-05: useSearchParams readonly bridged via new URLSearchParams(searchParams.toString()) for Next 16 typing
+- [Phase 24]: 24-06: Scope enumeration (22 artax-ui names + React) — NOT wildcard spread — preserves tree-shaking per 24-01 spike Open Question 2
+- [Phase 24]: 24-06: React-19 JSX-transform warning tolerated (not suppressed via transformCode) — dev-only, absent from prod build per 24-01 spike
+- [Phase 24]: 24-06: JSX editor reset uses key={resetCounter} remount — LiveEditor owns its contenteditable buffer and ignores seed-prop changes post-mount
+- [Phase 24]: 24-06: PrismThemeEntry does not accept fontFamily/fontSize — font applied via font-mono text-sm Tailwind classes on the editor wrapper instead
 
 ### Pending Todos
 
@@ -90,6 +94,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T04:31:54.852Z
-Stopped at: Completed 24-05-PLAN.md (ComponentPlayground tab integration)
+Last session: 2026-04-19T04:50:23.248Z
+Stopped at: Completed 24-06-PLAN.md (JSX editor via react-live)
 Resume file: None
