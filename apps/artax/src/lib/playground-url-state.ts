@@ -37,6 +37,9 @@ export function decodePlaygroundParams(
  * AND the URL hash so sibling features (e.g. analytics utm params, page
  * anchors) survive every playground state write. See RESEARCH.md Pattern 2
  * / Next.js discussion #49540.
+ *
+ * @remarks Client-only. Dereferences `window.location` / `window.history` and
+ * will throw during SSR/prerender. Call from client components or effects.
  */
 export function pushPlaygroundParams(props: Record<string, string>): void {
   const next = new URLSearchParams(window.location.search)
