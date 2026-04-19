@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: executing
-stopped_at: Phase 24 gap closed — ARTAX-08 criterion #2 satisfied; ready for /gsd-verify-work rerun
-last_updated: "2026-04-17T00:00:00Z"
-last_activity: 2026-04-17
+stopped_at: "Phase 24.1 plan 02 complete — WR-02 closed (Toggle no longer in <label>); plan 03 (Header hydration) next"
+last_updated: "2026-04-19T06:09:48Z"
+last_activity: 2026-04-19 -- Phase 24.1 plan 02 (WR-02) complete
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 4
-  total_plans: 15
-  completed_plans: 15
-  percent: 100
+  total_plans: 18
+  completed_plans: 16
+  percent: 89
 ---
 
 # Project State
@@ -21,15 +21,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 24 — editable-previews
+**Current focus:** Phase 24.1 — editable-previews-polish
 
 ## Current Position
 
-Phase: 24 (editable-previews) — EXECUTING
-Plan: 7 of 7
+Phase: 24.1 (editable-previews-polish) — EXECUTING
+Plan: 2 of 3
 Plans: 7 plans across 5 waves; ARTAX-08 covered; checker verification passed iteration 2/3
-Status: Ready to execute
-Last activity: 2026-04-19
+Status: Executing Phase 24.1
+Last activity: 2026-04-19 -- Phase 24.1 plan 02 (WR-02) complete
 
 Progress: [█████░░░░░] 50%
 
@@ -84,6 +84,7 @@ Progress: [█████░░░░░] 50%
 - [Phase 24]: 24-06: PrismThemeEntry does not accept fontFamily/fontSize — font applied via font-mono text-sm Tailwind classes on the editor wrapper instead
 - [Phase 24]: Route tests .tsx not .ts (JSX under ts-jest requires .tsx); locality-of-intent partition duplication for drift detection
 - [Phase 24 gap-closure]: preview(values) signature lets playground edits drive preview in real time — closes ARTAX-08 criterion #2 gap from 24-VERIFICATION. ComponentDef.preview signature widened from `(variant?: string)` to `(values?: Record<string, string>)`; 11 enabled components destructure from bag with `as` casts for literal unions and `=== 'true'` for booleans; 4 excluded components unchanged (structural subtyping). Supersedes the 24-05 deferral note above.
+- [Phase 24.1]: 24.1-02: Radix-backed button primitives (Toggle) must not be `<label>` children — aria-label carries accessible name. Boolean branch of PlaygroundPropsForm switched from `<label><Toggle>` to `<div><Toggle aria-label={prop.name}>`; select/number/text branches untouched (real form controls, native label semantics are correct).
 
 ### Roadmap Evolution
 
@@ -100,6 +101,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-17T00:00:00Z
-Stopped at: Phase 24 gap closed — ARTAX-08 criterion #2 satisfied via preview(values) wiring; ready for /gsd-verify-work rerun
+Last session: 2026-04-19T06:09:48Z
+Stopped at: Phase 24.1 plan 02 complete — WR-02 closed (Toggle no longer in <label>); plan 03 (Header hydration) next
 Resume file: None
