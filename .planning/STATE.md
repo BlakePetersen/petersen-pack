@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: in_progress
-stopped_at: Phase 26-05 complete — Start Here page (SITE-06) recomposed to Pencil composition: // start_here mono hero + editorial H1 + $ start-here shell CTA, numbered bg-card p-6 step cards with zero-padded text-primary step numbers, per-step $ go-to-{collection} CTAs, // next footer with [skills] / [home] brackets. Data contract (steps + resolveSteps) preserved. Typecheck + build clean. DecisionRationale skipped (Pencil MCP unavailable, no discrete "why this stack" content). D-07 batched for phase end (02/03/04/05 deferred, 06 upcoming).
-last_updated: "2026-04-19T20:31:37.000Z"
+stopped_at: Phase 26-06 complete — Collection Listing (SITE-07) factory recomposed via single edit to createCollectionIndexPage; all 5 listing routes (/configs, /hooks, /guides, /skills, /posts) inherit new header (// {slug} caption + label H1 + count Badge + indexDescription), refined row typography, and UI-SPEC empty-state branch. New jest test tests/lib/collection-pages.test.tsx mocks getCollection to return [] and verifies empty-state deterministically via renderToStaticMarkup (replaces destructive manual content-deletion step). Existing variant=secondary tag pills preserved (pre=2, post=3 — additive count Badge only). Typecheck + 214/214 tests + build all green. D-07 visual smoke batched for phase end with 02/03/04/05.
+last_updated: "2026-04-19T21:05:00.000Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 27
-  completed_plans: 22
-  percent: 89
+  completed_plans: 23
+  percent: 92
 ---
 
 # Project State
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 26
-Plan: 01, 01b, 02, 03, 04, 05 complete; 06 next
-Plans: 7 total — 01 ✓, 01b ✓, 02 ✓, 03 ✓, 04 ✓, 05 ✓, 06 (Collection Listing)
-Status: 26-05 shipped Start Here recompose (SITE-06) — hero + $ start-here CTA, bg-card numbered step cards with primary numbers, $ go-to-{collection} per-step CTAs, // next footer with bracket links; data contract preserved; typecheck + build clean; D-07 still batched for phase end
+Plan: 01, 01b, 02, 03, 04, 05, 06 complete — all execute plans shipped; D-07 phase-end visual smoke across all 5 Phase-26 routes is the remaining gate
+Plans: 7 total — 01 ✓, 01b ✓, 02 ✓, 03 ✓, 04 ✓, 05 ✓, 06 ✓
+Status: 26-06 shipped Collection Listing factory recompose (SITE-07) — single edit to createCollectionIndexPage propagates to /configs /hooks /guides /skills /posts; Pencil header with count Badge, refined listing rows, UI-SPEC empty-state; new empty-state unit test (4 cases, renderToStaticMarkup + mocked getCollection) replaces destructive manual verification; existing variant=secondary tag pills preserved; typecheck + 214/214 tests + build all green; D-07 batched for phase end
 Last activity: 2026-04-19
 
-Progress: [█████████░] 89% (6 of 7 phases complete)
+Progress: [█████████░] 92% (6 of 7 phases complete, Phase 26 awaiting D-07 smoke)
 
 ## Performance Metrics
 
@@ -96,6 +96,9 @@ Progress: [█████████░] 89% (6 of 7 phases complete)
 - [Phase 26]: 26-04: About recompose (SITE-05) — Badge meta row + interests grid, max-w-prose column, Lead-role mono prose, `$ email-blake`/`$ find-me-on-github` shell CTAs. AuthorNote skipped (Pencil MCP unavailable; no discrete personal-aside in current prose). TODO scaffolding preserved per D-01. GitHub URL canonical-cased to `BlakePetersen` (matches homepage).
 - [Phase 26]: 26-04: D-07 smoke check deferred to phase-end batch per Plan 02/03 precedent. `// interests` chip list (6 secondary-variant labels) is the only executor-authored stub — Blake can edit post-D-07.
 - [Phase 26]: 26-05: Start Here recompose (SITE-06) — `// start_here` mono hero + `font-mono-alt text-3xl` H1 + `$ start-here` anchor to `#steps`, numbered `<ol>` of `bg-card p-6 border-border` step cards with zero-padded `text-primary font-mono text-lg` numbers, per-step `$ go-to-{collection}` CTAs (uses `collection` field not slug — slugs are path-qualified), `// next` footer with `[skills]` / `[home]` bracket links. Reading column tightened from `max-w-[80ch]` to `max-w-[72ch]` per UI-SPEC rule. Data contract preserved: `steps` array + `resolveSteps()` getter signature unchanged; resolved-shape type extended additively with `collection: Step['collection']`. DecisionRationale skipped (Pencil MCP unavailable; per-step `why` is orientation rationale not a "why this stack" decision block). Hero copy editorial-authored — Blake can edit post-D-07.
+- [Phase 26]: 26-06: Collection Listing factory recompose (SITE-07) — single edit to `createCollectionIndexPage` in `apps/blakepetersen.io/src/lib/collection-pages.tsx` propagates to all 5 listing routes (/configs /hooks /guides /skills /posts). New header: `// {slug}` mono caption + `font-mono-alt text-3xl` label H1 + `<Badge variant="secondary">{count}</Badge>` + `indexDescription(count)` paragraph. UI-SPEC empty-state branch (`items.length === 0`): `// empty_collection` + label H1 + `No entries yet. Check back, or contribute one → [contribute]` → `/start-here`. Row typography unified: `text-base font-medium text-foreground` titles; `font-mono text-base text-muted-foreground` descriptions; tag-pill `variant="secondary"` consumers preserved (pre=2 → post=3, additive count Badge only — Pitfall 5 guard). Server-component contract preserved (no `'use client'`). Per-route `page.tsx` files untouched.
+- [Phase 26]: 26-06: Empty-state verification via deterministic unit test (`apps/blakepetersen.io/tests/lib/collection-pages.test.tsx`, 4 cases) that mocks `getCollection` to return `[]` and asserts on `renderToStaticMarkup(Page())` — replaces the destructive "temporarily empty content" manual step. Test pattern adaptation (deviation Rule 3): `JSON.stringify(tree)` pattern from `roadmap.test.tsx` hits a circular-ref on React trees containing `<Link>`; switched to `renderToStaticMarkup` + `next/link` mock returning plain `<a>`, matching `packages/artax-ui/tests/components/modal.test.tsx` precedent.
+- [Phase 26]: 26-06: D-07 visual smoke check across all 5 factory-driven listing routes (light/dark) deferred to phase-end batch with 26-02/03/04/05 — consistent handling across all execute plans in Phase 26.
 
 ### Roadmap Evolution
 
@@ -112,6 +115,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T20:31:37Z
-Stopped at: Completed 26-05 — Start Here page recompose (SITE-06) landed in `apps/blakepetersen.io/src/app/start-here/page.tsx` (commit c16db24). Typecheck + build clean. D-07 smoke check deferred to phase end (02/03/04/05 batched). DecisionRationale unused (conditional skipped).
-Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-06-PLAN.md
+Last session: 2026-04-19T21:05:00Z
+Stopped at: Completed 26-06 — Collection Listing factory recompose (SITE-07) landed in `apps/blakepetersen.io/src/lib/collection-pages.tsx` + new empty-state unit test at `apps/blakepetersen.io/tests/lib/collection-pages.test.tsx` (commit 34dc42e). Typecheck + 214/214 jest + build clean. All 5 listing routes inherit via factory — per-route page.tsx files untouched. D-07 phase-end visual smoke batched with 26-02/03/04/05.
+Resume file: .planning/phases/26-blakepetersen-io-page-updates/ (phase-end D-07 batch smoke)
