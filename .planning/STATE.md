@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: in_progress
-stopped_at: Phase 26-01 complete — Badge extended with info/success/warning/destructive; Modal primitive composes Dialog with mounted-flag SSR gate; PrevNextNav extracted as presentation-only molecule; barrel exports Modal + PrevNextNav; 293/293 artax-ui tests green; ready for 26-01b (AuthorNote + DecisionRationale + D-05 gate)
-last_updated: "2026-04-19T20:10:00.000Z"
+stopped_at: Phase 26-03 complete — PrevNextNav swap landed in dx-content-layout + post-layout; page-navigation.tsx deleted (54 lines); 210/210 bp.io tests green; build clean. D-07 consolidated smoke check still pending phase-end batch (02/03 deferred, 04/05/06 upcoming).
+last_updated: "2026-04-19T20:22:54.000Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 7
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 26
-Plan: 01 complete; 01b next
-Plans: 7 total — 01 ✓, 01b (editorial-voice gate), 02–06 (Wave 2 pages)
-Status: 26-01 shipped Badge extension + Modal + PrevNextNav to artax-ui; 293/293 tests green; ready for 26-01b
+Plan: 01, 01b, 02, 03 complete; 04 next
+Plans: 7 total — 01 ✓, 01b ✓, 02 ✓, 03 ✓, 04–06 (About, Start Here, Collection Listing)
+Status: 26-03 shipped PrevNextNav swap across both detail layouts; page-navigation.tsx retired; 210/210 bp.io tests green; build clean; D-07 still batched for phase end
 Last activity: 2026-04-19
 
 Progress: [████████░░] 86% (6 of 7 phases complete)
@@ -91,6 +91,8 @@ Progress: [████████░░] 86% (6 of 7 phases complete)
 - [Phase 26]: 26-01: SSR regression assertion colocated in `modal.test.tsx` (not a separate hydration test file) — single-file contract reduces drift between render and SSR tests.
 - [Phase 26]: 26-01: `next/link` is reachable from artax-ui's jest-jsdom context via pnpm hoisting; PrevNextNav keeps the direct `<Link>` import (not the asChild fallback) to preserve client-side transitions for bp.io consumers.
 - [Phase 26]: 26-01: Any new `*.tsx` under `packages/artax-ui/src/components` must be registered in `tests/boundaries.test.ts` (server-safe vs client) in the same commit as the file itself — enforced by a coverage assertion.
+- [Phase 26]: 26-03: PrevNextNav slot derivation follows `findBySlug(slug) → itemsByCollection[collection] → getPrevNext(items, found.item.href) → { href, label }` — NavItem.href is pre-built by `collectionToItems()` so consumers never reconstruct URLs. Resolution logic lifted verbatim from retired `page-navigation.tsx` into `dx-content-layout.tsx` and `post-layout.tsx`.
+- [Phase 26]: 26-03: Skills Detail header recompose (H1 `text-3xl`, `max-w-[72ch]`) DEFERRED — `dx-content-layout.tsx` is shared across skills/hooks/configs/guides; cross-collection typography change needs its own Pencil-driven plan. Logged in 26-03-SUMMARY.md Deviations #1.
 
 ### Roadmap Evolution
 
@@ -107,6 +109,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T20:10:00Z
-Stopped at: Completed 26-01 — Badge info/success/warning/destructive variants (additive), Modal composition over Dialog with Phase 24.1 mounted-flag SSR gate, PrevNextNav extracted as dumb presentation-only molecule, barrel + boundaries updated; 293/293 artax-ui tests green
-Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-01b-PLAN.md
+Last session: 2026-04-19T20:22:54Z
+Stopped at: Completed 26-03 — PrevNextNav swap in dx-content-layout + post-layout, page-navigation.tsx deleted, 210/210 bp.io tests green, build clean. D-07 batched at phase end.
+Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-04-PLAN.md
