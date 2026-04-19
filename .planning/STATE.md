@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Artax Design System
 status: in_progress
-stopped_at: Phase 26-04 complete — About page (SITE-05) recomposed to Pencil frame: Badge meta row + interests grid, max-w-prose reading column, Lead-role mono prose, shell-command contact CTAs. Typecheck + build clean. AuthorNote skipped (Pencil MCP unavailable, no discrete personal-aside). D-07 still batched for phase end (02/03/04 deferred, 05/06 upcoming).
-last_updated: "2026-04-19T20:30:00.000Z"
+stopped_at: Phase 26-05 complete — Start Here page (SITE-06) recomposed to Pencil composition: // start_here mono hero + editorial H1 + $ start-here shell CTA, numbered bg-card p-6 step cards with zero-padded text-primary step numbers, per-step $ go-to-{collection} CTAs, // next footer with [skills] / [home] brackets. Data contract (steps + resolveSteps) preserved. Typecheck + build clean. DecisionRationale skipped (Pencil MCP unavailable, no discrete "why this stack" content). D-07 batched for phase end (02/03/04/05 deferred, 06 upcoming).
+last_updated: "2026-04-19T20:31:37.000Z"
 last_activity: 2026-04-19
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 27
-  completed_plans: 21
-  percent: 86
+  completed_plans: 22
+  percent: 89
 ---
 
 # Project State
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-03-15)
 ## Current Position
 
 Phase: 26
-Plan: 01, 01b, 02, 03, 04 complete; 05 next
-Plans: 7 total — 01 ✓, 01b ✓, 02 ✓, 03 ✓, 04 ✓, 05–06 (Start Here, Collection Listing)
-Status: 26-04 shipped About recompose (SITE-05) — Badge chips, max-w-prose, Lead-role mono prose, shell CTAs; typecheck + build clean; D-07 still batched for phase end
+Plan: 01, 01b, 02, 03, 04, 05 complete; 06 next
+Plans: 7 total — 01 ✓, 01b ✓, 02 ✓, 03 ✓, 04 ✓, 05 ✓, 06 (Collection Listing)
+Status: 26-05 shipped Start Here recompose (SITE-06) — hero + $ start-here CTA, bg-card numbered step cards with primary numbers, $ go-to-{collection} per-step CTAs, // next footer with bracket links; data contract preserved; typecheck + build clean; D-07 still batched for phase end
 Last activity: 2026-04-19
 
-Progress: [████████░░] 86% (6 of 7 phases complete)
+Progress: [█████████░] 89% (6 of 7 phases complete)
 
 ## Performance Metrics
 
@@ -95,6 +95,7 @@ Progress: [████████░░] 86% (6 of 7 phases complete)
 - [Phase 26]: 26-03: Skills Detail header recompose (H1 `text-3xl`, `max-w-[72ch]`) DEFERRED — `dx-content-layout.tsx` is shared across skills/hooks/configs/guides; cross-collection typography change needs its own Pencil-driven plan. Logged in 26-03-SUMMARY.md Deviations #1.
 - [Phase 26]: 26-04: About recompose (SITE-05) — Badge meta row + interests grid, max-w-prose column, Lead-role mono prose, `$ email-blake`/`$ find-me-on-github` shell CTAs. AuthorNote skipped (Pencil MCP unavailable; no discrete personal-aside in current prose). TODO scaffolding preserved per D-01. GitHub URL canonical-cased to `BlakePetersen` (matches homepage).
 - [Phase 26]: 26-04: D-07 smoke check deferred to phase-end batch per Plan 02/03 precedent. `// interests` chip list (6 secondary-variant labels) is the only executor-authored stub — Blake can edit post-D-07.
+- [Phase 26]: 26-05: Start Here recompose (SITE-06) — `// start_here` mono hero + `font-mono-alt text-3xl` H1 + `$ start-here` anchor to `#steps`, numbered `<ol>` of `bg-card p-6 border-border` step cards with zero-padded `text-primary font-mono text-lg` numbers, per-step `$ go-to-{collection}` CTAs (uses `collection` field not slug — slugs are path-qualified), `// next` footer with `[skills]` / `[home]` bracket links. Reading column tightened from `max-w-[80ch]` to `max-w-[72ch]` per UI-SPEC rule. Data contract preserved: `steps` array + `resolveSteps()` getter signature unchanged; resolved-shape type extended additively with `collection: Step['collection']`. DecisionRationale skipped (Pencil MCP unavailable; per-step `why` is orientation rationale not a "why this stack" decision block). Hero copy editorial-authored — Blake can edit post-D-07.
 
 ### Roadmap Evolution
 
@@ -111,6 +112,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-19T20:30:00Z
-Stopped at: Completed 26-04 — About page recompose (SITE-05) landed in `apps/blakepetersen.io/src/app/about/page.tsx` (commit 11307f8). Typecheck + build clean. D-07 smoke check deferred. AuthorNote unused (conditional skipped).
-Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-05-PLAN.md
+Last session: 2026-04-19T20:31:37Z
+Stopped at: Completed 26-05 — Start Here page recompose (SITE-06) landed in `apps/blakepetersen.io/src/app/start-here/page.tsx` (commit c16db24). Typecheck + build clean. D-07 smoke check deferred to phase end (02/03/04/05 batched). DecisionRationale unused (conditional skipped).
+Resume file: .planning/phases/26-blakepetersen-io-page-updates/26-06-PLAN.md

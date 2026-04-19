@@ -167,7 +167,7 @@ Plans:
 - [ ] 26-02-PLAN.md — Homepage surgical rewrite (SITE-03)
 - [ ] 26-03-PLAN.md — Skills Detail + retire page-navigation.tsx, wire PrevNextNav (SITE-04)
 - [x] 26-04-PLAN.md — About page recompose with Badge chips + terminal CTAs (SITE-05)
-- [ ] 26-05-PLAN.md — Start Here numbered walkthrough recompose (SITE-06)
+- [x] 26-05-PLAN.md — Start Here numbered walkthrough recompose (SITE-06)
 - [ ] 26-06-PLAN.md — Collection Listing factory recompose across 5 routes + empty-state unit test (SITE-07)
 
 ## Progress
@@ -205,4 +205,4 @@ Note: Phases 22-24 (artax) and 25-26 (blakepetersen.io) are independent tracks a
 | 24. Editable Previews | v1.3 | 7/7 | Complete   | 2026-04-19 |
 | 24.1 Editable Previews Polish | v1.3 | 4/3 | Complete    | 2026-04-19 |
 | 25. blakepetersen.io Theming | v1.3 | 1/1 | Complete   | 2026-04-19 |
-| 26. blakepetersen.io Page Updates | v1.3 | 5/7 | In progress | - |
+| 26. blakepetersen.io Page Updates | v1.3 | 6/7 | In progress | - |
