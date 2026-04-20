@@ -21,7 +21,7 @@ function DecisionRationale({
   className,
 }: DecisionRationaleProps) {
   const containerClass = cn(
-    'my-6 bg-card p-6 border-l-4 border-l-primary font-mono text-sm text-foreground',
+    'my-6 bg-card p-6 border-l-4 border-l-primary font-mono text-base text-foreground',
     className
   )
 
@@ -34,7 +34,7 @@ function DecisionRationale({
           </span>
           {decision}
         </summary>
-        <div className="mt-3 leading-relaxed">{rationale}</div>
+        <div className="mt-4 leading-relaxed">{rationale}</div>
         {alternatives && alternatives.length > 0 && (
           <ul className="mt-4 space-y-1">
             {alternatives.map((alt) => (
@@ -55,7 +55,7 @@ function DecisionRationale({
       <p className="mb-2 font-mono text-xs text-muted-foreground">
         {'// decision'}
       </p>
-      <h3 className="mb-3 text-base font-medium text-foreground">{decision}</h3>
+      <h3 className="mb-4 text-base font-medium text-foreground">{decision}</h3>
       <div className="leading-relaxed">{rationale}</div>
       {alternatives && alternatives.length > 0 && (
         <ul className="mt-4 space-y-1">
