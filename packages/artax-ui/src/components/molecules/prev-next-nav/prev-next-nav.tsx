@@ -17,7 +17,7 @@ export function PrevNextNav({ prev, next, className }: PrevNextNavProps) {
     <nav
       aria-label="Article navigation"
       className={cn(
-        'mt-12 flex justify-between border-t border-border pt-6 font-mono text-sm',
+        'mt-12 flex justify-between border-t border-border pt-6 font-mono text-xs',
         className
       )}
     >
