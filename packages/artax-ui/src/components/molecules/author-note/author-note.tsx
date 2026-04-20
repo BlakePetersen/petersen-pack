@@ -17,7 +17,7 @@ function AuthorNote({ author, date, children, className }: AuthorNoteProps) {
       role="note"
       aria-label="Author's note"
       className={cn(
-        'my-6 border-l-2 border-info bg-[var(--surface-info)] px-4 py-3',
+        'my-6 border-l-2 border-info bg-[var(--surface-info)] px-4 py-4',
         className
       )}
     >
@@ -29,7 +29,7 @@ function AuthorNote({ author, date, children, className }: AuthorNoteProps) {
           {date}
         </p>
       )}
-      <div className="font-mono text-sm text-secondary-foreground leading-relaxed">
+      <div className="font-mono text-base text-secondary-foreground leading-relaxed">
         {children}
       </div>
     </aside>
