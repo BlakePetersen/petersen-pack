@@ -47,6 +47,9 @@ storybook-static
 # typescript build cache
 *.tsbuildinfo
 
+# node runtime compile cache
+node-compile-cache/
+
 # cold storage
 .trash/
 
