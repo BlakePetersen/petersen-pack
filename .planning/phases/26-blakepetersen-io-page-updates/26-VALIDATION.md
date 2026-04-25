@@ -55,15 +55,15 @@ Plan 01/01b tasks are single-task write-test-and-impl-together commits — NOT a
 | 26-01b-02 | 01b | 1 | ARTAX-primitive (AuthorNote + DecisionRationale) | unit + source-grep | `pnpm --filter artax-ui test -- --watchAll=false --testPathPattern='(author-note\|decision-rationale)'` | `packages/artax-ui/tests/components/author-note.test.tsx`, `packages/artax-ui/tests/components/decision-rationale.test.tsx` | ⬜ pending |
 | 26-01b-03 | 01b | 1 | barrel exports + mdx reconciliation + full suite | integration | `pnpm --filter artax-ui test -- --watchAll=false && pnpm --filter artax-ui typecheck` | (all existing + new) | ⬜ pending |
 | 26-02-01 | 02 | 2 | SITE-03 | typecheck+build | `pnpm --filter blakepetersen.io typecheck && pnpm --filter blakepetersen.io build` | (Next SSR build) | ⬜ pending |
-| 26-02-02 | 02 | 2 | SITE-03 | checkpoint:human-verify (D-07) | manual light/dark toggle | n/a | ⬜ pending |
+| 26-02-02 | 02 | 2 | SITE-03 | checkpoint:human-verify (D-07) | manual light/dark toggle | n/a | ✅ green |
 | 26-03-01 | 03 | 2 | SITE-04 | typecheck+test+build | `pnpm --filter blakepetersen.io typecheck && pnpm --filter blakepetersen.io test -- --watchAll=false && pnpm --filter blakepetersen.io build` | (navigation tests + Next SSR build) | ⬜ pending |
-| 26-03-02 | 03 | 2 | SITE-04 | checkpoint:human-verify (D-07) | manual light/dark toggle | n/a | ⬜ pending |
+| 26-03-02 | 03 | 2 | SITE-04 | checkpoint:human-verify (D-07) | manual light/dark toggle | n/a | ✅ green |
 | 26-04-01 | 04 | 2 | SITE-05 | typecheck+build | `pnpm --filter blakepetersen.io typecheck && pnpm --filter blakepetersen.io build` | (Next SSR build) | ⬜ pending |
-| 26-04-02 | 04 | 2 | SITE-05 | checkpoint:human-verify (D-07) | manual light/dark toggle | n/a | ⬜ pending |
+| 26-04-02 | 04 | 2 | SITE-05 | checkpoint:human-verify (D-07) | manual light/dark toggle | n/a | ✅ green |
 | 26-05-01 | 05 | 2 | SITE-06 | typecheck+build | `pnpm --filter blakepetersen.io typecheck && pnpm --filter blakepetersen.io build` | (Next SSR build) | ⬜ pending |
-| 26-05-02 | 05 | 2 | SITE-06 | checkpoint:human-verify (D-07) | manual light/dark toggle | n/a | ⬜ pending |
+| 26-05-02 | 05 | 2 | SITE-06 | checkpoint:human-verify (D-07) | manual light/dark toggle | n/a | ✅ green |
 | 26-06-01 | 06 | 2 | SITE-07 (factory + empty-state unit test) | typecheck+test+build | `pnpm --filter blakepetersen.io typecheck && pnpm --filter blakepetersen.io test -- --watchAll=false --testPathPattern=collection-pages && pnpm --filter blakepetersen.io build` | `apps/blakepetersen.io/tests/lib/collection-pages.test.tsx` | ⬜ pending |
-| 26-06-02 | 06 | 2 | SITE-07 | checkpoint:human-verify (D-07) | manual light/dark toggle across 5 routes | n/a | ⬜ pending |
+| 26-06-02 | 06 | 2 | SITE-07 | checkpoint:human-verify (D-07) | manual light/dark toggle across 5 routes | n/a | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
