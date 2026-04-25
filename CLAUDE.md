@@ -21,11 +21,13 @@ Monorepo: pnpm workspaces + Turbo. Two Next.js 16 apps, four shared packages.
 ## Layout
 
 - `apps/blakepetersen.io` — personal site; Velite MDX pipeline, Pagefind search (`postbuild`), Shiki highlighting. See `apps/blakepetersen.io/CLAUDE.md`.
-- `apps/artax` — Artax UI showcase app
+- `apps/artax` — live showcase/playground for `artax-ui` components (Next.js + `react-live` for in-browser code previews)
 - `packages/artax-ui` — shared design system (Tailwind v4 theme, `mdx/components`, `lib/utils`)
 - `packages/blink-registry` — Zod-schema content registry
 - `packages/blink-cli` — CLI on top of `blink-registry` (built with `tsup`)
 - `packages/tsconfig` — shared tsconfig presets (`base.json`, `nextjs.json`, `react-library.json`)
+- `.github/scripts/` — repo automation (Octokit + Anthropic SDK); has its own Jest config, run via `pnpm test:scripts`
+- `docs/` — long-form repo docs (not the GSD `.planning/` workflow)
 
 ## Gotchas
 
@@ -36,7 +38,9 @@ Monorepo: pnpm workspaces + Turbo. Two Next.js 16 apps, four shared packages.
 - Pre-commit: Husky runs commitlint; never bypass with `--no-verify`
 - Typecheck config is separate from build config: `tsconfig.typecheck.json` per app
 - `node-compile-cache/` at the repo root is a Node cache artifact — gitignored, safe to delete
+- `pnpm.overrides` in root `package.json` pins security advisories (postcss, ajv, glob, etc.) — don't loosen without checking the advisory
+- Node/pnpm versions are pinned via `.tool-versions`; install [mise](https://mise.jdx.dev/) and run `mise install` to match
 
 ## Design system reference
 
-`artax-ui` components map to designs in `bp.io.pen` (see global memory). Use `mcp__pencil__*` tools to inspect `.pen` files — never `Read`/`Grep` (contents are encrypted).
+`artax-ui` components map to designs in the `bp.io.pen` Pencil file. Use `mcp__pencil__*` tools to inspect `.pen` files — never `Read`/`Grep`, contents are encrypted.
