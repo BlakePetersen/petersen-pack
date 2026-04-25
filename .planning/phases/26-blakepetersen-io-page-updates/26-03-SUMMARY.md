@@ -198,6 +198,18 @@ None.
 - VERIFIED: `apps/blakepetersen.io/src/components/mdx-content.tsx` is NOT in `git diff HEAD~1 HEAD` (unchanged by this plan)
 - VERIFIED: `grep -rn "page-navigation\|PageNavigation" apps/blakepetersen.io/src/` → empty
 
+## D-07 Phase-End Closure — APPROVED
+
+**Resolved:** 2026-04-24, batched across all Phase 26 routes (Plans 02–06).
+
+**Method:** Playwright-driven 1440×900 light + dark capture; 18 screenshots saved to `.planning/ui-reviews/26-d07/` (gitignored binary). Live toggle-no-artifacts check approved by Blake on `/skills/claude-code/writing-custom-skills` (Skill Detail densest surface stacking — sidebar + content + TOC + footer).
+
+**Per-plan findings (Skill Detail):** breadcrumb `// skills / claude code / writing custom skills` rendered, sidebar nav with active state rendered, H1 + description + tag pills rendered, `$ blink apply skill/...` code block with copy button rendered, body H2 captions (`// Skill Structure`, `// Rule Files`, `// When to Create a Skill`) rendered, right-rail TOC `// on this page` rendered, `// discussion` footer with "Report a problem" rendered.
+
+**Slug structure note (non-blocking):** the canonical Skill Detail URL is the nested `/skills/claude-code/writing-custom-skills` shape (subdirectory grouping). The flat `/skills/claude-code` path 404s — confirmed via this smoke pass. If a flat-slug landing page is ever wanted, that's a separate routing decision, not a Plan 03 regression.
+
+**Approved by:** Blake — 2026-04-24.
+
 ---
 *Phase: 26-blakepetersen-io-page-updates*
 *Completed: 2026-04-19*

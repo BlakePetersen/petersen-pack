@@ -128,3 +128,15 @@ The `// interests` chip list is the only executor-authored content stub. All oth
 - [x] Color-literal grep empty
 - [x] `pnpm --filter blakepetersen.io typecheck` exits 0
 - [x] `pnpm --filter blakepetersen.io build` succeeds
+
+## D-07 Phase-End Closure — APPROVED
+
+**Resolved:** 2026-04-24, batched across all Phase 26 routes (Plans 02–06).
+
+**Method:** Playwright-driven 1440×900 light + dark capture; 18 screenshots saved to `.planning/ui-reviews/26-d07/` (gitignored binary). Live toggle-no-artifacts check approved by Blake on representative routes.
+
+**Per-plan findings (`/about`):** `// about` muted caption rendered, H1 mono-alt 3xl rendered, outline-variant chip row clean, biographical prose at `text-lg` with relaxed line-height, interests grid wraps, `$ email-blake` and `$ find-me-on-github` primary-colored. AuthorNote absence confirmed (per the plan's D-05 conditional gate — current single-voice prose has no discrete personal aside).
+
+**Open editorial follow-ups (non-blocking, not D-07 regressions):** three `[TODO: Blake to ...]` paragraphs still in the rendered MDX (preserved per D-01 + decisions log line 26). Strip or fill before marketing-hardening.
+
+**Approved by:** Blake — 2026-04-24.

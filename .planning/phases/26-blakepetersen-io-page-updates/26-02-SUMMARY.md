@@ -152,6 +152,14 @@ None — no external service configuration.
 - VERIFIED: all 5 section captions present (`// dx_workbench`, `// stack`, `// collections`, `// recent_posts`, `// contribute`)
 - VERIFIED: bracket + shell CTAs present (`[skills]`, `[hooks]`, `[configs]`, `[guides]`, `$ report-problem`, `$ suggest-improvement`)
 
+## D-07 Phase-End Closure — APPROVED
+
+**Resolved:** 2026-04-24, batched across all Phase 26 routes (Plans 02–06).
+
+**Method:** Playwright-driven 1440×900 light + dark capture; 18 screenshots saved to `.planning/ui-reviews/26-d07/` (gitignored binary). Live toggle-no-artifacts check approved by Blake on `/start-here` and `/skills/claude-code/writing-custom-skills` (densest surface stacking, representative for all routes).
+
+**Approved by:** Blake — 2026-04-24.
+
 ---
 *Phase: 26-blakepetersen-io-page-updates*
 *Completed: 2026-04-19*

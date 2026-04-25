@@ -44,6 +44,9 @@ storybook-static
 # claude code
 .claude/
 
+# playwright mcp scratch
+.playwright-mcp/
+
 # typescript build cache
 *.tsbuildinfo
 

@@ -116,3 +116,13 @@ Non-empty visual render is covered by the successful prerendering of all 5 listi
 - Verified: `pnpm exec jest` → 214/214 pass. `pnpm --filter blakepetersen.io build` → green, all 5 listing routes prerender.
 - Verified: no per-route `page.tsx` files in commit diff (factory-only change).
 - Verified: pre-edit `variant="secondary"` count = 2, post-edit = 3 (Pitfall 5 guard: additive only).
+
+## D-07 Phase-End Closure — APPROVED
+
+**Resolved:** 2026-04-24, batched across all Phase 26 routes (Plans 02–06).
+
+**Method:** Playwright-driven 1440×900 light + dark capture; 18 screenshots saved to `.planning/ui-reviews/26-d07/` (gitignored binary). Live toggle-no-artifacts check approved by Blake on representative routes.
+
+**Per-plan findings (factory routes):** all 5 listing routes (`/configs`, `/hooks`, `/guides`, `/skills`, `/posts`) rendered with the new factory header (caption + label H1 + count Badge + indexDescription) and refined row typography. The empty-state branch fired live on `/posts` (count = 0) — `// empty_collection` caption rendered in place of `// {slug}`, count Badge omitted, "No entries yet … `[contribute]`" copy present. This live render confirms the same code path that the deterministic Jest unit (`tests/lib/collection-pages.test.tsx`) exercises with `renderToStaticMarkup`.
+
+**Approved by:** Blake — 2026-04-24.
