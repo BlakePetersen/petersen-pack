@@ -16,7 +16,15 @@ Personal site. Next.js 16 + React 19, MDX content via Velite, Pagefind for searc
 - `next.config.ts` — Next config; wraps Velite build step
 - `src/app/` — App Router routes
 - `src/components/` — site-specific components (shared ones live in `artax-ui`)
+- `src/lib/` — site-specific helpers (content loaders, formatters)
+- `src/hooks/` — React hooks
+- `src/types/` — site-local TypeScript types
 - `content/` — source MDX (`posts/`, `guides/`, `configs/`, `hooks/`, `skills/`)
+
+## Cross-package usage
+
+- Consumes `artax-ui` (design system) via `workspace:*`
+- Imports types only from `blink-registry` (e.g. `ArtifactMetadata` in `src/lib/artifacts.ts`); the registry's runtime/Zod usage lives in `@blink/cli`, not here
 
 ## Gotchas
 
