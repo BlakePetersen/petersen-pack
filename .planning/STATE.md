@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: "Content Density"
-status: defining-requirements
-stopped_at: Milestone v1.4 started 2026-04-24. Goals captured in PROJECT.md; REQUIREMENTS.md and ROADMAP.md not yet written.
+status: planning
+stopped_at: 'Roadmap complete; awaiting first phase plan'
 last_updated: "2026-04-24T12:00:00.000Z"
 last_activity: 2026-04-24
 last_shipped: v1.3
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
-  total_plans: 0
+  total_plans: 14
   completed_plans: 0
   percent: 0
 ---
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 27 (Schema Foundations) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-04-24 — Milestone v1.4 Content Density started
+Status: Roadmap complete; awaiting first phase plan
+Last activity: 2026-04-24 — v1.4 roadmap (Phases 27-30) drafted from research synthesis; 37/37 v1.4 requirements mapped
 
-Progress: defining-requirements (no phases planned yet)
+Progress: planning (0/4 phases complete, 0/14 estimated plans complete)
 
 ## Performance Metrics
 
@@ -40,7 +40,8 @@ Progress: defining-requirements (no phases planned yet)
 - v1.0: 20 plans in ~3 days
 - v1.1: 9 plans in ~3 days
 - v1.2: 23 plans in ~4 days
-- Combined: 52 plans across 3 milestones, 20 phases
+- v1.3: 27 plans in ~34 days
+- Cumulative: 79 plans across 4 milestones, 26 phases shipped
 
 ## Accumulated Context
 
@@ -100,21 +101,37 @@ Progress: defining-requirements (no phases planned yet)
 - [Phase 26]: 26-06: Empty-state verification via deterministic unit test (`apps/blakepetersen.io/tests/lib/collection-pages.test.tsx`, 4 cases) that mocks `getCollection` to return `[]` and asserts on `renderToStaticMarkup(Page())` — replaces the destructive "temporarily empty content" manual step. Test pattern adaptation (deviation Rule 3): `JSON.stringify(tree)` pattern from `roadmap.test.tsx` hits a circular-ref on React trees containing `<Link>`; switched to `renderToStaticMarkup` + `next/link` mock returning plain `<a>`, matching `packages/artax-ui/tests/components/modal.test.tsx` precedent.
 - [Phase 26]: 26-06: D-07 visual smoke check across all 5 factory-driven listing routes (light/dark) deferred to phase-end batch with 26-02/03/04/05 — consistent handling across all execute plans in Phase 26.
 
+### v1.4 Roadmap Decisions (locked at planning time)
+
+- **v1.4-PLAN-01:** All new CLI capability ships as `blink` subcommands (`scaffold`, `lint`, `port`) — no second binary, no parallel toolchain. Source: ARCHITECTURE.md Q1, Q2, Q5; STACK.md rejects `plop`, `hygen`.
+- **v1.4-PLAN-02:** `voice` and `requires_artifact` fields land on `dxFields` in Phase 27 (SCHEMA-01, SCHEMA-02). Field freeze for Phases 28–30 — any rename or semantic shift requires a milestone-level decision.
+- **v1.4-PLAN-03:** v1.2 ESM workaround (inline artifact validation in Velite prepare hook) is fixed in Phase 27 (SCHEMA-05). Unblocks SCAFFOLD-03 (templates derive from live Velite Zod) in Phase 28.
+- **v1.4-PLAN-04:** `blink lint` is the sole MDX content lint home — NOT `eslint-plugin-mdx`. Cross-file invariants (artifact-pair sync, dependency slug existence) don't fit ESLint's per-file model. Source: ARCHITECTURE.md Q2; SUMMARY.md Divergence #1 resolution.
+- **v1.4-PLAN-05:** `obsidian-export` (Rust, out-of-band) for Obsidian port — never npm. `.obsidian-port-staging/` gitignored intermediate dir.
+- **v1.4-PLAN-06:** Voice-primitive lint ships **advisory (warn)** in v1.4. Promotion to error gated on Phase 29 evidence (8-entry organic-pass heuristic) reviewed in Phase 30 (DEBT-05). Source: PITFALLS.md #2; SUMMARY.md Divergence #2.
+- **v1.4-PLAN-07:** Both differentiators (`blink port` AND scaffold-pre-pop-from-doc-frontmatter) ship in v1.4 — Blake confirmed scope creep accepted. Neither deferred.
+- **v1.4-PLAN-08:** CONTENT-05 (`<ArtifactBody slug>` server component) belongs in Phase 28 (Scaffolds + Lint), not Phase 29 — it's drift-prevention infrastructure that must precede bulk authoring per PITFALLS.md #4.
+
 ### Roadmap Evolution
 
 - Phase 24.1 inserted after Phase 24: Editable Previews Polish — close WR-01 (query-param wipe), WR-02 (Toggle/label), pre-existing Header hydration mismatch (URGENT — surfaced by 24-REVIEW.md and carried into Phase 24.1 rather than deferred)
+- v1.4 roadmap (Phases 27-30) drafted 2026-04-24 from synthesizer's 4-phase recommendation in research/SUMMARY.md, with sequence dependencies enforced (SCHEMA → SCAFFOLD → LINT → CONTENT; PORT-04 round-trip before bulk authoring; DEBT-04/05 after Phase 29 evidence)
 
 ### Pending Todos
 
-None.
+- Run CalVer behavior spike (~30min read of `apps/blakepetersen.io/src/lib/calver.ts` + 1h regression test) at Phase 27 start — SCHEMA-08 deliverable
+- Run `remark-lint-frontmatter-schema@3.15.4` × unified 11 compat spike (~2h) at Phase 28 Day 1 — Plan B is custom Ajv plugin (~80 LOC)
+- Run `zod-to-json-schema@3.25.2` × Zod 4.3.6 coverage spike (~1h) at Phase 28 Day 1 — Plan B is hand-author JSON Schemas
 
 ### Blockers/Concerns
 
 - ~~**react-live React 19 compat (Phase 24):** Spike (24-01) runs first as Wave 1. Per Blake's directive, fail-path is fix-forward — investigate, fix, re-spike — not deferral.~~ **Resolved 2026-04-18: VERDICT PASS** — react-live 4.1.8 renders Button under React 19; warning is dev-only, absent from prod build. Recommendation: enumerate named scope (68 artax-ui exports too large to spread). See `24-01-SPIKE-RESULT.md`.
-- **Pencil light-mode token values (Phase 21):** Light-mode CSS custom property values depend on Blake's Pencil design sign-off. Design must precede implementation.
+- **Pre-commit budget (v1.4 Phase 28):** Husky pre-commit currently runs commitlint + lint-staged Prettier (~sub-second). Adding `blink lint --files` for staged content must keep total under 2s typical (PITFALLS.md #10 — `--no-verify` rebellion risk). Distribute slower checks to pre-push or CI.
+- **Velite prepare-hook perf at scale (v1.4 Phase 27):** Capture cold-build + warm-dev baseline (SCHEMA-07) before Phase 29 content scale-up. If HMR latency exceeds 2s for content edits during Phase 29, add caching to graph + git-history + registry rewrite (PITFALLS.md #1).
+- **Editorial debt human gate (v1.4 Phase 30):** /about and /start-here copy doesn't satisfy v1.4 closure until Blake re-reads 24h after writing and confirms voice (PITFALLS.md #6). Cannot be automated.
 
 ## Session Continuity
 
-Last session: 2026-04-24T05:50:00Z
-Stopped at: D-07 phase-end visual smoke approved by Blake. v1.3 milestone fully shipped — all 7 phases complete, 27/27 plans done, all phase-end gates closed. STATE.md, 26-VALIDATION.md, and Plans 26-02..26-06 SUMMARYs updated to reflect closure. Screenshots in `.planning/ui-reviews/26-d07/` (gitignored binary).
-Resume file: .planning/STATE.md (run `/gsd-complete-milestone v1.3` to archive)
+Last session: 2026-04-24T12:00:00Z
+Stopped at: Roadmap complete; awaiting first phase plan. v1.4 Phases 27-30 written to ROADMAP.md; 37/37 v1.4 requirements mapped in REQUIREMENTS.md traceability table.
+Resume file: .planning/STATE.md (run `/gsd-plan-phase 27` to start)
