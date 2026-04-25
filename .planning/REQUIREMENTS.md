@@ -105,40 +105,40 @@ Which phases cover which requirements. Filled by the roadmapper.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCHEMA-01 | TBD | Pending |
-| SCHEMA-02 | TBD | Pending |
-| SCHEMA-03 | TBD | Pending |
-| SCHEMA-04 | TBD | Pending |
-| SCHEMA-05 | TBD | Pending |
-| SCHEMA-06 | TBD | Pending |
-| SCHEMA-07 | TBD | Pending |
-| SCHEMA-08 | TBD | Pending |
-| SCAFFOLD-01 | TBD | Pending |
-| SCAFFOLD-02 | TBD | Pending |
-| SCAFFOLD-03 | TBD | Pending |
-| SCAFFOLD-04 | TBD | Pending |
-| SCAFFOLD-05 | TBD | Pending |
-| SCAFFOLD-06 | TBD | Pending |
-| LINT-01 | TBD | Pending |
-| LINT-02 | TBD | Pending |
-| LINT-03 | TBD | Pending |
-| LINT-04 | TBD | Pending |
-| LINT-05 | TBD | Pending |
-| LINT-06 | TBD | Pending |
-| LINT-07 | TBD | Pending |
-| PORT-01 | TBD | Pending |
-| PORT-02 | TBD | Pending |
-| PORT-03 | TBD | Pending |
-| PORT-04 | TBD | Pending |
-| CONTENT-01 | TBD | Pending |
-| CONTENT-02 | TBD | Pending |
-| CONTENT-03 | TBD | Pending |
-| CONTENT-04 | TBD | Pending |
-| CONTENT-05 | TBD | Pending |
-| CONTENT-06 | TBD | Pending |
-| DEBT-01 | TBD | Pending |
-| DEBT-02 | TBD | Pending |
-| DEBT-03 | TBD | Pending |
-| DEBT-04 | TBD | Pending |
-| DEBT-05 | TBD | Pending |
-| DEBT-06 | TBD | Pending |
+| SCHEMA-01 | Phase 27 | Pending |
+| SCHEMA-02 | Phase 27 | Pending |
+| SCHEMA-03 | Phase 27 | Pending |
+| SCHEMA-04 | Phase 27 | Pending |
+| SCHEMA-05 | Phase 27 | Pending |
+| SCHEMA-06 | Phase 27 | Pending |
+| SCHEMA-07 | Phase 27 | Pending |
+| SCHEMA-08 | Phase 27 | Pending |
+| SCAFFOLD-01 | Phase 28 | Pending |
+| SCAFFOLD-02 | Phase 28 | Pending |
+| SCAFFOLD-03 | Phase 28 | Pending |
+| SCAFFOLD-04 | Phase 28 | Pending |
+| SCAFFOLD-05 | Phase 28 | Pending |
+| SCAFFOLD-06 | Phase 28 | Pending |
+| LINT-01 | Phase 28 | Pending |
+| LINT-02 | Phase 28 | Pending |
+| LINT-03 | Phase 28 | Pending |
+| LINT-04 | Phase 28 | Pending |
+| LINT-05 | Phase 28 | Pending |
+| LINT-06 | Phase 28 | Pending |
+| LINT-07 | Phase 28 | Pending |
+| PORT-01 | Phase 28 | Pending |
+| PORT-02 | Phase 28 | Pending |
+| PORT-03 | Phase 28 | Pending |
+| PORT-04 | Phase 28 | Pending |
+| CONTENT-01 | Phase 29 | Pending |
+| CONTENT-02 | Phase 29 | Pending |
+| CONTENT-03 | Phase 29 | Pending |
+| CONTENT-04 | Phase 29 | Pending |
+| CONTENT-05 | Phase 28 | Pending |
+| CONTENT-06 | Phase 29 | Pending |
+| DEBT-01 | Phase 30 | Pending |
+| DEBT-02 | Phase 30 | Pending |
+| DEBT-03 | Phase 30 | Pending |
+| DEBT-04 | Phase 30 | Pending |
+| DEBT-05 | Phase 30 | Pending |
+| DEBT-06 | Phase 30 | Pending |
