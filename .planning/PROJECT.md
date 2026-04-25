@@ -54,9 +54,16 @@ Developers (including Blake) can discover, reference, and apply opinionated AI-f
 
 ### Active
 
-## Current Milestone: TBD (post-v1.3)
+## Current Milestone: v1.4 Content Density
 
-**v1.3 shipped 2026-04-24.** Run `/gsd-new-milestone` to start v1.4 with fresh requirements definition, research, and roadmap.
+**Goal:** Populate the 4 active collections with real, distributable content backed by authoring scaffolds — and close the v1.3 editorial debt in the process.
+
+**Target features:**
+- Content density: ≥16 entries shipped — 5 skills, 5 configs, 3 hooks, 3 guides (mix of ports from existing notes/Obsidian and greenfield); `posts` deferred
+- Authoring scaffolds — `blink scaffold` (or equivalent), MDX templates, and lint enforcement so new entries follow the right shape
+- Companion `.artifact` files for every applicable skill/config/hook entry, growing the Blink registry alongside content
+- AuthorNote/DecisionRationale required where they fit (lint-enforced) — voice primitives shipped in v1.3 put to work
+- v1.3 editorial debt closed: real /about copy, real /start-here copy, AuthorNote/DecisionRationale invocations across existing relevant MDX, deferred Skills Detail typography polish
 
 ### Deferred
 
@@ -132,6 +139,23 @@ Developers (including Blake) can discover, reference, and apply opinionated AI-f
 | CalVer versioning for artifacts | Derived from git commit date, deterministic and meaningful | ✓ Good |
 | Bidirectional Monodex sync (last-write wins) | Author in both Obsidian and repo | — Pending |
 
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
 ---
 
-_Last updated: 2026-04-24 after v1.3 milestone shipped_
+_Last updated: 2026-04-24 — milestone v1.4 Content Density started_

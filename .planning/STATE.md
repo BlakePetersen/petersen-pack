@@ -1,10 +1,10 @@
 ---
 gsd_state_version: 1.0
-milestone: none
-milestone_name: ""
-status: archived
-stopped_at: v1.3 Artax Design System archived 2026-04-24 — git tag v1.3, archive files at .planning/milestones/v1.3-*.md. Run /gsd-new-milestone to start v1.4.
-last_updated: "2026-04-24T06:00:00.000Z"
+milestone: v1.4
+milestone_name: "Content Density"
+status: defining-requirements
+stopped_at: Milestone v1.4 started 2026-04-24. Goals captured in PROJECT.md; REQUIREMENTS.md and ROADMAP.md not yet written.
+last_updated: "2026-04-24T12:00:00.000Z"
 last_activity: 2026-04-24
 last_shipped: v1.3
 progress:
@@ -19,19 +19,19 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-15)
+See: .planning/PROJECT.md (updated 2026-04-24)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Between milestones — v1.3 shipped, v1.4 not yet defined
+**Current focus:** v1.4 Content Density — populate the 4 active collections (skills/configs/hooks/guides) with real, distributable content backed by authoring scaffolds; close v1.3 editorial debt
 
 ## Current Position
 
-Phase: none
-Plan: none
-Status: v1.3 Artax Design System archived 2026-04-24. Run `/gsd-new-milestone` to start v1.4 with fresh requirements definition, research, and roadmap.
-Last activity: 2026-04-24
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-24 — Milestone v1.4 Content Density started
 
-Progress: idle (no active milestone)
+Progress: defining-requirements (no phases planned yet)
 
 ## Performance Metrics
 
