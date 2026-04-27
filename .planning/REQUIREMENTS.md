@@ -15,7 +15,8 @@ Lock the data shape before any content authoring; field changes after sixteen en
 **: `voice` field added to Velite `dxFields` as `array(enum(['author-note', 'decision-rationale']))` with empty-array default; existing entries pass validation unchanged
 - [x] **SCHEMA-02
 **: `requires_artifact` field added to Velite `dxFields` as `boolean` with `false` default; existing entries pass validation unchanged
-- [ ] **SCHEMA-03**: Velite collection `path` schema swapped to `slug('<collection>')` for skills, configs, hooks, guides — duplicate slugs across a collection fail the build
+- [x] **SCHEMA-03
+**: Velite collection `path` schema swapped to `slug('<collection>')` for skills, configs, hooks, guides — duplicate slugs across a collection fail the build
 - [ ] **SCHEMA-04**: Velite `prepare` hook asserts every `requires:` cross-reference resolves to a real entry slug; broken references fail the build
 - [x] **SCHEMA-05
 **: v1.2 ESM workaround resolved — Velite imports artifact validation from `@blink-dx/registry` directly; inline duplication removed
@@ -111,7 +112,7 @@ Which phases cover which requirements. Filled by the roadmapper.
 |-------------|-------|--------|
 | SCHEMA-01 | Phase 27 | Pending |
 | SCHEMA-02 | Phase 27 | Pending |
-| SCHEMA-03 | Phase 27 | Pending |
+| SCHEMA-03 | Phase 27 | Complete |
 | SCHEMA-04 | Phase 27 | Pending |
 | SCHEMA-05 | Phase 27 | Pending |
 | SCHEMA-06 | Phase 27 | Pending |

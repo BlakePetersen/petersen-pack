@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 27-02-blink-registry-import-PLAN.md
-last_updated: "2026-04-27T06:52:00.027Z"
+stopped_at: Completed 27-03-slug-uniqueness-PLAN.md
+last_updated: "2026-04-27T06:59:35.692Z"
 last_activity: 2026-04-27
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 8
-  completed_plans: 3
-  percent: 38
+  completed_plans: 4
+  percent: 50
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 27 (schema-foundations) — EXECUTING
-Plan: 4 of 8
+Plan: 5 of 8
 Status: Ready to execute
 Last activity: 2026-04-27
 
-Progress: [████░░░░░░] 38%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -105,6 +105,8 @@ Progress: [████░░░░░░] 38%
 - 27-01: voice + requires_artifact ship between tags and category in dxFields per RESEARCH Q7; defaults [] and false preserve all 11 existing DX entries with no frontmatter changes (SCHEMA-01, SCHEMA-02 field freeze).
 - 27-02: Velite imports SlugSchema/CalVerSchema/ArtifactTypeSchema/MergeStrategySchema directly from blink-registry; v1.2 ESM workaround retired (SCHEMA-05/D-20 closed)
 - 27-02 deviation (Blake-approved Option A): blink-registry barrel re-exports use explicit .ts extensions for Node ESM strict resolution; allowImportingTsExtensions+noEmit promoted to packages/tsconfig/base.json — workspace emits via tsup/Next, never tsc
+- 27-03: Per-collection bare-slug uniqueness via custom superRefine on s.path() (helper + dxSchemaFor factory) — preserves path-shaped entry.slug; literal D-19 swap to s.slug('<collection>') would change entry.slug to bare and break .velite/<collection>.json consumers + dxSchema.transform category fallback
+- 27-03: TDD ordering — test(...) RED commit before feat(...) GREEN commit overrides plan declaration order when tasks list impl before its regression test
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -137,8 +139,8 @@ Progress: [████░░░░░░] 38%
 
 ## Session Continuity
 
-Last session: 2026-04-27T06:52:00.024Z
-Stopped at: Completed 27-02-blink-registry-import-PLAN.md
+Last session: 2026-04-27T06:59:35.689Z
+Stopped at: Completed 27-03-slug-uniqueness-PLAN.md
 Resume file: None
 
 **Planned Phase:** 27 (Schema Foundations) — 8 plans — 2026-04-27T05:34:40.722Z

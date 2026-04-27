@@ -107,7 +107,7 @@ Plans:
 - [x] 27-00-test-fixtures-PLAN.md — Wave 0 fixtures + velite-runner helper
 - [x] 27-01-voice-and-requires-artifact-PLAN.md — SCHEMA-01 + SCHEMA-02 dxFields additions
 - [x] 27-02-blink-registry-import-PLAN.md — SCHEMA-05 direct import (replace inline patterns)
-- [ ] 27-03-slug-uniqueness-PLAN.md — SCHEMA-03 per-collection slug dedup (smallest-delta path)
+- [x] 27-03-slug-uniqueness-PLAN.md — SCHEMA-03 per-collection slug dedup (smallest-delta path)
 - [ ] 27-04-cross-ref-validator-PLAN.md — SCHEMA-04 dependencies/related integrity check
 - [ ] 27-05-calver-hash-gate-PLAN.md — SCHEMA-08 content-hash CalVer gate + manifest
 - [ ] 27-06-codemod-harness-PLAN.md — SCHEMA-06 migrate-content harness skeleton
@@ -205,7 +205,7 @@ v1.4 phases execute in numeric order: 27 → 28 → 29 → 30. Phase 28 has thre
 | 24.1 Editable Previews Polish | v1.3 | 3/3 | Complete | 2026-04-19 |
 | 25. blakepetersen.io Theming | v1.3 | 1/1 | Complete | 2026-04-19 |
 | 26. blakepetersen.io Page Updates | v1.3 | 7/7 | Complete | 2026-04-24 |
-| 27. Schema Foundations | v1.4 | 3/8 | In progress | — |
+| 27. Schema Foundations | v1.4 | 4/8 | In progress | — |
 | 28. Authoring Scaffolds + Lint + Port | v1.4 | 0/? | Not started | — |
 | 29. Content Authoring | v1.4 | 0/? | Not started | — |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
