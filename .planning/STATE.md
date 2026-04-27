@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 27-schema-foundations-05-calver-hash-gate-PLAN.md
-last_updated: "2026-04-27T07:18:27.551Z"
+stopped_at: Completed 27-schema-foundations-06-codemod-harness-PLAN.md
+last_updated: "2026-04-27T07:26:54.323Z"
 last_activity: 2026-04-27
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 8
-  completed_plans: 6
-  percent: 75
+  completed_plans: 7
+  percent: 88
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 27 (schema-foundations) — EXECUTING
-Plan: 7 of 8
+Plan: 8 of 8
 Status: Ready to execute
 Last activity: 2026-04-27
 
-Progress: [████████░░] 75%
+Progress: [█████████░] 88%
 
 ## Performance Metrics
 
@@ -113,6 +113,9 @@ Progress: [████████░░] 75%
 - 27-05: Manifest at content/.artifact-versions.json is git-tracked per D-06 — survives clean checkouts; T-27-05-01 commit-access tampering accepted (PR-diffable)
 - 27-05: Single-process serial build assumption (Risk #3) — fs.writeFileSync of full JSON in one syscall; atomic write-temp-then-rename deferred to v2+
 - 27-05: Plan-level TDD ordering — test(27-05) RED commit before feat(27-05) GREEN; same precedent as 27-03 / 27-04
+- 27-06: Use ESM-native fileURLToPath(import.meta.url) instead of CJS-shim polyfill — tsx 4.x runs scripts as native ESM (plan-invited swap)
+- 27-06: Codemod harness skeleton ships --dry-run as printf-only short-circuit; future migration #001 owns dry-run contract definition (T-27-06-02 deferred per skeleton scope)
+- 27-06: Migration discovery contract = scripts/migrations/<NNN>-<name>.ts default-export { name, description, run(contentRoot) }; regex /^\d{3}-[a-z0-9-]+\.ts$/ filters discoverable files
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -145,8 +148,8 @@ Progress: [████████░░] 75%
 
 ## Session Continuity
 
-Last session: 2026-04-27T07:18:27.549Z
-Stopped at: Completed 27-schema-foundations-05-calver-hash-gate-PLAN.md
+Last session: 2026-04-27T07:26:54.321Z
+Stopped at: Completed 27-schema-foundations-06-codemod-harness-PLAN.md
 Resume file: None
 
 **Planned Phase:** 27 (Schema Foundations) — 8 plans — 2026-04-27T05:34:40.722Z

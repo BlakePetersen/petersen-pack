@@ -21,7 +21,8 @@ Lock the data shape before any content authoring; field changes after sixteen en
 **: Velite `prepare` hook asserts every `requires:` cross-reference resolves to a real entry slug; broken references fail the build
 - [x] **SCHEMA-05
 **: v1.2 ESM workaround resolved — Velite imports artifact validation from `@blink-dx/registry` directly; inline duplication removed
-- [ ] **SCHEMA-06**: `scripts/migrate-content.ts` codemod harness committed (skeleton only — not yet executed); future schema migrations have a documented entry point
+- [x] **SCHEMA-06
+**: `scripts/migrate-content.ts` codemod harness committed (skeleton only — not yet executed); future schema migrations have a documented entry point
 - [ ] **SCHEMA-07**: Build-perf baseline captured (cold `pnpm build` + warm `next dev` startup) and stored in `.planning/intel/` for v1.4 regression comparison
 - [x] **SCHEMA-08
 **: `deriveCalVer` audited — if pure-date logic, content-hash gate added so prose-only edits don't bump artifact CalVer
