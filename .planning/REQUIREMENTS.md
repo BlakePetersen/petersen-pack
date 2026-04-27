@@ -11,8 +11,10 @@ Requirements for milestone v1.4 Content Density. Each maps to roadmap phases.
 
 Lock the data shape before any content authoring; field changes after sixteen entries land require codemods.
 
-- [ ] **SCHEMA-01**: `voice` field added to Velite `dxFields` as `array(enum(['author-note', 'decision-rationale']))` with empty-array default; existing entries pass validation unchanged
-- [ ] **SCHEMA-02**: `requires_artifact` field added to Velite `dxFields` as `boolean` with `false` default; existing entries pass validation unchanged
+- [x] **SCHEMA-01
+**: `voice` field added to Velite `dxFields` as `array(enum(['author-note', 'decision-rationale']))` with empty-array default; existing entries pass validation unchanged
+- [x] **SCHEMA-02
+**: `requires_artifact` field added to Velite `dxFields` as `boolean` with `false` default; existing entries pass validation unchanged
 - [ ] **SCHEMA-03**: Velite collection `path` schema swapped to `slug('<collection>')` for skills, configs, hooks, guides — duplicate slugs across a collection fail the build
 - [ ] **SCHEMA-04**: Velite `prepare` hook asserts every `requires:` cross-reference resolves to a real entry slug; broken references fail the build
 - [ ] **SCHEMA-05**: v1.2 ESM workaround resolved — Velite imports artifact validation from `@blink-dx/registry` directly; inline duplication removed
