@@ -41,43 +41,75 @@ const dxFields = {
   updated_context: s.isodate().optional(),
 }
 
-const dxSchema = s
-  .object({
-    ...dxFields,
-    slug: s.path(),
-    excerpt: s.excerpt(),
-    metadata: s.metadata(),
-    code: s.mdx(),
+/**
+ * Per-collection bare-slug uniqueness helper for SCHEMA-03.
+ *
+ * Deviates from the literal D-19 wording ("swap to s.slug('<collection>')") to
+ * preserve the path-shaped value of `entry.slug` that every consumer of
+ * `.velite/<collection>.json` depends on. Same substance as `s.slug(by)`'s
+ * dedup namespace, applied to the bare-slug component.
+ *
+ * Reuses Velite's own `meta.config.cache` (Map<string,string>) — the same
+ * mechanism `s.slug()` uses internally. See node_modules/velite/dist/index.js
+ * around the `s.slug` definition for the reference implementation.
+ */
+function pathSlugWithCollectionDedup(collection: string) {
+  return s.path().superRefine((value, { meta, addIssue }) => {
+    const bareSlug = value.split('/').pop() ?? value
+    const key = `phase27:collection-slug:${collection}:${bareSlug}`
+    const cache = (meta.config as { cache: Map<string, string> }).cache
+    const prior = cache.get(key)
+    if (prior) {
+      addIssue({
+        fatal: true,
+        code: 'custom',
+        message: `Duplicate slug '${bareSlug}' in collection '${collection}': '${meta.path}' conflicts with '${prior}'`,
+      })
+    } else {
+      cache.set(key, meta.path)
+    }
   })
-  .transform(({ metadata, ...data }) => ({
-    ...data,
-    category: data.category || data.slug.split('/')[0] || 'uncategorized',
-    readingTime: metadata.readingTime,
-    wordCount: metadata.wordCount,
-  }))
+}
+
+function dxSchemaFor(collection: string) {
+  return s
+    .object({
+      ...dxFields,
+      slug: pathSlugWithCollectionDedup(collection),
+      excerpt: s.excerpt(),
+      metadata: s.metadata(),
+      code: s.mdx(),
+    })
+    .transform(({ metadata, ...data }) => ({
+      ...data,
+      category: data.category || data.slug.split('/')[0] || 'uncategorized',
+      readingTime: metadata.readingTime,
+      wordCount: metadata.wordCount,
+    }))
+}
 
 const skills = defineCollection({
   name: 'Skill',
   pattern: 'skills/**/*.mdx',
-  schema: dxSchema,
+  schema: dxSchemaFor('skills'),
 })
 
 const hooks = defineCollection({
   name: 'Hook',
   pattern: 'hooks/**/*.mdx',
-  schema: dxSchema,
+  schema: dxSchemaFor('hooks'),
 })
 
 const configs = defineCollection({
   name: 'Config',
   pattern: 'configs/**/*.mdx',
-  schema: dxSchema,
+  schema: dxSchemaFor('configs'),
 })
 
 const guides = defineCollection({
   name: 'Guide',
   pattern: 'guides/**/*.mdx',
-  schema: dxSchema,
+  schema: dxSchemaFor('guides'),
 })
 
 const posts = defineCollection({
