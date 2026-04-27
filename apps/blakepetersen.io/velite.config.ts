@@ -17,6 +17,12 @@ import {
 import type { ContentNode } from './src/lib/graph'
 import { getGitHistoryForFile } from './src/lib/git-history'
 import { deriveCalVer } from './src/lib/calver'
+import {
+  SlugSchema,
+  CalVerSchema,
+  ArtifactTypeSchema,
+  MergeStrategySchema,
+} from 'blink-registry'
 
 // Shared fields for DX content types (skills, hooks, configs, guides)
 const dxFields = {
@@ -283,23 +289,18 @@ const config: any = defineConfig({
     const allArtifacts = [...singles, ...multis]
 
     // Validate artifact shape at build time (fail-fast)
-    const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
-    const calverPattern = /^\d{4}\.\d{2}\.\d{2}\.\d+$/
-    const validTypes = ['config', 'skill', 'hook', 'guide']
-    const validMerges = ['replace', 'section']
-
     for (const artifact of allArtifacts) {
-      if (!slugPattern.test(artifact.slug)) {
+      if (!SlugSchema.safeParse(artifact.slug).success) {
         throw new Error(`Invalid artifact slug: "${artifact.slug}"`)
       }
-      if (!calverPattern.test(artifact.version)) {
+      if (!CalVerSchema.safeParse(artifact.version).success) {
         throw new Error(`Invalid artifact version: "${artifact.version}" for ${artifact.slug}`)
       }
-      if (!validTypes.includes(artifact.type)) {
+      if (!ArtifactTypeSchema.safeParse(artifact.type).success) {
         throw new Error(`Invalid artifact type: "${artifact.type}" for ${artifact.slug}`)
       }
       for (const file of artifact.files) {
-        if (!validMerges.includes(file.merge)) {
+        if (!MergeStrategySchema.safeParse(file.merge).success) {
           throw new Error(`Invalid merge strategy: "${file.merge}" in ${artifact.slug}`)
         }
         if (!file.content) {
