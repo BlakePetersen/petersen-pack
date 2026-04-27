@@ -19,6 +19,7 @@ build
 
 # phase 27 fixture build artifacts (velite test fixtures)
 apps/blakepetersen.io/test-fixtures/**/public/
+apps/blakepetersen.io/test-fixtures/**/.artifact-versions.json
 
 # misc
 .DS_Store
