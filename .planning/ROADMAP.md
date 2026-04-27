@@ -109,7 +109,7 @@ Plans:
 - [x] 27-02-blink-registry-import-PLAN.md — SCHEMA-05 direct import (replace inline patterns)
 - [x] 27-03-slug-uniqueness-PLAN.md — SCHEMA-03 per-collection slug dedup (smallest-delta path)
 - [x] 27-04-cross-ref-validator-PLAN.md — SCHEMA-04 dependencies/related integrity check
-- [ ] 27-05-calver-hash-gate-PLAN.md — SCHEMA-08 content-hash CalVer gate + manifest
+- [x] 27-05-calver-hash-gate-PLAN.md — SCHEMA-08 content-hash CalVer gate + manifest
 - [ ] 27-06-codemod-harness-PLAN.md — SCHEMA-06 migrate-content harness skeleton
 - [ ] 27-07-perf-baseline-PLAN.md — SCHEMA-07 build-perf baseline (runs LAST)
 
