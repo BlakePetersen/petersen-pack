@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 27-schema-foundations-04-cross-ref-validator-PLAN.md
-last_updated: "2026-04-27T07:07:24.915Z"
+stopped_at: Completed 27-schema-foundations-05-calver-hash-gate-PLAN.md
+last_updated: "2026-04-27T07:18:27.551Z"
 last_activity: 2026-04-27
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 8
-  completed_plans: 5
-  percent: 63
+  completed_plans: 6
+  percent: 75
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 27 (schema-foundations) — EXECUTING
-Plan: 6 of 8
+Plan: 7 of 8
 Status: Ready to execute
 Last activity: 2026-04-27
 
-Progress: [██████░░░░] 63%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -108,6 +108,11 @@ Progress: [██████░░░░] 63%
 - 27-03: Per-collection bare-slug uniqueness via custom superRefine on s.path() (helper + dxSchemaFor factory) — preserves path-shaped entry.slug; literal D-19 swap to s.slug('<collection>') would change entry.slug to bare and break .velite/<collection>.json consumers + dxSchema.transform category fallback
 - 27-03: TDD ordering — test(...) RED commit before feat(...) GREEN commit overrides plan declaration order when tasks list impl before its regression test
 - 27-04: Deviated from plan reference snippet — store path-shaped slugs in per-collection Sets and match ref strings directly, instead of pop()-ing the last segment, to avoid false-positive dangling errors on nested skill paths
+- 27-05: Hash gate short-circuits BEFORE deriveCalVer (which is NOT pure — consults git history) so prose-only artifact frontmatter edits no longer bump CalVer
+- 27-05: Hash scope = distributed payload only (D-05) — single-file = artifact.body bytes, multi-file = concatenated file.content in declared order. Frontmatter bytes (description, devDependencies, name) excluded
+- 27-05: Manifest at content/.artifact-versions.json is git-tracked per D-06 — survives clean checkouts; T-27-05-01 commit-access tampering accepted (PR-diffable)
+- 27-05: Single-process serial build assumption (Risk #3) — fs.writeFileSync of full JSON in one syscall; atomic write-temp-then-rename deferred to v2+
+- 27-05: Plan-level TDD ordering — test(27-05) RED commit before feat(27-05) GREEN; same precedent as 27-03 / 27-04
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -140,8 +145,8 @@ Progress: [██████░░░░] 63%
 
 ## Session Continuity
 
-Last session: 2026-04-27T07:07:24.912Z
-Stopped at: Completed 27-schema-foundations-04-cross-ref-validator-PLAN.md
+Last session: 2026-04-27T07:18:27.549Z
+Stopped at: Completed 27-schema-foundations-05-calver-hash-gate-PLAN.md
 Resume file: None
 
 **Planned Phase:** 27 (Schema Foundations) — 8 plans — 2026-04-27T05:34:40.722Z
