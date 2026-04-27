@@ -71,3 +71,25 @@ describe('Frontmatter Schema (CONT-03)', () => {
     },
   )
 })
+
+describe('SCHEMA-01 / SCHEMA-02 — voice + requires_artifact defaults', () => {
+  test.each(['skills', 'hooks', 'configs', 'guides'])(
+    'every %s entry has voice as an array',
+    (collection) => {
+      const items = readCollection(collection)
+      for (const item of items) {
+        expect(Array.isArray(item.voice)).toBe(true)
+      }
+    },
+  )
+
+  test.each(['skills', 'hooks', 'configs', 'guides'])(
+    'every %s entry has requires_artifact as a boolean',
+    (collection) => {
+      const items = readCollection(collection)
+      for (const item of items) {
+        expect(typeof item.requires_artifact).toBe('boolean')
+      }
+    },
+  )
+})
