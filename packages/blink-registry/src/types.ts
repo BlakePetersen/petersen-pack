@@ -6,26 +6,26 @@ export type {
   CalVer,
   MergeStrategy,
   Scope,
-} from './schemas/primitives'
+} from './schemas/primitives.ts'
 
 export type {
   ArtifactFile,
   ArtifactMetadata,
-} from './schemas/artifact'
+} from './schemas/artifact.ts'
 
 export type {
   ManifestFileEntry,
   ManifestEntry,
   Manifest,
-} from './schemas/manifest'
+} from './schemas/manifest.ts'
 
 export type {
   RegistryItem,
   RegistryIndex,
   RegistryArtifact,
-} from './schemas/registry'
+} from './schemas/registry.ts'
 
 export type {
   BlinkErrorCodeType,
   BlinkError,
-} from './schemas/errors'
+} from './schemas/errors.ts'

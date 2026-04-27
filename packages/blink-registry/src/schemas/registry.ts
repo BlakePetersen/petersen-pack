@@ -2,8 +2,8 @@
 // ABOUTME: Defines the registry index listing and individual registry item shapes.
 import { z } from 'zod'
 
-import { ArtifactTypeSchema, CalVerSchema, SlugSchema } from './primitives'
-import { ArtifactMetadataSchema } from './artifact'
+import { ArtifactTypeSchema, CalVerSchema, SlugSchema } from './primitives.ts'
+import { ArtifactMetadataSchema } from './artifact.ts'
 
 export const RegistryItemSchema = z.object({
   slug: SlugSchema,

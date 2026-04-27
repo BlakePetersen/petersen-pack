@@ -11,14 +11,14 @@ export {
   type CalVer,
   type MergeStrategy,
   type Scope,
-} from './schemas/primitives'
+} from './schemas/primitives.ts'
 
 export {
   ArtifactFileSchema,
   ArtifactMetadataSchema,
   type ArtifactFile,
   type ArtifactMetadata,
-} from './schemas/artifact'
+} from './schemas/artifact.ts'
 
 export {
   ManifestFileEntrySchema,
@@ -27,7 +27,7 @@ export {
   type ManifestFileEntry,
   type ManifestEntry,
   type Manifest,
-} from './schemas/manifest'
+} from './schemas/manifest.ts'
 
 export {
   RegistryItemSchema,
@@ -36,11 +36,11 @@ export {
   type RegistryItem,
   type RegistryIndex,
   type RegistryArtifact,
-} from './schemas/registry'
+} from './schemas/registry.ts'
 
 export {
   BlinkErrorCode,
   BlinkErrorSchema,
   type BlinkErrorCodeType,
   type BlinkError,
-} from './schemas/errors'
+} from './schemas/errors.ts'

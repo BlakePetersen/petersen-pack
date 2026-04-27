@@ -7,7 +7,7 @@ import {
   CalVerSchema,
   MergeStrategySchema,
   SlugSchema,
-} from './primitives'
+} from './primitives.ts'
 
 export const ArtifactFileSchema = z.object({
   path: z.string(),

@@ -8,7 +8,7 @@ import {
   MergeStrategySchema,
   ScopeSchema,
   SlugSchema,
-} from './primitives'
+} from './primitives.ts'
 
 export const ManifestFileEntrySchema = z.object({
   path: z.string(),
