@@ -101,7 +101,17 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 **Spike callouts**:
   - `deriveCalVer` audit (~30min read of `apps/blakepetersen.io/src/lib/calver.ts` + 1h regression test). If pure-date logic is confirmed, add content-hash gate before Phase 29 begins. SCHEMA-08 is the deliverable.
 
-**Plans**: TBD
+**Plans**: 8 plans
+
+Plans:
+- [ ] 27-00-test-fixtures-PLAN.md — Wave 0 fixtures + velite-runner helper
+- [ ] 27-01-voice-and-requires-artifact-PLAN.md — SCHEMA-01 + SCHEMA-02 dxFields additions
+- [ ] 27-02-blink-registry-import-PLAN.md — SCHEMA-05 direct import (replace inline patterns)
+- [ ] 27-03-slug-uniqueness-PLAN.md — SCHEMA-03 per-collection slug dedup (smallest-delta path)
+- [ ] 27-04-cross-ref-validator-PLAN.md — SCHEMA-04 dependencies/related integrity check
+- [ ] 27-05-calver-hash-gate-PLAN.md — SCHEMA-08 content-hash CalVer gate + manifest
+- [ ] 27-06-codemod-harness-PLAN.md — SCHEMA-06 migrate-content harness skeleton
+- [ ] 27-07-perf-baseline-PLAN.md — SCHEMA-07 build-perf baseline (runs LAST)
 
 ### Phase 28: Authoring Scaffolds + Lint + Port
 
