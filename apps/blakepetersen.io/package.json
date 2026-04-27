@@ -27,6 +27,7 @@
     "clean": "rm -rf .next && rm -rf .turbo && rm -rf node_modules",
     "dev": "next dev",
     "lint": "eslint .",
+    "migrate": "tsx scripts/migrate-content.ts",
     "start": "next start",
     "test": "jest --passWithNoTests",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
@@ -42,6 +43,7 @@
     "rehype-slug": "^6.0.0",
     "ts-jest": "^29.4.9",
     "tsconfig": "workspace:*",
+    "tsx": "^4.21.0",
     "typescript": "6.0.2",
     "velite": "^0.3.1"
   }
