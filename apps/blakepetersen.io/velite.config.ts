@@ -27,6 +27,8 @@ const dxFields = {
   order: s.number().optional(),
   draft: s.boolean().default(false),
   tags: s.array(s.string()).default([]),
+  voice: s.array(s.enum(['author-note', 'decision-rationale'])).default([]),
+  requires_artifact: s.boolean().default(false),
   category: s.string().optional(),
   decisions: s.array(s.object({ choice: s.string(), rationale: s.string() })).default([]),
   related: s.array(s.string()).default([]),
