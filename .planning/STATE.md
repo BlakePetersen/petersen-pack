@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: completed
-stopped_at: Phase 27 context gathered
-last_updated: "2026-04-27T05:34:40.725Z"
-last_activity: 2026-04-24 — v1.4 roadmap (Phases 27-30) drafted from research synthesis; 37/37 v1.4 requirements mapped
+status: executing
+stopped_at: Completed 27-00-test-fixtures-PLAN.md
+last_updated: "2026-04-27T06:27:29.030Z"
+last_activity: 2026-04-27
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 8
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 13
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-24)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** v1.4 Content Density — populate the 4 active collections (skills/configs/hooks/guides) with real, distributable content backed by authoring scaffolds; close v1.3 editorial debt
+**Current focus:** Phase 27 — schema-foundations
 
 ## Current Position
 
-Phase: 27 (Schema Foundations) — not started
-Plan: —
-Status: Roadmap complete; awaiting first phase plan
-Last activity: 2026-04-24 — v1.4 roadmap (Phases 27-30) drafted from research synthesis; 37/37 v1.4 requirements mapped
+Phase: 27 (schema-foundations) — EXECUTING
+Plan: 2 of 8
+Status: Ready to execute
+Last activity: 2026-04-27
 
-Progress: planning (0/4 phases complete, 0/14 estimated plans complete)
+Progress: [█░░░░░░░░░] 13%
 
 ## Performance Metrics
 
@@ -99,6 +99,8 @@ Progress: planning (0/4 phases complete, 0/14 estimated plans complete)
 - [Phase 26]: 26-06: Collection Listing factory recompose (SITE-07) — single edit to `createCollectionIndexPage` in `apps/blakepetersen.io/src/lib/collection-pages.tsx` propagates to all 5 listing routes (/configs /hooks /guides /skills /posts). New header: `// {slug}` mono caption + `font-mono-alt text-3xl` label H1 + `<Badge variant="secondary">{count}</Badge>` + `indexDescription(count)` paragraph. UI-SPEC empty-state branch (`items.length === 0`): `// empty_collection` + label H1 + `No entries yet. Check back, or contribute one → [contribute]` → `/start-here`. Row typography unified: `text-base font-medium text-foreground` titles; `font-mono text-base text-muted-foreground` descriptions; tag-pill `variant="secondary"` consumers preserved (pre=2 → post=3, additive count Badge only — Pitfall 5 guard). Server-component contract preserved (no `'use client'`). Per-route `page.tsx` files untouched.
 - [Phase 26]: 26-06: Empty-state verification via deterministic unit test (`apps/blakepetersen.io/tests/lib/collection-pages.test.tsx`, 4 cases) that mocks `getCollection` to return `[]` and asserts on `renderToStaticMarkup(Page())` — replaces the destructive "temporarily empty content" manual step. Test pattern adaptation (deviation Rule 3): `JSON.stringify(tree)` pattern from `roadmap.test.tsx` hits a circular-ref on React trees containing `<Link>`; switched to `renderToStaticMarkup` + `next/link` mock returning plain `<a>`, matching `packages/artax-ui/tests/components/modal.test.tsx` precedent.
 - [Phase 26]: 26-06: D-07 visual smoke check across all 5 factory-driven listing routes (light/dark) deferred to phase-end batch with 26-02/03/04/05 — consistent handling across all execute plans in Phase 26.
+- 27-00: Phase 27 fixture pattern — spread baseConfig, override root + output.data + clean; runner uses pnpm exec velite with cwd=fixtureDir
+- 27-00: spawnSync runner uses argv array (no shell) and fixtureDir constructed from __dirname join — satisfies T-27-00-03 injection threat mitigation
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -131,8 +133,8 @@ Progress: planning (0/4 phases complete, 0/14 estimated plans complete)
 
 ## Session Continuity
 
-Last session: --stopped-at
-Stopped at: Phase 27 context gathered
-Resume file: --resume-file
+Last session: 2026-04-27T06:27:29.027Z
+Stopped at: Completed 27-00-test-fixtures-PLAN.md
+Resume file: None
 
 **Planned Phase:** 27 (Schema Foundations) — 8 plans — 2026-04-27T05:34:40.722Z
