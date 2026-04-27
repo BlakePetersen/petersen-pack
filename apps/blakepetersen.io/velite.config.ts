@@ -224,6 +224,64 @@ const config: any = defineConfig({
       dependencies: item.dependencies,
     }))
 
+    // SCHEMA-04: cross-reference integrity check (D-01..D-04).
+    // Runs against post-draft-filter data so dev = prod for valid published
+    // content. Walks `dependencies` and `related` only — `decisions` is wrong
+    // shape (no slugs) per D-01. Cross-collection refs allowed per D-02.
+    // Format is `<collection>/<slug>` per D-03; bare slug may itself contain
+    // slashes (nested skills), so we compare against the path-shaped slug
+    // directly rather than splitting again. Accumulator-then-throw per D-04.
+    type DxCollectionName = 'skills' | 'hooks' | 'configs' | 'guides'
+    const collectionSlugs: Record<DxCollectionName, Set<string>> = {
+      skills: new Set(data.skills.map((i) => i.slug)),
+      hooks: new Set(data.hooks.map((i) => i.slug)),
+      configs: new Set(data.configs.map((i) => i.slug)),
+      guides: new Set(data.guides.map((i) => i.slug)),
+    }
+
+    const brokenRefs: string[] = []
+    const allDx: Array<{ slug: string; dependencies?: string[]; related?: string[] }> = [
+      ...data.skills,
+      ...data.hooks,
+      ...data.configs,
+      ...data.guides,
+    ]
+
+    for (const item of allDx) {
+      for (const field of ['dependencies', 'related'] as const) {
+        const refs = (item[field] ?? []) as string[]
+        for (const ref of refs) {
+          const slashIndex = ref.indexOf('/')
+          if (slashIndex <= 0 || slashIndex === ref.length - 1) {
+            brokenRefs.push(
+              `  ${item.slug} ${field}: '${ref}' — invalid format (expected '<collection>/<slug>')`,
+            )
+            continue
+          }
+          const coll = ref.slice(0, slashIndex)
+          if (!(coll in collectionSlugs)) {
+            brokenRefs.push(
+              `  ${item.slug} ${field}: '${ref}' — unknown collection '${coll}'`,
+            )
+            continue
+          }
+          // ref is the full path-shaped slug (e.g. 'skills/claude-code/writing-custom-skills');
+          // collection's Set stores the same path-shaped value, so compare directly.
+          if (!collectionSlugs[coll as DxCollectionName].has(ref)) {
+            brokenRefs.push(
+              `  ${item.slug} ${field}: '${ref}' — target not found in collection '${coll}'`,
+            )
+          }
+        }
+      }
+    }
+
+    if (brokenRefs.length > 0) {
+      throw new Error(
+        `Broken cross-references in DX content (${brokenRefs.length}):\n${brokenRefs.join('\n')}`,
+      )
+    }
+
     const fullGraph = buildGraph(dxItems)
     const fullLayout = computeLayout(fullGraph)
     const fullGraphSvg = renderGraphSvg(fullLayout, { basePath: '/dx' })
