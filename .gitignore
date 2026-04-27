@@ -15,6 +15,10 @@ build
 
 # velite
 .velite
+.velite-fixture
+
+# phase 27 fixture build artifacts (velite test fixtures)
+apps/blakepetersen.io/test-fixtures/**/public/
 
 # misc
 .DS_Store
