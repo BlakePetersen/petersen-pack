@@ -1,6 +1,7 @@
 // ABOUTME: Velite content pipeline configuration with typed schemas for all collections.
 // ABOUTME: Defines content and artifact collections, merges artifacts in prepare hook into artifacts.json.
 
+import { createHash } from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { defineCollection, defineConfig, s } from 'velite'
@@ -336,12 +337,39 @@ const config: any = defineConfig({
       return cleaned.split('/').pop() || cleaned
     }
 
+    // SCHEMA-08: load the git-tracked version manifest before deriveCalVer
+    // is ever called. The hash gate short-circuits version derivation when
+    // an artifact's distributed-payload bytes are unchanged (D-05/D-07),
+    // which is what preserves "prose-only edits don't bump CalVer" even
+    // though deriveCalVer is NOT pure-date (it shells out to git log).
+    // Manifest is git-tracked per D-06 so versions stay deterministic
+    // across machines after first capture. Single-process serial build
+    // assumption (Risk #3) — no atomic write needed for v1.4.
+    const versionManifestPath = path.resolve(contentDir, '.artifact-versions.json')
+    type VersionManifest = Record<string, { hash: string; version: string }>
+    const priorVersionManifest: VersionManifest = fs.existsSync(versionManifestPath)
+      ? JSON.parse(fs.readFileSync(versionManifestPath, 'utf-8'))
+      : {}
+    const updatedVersionManifest: VersionManifest = {}
     const dateCounters = new Map<string, number>()
+
+    function sha256Hex(payload: string): string {
+      return createHash('sha256').update(payload).digest('hex')
+    }
 
     const singles = (data.singleArtifacts ?? []).map((artifact) => {
       const slug = deriveArtifactSlug(artifact.slug)
-      const filePath = path.join(contentDir, `${artifact.slug}.md`)
-      const version = deriveCalVer(filePath, dateCounters)
+      // D-05: hash the distributed-payload bytes only (single-file = body).
+      const hash = sha256Hex(artifact.body)
+      const prior = priorVersionManifest[slug]
+      let version: string
+      if (prior && prior.hash === hash) {
+        version = prior.version
+      } else {
+        const filePath = path.join(contentDir, `${artifact.slug}.md`)
+        version = deriveCalVer(filePath, dateCounters)
+      }
+      updatedVersionManifest[slug] = { hash, version }
 
       return {
         slug,
@@ -362,8 +390,19 @@ const config: any = defineConfig({
 
     const multis = (data.multiArtifacts ?? []).map((artifact) => {
       const slug = deriveArtifactSlug(artifact.slug)
-      const manifestPath = path.join(contentDir, `${artifact.slug}.json`)
-      const version = deriveCalVer(manifestPath, dateCounters)
+      // D-05: hash concatenated file.content in declared order (no separator —
+      // boundaries are immaterial to the consumer-facing payload).
+      const concatenated = artifact.files.map((f) => f.content).join('')
+      const hash = sha256Hex(concatenated)
+      const prior = priorVersionManifest[slug]
+      let version: string
+      if (prior && prior.hash === hash) {
+        version = prior.version
+      } else {
+        const manifestFilePath = path.join(contentDir, `${artifact.slug}.json`)
+        version = deriveCalVer(manifestFilePath, dateCounters)
+      }
+      updatedVersionManifest[slug] = { hash, version }
 
       return {
         slug,
@@ -398,6 +437,13 @@ const config: any = defineConfig({
         }
       }
     }
+
+    // SCHEMA-08: persist updated version manifest after artifact validation
+    // passes. Single-process serial build (Risk #3) — no atomic write needed.
+    fs.writeFileSync(
+      versionManifestPath,
+      JSON.stringify(updatedVersionManifest, null, 2) + '\n',
+    )
 
     fs.writeFileSync(
       path.join(outputDir, 'artifacts.json'),
