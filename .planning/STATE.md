@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 27-03-slug-uniqueness-PLAN.md
-last_updated: "2026-04-27T06:59:35.692Z"
+stopped_at: Completed 27-schema-foundations-04-cross-ref-validator-PLAN.md
+last_updated: "2026-04-27T07:07:24.915Z"
 last_activity: 2026-04-27
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 8
-  completed_plans: 4
-  percent: 50
+  completed_plans: 5
+  percent: 63
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 27 (schema-foundations) — EXECUTING
-Plan: 5 of 8
+Plan: 6 of 8
 Status: Ready to execute
 Last activity: 2026-04-27
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 63%
 
 ## Performance Metrics
 
@@ -107,6 +107,7 @@ Progress: [█████░░░░░] 50%
 - 27-02 deviation (Blake-approved Option A): blink-registry barrel re-exports use explicit .ts extensions for Node ESM strict resolution; allowImportingTsExtensions+noEmit promoted to packages/tsconfig/base.json — workspace emits via tsup/Next, never tsc
 - 27-03: Per-collection bare-slug uniqueness via custom superRefine on s.path() (helper + dxSchemaFor factory) — preserves path-shaped entry.slug; literal D-19 swap to s.slug('<collection>') would change entry.slug to bare and break .velite/<collection>.json consumers + dxSchema.transform category fallback
 - 27-03: TDD ordering — test(...) RED commit before feat(...) GREEN commit overrides plan declaration order when tasks list impl before its regression test
+- 27-04: Deviated from plan reference snippet — store path-shaped slugs in per-collection Sets and match ref strings directly, instead of pop()-ing the last segment, to avoid false-positive dangling errors on nested skill paths
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -139,8 +140,8 @@ Progress: [█████░░░░░] 50%
 
 ## Session Continuity
 
-Last session: 2026-04-27T06:59:35.689Z
-Stopped at: Completed 27-03-slug-uniqueness-PLAN.md
+Last session: 2026-04-27T07:07:24.912Z
+Stopped at: Completed 27-schema-foundations-04-cross-ref-validator-PLAN.md
 Resume file: None
 
 **Planned Phase:** 27 (Schema Foundations) — 8 plans — 2026-04-27T05:34:40.722Z

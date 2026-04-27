@@ -17,7 +17,8 @@ Lock the data shape before any content authoring; field changes after sixteen en
 **: `requires_artifact` field added to Velite `dxFields` as `boolean` with `false` default; existing entries pass validation unchanged
 - [x] **SCHEMA-03
 **: Velite collection `path` schema swapped to `slug('<collection>')` for skills, configs, hooks, guides — duplicate slugs across a collection fail the build
-- [ ] **SCHEMA-04**: Velite `prepare` hook asserts every `requires:` cross-reference resolves to a real entry slug; broken references fail the build
+- [x] **SCHEMA-04
+**: Velite `prepare` hook asserts every `requires:` cross-reference resolves to a real entry slug; broken references fail the build
 - [x] **SCHEMA-05
 **: v1.2 ESM workaround resolved — Velite imports artifact validation from `@blink-dx/registry` directly; inline duplication removed
 - [ ] **SCHEMA-06**: `scripts/migrate-content.ts` codemod harness committed (skeleton only — not yet executed); future schema migrations have a documented entry point
