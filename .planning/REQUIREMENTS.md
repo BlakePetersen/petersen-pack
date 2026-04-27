@@ -17,7 +17,8 @@ Lock the data shape before any content authoring; field changes after sixteen en
 **: `requires_artifact` field added to Velite `dxFields` as `boolean` with `false` default; existing entries pass validation unchanged
 - [ ] **SCHEMA-03**: Velite collection `path` schema swapped to `slug('<collection>')` for skills, configs, hooks, guides — duplicate slugs across a collection fail the build
 - [ ] **SCHEMA-04**: Velite `prepare` hook asserts every `requires:` cross-reference resolves to a real entry slug; broken references fail the build
-- [ ] **SCHEMA-05**: v1.2 ESM workaround resolved — Velite imports artifact validation from `@blink-dx/registry` directly; inline duplication removed
+- [x] **SCHEMA-05
+**: v1.2 ESM workaround resolved — Velite imports artifact validation from `@blink-dx/registry` directly; inline duplication removed
 - [ ] **SCHEMA-06**: `scripts/migrate-content.ts` codemod harness committed (skeleton only — not yet executed); future schema migrations have a documented entry point
 - [ ] **SCHEMA-07**: Build-perf baseline captured (cold `pnpm build` + warm `next dev` startup) and stored in `.planning/intel/` for v1.4 regression comparison
 - [ ] **SCHEMA-08**: `deriveCalVer` audited — if pure-date logic, content-hash gate added so prose-only edits don't bump artifact CalVer
@@ -28,7 +29,8 @@ Generators that produce schema-valid skeletons; templates derive from the canoni
 
 - [ ] **SCAFFOLD-01**: `blink scaffold skill <slug>` generates an MDX file plus companion `.artifact.md` at the correct content path with valid frontmatter
 - [ ] **SCAFFOLD-02**: `blink scaffold config <slug>`, `blink scaffold hook <slug>`, and `blink scaffold guide <slug>` produce the equivalent skeleton for each remaining collection
-- [ ] **SCAFFOLD-03**: Scaffold templates derive from the live Velite Zod schema (no hand-maintained template/schema duplication) — depends on SCHEMA-05
+- [x] **SCAFFOLD-03**: Scaffold templates derive from the live Velite Zod schema (no hand-maintained template/schema duplication) — depends on SCHEMA-05
+
 - [ ] **SCAFFOLD-04**: Scaffold pre-populates the artifact frontmatter (`name`, `description`, `type`, `version`) from the MDX frontmatter so authors edit one source of truth
 - [ ] **SCAFFOLD-05**: Round-trip CI test runs `blink scaffold` for each collection, then runs Velite, and asserts the generated entries pass schema validation
 - [ ] **SCAFFOLD-06**: Scaffold respects `--dry-run` (prints the would-write paths and contents) and `--force` (overwrites an existing slug)

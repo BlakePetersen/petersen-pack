@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 27-01-voice-and-requires-artifact-PLAN.md
-last_updated: "2026-04-27T06:35:55.413Z"
+stopped_at: Completed 27-02-blink-registry-import-PLAN.md
+last_updated: "2026-04-27T06:52:00.027Z"
 last_activity: 2026-04-27
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 8
-  completed_plans: 2
-  percent: 25
+  completed_plans: 3
+  percent: 38
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 27 (schema-foundations) — EXECUTING
-Plan: 3 of 8
+Plan: 4 of 8
 Status: Ready to execute
 Last activity: 2026-04-27
 
-Progress: [███░░░░░░░] 25%
+Progress: [████░░░░░░] 38%
 
 ## Performance Metrics
 
@@ -103,6 +103,8 @@ Progress: [███░░░░░░░] 25%
 - 27-00: spawnSync runner uses argv array (no shell) and fixtureDir constructed from __dirname join — satisfies T-27-00-03 injection threat mitigation
 - 27-01: Velite's strict config option does NOT control CLI exit codes — only the --strict CLI flag does. Phase 27 fixture runner must invoke velite directly with --strict to surface schema failures as non-zero exits.
 - 27-01: voice + requires_artifact ship between tags and category in dxFields per RESEARCH Q7; defaults [] and false preserve all 11 existing DX entries with no frontmatter changes (SCHEMA-01, SCHEMA-02 field freeze).
+- 27-02: Velite imports SlugSchema/CalVerSchema/ArtifactTypeSchema/MergeStrategySchema directly from blink-registry; v1.2 ESM workaround retired (SCHEMA-05/D-20 closed)
+- 27-02 deviation (Blake-approved Option A): blink-registry barrel re-exports use explicit .ts extensions for Node ESM strict resolution; allowImportingTsExtensions+noEmit promoted to packages/tsconfig/base.json — workspace emits via tsup/Next, never tsc
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -135,8 +137,8 @@ Progress: [███░░░░░░░] 25%
 
 ## Session Continuity
 
-Last session: 2026-04-27T06:35:55.410Z
-Stopped at: Completed 27-01-voice-and-requires-artifact-PLAN.md
+Last session: 2026-04-27T06:52:00.024Z
+Stopped at: Completed 27-02-blink-registry-import-PLAN.md
 Resume file: None
 
 **Planned Phase:** 27 (Schema Foundations) — 8 plans — 2026-04-27T05:34:40.722Z
