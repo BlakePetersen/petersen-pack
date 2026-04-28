@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: verified
-stopped_at: "Phase 27 verified 8/8 PASS (SCHEMA-08 PARTIAL closed inline 2026-04-28)"
-last_updated: "2026-04-28T03:30:00.000Z"
-last_activity: 2026-04-28 — Phase 27 verified; SCHEMA-08 manifest determinism fix + REQUIREMENTS.md table sync landed
+status: shipped
+stopped_at: "Phase 27 shipped — PR #116 (gsd/phase-27-schema-foundations → main)"
+last_updated: "2026-04-28T03:45:00.000Z"
+last_activity: 2026-04-28 — Phase 27 PR #116 opened (33 commits, 128 files, +3100/-?)
 progress:
   total_phases: 4
   completed_phases: 1
