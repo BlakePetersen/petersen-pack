@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: executing
-stopped_at: Completed 27-schema-foundations-06-codemod-harness-PLAN.md
-last_updated: "2026-04-27T07:26:54.323Z"
-last_activity: 2026-04-27
+status: verifying
+stopped_at: "Completed 27-schema-foundations-07-perf-baseline-PLAN.md (Phase 27 complete: 8/8)"
+last_updated: "2026-04-28T03:14:45.024Z"
+last_activity: 2026-04-28
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 8
-  completed_plans: 7
-  percent: 88
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 
 Phase: 27 (schema-foundations) — EXECUTING
 Plan: 8 of 8
-Status: Ready to execute
-Last activity: 2026-04-27
+Status: Phase complete — ready for verification
+Last activity: 2026-04-28
 
-Progress: [█████████░] 88%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -116,6 +116,8 @@ Progress: [█████████░] 88%
 - 27-06: Use ESM-native fileURLToPath(import.meta.url) instead of CJS-shim polyfill — tsx 4.x runs scripts as native ESM (plan-invited swap)
 - 27-06: Codemod harness skeleton ships --dry-run as printf-only short-circuit; future migration #001 owns dry-run contract definition (T-27-06-02 deferred per skeleton scope)
 - 27-06: Migration discovery contract = scripts/migrations/<NNN>-<name>.ts default-export { name, description, run(contentRoot) }; regex /^\d{3}-[a-z0-9-]+\.ts$/ filters discoverable files
+- 27-07: tsx scripts in CJS host packages must wrap async work in main() — top-level await unsupported by esbuild's cjs output; use fileURLToPath(import.meta.url) for __dirname (matches migrate-content.ts ESM pattern)
+- 27-07: v1.4 perf baseline (Node v24.14.0, content count 23) — fullBuildWallMs 12456.79, veliteWallMs 3509.55, webpackCompileMs 6300, nextDevReadyMs 181; committed at .planning/intel/build-perf-baseline.json as v1.5+ regression yardstick
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -148,8 +150,8 @@ Progress: [█████████░] 88%
 
 ## Session Continuity
 
-Last session: 2026-04-27T07:26:54.321Z
-Stopped at: Completed 27-schema-foundations-06-codemod-harness-PLAN.md
+Last session: 2026-04-28T03:14:45.021Z
+Stopped at: Completed 27-schema-foundations-07-perf-baseline-PLAN.md (Phase 27 complete: 8/8)
 Resume file: None
 
 **Planned Phase:** 27 (Schema Foundations) — 8 plans — 2026-04-27T05:34:40.722Z

@@ -76,7 +76,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 
 ### v1.4 Content Density (Phases 27-30) — IN PROGRESS
 
-- [ ] **Phase 27: Schema Foundations** — Lock `dxFields` shape, slug uniqueness, cross-ref integrity, perf baseline, CalVer + ESM debt resolution before any content authoring
+- [x] **Phase 27: Schema Foundations** — Lock `dxFields` shape, slug uniqueness, cross-ref integrity, perf baseline, CalVer + ESM debt resolution before any content authoring
 - [ ] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
 - [ ] **Phase 29: Content Authoring (Greenfield + Ports)** — 16 entries shipped (5 skills, 5 configs, 3 hooks, 3 guides) plus first-invocation voice-primitive torture test
 - [ ] **Phase 30: Editorial Closure** — Real `/about` and `/start-here` copy, voice-primitive backfill across pre-existing MDX, Skills Detail typography polish, voice-lint promotion review, milestone audit
@@ -111,7 +111,7 @@ Plans:
 - [x] 27-04-cross-ref-validator-PLAN.md — SCHEMA-04 dependencies/related integrity check
 - [x] 27-05-calver-hash-gate-PLAN.md — SCHEMA-08 content-hash CalVer gate + manifest
 - [x] 27-06-codemod-harness-PLAN.md — SCHEMA-06 migrate-content harness skeleton
-- [ ] 27-07-perf-baseline-PLAN.md — SCHEMA-07 build-perf baseline (runs LAST)
+- [x] 27-07-perf-baseline-PLAN.md — SCHEMA-07 build-perf baseline (runs LAST)
 
 ### Phase 28: Authoring Scaffolds + Lint + Port
 
@@ -205,7 +205,7 @@ v1.4 phases execute in numeric order: 27 → 28 → 29 → 30. Phase 28 has thre
 | 24.1 Editable Previews Polish | v1.3 | 3/3 | Complete | 2026-04-19 |
 | 25. blakepetersen.io Theming | v1.3 | 1/1 | Complete | 2026-04-19 |
 | 26. blakepetersen.io Page Updates | v1.3 | 7/7 | Complete | 2026-04-24 |
-| 27. Schema Foundations | v1.4 | 5/8 | In progress | — |
+| 27. Schema Foundations | v1.4 | 8/8 | Complete | 2026-04-28 |
 | 28. Authoring Scaffolds + Lint + Port | v1.4 | 0/? | Not started | — |
 | 29. Content Authoring | v1.4 | 0/? | Not started | — |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
