@@ -114,14 +114,14 @@ Which phases cover which requirements. Filled by the roadmapper.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCHEMA-01 | Phase 27 | Pending |
-| SCHEMA-02 | Phase 27 | Pending |
+| SCHEMA-01 | Phase 27 | Complete |
+| SCHEMA-02 | Phase 27 | Complete |
 | SCHEMA-03 | Phase 27 | Complete |
-| SCHEMA-04 | Phase 27 | Pending |
-| SCHEMA-05 | Phase 27 | Pending |
-| SCHEMA-06 | Phase 27 | Pending |
+| SCHEMA-04 | Phase 27 | Complete |
+| SCHEMA-05 | Phase 27 | Complete |
+| SCHEMA-06 | Phase 27 | Complete |
 | SCHEMA-07 | Phase 27 | Complete |
-| SCHEMA-08 | Phase 27 | Pending |
+| SCHEMA-08 | Phase 27 | Complete |
 | SCAFFOLD-01 | Phase 28 | Pending |
 | SCAFFOLD-02 | Phase 28 | Pending |
 | SCAFFOLD-03 | Phase 28 | Pending |
