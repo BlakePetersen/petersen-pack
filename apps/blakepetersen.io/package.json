@@ -28,6 +28,7 @@
     "dev": "next dev",
     "lint": "eslint .",
     "migrate": "tsx scripts/migrate-content.ts",
+    "perf:baseline": "tsx scripts/perf-baseline.ts",
     "start": "next start",
     "test": "jest --passWithNoTests",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",

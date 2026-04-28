@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-04-28T03:11:37.754Z",
+  "nodeVersion": "v24.14.0",
+  "contentCount": 23,
+  "metrics": {
+    "fullBuildWallMs": 12456.786542000002,
+    "veliteWallMs": 3509.5498750000006,
+    "webpackCompileMs": 6300,
+    "nextDevReadyMs": 181
+  }
+}
