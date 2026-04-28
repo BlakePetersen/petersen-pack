@@ -11,14 +11,6 @@
     "hash": "f857972bada548c9b0f038e43544dbdc990680944768904b0cd0e7bf9ec102fb",
     "version": "2026.03.15.0"
   },
-  "tmux-poweruser": {
-    "hash": "e9608c4b41411e9605ba4b42eff43ec5a8212c6f49be0062e22fdfcc5766ef10",
-    "version": "2026.04.05.0"
-  },
-  "typescript-config": {
-    "hash": "b5431f9a8b4876e8262f4166164c40fac93b37d00191cc198d156cbd79177f59",
-    "version": "2026.03.15.3"
-  },
   "husky-lint-staged": {
     "hash": "10c7b8719345b4824ff121cbadbde80d8be17a89f96553386632bec042b71a03",
     "version": "2026.03.15.5"
@@ -26,6 +18,14 @@
   "prettier-config": {
     "hash": "44c2365c0d70781af156a58a75cbf6b8ae26d452f3ec7e7add7bb969c908cc86",
     "version": "2026.03.15.4"
+  },
+  "tmux-poweruser": {
+    "hash": "e9608c4b41411e9605ba4b42eff43ec5a8212c6f49be0062e22fdfcc5766ef10",
+    "version": "2026.04.05.0"
+  },
+  "typescript-config": {
+    "hash": "b5431f9a8b4876e8262f4166164c40fac93b37d00191cc198d156cbd79177f59",
+    "version": "2026.03.15.3"
   },
   "writing-custom-skills": {
     "hash": "b7e370ff5ea0ee0a346eea9ca33ae1e7e9d1b590803461fcd19a5a75d30835f4",

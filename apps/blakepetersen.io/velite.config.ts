@@ -440,9 +440,13 @@ const config: any = defineConfig({
 
     // SCHEMA-08: persist updated version manifest after artifact validation
     // passes. Single-process serial build (Risk #3) — no atomic write needed.
+    // Sort top-level keys so consecutive runs are byte-identical (D-06: diffable in PRs).
+    const sortedVersionManifest = Object.fromEntries(
+      Object.entries(updatedVersionManifest).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
+    )
     fs.writeFileSync(
       versionManifestPath,
-      JSON.stringify(updatedVersionManifest, null, 2) + '\n',
+      JSON.stringify(sortedVersionManifest, null, 2) + '\n',
     )
 
     fs.writeFileSync(
