@@ -23,7 +23,8 @@ Lock the data shape before any content authoring; field changes after sixteen en
 **: v1.2 ESM workaround resolved — Velite imports artifact validation from `@blink-dx/registry` directly; inline duplication removed
 - [x] **SCHEMA-06
 **: `scripts/migrate-content.ts` codemod harness committed (skeleton only — not yet executed); future schema migrations have a documented entry point
-- [ ] **SCHEMA-07**: Build-perf baseline captured (cold `pnpm build` + warm `next dev` startup) and stored in `.planning/intel/` for v1.4 regression comparison
+- [x] **SCHEMA-07
+**: Build-perf baseline captured (cold `pnpm build` + warm `next dev` startup) and stored in `.planning/intel/` for v1.4 regression comparison
 - [x] **SCHEMA-08
 **: `deriveCalVer` audited — if pure-date logic, content-hash gate added so prose-only edits don't bump artifact CalVer
 
@@ -119,7 +120,7 @@ Which phases cover which requirements. Filled by the roadmapper.
 | SCHEMA-04 | Phase 27 | Pending |
 | SCHEMA-05 | Phase 27 | Pending |
 | SCHEMA-06 | Phase 27 | Pending |
-| SCHEMA-07 | Phase 27 | Pending |
+| SCHEMA-07 | Phase 27 | Complete |
 | SCHEMA-08 | Phase 27 | Pending |
 | SCAFFOLD-01 | Phase 28 | Pending |
 | SCAFFOLD-02 | Phase 28 | Pending |
