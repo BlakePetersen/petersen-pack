@@ -2,12 +2,19 @@
   "name": "blink-registry",
   "version": "0.0.0",
   "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
   "scripts": {
+    "build": "tsup",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },
@@ -19,6 +26,10 @@
     "jest": "30.3.0",
     "ts-jest": "^29.4.9",
     "tsconfig": "workspace:*",
+    "tsup": "^8.5.1",
     "typescript": "6.0.2"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
