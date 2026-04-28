@@ -1,7 +1,7 @@
 // ABOUTME: CalVer derivation utility for artifact versioning.
 // ABOUTME: Generates calendar-based version strings (YYYY.MM.DD.N) from git commit dates.
 
-import { getGitHistoryForFile } from './git-history'
+import { execFileSync } from 'node:child_process'
 
 /**
  * Derives a CalVer string from a date, tracking daily counters for uniqueness.
@@ -20,11 +20,27 @@ export function calverFromDate(date: Date, dateCounters: Map<string, number>): s
 }
 
 /**
- * Derives a CalVer string for a file based on its git history.
- * Falls back to the current date if the file has no git history.
+ * Derives a CalVer string for a file based on its git commit date.
+ * Throws on git execution failure (not-a-repo, missing binary, shallow clone with no
+ * usable history) — silently fabricating a date here gets persisted into the
+ * .artifact-versions.json manifest and the hash gate locks the bogus version forever.
+ * Returns today's date when git succeeds but the file is untracked (legitimate
+ * freshly-added artifact path).
  */
 export function deriveCalVer(filePath: string, dateCounters: Map<string, number>): string {
-  const history = getGitHistoryForFile(filePath)
-  const date = new Date(history.lastModified)
+  let lastModified: string
+  try {
+    lastModified = execFileSync(
+      'git',
+      ['log', '-1', '--follow', '--format=%cI', '--', filePath],
+      { encoding: 'utf-8' },
+    ).trim()
+  } catch (err) {
+    throw new Error(
+      `deriveCalVer: git log failed for ${filePath}: ${err instanceof Error ? err.message : String(err)}`,
+      { cause: err },
+    )
+  }
+  const date = lastModified ? new Date(lastModified) : new Date()
   return calverFromDate(date, dateCounters)
 }
