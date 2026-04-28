@@ -25,6 +25,13 @@ describe('SCHEMA-08: .artifact-versions.json shape', () => {
     }
   })
 
+  it('emits keys in lexicographic order (consecutive-run determinism per D-06)', () => {
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8')) as Record<string, unknown>
+    const keys = Object.keys(manifest)
+    const sorted = [...keys].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
+    expect(keys).toEqual(sorted)
+  })
+
   it('every published artifact in public/r/index.json has a manifest entry', () => {
     if (!fs.existsSync(indexPath)) {
       // index.json is built during full pnpm build; skip if velite-only ran.
