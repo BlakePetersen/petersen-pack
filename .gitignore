@@ -63,3 +63,4 @@ node-compile-cache/
 
 # planning
 .planning/
+.fallow/
