@@ -73,6 +73,9 @@ importers:
       eslint-plugin-import-x:
         specifier: ^4.16.2
         version: 4.16.2(@typescript-eslint/utils@8.58.0(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2))(eslint@10.2.0(jiti@2.6.1))
+      fallow:
+        specifier: ^2.56.0
+        version: 2.56.0
       husky:
         specifier: 9.1.7
         version: 9.1.7
@@ -130,9 +133,6 @@ importers:
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.2
-      tw-animate-css:
-        specifier: ^1.4.0
-        version: 1.4.0
     devDependencies:
       '@testing-library/jest-dom':
         specifier: 6.9.1
@@ -209,9 +209,6 @@ importers:
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.2
-      tw-animate-css:
-        specifier: ^1.4.0
-        version: 1.4.0
     devDependencies:
       '@dagrejs/dagre':
         specifier: ^3.0.0
@@ -261,9 +258,6 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      lucide-react:
-        specifier: ^1.7.0
-        version: 1.7.0(react@19.2.4)
       radix-ui:
         specifier: ^1.4.3
         version: 1.4.3(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1108,6 +1102,46 @@ packages:
   '@eslint/plugin-kit@0.7.0':
     resolution: {integrity: sha512-ejvBr8MQCbVsWNZnCwDXjUKq40MDmHalq7cJ6e9s/qzTUFIIo/afzt1Vui9T97FM/V/pN4YsFVoed5NIa96RDg==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+
+  '@fallow-cli/darwin-arm64@2.56.0':
+    resolution: {integrity: sha512-KsJEq8gZ0o83wIykwNLFBXIEXUGA288gS7UIQLaWNXttlf7TYLlYqHzyXijas/Uch97QY3eKsb7seuwL442SYQ==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@fallow-cli/darwin-x64@2.56.0':
+    resolution: {integrity: sha512-iF2msec6H8IbqP9viQg0D3AfUb37m9TnB0lL0dagKYxr0liiqfgFTdnZ1nXzn7ezj8nFPzka7HyvrQ/cSiq2bA==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@fallow-cli/linux-arm64-gnu@2.56.0':
+    resolution: {integrity: sha512-wIDQbO5x486BDzr/17z9zloB000cDog8CiLcFCN/HOfLpp8ky/krYuzfoR7PxVgdTqF11JNQ8YpPYfFRa/KYJg==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@fallow-cli/linux-arm64-musl@2.56.0':
+    resolution: {integrity: sha512-Ro/MOnNamUbVgx0CMQ3HbBzC/a6nhNw6L9ke575/HAtYPhVK2oqO/UEW+yH6BmnFkdGGxTCUPWYR42mW5k7mBQ==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@fallow-cli/linux-x64-gnu@2.56.0':
+    resolution: {integrity: sha512-c0NtJ2Iy8XUIAik5b2hlUtsXqIbX4RVyrTA1rLnyGZYGH2TRhk5uJQH+bg7wMyY6cpuFcAUGS+xqx2qWPalf8g==}
+    cpu: [x64]
+    os: [linux]
+
+  '@fallow-cli/linux-x64-musl@2.56.0':
+    resolution: {integrity: sha512-Sq6V3yEtClfmE3Hv/V42pBz6FTWPB+p7WdSIzR12sWY0MzGdJlCH+QA8cJUNO+IYRB2Gdym7cSouP/qvEQgtsQ==}
+    cpu: [x64]
+    os: [linux]
+
+  '@fallow-cli/win32-arm64-msvc@2.56.0':
+    resolution: {integrity: sha512-5kDhI1hT3c4QOdmXQBe/izbS+SpGaf+TUrHiWykvFzWecL494yNah9elMgcawfcUtYj6uGIJh3X6iKK5PgWBng==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@fallow-cli/win32-x64-msvc@2.56.0':
+    resolution: {integrity: sha512-8gaMEURJ+iLNocraRbU9dth4cprD40dABZcM3rD3zjyDC9SktSBUuwmqNsDVb35sDsL2orcZDBJUrG2o0smemA==}
+    cpu: [x64]
+    os: [win32]
 
   '@floating-ui/core@1.7.5':
     resolution: {integrity: sha512-1Ih4WTWyw0+lKyFMcBHGbb5U5FtuHJuujoyyr5zTaWS5EYMeT6Jb2AuDeftsCsEuchO+mM2ij5+q9crhydzLhQ==}
@@ -3569,6 +3603,11 @@ packages:
 
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
+
+  fallow@2.56.0:
+    resolution: {integrity: sha512-nf1S93kufo56pXbwHTBH8gC+1v+fL8Xur1HmqCwnhlNZz6rRVAt54JtwZRX4YNyzmo9E6EFmBjq3pgTWBZVFMA==}
+    engines: {node: '>=16'}
+    hasBin: true
 
   fast-content-type-parse@3.0.0:
     resolution: {integrity: sha512-ZvLdcY8P+N8mGQJahJV5G4U88CSvT1rP8ApL6uETe88MBXrBHAkZlSEySdUlyztF7ccb+Znos3TFqaepHxdhBg==}
@@ -6072,6 +6111,30 @@ snapshots:
     dependencies:
       '@eslint/core': 1.2.0
       levn: 0.4.1
+
+  '@fallow-cli/darwin-arm64@2.56.0':
+    optional: true
+
+  '@fallow-cli/darwin-x64@2.56.0':
+    optional: true
+
+  '@fallow-cli/linux-arm64-gnu@2.56.0':
+    optional: true
+
+  '@fallow-cli/linux-arm64-musl@2.56.0':
+    optional: true
+
+  '@fallow-cli/linux-x64-gnu@2.56.0':
+    optional: true
+
+  '@fallow-cli/linux-x64-musl@2.56.0':
+    optional: true
+
+  '@fallow-cli/win32-arm64-msvc@2.56.0':
+    optional: true
+
+  '@fallow-cli/win32-x64-msvc@2.56.0':
+    optional: true
 
   '@floating-ui/core@1.7.5':
     dependencies:
@@ -8646,6 +8709,19 @@ snapshots:
       jest-util: 30.3.0
 
   extend@3.0.2: {}
+
+  fallow@2.56.0:
+    dependencies:
+      detect-libc: 2.1.2
+    optionalDependencies:
+      '@fallow-cli/darwin-arm64': 2.56.0
+      '@fallow-cli/darwin-x64': 2.56.0
+      '@fallow-cli/linux-arm64-gnu': 2.56.0
+      '@fallow-cli/linux-arm64-musl': 2.56.0
+      '@fallow-cli/linux-x64-gnu': 2.56.0
+      '@fallow-cli/linux-x64-musl': 2.56.0
+      '@fallow-cli/win32-arm64-msvc': 2.56.0
+      '@fallow-cli/win32-x64-msvc': 2.56.0
 
   fast-content-type-parse@3.0.0: {}
 
