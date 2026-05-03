@@ -56,9 +56,9 @@ Cross-file invariants that ESLint can't enforce, exposed via a `blink` subcomman
 
 Two-step pipeline that converts vault prose into reviewable, schema-valid MDX without polluting `content/` with half-clean drafts.
 
-- [ ] **PORT-01**: `blink port stage <input-dir>` runs `obsidian-export` (Rust, out-of-band) and applies project transformations (wikilink rewrite, callout → `<AuthorNote>`, frontmatter normalization, dataview block strip), writing output to `.obsidian-port-staging/`
+- [x] **PORT-01**: `blink port stage <input-dir>` runs `obsidian-export` (Rust, out-of-band) and applies project transformations (wikilink rewrite, callout → `<AuthorNote>`, frontmatter normalization, dataview block strip), writing output to `.obsidian-port-staging/`
 - [ ] **PORT-02**: `.obsidian-port-staging/` is gitignored; staged output is reviewable as a normal diff against an empty baseline
-- [ ] **PORT-03**: `blink port commit <slug>` moves a single staged entry from `.obsidian-port-staging/` to its final `content/<collection>/` path, atomically including any companion `.artifact.md`
+- [x] **PORT-03**: `blink port commit <slug>` moves a single staged entry from `.obsidian-port-staging/` to its final `content/<collection>/` path, atomically including any companion `.artifact.md`
 - [ ] **PORT-04**: Port pipeline round-trips one Blake-selected skill end-to-end before bulk content authoring begins (smoke test, not blocking)
 
 ### Content Density
@@ -135,9 +135,9 @@ Which phases cover which requirements. Filled by the roadmapper.
 | LINT-05 | Phase 28 | Pending |
 | LINT-06 | Phase 28 | Pending |
 | LINT-07 | Phase 28 | Complete |
-| PORT-01 | Phase 28 | Pending |
+| PORT-01 | Phase 28 | Complete |
 | PORT-02 | Phase 28 | Pending |
-| PORT-03 | Phase 28 | Pending |
+| PORT-03 | Phase 28 | Complete |
 | PORT-04 | Phase 28 | Pending |
 | CONTENT-01 | Phase 29 | Pending |
 | CONTENT-02 | Phase 29 | Pending |
