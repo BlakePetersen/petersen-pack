@@ -5,17 +5,10 @@ import { consola } from 'consola'
 import pc from 'picocolors'
 import { readFile } from 'node:fs/promises'
 import { fetchArtifact } from '@/registry'
-import {
-  readManifest,
-  writeManifest,
-  updateManifestEntry,
-  checksum,
-} from '@/manifest'
-import { confirmAction } from '@/modules/prompt'
+import { readManifest, writeManifest, updateManifestEntry } from '@/manifest'
 import { atomicWrite } from '@/writer'
-import { findManagedSections, replaceManagedContent } from '@/markers'
 import { resolveDestination, resolveManifestRoot } from '@/scope'
-import { formatColoredDiff } from '@/output'
+import { reconcileFile } from '@/reconcile'
 import type { ManifestEntry, ManifestFileEntry } from 'blink-registry'
 
 async function readFileSafe(path: string): Promise<string | null> {
@@ -88,152 +81,23 @@ export default defineCommand({
       for (const file of artifact.files) {
         const destPath = resolveDestination(file.path, entry.scope, cwd)
         const currentContent = await readFileSafe(destPath)
+        const manifestFileEntry = entry.files.find((f) => f.path === file.path)
 
-        if (currentContent === null) {
-          // File missing on disk; write fresh
-          if (!dryRun) {
-            await atomicWrite(destPath, file.content)
-          }
-          newFileEntries.push({
-            path: file.path,
-            checksum: checksum(file.content),
-            merge: file.merge,
-          })
-          hasChanges = true
-          continue
+        const result = await reconcileFile({
+          file,
+          destPath,
+          currentContent,
+          manifestFileEntry,
+          slug: entry.slug,
+          skipPrompt,
+        })
+
+        if (result.action.kind === 'write' && !dryRun) {
+          await atomicWrite(result.action.destPath, result.action.content)
         }
 
-        const manifestFileEntry = entry.files.find(
-          (f) => f.path === file.path
-        )
-
-        if (file.merge === 'section') {
-          const sections = findManagedSections(currentContent, entry.slug)
-
-          if (sections.length === 0) {
-            consola.warn(
-              `No managed section found for ${pc.bold(entry.slug)} in ${file.path}. Skipping.`
-            )
-            newFileEntries.push(
-              manifestFileEntry || {
-                path: file.path,
-                checksum: checksum(currentContent),
-                merge: file.merge,
-              }
-            )
-            continue
-          }
-
-          const currentManaged = sections[0].content
-          const currentManagedChecksum = checksum(currentManaged)
-
-          // Check if upstream content differs from local managed content
-          if (currentManaged === file.content) {
-            newFileEntries.push(
-              manifestFileEntry || {
-                path: file.path,
-                checksum: checksum(currentContent),
-                merge: file.merge,
-              }
-            )
-            continue
-          }
-
-          hasChanges = true
-
-          // Detect local modifications
-          if (
-            manifestFileEntry &&
-            currentManagedChecksum !== checksum(manifestFileEntry.path)
-          ) {
-            // Compare current managed checksum against what we last wrote
-            const lastWrittenContent = currentManaged
-            const lastWrittenChecksum = checksum(lastWrittenContent)
-
-            if (
-              manifestFileEntry.checksum !== checksum(currentContent)
-            ) {
-              const confirmed = await confirmAction(
-                `Local changes detected in managed section of ${file.path}. Overwrite?`,
-                skipPrompt
-              )
-              if (!confirmed) {
-                newFileEntries.push(manifestFileEntry)
-                continue
-              }
-            }
-          }
-
-          // Show diff
-          const diffOutput = formatColoredDiff(
-            currentManaged,
-            file.content,
-            file.path
-          )
-          consola.log(diffOutput)
-
-          // Apply update
-          const updatedContent = replaceManagedContent(
-            currentContent,
-            entry.slug,
-            file.content
-          )
-
-          if (!dryRun) {
-            await atomicWrite(destPath, updatedContent)
-          }
-          newFileEntries.push({
-            path: file.path,
-            checksum: checksum(updatedContent),
-            merge: file.merge,
-          })
-        } else {
-          // Replace merge
-          if (currentContent === file.content) {
-            newFileEntries.push(
-              manifestFileEntry || {
-                path: file.path,
-                checksum: checksum(currentContent),
-                merge: file.merge,
-              }
-            )
-            continue
-          }
-
-          hasChanges = true
-
-          // Detect local modifications
-          if (
-            manifestFileEntry &&
-            manifestFileEntry.checksum !== checksum(currentContent)
-          ) {
-            const confirmed = await confirmAction(
-              `Local changes detected in ${file.path}. Overwrite?`,
-              skipPrompt
-            )
-            if (!confirmed) {
-              newFileEntries.push(manifestFileEntry)
-              continue
-            }
-          }
-
-          // Show diff
-          const diffOutput = formatColoredDiff(
-            currentContent,
-            file.content,
-            file.path
-          )
-          consola.log(diffOutput)
-
-          if (!dryRun) {
-            await atomicWrite(destPath, file.content)
-          }
-          newFileEntries.push({
-            path: file.path,
-            checksum: checksum(file.content),
-            merge: file.merge,
-          })
-        }
+        newFileEntries.push(result.entry)
+        if (result.hasChanges) hasChanges = true
       }
 
       if (!hasChanges) {
