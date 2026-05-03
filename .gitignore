@@ -61,6 +61,9 @@ node-compile-cache/
 # cold storage
 .trash/
 
+# obsidian port staging directory
+.obsidian-port-staging
+
 # planning
 .planning/
 .fallow/

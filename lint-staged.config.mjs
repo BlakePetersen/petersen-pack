@@ -10,4 +10,8 @@ export default {
   'apps/**/*.{js,jsx,ts,tsx}': ['pnpm eslint --quiet --fix'],
   '*.{json,md}': ['prettier --write'],
   '**/*.{ts,tsx}': (files) => `fallow dead-code --quiet ${fileFlags(files)}`,
+  'apps/blakepetersen.io/content/**/*.{mdx,md}': (files) => {
+    const paths = files.join(',')
+    return `pnpm --filter blakepetersen.io lint:content -- --files ${paths}`
+  },
 }
