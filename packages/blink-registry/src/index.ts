@@ -44,3 +44,10 @@ export {
   type BlinkErrorCodeType,
   type BlinkError,
 } from './schemas/errors.ts'
+
+export {
+  DX_COLLECTIONS,
+  DxFrontmatterSchema,
+  getDxJsonSchema,
+  type DxFrontmatter,
+} from './schemas/dx-frontmatter.ts'
