@@ -136,7 +136,7 @@ Plans:
 
 Plans:
 - [x] 28-01-PLAN.md — DxFrontmatterSchema + scaffold command (SCAFFOLD-01..04, SCAFFOLD-06, SCAFFOLD-03)
-- [ ] 28-02-PLAN.md — Lint rules + runner + reporter (LINT-01, LINT-02, LINT-03, LINT-07)
+- [x] 28-02-PLAN.md — Lint rules + runner + reporter (LINT-01, LINT-02, LINT-03, LINT-07)
 - [ ] 28-03-PLAN.md — Port transforms + staging (PORT-01, PORT-03)
 - [ ] 28-04-PLAN.md — ArtifactBody component (CONTENT-05)
 - [ ] 28-05-PLAN.md — CLI commands + CI integration (LINT-04, LINT-05, LINT-06, PORT-02)

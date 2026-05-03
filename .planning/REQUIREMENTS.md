@@ -44,13 +44,13 @@ Generators that produce schema-valid skeletons; templates derive from the canoni
 
 Cross-file invariants that ESLint can't enforce, exposed via a `blink` subcommand.
 
-- [ ] **LINT-01**: `blink lint` subcommand validates frontmatter against the JSON Schema derived from Velite Zod (single source of truth)
-- [ ] **LINT-02**: `blink lint` enforces artifact-pair sync — entries with `requires_artifact: true` must have a sibling `.artifact.md` (error); orphan `.artifact.md` files surface as warnings
-- [ ] **LINT-03**: `blink lint` enforces voice-primitive invariants — entries that declare a `voice` value must invoke the matching JSX component in the body; entries with rationale-shaped headings flag as advisory if `voice: ['decision-rationale']` is missing
+- [x] **LINT-01**: `blink lint` subcommand validates frontmatter against the JSON Schema derived from Velite Zod (single source of truth)
+- [x] **LINT-02**: `blink lint` enforces artifact-pair sync — entries with `requires_artifact: true` must have a sibling `.artifact.md` (error); orphan `.artifact.md` files surface as warnings
+- [x] **LINT-03**: `blink lint` enforces voice-primitive invariants — entries that declare a `voice` value must invoke the matching JSX component in the body; entries with rationale-shaped headings flag as advisory if `voice: ['decision-rationale']` is missing
 - [ ] **LINT-04**: `pnpm lint:content` script runs `blink lint` across all collections; exits non-zero on any error
 - [ ] **LINT-05**: `lint-staged` runs `blink lint` against staged MDX/artifact files only, completing under 2s for typical 1–3 file changesets
 - [ ] **LINT-06**: Turbo `lint:content` task added; CI runs the full-tree lint
-- [ ] **LINT-07**: All voice-primitive rules ship as **advisory (warn)** in v1.4 — promotion to **error** is gated on the Phase 4 review (DEBT-04)
+- [x] **LINT-07**: All voice-primitive rules ship as **advisory (warn)** in v1.4 — promotion to **error** is gated on the Phase 4 review (DEBT-04)
 
 ### Obsidian Port
 
@@ -128,13 +128,13 @@ Which phases cover which requirements. Filled by the roadmapper.
 | SCAFFOLD-04 | Phase 28 | Complete |
 | SCAFFOLD-05 | Phase 28 | Pending |
 | SCAFFOLD-06 | Phase 28 | Complete |
-| LINT-01 | Phase 28 | Pending |
-| LINT-02 | Phase 28 | Pending |
-| LINT-03 | Phase 28 | Pending |
+| LINT-01 | Phase 28 | Complete |
+| LINT-02 | Phase 28 | Complete |
+| LINT-03 | Phase 28 | Complete |
 | LINT-04 | Phase 28 | Pending |
 | LINT-05 | Phase 28 | Pending |
 | LINT-06 | Phase 28 | Pending |
-| LINT-07 | Phase 28 | Pending |
+| LINT-07 | Phase 28 | Complete |
 | PORT-01 | Phase 28 | Pending |
 | PORT-02 | Phase 28 | Pending |
 | PORT-03 | Phase 28 | Pending |

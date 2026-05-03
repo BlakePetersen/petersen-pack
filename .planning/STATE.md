@@ -4,14 +4,14 @@ milestone: v1.4
 milestone_name: Content Density
 status: executing
 stopped_at: Phase 28 UI-SPEC approved
-last_updated: "2026-05-03T06:57:14.109Z"
-last_activity: 2026-05-03 -- Phase 28 execution started
+last_updated: "2026-05-03T07:15:00Z"
+last_activity: 2026-05-03 -- Plan 28-02 completed (lint rules + reporter + runner)
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 14
-  completed_plans: 8
-  percent: 57
+  completed_plans: 9
+  percent: 64
 ---
 
 # Project State
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 28 (authoring-scaffolds-lint-port) — EXECUTING
-Plan: 2 of 6
-Status: Plan 01 complete, advancing to Plan 02
-Last activity: 2026-05-03 -- Plan 28-01 completed (scaffold CLI + DxFrontmatterSchema)
+Plan: 3 of 6
+Status: Plan 02 complete, advancing to Plan 03
+Last activity: 2026-05-03 -- Plan 28-02 completed (lint rules + reporter + runner)
 
 Progress: [██████████] 100%
 
@@ -121,6 +121,10 @@ Progress: [██████████] 100%
 - 28-01: z.toJSONSchema() native Zod 4 — no zod-to-json-schema dep needed; both spikes resolved by research (skip entirely)
 - 28-01: CrossRefSchema defined locally in dx-frontmatter.ts (cannot reuse Velite's different Zod instance per Pitfall 1)
 - 28-01: Scaffold slug-to-title via simple split-capitalize; content-root defaults to apps/blakepetersen.io/content from cwd
+- 28-02: $schema field stripped from JSON Schema for Ajv 8 compatibility (draft-2020-12 meta-schema not needed for keyword validation)
+- 28-02: useDefaults:true on check validator so Zod default() fields pass required check (JSON Schema lists them as required)
+- 28-02: statSync used instead of readdirSync withFileTypes to avoid Node 24 Dirent<NonSharedBuffer> type incompatibility
+- 28-02: checkOrphans is a separate method on artifactPairRule (not per-file check) because it scans directory-level
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -153,8 +157,8 @@ Progress: [██████████] 100%
 
 ## Session Continuity
 
-Last session: 2026-05-03T07:02:49Z
-Stopped at: Completed 28-01-PLAN.md
-Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-02-PLAN.md
+Last session: 2026-05-03T07:15:00Z
+Stopped at: Completed 28-02-PLAN.md
+Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-03-PLAN.md
 
 **Planned Phase:** 28 (authoring-scaffolds-lint-port) — 6 plans — 2026-05-03T06:51:23.263Z
