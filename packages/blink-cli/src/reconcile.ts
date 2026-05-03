@@ -2,6 +2,7 @@
 // ABOUTME: from upstream content, current disk content, and prior manifest entry.
 
 import { consola } from 'consola'
+import pc from 'picocolors'
 import { confirmAction } from '@/modules/prompt'
 import { findManagedSections, replaceManagedContent } from '@/markers'
 import { formatColoredDiff } from '@/output'
@@ -15,7 +16,6 @@ export type WriteAction =
 export interface ReconcileResult {
   action: WriteAction
   entry: ManifestFileEntry
-  hasChanges: boolean
 }
 
 export interface ReconcileInput {
@@ -27,7 +27,6 @@ export interface ReconcileInput {
   skipPrompt: boolean
 }
 
-// File missing on disk: write fresh, no prompt, no diff.
 function writeFresh(input: ReconcileInput): ReconcileResult {
   return {
     action: { kind: 'write', destPath: input.destPath, content: input.file.content },
@@ -36,13 +35,9 @@ function writeFresh(input: ReconcileInput): ReconcileResult {
       checksum: checksum(input.file.content),
       merge: input.file.merge,
     },
-    hasChanges: true,
   }
 }
 
-// Caller declined the overwrite prompt OR upstream matched current: leave
-// the manifest entry as the prior tracked state (or rebuild from disk if
-// this is a brand-new install of an already-existing file).
 function preserveExisting(input: ReconcileInput): ReconcileResult {
   const entry =
     input.manifestFileEntry ??
@@ -51,11 +46,12 @@ function preserveExisting(input: ReconcileInput): ReconcileResult {
       checksum: checksum(input.currentContent ?? ''),
       merge: input.file.merge,
     }
-  return { action: { kind: 'skip' }, entry, hasChanges: false }
+  return { action: { kind: 'skip' }, entry }
 }
 
-// Section-merge resolves the "current" managed payload and the "new" full
-// file content; replace operates on the file as a whole.
+// section-merge: diff side is the section payload (file.content), but the
+// write side is the full file with the managed region replaced.
+// replace: diff side and write side are both file.content (whole file).
 function materialize(
   file: ArtifactFile,
   currentContent: string,
@@ -63,24 +59,26 @@ function materialize(
 ):
   | { kind: 'no-section'; reason: string }
   | { kind: 'unchanged' }
-  | { kind: 'changed'; newFullContent: string; currentManaged: string } {
+  | { kind: 'changed'; writeContent: string; currentDiff: string } {
   if (file.merge === 'section') {
     const sections = findManagedSections(currentContent, slug)
     if (sections.length === 0) {
-      return { kind: 'no-section', reason: `No managed section found for ${slug} in ${file.path}.` }
+      return {
+        kind: 'no-section',
+        reason: `No managed section found for ${pc.bold(slug)} in ${file.path}.`,
+      }
     }
     const currentManaged = sections[0].content
     if (currentManaged === file.content) return { kind: 'unchanged' }
     return {
       kind: 'changed',
-      newFullContent: replaceManagedContent(currentContent, slug, file.content),
-      currentManaged,
+      writeContent: replaceManagedContent(currentContent, slug, file.content),
+      currentDiff: currentManaged,
     }
   }
 
-  // replace
   if (currentContent === file.content) return { kind: 'unchanged' }
-  return { kind: 'changed', newFullContent: file.content, currentManaged: currentContent }
+  return { kind: 'changed', writeContent: file.content, currentDiff: currentContent }
 }
 
 export async function reconcileFile(input: ReconcileInput): Promise<ReconcileResult> {
@@ -99,8 +97,6 @@ export async function reconcileFile(input: ReconcileInput): Promise<ReconcileRes
     return preserveExisting(input)
   }
 
-  // Local-modification check — if the file has drifted from what we last
-  // wrote, ask before overwriting.
   if (
     input.manifestFileEntry &&
     input.manifestFileEntry.checksum !== checksum(input.currentContent)
@@ -110,23 +106,21 @@ export async function reconcileFile(input: ReconcileInput): Promise<ReconcileRes
       input.skipPrompt,
     )
     if (!confirmed) {
-      return {
-        action: { kind: 'skip' },
-        entry: input.manifestFileEntry,
-        hasChanges: false,
-      }
+      return { action: { kind: 'skip' }, entry: input.manifestFileEntry }
     }
   }
 
-  consola.log(formatColoredDiff(mat.currentManaged, mat.newFullContent, input.file.path))
+  // Diff against the section payload (or full file for replace), not the
+  // reconstructed full file — otherwise section-merge previews show all the
+  // surrounding unchanged content as additions.
+  consola.log(formatColoredDiff(mat.currentDiff, input.file.content, input.file.path))
 
   return {
-    action: { kind: 'write', destPath: input.destPath, content: mat.newFullContent },
+    action: { kind: 'write', destPath: input.destPath, content: mat.writeContent },
     entry: {
       path: input.file.path,
-      checksum: checksum(mat.newFullContent),
+      checksum: checksum(mat.writeContent),
       merge: input.file.merge,
     },
-    hasChanges: true,
   }
 }

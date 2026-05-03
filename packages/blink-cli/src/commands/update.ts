@@ -92,12 +92,12 @@ export default defineCommand({
           skipPrompt,
         })
 
-        if (result.action.kind === 'write' && !dryRun) {
-          await atomicWrite(result.action.destPath, result.action.content)
+        if (result.action.kind === 'write') {
+          if (!dryRun) await atomicWrite(result.action.destPath, result.action.content)
+          hasChanges = true
         }
 
         newFileEntries.push(result.entry)
-        if (result.hasChanges) hasChanges = true
       }
 
       if (!hasChanges) {

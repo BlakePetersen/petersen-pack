@@ -5,18 +5,18 @@ import { reconcileFile, type ReconcileInput } from '../src/reconcile'
 import { checksum } from '../src/manifest'
 import type { ArtifactFile, ManifestFileEntry } from 'blink-registry'
 
-// Mock confirmAction. Default behavior mirrors the real impl: returns true
-// when skipPrompt=true; tests opting into the decline branch override per-test.
+// Mock mirrors real confirmAction: returns skipPrompt so default-true tests don't hang.
 jest.mock('../src/modules/prompt', () => ({
   confirmAction: jest.fn((_msg: string, skipPrompt: boolean) => Promise.resolve(skipPrompt)),
 }))
 import { confirmAction } from '../src/modules/prompt'
 const mockConfirm = confirmAction as jest.MockedFunction<typeof confirmAction>
 
-// Silence consola warn/log noise during tests.
 jest.mock('consola', () => ({
   consola: { warn: jest.fn(), log: jest.fn(), info: jest.fn(), success: jest.fn(), error: jest.fn() },
 }))
+import { consola } from 'consola'
+const mockWarn = consola.warn as jest.MockedFunction<typeof consola.warn>
 
 const SLUG = 'test-artifact'
 
@@ -41,16 +41,16 @@ function makeInput(overrides: Partial<ReconcileInput> & Pick<ReconcileInput, 'fi
 
 beforeEach(() => {
   mockConfirm.mockClear()
+  mockWarn.mockClear()
 })
 
 describe('reconcileFile — file missing on disk', () => {
-  it('writes the upstream content fresh, marks hasChanges', async () => {
+  it('writes the upstream content fresh', async () => {
     const file = replaceFile('hello')
     const result = await reconcileFile(makeInput({ file, currentContent: null }))
 
     expect(result.action).toEqual({ kind: 'write', destPath: '/tmp/dest', content: 'hello' })
     expect(result.entry).toEqual({ path: 'foo.json', checksum: checksum('hello'), merge: 'replace' })
-    expect(result.hasChanges).toBe(true)
     expect(mockConfirm).not.toHaveBeenCalled()
   })
 })
@@ -67,7 +67,14 @@ describe('reconcileFile — replace strategy', () => {
 
     expect(result.action).toEqual({ kind: 'skip' })
     expect(result.entry).toBe(manifestFileEntry)
-    expect(result.hasChanges).toBe(false)
+  })
+
+  it('rebuilds entry from disk when current matches upstream and no manifest entry exists', async () => {
+    const file = replaceFile('same')
+    const result = await reconcileFile(makeInput({ file, currentContent: 'same' }))
+
+    expect(result.action).toEqual({ kind: 'skip' })
+    expect(result.entry).toEqual({ path: 'foo.json', checksum: checksum('same'), merge: 'replace' })
   })
 
   it('writes upstream when content differs and there is no manifest entry', async () => {
@@ -75,7 +82,6 @@ describe('reconcileFile — replace strategy', () => {
     const result = await reconcileFile(makeInput({ file, currentContent: 'old' }))
 
     expect(result.action).toEqual({ kind: 'write', destPath: '/tmp/dest', content: 'new' })
-    expect(result.hasChanges).toBe(true)
     expect(mockConfirm).not.toHaveBeenCalled()
   })
 
@@ -91,7 +97,6 @@ describe('reconcileFile — replace strategy', () => {
     )
 
     expect(result.action.kind).toBe('write')
-    expect(result.hasChanges).toBe(true)
     expect(mockConfirm).not.toHaveBeenCalled()
   })
 
@@ -112,8 +117,6 @@ describe('reconcileFile — replace strategy', () => {
     )
 
     expect(result.action.kind).toBe('write')
-    expect(result.hasChanges).toBe(true)
-    // confirmAction is still called; it short-circuits to true via skipPrompt.
     expect(mockConfirm).toHaveBeenCalledWith(expect.stringMatching(/Local changes detected/), true)
   })
 
@@ -136,17 +139,15 @@ describe('reconcileFile — replace strategy', () => {
 
     expect(result.action).toEqual({ kind: 'skip' })
     expect(result.entry).toBe(manifestFileEntry)
-    expect(result.hasChanges).toBe(false)
   })
 })
 
 describe('reconcileFile — section strategy', () => {
-  // Build a fixture file with a managed section embedded between header and
-  // footer text. Marker line format matches MarkerEngine.inject for `.md`.
+  // Marker line format matches MarkerEngine.inject for `.md`.
   const wrapInMarkers = (managed: string) =>
     `# Header\n\n<!-- blink:start ${SLUG} -->\n${managed}\n<!-- blink:end ${SLUG} -->\n\n# Footer\n`
 
-  it('warns and preserves manifest entry when no managed section is present', async () => {
+  it('warns with slug + path and preserves existing manifest entry when no managed section is present', async () => {
     const file = sectionFile('whatever')
     const manifestFileEntry: ManifestFileEntry = {
       path: 'README.md',
@@ -159,7 +160,24 @@ describe('reconcileFile — section strategy', () => {
 
     expect(result.action).toEqual({ kind: 'skip' })
     expect(result.entry).toBe(manifestFileEntry)
-    expect(result.hasChanges).toBe(false)
+    expect(mockWarn).toHaveBeenCalledTimes(1)
+    const warnArg = String(mockWarn.mock.calls[0][0])
+    expect(warnArg).toContain('test-artifact')
+    expect(warnArg).toContain('README.md')
+  })
+
+  it('rebuilds entry from disk when no managed section and no manifest entry exists', async () => {
+    const file = sectionFile('whatever')
+    const result = await reconcileFile(
+      makeInput({ file, currentContent: 'plain readme' }),
+    )
+
+    expect(result.action).toEqual({ kind: 'skip' })
+    expect(result.entry).toEqual({
+      path: 'README.md',
+      checksum: checksum('plain readme'),
+      merge: 'section',
+    })
   })
 
   it('returns skip when managed content already matches upstream', async () => {
@@ -171,7 +189,11 @@ describe('reconcileFile — section strategy', () => {
     )
 
     expect(result.action).toEqual({ kind: 'skip' })
-    expect(result.hasChanges).toBe(false)
+    expect(result.entry).toEqual({
+      path: 'README.md',
+      checksum: checksum(currentContent),
+      merge: 'section',
+    })
   })
 
   it('writes a new full file when managed content differs from upstream', async () => {
@@ -192,7 +214,6 @@ describe('reconcileFile — section strategy', () => {
       expect(result.action.content).toContain('# Header')
       expect(result.action.content).toContain('# Footer')
     }
-    expect(result.hasChanges).toBe(true)
     expect(mockConfirm).not.toHaveBeenCalled() // checksum matches current → no local mod prompt
   })
 
@@ -216,6 +237,5 @@ describe('reconcileFile — section strategy', () => {
 
     expect(result.action).toEqual({ kind: 'skip' })
     expect(result.entry).toBe(manifestFileEntry)
-    expect(result.hasChanges).toBe(false)
   })
 })
