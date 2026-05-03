@@ -14,13 +14,12 @@
   "dynamicallyLoaded": ["**/tests/setup.ts", "**/jest.setup.ts"],
 
   // Knip-compatible: don't report exports referenced in the same file as their
-  // declaration. Many module-internal classes/types/utilities export their
-  // shape for clarity even though only sibling functions in the same file use
-  // them (markers.ts, pipeline.ts, triage-engine.ts).
+  // declaration. Some exports exist for module-shape clarity even though only
+  // sibling functions in the same file consume them.
   "ignoreExportsUsedInFile": true,
 
   // Velite consumes content/**/*.mdx at build time via .velite/ collections.
-  // Public assets and Phase 27 fixtures are out of scope for static analysis.
+  // Public assets and CalVer test fixtures are out of scope for static analysis.
   "ignorePatterns": [
     "apps/blakepetersen.io/content/**/*.mdx",
     "apps/blakepetersen.io/test-fixtures/**",
@@ -37,6 +36,8 @@
   //  - blink-registry: workspace package builds to dist/, so fallow's resolver
   //    doesn't trace runtime imports back to source. The package is genuinely
   //    used (see packages/blink-cli/src/manifest.ts and apps/blakepetersen.io).
+  //  - eslint-import-resolver-typescript: loaded implicitly by eslint-plugin-import-x's
+  //    resolver setting ({ typescript: true }) — no direct import to trace.
   "ignoreDependencies": [
     "shiki",
     "mdx",
