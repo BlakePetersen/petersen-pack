@@ -32,13 +32,13 @@ Lock the data shape before any content authoring; field changes after sixteen en
 
 Generators that produce schema-valid skeletons; templates derive from the canonical schema.
 
-- [ ] **SCAFFOLD-01**: `blink scaffold skill <slug>` generates an MDX file plus companion `.artifact.md` at the correct content path with valid frontmatter
-- [ ] **SCAFFOLD-02**: `blink scaffold config <slug>`, `blink scaffold hook <slug>`, and `blink scaffold guide <slug>` produce the equivalent skeleton for each remaining collection
+- [x] **SCAFFOLD-01**: `blink scaffold skill <slug>` generates an MDX file plus companion `.artifact.md` at the correct content path with valid frontmatter
+- [x] **SCAFFOLD-02**: `blink scaffold config <slug>`, `blink scaffold hook <slug>`, and `blink scaffold guide <slug>` produce the equivalent skeleton for each remaining collection
 - [x] **SCAFFOLD-03**: Scaffold templates derive from the live Velite Zod schema (no hand-maintained template/schema duplication) — depends on SCHEMA-05
 
-- [ ] **SCAFFOLD-04**: Scaffold pre-populates the artifact frontmatter (`name`, `description`, `type`, `version`) from the MDX frontmatter so authors edit one source of truth
+- [x] **SCAFFOLD-04**: Scaffold pre-populates the artifact frontmatter (`name`, `description`, `type`, `version`) from the MDX frontmatter so authors edit one source of truth
 - [ ] **SCAFFOLD-05**: Round-trip CI test runs `blink scaffold` for each collection, then runs Velite, and asserts the generated entries pass schema validation
-- [ ] **SCAFFOLD-06**: Scaffold respects `--dry-run` (prints the would-write paths and contents) and `--force` (overwrites an existing slug)
+- [x] **SCAFFOLD-06**: Scaffold respects `--dry-run` (prints the would-write paths and contents) and `--force` (overwrites an existing slug)
 
 ### Content Lint
 
@@ -122,12 +122,12 @@ Which phases cover which requirements. Filled by the roadmapper.
 | SCHEMA-06 | Phase 27 | Complete |
 | SCHEMA-07 | Phase 27 | Complete |
 | SCHEMA-08 | Phase 27 | Complete |
-| SCAFFOLD-01 | Phase 28 | Pending |
-| SCAFFOLD-02 | Phase 28 | Pending |
-| SCAFFOLD-03 | Phase 28 | Pending |
-| SCAFFOLD-04 | Phase 28 | Pending |
+| SCAFFOLD-01 | Phase 28 | Complete |
+| SCAFFOLD-02 | Phase 28 | Complete |
+| SCAFFOLD-03 | Phase 28 | Complete |
+| SCAFFOLD-04 | Phase 28 | Complete |
 | SCAFFOLD-05 | Phase 28 | Pending |
-| SCAFFOLD-06 | Phase 28 | Pending |
+| SCAFFOLD-06 | Phase 28 | Complete |
 | LINT-01 | Phase 28 | Pending |
 | LINT-02 | Phase 28 | Pending |
 | LINT-03 | Phase 28 | Pending |

@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: verifying
-stopped_at: "Completed 27-schema-foundations-07-perf-baseline-PLAN.md (Phase 27 complete: 8/8)"
-last_updated: "2026-04-28T09:13:55.316Z"
-last_activity: 2026-04-28 — Phase 27 LEARNINGS.md extracted (8 decisions / 7 lessons / 9 patterns / 7 surprises)
+status: executing
+stopped_at: Phase 28 UI-SPEC approved
+last_updated: "2026-05-03T06:57:14.109Z"
+last_activity: 2026-05-03 -- Phase 28 execution started
 progress:
-  total_phases: 4
+  total_phases: 7
   completed_phases: 1
-  total_plans: 8
+  total_plans: 14
   completed_plans: 8
-  percent: 100
+  percent: 57
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-24)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 27 — schema-foundations
+**Current focus:** Phase 28 — authoring-scaffolds-lint-port
 
 ## Current Position
 
-Phase: 27 (schema-foundations) — EXECUTING
-Plan: 8 of 8
-Status: Phase complete — ready for verification
-Last activity: 2026-04-28 — Phase 27 LEARNINGS.md extracted (8 decisions / 7 lessons / 9 patterns / 7 surprises)
+Phase: 28 (authoring-scaffolds-lint-port) — EXECUTING
+Plan: 2 of 6
+Status: Plan 01 complete, advancing to Plan 02
+Last activity: 2026-05-03 -- Plan 28-01 completed (scaffold CLI + DxFrontmatterSchema)
 
 Progress: [██████████] 100%
 
@@ -118,6 +118,9 @@ Progress: [██████████] 100%
 - 27-06: Migration discovery contract = scripts/migrations/<NNN>-<name>.ts default-export { name, description, run(contentRoot) }; regex /^\d{3}-[a-z0-9-]+\.ts$/ filters discoverable files
 - 27-07: tsx scripts in CJS host packages must wrap async work in main() — top-level await unsupported by esbuild's cjs output; use fileURLToPath(import.meta.url) for __dirname (matches migrate-content.ts ESM pattern)
 - 27-07: v1.4 perf baseline (Node v24.14.0, content count 23) — fullBuildWallMs 12456.79, veliteWallMs 3509.55, webpackCompileMs 6300, nextDevReadyMs 181; committed at .planning/intel/build-perf-baseline.json as v1.5+ regression yardstick
+- 28-01: z.toJSONSchema() native Zod 4 — no zod-to-json-schema dep needed; both spikes resolved by research (skip entirely)
+- 28-01: CrossRefSchema defined locally in dx-frontmatter.ts (cannot reuse Velite's different Zod instance per Pitfall 1)
+- 28-01: Scaffold slug-to-title via simple split-capitalize; content-root defaults to apps/blakepetersen.io/content from cwd
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -150,8 +153,8 @@ Progress: [██████████] 100%
 
 ## Session Continuity
 
-Last session: 2026-04-28T03:14:45.021Z
-Stopped at: Completed 27-schema-foundations-07-perf-baseline-PLAN.md (Phase 27 complete: 8/8)
-Resume file: None
+Last session: 2026-05-03T07:02:49Z
+Stopped at: Completed 28-01-PLAN.md
+Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-02-PLAN.md
 
-**Planned Phase:** 27 (Schema Foundations) — 8 plans — 2026-04-27T05:34:40.722Z
+**Planned Phase:** 28 (authoring-scaffolds-lint-port) — 6 plans — 2026-05-03T06:51:23.263Z
