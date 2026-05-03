@@ -15,6 +15,7 @@ const main = defineCommand({
     eject: () => import('./commands/eject').then((m) => m.default),
     init: () => import('./commands/init').then((m) => m.default),
     list: () => import('./commands/list').then((m) => m.default),
+    scaffold: () => import('./commands/scaffold').then((m) => m.default),
     status: () => import('./commands/status').then((m) => m.default),
     update: () => import('./commands/update').then((m) => m.default),
   },
