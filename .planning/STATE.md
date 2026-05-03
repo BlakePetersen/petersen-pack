@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Phase 28 UI-SPEC approved
-last_updated: "2026-05-03T07:27:00Z"
-last_activity: 2026-05-03 -- Plan 28-03 completed (port transforms + staging)
+stopped_at: Completed 28-04-PLAN.md
+last_updated: "2026-05-03T07:34:28.235Z"
+last_activity: 2026-05-03
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 14
-  completed_plans: 10
-  percent: 71
+  completed_plans: 12
+  percent: 86
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 28 (authoring-scaffolds-lint-port) — EXECUTING
-Plan: 4 of 6
-Status: Plan 03 complete, advancing to Plan 04
-Last activity: 2026-05-03 -- Plan 28-03 completed (port transforms + staging)
+Plan: 5 of 6
+Status: Ready to execute
+Last activity: 2026-05-03
 
-Progress: [██████████] 100%
+Progress: [█████████░] 86%
 
 ## Performance Metrics
 
@@ -128,6 +128,7 @@ Progress: [██████████] 100%
 - 28-03: Callout regex matches one block at a time via body continuation pattern (not multiline greedy)
 - 28-03: YAML serialization is manual (no stringify dep) for staging output — keeps bundle small
 - 28-03: validateSlug rejects .., /, and leading dot for T-28-03-02 path traversal mitigation
+- 28-04: ArtifactBody is 'use client' (renders inside MDXContent client component + Radix Tabs); data supplied via React context from server-side DxContentLayout
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -160,8 +161,8 @@ Progress: [██████████] 100%
 
 ## Session Continuity
 
-Last session: 2026-05-03T07:27:00Z
-Stopped at: Completed 28-03-PLAN.md
-Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-04-PLAN.md
+Last session: 2026-05-03T07:34:28.232Z
+Stopped at: Completed 28-04-PLAN.md
+Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-05-PLAN.md
 
 **Planned Phase:** 28 (authoring-scaffolds-lint-port) — 6 plans — 2026-05-03T06:51:23.263Z
