@@ -1,8 +1,8 @@
 // ABOUTME: LINT-02 — enforces artifact-pair sync (requires_artifact <-> sibling .artifact.md).
 // ABOUTME: Missing artifact = error; orphan artifact = warning. Fix generates stub .artifact.md per D-07.
 
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
-import { join, basename, dirname } from 'node:path'
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 import matter from 'gray-matter'
 import type { LintDiagnostic, LintRule, LintContext } from '@/lint/types'
 
@@ -63,22 +63,33 @@ export const artifactPairRule: LintRule & {
     const diagnostics: LintDiagnostic[] = []
 
     const scanDir = (dir: string) => {
-      let entries: ReturnType<typeof readdirSync>
+      let names: string[]
       try {
-        entries = readdirSync(dir, { withFileTypes: true })
+        names = readdirSync(dir) as string[]
       } catch {
         return
       }
 
-      for (const entry of entries) {
-        const fullPath = join(dir, entry.name)
+      for (const name of names) {
+        if (name === 'node_modules' || name === '.git') continue
+        const fullPath = join(dir, name)
 
-        if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
+        let isDir = false
+        let isFile = false
+        try {
+          const s = statSync(fullPath)
+          isDir = s.isDirectory()
+          isFile = s.isFile()
+        } catch {
+          continue
+        }
+
+        if (isDir) {
           scanDir(fullPath)
           continue
         }
 
-        if (!entry.isFile() || !entry.name.endsWith('.artifact.md')) continue
+        if (!isFile || !name.endsWith('.artifact.md')) continue
 
         // Check for sibling .mdx
         const mdxSibling = fullPath.replace(/\.artifact\.md$/, '.mdx')
