@@ -9,6 +9,16 @@
   },
   "entry": ["apps/blakepetersen.io/velite.config.ts"],
 
+  // Jest setupFilesAfterEnv references aren't traced through TS imports;
+  // tell fallow these are loaded at runtime by the test framework.
+  "dynamicallyLoaded": ["**/tests/setup.ts", "**/jest.setup.ts"],
+
+  // Knip-compatible: don't report exports referenced in the same file as their
+  // declaration. Many module-internal classes/types/utilities export their
+  // shape for clarity even though only sibling functions in the same file use
+  // them (markers.ts, pipeline.ts, triage-engine.ts).
+  "ignoreExportsUsedInFile": true,
+
   // Velite consumes content/**/*.mdx at build time via .velite/ collections.
   // Public assets and Phase 27 fixtures are out of scope for static analysis.
   "ignorePatterns": [
@@ -31,11 +41,15 @@
     "shiki",
     "mdx",
     "prism-react-renderer",
-    "blink-registry"
+    "blink-registry",
+    "eslint-import-resolver-typescript"
   ],
 
   // Severities: warn-everywhere so the first CI run doesn't fail. Flip to
-  // "error" later once any remaining findings are addressed.
+  // "error" later once any remaining findings are addressed. Known persistent
+  // warns: 2 unresolved-imports for `artax-ui/styles/globals.css` in app
+  // globals.css files (Tailwind v4 workspace subpath; fallow's CSS resolver
+  // doesn't follow `exports` map for CSS — non-blocking false positives).
   "rules": {
     "unused-files": "warn",
     "unused-exports": "warn",

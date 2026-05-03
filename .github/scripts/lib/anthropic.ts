@@ -4,7 +4,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 
 export const CLAUDE_MODEL = 'claude-sonnet-4-20250514';
-export const DEFAULT_REVIEW_MAX_TOKENS = 4096;
 export const DEFAULT_TRIAGE_MAX_TOKENS = 1024;
 
 export function createAnthropicClient(): Anthropic {
