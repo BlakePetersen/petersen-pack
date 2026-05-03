@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 28-04-PLAN.md
-last_updated: "2026-05-03T07:34:28.235Z"
+stopped_at: Completed 28-05-PLAN.md
+last_updated: "2026-05-03T07:41:22.023Z"
 last_activity: 2026-05-03
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 14
-  completed_plans: 12
-  percent: 86
+  completed_plans: 13
+  percent: 93
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 28 (authoring-scaffolds-lint-port) — EXECUTING
-Plan: 5 of 6
+Plan: 6 of 6
 Status: Ready to execute
 Last activity: 2026-05-03
 
-Progress: [█████████░] 86%
+Progress: [█████████░] 93%
 
 ## Performance Metrics
 
@@ -129,6 +129,7 @@ Progress: [█████████░] 86%
 - 28-03: YAML serialization is manual (no stringify dep) for staging output — keeps bundle small
 - 28-03: validateSlug rejects .., /, and leading dot for T-28-03-02 path traversal mitigation
 - 28-04: ArtifactBody is 'use client' (renders inside MDXContent client component + Radix Tabs); data supplied via React context from server-side DxContentLayout
+- 28-05: createRequire shim in tsup banner for gray-matter CJS require('fs') compatibility in ESM bundle — standard pattern for CJS interop in bundled ESM binaries
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -161,8 +162,8 @@ Progress: [█████████░] 86%
 
 ## Session Continuity
 
-Last session: 2026-05-03T07:34:28.232Z
-Stopped at: Completed 28-04-PLAN.md
-Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-05-PLAN.md
+Last session: 2026-05-03T07:41:22.020Z
+Stopped at: Completed 28-05-PLAN.md
+Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-06-PLAN.md
 
 **Planned Phase:** 28 (authoring-scaffolds-lint-port) — 6 plans — 2026-05-03T06:51:23.263Z

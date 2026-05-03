@@ -47,9 +47,12 @@ Cross-file invariants that ESLint can't enforce, exposed via a `blink` subcomman
 - [x] **LINT-01**: `blink lint` subcommand validates frontmatter against the JSON Schema derived from Velite Zod (single source of truth)
 - [x] **LINT-02**: `blink lint` enforces artifact-pair sync — entries with `requires_artifact: true` must have a sibling `.artifact.md` (error); orphan `.artifact.md` files surface as warnings
 - [x] **LINT-03**: `blink lint` enforces voice-primitive invariants — entries that declare a `voice` value must invoke the matching JSX component in the body; entries with rationale-shaped headings flag as advisory if `voice: ['decision-rationale']` is missing
-- [ ] **LINT-04**: `pnpm lint:content` script runs `blink lint` across all collections; exits non-zero on any error
-- [ ] **LINT-05**: `lint-staged` runs `blink lint` against staged MDX/artifact files only, completing under 2s for typical 1–3 file changesets
-- [ ] **LINT-06**: Turbo `lint:content` task added; CI runs the full-tree lint
+- [x] **LINT-04
+**: `pnpm lint:content` script runs `blink lint` across all collections; exits non-zero on any error
+- [x] **LINT-05
+**: `lint-staged` runs `blink lint` against staged MDX/artifact files only, completing under 2s for typical 1–3 file changesets
+- [x] **LINT-06
+**: Turbo `lint:content` task added; CI runs the full-tree lint
 - [x] **LINT-07**: All voice-primitive rules ship as **advisory (warn)** in v1.4 — promotion to **error** is gated on the Phase 4 review (DEBT-04)
 
 ### Obsidian Port
@@ -57,7 +60,8 @@ Cross-file invariants that ESLint can't enforce, exposed via a `blink` subcomman
 Two-step pipeline that converts vault prose into reviewable, schema-valid MDX without polluting `content/` with half-clean drafts.
 
 - [x] **PORT-01**: `blink port stage <input-dir>` runs `obsidian-export` (Rust, out-of-band) and applies project transformations (wikilink rewrite, callout → `<AuthorNote>`, frontmatter normalization, dataview block strip), writing output to `.obsidian-port-staging/`
-- [ ] **PORT-02**: `.obsidian-port-staging/` is gitignored; staged output is reviewable as a normal diff against an empty baseline
+- [x] **PORT-02
+**: `.obsidian-port-staging/` is gitignored; staged output is reviewable as a normal diff against an empty baseline
 - [x] **PORT-03**: `blink port commit <slug>` moves a single staged entry from `.obsidian-port-staging/` to its final `content/<collection>/` path, atomically including any companion `.artifact.md`
 - [ ] **PORT-04**: Port pipeline round-trips one Blake-selected skill end-to-end before bulk content authoring begins (smoke test, not blocking)
 
