@@ -11,24 +11,30 @@ import {
 } from 'blink-registry'
 
 describe('SCHEMA-05: blink-registry direct import', () => {
-  const veliteConfig = fs.readFileSync(
-    path.resolve(__dirname, '..', 'velite.config.ts'),
-    'utf-8',
-  )
+  // The Velite pipeline split into velite.config.ts (collections) and
+  // src/lib/velite-prepare.ts (build-time validation). Schema imports live
+  // wherever they're consumed; concatenate both for the regression check.
+  const pipelineSource =
+    fs.readFileSync(path.resolve(__dirname, '..', 'velite.config.ts'), 'utf-8') +
+    '\n' +
+    fs.readFileSync(
+      path.resolve(__dirname, '..', 'src', 'lib', 'velite-prepare.ts'),
+      'utf-8',
+    )
 
   it('removes the inline slugPattern, calverPattern, validTypes, validMerges declarations', () => {
-    expect(veliteConfig).not.toMatch(/slugPattern\s*=/)
-    expect(veliteConfig).not.toMatch(/calverPattern\s*=/)
-    expect(veliteConfig).not.toMatch(/validTypes\s*=/)
-    expect(veliteConfig).not.toMatch(/validMerges\s*=/)
+    expect(pipelineSource).not.toMatch(/slugPattern\s*=/)
+    expect(pipelineSource).not.toMatch(/calverPattern\s*=/)
+    expect(pipelineSource).not.toMatch(/validTypes\s*=/)
+    expect(pipelineSource).not.toMatch(/validMerges\s*=/)
   })
 
   it("imports the four schemas from 'blink-registry'", () => {
-    expect(veliteConfig).toMatch(/from\s+['"]blink-registry['"]/)
-    expect(veliteConfig).toMatch(/SlugSchema/)
-    expect(veliteConfig).toMatch(/CalVerSchema/)
-    expect(veliteConfig).toMatch(/ArtifactTypeSchema/)
-    expect(veliteConfig).toMatch(/MergeStrategySchema/)
+    expect(pipelineSource).toMatch(/from\s+['"]blink-registry['"]/)
+    expect(pipelineSource).toMatch(/SlugSchema/)
+    expect(pipelineSource).toMatch(/CalVerSchema/)
+    expect(pipelineSource).toMatch(/ArtifactTypeSchema/)
+    expect(pipelineSource).toMatch(/MergeStrategySchema/)
   })
 
   it('imported SlugSchema accepts valid slugs and rejects invalid', () => {

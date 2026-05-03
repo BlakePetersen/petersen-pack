@@ -22,13 +22,17 @@ import {
 
 // --- Types ---
 
+// Post-Velite-transform shape. Velite guarantees:
+//   - category: dxFields transform falls back to slug-prefix or 'uncategorized'.
+//   - dependencies / related: `s.array(...).default([])` ensures arrays are present.
+// Tests constructing DxItems must mirror these guarantees.
 export type DxItem = {
   slug: string
   title: string
-  category?: string
+  category: string
   draft?: boolean
-  dependencies?: string[]
-  related?: string[]
+  dependencies: string[]
+  related: string[]
 }
 
 export type PostItem = {
@@ -62,8 +66,8 @@ export type DxData = {
   configs: DxItem[]
   guides: DxItem[]
   posts: PostItem[]
-  singleArtifacts?: SingleArtifactInput[]
-  multiArtifacts?: MultiArtifactInput[]
+  singleArtifacts: SingleArtifactInput[]
+  multiArtifacts: MultiArtifactInput[]
 }
 
 export type ValidatedArtifact = {
@@ -90,11 +94,11 @@ export function filterDrafts(data: DxData): void {
 
 // --- 2. Cross-reference integrity (SCHEMA-04 / D-01..D-04) ---
 
-// Walks `dependencies` and `related` only — `decisions` is wrong shape (no
-// slugs) per D-01. Cross-collection refs allowed per D-02. Format is
-// `<collection>/<slug>` per D-03; bare slug may itself contain slashes
-// (nested skills), so we compare against the path-shaped slug directly rather
-// than splitting again. Accumulator-then-throw per D-04.
+// Caller must apply filterDrafts first in production so dev/prod validate the
+// same set. Walks dependencies/related only — decisions is wrong shape (D-01).
+// Cross-collection refs allowed (D-02), `<collection>/<slug>` format (D-03);
+// nested-slug refs are compared against the path-shaped slug directly.
+// Accumulator-then-throw per D-04.
 export function validateCrossReferences(data: DxData): void {
   const collectionSlugs: Record<DxCollectionName, Set<string>> = {
     skills: new Set(data.skills.map((i) => i.slug)),
@@ -113,7 +117,7 @@ export function validateCrossReferences(data: DxData): void {
 
   for (const item of allDx) {
     for (const field of ['dependencies', 'related'] as const) {
-      const refs = item[field] ?? []
+      const refs = item[field]
       for (const ref of refs) {
         const slashIndex = ref.indexOf('/')
         if (slashIndex <= 0 || slashIndex === ref.length - 1) {
@@ -156,8 +160,8 @@ export function buildAndWriteGraphs(data: DxData, outputDir: string): void {
   ].map((item) => ({
     slug: item.slug,
     title: item.title,
-    category: item.category as string,
-    dependencies: item.dependencies ?? [],
+    category: item.category,
+    dependencies: item.dependencies,
   }))
 
   const fullGraph = buildGraph(dxItems)
@@ -228,9 +232,11 @@ function sha256Hex(payload: string): string {
 // Version each artifact via the SCHEMA-08 hash gate (D-05/D-07): unchanged
 // distributed-payload bytes preserve the prior CalVer, so prose-only edits
 // don't bump version. Manifest is git-tracked per D-06 for cross-machine
-// determinism. Single-process serial build (Risk #3) — no atomic write.
+// determinism. Throws on the first artifact that fails Zod shape validation,
+// before persisting the version manifest, so a bad artifact never corrupts
+// the on-disk hash gate.
 export function versionAndValidateArtifacts(
-  data: { singleArtifacts?: SingleArtifactInput[]; multiArtifacts?: MultiArtifactInput[] },
+  data: DxData,
   contentDir: string,
 ): ValidatedArtifact[] {
   const versionManifestPath = path.resolve(contentDir, '.artifact-versions.json')
@@ -240,7 +246,7 @@ export function versionAndValidateArtifacts(
   const updatedVersionManifest: VersionManifest = {}
   const dateCounters = new Map<string, number>()
 
-  const singles: ValidatedArtifact[] = (data.singleArtifacts ?? []).map((artifact) => {
+  const singles: ValidatedArtifact[] = data.singleArtifacts.map((artifact) => {
     const slug = deriveArtifactSlug(artifact.slug)
     // D-05: hash the distributed-payload bytes only (single-file = body).
     const hash = sha256Hex(artifact.body)
@@ -271,7 +277,7 @@ export function versionAndValidateArtifacts(
     }
   })
 
-  const multis: ValidatedArtifact[] = (data.multiArtifacts ?? []).map((artifact) => {
+  const multis: ValidatedArtifact[] = data.multiArtifacts.map((artifact) => {
     const slug = deriveArtifactSlug(artifact.slug)
     // D-05: hash concatenated file.content in declared order (no separator —
     // boundaries are immaterial to the consumer-facing payload).
@@ -300,7 +306,6 @@ export function versionAndValidateArtifacts(
 
   const allArtifacts = [...singles, ...multis]
 
-  // Validate artifact shape at build time (fail-fast)
   for (const artifact of allArtifacts) {
     if (!SlugSchema.safeParse(artifact.slug).success) {
       throw new Error(`Invalid artifact slug: "${artifact.slug}"`)
@@ -321,7 +326,8 @@ export function versionAndValidateArtifacts(
     }
   }
 
-  // Sort top-level keys so consecutive runs are byte-identical (D-06: diffable in PRs).
+  // Sort top-level keys for byte-identical consecutive runs (D-06).
+  // Single-process serial build (Risk #3) — no atomic write needed.
   const sortedVersionManifest = Object.fromEntries(
     Object.entries(updatedVersionManifest).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
   )
