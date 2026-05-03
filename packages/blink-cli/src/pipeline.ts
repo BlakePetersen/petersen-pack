@@ -49,10 +49,6 @@ export interface PrepareResult {
   depPlan: DepPlan
 }
 
-export interface WriteResult {
-  fileEntries: ManifestFileEntry[]
-}
-
 // --- Stage: Resolve ---
 
 export async function resolve(
