@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: shipped
-stopped_at: "Phase 27 shipped — PR #116 (gsd/phase-27-schema-foundations → main)"
-last_updated: "2026-04-28T03:45:00.000Z"
-last_activity: 2026-04-28 — Phase 27 PR #116 opened (33 commits, 128 files, +3100/-?)
+status: verifying
+stopped_at: "Completed 27-schema-foundations-07-perf-baseline-PLAN.md (Phase 27 complete: 8/8)"
+last_updated: "2026-04-28T09:13:55.316Z"
+last_activity: 2026-04-28 — Phase 27 LEARNINGS.md extracted (8 decisions / 7 lessons / 9 patterns / 7 surprises)
 progress:
   total_phases: 4
   completed_phases: 1
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 Phase: 27 (schema-foundations) — EXECUTING
 Plan: 8 of 8
 Status: Phase complete — ready for verification
-Last activity: 2026-04-28
+Last activity: 2026-04-28 — Phase 27 LEARNINGS.md extracted (8 decisions / 7 lessons / 9 patterns / 7 surprises)
 
 Progress: [██████████] 100%
 

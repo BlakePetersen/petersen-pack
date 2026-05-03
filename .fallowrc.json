@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+
+  // Pnpm + turbo monorepo. Next.js / package plugins discover most entry points;
+  // velite.config.ts is run by Velite at build but isn't imported by app code,
+  // so we mark it as an entry to keep its imports (shiki etc.) in the graph.
+  "workspaces": {
+    "packages": ["apps/*", "packages/*"]
+  },
+  "entry": ["apps/blakepetersen.io/velite.config.ts"],
+
+  // Velite consumes content/**/*.mdx at build time via .velite/ collections.
+  // Public assets and Phase 27 fixtures are out of scope for static analysis.
+  "ignorePatterns": [
+    "apps/blakepetersen.io/content/**/*.mdx",
+    "apps/blakepetersen.io/test-fixtures/**",
+    "apps/blakepetersen.io/scripts/migrations/000-noop.ts",
+    "**/public/**",
+    "**/.velite/**",
+    "**/dist/**",
+    "**/.next/**"
+  ],
+
+  // Suppressed deps:
+  //  - shiki / mdx / prism-react-renderer: type-only imports that resolve via
+  //    transitive deps (@shikijs/rehype, @types/mdx) — real but tolerable.
+  //  - blink-registry: workspace package builds to dist/, so fallow's resolver
+  //    doesn't trace runtime imports back to source. The package is genuinely
+  //    used (see packages/blink-cli/src/manifest.ts and apps/blakepetersen.io).
+  "ignoreDependencies": [
+    "shiki",
+    "mdx",
+    "prism-react-renderer",
+    "blink-registry"
+  ],
+
+  // Severities: warn-everywhere so the first CI run doesn't fail. Flip to
+  // "error" later once any remaining findings are addressed.
+  "rules": {
+    "unused-files": "warn",
+    "unused-exports": "warn",
+    "unused-types": "warn",
+    "unused-dependencies": "warn",
+    "unlisted-dependencies": "warn",
+    "unresolved-imports": "warn",
+    "circular-dependencies": "error",
+    "duplicate-exports": "error"
+  }
+}

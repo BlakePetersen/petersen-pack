@@ -209,3 +209,61 @@ v1.4 phases execute in numeric order: 27 → 28 → 29 → 30. Phase 28 has thre
 | 28. Authoring Scaffolds + Lint + Port | v1.4 | 0/? | Not started | — |
 | 29. Content Authoring | v1.4 | 0/? | Not started | — |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
+
+## Backlog
+
+### Phase 999.1: Type-design tightening from Phase 27 review (BACKLOG)
+
+**Goal:** [Captured for future planning]
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Findings from `/pr-review-toolkit:review-pr` on PR #116. Captured for future triage:
+
+- Define `Sha256Hex` primitive in `blink-registry`; retype `VersionManifest` as `Record<Slug, { hash: Sha256Hex; version: CalVer }>` so encoding-format drift surfaces at parse, not after a build cycle of mis-versioned artifacts.
+- Replace `velite.config.ts:475-500` `writeRegistryFiles` parameter's bare structural type with `RegistryArtifact[]` (or a `Pick<ArtifactMetadata, …>` build-local type) so a future `type: 'recipe'` collection can't silently mint 404 URLs into `index.json`.
+- Replace inline `s.enum(['config','skill','hook','guide'])` and `s.enum(['replace','section'])` in `singleArtifacts` / `multiArtifacts` (velite.config.ts:147-148) with adapters around `ArtifactTypeSchema` / `MergeStrategySchema`. Single source of truth in `blink-registry`.
+- Drop `const config: any = defineConfig(...)` (velite.config.ts:185) — restoring inferred types lets the cross-ref accumulator drop its `as string[]` cast and removes the eslint-disable.
+- Lift `CrossRefSchema` from inline `velite.config.ts` declaration to an exported `blink-registry` factory (`makeCrossRefSchema(collections)`) so other apps can compose it.
+- Tighten `Migration` interface (`scripts/migrate-content.ts:8`) to `run(opts: { contentRoot: string; dryRun: boolean }): Promise<MigrationResult>`. Lift the type to a shared module so `000-noop.ts` doesn't redeclare `MigrationResult`. Required when Migration #001 lands.
+- Export `VoiceSchema` / `type Voice` (currently inlined as `s.enum([...])` literals at velite.config.ts:37) so site renderers can be exhaustive against the canonical union.
+
+Plans:
+- [ ] TBD (promote with /gsd-review-backlog when ready)
+
+### Phase 999.2: Error-handling + test-coverage gaps from Phase 27 review (BACKLOG)
+
+**Goal:** [Captured for future planning]
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Findings from `/pr-review-toolkit:review-pr` on PR #116. Captured for future triage:
+
+- Wrap `JSON.parse` of `.artifact-versions.json` (velite.config.ts:350-352) in try/catch; rethrow with "manifest corrupted at <path>; delete to regenerate" rather than letting a cryptic `SyntaxError` surface from inside Velite's prepare hook.
+- Tag the cross-ref accumulator's plain `Error` (velite.config.ts:251-284) with a Sentry-trackable `BlinkError` ID.
+- Replace the manifest determinism assertion in `phase27-manifest-shape.test.ts` (key-order proxy, ~8 entries → flake-prone) with a true byte-compare: write the manifest twice in succession, compare bytes byte-for-byte. Asserts the actual D-06 invariant.
+- Capture `execSync` exit in `frontmatter-schema.test.ts`'s `beforeAll` and fail loudly on non-zero (or `rmSync(.velite, …)` first). Today's "build green" signal is muffled by stale-cache passthrough.
+- Add a fixture with 2+ broken cross-refs in one entry to `phase27-dangling-cross-ref` so a future refactor that short-circuits per-file accumulation can't ship silently.
+- Add codemod harness ordering + chain-halt-on-failure tests (temp `998-touch.ts` + `999-throw.ts` migrations) — assert chain halts and `999` runs after `998`.
+- Surface signal kills in `phase27-velite-runner.ts` (`result.status ?? -1` collapses SIGKILL into `-1`); include `result.signal` in `VeliteRunResult`.
+- Add stderr listener + null-stdout handling in `scripts/perf-baseline.ts:42-51` — fatal errors before "Ready in" are currently discarded.
+- Normalize migration thrown values in `migrate-content.ts:99` (catch handler stringifies non-Error throws as `[object Object]`).
+
+Plans:
+- [ ] TBD (promote with /gsd-review-backlog when ready)
+
+### Phase 999.3: Documentation drift cleanup from Phase 27 review (BACKLOG)
+
+**Goal:** [Captured for future planning]
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Findings from `/pr-review-toolkit:review-pr` on PR #116. Captured for future triage:
+
+- Update `apps/blakepetersen.io/CLAUDE.md` cross-package note. It says "Imports types only from `blink-registry`; the registry's runtime/Zod usage lives in `@blink/cli`, not here" — Phase 27-02 deliberately introduced runtime `safeParse` calls. Stale CLAUDE.md is a recurring source of bad agent decisions.
+- Rewrite the 9 `.planning/`-artifact-ID citations in code comments that will rot when Phase 27 archives. Locations: `velite.config.ts:48 (D-19)`, `:228-234 (D-01..D-04 ×5)`, `:340-347 (D-05/D-07, D-06, Risk #3)`, `:362 (D-05)`, `:393-394 (D-05)`, `:441-443 (Risk #3, D-06)`; tests `phase27-dangling-cross-ref.test.ts:15 (D-04)`, `phase27-manifest-shape.test.ts:28 (D-06)`, `phase27-perf-baseline.test.ts:2 (27-VALIDATION.md)`. Replace each with a self-contained WHY (the substance of the decision, not the doc-ID).
+- Delete redundant numbered-step comments in `scripts/perf-baseline.ts:32, 59, 74, 89, 100, 110, 114` and the `// Positional: execute` line in `scripts/migrate-content.ts:90` — they restate the line that follows. Keep the regex-explanation at perf-baseline.ts:101.
+- Optional one-liner WHY for the `fileURLToPath(import.meta.url)` shim at `migrate-content.ts:14-15` and `perf-baseline.ts:17-18`.
+
+Plans:
+- [ ] TBD (promote with /gsd-review-backlog when ready)
