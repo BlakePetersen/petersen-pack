@@ -37,7 +37,8 @@ Generators that produce schema-valid skeletons; templates derive from the canoni
 - [x] **SCAFFOLD-03**: Scaffold templates derive from the live Velite Zod schema (no hand-maintained template/schema duplication) — depends on SCHEMA-05
 
 - [x] **SCAFFOLD-04**: Scaffold pre-populates the artifact frontmatter (`name`, `description`, `type`, `version`) from the MDX frontmatter so authors edit one source of truth
-- [ ] **SCAFFOLD-05**: Round-trip CI test runs `blink scaffold` for each collection, then runs Velite, and asserts the generated entries pass schema validation
+- [x] **SCAFFOLD-05
+**: Round-trip CI test runs `blink scaffold` for each collection, then runs Velite, and asserts the generated entries pass schema validation
 - [x] **SCAFFOLD-06**: Scaffold respects `--dry-run` (prints the would-write paths and contents) and `--force` (overwrites an existing slug)
 
 ### Content Lint
@@ -63,7 +64,8 @@ Two-step pipeline that converts vault prose into reviewable, schema-valid MDX wi
 - [x] **PORT-02
 **: `.obsidian-port-staging/` is gitignored; staged output is reviewable as a normal diff against an empty baseline
 - [x] **PORT-03**: `blink port commit <slug>` moves a single staged entry from `.obsidian-port-staging/` to its final `content/<collection>/` path, atomically including any companion `.artifact.md`
-- [ ] **PORT-04**: Port pipeline round-trips one Blake-selected skill end-to-end before bulk content authoring begins (smoke test, not blocking)
+- [x] **PORT-04
+**: Port pipeline round-trips one Blake-selected skill end-to-end before bulk content authoring begins (smoke test, not blocking)
 
 ### Content Density
 

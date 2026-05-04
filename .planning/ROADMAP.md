@@ -77,7 +77,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 ### v1.4 Content Density (Phases 27-30) — IN PROGRESS
 
 - [x] **Phase 27: Schema Foundations** — Lock `dxFields` shape, slug uniqueness, cross-ref integrity, perf baseline, CalVer + ESM debt resolution before any content authoring
-- [ ] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
+- [x] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
 - [ ] **Phase 29: Content Authoring (Greenfield + Ports)** — 16 entries shipped (5 skills, 5 configs, 3 hooks, 3 guides) plus first-invocation voice-primitive torture test
 - [ ] **Phase 30: Editorial Closure** — Real `/about` and `/start-here` copy, voice-primitive backfill across pre-existing MDX, Skills Detail typography polish, voice-lint promotion review, milestone audit
 
@@ -138,9 +138,9 @@ Plans:
 - [x] 28-01-PLAN.md — DxFrontmatterSchema + scaffold command (SCAFFOLD-01..04, SCAFFOLD-06, SCAFFOLD-03)
 - [x] 28-02-PLAN.md — Lint rules + runner + reporter (LINT-01, LINT-02, LINT-03, LINT-07)
 - [x] 28-03-PLAN.md — Port transforms + staging (PORT-01, PORT-03)
-- [ ] 28-04-PLAN.md — ArtifactBody component (CONTENT-05)
-- [ ] 28-05-PLAN.md — CLI commands + CI integration (LINT-04, LINT-05, LINT-06, PORT-02)
-- [ ] 28-06-PLAN.md — Round-trip test + port smoke test (SCAFFOLD-05, PORT-04)
+- [x] 28-04-PLAN.md — ArtifactBody component (CONTENT-05)
+- [x] 28-05-PLAN.md — CLI commands + CI integration (LINT-04, LINT-05, LINT-06, PORT-02)
+- [x] 28-06-PLAN.md — Round-trip test + port smoke test (SCAFFOLD-05, PORT-04)
 
 ### Phase 29: Content Authoring (Greenfield + Ports)
 
@@ -214,7 +214,7 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 25. blakepetersen.io Theming | v1.3 | 1/1 | Complete | 2026-04-19 |
 | 26. blakepetersen.io Page Updates | v1.3 | 7/7 | Complete | 2026-04-24 |
 | 27. Schema Foundations | v1.4 | 8/8 | Complete | 2026-04-28 |
-| 28. Authoring Scaffolds + Lint + Port | v1.4 | 0/6 | Not started | — |
+| 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete | 2026-05-03 |
 | 29. Content Authoring | v1.4 | 0/? | Not started | — |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
 

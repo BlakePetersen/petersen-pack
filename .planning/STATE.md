@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: executing
-stopped_at: Completed 28-05-PLAN.md
-last_updated: "2026-05-03T07:41:22.023Z"
-last_activity: 2026-05-03
+status: verifying
+stopped_at: Completed 28-06-PLAN.md (Phase 28 complete)
+last_updated: "2026-05-04T20:54:55.991Z"
+last_activity: 2026-05-04
 progress:
   total_phases: 7
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 14
-  completed_plans: 13
-  percent: 93
+  completed_plans: 14
+  percent: 100
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 
 Phase: 28 (authoring-scaffolds-lint-port) — EXECUTING
 Plan: 6 of 6
-Status: Ready to execute
-Last activity: 2026-05-03
+Status: Phase complete — ready for verification
+Last activity: 2026-05-04
 
-Progress: [█████████░] 93%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -130,6 +130,7 @@ Progress: [█████████░] 93%
 - 28-03: validateSlug rejects .., /, and leading dot for T-28-03-02 path traversal mitigation
 - 28-04: ArtifactBody is 'use client' (renders inside MDXContent client component + Radix Tabs); data supplied via React context from server-side DxContentLayout
 - 28-05: createRequire shim in tsup banner for gray-matter CJS require('fs') compatibility in ESM bundle — standard pattern for CJS interop in bundled ESM binaries
+- 28-06: Schema-validation round-trip (DxFrontmatterSchema.safeParse) over full Velite fixture build — faster, more reliable, same source of truth
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -162,8 +163,8 @@ Progress: [█████████░] 93%
 
 ## Session Continuity
 
-Last session: 2026-05-03T07:41:22.020Z
-Stopped at: Completed 28-05-PLAN.md
-Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-06-PLAN.md
+Last session: 2026-05-04T20:54:55.988Z
+Stopped at: Completed 28-06-PLAN.md (Phase 28 complete)
+Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-06-SUMMARY.md
 
 **Planned Phase:** 28 (authoring-scaffolds-lint-port) — 6 plans — 2026-05-03T06:51:23.263Z
