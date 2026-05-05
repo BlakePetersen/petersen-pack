@@ -1,0 +1,79 @@
+{
+  "title": "Animals",
+  "slug": "animals",
+  "description": "Professional animal photography capturing the personality and spirit of your pets",
+  "featured": false,
+  "images": [
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1617750942032-ONG1UNTGD2L7JDV7EN7H/_DSC5849.JPG",
+      "altText": "Animals - Image 1",
+      "width": 2048,
+      "height": 1367,
+      "cachedFilename": "animals-0.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1493246605643-6ZGYN06IUKUUMI46V5DX/DSC_2425.jpg",
+      "altText": "Animals - Image 2",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "animals-1.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1448132206324-I94DL1EZX39D0MPJO7O9/_DSC5039.jpg",
+      "altText": "Animals - Image 3",
+      "width": 2400,
+      "height": 1597,
+      "cachedFilename": "animals-2.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1448133421553-TP8EWPUMXUM2RGXTS1XC/_DSC9953.jpg",
+      "altText": "Animals - Image 4",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "animals-3.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1448132223156-7RWPMM7VFPM3RS4I54H1/_DSC6915.jpg",
+      "altText": "Animals - Image 5",
+      "width": 2400,
+      "height": 1601,
+      "cachedFilename": "animals-4.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1485483170427-J2RGVOGCNTVIPXX66LWZ/_DSC0118.jpg",
+      "altText": "Animals - Image 6",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "animals-5.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1448133423848-24WFSGOPU0DILNVNRLZ9/4446_untitled.jpg",
+      "altText": "Animals - Image 7",
+      "width": 1597,
+      "height": 2400,
+      "cachedFilename": "animals-6.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452052875684-7LK9CY29RDTVGGYJGYE2/_DSC5234.jpg",
+      "altText": "Animals - Image 8",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "animals-7.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1448133419541-QD8E3J6GWCYWTW9TLE2G/_DSC4321masterfile+copy.jpg",
+      "altText": "Animals - Image 9",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "animals-8.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1447641586801-1QI00A20Z9AVG4J60B5C/4601_untitled.jpg",
+      "altText": "Animals - Image 10",
+      "width": 2400,
+      "height": 1596,
+      "cachedFilename": "animals-9.webp"
+    }
+  ],
+  "scrapedAt": "2025-11-17T05:50:34.961Z"
+}

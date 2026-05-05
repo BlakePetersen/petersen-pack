@@ -1,0 +1,37 @@
+{
+  "title": "Headshots",
+  "slug": "headshots",
+  "description": "Professional headshots for actors, corporate professionals, and LinkedIn profiles",
+  "featured": false,
+  "images": [
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1659243136288-H0CIBGBWNKI1B1XIJCAL/5_Capture0045-2.jpg",
+      "altText": "Headshots - Image 1",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "headshots-0.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1743279378751-SYRGKKSTVDWIISXY4H7O/_DSC1811-Edit.jpg",
+      "altText": "Headshots - Image 2",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "headshots-1.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1743279377906-W3QE46A8GLKIVNJRGTJP/_DSC1939-Edit.jpg",
+      "altText": "Headshots - Image 3",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "headshots-2.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1743279382820-BOZRO3E3R07HETZWPDS6/_DSC2076-Edit.jpg",
+      "altText": "Headshots - Image 4",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "headshots-3.webp"
+    }
+  ],
+  "scrapedAt": "2025-11-17T05:52:32.484Z"
+}
