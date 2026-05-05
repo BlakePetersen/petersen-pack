@@ -1,0 +1,128 @@
+{
+  "title": "Boudoir",
+  "slug": "boudoir",
+  "description": "Elegant and empowering boudoir photography",
+  "featured": false,
+  "images": [
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1743280240193-11CHENRM6ATLEIGUD1CA/9_DSC_1303-Edit-2.jpg",
+      "altText": "Boudoir - Image 1",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "boudoir-0.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1743280241923-WSTO5OQTDPQGZKLG402Y/17_DSC_1380.jpg",
+      "altText": "Boudoir - Image 2",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "boudoir-1.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1743280244158-1LX7C6S38JNYNPFCDZ6V/31_DSC_1456.jpg",
+      "altText": "Boudoir - Image 3",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "boudoir-2.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1743280246885-QREDBIV8791OIQLTKPAZ/45_DSC_1723.jpg",
+      "altText": "Boudoir - Image 4",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "boudoir-3.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618113069389-J19RX0QG2IJY12816W8X/DSC_4387-Edit.jpg",
+      "altText": "Boudoir - Image 5",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "boudoir-4.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618010015909-YZTB23WBWXBUPBFIEN8L/DSC_4080-Edit.jpg",
+      "altText": "Boudoir - Image 6",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "boudoir-5.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618010016530-QTO8J3YWFXC71ZEL09L8/DSC_4157-Edit.jpg",
+      "altText": "Boudoir - Image 7",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "boudoir-6.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618113156121-VLXDPPA6F4FA95LDQ72J/DSC_3930.jpg",
+      "altText": "Boudoir - Image 8",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "boudoir-7.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618112922571-UH7D1NYSRZ9KYYADPCMT/DSC_3743.jpg",
+      "altText": "Boudoir - Image 9",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "boudoir-8.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618010014749-FFOMOSEMGKL6C35PDER7/DSC_3546.jpg",
+      "altText": "Boudoir - Image 10",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "boudoir-9.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618010014145-Y8YKN0M62B4XS014C7W9/13_DSC_5741.jpg",
+      "altText": "Boudoir - Image 11",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "boudoir-10.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618192233668-4WLOKM5ZVVA9CS7WUA3F/DSC_0585-Edit.jpg",
+      "altText": "Boudoir - Image 12",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "boudoir-11.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618113771143-F5YI11PIFEO21OWE3YTX/_DSC5491.jpg",
+      "altText": "Boudoir - Image 13",
+      "width": 1367,
+      "height": 2048,
+      "cachedFilename": "boudoir-12.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618010013719-AE0X0GPOKFK1NPJU2LF9/_DSC5242.jpg",
+      "altText": "Boudoir - Image 14",
+      "width": 1601,
+      "height": 2400,
+      "cachedFilename": "boudoir-13.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618113770600-6BKTM666JEI9WE2ECAGD/_DSC5592-2.jpg",
+      "altText": "Boudoir - Image 15",
+      "width": 2048,
+      "height": 1367,
+      "cachedFilename": "boudoir-14.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618113777738-2026A2TC08RZYXJ8PF2H/_DSC5800.jpg",
+      "altText": "Boudoir - Image 16",
+      "width": 2048,
+      "height": 1367,
+      "cachedFilename": "boudoir-15.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618113777261-9BBIOT1MN5HB1U9GT1PF/_DSC5815.jpg",
+      "altText": "Boudoir - Image 17",
+      "width": 2048,
+      "height": 1367,
+      "cachedFilename": "boudoir-16.webp"
+    }
+  ],
+  "scrapedAt": "2025-11-17T05:51:00.576Z"
+}

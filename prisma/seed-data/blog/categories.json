@@ -1,0 +1,149 @@
+[
+  {
+    "id": "cminzxa8r00358z7lh1byop0o",
+    "name": "Bay Area",
+    "slug": "bay-area",
+    "description": null,
+    "createdAt": "2025-12-02T03:05:53.521Z"
+  },
+  {
+    "id": "cmio0txu000sw8z7lyynaqbak",
+    "name": "Dogs",
+    "slug": "dogs",
+    "description": null,
+    "createdAt": "2025-12-02T03:31:17.256Z"
+  },
+  {
+    "id": "cmio02ug5006p8z7ledr2jgdh",
+    "name": "Engagements",
+    "slug": "engagements",
+    "description": null,
+    "createdAt": "2025-12-02T03:10:13.066Z"
+  },
+  {
+    "id": "cmio0gw5800id8z7lmu7epmzt",
+    "name": "Events",
+    "slug": "events",
+    "description": null,
+    "createdAt": "2025-12-02T03:21:07.840Z"
+  },
+  {
+    "id": "cminztnsi00008z7ln8fn1uz5",
+    "name": "Family",
+    "slug": "family",
+    "description": null,
+    "createdAt": "2025-12-02T03:03:04.532Z"
+  },
+  {
+    "id": "cminzu92i000o8z7l3h3rug4a",
+    "name": "Fantasy",
+    "slug": "fantasy",
+    "description": null,
+    "createdAt": "2025-12-02T03:03:32.114Z"
+  },
+  {
+    "id": "cmio0ct4e00fj8z7lsun4e7g0",
+    "name": "Horses",
+    "slug": "horses",
+    "description": null,
+    "createdAt": "2025-12-02T03:17:57.916Z"
+  },
+  {
+    "id": "cminzxa8r00348z7lgd1nk9hj",
+    "name": "Kids",
+    "slug": "kids",
+    "description": null,
+    "createdAt": "2025-12-02T03:05:53.521Z"
+  },
+  {
+    "id": "cmio0qhiu00qa8z7lrrytdw0f",
+    "name": "Landscape",
+    "slug": "landscape",
+    "description": null,
+    "createdAt": "2025-12-02T03:28:36.064Z"
+  },
+  {
+    "id": "cminzyd4m003j8z7l5nu74yon",
+    "name": "Lifestyle",
+    "slug": "lifestyle",
+    "description": null,
+    "createdAt": "2025-12-02T03:06:43.997Z"
+  },
+  {
+    "id": "cminzto8w00018z7lviku0hce",
+    "name": "Maternity",
+    "slug": "maternity",
+    "description": null,
+    "createdAt": "2025-12-02T03:03:04.532Z"
+  },
+  {
+    "id": "cmio04qs200948z7lw5sjecwg",
+    "name": "Milk Bath",
+    "slug": "milk-bath",
+    "description": null,
+    "createdAt": "2025-12-02T03:11:41.633Z"
+  },
+  {
+    "id": "cminzvopg00148z7l4d51pz54",
+    "name": "Minis",
+    "slug": "minis",
+    "description": null,
+    "createdAt": "2025-12-02T03:04:39.034Z"
+  },
+  {
+    "id": "cmio08wga00cf8z7li9k9qxoj",
+    "name": "Newborn",
+    "slug": "newborn",
+    "description": null,
+    "createdAt": "2025-12-02T03:14:55.614Z"
+  },
+  {
+    "id": "cmio0dm8300fv8z7lriohfyyk",
+    "name": "Portraiture",
+    "slug": "portraiture",
+    "description": null,
+    "createdAt": "2025-12-02T03:18:35.635Z"
+  },
+  {
+    "id": "cmio0l5v000m98z7lnjnby16f",
+    "name": "Rescue Tales",
+    "slug": "rescue-tales",
+    "description": null,
+    "createdAt": "2025-12-02T03:24:27.660Z"
+  },
+  {
+    "id": "cmio0fwap00hv8z7llrcmbyvu",
+    "name": "Senior Portrait",
+    "slug": "senior-portrait",
+    "description": null,
+    "createdAt": "2025-12-02T03:20:21.986Z"
+  },
+  {
+    "id": "cmio0150m006f8z7l6kzyxt9d",
+    "name": "Travel",
+    "slug": "travel",
+    "description": null,
+    "createdAt": "2025-12-02T03:08:53.445Z"
+  },
+  {
+    "id": "cmio0533g009o8z7luoaxpl5g",
+    "name": "Underwater",
+    "slug": "underwater",
+    "description": null,
+    "createdAt": "2025-12-02T03:11:57.593Z"
+  },
+  {
+    "id": "cmio0sbrp00rl8z7lr33k83h3",
+    "name": "Wedding",
+    "slug": "wedding",
+    "description": null,
+    "createdAt": "2025-12-02T03:30:01.924Z"
+  },
+  {
+    "id": "cmio07pre00b08z7lu4unkzx3",
+    "name": "Yoga",
+    "slug": "yoga",
+    "description": null,
+    "createdAt": "2025-12-02T03:14:00.202Z"
+  }
+]

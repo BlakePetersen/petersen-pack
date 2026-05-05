@@ -1,0 +1,27 @@
+-- AlterTable
+ALTER TABLE "BlogPostImage" ADD COLUMN     "cropAspectRatio" TEXT,
+ADD COLUMN     "cropHeight" DOUBLE PRECISION,
+ADD COLUMN     "cropWidth" DOUBLE PRECISION,
+ADD COLUMN     "cropX" DOUBLE PRECISION,
+ADD COLUMN     "cropY" DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "HeroSlide" ADD COLUMN     "cropAspectRatio" TEXT,
+ADD COLUMN     "cropHeight" DOUBLE PRECISION,
+ADD COLUMN     "cropWidth" DOUBLE PRECISION,
+ADD COLUMN     "cropX" DOUBLE PRECISION,
+ADD COLUMN     "cropY" DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "Image" ADD COLUMN     "cropAspectRatio" TEXT,
+ADD COLUMN     "cropHeight" DOUBLE PRECISION,
+ADD COLUMN     "cropWidth" DOUBLE PRECISION,
+ADD COLUMN     "cropX" DOUBLE PRECISION,
+ADD COLUMN     "cropY" DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "ServiceImage" ADD COLUMN     "cropAspectRatio" TEXT,
+ADD COLUMN     "cropHeight" DOUBLE PRECISION,
+ADD COLUMN     "cropWidth" DOUBLE PRECISION,
+ADD COLUMN     "cropX" DOUBLE PRECISION,
+ADD COLUMN     "cropY" DOUBLE PRECISION;

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Flyer - Electric Split</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0B0B0E;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .flyer {
+    width: 1080px;
+    height: 1350px;
+    background: #0B0B0E;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Grain overlay */
+  .flyer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    background-size: 256px;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .photo-side {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    filter: grayscale(40%) contrast(1.15) brightness(0.85);
+  }
+
+  /* Blue gradient overlay on photo */
+  .photo-side::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      transparent 40%,
+      rgba(11, 11, 14, 0.6) 80%,
+      #0B0B0E 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(31, 107, 255, 0.15) 0%,
+      transparent 50%
+    );
+  }
+
+  .text-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 20px;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* Vertical blue line accent */
+  .text-side::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      #1F6BFF 30%,
+      #1F6BFF 70%,
+      transparent
+    );
+  }
+
+  .birthday-tag {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #1F6BFF;
+    margin-bottom: 40px;
+  }
+
+  .artist-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 130px;
+    line-height: 0.88;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+
+  .artist-name span {
+    display: block;
+  }
+
+  .artist-name .highlight {
+    color: #1F6BFF;
+    text-shadow: 0 0 60px rgba(31, 107, 255, 0.4);
+  }
+
+  .live-dj {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #9FA3A7;
+    margin-top: 36px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(159, 163, 167, 0.2);
+  }
+
+  .event-info {
+    margin-top: auto;
+  }
+
+  .event-date {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    letter-spacing: 3px;
+    color: #FFFFFF;
+    line-height: 1;
+  }
+
+  .event-venue {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    color: #1F6BFF;
+    margin-top: 12px;
+  }
+
+  .tagline {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 24px;
+  }
+</style>
+</head>
+<body>
+<div class="flyer">
+  <div class="photo-side">
+    <img src="https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/standalone/1769736137927-Ashley-119.webp" alt="Ashley">
+  </div>
+
+  <div class="text-side">
+    <div class="birthday-tag">It's My Birthday</div>
+
+    <div class="artist-name">
+      <span>What</span>
+      <span class="highlight">So</span>
+      <span>Not</span>
+    </div>
+
+    <div class="live-dj">Live DJ Set</div>
+
+    <div class="event-info">
+      <div class="event-date">FRI 2.20</div>
+      <div class="event-venue">Audio</div>
+      <div class="tagline">Bass heavy. Late night. Unforgettable.</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

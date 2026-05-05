@@ -1,0 +1,36 @@
+
+<svg width="512" height="512" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100" height="100" fill="#000000" />
+
+  <!-- Moon and sun centered -->
+  <g transform="translate(50, 50)">
+    <!-- Crescent moon - filled -->
+    <path d="M 0 -25 A 15 15 0 1 1 0 25 A 13 25 0 0 0 0 -25 Z" fill="#FFFFFF" stroke="none" />
+
+    <!-- Sun rays - varying lengths -->
+    <!-- Top (12 o'clock) -->
+    <line x1="0" y1="-40" x2="0" y2="-25" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Top-right diagonal (1:30) -->
+    <line x1="28" y1="-28" x2="18" y2="-18" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Right (3 o'clock) -->
+    <line x1="25" y1="0" x2="38" y2="0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Bottom-right diagonal (4:30) -->
+    <line x1="28" y1="28" x2="18" y2="18" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Bottom (6 o'clock) -->
+    <line x1="0" y1="25" x2="0" y2="40" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Bottom-left diagonal (7:30) -->
+    <line x1="-28" y1="28" x2="-18" y2="18" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Left (9 o'clock) -->
+    <line x1="-38" y1="0" x2="-25" y2="0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Top-left diagonal (10:30) -->
+    <line x1="-28" y1="-28" x2="-18" y2="-18" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+  </g>
+</svg>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 -12 76 130" fill="none">
+  <defs>
+    <!-- Mask: white = visible, black = hidden -->
+    <mask id="ray-mask">
+      <rect x="0" y="-20" width="120" height="160" fill="white"/>
+      <ellipse cx="49.782" cy="50.319" rx="20.407" ry="20.393" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- Sun rays (masked to create transparent center) -->
+  <g mask="url(#ray-mask)" stroke="#171717" stroke-linecap="butt" stroke-linejoin="round">
+    <line x1="50" y1="9.983" x2="50" y2="34.466" stroke-width="5"/>
+    <line x1="71.884" y1="28.116" x2="61.818" y2="38.182" stroke-width="4"/>
+    <line x1="70.232" y1="50" x2="80" y2="50" stroke-width="3"/>
+    <line x1="71.83" y1="71.83" x2="61.672" y2="61.672" stroke-width="4"/>
+    <line x1="50" y1="66.247" x2="50" y2="91" stroke-width="5" stroke-linecap="round"/>
+    <line x1="28.17" y1="71.83" x2="37" y2="63" stroke-width="4"/>
+    <polyline points="20 50 27.15 50 32.711 50" stroke-width="3"/>
+    <line x1="28.17" y1="28.17" x2="37" y2="37" stroke-width="4"/>
+  </g>
+
+  <!-- End caps (outside mask area, so no masking needed) -->
+  <g fill="#171717" stroke="#171717">
+    <circle cx="50" cy="0" r="0.5" stroke-width="3.5"/>
+    <circle cx="50" cy="10" r="0.5" stroke-width="4"/>
+    <circle cx="71.83" cy="28.17" r="0.25" stroke-width="3.5"/>
+    <circle cx="80" cy="50" r="0.125" stroke-width="2.785"/>
+    <circle cx="71.83" cy="71.83" r="0.25" stroke-width="3.5"/>
+    <circle cx="50" cy="91" r="0.5" stroke-width="4"/>
+    <circle cx="50" cy="100.997" r="0.5" stroke-width="3.5"/>
+    <circle cx="50" cy="111.033" r="0.5" stroke-width="2.75"/>
+    <circle cx="28.17" cy="71.83" r="0.25" stroke-width="3.5"/>
+    <circle cx="20" cy="50" r="0.125" stroke-width="2.75"/>
+    <circle cx="28.17" cy="28.17" r="0.25" stroke-width="3.5"/>
+  </g>
+
+  <!-- Crescent moon -->
+  <path
+    d="M 48.197 29.548 C 65.672 29.548 71.297 42.811 71.045 50.372 C 70.468 67.705 56.307 70.867 48.197 70.867 C 59.207 70.822 62.763 55.949 62.483 49.81 C 61.999 39.216 55.789 29.389 48.197 29.548 Z"
+    fill="#171717"
+    stroke="#171717"
+    stroke-width="1.33"
+    stroke-linecap="round"
+  />
+</svg>

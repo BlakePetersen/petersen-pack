@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+  "entry": ["scripts/**/*.{ts,mjs,js}", "tools/**/*.ts", "prisma/seed*.ts"],
+  "ignorePatterns": [".storybook/**", "test-output.css"],
+  "rules": {
+    "unused-dependencies": "warn"
+  },
+  "audit": {
+    "deadCodeBaseline": ".fallow/dead-code-baseline.json"
+  }
+}
