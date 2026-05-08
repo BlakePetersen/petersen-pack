@@ -38,7 +38,7 @@ export const artifactPairRule: LintRule & {
     }]
   },
 
-  fix(ctx: LintContext): { frontmatter?: Record<string, unknown>; body?: string } | null {
+  fix(ctx: LintContext) {
     const requiresArtifact = ctx.frontmatter.requires_artifact === true
 
     if (!requiresArtifact) return null
@@ -56,7 +56,8 @@ export const artifactPairRule: LintRule & {
       '',
     ].filter((line, i, arr) => !(line === '' && arr[i - 1] === '')).join('\n')
 
-    return { body: stubContent }
+    const artifactPath = getSiblingArtifactPath(ctx.file)
+    return { siblingFiles: [{ path: artifactPath, content: stubContent }] }
   },
 
   checkOrphans(contentRoot: string): LintDiagnostic[] {

@@ -19,8 +19,14 @@ export interface LintContext {
   contentRoot: string
 }
 
+export interface LintFixResult {
+  frontmatter?: Record<string, unknown>
+  body?: string
+  siblingFiles?: Array<{ path: string; content: string }>
+}
+
 export interface LintRule {
   name: string
   check(ctx: LintContext): LintDiagnostic[]
-  fix?(ctx: LintContext): { frontmatter?: Record<string, unknown>; body?: string } | null
+  fix?(ctx: LintContext): LintFixResult | null
 }

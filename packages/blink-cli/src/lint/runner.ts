@@ -85,18 +85,32 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
       if (fix && rule.fix && ruleDiagnostics.length > 0) {
         const fixResult = rule.fix(ctx)
         if (fixResult) {
-          // Update ctx for subsequent rules
-          ctx = {
-            ...ctx,
-            frontmatter: fixResult.frontmatter ?? ctx.frontmatter,
-            body: fixResult.body ?? ctx.body,
+          // Write sibling files if the fix creates them (e.g., artifact stubs)
+          if (fixResult.siblingFiles) {
+            for (const sf of fixResult.siblingFiles) {
+              try {
+                writeFileSync(sf.path, sf.content, 'utf-8')
+                fixed.push(sf.path)
+              } catch {
+                // Write failed — skip
+              }
+            }
           }
-          const output = matter.stringify(ctx.body, ctx.frontmatter)
-          try {
-            writeFileSync(file, output, 'utf-8')
-            fixed.push(file)
-          } catch {
-            // Write failed — skip
+
+          // Update ctx for subsequent rules if frontmatter or body changed
+          if (fixResult.frontmatter || fixResult.body) {
+            ctx = {
+              ...ctx,
+              frontmatter: fixResult.frontmatter ?? ctx.frontmatter,
+              body: fixResult.body ?? ctx.body,
+            }
+            const output = matter.stringify(ctx.body, ctx.frontmatter)
+            try {
+              writeFileSync(file, output, 'utf-8')
+              fixed.push(file)
+            } catch {
+              // Write failed — skip
+            }
           }
         }
       }
