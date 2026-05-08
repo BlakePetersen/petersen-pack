@@ -1,7 +1,7 @@
 // ABOUTME: Stage and commit workflow for the Obsidian port pipeline.
 // ABOUTME: Stage applies transforms to .obsidian-port-staging/; commit moves to content/.
 
-import { readFile, readdir, unlink } from 'node:fs/promises'
+import { readFile, readdir, stat, unlink } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { join, basename, extname, resolve } from 'node:path'
 import matter from 'gray-matter'
@@ -64,12 +64,11 @@ async function walkMdxFiles(
 
   for (const entry of entries) {
     const fullPath = join(dir, entry)
-    // Use existsSync check to determine if it is a directory
-    // (avoids Dirent type issues with Node 24)
-    const entryPath = fullPath
-    if (existsSync(join(entryPath, '.'))) {
-      // Check if it's actually a directory by trying readdir
-      if (entry.endsWith('.mdx')) {
+    try {
+      const s = await stat(fullPath)
+      if (s.isDirectory()) {
+        await walkMdxFiles(fullPath, contentRoot, slugMap)
+      } else if (s.isFile() && entry.endsWith('.mdx')) {
         try {
           const raw = await readFile(fullPath, 'utf-8')
           const { data } = matter(raw)
@@ -89,17 +88,9 @@ async function walkMdxFiles(
         } catch {
           // Skip unreadable files
         }
-      } else {
-        // Try as directory
-        try {
-          const subEntries = await readdir(fullPath)
-          if (subEntries) {
-            await walkMdxFiles(fullPath, contentRoot, slugMap)
-          }
-        } catch {
-          // Not a directory, skip
-        }
       }
+    } catch {
+      continue
     }
   }
 }
