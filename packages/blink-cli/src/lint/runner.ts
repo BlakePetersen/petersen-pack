@@ -71,7 +71,7 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
     }
 
     const parsed = matter(content)
-    const ctx: LintContext = {
+    let ctx: LintContext = {
       file,
       frontmatter: parsed.data,
       body: parsed.content,
@@ -85,9 +85,13 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
       if (fix && rule.fix && ruleDiagnostics.length > 0) {
         const fixResult = rule.fix(ctx)
         if (fixResult) {
-          const newFrontmatter = fixResult.frontmatter ?? ctx.frontmatter
-          const newBody = fixResult.body ?? ctx.body
-          const output = matter.stringify(newBody, newFrontmatter)
+          // Update ctx for subsequent rules
+          ctx = {
+            ...ctx,
+            frontmatter: fixResult.frontmatter ?? ctx.frontmatter,
+            body: fixResult.body ?? ctx.body,
+          }
+          const output = matter.stringify(ctx.body, ctx.frontmatter)
           try {
             writeFileSync(file, output, 'utf-8')
             fixed.push(file)
