@@ -52,8 +52,15 @@ export function ArtifactBody({ slug }: { slug: string }) {
   const artifact = artifactMap.get(slug)
 
   if (!artifact) {
-    throw new Error(
-      `ArtifactBody: artifact "${slug}" not found. Ensure the artifact exists and data is provided via ArtifactDataProvider.`,
+    if (process.env.NODE_ENV === 'development') {
+      throw new Error(
+        `ArtifactBody: artifact "${slug}" not found. Ensure the artifact exists and data is provided via ArtifactDataProvider.`,
+      )
+    }
+    return (
+      <div className="rounded border border-destructive p-4 text-sm text-destructive">
+        Artifact &quot;{slug}&quot; not found. Run <code>pnpm velite</code> to rebuild.
+      </div>
     )
   }
 

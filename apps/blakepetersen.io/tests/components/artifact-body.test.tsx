@@ -80,7 +80,9 @@ describe('ArtifactBody', () => {
     expect(codeBlocks).toHaveLength(3)
   })
 
-  it('throws an error with descriptive message when slug not found', () => {
+  it('throws an error in development when slug not found', () => {
+    const originalEnv = process.env.NODE_ENV
+    process.env.NODE_ENV = 'development'
     // Suppress React error boundary console output during this test
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
@@ -95,6 +97,23 @@ describe('ArtifactBody', () => {
     )
 
     spy.mockRestore()
+    process.env.NODE_ENV = originalEnv
+  })
+
+  it('renders fallback UI in production when slug not found', () => {
+    const originalEnv = process.env.NODE_ENV
+    process.env.NODE_ENV = 'production'
+
+    render(
+      <ArtifactDataProvider artifacts={[singleFileArtifact]}>
+        <ArtifactBody slug="nonexistent-slug" />
+      </ArtifactDataProvider>,
+    )
+
+    expect(screen.getByText(/not found/)).toBeInTheDocument()
+    expect(screen.getByText('pnpm velite')).toBeInTheDocument()
+
+    process.env.NODE_ENV = originalEnv
   })
 
   it('detects language from file extension correctly', () => {
