@@ -196,6 +196,17 @@ function validateSlug(slug: string): void {
 }
 
 /**
+ * Validate a collection name for path traversal attacks.
+ */
+function validateCollection(collection: string): void {
+  if (collection.includes('..') || collection.includes('/') || collection.startsWith('.')) {
+    throw new Error(
+      `Invalid collection "${collection}": must not contain path separators or traversal patterns`,
+    )
+  }
+}
+
+/**
  * Commit a staged entry: move from staging to content/<collection>/<slug>.mdx.
  * Refuses to overwrite existing content (no --force in port commit).
  */
@@ -203,8 +214,9 @@ export async function commitEntry(options: CommitOptions): Promise<void> {
   const { slug, collection, contentRoot, stagingDir } = options
   const sourceDir = stagingDir || STAGING_DIR
 
-  // Validate slug for path traversal (T-28-03-02)
+  // Validate slug and collection for path traversal (T-28-03-02)
   validateSlug(slug)
+  validateCollection(collection)
 
   const stagedPath = join(sourceDir, `${slug}.mdx`)
 
@@ -238,7 +250,12 @@ export async function commitEntry(options: CommitOptions): Promise<void> {
   // Move companion .artifact.md if present
   const artifactStagedPath = join(sourceDir, `${slug}.artifact.md`)
   if (existsSync(artifactStagedPath)) {
-    const artifactTargetPath = join(contentRoot, collection, `${slug}.artifact.md`)
+    const artifactTargetPath = resolve(contentRoot, collection, `${slug}.artifact.md`)
+    if (!artifactTargetPath.startsWith(resolvedContentRoot)) {
+      throw new Error(
+        `Artifact target path "${artifactTargetPath}" escapes content root "${resolvedContentRoot}"`,
+      )
+    }
     const artifactContent = await readFile(artifactStagedPath, 'utf-8')
     await atomicWrite(artifactTargetPath, artifactContent)
     await unlink(artifactStagedPath)
