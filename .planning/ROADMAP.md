@@ -214,7 +214,7 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 25. blakepetersen.io Theming | v1.3 | 1/1 | Complete | 2026-04-19 |
 | 26. blakepetersen.io Page Updates | v1.3 | 7/7 | Complete | 2026-04-24 |
 | 27. Schema Foundations | v1.4 | 8/8 | Complete | 2026-04-28 |
-| 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete | 2026-05-03 |
+| 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete    | 2026-05-05 |
 | 29. Content Authoring | v1.4 | 0/? | Not started | — |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
 
@@ -224,7 +224,7 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 
 **Goal:** [Captured for future planning]
 **Requirements:** TBD
-**Plans:** 0 plans
+**Plans:** 6/6 plans complete
 
 Findings from `/pr-review-toolkit:review-pr` on PR #116. Captured for future triage:
 
