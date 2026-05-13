@@ -41,13 +41,6 @@ convex/
 
 A Convex codebase grows by adding domain files rather than routes — each file exports any combination of queries, mutations, and actions, referenced from the client through the generated `api` namespace (`api.tasks.listForUser`).
 
-## Compare artifact-page layouts (Blake review only — delete after pick)
-
-Two isolated views of the companion artifact, each with a different framing. Pick a winner; this section gets removed.
-
-- <a href="/artifacts/skills/convex-patterns" target="_blank" rel="noopener">Variant 1 — Bare viewer</a>: minimal chrome, file render is the page.
-- <a href="/install/skills/convex-patterns" target="_blank" rel="noopener">Variant 3 — Install context</a>: `blink apply` is the protagonist, files are supporting context.
-
 ## Schema is structural, indexes are mandatory
 
 Two things matter in `convex/schema.ts`: every column you intend to filter on needs an explicit index, and every value type is wrapped in a runtime validator from `convex/values`. The validators are how Convex type-checks the database at both compile time and write time — no separate migration layer trying to keep them in sync.
@@ -72,7 +65,7 @@ export default defineSchema({
 
 The indexes feel like overhead at first — you have to declare them up front rather than chaining `.filter(...)` on a hot path. That's the point. A `filter()` call walks the full table in memory; on a 100-row dev fixture it's invisible, on a 100,000-row production table it's catastrophic. Declaring the index in the schema pays the cost once at write time and keeps the read path bounded.
 
-<a href="/artifacts/skills/convex-patterns" target="_blank" rel="noopener">View full convex/schema.ts →</a>
+<a href="/install/skills/convex-patterns" target="_blank" rel="noopener">View full convex/schema.ts →</a>
 
 <DecisionRationale
   decision="Declare an index for every column a query filters on"
@@ -111,7 +104,7 @@ export const create = mutation({
 
 Query terminators matter: `collect()` for "all matching rows," `first()` / `unique()` for one, `take(n)` for a cap, `paginate(opts)` for cursor pagination. Don't reach for `collect()` on a table you can't fully load. From the Next.js side, client components call into Convex through hooks: `useQuery(api.tasks.listForUser, { userId })` for the subscription, `useMutation(api.tasks.create)` for the write. The same hooks work in Expo with `convex/react`.
 
-<a href="/artifacts/skills/convex-patterns" target="_blank" rel="noopener">View full convex/tasks.ts →</a>
+<a href="/install/skills/convex-patterns" target="_blank" rel="noopener">View full convex/tasks.ts →</a>
 
 ## Clerk-backed auth lives at the boundary
 
@@ -131,7 +124,7 @@ export default {
 
 The second file, `convex/http.ts`, mounts a webhook endpoint for Clerk. Clerk fires `user.created`, `user.updated`, and `user.deleted` events at it; the handler verifies the `svix` signature and routes each into an internal mutation that owns the `users` table. The endpoint is reachable at `https://<deployment>.convex.site/clerk-users-webhook` — configure that URL in the Clerk dashboard and store the signing secret as `CLERK_WEBHOOK_SECRET` in the Convex dashboard.
 
-<a href="/artifacts/skills/convex-patterns" target="_blank" rel="noopener">View full convex/http.ts →</a>
+<a href="/install/skills/convex-patterns" target="_blank" rel="noopener">View full convex/http.ts →</a>
 
 The provisioning shape matters. The tempting alternative — read `ctx.auth.getUserIdentity()` inside a query and lazily insert if missing — fuses a write into every read path. Queries are read-only by contract; the moment you insert from inside one, every page in the app is responsible for a write that should have happened once. The webhook approach keeps the contracts clean: writes happen at Clerk events, every other query is a pure indexed read against `users`.
 
@@ -163,6 +156,6 @@ From there, any client component can call `useQuery(api.tasks.listForUser, { use
 
 `ctx.scheduler.runAfter(ms, ref, args)` and `ctx.scheduler.runAt(timestampMs, ref, args)` schedule internal functions — scheduled mutations are exactly-once, scheduled actions are at-most-once, and you always `await` the scheduler call so it lands inside the triggering transaction. File uploads are a three-step dance: a mutation hands the client a short-lived signed upload URL (`ctx.storage.generateUploadUrl()`), the client `POST`s the file body, a second mutation persists the returned `storageId`. Read access goes through `ctx.storage.getUrl(storageId)`.
 
-<a href="/artifacts/skills/convex-patterns" target="_blank" rel="noopener">View the full artifact (schema, http, users, scheduling, file storage) →</a>
+<a href="/install/skills/convex-patterns" target="_blank" rel="noopener">View the full artifact (schema, http, users, scheduling, file storage) →</a>
 
 The companion artifact has a working version of everything described here. Drop the files into `convex/`, set `CLERK_JWT_ISSUER_DOMAIN` and `CLERK_WEBHOOK_SECRET` in the Convex dashboard, run `npx convex dev`, and the typed `api` object is ready for your client components to import.
