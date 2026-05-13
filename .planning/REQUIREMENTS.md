@@ -77,7 +77,8 @@ Real entries shipped at the agreed floor.
 **: Five config entries authored to production quality (MDX + companion `.artifact.md`)
 - [x] **CONTENT-03
 **: Three hook entries authored to production quality (MDX + companion `.artifact.md`)
-- [ ] **CONTENT-04**: Three guide entries authored to production quality (MDX only — guides do not have artifact companions)
+- [x] **CONTENT-04
+**: Three guide entries authored to production quality (MDX only — guides do not have artifact companions)
 - [x] **CONTENT-05
 **: `<ArtifactBody slug>` MDX server component shipped — eliminates copy-paste of artifact body content into MDX docs
 - [x] **CONTENT-06

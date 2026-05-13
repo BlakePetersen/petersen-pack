@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 29-05-PLAN.md — 4 greenfield hooks shipped, CONTENT-03 floor exceeded
-last_updated: "2026-05-13T08:32:15.442Z"
+stopped_at: Completed 29-06-PLAN.md — 4 greenfield guides shipped, CONTENT-04 floor exceeded, 20 net-new entries done
+last_updated: "2026-05-13T09:01:22Z"
 last_activity: 2026-05-13
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 21
-  completed_plans: 19
-  percent: 90
+  completed_plans: 20
+  percent: 95
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 29 (content-authoring-greenfield-ports) — EXECUTING
-Plan: 6 of 7 (Plans 01-02 complete — Wave 0 preflight + Wave 1 torture-test HARD GATE passed; Plans 03-06 unblocked as Wave 2 batch authoring)
+Plan: 7 of 7 (Plans 01-06 complete — 20 net-new DX entries shipped across 5 skills + 7 configs + 4 hooks + 4 guides; CONTENT-01..04 floors all satisfied; Plan 07 phase gate ready)
 Status: Ready to execute
 Last activity: 2026-05-13
 
-Progress: [█████████░] 90%
+Progress: [█████████▌] 95%
 
 ## Performance Metrics
 
@@ -147,6 +147,9 @@ Progress: [█████████░] 90%
 - 29-05: Use grep -qE with anchored regex in shell artifacts instead of case-glob — prettier mangles bare asterisks into Markdown italics on .md files
 - 29-05: Husky v9 hook artifacts omit shebang line; runtime invokes via sh directly
 - 29-05: AI_COMMIT_CMD env var (default claude) is trust boundary for commit-msg AI assist; provider-agnostic
+- 29-06: Guide-adapted Variant 3 pattern locked — same prose shape as skills/configs/hooks (architectural framing + voice primitives + cross-refs) but NO companion artifact (D-14) and NO /install/guides/<slug> anchor (route 404s by INSTALLABLE_TYPES exclusion); requires_artifact: false in frontmatter
+- 29-06: All 4 guides ship with both voice primitives; D-11 minimum is one but source material had real first-person + decision content for every entry. 20-entry both-primitives sample built across Phase 29 for DEBT-05 lint promotion review
+- 29-06: Word-count band enforcement uses prose-only count (excluding fenced code), 500-1500 — paragraph prose is denser than bulleted lists when trimming, applied to ai-code-review wr-01 first draft
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -179,8 +182,8 @@ Progress: [█████████░] 90%
 
 ## Session Continuity
 
-Last session: 2026-05-13T08:32:15.439Z
-Stopped at: Completed 29-05-PLAN.md — 4 greenfield hooks shipped, CONTENT-03 floor exceeded
+Last session: 2026-05-13T09:01:22Z
+Stopped at: Completed 29-06-PLAN.md — 4 greenfield guides shipped, CONTENT-04 floor exceeded, 20 net-new entries done
 Resume file: None
 
 **Planned Phase:** 29 (Content Authoring (Greenfield + Ports)) — 7 plans — 2026-05-10T07:19:23.134Z

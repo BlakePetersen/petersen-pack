@@ -165,7 +165,7 @@ Plans:
 - [x] 29-03-PLAN.md — Wave 2: Remaining 4 ported skills (CONTENT-01)
 - [x] 29-04-PLAN.md — Wave 2: 7 greenfield configs incl. tmux-popup-workflows collision-resolved (CONTENT-02)
 - [x] 29-05-PLAN.md — Wave 2: 4 greenfield hooks with real shell artifacts (CONTENT-03)
-- [ ] 29-06-PLAN.md — Wave 2: 4 greenfield guides, MDX-only (CONTENT-04)
+- [x] 29-06-PLAN.md — Wave 2: 4 greenfield guides, MDX-only (CONTENT-04)
 - [ ] 29-07-PLAN.md — Wave 3: Phase gate — full lint diff vs baseline + perf check + blink list smoke
 
 ### Phase 30: Editorial Closure
