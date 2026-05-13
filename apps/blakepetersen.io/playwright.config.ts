@@ -12,6 +12,11 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
 
+  // Keep the on-disk snapshot name exactly as the spec passes it (e.g.
+  // `skill-detail-desktop-light.png`). Default template adds project + platform
+  // suffixes which doubles up when the spec already embeds project.name.
+  snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{arg}{ext}',
+
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
