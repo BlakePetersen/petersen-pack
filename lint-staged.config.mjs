@@ -17,7 +17,10 @@ export default {
   'apps/**/*.{js,jsx,ts,tsx}': ['pnpm eslint --quiet --fix'],
   '*.{json,md}': ['prettier --write'],
   '**/*.{ts,tsx}': (files) => `fallow dead-code --quiet ${fileFlags(files)}`,
-  'apps/blakepetersen.io/content/**/*.{mdx,md}': (files) => {
+  // Only lint entry MDX (not `.artifact.md` companions — those use a different
+  // frontmatter schema and are validated transitively by the artifact-pair rule
+  // when the parent `.mdx` is linted).
+  'apps/blakepetersen.io/content/**/*.mdx': (files) => {
     const relative = files.map((f) => path.relative(APP_ROOT, f)).join(',')
     return `pnpm --filter blakepetersen.io exec blink lint --files ${relative}`
   },
