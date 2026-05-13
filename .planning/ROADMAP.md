@@ -157,7 +157,16 @@ Plans:
   4. `pnpm lint:content` runs across the full tree at phase end with zero new errors and a documented count of voice-primitive advisory warnings (data input for Phase 30 lint promotion review)
   5. `blink list` (or equivalent CLI inspection) returns at least sixteen entries spanning the four collections — verifiable from a fresh `npm install -g @blink-dx/cli` against the production registry after deploy
 
-**Plans**: TBD
+**Plans**: 7 plans
+
+Plans:
+- [x] 29-01-PLAN.md — Wave 0: Playwright infra + lint baseline + Monodex shortlist
+- [ ] 29-02-PLAN.md — Wave 1: Torture-test entry (1st ported skill, both voice primitives, Playwright spec) — HARD GATE per D-09
+- [ ] 29-03-PLAN.md — Wave 2: Remaining 4 ported skills (CONTENT-01)
+- [ ] 29-04-PLAN.md — Wave 2: 7 greenfield configs incl. tmux-popup-workflows collision-resolved (CONTENT-02)
+- [ ] 29-05-PLAN.md — Wave 2: 4 greenfield hooks with real shell artifacts (CONTENT-03)
+- [ ] 29-06-PLAN.md — Wave 2: 4 greenfield guides, MDX-only (CONTENT-04)
+- [ ] 29-07-PLAN.md — Wave 3: Phase gate — full lint diff vs baseline + perf check + blink list smoke
 
 ### Phase 30: Editorial Closure
 
@@ -215,7 +224,7 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 26. blakepetersen.io Page Updates | v1.3 | 7/7 | Complete | 2026-04-24 |
 | 27. Schema Foundations | v1.4 | 8/8 | Complete | 2026-04-28 |
 | 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete    | 2026-05-05 |
-| 29. Content Authoring | v1.4 | 0/? | Not started | — |
+| 29. Content Authoring | v1.4 | 1/7 | In progress | — |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
 
 ## Backlog

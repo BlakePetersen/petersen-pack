@@ -77,7 +77,8 @@ Real entries shipped at the agreed floor.
 - [ ] **CONTENT-04**: Three guide entries authored to production quality (MDX only — guides do not have artifact companions)
 - [x] **CONTENT-05
 **: `<ArtifactBody slug>` MDX server component shipped — eliminates copy-paste of artifact body content into MDX docs
-- [ ] **CONTENT-06**: First voice-primitive invocation across the catalog passes a "torture-test" pass — light/dark/mobile visual capture; any layout regression in `AuthorNote` or `DecisionRationale` is fixed in `artax-ui` before bulk authoring continues
+- [x] **CONTENT-06
+**: First voice-primitive invocation across the catalog passes a "torture-test" pass — light/dark/mobile visual capture; any layout regression in `AuthorNote` or `DecisionRationale` is fixed in `artax-ui` before bulk authoring continues
 
 ### Editorial Debt Closure
 
