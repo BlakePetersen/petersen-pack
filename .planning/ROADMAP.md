@@ -78,7 +78,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 
 - [x] **Phase 27: Schema Foundations** — Lock `dxFields` shape, slug uniqueness, cross-ref integrity, perf baseline, CalVer + ESM debt resolution before any content authoring
 - [x] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
-- [ ] **Phase 29: Content Authoring (Greenfield + Ports)** — 16 entries shipped (5 skills, 5 configs, 3 hooks, 3 guides) plus first-invocation voice-primitive torture test
+- [x] **Phase 29: Content Authoring (Greenfield + Ports)** — 20 net-new entries shipped (5 skills, 7 configs, 4 hooks, 4 guides) — exceeded all CONTENT-01..04 floors; Variant 3 pattern locked; voice-primitive torture test green across desktop-light/dark + mobile
 - [ ] **Phase 30: Editorial Closure** — Real `/about` and `/start-here` copy, voice-primitive backfill across pre-existing MDX, Skills Detail typography polish, voice-lint promotion review, milestone audit
 
 ## Phase Details
@@ -166,7 +166,7 @@ Plans:
 - [x] 29-04-PLAN.md — Wave 2: 7 greenfield configs incl. tmux-popup-workflows collision-resolved (CONTENT-02)
 - [x] 29-05-PLAN.md — Wave 2: 4 greenfield hooks with real shell artifacts (CONTENT-03)
 - [x] 29-06-PLAN.md — Wave 2: 4 greenfield guides, MDX-only (CONTENT-04)
-- [ ] 29-07-PLAN.md — Wave 3: Phase gate — full lint diff vs baseline + perf check + blink list smoke
+- [x] 29-07-PLAN.md — Wave 3: Phase gate — full lint diff vs baseline + perf check + blink list smoke
 
 ### Phase 30: Editorial Closure
 
@@ -224,7 +224,7 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 26. blakepetersen.io Page Updates | v1.3 | 7/7 | Complete | 2026-04-24 |
 | 27. Schema Foundations | v1.4 | 8/8 | Complete | 2026-04-28 |
 | 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete    | 2026-05-05 |
-| 29. Content Authoring | v1.4 | 2/7 | In progress | — |
+| 29. Content Authoring | v1.4 | 7/7 | Complete | 2026-05-13 |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
 
 ## Backlog

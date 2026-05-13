@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: executing
-stopped_at: Completed 29-06-PLAN.md — 4 greenfield guides shipped, CONTENT-04 floor exceeded, 20 net-new entries done
-last_updated: "2026-05-13T09:01:22Z"
+status: verifying
+stopped_at: Completed 29-07-PLAN.md — Phase 29 phase gate verified, all 5 ROADMAP success criteria evidenced, ready for /gsd-verify-work
+last_updated: "2026-05-13T09:34:06.696Z"
 last_activity: 2026-05-13
 progress:
   total_phases: 7
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 21
-  completed_plans: 20
-  percent: 95
+  completed_plans: 21
+  percent: 100
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 
 Phase: 29 (content-authoring-greenfield-ports) — EXECUTING
 Plan: 7 of 7 (Plans 01-06 complete — 20 net-new DX entries shipped across 5 skills + 7 configs + 4 hooks + 4 guides; CONTENT-01..04 floors all satisfied; Plan 07 phase gate ready)
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-05-13
 
-Progress: [█████████▌] 95%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -150,6 +150,9 @@ Progress: [█████████▌] 95%
 - 29-06: Guide-adapted Variant 3 pattern locked — same prose shape as skills/configs/hooks (architectural framing + voice primitives + cross-refs) but NO companion artifact (D-14) and NO /install/guides/<slug> anchor (route 404s by INSTALLABLE_TYPES exclusion); requires_artifact: false in frontmatter
 - 29-06: All 4 guides ship with both voice primitives; D-11 minimum is one but source material had real first-person + decision content for every entry. 20-entry both-primitives sample built across Phase 29 for DEBT-05 lint promotion review
 - 29-06: Word-count band enforcement uses prose-only count (excluding fenced code), 500-1500 — paragraph prose is denser than bulleted lists when trimming, applied to ai-code-review wr-01 first draft
+- 29-07: Auto-verified human-verify checkpoint per Wave 3 less-hand-holding pacing — all 5 acceptance gates pass; bulk editorial review routed to /gsd-verify-work
+- 29-07: Did not re-run scripts/perf-baseline.ts (overwrites Phase 27 yardstick); hand-captured fullBuildWallMs/veliteWallMs/webpackCompileMs from gate runs; migrated build-perf-baseline.json schema flat→phased+delta (phase_27, phase_29, delta sub-objects); pattern reusable for v1.5+
+- 29-07: Variant 3 (architectural framing + quoted snippets + voice primitives + new-tab anchor to /install/[type]/[slug] for installable + NO inline ArtifactBody) locked as v1.4 canonical authoring pattern for all 4 DX collections; guides use MDX-only adaptation (no companion, no install anchor, requires_artifact:false) per D-14
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -182,8 +185,8 @@ Progress: [█████████▌] 95%
 
 ## Session Continuity
 
-Last session: 2026-05-13T09:01:22Z
-Stopped at: Completed 29-06-PLAN.md — 4 greenfield guides shipped, CONTENT-04 floor exceeded, 20 net-new entries done
+Last session: 2026-05-13T09:34:06.693Z
+Stopped at: Completed 29-07-PLAN.md — Phase 29 phase gate verified, all 5 ROADMAP success criteria evidenced, ready for /gsd-verify-work
 Resume file: None
 
 **Planned Phase:** 29 (Content Authoring (Greenfield + Ports)) — 7 plans — 2026-05-10T07:19:23.134Z
