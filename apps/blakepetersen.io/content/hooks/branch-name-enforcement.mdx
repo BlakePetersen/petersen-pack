@@ -1,0 +1,125 @@
+---
+title: "Branch Name Enforcement Hook"
+description: "Husky pre-push hook that rejects branch names not matching a prefix convention (feat/, fix/, chore/, gsd/) — runs on push so local scratch branches stay free-form."
+applies_to: ["git", "husky", "team-conventions"]
+dependencies: []
+order: 5
+draft: false
+tags: ["git-hooks", "husky", "branch-naming", "conventions"]
+voice: ["decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Enforce on pre-push, not pre-commit or branch create"
+    rationale: "Local branches are scratch space — half of them never leave the laptop, get renamed twice before the first push, or are throwaway WIP that the developer rebases away. Enforcing at branch creation produces friction with no payoff for those cases. Enforcing on pre-push catches the moment the name actually starts to matter, which is when it lands on a ref the team will see."
+related: ["hooks/pre-push-validation"]
+---
+
+A branch-name enforcement hook checks the current branch against a prefix convention — `feat/...`, `fix/...`, `chore/...`, `docs/...`, `refactor/...`, `test/...`, `gsd/...`, plus a small protected list (`main`, `develop`) — and rejects the push if the name doesn't match. The point isn't to constrain creativity, it's to make `git log` and the PR list legible at a glance. A team that uses prefixes consistently can read a 40-PR backlog and group it by intent without opening anything. A team that doesn't ends up with a mix of `wip-stuff`, `johns-branch`, and `temp-fix-pls-review` that takes ten times longer to triage.
+
+This hook lives at `.husky/pre-push` (or installs alongside an existing pre-push hook — see the merge note below). It exits zero for protected branches and convention-matching branches, exits non-zero with a helpful message for everything else.
+
+## Where in the Hook Chain
+
+The two reasonable places for this check are pre-commit (catches the name on the first commit to the branch) and pre-push (catches the name when it's about to be published). They have very different feels:
+
+```sh title=".husky/pre-push (check first, fail fast)"
+set -e
+branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+
+# Allow detached-HEAD pushes (rare, but happens for `git push origin <sha>:refs/...`)
+[ -z "$branch" ] && exit 0
+```
+
+<a href="/install/hooks/branch-name-enforcement" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+
+Pre-commit feels stricter on paper — "you can't even commit on a non-conforming branch" sounds disciplined. In practice, it produces a noisy hook that fires fifty times for a single bad name (one rejection per commit attempt) and trains developers to ignore the message because they're going to rename eventually. Pre-push fires once, at the moment the name actually matters, and either lets the push through or asks for a rename. The signal-to-noise ratio is the entire reason to prefer it.
+
+<DecisionRationale
+  decision="Pre-push, not pre-commit, for branch-name enforcement"
+  rationale="Pre-commit on a non-conforming branch fires on every single commit attempt — fifty rejections for a developer who renames the branch later, all of them carrying the same error message. By the third one, the developer is reading past the message looking for the unblock instruction; by the fifth, they're using --no-verify reflexively. Pre-push fires once per push, at the exact moment the name starts mattering to anyone else, and the developer either renames (1 minute of work) or pushes with --no-verify (which they should almost never do, but the escape hatch matters). Same enforcement strength, dramatically less noise."
+  alternatives={[
+    { name: "Enforce on pre-commit", reason: "Catches the name earlier; produces 10-50x the noise per non-conforming branch, training developers to ignore the hook" },
+    { name: "Enforce on remote with a server-side hook", reason: "Most precise but requires server-side access (GitHub branch protection won't reject by name pattern); pushes a remote-side rejection that's harder to recover from than a local one" }
+  ]}
+/>
+
+## The Convention
+
+The matching is a single `case` statement with one branch per allowed prefix, plus a protected-branch fallthrough:
+
+```sh title=".husky/pre-push"
+case "$branch" in
+  main|master|develop|staging|production)
+    # Protected branches — push allowed (though force-push protection should
+    # live in remote config, not here).
+    exit 0
+    ;;
+  feat/*|fix/*|chore/*|docs/*|refactor/*|test/*|perf/*|build/*|ci/*|revert/*)
+    # Conventional-prefix branches — push allowed.
+    exit 0
+    ;;
+  gsd/*)
+    # GSD-workflow branches — push allowed.
+    exit 0
+    ;;
+esac
+```
+
+<a href="/install/hooks/branch-name-enforcement" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+
+The prefix list mirrors the Conventional Commits types (`feat`, `fix`, `chore`, etc.) for symmetry — a `feat/...` branch produces `feat:` commits, which is the same vocabulary the team is already using in their commit history. The `gsd/...` prefix is a project-specific addition for branches that follow the GSD workflow (one branch per phase). Teams that don't use that workflow can drop the line; the rest stay.
+
+## The Failure Message
+
+Hostile hooks fail with a single line of regex output. Helpful hooks fail with a sentence-and-an-example that tells the developer what's wrong and how to fix it:
+
+```sh title=".husky/pre-push"
+# If we got here, the branch didn't match any allowed pattern.
+echo "" >&2
+echo "✘ branch-name-enforcement: '$branch' violates the convention" >&2
+echo "" >&2
+echo "  Allowed prefixes: feat/, fix/, chore/, docs/, refactor/," >&2
+echo "                    test/, perf/, build/, ci/, revert/, gsd/" >&2
+echo "  Protected:        main, master, develop, staging, production" >&2
+echo "" >&2
+echo "  Rename with:      git branch -m $branch <new-name>" >&2
+echo "  Then re-push:     git push -u origin <new-name>" >&2
+exit 1
+```
+
+<a href="/install/hooks/branch-name-enforcement" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+
+The rename command is the load-bearing part. A developer who reads "your branch name is wrong" and has to look up the rename syntax is more likely to `--no-verify` past the hook than to fix the name. A developer who sees `git branch -m current-branch new-name` literally in the error output renames it. Hooks are a UX problem dressed up as a process problem.
+
+## Coexisting with Other Pre-push Hooks
+
+If `.husky/pre-push` already exists — for instance, the pre-push-validation hook from this same plan — the branch check needs to merge cleanly. The recommended layout is to put the branch check first (it's the fastest check, and a failure here means the slower checks would have wasted time):
+
+```sh title=".husky/pre-push (combined)"
+# 1. Branch-name check (fail fast)
+case "$branch" in
+  main|master|develop|staging|production|feat/*|fix/*|chore/*|docs/*|refactor/*|test/*|perf/*|build/*|ci/*|revert/*|gsd/*)
+    ;;
+  *)
+    echo "✘ '$branch' violates branch-name convention" >&2
+    exit 1
+    ;;
+esac
+
+# 2. The expensive validation chain (typecheck, lint, tests)
+# ... pre-push-validation logic below ...
+```
+
+The combined form folds the branch check into one `case` statement with the allow-patterns in the matching branch and the rejection in the default. That's the same shape as the standalone artifact, just inverted — the standalone exits 0 from matched branches and falls through to the rejection; the combined exits 0 in the same way and lets execution continue to the next check on success.
+
+## Team-vs-solo Trade-offs
+
+Solo developers can skip this hook entirely — there's no PR backlog to triage, no team-shared `git log` to keep legible, and the discipline of writing well-named branches comes free with the discipline of writing good commit messages. The hook starts paying its keep at the moment a second developer joins, and the payoff scales linearly with team size. By the time a team is at 5-10 developers actively pushing, an inconsistent branch namespace becomes a measurable productivity drag — code reviewers can't tell whether `temp-debug` is the urgent fix or the throwaway exploration without opening the PR.
+
+The protected-branch list is the other axis to tune per team. The default (`main`, `master`, `develop`, `staging`, `production`) covers the standard branching models. Trunk-based teams can drop `develop`/`staging`/`production` from the list (they don't have those branches) without changing anything else. GitFlow teams should add `release/*` and `hotfix/*` to the allowed-prefix list, since those are part of the workflow's vocabulary.
+
+## What This Hook Deliberately Doesn't Do
+
+The hook does not enforce ticket-ID prefixes (`feat/JIRA-1234-add-foo` style). That convention exists, but it's tightly coupled to a specific issue tracker — a hook that enforces it has to be re-customized per repo, which defeats the "drop in and go" point of a shared hook. Teams that want the discipline can extend the matching with their own pattern. The default stays vocabulary-only, which fits any team that uses Conventional Commits regardless of issue tracker.
+
+The hook also does not enforce a maximum branch-name length. Git has its own limits (255 chars on most filesystems), and shorter-is-better is a stylistic preference, not a correctness one. If a developer wants to call their branch `feat/the-most-elaborate-and-thoroughly-described-feature-name-imaginable`, the hook lets them — the prefix is what matters.

@@ -1,4 +1,8 @@
 {
+  "branch-name-enforcement": {
+    "hash": "cd28ff79cbdc9a0c57a1269e9cf6518e9936b508aa49c734c5f46b0344df2946",
+    "version": "2026.05.13.0"
+  },
   "claude-global": {
     "hash": "bd9390c4bfed41c07f37f2f4eadcead510b87ed53730c1641cc8f5c14bb11f32",
     "version": "2026.03.15.0"
@@ -8,8 +12,8 @@
     "version": "2026.03.15.1"
   },
   "commit-msg-ai-assist": {
-    "hash": "e533ca4c7ee00000ad6ef8f1709a6ecdbe9960346e1c528e44d02b412961f91f",
-    "version": "2026.05.13.0"
+    "hash": "b25a2d0d6816b38fbc74027d48b5a2a969cefe3aa4f8f18b97264703a3ae8ecf",
+    "version": "2026.05.13.1"
   },
   "commitlint": {
     "hash": "3391ef442619205581a6804ad2658a2c3a5f2494b137c44cd67a2c1920cd48cb",
