@@ -152,7 +152,7 @@ Which phases cover which requirements. Filled by the roadmapper.
 | CONTENT-03 | Phase 29 | Pending |
 | CONTENT-04 | Phase 29 | Pending |
 | CONTENT-05 | Phase 28 | Complete |
-| CONTENT-06 | Phase 29 | Pending |
+| CONTENT-06 | Phase 29 | Complete |
 | DEBT-01 | Phase 30 | Pending |
 | DEBT-02 | Phase 30 | Pending |
 | DEBT-03 | Phase 30 | Pending |

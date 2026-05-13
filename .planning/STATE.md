@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 29-01-PLAN.md
-last_updated: "2026-05-13T05:56:22.951Z"
-last_activity: 2026-05-12 -- Phase 29 Plan 01 complete (Wave 0 preflight); ready for Plan 02 torture-test entry
+stopped_at: Completed 29-02-PLAN.md — Variant 3 picked, install route generalized, baselines regenerated
+last_updated: "2026-05-13T07:01:22.493Z"
+last_activity: 2026-05-13
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 21
-  completed_plans: 15
-  percent: 71
+  completed_plans: 16
+  percent: 76
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 29 (content-authoring-greenfield-ports) — EXECUTING
-Plan: 2 of 7 (Plan 01 Wave 0 complete; Plan 02 Wave 1 torture-test entry next)
+Plan: 3 of 7 (Plans 01-02 complete — Wave 0 preflight + Wave 1 torture-test HARD GATE passed; Plans 03-06 unblocked as Wave 2 batch authoring)
 Status: Ready to execute
-Last activity: 2026-05-12 -- Phase 29 Plan 01 complete (Wave 0 preflight); ready for Plan 02 torture-test entry
+Last activity: 2026-05-13 — Phase 29 Plan 02 complete (Variant 3 install-context view picked, /install/[type]/[slug] route generalized, baselines regenerated; CONTENT-06 delivered)
 
-Progress: [███████░░░] 71%
+Progress: [████████░░] 76%
 
 ## Performance Metrics
 
@@ -134,6 +134,10 @@ Progress: [███████░░░] 71%
 - 29-01: Option B authorization — port Monodex notes unmodified; Plan 02 (convex-patterns) and Plan 03 (4 batch entries) must manually inject <AuthorNote> + <DecisionRationale> to satisfy D-06/D-11 (vault has zero callouts across 135 notes)
 - 29-01: Slug #5 renamed from tmux-poweruser-setup to tmux-power-workflows to avoid collision with content/configs/tmux-poweruser.mdx and signal workflow-focused angle vs config-focused existing entry
 - 29-01: Monodex shortlist ranked by skill-shape (reusability/opinion-shape) not callout density since vault callout count is uniform zero — torture-test selection is qualitative
+- 29-02: Variant 3 (install-context view) picked over Variant 1 (bare artifact viewer) — blink apply command is the page protagonist; file render is supporting context
+- 29-02: Install route generalized to /install/[type]/[slug] (parametric) — single page handles skills/configs/hooks; guides 404 via INSTALLABLE_TYPES allowlist per D-14
+- 29-02: New-tab anchor pattern (target=_blank rel=noopener) for snippet links — Blake-requested; defers full-file context to install route without breaking reading flow
+- 29-02: No inline <ArtifactBody> in entry body — supersedes Pitfall 4 path-shaped-slug guidance for entries authored to the architectural-framing pattern; Phase 30 doc cleanup item
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -166,8 +170,8 @@ Progress: [███████░░░] 71%
 
 ## Session Continuity
 
-Last session: 2026-05-13T05:56:14.548Z
-Stopped at: Completed 29-01-PLAN.md
+Last session: 2026-05-13T07:01:22.490Z
+Stopped at: Completed 29-02-PLAN.md — Variant 3 picked, install route generalized, baselines regenerated
 Resume file: None
 
 **Planned Phase:** 29 (Content Authoring (Greenfield + Ports)) — 7 plans — 2026-05-10T07:19:23.134Z
