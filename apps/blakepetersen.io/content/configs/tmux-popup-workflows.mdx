@@ -1,0 +1,124 @@
+---
+title: "Tmux Popup Workflows"
+description: "A focused popup layer on top of an existing tmux config — single-letter mnemonics binding ephemeral scratch sessions, popup-driven git, fzf project switchers, and one-shot command runners."
+applies_to: ["tmux", "fzf", "lazygit"]
+dependencies: ["configs/tmux-poweruser"]
+order: 11
+draft: false
+tags: ["tmux", "terminal", "popups", "workflow"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Bind popups to single-letter mnemonics under one prefix"
+    rationale: "Two-keystroke mnemonics (prefix + g for git, prefix + n for notes) are short enough to live in muscle memory, and the letter telegraphs the action without needing a cheat sheet. The cost is that you sacrifice eight letters of the binding namespace; the benefit is that every popup workflow lives at the same access depth as the editor's most-used commands."
+related: ["configs/tmux-poweruser"]
+---
+
+`display-popup -E` is the tmux feature that most users discover after they've already been using tmux for years. It's a small overlay window that appears centered over your current layout, runs a command, and disappears when the command exits. Unlike opening a new pane or window, the popup is genuinely ephemeral — your layout, your scrollback, and your running processes are untouched when it closes.
+
+This entry sits on top of an existing tmux config (the [tmux-poweruser](/configs/tmux-poweruser) entry, or any sane baseline) and adds a popup workflow layer. The pattern is the same in every binding: prefix + a single letter opens a focused popup running one tool, sized for the task, scoped to the calling pane's directory. The result is a workflow where git, scratch shells, project switching, file search, and one-off commands are all one keypress away and never disturb the editor session you're in the middle of.
+
+## Prerequisites
+
+The popups assume a handful of tools — none required by tmux itself, all common enough that most terminal-heavy developers already have them:
+
+```bash
+brew install lazygit fzf zoxide gh ripgrep bat
+```
+
+`lazygit` is what opens in the git popup. `fzf` powers the file-search and session-switcher popups. `zoxide` lets the project-jump popup rank directories by frequency. `gh` is the GitHub CLI for the issue-and-PR popup. `ripgrep` and `bat` power the live grep popup with syntax-highlighted previews. If any are missing, the popup binding silently no-ops — no startup error, no breakage.
+
+## The Git Popup
+
+The single most-used popup in this config. `prefix + g` opens lazygit full-screen, scoped to the calling pane's working directory:
+
+```tmux title="~/.config/tmux/popups.conf"
+bind g display-popup -E -w 90% -h 90% -d "#{pane_current_path}" "lazygit"
+```
+
+<a href="/install/configs/tmux-popup-workflows" target="_blank" rel="noopener">View full popups.conf →</a>
+
+The `-E` flag is critical — it tells tmux to close the popup when the command exits, which is what makes it feel ephemeral instead of "another thing I have to manage." The `-d "#{pane_current_path}"` interpolates the calling pane's CWD so lazygit opens scoped to the right repo even if you switched panes.
+
+<AuthorNote>
+The thing I didn't expect about the git popup is how much it changed my commit cadence. When git was three keystrokes away through a popup, I started committing in smaller increments — every time something worked, prefix + g, stage and commit, prefix + q to dismiss, back to editing. Without the popup, the commit step had enough friction that I'd batch up changes and write one large commit at the end. The smaller increments are dramatically easier to bisect and review later.
+</AuthorNote>
+
+## Scratch Shell and One-Shot Commands
+
+Two related popups: an empty scratch shell, and a quick command runner that prompts for a string and executes it.
+
+```tmux title="~/.config/tmux/popups.conf"
+bind P display-popup -E -w 80% -h 75% -d "#{pane_current_path}"
+bind ! command-prompt -p "popup:" "display-popup -E -w 80% -h 60% -d '#{pane_current_path}' '%1; read'"
+```
+
+<a href="/install/configs/tmux-popup-workflows" target="_blank" rel="noopener">View full popups.conf →</a>
+
+`prefix + P` opens an empty shell — perfect for "I need to run `pnpm install` real quick" without leaving the editor pane. Close it with `exit` or Ctrl+D and you're back. `prefix + !` prompts for a command, runs it in a popup, and pauses on `read` so you can see the output before dismissing. Combined, they cover the "I just need to run one thing" use case without ever opening a new window.
+
+## fzf Project Jumper
+
+A popup binding for fzf-driven project switching turns the "find the right tmux session" problem into a fuzzy search:
+
+```tmux title="~/.config/tmux/popups.conf"
+bind J display-popup -E -w 60% -h 50% \
+  "tmux list-sessions -F '#S' | fzf --reverse --prompt='session> ' | xargs -I {} tmux switch-client -t {}"
+```
+
+The pipeline lists every tmux session, filters through fzf, and switches the client to whatever the user picks. The popup closes automatically when the pipeline exits. For new sessions, pair it with zoxide:
+
+```tmux title="~/.config/tmux/popups.conf"
+bind N display-popup -E -w 60% -h 50% \
+  "zoxide query -l | fzf --reverse --prompt='new session> ' | xargs -I {} bash -c 'tmux new-session -ds \"$(basename {})\" -c {} && tmux switch-client -t \"$(basename {})\"'"
+```
+
+`prefix + N` is "make a new session at one of my frequently-used directories." Zoxide's recency ranking puts the right project at the top 95% of the time.
+
+<DecisionRationale
+  decision="Use popups for project-jumping rather than a status-bar widget"
+  rationale="Status-bar pickers (smart-tmux-session-manager and friends) work fine but cost screen real estate every minute of every session, and the trigger is whatever keystroke their plugin claims. A popup-bound jumper is invisible until you call it, can be sized to whatever fits the picker, and lives at the same prefix + single-letter access depth as every other popup. The plugin's only edge is built-in zoxide integration, which is trivially recreatable in 20 characters of shell."
+  alternatives={[
+    { name: "Use joshmedeski/t-smart-tmux-session-manager", reason: "Adds a plugin dependency for what's now a one-line tmux binding" }
+  ]}
+/>
+
+## Live Search and File-Open
+
+A `ripgrep + fzf + bat` popup turns "find the file or line I'm thinking of" into one keystroke. The popup shows live results, previews the matched line in context with `bat`, and lets you select a result to copy or pipe forward:
+
+```tmux title="~/.config/tmux/popups.conf"
+bind / display-popup -E -w 80% -h 70% -d "#{pane_current_path}" \
+  "rg --line-number --no-heading --color=always . \
+    | fzf --ansi --reverse --delimiter=: \
+          --preview 'bat --color=always --highlight-line {2} {1}' \
+          --preview-window='right,60%,+{2}-/2'"
+```
+
+`prefix + /` searches the calling pane's directory recursively, previews matches with syntax highlighting, and centers the preview window on the matched line. The result is a "find anything in any file" workflow that's faster than the editor's own search for cross-file queries.
+
+## GitHub Issues and PRs
+
+For projects that live on GitHub, a `gh` popup is the fastest way to peek at issues or open PRs without leaving tmux:
+
+```tmux title="~/.config/tmux/popups.conf"
+bind G display-popup -E -w 90% -h 80% -d "#{pane_current_path}" "gh dash"
+bind I display-popup -E -w 80% -h 70% -d "#{pane_current_path}" \
+  "gh issue list --limit 30 | fzf --reverse --prompt='issue> ' | awk '{print \$1}' | xargs gh issue view --web"
+```
+
+`prefix + G` opens `gh dash`, the GitHub TUI dashboard — assigned issues, open PRs, recent notifications, all in one screen. `prefix + I` is a more focused popup that lists open issues and opens whichever you pick in your browser.
+
+## The Mental Model
+
+The reason popups are different from regular panes is that they cost nothing to open and nothing to close. A pane has a layout impact, a process tree, a place in your scrollback. A popup has none of those — it's the editor equivalent of a Spotlight window. The right framing is: anything I want to do for less than thirty seconds, popups are the answer. Anything I want to live with for longer (a dev server, a watch process, a tail), a real pane is the answer. Splitting the mental load along that axis keeps the layout uncluttered and the workflows fast.
+
+## Wiring Into Your Existing Config
+
+The artifact for this entry is a single tmux fragment file (`popups.conf`). Source it from your main `tmux.conf`:
+
+```tmux title="~/.config/tmux/tmux.conf"
+source-file ~/.config/tmux/popups.conf
+```
+
+That single line opts in the entire popup layer. Reload with `prefix + r` (or `tmux source-file ~/.config/tmux/tmux.conf`), and the bindings light up immediately.
