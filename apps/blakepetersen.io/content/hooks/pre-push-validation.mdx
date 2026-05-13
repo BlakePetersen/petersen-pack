@@ -1,0 +1,122 @@
+---
+title: "Pre-push Validation Hook"
+description: "Husky pre-push hook that runs typecheck + lint + tests scoped to changed files before the push hits the remote — fast enough to keep, strict enough to catch the obvious regressions."
+applies_to: ["git", "husky", "pnpm", "monorepo"]
+dependencies: []
+order: 2
+draft: false
+tags: ["git-hooks", "husky", "validation", "ci"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Run on pre-push, not pre-commit"
+    rationale: "Local commits should stay fast and uninterrupted — commits are the unit of editing, not the unit of publishing. The push is the moment the work leaves the developer's machine and starts to affect anyone else. That's the right point to spend a few seconds verifying it doesn't break the world."
+  - choice: "Scope checks to changed files via git diff, not the whole tree"
+    rationale: "A whole-tree typecheck + lint + test pass takes 30-90 seconds in a mid-sized monorepo; the same pass scoped to files touched between origin and HEAD takes 3-10 seconds. The scoped version catches everything a developer could have broken with their changes. The full version also catches things that broke independently — which is what CI is for."
+related: ["hooks/pre-commit/lint-staged-setup"]
+---
+
+A pre-push hook runs after `git push` resolves the remote ref but before any objects upload, which makes it the last place a developer's machine can stop a bad push without involving the remote. If the hook exits non-zero, the push is aborted and nothing leaves the laptop. That's a stronger guarantee than pre-commit (which only stops the snapshot, not the publication) and a weaker one than CI (which catches everything but with a 2-5 minute round trip). The sweet spot for pre-push is "things that would embarrass you in PR review or break the dev branch for everyone else" — and the way you keep it sweet is by making it fast enough that no one ever reaches for `--no-verify`.
+
+This hook runs a three-step check — typecheck, lint, test — scoped to files that changed between the upstream tip and `HEAD`. In a 40-package monorepo that means typically 3-10 seconds total. The hook lives at `.husky/pre-push` and is wired up by Husky's `prepare` script at install time; no per-developer setup needed.
+
+## Where the Hook Lives
+
+Husky v9 manages git hooks via files under `.husky/` in the repo root. Each file is named after the git hook stage it implements; the runtime invokes them via `sh` directly, which is why v9 hook files no longer carry a shebang. Initialize the directory once with `pnpm exec husky init` (creates `.husky/` and patches `package.json` to add `"prepare": "husky"`), then drop the hook file in:
+
+```bash title="Project root"
+mkdir -p .husky
+touch .husky/pre-push
+chmod +x .husky/pre-push
+```
+
+<a href="/install/hooks/pre-push-validation" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+
+Pre-push runs once per `git push` invocation, not once per pushed ref. Git pipes the list of refs being pushed into the hook on stdin (`<local-ref> <local-sha> <remote-ref> <remote-sha>` per line), which is occasionally useful but most hooks ignore it. This one does too — the simpler signal is the diff between `@{u}` (upstream) and `HEAD`.
+
+## Detecting What Changed
+
+The first thing the hook needs is the list of files that this push will publish. The natural answer is `git diff --name-only @{u}...HEAD`, which gives the files touched on the local branch since it diverged from the upstream. Two edge cases matter:
+
+```sh title=".husky/pre-push"
+set -e
+upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "")
+if [ -z "$upstream" ]; then
+  base=$(git merge-base HEAD origin/main 2>/dev/null || git rev-list --max-parents=0 HEAD)
+else
+  base="$upstream"
+fi
+changed=$(git diff --name-only "$base"...HEAD)
+```
+
+<a href="/install/hooks/pre-push-validation" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+
+The first edge is the very first push of a new branch — `@{u}` doesn't resolve until the upstream is set. The fallback uses `origin/main` as the comparison base, which gives the right answer for any branch cut from main. The second edge is a fresh-clone-no-remote situation, where even `origin/main` fails; the fallback to the repo's root commit makes the hook still produce a sensible diff instead of crashing.
+
+<DecisionRationale
+  decision="Use git diff @{u}...HEAD instead of the remote-ref stdin payload"
+  rationale="Git's pre-push stdin contract gives you exactly the refs being pushed, which sounds like the more correct answer — but it falls over for first-push-of-a-new-branch (the remote-sha is forty zeros, which means 'the file diff is the entire local branch back to the root commit'). Computing the diff yourself against the upstream is simpler, handles new branches naturally, and gives the same answer for every subsequent push."
+  alternatives={[
+    { name: "Read stdin per git's pre-push contract", reason: "More 'correct' on paper; trips over the all-zeros sentinel on new branches, and most hooks end up special-casing that anyway" }
+  ]}
+/>
+
+## The Three Checks
+
+With the changed-files list in hand, the hook fans out to three checks. Each one filters the list down to files it cares about and skips entirely if the filtered list is empty — typecheck doesn't run if no `.ts` files changed, lint doesn't run if no source files changed, test doesn't run if no source or test files changed:
+
+```sh title=".husky/pre-push"
+ts_files=$(echo "$changed" | grep -E '\.(ts|tsx)$' || true)
+src_files=$(echo "$changed" | grep -E '\.(ts|tsx|js|jsx)$' || true)
+
+if [ -n "$ts_files" ]; then
+  echo "→ typecheck (affected packages)"
+  pnpm -r --filter "...[origin/main]" typecheck
+fi
+
+if [ -n "$src_files" ]; then
+  echo "→ lint"
+  pnpm exec eslint $src_files --max-warnings=0
+fi
+```
+
+<a href="/install/hooks/pre-push-validation" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+
+Typecheck is the one check that genuinely can't be scoped per-file — TypeScript needs the whole package context to check anything in it. Instead, the hook uses pnpm's `--filter "...[origin/main]"` syntax to typecheck only the packages that contain a changed file, plus their dependents. That's still a much smaller set than the whole monorepo. Lint and test, by contrast, are file-scoped naturally — ESLint takes a file list directly, and Jest accepts `--findRelatedTests <files>` to pick the tests whose source-of-truth tree includes any of those paths.
+
+## Tests Without Re-running the Suite
+
+The test step uses Jest's related-tests mode:
+
+```sh title=".husky/pre-push"
+if [ -n "$src_files" ]; then
+  echo "→ tests (related)"
+  pnpm exec jest --findRelatedTests $src_files --passWithNoTests
+fi
+```
+
+`--findRelatedTests` walks Jest's haste-map of imports and gives you the set of test files whose code under test transitively touches any of the changed files. In practice it catches the same failures the full suite would catch for the same change, and runs in 2-5 seconds instead of 30-60. The `--passWithNoTests` flag handles the case where someone pushes a docs-only change that resolves to zero test files.
+
+<AuthorNote>
+I ran a 90-day experiment with full-suite-on-pre-push at a previous job. Six people on the team. Two weeks in, four of them had started using `--no-verify` reflexively because the hook took 45 seconds and they were pushing twice an hour. The fifth person filed a ticket asking us to remove the hook entirely. The sixth was me. Switching to scoped diffs cut it to 4 seconds and the bypass usage dropped to zero within a week — the cost was finally below the friction threshold where developers would actually pay it.
+</AuthorNote>
+
+## Failure Output
+
+The hook's most important job is being legible when it fails. A wall of TypeScript or ESLint output that scrolls off the screen is almost as useless as no output at all — the developer's eye lands on the wrong line and they try to fix the wrong thing. A few lines of framing at the top and bottom help:
+
+```sh title=".husky/pre-push"
+fail() {
+  echo "" >&2
+  echo "✘ pre-push: $1 failed" >&2
+  echo "  Fix the errors above, or push with --no-verify if you" >&2
+  echo "  have a reason (the hook is here to help, not block)." >&2
+  exit 1
+}
+```
+
+The bypass mention isn't an invitation — it's an acknowledgment that the developer is going to find `--no-verify` either way, and being explicit about it removes the "is this hook trying to fight me" energy that hostile hooks accumulate. Most pushes are fine. The hook earns its keep on the few that aren't.
+
+## Bypass Etiquette
+
+`git push --no-verify` skips the hook entirely. It exists for the same reason `force-push` exists — sometimes the safety check is wrong, and the developer needs the escape hatch. Healthy projects see `--no-verify` used a few times a year, for one of three real reasons: a doc-only push during an incident, a known-broken-but-not-by-this-change WIP branch, or a hook bug that's blocking the wrong push. The unhealthy version is using it daily because the hook is too slow or too noisy. If you find yourself reaching for it more than once a quarter, the hook is the problem — not you.
