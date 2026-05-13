@@ -1,0 +1,146 @@
+---
+title: "TypeScript Strict Config for Monorepos"
+description: "Strict tsconfig base for a pnpm/Turbo monorepo — every strict-mode flag, exactOptionalPropertyTypes, noUncheckedIndexedAccess, and the inheritance shape that lets each package opt in cleanly."
+applies_to: ["typescript", "monorepo", "turborepo", "pnpm"]
+dependencies: []
+order: 7
+draft: false
+tags: ["typescript", "configuration", "monorepo", "type-safety"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Enable exactOptionalPropertyTypes alongside strict: true"
+    rationale: "strict: true does not include this flag — it was added later as opt-in because it surfaces real bugs in existing codebases. New code under it stays honest about the difference between 'property missing' and 'property explicitly set to undefined.' The migration cost is one-time; the soundness gain is permanent."
+  - choice: "Enable noUncheckedIndexedAccess project-wide"
+    rationale: "Without it, T[number] on an array narrows to T, not T | undefined, which is the single biggest 'why did my code crash on a value the type system said was there' bug. The cost is a handful of optional-chaining additions per file; the benefit is the type system telling you the truth about bounded vs. unbounded access."
+related: ["configs/eslint-flat-config"]
+---
+
+TypeScript's strict mode is a single line in `tsconfig.json` that enables eight separate compiler flags at once — `noImplicitAny`, `strictNullChecks`, `strictFunctionTypes`, `strictBindCallApply`, `strictPropertyInitialization`, `noImplicitThis`, `useUnknownInCatchVariables`, and `alwaysStrict`. Most teams stop there. They shouldn't. The two flags that catch the most real-world bugs — `exactOptionalPropertyTypes` and `noUncheckedIndexedAccess` — are excluded from `strict: true` because the TypeScript team added them later and didn't want to break existing strict codebases on a minor version bump. In a new monorepo or one without long-tail consumers, both are worth enabling on day one.
+
+This entry covers the strict base config for a pnpm + Turborepo workspace. It sits at the repo root as `tsconfig.base.json` and is extended by every package's local `tsconfig.json`. The local configs override only what's truly local (paths, `include`, `outDir`). Everything that determines type-checking behavior lives in the base.
+
+## Where the Base Config Lives
+
+In a pnpm workspace, `tsconfig.base.json` belongs at the repo root, next to `pnpm-workspace.yaml` and `turbo.json`. Each package extends it via a relative path:
+
+```json title="packages/some-pkg/tsconfig.json"
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src"]
+}
+```
+
+<a href="/install/configs/typescript-strict" target="_blank" rel="noopener">View full tsconfig.base.json →</a>
+
+A common alternative is to publish the base as a workspace package (`@scope/tsconfig`) and extend it by name (`"extends": "@scope/tsconfig/base.json"`). That works fine and scales well to a large monorepo with many third-party consumers. For a single-team repo, the relative path is two characters shorter and produces identical type-checking — the indirection isn't earning anything.
+
+## The Strict Flags That Matter
+
+Inside `compilerOptions`, three blocks do the heavy lifting. The first is the `strict: true` shorthand:
+
+```json title="tsconfig.base.json"
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true
+  }
+}
+```
+
+`strict: true` is non-negotiable for any codebase started after 2020. The two adjacent flags are small but worth enabling — `noImplicitOverride` forces `override` keywords on subclass methods (so renaming a base method doesn't silently turn an override into a sibling), and `noFallthroughCasesInSwitch` catches the C-style `case 1:` fallthrough bug that hits new developers about once a year.
+
+The second block is the two flags that aren't part of `strict`:
+
+```json title="tsconfig.base.json"
+{
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
+  }
+}
+```
+
+<DecisionRationale
+  decision="Enable exactOptionalPropertyTypes despite the migration cost"
+  rationale="Without it, an interface field declared as `name?: string` accepts both `{}` and `{ name: undefined }` as valid. Those two values are semantically different — one is 'no name was provided,' the other is 'something explicitly cleared the name.' Most APIs care about that distinction. With the flag, the only way to pass `undefined` is to declare the field as `name?: string | undefined`, which makes the intent explicit at the type boundary. The cost is roughly one type adjustment per dozen files in a mid-sized codebase; the benefit is the type system telling you the truth."
+  alternatives={[
+    { name: "Leave it off and rely on runtime guards", reason: "Defers the check to runtime in the one place — the API boundary — where the type system can do it for free at compile time" }
+  ]}
+/>
+
+`noUncheckedIndexedAccess` is the bigger win in practice. Without it, `array[i]` returns `T` regardless of whether `i` is in bounds. With it, the return type is `T | undefined`, forcing a narrowing check before use. This catches the entire class of "iterating up to length but indexing differently" bugs at compile time. The cost is a handful of `?.` or `if (x !== undefined)` additions in hot loops; in modern V8, those have zero runtime cost.
+
+## Module Resolution
+
+The module-resolution block determines how TypeScript finds imports. For a modern monorepo, the answer is `bundler`:
+
+```json title="tsconfig.base.json"
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "es2022",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  }
+}
+```
+
+<a href="/install/configs/typescript-strict" target="_blank" rel="noopener">View full tsconfig.base.json →</a>
+
+`moduleResolution: "bundler"` tells TypeScript that a real bundler (Webpack, esbuild, Vite, Turbopack) will handle resolution at build time, so the type checker doesn't need to enforce file extensions in imports. That matches reality for any modern Next.js or Vite project and removes a class of friction around `import './foo'` vs `import './foo.js'`. `isolatedModules: true` is required for any bundler that does per-file transpilation (which is all of them) — it forbids the few TypeScript features that can't be type-erased without whole-program analysis.
+
+<AuthorNote>
+I used to enable `skipLibCheck: false` for "rigor." It turns out the only thing that flag does in practice is occasionally fail your build because a transitive dependency two layers down has a malformed `.d.ts` file. The bug isn't yours and you can't fix it. Always-on `skipLibCheck: true` is the right answer; the cost is theoretical, and the alternative is a CI failure that you have to wait on the upstream maintainer to resolve.
+</AuthorNote>
+
+## Per-Package Overrides
+
+Library packages override `declaration` and `outDir`; app packages override almost nothing. A library `tsconfig.json` looks like this:
+
+```json title="packages/some-lib/tsconfig.json"
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true
+  },
+  "include": ["src"]
+}
+```
+
+`composite: true` lets Turbo and TypeScript project references work in lockstep — each package builds in its own pass, and `tsc --build` skips packages whose inputs haven't changed. The `declarationMap` field is small but worth it: it makes "Go to Definition" in VS Code jump to the source file in another workspace package, not the generated `.d.ts`.
+
+## Typecheck-Only Configs
+
+The build config (`tsconfig.json`) controls what gets emitted to `dist`. For type-checking in CI, it's worth having a separate `tsconfig.typecheck.json` that includes more files (tests, scripts, config files) without affecting emit:
+
+```json title="apps/some-app/tsconfig.typecheck.json"
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src", "tests", "scripts", "*.config.ts", "*.config.js"]
+}
+```
+
+This is what `pnpm typecheck` should run against. The build config can stay narrow (`include: ["src"]`) for fast builds, and the typecheck config widens to cover everything that should still be valid TypeScript even though it doesn't ship.
+
+## Common Errors and Their Fixes
+
+A handful of errors show up the first time `exactOptionalPropertyTypes` is enabled. The two most common are object-spread of partial state (`{ ...prev, name: nextName }` where `nextName: string | undefined`) and React component prop defaults. Both have one-line fixes: change the prop type from `T` to `T | undefined` at the boundary, or stop spreading partials and explicitly set the fields you want to update.
+
+For `noUncheckedIndexedAccess`, the most common error is iterating with a `for` loop and indexing into the array — `arr[i]` is now `T | undefined`. The fix is to use `for-of` instead, which yields `T` directly. The places that genuinely need indexed access (matrix math, lookup tables) get an explicit `?? defaultValue` or `if (value === undefined) continue`. In every case, the code becomes slightly more honest about what it's doing.
