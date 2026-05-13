@@ -30,20 +30,18 @@ changed=$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)
 
 ## Detecting Lockfile Changes
 
-With the changed-files list in hand, the hook checks for `pnpm-lock.yaml` and triggers an install if present. The simplest expression of this is a `case` statement:
+With the changed-files list in hand, the hook checks for `pnpm-lock.yaml` and triggers an install if present. The cleanest expression of this is a `grep -q` test against the newline-separated file list:
 
 ```sh title=".husky/post-merge"
-case "$changed" in
-  *pnpm-lock.yaml*)
-    echo "→ pnpm-lock.yaml changed — running pnpm install"
-    pnpm install
-    ;;
-esac
+if printf '%s\n' "$changed" | grep -q 'pnpm-lock\.yaml'; then
+  echo "→ pnpm-lock.yaml changed — running pnpm install"
+  pnpm install
+fi
 ```
 
 <a href="/install/hooks/post-merge-dep-sync" target="_blank" rel="noopener">View full .husky/post-merge →</a>
 
-The glob match is intentional — it catches both top-level `pnpm-lock.yaml` (the only one in a normal pnpm monorepo) and any nested lockfiles a multi-root setup might have. For a single-lockfile repo a literal `grep -q '^pnpm-lock\.yaml$'` is more precise but the case-glob version is shorter and equivalent in practice.
+A neighboring choice is a `case "$changed" in ...pnpm-lock.yaml...)` glob match. The glob is shorter and equivalent in behavior, but the surrounding asterisks are easy to lose to an over-eager Markdown formatter that sees them as italics. The `grep -q` form is one line longer and immune to that class of accident, which is the right trade for content that lives in `.md` siblings.
 
 `pnpm install` itself is idempotent — if the lockfile hasn't moved relative to `node_modules`, it's a no-op that exits in 200-400ms. So even if the hook fires on a merge that touched the lockfile but didn't actually change the resolution graph (rare, but happens when a transitive dep's hash updates), the cost is bounded. The only case where this hook does meaningful work is the case where it needed to run.
 

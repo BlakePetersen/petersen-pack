@@ -18,18 +18,18 @@ set -e
 
 changed=$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD 2>/dev/null || echo "")
 
-case "$changed" in
-_pnpm-lock.yaml_)
+# grep -q instead of a case-glob — the literal asterisks in `*pnpm-lock.yaml*`
+
+# get mangled into italics if a prettier pass ever touches this file.
+
+if printf '%s\n' "$changed" | grep -q 'pnpm-lock\.yaml'; then
 echo "→ pnpm-lock.yaml changed — running pnpm install"
 if ! pnpm install; then
-echo ""
+echo "" >&2
 echo "✘ post-merge: pnpm install failed" >&2
 echo " Your working tree is up-to-date, but node_modules is stale." >&2
 echo " Run 'pnpm install' manually after fixing the error above." >&2
 exit 1
 fi
 echo "✓ post-merge: dependencies in sync"
-;;
-\*) # No lockfile change — nothing to do.
-;;
-esac
+fi
