@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 29-04-PLAN.md — 7 greenfield configs shipped, CONTENT-02 floor exceeded
-last_updated: "2026-05-13T08:15:21.346Z"
+stopped_at: Completed 29-05-PLAN.md — 4 greenfield hooks shipped, CONTENT-03 floor exceeded
+last_updated: "2026-05-13T08:32:15.442Z"
 last_activity: 2026-05-13
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 21
-  completed_plans: 18
-  percent: 86
+  completed_plans: 19
+  percent: 90
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 29 (content-authoring-greenfield-ports) — EXECUTING
-Plan: 5 of 7 (Plans 01-02 complete — Wave 0 preflight + Wave 1 torture-test HARD GATE passed; Plans 03-06 unblocked as Wave 2 batch authoring)
+Plan: 6 of 7 (Plans 01-02 complete — Wave 0 preflight + Wave 1 torture-test HARD GATE passed; Plans 03-06 unblocked as Wave 2 batch authoring)
 Status: Ready to execute
 Last activity: 2026-05-13
 
-Progress: [█████████░] 86%
+Progress: [█████████░] 90%
 
 ## Performance Metrics
 
@@ -144,6 +144,9 @@ Progress: [█████████░] 86%
 - 29-04: Variant 3 pattern (no inline ArtifactBody) applied to 7 configs — supersedes plan-file invariant per Plan 02 inheritance
 - 29-04: tmux collision resolved by shipping tmux-popup-workflows; pre-existing tmux-poweruser untouched (0 diff)
 - 29-04: scaffold-emitted artax-ui imports stripped from all 7 entries (Phase 30 cleanup — fix scaffold template)
+- 29-05: Use grep -qE with anchored regex in shell artifacts instead of case-glob — prettier mangles bare asterisks into Markdown italics on .md files
+- 29-05: Husky v9 hook artifacts omit shebang line; runtime invokes via sh directly
+- 29-05: AI_COMMIT_CMD env var (default claude) is trust boundary for commit-msg AI assist; provider-agnostic
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -176,8 +179,8 @@ Progress: [█████████░] 86%
 
 ## Session Continuity
 
-Last session: 2026-05-13T08:15:18.694Z
-Stopped at: Completed 29-04-PLAN.md — 7 greenfield configs shipped, CONTENT-02 floor exceeded
+Last session: 2026-05-13T08:32:15.439Z
+Stopped at: Completed 29-05-PLAN.md — 4 greenfield hooks shipped, CONTENT-03 floor exceeded
 Resume file: None
 
 **Planned Phase:** 29 (Content Authoring (Greenfield + Ports)) — 7 plans — 2026-05-10T07:19:23.134Z
