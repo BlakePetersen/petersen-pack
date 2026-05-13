@@ -99,15 +99,12 @@ else
 exit 0
 fi
 
-case "$answer" in
-  y|Y|yes|YES)
-    printf '%s\n' "$suggestion" > "$msg_file"
-    echo "✓ message replaced with suggestion" >&2
-    ;;
-  e|E|edit|EDIT)
-    printf '%s\n' "$suggestion" > "$msg_file"
-    "${EDITOR:-vi}" "$msg_file" </dev/tty
-;;
-\*) # Decline — original message stays in place.
-;;
-esac
+if [ "$answer" = "y" ] || [ "$answer" = "Y" ] || [ "$answer" = "yes" ]; then
+printf '%s\n' "$suggestion" > "$msg_file"
+echo "✓ message replaced with suggestion" >&2
+elif [ "$answer" = "e" ] || [ "$answer" = "E" ] || [ "$answer" = "edit" ]; then
+printf '%s\n' "$suggestion" > "$msg_file"
+"${EDITOR:-vi}" "$msg_file" </dev/tty
+fi
+
+# Any other answer (n, blank, anything else) leaves the original message in place.
