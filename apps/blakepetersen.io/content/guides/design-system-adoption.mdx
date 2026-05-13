@@ -1,0 +1,99 @@
+---
+title: "Design System Adoption"
+description: "How to adopt a design system into an existing codebase without rewriting the whole UI — token layer first, primitives next, compositions last, page-level adoption never."
+applies_to: ["design-systems", "react", "tailwind", "migration"]
+dependencies: []
+order: 5
+draft: false
+tags: ["design-systems", "react", "tailwind", "migration", "architecture"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: false
+decisions:
+  - choice: "Migrate component-by-component, never page-by-page"
+    rationale: "Page-by-page migration produces a UI that is half new and half old at the seam of every route — the design system's primitives sit next to ad-hoc ones in the same render tree, and every page is its own decision about which version of a button to use. Component-by-component migration produces a UI where every page is incrementally more consistent over time, and there is exactly one button. The mental model is 'replace the leaf, not the branch.'"
+  - choice: "Ship the design system as workspace source code, not a versioned tarball dep"
+    rationale: "A workspace dependency (`workspace:*`) lets the design system evolve in lockstep with the apps consuming it — a component change and the app code that consumes it land in the same PR. A versioned dep forces a publish-bump-install cycle for every change, which means small consumer-driven improvements never get made because the friction is too high."
+related: ["configs/artax-design-system"]
+---
+
+The hardest part of adopting a design system into an existing codebase isn't the design system itself — it's the moment, somewhere around week three, when the team realizes the migration is going to take six months and that for those six months, the UI is going to look like two design systems badly stitched together. Most teams either give up at that point and revert, or push through and produce something inconsistent enough that everyone eventually rewrites it from scratch a year later.
+
+The path that works is structural, not heroic. You don't migrate the UI; you migrate the *layers underneath* the UI. The visible UI follows for free.
+
+## The Three Layers of a Design System
+
+A design system has three layers, in dependency order:
+
+1. **Tokens** — colors, spacing, typography, motion. The raw values that everything else references. Lives in CSS variables, a theme file, or a Tailwind config. No JSX, no React, no semantics.
+2. **Primitives** — `Button`, `Input`, `Box`, `Stack`, `Text`. Single-responsibility components that bind tokens to interactive elements. Knows about the token layer, knows nothing about the app.
+3. **Compositions** — `CardWithActions`, `LoginForm`, `EmptyState`. Built from primitives. May know about a specific app's domain but is still reusable across routes.
+
+Application code sits above all three. The rule that makes the whole thing work: **lower layers must not import from higher layers.** Compositions depend on primitives; primitives depend on tokens; nothing in the design system depends on app routes. When this rule holds, the design system can be developed independently of the app, and adopted by the app at the pace the app sets.
+
+In a monorepo this layering shows up as a workspace package — `packages/artax-ui` in this codebase. See the [artax-design-system config](/configs/artax-design-system) for the specific token + primitive shape this repo uses.
+
+## The Migration Arc
+
+The migration follows the same dependency order, bottom-up. Each step ships and stabilizes before the next begins.
+
+### Step 1: Token Layer First
+
+Replace hard-coded values in the existing codebase with token references *before* introducing any new components. Find every `#1A1A1A`, every `padding: 16px`, every `font-family: 'Inter'`, and route them through a CSS variable, a Tailwind theme token, or a `useTheme()` hook.
+
+```ts title="Before — hard-coded values throughout the codebase"
+<div style={{ background: '#1A1A1A', padding: 16, fontFamily: 'Inter' }}>
+```
+
+```ts title="After — tokens reference a single source"
+<div className="bg-surface p-4 font-sans">
+```
+
+The work is mechanical and reviewable in small PRs. The visible UI doesn't change. When the design system's tokens evolve in step 2, the whole codebase shifts in lockstep without further touch.
+
+### Step 2: Primitives Next, by Replacement Frequency
+
+With tokens in place, introduce the primitives. The order isn't alphabetical — it's by how often the codebase currently reaches for an ad-hoc version of the same thing. `Button` is almost always first. `Text` second. `Input` third. Each primitive replaces the ten or twenty ad-hoc versions of itself in the codebase.
+
+For each primitive, the pattern is:
+
+1. Build the primitive in the design system package.
+2. Find every ad-hoc version in the app via a Grep on the props or class names.
+3. Replace them one by one, in PRs scoped to one component each.
+4. Delete the ad-hoc versions when they're no longer imported anywhere.
+
+<DecisionRationale
+  decision="Replace ad-hoc components leaf-first, not page-first"
+  rationale="If you migrate a whole page to the new system, you have to replace every component on that page at once — buttons, inputs, modal, layout — and any of those replacements might not work yet. The PR balloons, the risk balloons, the rollback story gets ugly. Migrating one primitive at a time means a single PR replaces every button across the app in one mechanical pass. The blast radius is the primitive, not the page; if `Button` has a regression, it's the same regression everywhere, fixable in one place."
+  alternatives={[
+    { name: "Migrate one page at a time", reason: "Produces a half-and-half UI at every seam and forces premature decisions about every primitive on the page simultaneously." },
+    { name: "Migrate everything at once", reason: "Six-week PR, six-week rollback, six-week 'we're almost done' standup update." }
+  ]}
+/>
+
+### Step 3: Compositions Once Primitives Stabilize
+
+After three or four primitives are in production and not changing daily, compositions start to earn their place. A composition is a primitive arrangement that appears in three or more places — `CardWithActions`, `EmptyState`, `ConfirmationDialog`. Below three uses, it's premature abstraction; the right shape is harder to see when you have only one or two consumers.
+
+The trap here is treating compositions as primitives — putting business logic into them, baking in a specific copy decision, hardcoding a route. Keep compositions in the same dependency layer as primitives: they know about tokens and primitives, they know nothing about the specific app instance. The app code passes in the labels, the handlers, the destinations.
+
+### Step 4: There Is No Page-Level Layer
+
+The fourth step is realizing there isn't one. Routes assemble compositions and primitives; they don't introduce a new layer above. If you find yourself wanting to put a component in the design system that's "almost the same as the app's profile page," it doesn't belong in the design system. Either it's a composition (extract the pattern, leave the page-specific bits in the app) or it's a route (leave it in the app).
+
+## Measuring Progress
+
+<AuthorNote>
+The first design system migration I led, we measured "progress" by counting how many components were in the new system. After three months we had sixty components in the design system and the app still rendered the old ad-hoc versions everywhere. The new components weren't *adopted*; they were just *available*. The metric that would have caught this earlier: the number of imports of `from 'artax-ui'` in the app vs. imports of the equivalent ad-hoc component. Adoption is consumption, not authorship.
+</AuthorNote>
+
+A handful of metrics, in priority order:
+
+- **Imports from the design system vs. imports of equivalents from inside the app.** Run a Grep for `from 'artax-ui'` and compare it to a Grep for the ad-hoc components you're replacing. The ratio should climb week over week.
+- **Hard-coded color/spacing/font references remaining.** Run a regex sweep for hex codes, `rem` values, and font names that aren't in the token list. The number should drop to near zero before primitives even start.
+- **PRs that bypass the design system.** A new component that lives in `app/routes/<feature>/` instead of `packages/artax-ui` is a signal — either the design system is missing a primitive that this feature needed, or the team forgot to look. Track these explicitly; they're the most useful signal about whether the system is being adopted in spirit.
+
+## When to Stop
+
+A design system migration doesn't end with "every component is in the system" — it ends when net-new app features stop introducing ad-hoc components. The migration is done the day a developer reaches for a `Button` from `artax-ui` because that's the obvious thing to do, not because the migration ticket told them to. After that, the design system is just part of how the codebase works, and the next discussion is about which primitives are missing.
+
+The work that remains after the formal migration ends is the work that always remains: extending the system to cover cases that didn't exist when the system was designed, deprecating primitives that don't earn their place, and the occasional decision to break compatibility for a meaningfully better shape. None of that is migration; it's just maintenance of a healthy design system, which is now what the app uses.
