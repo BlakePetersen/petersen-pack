@@ -1,0 +1,132 @@
+---
+title: "Commit-msg AI Assist Hook"
+description: "Husky commit-msg hook that detects non-conventional messages, pipes the staged diff plus the developer's intent into a local AI CLI, and offers a conventional-format rewrite the developer can accept, edit, or reject."
+applies_to: ["git", "husky", "ai-tooling", "conventional-commits"]
+dependencies: ["configs/commitlint"]
+order: 4
+draft: false
+tags: ["git-hooks", "husky", "ai", "conventional-commits", "automation"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Suggest and prompt, never silently rewrite"
+    rationale: "A commit-msg hook can rewrite the message in place — the file is right there, $1 points at it. But silent rewrites are how trust dies. The developer types one thing and a different thing lands in git log; the next time they look at the history they don't recognize their own commits. The hook should always show the suggestion, always require an explicit accept-or-edit decision, and never modify the message without that decision."
+  - choice: "Accept any local CLI via env var; default to a sensible one"
+    rationale: "Hard-coding a specific provider (Claude, OpenAI, Ollama) locks readers into the author's tooling. An env var (AI_COMMIT_CMD) lets each reader point at whatever's installed and configured on their machine — claude, aichat, ollama, llm — without forking the hook. The default is the one with the lowest install friction (claude CLI), but switching is one line in the shell rc file."
+related: ["configs/commitlint"]
+---
+
+The commit-msg hook fires after the developer writes a commit message but before the commit is finalized. Git passes the message-file path as `$1` — the hook can read it, validate it, or rewrite it. The classic use is enforcement: pipe the message into commitlint and reject if it doesn't match Conventional Commits. This entry goes one step further. Instead of rejecting a malformed message and forcing the developer to start over, it pipes the message plus the staged diff into a local AI CLI and offers a conventional-format suggestion. The developer accepts, edits, or rejects. No silent rewrites.
+
+The hook lives at `.husky/commit-msg` and depends on a local AI command being available on the developer's path. The default is `claude` (Anthropic's CLI), but any text-in / text-out command works — `aichat`, `ollama run`, `llm` — selected via the `AI_COMMIT_CMD` environment variable. The hook is paired with [commitlint](/configs/commitlint), which is the rejection-side complement: commitlint is the structural validator that runs after this hook accepts; this hook is the suggestion-side helper that runs before.
+
+## Where It Slots in the Hook Chain
+
+Git fires its hooks in a fixed order during `git commit`. The relevant subset for commit messages is `prepare-commit-msg` (which can preload the message file before the editor opens), then the developer's editor session, then `commit-msg` (which sees the saved message), then `post-commit` (which runs after the commit is already in the object database). This hook is intentionally `commit-msg`, not `prepare-commit-msg`:
+
+```sh title=".husky/commit-msg"
+# $1 is the path to the message file; git writes whatever the developer
+# typed (or pasted, or auto-generated) to this file before invoking us.
+msg_file="$1"
+msg=$(cat "$msg_file")
+```
+
+<a href="/install/hooks/commit-msg-ai-assist" target="_blank" rel="noopener">View full .husky/commit-msg →</a>
+
+`prepare-commit-msg` runs too early — at that point the developer hasn't said anything yet, and an AI suggestion based on the empty message would just be a generic "describe what you did." Running at `commit-msg` means the AI sees the developer's first-pass intent and can rewrite *that* into conventional format, instead of inventing a message from the diff alone. The difference shows up in quality: rewrites of human intent stay specific (the developer's mental model leaks into the message); from-scratch generation drifts toward bland.
+
+## Detecting Non-conventional Messages
+
+Conventional Commits has a well-known regex: `^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9-]+\))?!?: .+`. If the developer's message matches, the hook exits silently and the commit proceeds. If it doesn't, the hook kicks in:
+
+```sh title=".husky/commit-msg"
+conventional_regex='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9-]+\))?!?: '
+first_line=$(printf '%s' "$msg" | head -1)
+
+if printf '%s' "$first_line" | grep -qE "$conventional_regex"; then
+  exit 0
+fi
+```
+
+<a href="/install/hooks/commit-msg-ai-assist" target="_blank" rel="noopener">View full .husky/commit-msg →</a>
+
+The regex checks the first line only. Conventional Commits doesn't constrain the body or footer beyond a few optional patterns, so anything past the first line is the developer's prose to manage. Comment lines (starting with `#`) are stripped from the message before the check — git adds those automatically to remind the developer about the staged file list, and the hook should ignore them.
+
+## Pulling the Diff and Calling the AI
+
+When the message needs help, the hook pipes the staged diff plus the developer's draft message into the AI CLI:
+
+```sh title=".husky/commit-msg"
+ai_cmd="${AI_COMMIT_CMD:-claude}"
+diff=$(git diff --cached --stat; echo "---"; git diff --cached)
+
+prompt=$(cat <<PROMPT
+Rewrite this commit message in Conventional Commits format.
+Type prefixes: feat, fix, docs, style, refactor, perf, test, chore.
+Optional scope in parens. Subject under 70 chars. Output the message only.
+
+Original message:
+$msg
+
+Staged diff:
+$diff
+PROMPT
+)
+
+suggestion=$(printf '%s' "$prompt" | "$ai_cmd" 2>/dev/null || echo "")
+```
+
+<DecisionRationale
+  decision="Send the full staged diff, not just the message"
+  rationale="Conventional Commits scope is derived from what files changed (a feat in src/api/ is feat(api); a feat across src/api/ and src/web/ might be feat(core)). Without the diff, the AI has to guess the scope from the message alone, which produces low-confidence prefixes. Including the diff lets the AI infer the scope precisely from the file paths. The cost is sending the diff to whatever CLI the reader configured — which is exactly what they're already doing when they ask the AI to explain code. The contract is the same; the hook just packages a specific prompt."
+  alternatives={[
+    { name: "Send only the message and let the AI guess scope", reason: "Cheaper on tokens; gives wildly variable scope quality, defeating half the point of the hook" }
+  ]}
+/>
+
+## Prompting the Developer
+
+The hook never overwrites the message file. After getting a suggestion, it shows the original, the suggestion, and a three-way prompt: accept, edit, reject:
+
+```sh title=".husky/commit-msg"
+echo "" >&2
+echo "Original:    $first_line" >&2
+echo "Suggestion:  $(printf '%s' "$suggestion" | head -1)" >&2
+echo "" >&2
+printf "Use suggestion? [y]es / [e]dit / [n]o: " >&2
+read answer </dev/tty
+
+case "$answer" in
+  y|Y) printf '%s\n' "$suggestion" > "$msg_file" ;;
+  e|E) printf '%s\n' "$suggestion" > "$msg_file"; ${EDITOR:-vi} "$msg_file" ;;
+  *)   ;;  # leave original message in place
+esac
+```
+
+<a href="/install/hooks/commit-msg-ai-assist" target="_blank" rel="noopener">View full .husky/commit-msg →</a>
+
+The `</dev/tty` redirect is the load-bearing trick — when the commit-msg hook runs, stdin is closed (it's not a TTY context by default), so a bare `read` would return nothing and the prompt would be skipped. Forcing the read from `/dev/tty` reattaches to the terminal that invoked the commit and gives the developer a chance to actually answer.
+
+The "no" branch is intentional. If the suggestion is bad or the developer just wants to ship the message they wrote, the hook gets out of the way. Conventional Commits is a discipline, not a requirement — the hook is for the times when a developer would have written conventional format if they'd had ten more seconds to think about it, not for forcing a vocabulary on someone who deliberately chose otherwise.
+
+<AuthorNote>
+I ran this for a month on a side project where I was committing maybe 8-12 times a day. The suggestion-accept rate landed around 60% — high enough to matter, low enough to confirm the hook wasn't railroading me. The biggest surprise was that the suggestions were often *better than* what I would have written by hand: scopes I would have left off, breaking-change markers I would have forgotten. The 40% I rejected were almost always cases where I'd already written something more specific than the AI's generalization and didn't want to lose the specificity.
+</AuthorNote>
+
+## Failure Modes
+
+The AI call can fail — network blip, CLI not installed, rate-limit hit. The hook should fall through silently in those cases rather than blocking the commit:
+
+```sh title=".husky/commit-msg"
+if [ -z "$suggestion" ]; then
+  # AI call failed or returned empty — fall through and let the
+  # commit proceed with the developer's original message.
+  exit 0
+fi
+```
+
+A failed suggestion is not worse than no suggestion. The commit-msg hook chains with commitlint downstream — if the original message is non-conventional, commitlint catches it there. The AI assist is the carrot; commitlint is the stick. Both are valuable. Neither should depend on the other being available.
+
+## Privacy and Local-only AI
+
+Anything that sends the staged diff outside the developer's machine deserves explicit thought. The hook treats `AI_COMMIT_CMD` as the trust boundary — whatever command the developer configured is the one the diff gets piped to, and switching to a local-only model (Ollama, llamafile, llm with a local backend) is one env var change. The default `claude` CLI does send the diff to Anthropic's API, which is fine for most personal-project diffs but worth flagging for repos with private code or secrets. For those contexts, the recommended config is `AI_COMMIT_CMD="ollama run llama3"` or equivalent; the prompt format is identical.

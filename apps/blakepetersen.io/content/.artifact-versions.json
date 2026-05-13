@@ -7,6 +7,10 @@
     "hash": "72ba5eb110409272f26d0303793846f45655cb014f95d43f03c9431b60a2a835",
     "version": "2026.03.15.1"
   },
+  "commit-msg-ai-assist": {
+    "hash": "e533ca4c7ee00000ad6ef8f1709a6ecdbe9960346e1c528e44d02b412961f91f",
+    "version": "2026.05.13.0"
+  },
   "commitlint": {
     "hash": "3391ef442619205581a6804ad2658a2c3a5f2494b137c44cd67a2c1920cd48cb",
     "version": "2026.05.13.0"
@@ -40,8 +44,8 @@
     "version": "2026.05.13.0"
   },
   "post-merge-dep-sync": {
-    "hash": "9a5e0e280d7770b2ae1815ef0d5a7e9f702c6a0c4689e23dd4eeaeb471d8b660",
-    "version": "2026.05.13.0"
+    "hash": "4cbf4ee2ccea8e33f42addcd45c086437842d18e2368eb222fc35237d1b91305",
+    "version": "2026.05.13.1"
   },
   "pre-push-validation": {
     "hash": "55eebbdd97caa3e3fdaf669704af3544b66152280a2611384a6fd6b3d3b7d0af",
