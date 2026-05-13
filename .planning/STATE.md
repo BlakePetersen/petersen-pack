@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
 status: executing
-stopped_at: Completed 29-02-PLAN.md — Variant 3 picked, install route generalized, baselines regenerated
-last_updated: "2026-05-13T07:01:22.493Z"
+stopped_at: Completed 29-03-PLAN.md — 4 batch skill ports shipped, CONTENT-01 floor satisfied
+last_updated: "2026-05-13T07:58:12.073Z"
 last_activity: 2026-05-13
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 21
-  completed_plans: 16
-  percent: 76
+  completed_plans: 17
+  percent: 81
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 29 (content-authoring-greenfield-ports) — EXECUTING
-Plan: 3 of 7 (Plans 01-02 complete — Wave 0 preflight + Wave 1 torture-test HARD GATE passed; Plans 03-06 unblocked as Wave 2 batch authoring)
+Plan: 4 of 7 (Plans 01-02 complete — Wave 0 preflight + Wave 1 torture-test HARD GATE passed; Plans 03-06 unblocked as Wave 2 batch authoring)
 Status: Ready to execute
-Last activity: 2026-05-13 — Phase 29 Plan 02 complete (Variant 3 install-context view picked, /install/[type]/[slug] route generalized, baselines regenerated; CONTENT-06 delivered)
+Last activity: 2026-05-13
 
-Progress: [████████░░] 76%
+Progress: [████████░░] 81%
 
 ## Performance Metrics
 
@@ -138,6 +138,9 @@ Progress: [████████░░] 76%
 - 29-02: Install route generalized to /install/[type]/[slug] (parametric) — single page handles skills/configs/hooks; guides 404 via INSTALLABLE_TYPES allowlist per D-14
 - 29-02: New-tab anchor pattern (target=_blank rel=noopener) for snippet links — Blake-requested; defers full-file context to install route without breaking reading flow
 - 29-02: No inline <ArtifactBody> in entry body — supersedes Pitfall 4 path-shaped-slug guidance for entries authored to the architectural-framing pattern; Phase 30 doc cleanup item
+- 29-03: Apply Plan 02 Variant 3 pattern verbatim to all 4 batch ports; supersedes plan-file ArtifactBody acceptance criterion (stale)
+- 29-03: Manual voice primitives per Option B — all 4 entries have both AuthorNote AND DecisionRationale despite D-11 minimum of one
+- 29-03: Regenerate voice-primitives Playwright baselines after grown skills sidebar drift (per Plan 02 finalize precedent)
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -170,8 +173,8 @@ Progress: [████████░░] 76%
 
 ## Session Continuity
 
-Last session: 2026-05-13T07:01:22.490Z
-Stopped at: Completed 29-02-PLAN.md — Variant 3 picked, install route generalized, baselines regenerated
+Last session: 2026-05-13T07:58:12.070Z
+Stopped at: Completed 29-03-PLAN.md — 4 batch skill ports shipped, CONTENT-01 floor satisfied
 Resume file: None
 
 **Planned Phase:** 29 (Content Authoring (Greenfield + Ports)) — 7 plans — 2026-05-10T07:19:23.134Z

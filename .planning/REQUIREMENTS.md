@@ -71,7 +71,8 @@ Two-step pipeline that converts vault prose into reviewable, schema-valid MDX wi
 
 Real entries shipped at the agreed floor.
 
-- [ ] **CONTENT-01**: Five skill entries authored to production quality (frontmatter complete, body uses voice primitives where they fit, companion `.artifact.md` shipped)
+- [x] **CONTENT-01
+**: Five skill entries authored to production quality (frontmatter complete, body uses voice primitives where they fit, companion `.artifact.md` shipped)
 - [ ] **CONTENT-02**: Five config entries authored to production quality (MDX + companion `.artifact.md`)
 - [ ] **CONTENT-03**: Three hook entries authored to production quality (MDX + companion `.artifact.md`)
 - [ ] **CONTENT-04**: Three guide entries authored to production quality (MDX only — guides do not have artifact companions)
