@@ -1,0 +1,152 @@
+---
+title: "Obsidian Vault for the Monodex Pattern"
+description: "Vault setup for a single 'Monodex' knowledge base — folder shape, core plugin settings, the small community plugin set that matters, and the callout conventions that survive an AI-driven content port."
+applies_to: ["obsidian", "knowledge-base", "monodex"]
+dependencies: []
+order: 13
+draft: false
+tags: ["obsidian", "knowledge-base", "writing", "ai-workflow"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "One vault, faceted by folder — not one vault per project"
+    rationale: "Multiple vaults fragment search, fragment the link graph, and force you to remember which window you opened the right note in. A single vault with a top-level folder per facet (Projects/, Reference/, Daily/, Drafts/) keeps every backlink reachable and lets the global search work as a real index. The cost is one extra layer in your file paths; the benefit is that the vault behaves like a brain instead of a filing cabinet."
+related: ["configs/zed-editor"]
+---
+
+The "Monodex" pattern is a single Obsidian vault that holds every note, draft, project log, and reference document a developer accumulates — one searchable graph, one daily note rhythm, one set of conventions. The alternative is the project-vault sprawl most Obsidian users end up with after a year: one vault for work, one for personal, one for side-projects, none of which can see each other. The Monodex pattern collapses all of that into a single source of truth and leans on folder structure plus tags to keep the surfaces separate.
+
+This entry is the vault configuration — folder shape, core plugin settings, a curated set of community plugins, and the callout conventions that make the vault legible to both a human and an AI agent operating on it. It assumes Obsidian 1.5+ on macOS, but everything except the file paths translates to Windows and Linux unchanged.
+
+## Vault Shape
+
+The folder layout is opinionated and small. Five top-level folders cover every category of note; nesting inside each folder is per-folder convention, not a forced taxonomy.
+
+```text title="<Vault>/"
+.obsidian/         # vault config (committed)
+.trash/            # Obsidian's soft-delete bucket (gitignored)
+Projects/          # active work, one folder per project
+Reference/         # durable knowledge — concepts, libraries, patterns
+Daily/             # daily notes, YYYY-MM-DD.md
+Drafts/            # writing in flight before it goes to git
+Attachments/       # images and PDFs (centralized, see core settings)
+```
+
+<a href="/install/configs/obsidian-vault" target="_blank" rel="noopener">View full obsidian config →</a>
+
+`Projects/` holds short-lived working notes — once a project ships or moves to a real repo, the notes either get archived in `Reference/` (the durable ones) or deleted (the throwaway ones). `Reference/` is the long-term knowledge base: one note per concept, library, or technique, all linked together. `Daily/` is the date-stamped journal that becomes the timeline of what you were working on and when.
+
+## Core Plugin Settings
+
+Obsidian's "core plugins" are the ones bundled with the app. The ones that earn their spot for a Monodex setup are Daily Notes, Backlinks, Outgoing Links, Tag Pane, Templates, and Properties. The full settings are in the artifact below; two settings matter enough to call out:
+
+```json title=".obsidian/app.json"
+{
+  "useMarkdownLinks": true,
+  "attachmentFolderPath": "Attachments",
+  "newLinkFormat": "shortest",
+  "showLineNumber": true
+}
+```
+
+<a href="/install/configs/obsidian-vault" target="_blank" rel="noopener">View full obsidian config →</a>
+
+<DecisionRationale
+  decision="Use Markdown links, not Obsidian wikilinks"
+  rationale="Wikilinks ([[Page]]) are Obsidian-native and convenient inside Obsidian, but they're invisible to every other Markdown renderer (GitHub, Pandoc, MDX pipelines). Markdown links ([Page](Page.md)) work in Obsidian *and* render correctly when you port the vault content to MDX or paste it into a PR. For a Monodex that's the source of truth for content that eventually leaves the vault, the portability wins."
+  alternatives={[
+    { name: "Use wikilinks for in-vault convenience", reason: "Locks the content to Obsidian and breaks every downstream renderer when notes get ported" }
+  ]}
+/>
+
+`attachmentFolderPath: "Attachments"` centralizes every pasted image and PDF into one folder, so attachments don't pollute the note folders. `newLinkFormat: "shortest"` makes new links use the shortest unique path — `[Convex](Convex.md)` instead of `[Convex](Reference/databases/Convex.md)`. Easier to read, still resolvable.
+
+## Community Plugins That Matter
+
+The community-plugin ecosystem is enormous and mostly noise. Three plugins are worth the install for a Monodex setup:
+
+```json title=".obsidian/community-plugins.json"
+[
+  "templater-obsidian",
+  "dataview",
+  "obsidian-git"
+]
+```
+
+`templater-obsidian` is the template engine that powers daily-note generation, project scaffolding, and any "new X" workflow. The bundled core Templates plugin is fine for static templates; Templater adds variables, prompts, and small JavaScript expressions, which is the difference between "boilerplate" and "scaffold."
+
+`dataview` lets notes query other notes — pull every project marked as `status:: active`, list all daily notes from this week, show every reference note tagged `#convex`. The query language is its own thing but pays off the first time you stop maintaining an index manually because Dataview generates it.
+
+`obsidian-git` runs `git add`, `git commit`, and `git push` against the vault on a schedule (every 15 minutes is fine). It's the difference between "if my laptop dies I lose six months of notes" and "everything is on GitHub by tonight." Pair it with a private GitHub repo and the vault becomes durable.
+
+## Callout Conventions
+
+Obsidian's callout syntax (extended Markdown blockquotes with a typed prefix) is the single most useful convention for a vault that will eventually feed an AI workflow. A callout looks like this:
+
+```markdown title="Reference/some-note.md"
+> [!note] Title goes here
+> Body goes here. Multiple lines work.
+> Links and **formatting** work.
+
+> [!warning] Things that bit me
+> - Specific bug
+> - Specific fix
+```
+
+Obsidian supports `note`, `tip`, `warning`, `danger`, `info`, `success`, `question`, `quote`, `example`, `cite`, `abstract`, `todo`, `failure`, and `bug` out of the box. For a Monodex feeding an AI content pipeline, picking a small subset and using it consistently is more valuable than using all of them.
+
+<AuthorNote>
+The callout discipline I follow: `> [!decision]` (custom type) for architectural calls, `> [!gotcha]` (custom) for "this bit me," `> [!todo]` for open work, `> [!quote]` for cited sources, `> [!example]` for runnable snippets. That's it. The convention is small enough to remember and dense enough that when an AI agent ports the vault content, it can preserve the callout structure as a first-class signal — `decision` callouts become `<DecisionRationale>` invocations on the rendered side, `gotcha` callouts become `<AuthorNote>` blocks. The vault stops being a notes folder and starts being structured content.
+</AuthorNote>
+
+## Daily Notes and the Templater Wiring
+
+The Daily Notes core plugin handles date-stamped file creation; Templater fills the contents. The combination gives you a daily journal that's both reflexive (open Obsidian, today's note is the front page) and structured (every daily note has the same shape, so a Dataview query can aggregate across them).
+
+```text title="<Vault>/Templates/Daily.md"
+---
+date: <% tp.date.now("YYYY-MM-DD") %>
+tags: [daily]
+---
+
+# <% tp.date.now("dddd, MMMM Do") %>
+
+## In flight
+- 
+
+## Decisions
+- 
+
+## Notes
+- 
+
+## Tomorrow
+- 
+```
+
+<a href="/install/configs/obsidian-vault" target="_blank" rel="noopener">View full obsidian config →</a>
+
+The four sections — In flight, Decisions, Notes, Tomorrow — cover the daily writing rhythm without forcing a long-form journal. "In flight" is what I'm working on; "Decisions" is what I decided (this is what feeds the Monodex's decision log when I eventually port the vault); "Notes" is everything else; "Tomorrow" is the explicit handoff to my future self.
+
+## Theme and CSS Tweaks
+
+Two CSS snippets in `.obsidian/snippets/` make the vault visibly calmer:
+
+```css title=".obsidian/snippets/no-fluff.css"
+.markdown-source-view.mod-cm6 .cm-line {
+  max-width: 760px;
+}
+.cm-content {
+  font-family: "JetBrains Mono", "iA Writer Mono", monospace;
+}
+.markdown-preview-view {
+  max-width: 760px;
+  margin: 0 auto;
+}
+```
+
+The reading column at 760px is a deliberate constraint — long-form reading falls apart past ~80 characters per line, and Obsidian's default width tries to fill the whole window. Capping the column makes notes easier to read and forces you to actually scroll long notes rather than skimming horizontally. The monospace font choice is taste — works equally well with any prose-friendly variable-width font.
+
+## Sync and Backup
+
+Obsidian's paid Sync service works fine. For a developer who already lives in git, `obsidian-git` (mentioned above) plus a private GitHub repo is equivalent at zero cost, and it has the side benefit of giving you a real commit history of the vault — which means real `git log` on your own thinking. The trade-off is that git's merge model can occasionally surface conflicts in `.obsidian/workspace.json` (per-machine UI state); the fix is to gitignore that file.
