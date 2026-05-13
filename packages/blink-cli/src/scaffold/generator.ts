@@ -3,8 +3,8 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { SlugSchema } from 'blink-registry'
-import { atomicWrite } from '@/writer'
-import { getBodyTemplate, getArtifactTemplate } from '@/scaffold/templates'
+import { atomicWrite } from '../writer'
+import { getBodyTemplate, getArtifactTemplate } from './templates'
 
 /** Singular → plural collection name mapping. */
 const COLLECTION_PLURAL: Record<string, string> = {
