@@ -7,6 +7,10 @@
     "hash": "72ba5eb110409272f26d0303793846f45655cb014f95d43f03c9431b60a2a835",
     "version": "2026.03.15.1"
   },
+  "convex-patterns": {
+    "hash": "f73d59dc94d9f3e3d8628038c99524f7588ac55067a861db77501f664e71f7fd",
+    "version": "2026.05.13.0"
+  },
   "eslint-flat-config": {
     "hash": "f857972bada548c9b0f038e43544dbdc990680944768904b0cd0e7bf9ec102fb",
     "version": "2026.03.15.0"
