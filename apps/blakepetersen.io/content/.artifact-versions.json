@@ -31,6 +31,10 @@
     "hash": "44c2365c0d70781af156a58a75cbf6b8ae26d452f3ec7e7add7bb969c908cc86",
     "version": "2026.03.15.4"
   },
+  "terminal-webdev-tuning": {
+    "hash": "fd542468708d58a1e2884c0e43a5ef38c31573ccf5d7788a2dc795da1e8eb4e8",
+    "version": "2026.05.13.0"
+  },
   "tmux-poweruser": {
     "hash": "e9608c4b41411e9605ba4b42eff43ec5a8212c6f49be0062e22fdfcc5766ef10",
     "version": "2026.04.05.0"

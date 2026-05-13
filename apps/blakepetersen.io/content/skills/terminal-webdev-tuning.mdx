@@ -1,0 +1,178 @@
+---
+title: "Tuning Ghostty and tmux for web-dev work"
+description: "Round-two refinements on a working terminal setup — the bindings, plugins, and Ghostty options that emerge after three weeks of living in a Next.js dev loop."
+applies_to: ["ghostty", "tmux", "macos", "terminal"]
+dependencies: []
+order: 4
+draft: false
+tags: ["terminal", "ghostty", "tmux", "developer-experience"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Pane-border git-branch shellout polled on status-interval, not pre-command hook"
+    rationale: "A pre-command hook that writes the branch into the environment fires on every command and accrues latency in the hot path of every shell invocation. Polling git symbolic-ref every 5 seconds from the status loop costs one fork per pane per interval — invisible to the user, and the staleness window is so short it doesn't matter."
+  - choice: "Continuum auto-restore plus expanded resurrect process list, not a custom session-revival script"
+    rationale: "tmux-continuum already saves every 15 minutes and restores on boot — the gap is just that its default resurrect-processes list doesn't know about web-dev servers. Adding `pnpm dev`, `next dev`, and friends to the explicit list closes the gap with one config line; rolling a custom script for the same job would be an order of magnitude more code and another thing to maintain."
+---
+
+A baseline tmux config is the easy part. The interesting part is the friction that surfaces after three weeks of using it for actual web-dev work — the URL you can't grab without the trackpad, the stack trace that's too long for copy mode, the pane border that tells you the running command but not the branch you're on. This entry is the second pass: the bindings, plugins, and Ghostty options that close those gaps, and the small Ghostty bug worth fixing while you're in there.
+
+The baseline assumed is the `tmux-power-workflows` skill — XDG layout at `~/.config/tmux/`, backtick prefix, TPM plugins, Catppuccin Mocha status bar, lazygit popup, extrakto, smart session manager. Everything below sits on top of that.
+
+## Where the changes go
+
+Two files, both in `~/.config/`. The tmux additions go into `~/.config/tmux/tmux.conf` — bindings, the `pane-border-format` upgrade, the expanded resurrect-processes list, and one plugin swap. The Ghostty changes go into `~/.config/ghostty/config` — a keybinding bug fix and a small group of UX options.
+
+```text
+~/.config/
+  tmux/
+    tmux.conf       # additions to the baseline
+    plugins/        # TPM-managed, including new tmux-fzf-url
+  ghostty/
+    config          # cmd+minus fix + UX options
+```
+
+Ghostty applies config changes on relaunch, not on save — quit and reopen Ghostty for any change to take effect.
+
+## Grab URLs from a `next dev` log without the trackpad
+
+The single biggest day-to-day win. `next dev` prints `Local:` and `Network:` URLs the moment it boots; without a binding for it, the only way to open one is reach for the trackpad. `wfxr/tmux-fzf-url` reads the visible scrollback, finds every URL via regex, and pipes the list into fzf — hit Enter and it opens in your default browser.
+
+```tmux
+# ~/.config/tmux/tmux.conf
+set -g @plugin 'wfxr/tmux-fzf-url'
+
+# Optional: explicit binding (default is prefix + u)
+set -g @fzf-url-bind 'u'
+set -g @fzf-url-history-limit '2000'
+```
+
+<a href="/install/skills/terminal-webdev-tuning" target="_blank" rel="noopener">View full tmux.conf additions →</a>
+
+After adding the line, install with `prefix + I`. Once it's loaded, `prefix + u` opens fzf over every URL in the current pane. The flow is hands-on-keyboard from "build finished" to "browser open on the right URL," which is the difference between a 200ms context switch and a 2-second one.
+
+## Save a long stack trace to a file you can grep
+
+Copy-mode is fine for snippets. For a 500-line stack trace, you want it in a file. Two bindings cover this: one dumps the whole pane to a timestamped log under `/tmp`, the other copies the last 200 lines to the macOS clipboard for pasting into an issue tracker.
+
+```tmux
+# Dump pane scrollback to /tmp/tmux-{session}-{win}.{pane}-HHMMSS.log
+bind Enter run-shell '\
+  f=/tmp/tmux-#S-#I.#P-$(date +%H%M%S).log; \
+  tmux capture-pane -p -S - > "$f"; \
+  tmux display "Saved $f"'
+
+# Copy last 200 lines to clipboard
+bind Y run-shell '\
+  tmux capture-pane -p -S -200 | pbcopy; \
+  tmux display "Copied 200 lines to clipboard"'
+```
+
+<a href="/install/skills/terminal-webdev-tuning" target="_blank" rel="noopener">View full bind blocks →</a>
+
+`prefix + Enter` dumps to disk; `bat /tmp/tmux-…log` in another pane opens it with syntax highlighting. `prefix + Y` puts the last 200 lines on the clipboard — the right size for a GitHub issue body or a Linear ticket. Both are zero-state, zero-cleanup bindings.
+
+## Pane border that shows the git branch
+
+The baseline shows `2: nvim` in the border — pane index and the running command. In a monorepo with feature branches everywhere, knowing the branch matters more than knowing it's nvim again. A `#()` shellout in the format string adds the branch alongside the command, polled on the status-interval (every 5 seconds in the baseline).
+
+```tmux
+# ~/.config/tmux/tmux.conf
+set -g pane-border-status top
+set -g pane-border-format '\
+ #{?pane_active,#[fg=#cba6f7#,bold],#[fg=#6c7086]}\
+#{pane_index}: #{pane_current_command}\
+ #(cd #{pane_current_path} && git symbolic-ref --short HEAD 2>/dev/null | sed "s/^/⎇ /")\
+ '
+```
+
+<a href="/install/skills/terminal-webdev-tuning" target="_blank" rel="noopener">View full pane-border-format →</a>
+
+The shellout returns empty when the pane is not in a git repo, so non-repo panes see no clutter. The 5-second poll cadence means a branch switch shows up the next time you glance at the border — short enough that the staleness is invisible.
+
+<DecisionRationale
+  decision="Poll git on status-interval instead of a precmd hook"
+  rationale="A precmd hook that writes the branch into an env var fires on every shell command and adds latency to the hot path of every keystroke-and-Enter cycle. A 5-second poll from the status loop costs one fork per pane per interval — invisible — and the staleness window is so short that a branch switch shows up before you notice."
+  alternatives={[
+    { name: "precmd hook writes branch to env var", reason: "Defensible only if your shell precmd is already doing other work — otherwise it's a new hot-path cost for cosmetic gain." }
+  ]}
+/>
+
+## Resurrect that actually brings dev servers back
+
+`tmux-resurrect` saves session geometry by default, and `tmux-continuum` saves every 15 minutes and restores on tmux start. The gap: resurrect's default process list is `ssh`, `psql`, `mysql`, `sqlite3` — none of the web-dev servers you actually run. Add them explicitly and a reboot restores the full panes, dev servers and all.
+
+```tmux
+# ~/.config/tmux/tmux.conf
+set -g @resurrect-processes \
+  'ssh psql mysql sqlite3 "~docker compose~" "~pnpm dev~" "~pnpm storybook~" "~next dev~" "~vite~" "~prisma studio~" "~bun dev~" "~npm run dev~"'
+set -g @continuum-restore 'on'
+set -g @continuum-boot 'on'
+```
+
+<a href="/install/skills/terminal-webdev-tuning" target="_blank" rel="noopener">View full resurrect block →</a>
+
+The `~...~` syntax tells resurrect to match the full command line, not just the binary — so it captures `pnpm dev` rather than missing it because the active process is whatever Node binary pnpm spawned. `@continuum-boot 'on'` installs a launchd plist that starts tmux on system login, which closes the loop between "rebooted the laptop" and "back exactly where I was."
+
+<AuthorNote>
+The trick is to keep the resurrect-processes list aligned with whatever scripts your team actually uses. A monorepo standardised on `pnpm dev` will not bring back panes running `npm run dev`, and the failure is silent — empty panes on restore.
+</AuthorNote>
+
+## Ghostty: the cmd+minus bug fix and three UX nudges
+
+Ghostty ships with `cmd+minus` bound to `new_split:down`, which silently shadows the macOS-standard "decrease font size" everyone expects. Move the split to `cmd+shift+minus` and the font controls work again. While you're in the config, three more options are worth flipping: smoother scrollback, OS-native selection inside tmux via shift+drag, and killing the resize overlay that flashes on every split.
+
+```hcl
+# ~/.config/ghostty/config
+
+# Fix: cmd+minus shouldn't override font decrease
+keybind = cmd+minus=unbind
+keybind = cmd+shift+minus=new_split:down
+
+# Smoother trackpad scrollback in long dev-server logs
+mouse-scroll-multiplier = 2
+
+# Shift+drag bypasses tmux mouse capture — use OS-native selection
+mouse-shift-capture = always
+
+# Kill the size-overlay popup that flashes on every split
+resize-overlay = never
+
+# Small line-height bump; ligature-heavy code reads better
+adjust-cell-height = 10%
+```
+
+<a href="/install/skills/terminal-webdev-tuning" target="_blank" rel="noopener">View full Ghostty config →</a>
+
+The `mouse-shift-capture = always` option is the most useful of the three. Inside tmux, mouse interaction is captured by tmux's copy-mode (which is great for scroll, weird for selection). Holding shift bypasses the capture entirely and gives you native macOS selection — multi-line drag, double-click word boundaries, triple-click line, all working the way they do everywhere else on the OS.
+
+## Things skipped on purpose
+
+A few plugins and options live in the "considered, not adopted" bucket. They're not bad ideas; they just didn't earn their slot:
+
+- **Custom Ghostty shaders** (CRT effect, etc.) — fun for screenshots, distracting daily. Off.
+- **tmux-which-key** — discoverability over a 30-binding config is fine via this doc; the plugin adds load time and visual noise.
+- **omerxx/tmux-sessionx** — alternative session manager. The zoxide-backed `t-smart-tmux-session-manager` from the baseline already covers the same ground.
+- **vim-tmux-navigator** — pending Neovim adoption; not worth installing the tmux side first.
+
+## Verification
+
+After applying the additions:
+
+```bash
+tmux source-file ~/.config/tmux/tmux.conf       # no errors
+tmux display "test"                              # status bar message shows
+# Inside tmux: prefix + I to install tmux-fzf-url, then:
+#   prefix + u   — fzf URL picker opens
+#   prefix + Enter — writes a /tmp/tmux-...log file
+#   prefix + Y   — clipboard has 200 lines (paste somewhere to confirm)
+# Pane border shows ⎇ <branch> inside any git repo
+
+# Quit and relaunch Ghostty for its config to load:
+#   cmd+minus shrinks font
+#   cmd+shift+minus splits down
+#   shift+drag inside tmux selects OS-natively
+#   No resize overlay flashes on split
+```
+
+The companion artifact bundles the additive `tmux.conf` block and the Ghostty config as standalone files — drop them in next to your existing configs, source the tmux file, relaunch Ghostty, and the changes are live.
