@@ -35,6 +35,10 @@
     "hash": "fd542468708d58a1e2884c0e43a5ef38c31573ccf5d7788a2dc795da1e8eb4e8",
     "version": "2026.05.13.0"
   },
+  "tmux-power-workflows": {
+    "hash": "ccc4ab6cdae7830fd36383ee91340ef8703aa2eeb3cfa815fee02906e506add8",
+    "version": "2026.05.13.0"
+  },
   "tmux-poweruser": {
     "hash": "e9608c4b41411e9605ba4b42eff43ec5a8212c6f49be0062e22fdfcc5766ef10",
     "version": "2026.04.05.0"
