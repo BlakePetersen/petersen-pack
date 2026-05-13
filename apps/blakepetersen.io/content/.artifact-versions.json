@@ -19,9 +19,13 @@
     "hash": "10c7b8719345b4824ff121cbadbde80d8be17a89f96553386632bec042b71a03",
     "version": "2026.03.15.5"
   },
-  "nextjs-stack-patterns": {
-    "hash": "eca0c9f47a40f3a34bca8451161a210dfa4e703b58a36cc79202cc7e0ef796f8",
+  "macbook-dev-setup": {
+    "hash": "ae7fece40b7ed263166c4740be96e60f3511f57a3863ea0e3c974a31ece3860b",
     "version": "2026.05.13.0"
+  },
+  "nextjs-stack-patterns": {
+    "hash": "d9546294cbc5cad762bfd25993a0a3fb2be62108427bdd4f169d3c82b2cc0477",
+    "version": "2026.05.13.1"
   },
   "prettier-config": {
     "hash": "44c2365c0d70781af156a58a75cbf6b8ae26d452f3ec7e7add7bb969c908cc86",
