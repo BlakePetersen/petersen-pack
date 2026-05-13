@@ -1,0 +1,138 @@
+---
+title: "Zed Editor Config"
+description: "Opinionated Zed settings.json — font + theme + Vim mode + Assistant panel wiring + the format-on-save chain that makes it a viable VS Code replacement."
+applies_to: ["zed", "editor", "macos"]
+dependencies: []
+order: 10
+draft: false
+tags: ["editor", "zed", "ai-assistant", "developer-experience"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Use Zed's Assistant panel as the primary AI surface, not an external chat app"
+    rationale: "The Assistant panel runs in the editor process, can read the active buffer, and supports inline assists keyed to the cursor — a chat window in a separate app loses every one of those affordances. Latency is also dramatically better because there's no clipboard round-trip. Tradeoff is that the model surface is whatever Zed exposes; for the routine refactor + question workflows that consume 80% of AI use, that's more than enough."
+---
+
+Zed is a GPU-accelerated editor written in Rust by ex-Atom maintainers, with collaborative editing and an AI assistant baked into the editor process. The pitch is "VS Code but native, fast, and AI-aware out of the box." After two years using it as a daily driver, the pitch holds up — the editor opens in 80ms, types at 120fps, and the Assistant panel makes the AI workflow feel less like context-switching than any other tool.
+
+This entry is the settings file. Zed reads JSON from `~/.config/zed/settings.json` (`~/Library/Application Support/Zed/settings.json` on older versions — the XDG path is preferred and Zed will follow either). Per-project overrides live at `.zed/settings.json` in the project root and inherit from the global file.
+
+## Where the Settings Live
+
+The global file is read on Zed startup; changes don't require a restart, the settings reload live. The project-level file overlays the global one — useful for per-repo tab width, per-repo linter wiring, or per-repo Assistant context rules.
+
+```json title="~/.config/zed/settings.json"
+{
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_size": 14,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  }
+}
+```
+
+<a href="/install/configs/zed-editor" target="_blank" rel="noopener">View full settings.json →</a>
+
+`theme.mode: "system"` follows the macOS appearance toggle; the `light` and `dark` keys pick the variant for each. The default One themes are good — there's no reason to install a theme extension unless the color choice is itself a value.
+
+## Vim Mode and the Keybinding Philosophy
+
+Zed ships with a Vim mode that handles motion, operators, registers, and the most-used `Ex` commands — not a partial reimplementation, an actual usable Vim. Turn it on with one setting:
+
+```json title="~/.config/zed/settings.json"
+{
+  "vim_mode": true,
+  "cursor_blink": false,
+  "relative_line_numbers": true,
+  "soft_wrap": "editor_width"
+}
+```
+
+<a href="/install/configs/zed-editor" target="_blank" rel="noopener">View full settings.json →</a>
+
+`relative_line_numbers: true` is the single biggest motion win — `7j` and `12k` become eyeball-able instead of "do mental arithmetic on absolute line numbers." `cursor_blink: false` is taste; the blinking cursor is the single most distracting thing in a focused-editing session and disabling it has been an unmitigated upgrade.
+
+<DecisionRationale
+  decision="Vim mode on, IDE-style keybindings off where they conflict"
+  rationale="Zed's default keybindings are VS Code-flavored — ⌘P for the file picker, ⌘⇧P for the command palette, ⌘B for the sidebar. Vim mode adds modal navigation on top of those. They mostly cohabitate, but a few defaults (⌃P for file picker shadowing Vim's previous-line) need to be remapped. Keeping the IDE bindings for global actions and pure Vim for in-buffer motion is the model that takes the least adjustment from either direction."
+  alternatives={[
+    { name: "Disable Vim mode and use IDE keybindings only", reason: "Loses 20 years of muscle memory for a marginal reduction in keybinding overlap" }
+  ]}
+/>
+
+## The Assistant Panel
+
+Zed's Assistant panel is the AI integration. It's a dedicated panel (`⌘?` to toggle) that holds a conversation thread with context-awareness about the open files. Two settings shape how it behaves:
+
+```json title="~/.config/zed/settings.json"
+{
+  "assistant": {
+    "version": "2",
+    "enabled": true,
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5"
+    },
+    "button": true,
+    "dock": "right",
+    "default_width": 480
+  }
+}
+```
+
+The model provider can be Anthropic, OpenAI, Google, or a locally-hosted Ollama instance — set `provider` and Zed reads the corresponding `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` from your shell environment. For Ollama, point `api_url` at the local server and pick a model.
+
+The killer feature is inline assists. With the cursor on a line (or a visual selection), `⌘⏎` opens a small floating prompt at the cursor — "rewrite this function to use async/await," "add JSDoc," "explain what this regex does." The diff appears inline; accept or reject with `⌘⏎` / `⎋`. No context switch, no clipboard, no chat window losing track of which file you were editing.
+
+<AuthorNote>
+The reason I switched from VS Code wasn't speed (though that helped); it was that the Copilot panel and the editor lived in different processes that frequently desynced. I'd be staring at one file and the panel would be answering about a file I'd closed three minutes ago. Zed's Assistant runs in the editor process and reads the active buffer at request time, so that class of bug is gone. Two years in, I still notice when I switch back to a Copilot-style integration on a different machine.
+</AuthorNote>
+
+## Language and Formatter Wiring
+
+Zed picks up `prettier`, `eslint`, `rustfmt`, `gofmt`, and the rest from the project — no per-language plugin install. The settings just tell it which one to run on save:
+
+```json title="~/.config/zed/settings.json"
+{
+  "format_on_save": "on",
+  "formatter": "language_server",
+  "languages": {
+    "TypeScript": {
+      "formatter": { "external": { "command": "prettier", "arguments": ["--stdin-filepath", "{buffer_path}"] } },
+      "tab_size": 2
+    },
+    "Rust": {
+      "tab_size": 4
+    }
+  }
+}
+```
+
+`formatter: "language_server"` is the default — uses the LSP's own format-on-save. Override per-language for TypeScript because the typescript-language-server's formatter is worse than running Prettier directly. The `{buffer_path}` token lets Prettier resolve the right config based on the file's location.
+
+## Per-Project Settings
+
+A `.zed/settings.json` at the repo root overlays the global config. Useful for repos with non-standard tab width, lint configs, or for scoping the Assistant to a specific model:
+
+```json title="<project>/.zed/settings.json"
+{
+  "tab_size": 4,
+  "languages": {
+    "Python": {
+      "formatter": { "external": { "command": "ruff", "arguments": ["format", "-"] } }
+    }
+  }
+}
+```
+
+Commit this file. Every collaborator gets the same editor behavior without anyone touching their global config — which is the whole point.
+
+## Switching from VS Code
+
+The migration path is about three hours of friction. Zed's command palette has a "Import VS Code settings" command that converts keybindings and a subset of editor settings; the rest is hunting through Zed's settings docs for the equivalent of whatever you'd customized. The settings file above is what mine collapsed to after the dust settled — small, opinionated, and stable across major Zed versions.
