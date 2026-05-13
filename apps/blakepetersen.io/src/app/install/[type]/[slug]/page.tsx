@@ -1,5 +1,5 @@
-// ABOUTME: Variant 3 prototype — install-context view at /install/skills/[slug].
-// ABOUTME: Foregrounds the `blink apply` command as protagonist; file render is supporting context.
+// ABOUTME: Install-context view at /install/<type>/<slug> for skills, configs, and hooks.
+// ABOUTME: Foregrounds the `blink apply <type>/<slug>` command; file render is supporting context.
 
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -9,16 +9,35 @@ import { CopyCommandBlock } from './copy-command-block'
 
 export const dynamicParams = true
 
+// Only artifact-bearing content types are reachable here. Guides have no
+// artifacts per Phase 29 D-14, so /install/guides/<slug> intentionally 404s.
+const INSTALLABLE_TYPES = new Set(['skills', 'configs', 'hooks'])
+
+// Route segment uses plural collection names (matches /skills, /configs, /hooks);
+// artifact metadata stores the singular type (skill, config, hook).
+const TYPE_SEGMENT_TO_ARTIFACT_TYPE: Record<string, string> = {
+  skills: 'skill',
+  configs: 'config',
+  hooks: 'hook',
+}
+
 export default async function InstallContextViewPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ type: string; slug: string }>
 }) {
-  const { slug } = await params
+  const { type, slug } = await params
+
+  if (!INSTALLABLE_TYPES.has(type)) notFound()
+
   const all = readArtifactsJson()
   const artifact = all.find((a) => a.slug === slug)
 
   if (!artifact) notFound()
+
+  // Guard against /install/hooks/<slug> resolving an artifact whose type is
+  // actually `skill` — the URL would lie about what gets written.
+  if (artifact.type !== TYPE_SEGMENT_TO_ARTIFACT_TYPE[type]) notFound()
 
   const command = `blink apply ${artifact.type}/${slug}`
   const fileCount = artifact.files.length
@@ -41,10 +60,10 @@ export default async function InstallContextViewPage({
         <p className="font-mono text-sm text-muted-foreground">
           Install context for{' '}
           <Link
-            href={`/skills/${slug}`}
+            href={`/${type}/${slug}`}
             className="text-primary hover:underline"
           >
-            /skills/{slug}
+            /{type}/{slug}
           </Link>
         </p>
       </header>

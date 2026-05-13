@@ -1,5 +1,5 @@
-// ABOUTME: Variant 3 client-side copy block — protagonist `blink apply` command with copy button.
-// ABOUTME: Larger, prouder version of ApplyActionBar tailored for the dedicated install-context page.
+// ABOUTME: Client-side copy block for the install-context view's protagonist `blink apply` command.
+// ABOUTME: Type-agnostic — `command` is a fully-formed string from the parent server component.
 
 'use client'
 
