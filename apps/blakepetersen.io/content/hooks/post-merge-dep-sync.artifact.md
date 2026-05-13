@@ -1,0 +1,35 @@
+---
+name: Post-merge Dependency Sync Hook
+description: Husky v9 post-merge hook that re-runs pnpm install whenever pnpm-lock.yaml changed in the merge diff
+type: hook
+merge: replace
+destination: .husky/post-merge
+devDependencies:
+  husky: '^9.1.7'
+---
+
+# ABOUTME: Post-merge dependency sync — re-runs pnpm install if the lockfile moved.
+
+# ABOUTME: Closes the "I just pulled and now my imports are broken" foot-gun.
+
+set -e
+
+# Files changed by this merge (ORIG_HEAD = pre-merge tip, HEAD = post-merge tip).
+
+changed=$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD 2>/dev/null || echo "")
+
+case "$changed" in
+_pnpm-lock.yaml_)
+echo "→ pnpm-lock.yaml changed — running pnpm install"
+if ! pnpm install; then
+echo ""
+echo "✘ post-merge: pnpm install failed" >&2
+echo " Your working tree is up-to-date, but node_modules is stale." >&2
+echo " Run 'pnpm install' manually after fixing the error above." >&2
+exit 1
+fi
+echo "✓ post-merge: dependencies in sync"
+;;
+\*) # No lockfile change — nothing to do.
+;;
+esac

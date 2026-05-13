@@ -1,0 +1,84 @@
+---
+title: "Post-merge Dependency Sync"
+description: "Husky post-merge hook that re-runs pnpm install whenever pnpm-lock.yaml changed in the merge — closes the 'why is my import broken? oh, missing dep' foot-gun after every pull."
+applies_to: ["git", "husky", "pnpm", "monorepo"]
+dependencies: []
+order: 3
+draft: false
+tags: ["git-hooks", "husky", "pnpm", "dependencies", "automation"]
+voice: ["author-note"]
+requires_artifact: true
+related: ["hooks/pre-push-validation"]
+---
+
+The post-merge hook fires after `git pull` or `git merge` completes successfully — exactly the moment when the working tree's `pnpm-lock.yaml` may have changed underneath the developer without them touching it. If it did, `node_modules` is now stale: some dependency has been added, removed, or pinned to a new version, and any subsequent `pnpm dev` or `pnpm test` will run against the old tree until someone remembers to install. The result is the classic "I just pulled and now my imports are red" or "the test suite is failing on a function nobody changed" reaction. A 12-line post-merge hook eliminates the entire category by re-running `pnpm install` automatically whenever the lockfile moves.
+
+This hook lives at `.husky/post-merge` and runs once per merge completion — including merges from `git pull` (the common case) and explicit `git merge` invocations. It does not run for `git checkout` or `git switch`, which is a deliberate choice; the post-checkout hook covers those cases separately and the two are usually kept independent to allow different policies (some teams want the post-checkout case to be a warning, not an install).
+
+## How Post-merge Receives Its Signal
+
+Unlike pre-commit or pre-push, post-merge runs after the operation has already succeeded, so its job is reaction, not gating. Git passes a single positional argument — a `1` if the merge was a squash, `0` otherwise — but for dependency sync the argument doesn't matter. What matters is the file list that was changed by the merge, which is the diff between `ORIG_HEAD` (where the local branch was before the merge) and `HEAD` (where it is now):
+
+```sh title=".husky/post-merge"
+set -e
+changed=$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)
+```
+
+<a href="/install/hooks/post-merge-dep-sync" target="_blank" rel="noopener">View full .husky/post-merge →</a>
+
+`git diff-tree` is the plumbing-level equivalent of `git diff` — it works on commit trees directly without touching the working directory or the index, which makes it the right tool to ask "what did this merge actually change?" The `-r` flag recurses into subtrees so the output is one file per line, and `--no-commit-id` strips the commit-hash header so the output is parseable by simple shell tools like `grep` or `case`.
+
+## Detecting Lockfile Changes
+
+With the changed-files list in hand, the hook checks for `pnpm-lock.yaml` and triggers an install if present. The simplest expression of this is a `case` statement:
+
+```sh title=".husky/post-merge"
+case "$changed" in
+  *pnpm-lock.yaml*)
+    echo "→ pnpm-lock.yaml changed — running pnpm install"
+    pnpm install
+    ;;
+esac
+```
+
+<a href="/install/hooks/post-merge-dep-sync" target="_blank" rel="noopener">View full .husky/post-merge →</a>
+
+The glob match is intentional — it catches both top-level `pnpm-lock.yaml` (the only one in a normal pnpm monorepo) and any nested lockfiles a multi-root setup might have. For a single-lockfile repo a literal `grep -q '^pnpm-lock\.yaml$'` is more precise but the case-glob version is shorter and equivalent in practice.
+
+`pnpm install` itself is idempotent — if the lockfile hasn't moved relative to `node_modules`, it's a no-op that exits in 200-400ms. So even if the hook fires on a merge that touched the lockfile but didn't actually change the resolution graph (rare, but happens when a transitive dep's hash updates), the cost is bounded. The only case where this hook does meaningful work is the case where it needed to run.
+
+## Workspace Awareness
+
+In a pnpm monorepo, `pnpm install` from the repo root installs across every workspace package. That's the right behavior for this hook — a merge that touches the root lockfile is by definition a workspace-level change, and re-installing only one package would leave the rest in a partially-synced state. If a team's convention is per-package installs (rare, but possible with `pnpm install --filter`), the hook can be extended with a more targeted command. For the default monorepo shape, the top-level `pnpm install` is correct.
+
+## When the Install Itself Fails
+
+`pnpm install` can fail for reasons that aren't the developer's fault — registry timeouts, peer-dep conflicts in the new lockfile, integrity check mismatches. The hook should surface those clearly rather than swallowing them:
+
+```sh title=".husky/post-merge"
+if ! pnpm install; then
+  echo ""
+  echo "✘ post-merge: pnpm install failed"
+  echo "  Your working tree is up-to-date, but node_modules is stale."
+  echo "  Run 'pnpm install' manually after fixing the error above."
+  exit 1
+fi
+```
+
+<a href="/install/hooks/post-merge-dep-sync" target="_blank" rel="noopener">View full .husky/post-merge →</a>
+
+Exiting non-zero from post-merge does not undo the merge — the merge has already completed by the time this hook runs. What the non-zero exit does is signal to the developer that something is off, which is the right behavior. A silent failure would be worse than a noisy one because the symptom (broken imports) would appear minutes later in a less obvious context.
+
+<AuthorNote>
+This is one of those hooks where the value isn't visible until you've shipped it on a team. The first week, nobody notices anything different — the install just happens in the background after pulls. The second week, you start to realize that the "I keep getting weird module-not-found errors" Slack messages have stopped. By the third week, you've forgotten the hook exists. That's the win condition for any background hook: it succeeds when nobody talks about it.
+</AuthorNote>
+
+## Squash and Rebase Variants
+
+Git fires post-merge after a fast-forward or true merge, but not after a rebase. If a team uses rebase-on-pull as the default (`git pull --rebase` or `pull.rebase = true` in config), the post-merge hook never fires for everyday pulls — the lockfile updates land via the post-rewrite hook instead, which most teams don't wire up. For rebase-heavy workflows, mirror this hook into `.husky/post-rewrite` with the same body; git invokes post-rewrite after `git rebase` and `git commit --amend` with the rewrite type as the first argument. The simplest port is a one-line wrapper that calls the post-merge logic.
+
+The `--squash` variant of merge does fire post-merge but with `$1=1`. The hook ignores the squash flag because the file-list signal is the same either way — a squashed merge that touched the lockfile needs the same install treatment as a regular merge that did.
+
+## Not the Same Problem as pre-commit or pre-push
+
+A neighboring idea is to check the lockfile in pre-commit or pre-push and warn if `node_modules` is out of sync with it. That works, but it solves a different problem — it catches the case where the developer changed the lockfile and forgot to install, not the case where the lockfile changed underneath them via a pull. The two cases are independent, and the right hook for each is the one closest to the event that creates the desync. Post-merge handles the pull case; lint-staged or a manual `pnpm install --frozen-lockfile` check in CI handles the change case.

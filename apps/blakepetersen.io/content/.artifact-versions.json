@@ -39,9 +39,13 @@
     "hash": "23c054d6c13e37e44ce79f6f4e69b35160533163d7fbd57afc505b5f5b630c92",
     "version": "2026.05.13.0"
   },
-  "pre-push-validation": {
-    "hash": "a816e91245d5f46c5d83bc7e38fd8e59d1a5dce55c2315a1bafdd3a78512ace5",
+  "post-merge-dep-sync": {
+    "hash": "dbd1a41373713b8c62d5f4720782592b9e5c0617f0bacbdecab3327fa6d99280",
     "version": "2026.05.13.0"
+  },
+  "pre-push-validation": {
+    "hash": "55eebbdd97caa3e3fdaf669704af3544b66152280a2611384a6fd6b3d3b7d0af",
+    "version": "2026.05.13.1"
   },
   "prettier-config": {
     "hash": "44c2365c0d70781af156a58a75cbf6b8ae26d452f3ec7e7add7bb969c908cc86",
