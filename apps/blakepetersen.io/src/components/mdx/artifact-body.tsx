@@ -69,7 +69,7 @@ export function ArtifactBody({ slug }: { slug: string }) {
   if (files.length === 1) {
     const file = files[0]
     return (
-      <CodeBlock filename={file.path} language={inferLanguage(file.path)} rawCode={file.content}>
+      <CodeBlock filename={file.path} language={inferLanguage(file.path)}>
         <pre className="overflow-x-auto p-4 m-0">
           <code>{file.content}</code>
         </pre>
@@ -88,7 +88,7 @@ export function ArtifactBody({ slug }: { slug: string }) {
       </TabsList>
       {files.map((file) => (
         <TabsContent key={file.path} value={file.path}>
-          <CodeBlock filename={file.path} language={inferLanguage(file.path)} rawCode={file.content}>
+          <CodeBlock filename={file.path} language={inferLanguage(file.path)}>
             <pre>
               <code>{file.content}</code>
             </pre>
