@@ -70,7 +70,7 @@ export function ArtifactBody({ slug }: { slug: string }) {
     const file = files[0]
     return (
       <CodeBlock filename={file.path} language={inferLanguage(file.path)} rawCode={file.content}>
-        <pre>
+        <pre className="overflow-x-auto p-4 m-0">
           <code>{file.content}</code>
         </pre>
       </CodeBlock>
