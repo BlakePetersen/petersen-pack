@@ -43,12 +43,12 @@ export default async function InstallContextViewPage({
   const fileCount = artifact.files.length
   const destinations = artifact.files.map((f) => f.path)
 
-  const artifactData = all.map((a) => ({
-    slug: a.slug,
-    name: a.name,
-    type: a.type,
-    files: a.files.map((f) => ({ path: f.path, content: f.content })),
-  }))
+  const artifactForRoute = {
+    slug: artifact.slug,
+    name: artifact.name,
+    type: artifact.type,
+    files: artifact.files.map((f) => ({ path: f.path, content: f.content })),
+  }
 
   return (
     <article className="mx-auto max-w-[900px] px-4 py-10">
@@ -85,7 +85,7 @@ export default async function InstallContextViewPage({
         <h2 className="mb-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">
           what gets written
         </h2>
-        <ArtifactDataProvider artifacts={artifactData}>
+        <ArtifactDataProvider artifacts={[artifactForRoute]}>
           <ArtifactBody slug={slug} />
         </ArtifactDataProvider>
       </section>
