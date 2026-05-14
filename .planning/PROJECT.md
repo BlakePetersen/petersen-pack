@@ -51,6 +51,9 @@ Developers (including Blake) can discover, reference, and apply opinionated AI-f
 - ✓ blakepetersen.io fully themed with light/dark mode, persisting toggle, FOUT-prevention blocking script — v1.3
 - ✓ Homepage, Skills Detail, About, Start Here, Collection Listing pages match Pencil designs in light + dark — v1.3
 - ✓ New artax-ui primitives — Badge (extended), Modal, PrevNextNav, AuthorNote, DecisionRationale with SSR-safe mounted-flag pattern — v1.3
+- ✓ Schema foundations — dxFields shape locked, slug invariants, CalVer behavior, perf baseline captured — v1.4 (Phase 27)
+- ✓ Authoring tooling — `blink scaffold`, `blink lint`, `blink port` subcommands; `<ArtifactBody>` MDX include component — v1.4 (Phase 28)
+- ✓ Content density — 20 net-new entries shipped on Variant 3 pattern: 5 skills + 7 configs + 4 hooks + 4 guides; Playwright voice-primitive torture test; generalized `/install/[type]/[slug]` install-context route — v1.4 (Phase 29)
 
 ### Active
 
@@ -158,4 +161,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-04-24 — milestone v1.4 Content Density started_
+_Last updated: 2026-05-14 — Phase 29 complete (20 net-new content entries on Variant 3 pattern); v1.4 milestone awaiting Phase 30 (Editorial Closure)_

@@ -151,10 +151,10 @@ Which phases cover which requirements. Filled by the roadmapper.
 | PORT-02 | Phase 28 | Complete |
 | PORT-03 | Phase 28 | Complete |
 | PORT-04 | Phase 28 | Complete |
-| CONTENT-01 | Phase 29 | Pending |
-| CONTENT-02 | Phase 29 | Pending |
-| CONTENT-03 | Phase 29 | Pending |
-| CONTENT-04 | Phase 29 | Pending |
+| CONTENT-01 | Phase 29 | Complete |
+| CONTENT-02 | Phase 29 | Complete |
+| CONTENT-03 | Phase 29 | Complete |
+| CONTENT-04 | Phase 29 | Complete |
 | CONTENT-05 | Phase 28 | Complete |
 | CONTENT-06 | Phase 29 | Complete |
 | DEBT-01 | Phase 30 | Pending |
