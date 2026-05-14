@@ -1,10 +1,11 @@
 // ABOUTME: Install-context view at /install/<type>/<slug> for skills, configs, and hooks.
-// ABOUTME: Foregrounds the `blink apply <type>/<slug>` command; file render is supporting context.
+// ABOUTME: Foregrounds the `blink apply <slug>` command; file render is supporting context.
 
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { readArtifactsJson } from '../../../../lib/artifacts'
 import { ArtifactBody, ArtifactDataProvider } from '../../../../components/mdx/artifact-body'
+import { getCollection } from '../../../../lib/collection-registry'
 import { CopyCommandBlock } from './copy-command-block'
 
 export const dynamicParams = true
@@ -30,16 +31,28 @@ export default async function InstallContextViewPage({
 
   if (!INSTALLABLE_TYPES.has(type)) notFound()
 
+  const artifactType = TYPE_SEGMENT_TO_ARTIFACT_TYPE[type]
   const all = readArtifactsJson()
-  const artifact = all.find((a) => a.slug === slug)
+  // Filter by type too — bare-slug uniqueness is only enforced within a
+  // collection, so cross-collection basename collisions would otherwise let
+  // /install/skills/foo resolve a config artifact named foo.
+  const artifact = all.find((a) => a.slug === slug && a.type === artifactType)
 
   if (!artifact) notFound()
 
-  // Guard against /install/hooks/<slug> resolving an artifact whose type is
-  // actually `skill` — the URL would lie about what gets written.
-  if (artifact.type !== TYPE_SEGMENT_TO_ARTIFACT_TYPE[type]) notFound()
+  // The content page URL is the velite slug verbatim. For nested content
+  // (e.g. skills/claude-code/writing-custom-skills) the route only exposes
+  // the bare trailing segment, so look up the sibling content entry to
+  // recover the path-shaped slug.
+  const contentItem = getCollection(type)
+    .getter()
+    .find(
+      (item) =>
+        item.slug === `${type}/${slug}` || item.slug.endsWith(`/${slug}`),
+    )
+  const contentHref = contentItem ? `/${contentItem.slug}` : null
 
-  const command = `blink apply ${artifact.type}/${slug}`
+  const command = `blink apply ${slug}`
   const fileCount = artifact.files.length
   const destinations = artifact.files.map((f) => f.path)
 
@@ -59,12 +72,15 @@ export default async function InstallContextViewPage({
         <h1 className="mb-1 font-mono text-2xl font-bold">{artifact.name}</h1>
         <p className="font-mono text-sm text-muted-foreground">
           Install context for{' '}
-          <Link
-            href={`/${type}/${slug}`}
-            className="text-primary hover:underline"
-          >
-            /{type}/{slug}
-          </Link>
+          {contentHref ? (
+            <Link href={contentHref} className="text-primary hover:underline">
+              {contentHref}
+            </Link>
+          ) : (
+            <span>
+              /{type}/{slug}
+            </span>
+          )}
         </p>
       </header>
 
