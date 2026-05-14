@@ -1,0 +1,15 @@
+{
+  "name": "Obsidian Vault — Monodex Pattern",
+  "description": "Obsidian core + community plugin config, daily-note template, reading-column CSS — single-vault Monodex setup",
+  "type": "config",
+  "files": [
+    { "path": ".obsidian/app.json", "merge": "replace" },
+    { "path": ".obsidian/core-plugins.json", "merge": "replace" },
+    { "path": ".obsidian/community-plugins.json", "merge": "replace" },
+    { "path": ".obsidian/daily-notes.json", "merge": "replace" },
+    { "path": ".obsidian/appearance.json", "merge": "replace" },
+    { "path": ".obsidian/snippets/no-fluff.css", "merge": "replace" },
+    { "path": "Templates/Daily.md", "merge": "replace" },
+    { "path": ".gitignore", "merge": "replace" }
+  ]
+}
