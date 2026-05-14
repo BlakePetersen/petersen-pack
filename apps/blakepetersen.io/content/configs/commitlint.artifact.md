@@ -10,47 +10,44 @@ devDependencies:
   husky: '^9.1.7'
 ---
 
-// ABOUTME: Conventional Commits enforcement with scoped vocabulary and body-line-length warning.
-// ABOUTME: Paired with .husky/commit-msg — `pnpm exec commitlint --edit "$1"`.
-
 export default {
-extends: ['@commitlint/config-conventional'],
-rules: {
-'scope-enum': [
-2,
-'always',
-[
-'site',
-'ui',
-'cli',
-'registry',
-'docs',
-'deps',
-'config',
-'release',
-],
-],
-'subject-case': [2, 'never', ['pascal-case', 'upper-case']],
-'subject-empty': [2, 'never'],
-'subject-full-stop': [2, 'never', '.'],
-'type-enum': [
-2,
-'always',
-[
-'feat',
-'fix',
-'docs',
-'style',
-'refactor',
-'perf',
-'test',
-'build',
-'ci',
-'chore',
-'revert',
-],
-],
-'body-max-line-length': [1, 'always', 100],
-'footer-max-line-length': [1, 'always', 100],
-},
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'scope-enum': [
+      2,
+      'always',
+      [
+        'site',
+        'ui',
+        'cli',
+        'registry',
+        'docs',
+        'deps',
+        'config',
+        'release',
+      ],
+    ],
+    'subject-case': [2, 'never', ['pascal-case', 'upper-case']],
+    'subject-empty': [2, 'never'],
+    'subject-full-stop': [2, 'never', '.'],
+    'type-enum': [
+      2,
+      'always',
+      [
+        'feat',
+        'fix',
+        'docs',
+        'style',
+        'refactor',
+        'perf',
+        'test',
+        'build',
+        'ci',
+        'chore',
+        'revert',
+      ],
+    ],
+    'body-max-line-length': [1, 'always', 100],
+    'footer-max-line-length': [1, 'always', 100],
+  },
 }

@@ -6,14 +6,8 @@ merge: replace
 destination: ~/.config/ghostty/config
 ---
 
-# ABOUTME: Ghostty config for a tmux + Vim + dark-mode macOS workflow.
-
-# ABOUTME: Reload with: ghostty --reload-config
-
 # ─────────────────────────────────────────────
-
 # Font
-
 # ─────────────────────────────────────────────
 
 font-family = "JetBrains Mono"
@@ -22,9 +16,7 @@ font-thicken = true
 adjust-cell-height = 10%
 
 # ─────────────────────────────────────────────
-
 # Theme + window chrome
-
 # ─────────────────────────────────────────────
 
 theme = "catppuccin-mocha"
@@ -38,9 +30,7 @@ macos-titlebar-style = "tabs"
 macos-option-as-alt = true
 
 # ─────────────────────────────────────────────
-
 # Cursor
-
 # ─────────────────────────────────────────────
 
 cursor-style = "bar"
@@ -48,26 +38,20 @@ cursor-style-blink = false
 cursor-color = "#cba6f7"
 
 # ─────────────────────────────────────────────
-
 # TERM — advertise xterm-256color so tmux + every tool just works
-
 # ─────────────────────────────────────────────
 
 term = "xterm-256color"
 
 # ─────────────────────────────────────────────
-
 # Shell integration
-
 # ─────────────────────────────────────────────
 
 shell-integration = "detect"
 shell-integration-features = "cursor,sudo,title"
 
 # ─────────────────────────────────────────────
-
 # Scrollback + clipboard
-
 # ─────────────────────────────────────────────
 
 scrollback-limit = 100000
@@ -80,9 +64,7 @@ clipboard-paste-protection = true
 clipboard-paste-bracketed-safe = true
 
 # ─────────────────────────────────────────────
-
 # Keybindings — disable tab/split shortcuts so tmux owns multiplexing
-
 # ─────────────────────────────────────────────
 
 keybind = cmd+t=unbind
@@ -95,7 +77,6 @@ keybind = clear_default=ctrl+tab
 keybind = clear_default=ctrl+shift+tab
 
 # Keep the basics that don't fight tmux
-
 keybind = cmd+c=copy_to_clipboard
 keybind = cmd+v=paste_from_clipboard
 keybind = cmd+k=clear_screen
@@ -104,9 +85,7 @@ keybind = cmd+minus=decrease_font_size:1
 keybind = cmd+zero=reset_font_size
 
 # ─────────────────────────────────────────────
-
 # Misc
-
 # ─────────────────────────────────────────────
 
 confirm-close-surface = false

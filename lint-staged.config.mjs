@@ -15,7 +15,12 @@ const APP_ROOT = path.resolve('apps/blakepetersen.io')
 
 export default {
   'apps/**/*.{js,jsx,ts,tsx}': ['pnpm eslint --quiet --fix'],
-  '*.{json,md}': ['prettier --write'],
+  // Exclude .artifact.md bodies — they carry language-specific payloads
+  // (JS / JSON / shell) that prettier mangles when treated as Markdown prose.
+  '*.{json,md}': (files) => {
+    const filtered = files.filter((f) => !f.endsWith('.artifact.md'))
+    return filtered.length ? [`prettier --write ${filtered.join(' ')}`] : []
+  },
   '**/*.{ts,tsx}': (files) => `fallow dead-code --quiet ${fileFlags(files)}`,
   // Only lint entry MDX (not `.artifact.md` companions — those use a different
   // frontmatter schema and are validated transitively by the artifact-pair rule
