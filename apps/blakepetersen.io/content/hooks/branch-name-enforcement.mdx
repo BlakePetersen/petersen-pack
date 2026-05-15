@@ -7,7 +7,7 @@ order: 5
 draft: false
 tags: ["git-hooks", "husky", "branch-naming", "conventions"]
 voice: ["decision-rationale"]
-requires_artifact: true
+requires_artifact: false
 decisions:
   - choice: "Enforce on pre-push, not pre-commit or branch create"
     rationale: "Local branches are scratch space — half of them never leave the laptop, get renamed twice before the first push, or are throwaway WIP that the developer rebases away. Enforcing at branch creation produces friction with no payoff for those cases. Enforcing on pre-push catches the moment the name actually starts to matter, which is when it lands on a ref the team will see."
@@ -16,7 +16,7 @@ related: ["hooks/pre-push-validation"]
 
 A branch-name enforcement hook checks the current branch against a prefix convention — `feat/...`, `fix/...`, `chore/...`, `docs/...`, `refactor/...`, `test/...`, `gsd/...`, plus a small protected list (`main`, `develop`) — and rejects the push if the name doesn't match. The point isn't to constrain creativity, it's to make `git log` and the PR list legible at a glance. A team that uses prefixes consistently can read a 40-PR backlog and group it by intent without opening anything. A team that doesn't ends up with a mix of `wip-stuff`, `johns-branch`, and `temp-fix-pls-review` that takes ten times longer to triage.
 
-This hook lives at `.husky/pre-push` (or installs alongside an existing pre-push hook — see the merge note below). It exits zero for protected branches and convention-matching branches, exits non-zero with a helpful message for everything else.
+The check exits zero for protected branches and convention-matching branches, exits non-zero with a helpful message for everything else. It ships as the first stage of the [pre-push validation hook](/hooks/pre-push-validation) — installing that single artifact gives you branch enforcement *plus* the typecheck/lint/test chain in one `.husky/pre-push`, with the branch check running first so a misnamed branch fails fast. This page explains the convention and the rationale behind it; see the [Coexisting with the Validation Chain](#coexisting-with-the-validation-chain) section below for how the two checks compose.
 
 ## Where in the Hook Chain
 
@@ -30,7 +30,7 @@ branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
 [ -z "$branch" ] && exit 0
 ```
 
-<a href="/install/hooks/branch-name-enforcement" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+<a href="/install/hooks/pre-push-validation" target="_blank" rel="noopener">View the combined .husky/pre-push →</a>
 
 Pre-commit feels stricter on paper — "you can't even commit on a non-conforming branch" sounds disciplined. In practice, it produces a noisy hook that fires fifty times for a single bad name (one rejection per commit attempt) and trains developers to ignore the message because they're going to rename eventually. Pre-push fires once, at the moment the name actually matters, and either lets the push through or asks for a rename. The signal-to-noise ratio is the entire reason to prefer it.
 
@@ -65,7 +65,7 @@ case "$branch" in
 esac
 ```
 
-<a href="/install/hooks/branch-name-enforcement" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+<a href="/install/hooks/pre-push-validation" target="_blank" rel="noopener">View the combined .husky/pre-push →</a>
 
 The prefix list mirrors the Conventional Commits types (`feat`, `fix`, `chore`, etc.) for symmetry — a `feat/...` branch produces `feat:` commits, which is the same vocabulary the team is already using in their commit history. The `gsd/...` prefix is a project-specific addition for branches that follow the GSD workflow (one branch per phase). Teams that don't use that workflow can drop the line; the rest stay.
 
@@ -87,30 +87,32 @@ echo "  Then re-push:     git push -u origin <new-name>" >&2
 exit 1
 ```
 
-<a href="/install/hooks/branch-name-enforcement" target="_blank" rel="noopener">View full .husky/pre-push →</a>
+<a href="/install/hooks/pre-push-validation" target="_blank" rel="noopener">View the combined .husky/pre-push →</a>
 
 The rename command is the load-bearing part. A developer who reads "your branch name is wrong" and has to look up the rename syntax is more likely to `--no-verify` past the hook than to fix the name. A developer who sees `git branch -m current-branch new-name` literally in the error output renames it. Hooks are a UX problem dressed up as a process problem.
 
-## Coexisting with Other Pre-push Hooks
+## Coexisting with the Validation Chain
 
-If `.husky/pre-push` already exists — for instance, the pre-push-validation hook from this same plan — the branch check needs to merge cleanly. The recommended layout is to put the branch check first (it's the fastest check, and a failure here means the slower checks would have wasted time):
+Branch enforcement and the expensive validation chain (typecheck, lint, tests) both want to own `.husky/pre-push`. Rather than ship two artifacts that silently overwrite each other, they're combined into a single hook — the [pre-push validation artifact](/install/hooks/pre-push-validation) — with the branch check running first:
 
 ```sh title=".husky/pre-push (combined)"
 # 1. Branch-name check (fail fast)
-case "$branch" in
-  main|master|develop|staging|production|feat/*|fix/*|chore/*|docs/*|refactor/*|test/*|perf/*|build/*|ci/*|revert/*|gsd/*)
-    ;;
-  *)
+branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+if [ -n "$branch" ]; then
+  protected_regex='^(main|master|develop|staging|production)$'
+  prefix_regex='^(feat|fix|chore|docs|refactor|test|perf|build|ci|revert|gsd)/.+'
+  if ! printf '%s' "$branch" | grep -qE "$protected_regex" &&
+     ! printf '%s' "$branch" | grep -qE "$prefix_regex"; then
     echo "✘ '$branch' violates branch-name convention" >&2
     exit 1
-    ;;
-esac
+  fi
+fi
 
 # 2. The expensive validation chain (typecheck, lint, tests)
 # ... pre-push-validation logic below ...
 ```
 
-The combined form folds the branch check into one `case` statement with the allow-patterns in the matching branch and the rejection in the default. That's the same shape as the standalone artifact, just inverted — the standalone exits 0 from matched branches and falls through to the rejection; the combined exits 0 in the same way and lets execution continue to the next check on success.
+Putting the branch check first is deliberate: it's the fastest check, and a failure here means the slower typecheck/lint/test pass would have wasted ten seconds on a branch that's getting renamed anyway. The standalone `case`-statement form shown in [The Convention](#the-convention) and the combined `grep -qE` form are equivalent — the combined hook just continues to the next check on success instead of `exit 0`.
 
 ## Team-vs-solo Trade-offs
 

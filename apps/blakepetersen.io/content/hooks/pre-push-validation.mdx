@@ -18,7 +18,7 @@ related: ["hooks/pre-commit/lint-staged-setup"]
 
 A pre-push hook runs after `git push` resolves the remote ref but before any objects upload, which makes it the last place a developer's machine can stop a bad push without involving the remote. If the hook exits non-zero, the push is aborted and nothing leaves the laptop. That's a stronger guarantee than pre-commit (which only stops the snapshot, not the publication) and a weaker one than CI (which catches everything but with a 2-5 minute round trip). The sweet spot for pre-push is "things that would embarrass you in PR review or break the dev branch for everyone else" — and the way you keep it sweet is by making it fast enough that no one ever reaches for `--no-verify`.
 
-This hook runs a three-step check — typecheck, lint, test — scoped to files that changed between the upstream tip and `HEAD`. In a 40-package monorepo that means typically 3-10 seconds total. The hook lives at `.husky/pre-push` and is wired up by Husky's `prepare` script at install time; no per-developer setup needed.
+This hook runs a three-step check — typecheck, lint, test — scoped to files that changed between the upstream tip and `HEAD`. In a 40-package monorepo that means typically 3-10 seconds total. The hook lives at `.husky/pre-push` and is wired up by Husky's `prepare` script at install time; no per-developer setup needed. It also runs a [branch-name convention check](/hooks/branch-name-enforcement) first, so a misnamed branch fails fast before the slower checks spend any time — the two checks share `.husky/pre-push` and ship as this single artifact.
 
 ## Where the Hook Lives
 

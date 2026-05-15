@@ -1,8 +1,4 @@
 {
-  "branch-name-enforcement": {
-    "hash": "110a9871736ec651d9018909faaefc787b1811aab0972cf3546b95b22436b00b",
-    "version": "2026.05.13.0"
-  },
   "claude-global": {
     "hash": "bd9390c4bfed41c07f37f2f4eadcead510b87ed53730c1641cc8f5c14bb11f32",
     "version": "2026.03.15.0"
@@ -52,8 +48,8 @@
     "version": "2026.05.13.2"
   },
   "pre-push-validation": {
-    "hash": "6035ec7912d9ace4789b04532e226089d75e12c5eac10c96906b08d3930f0cb8",
-    "version": "2026.05.13.3"
+    "hash": "471144f3cc9154a9f746a3b2f81ddb37c683b637eb039c72bbbc5254743a3bef",
+    "version": "2026.05.14.0"
   },
   "prettier-config": {
     "hash": "44c2365c0d70781af156a58a75cbf6b8ae26d452f3ec7e7add7bb969c908cc86",

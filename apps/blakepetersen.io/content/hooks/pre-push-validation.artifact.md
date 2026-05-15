@@ -1,6 +1,6 @@
 ---
 name: Pre-push Validation Hook
-description: Husky v9 pre-push hook running typecheck, lint, and Jest related-tests scoped to files changed between upstream and HEAD
+description: Husky v9 pre-push hook — enforces the branch-name convention, then runs typecheck, lint, and Jest related-tests scoped to files changed between upstream and HEAD
 type: hook
 merge: replace
 destination: .husky/pre-push
@@ -10,6 +10,36 @@ devDependencies:
 
 set -e
 
+# ── Branch-name enforcement ───────────────────────────────────
+# Reject pushes from branches that don't match the prefix convention.
+# Runs first so a misnamed branch fails fast, before the slower checks.
+branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+
+# Detached HEAD pushes — let them through (rare, but
+# `git push origin <sha>:refs/...` is valid).
+if [ -n "$branch" ]; then
+  # grep -qE against anchored regexes — equivalent to a case-glob, but the
+  # patterns live in single-quoted strings that survive any formatter pass.
+  protected_regex='^(main|master|develop|staging|production)$'
+  prefix_regex='^(feat|fix|chore|docs|refactor|test|perf|build|ci|revert|gsd)/.+'
+
+  if ! printf '%s' "$branch" | grep -qE "$protected_regex" &&
+     ! printf '%s' "$branch" | grep -qE "$prefix_regex"; then
+    echo "" >&2
+    echo "✘ pre-push: branch '$branch' violates the naming convention" >&2
+    echo "" >&2
+    echo "  Allowed prefixes: feat/, fix/, chore/, docs/, refactor/," >&2
+    echo "                    test/, perf/, build/, ci/, revert/, gsd/" >&2
+    echo "  Protected:        main, master, develop, staging, production" >&2
+    echo "" >&2
+    echo "  Rename with:  git branch -m $branch <new-name>" >&2
+    echo "  Then re-push: git push -u origin <new-name>" >&2
+    echo "" >&2
+    exit 1
+  fi
+fi
+
+# ── Validation: typecheck + lint + related tests ──────────────
 # Resolve the comparison base — prefer upstream, fall back to origin/main,
 # then to the repo's root commit for fresh clones without a remote.
 upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "")
