@@ -1,0 +1,247 @@
+{
+  "title": "Travel",
+  "slug": "travel",
+  "description": "Travel photography capturing destinations and adventures",
+  "featured": false,
+  "images": [
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1457135222293-C14Z5TFA72EPOP4996H2/Hallway_2.jpg",
+      "altText": "Travel - Image 1",
+      "width": 1602,
+      "height": 2400,
+      "cachedFilename": "travel-0.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452729540603-3IEJCSH3UR8PGD6QWYYI/_DSC0381.jpg",
+      "altText": "Travel - Image 2",
+      "width": 2400,
+      "height": 1601,
+      "cachedFilename": "travel-1.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452052647872-B9UIGQPRQZPQ67AKYJQQ/_DSC6328.jpg",
+      "altText": "Travel - Image 3",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "travel-2.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1448132116135-OQPPQ3IX8MTFIEAEGWQP/_DSC6346.jpg",
+      "altText": "Travel - Image 4",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "travel-3.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1454310502910-9N21E877MGRYPBPRY42V/_DSC3841.jpg",
+      "altText": "Travel - Image 5",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "travel-4.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1454305514524-JLZ2OX8SK9DLOX1NF33U/_DSC3818.jpg",
+      "altText": "Travel - Image 6",
+      "width": 1602,
+      "height": 2400,
+      "cachedFilename": "travel-5.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452052630855-Z6N6VYRJNJFNBIHZNDRX/_DSC2275_Masterfile-3.jpg",
+      "altText": "Travel - Image 7",
+      "width": 2400,
+      "height": 1601,
+      "cachedFilename": "travel-6.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1447455127716-GN1VZATWK1NKBMG42WMW/_DSC6115.jpg",
+      "altText": "Travel - Image 8",
+      "width": 1602,
+      "height": 2400,
+      "cachedFilename": "travel-7.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452052634419-BVN0HVSSS6B4OKRF4MY7/_DSC0187_Masterfile.jpg",
+      "altText": "Travel - Image 9",
+      "width": 2400,
+      "height": 1596,
+      "cachedFilename": "travel-8.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1447455168742-AWOKPJJWX4AOH35A3M13/_DSC9806.jpg",
+      "altText": "Travel - Image 10",
+      "width": 1597,
+      "height": 2400,
+      "cachedFilename": "travel-9.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1448132103559-SHV96XB4CUOPW9AHNKNI/_DSC0317.jpg",
+      "altText": "Travel - Image 11",
+      "width": 2400,
+      "height": 1597,
+      "cachedFilename": "travel-10.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1617751064660-II22XZ5VPU0BOLM904VR/_DSC2298.jpg",
+      "altText": "Travel - Image 12",
+      "width": 2048,
+      "height": 1367,
+      "cachedFilename": "travel-11.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1515452079011-OVMRTJOH62RGPIJOECSG/_DSC4140.jpg",
+      "altText": "Travel - Image 13",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "travel-12.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1496808045010-NBVMA0EU77QR7YDYTBDL/_DSC9409.jpg",
+      "altText": "Travel - Image 14",
+      "width": 1602,
+      "height": 2400,
+      "cachedFilename": "travel-13.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1496807978506-OQ9LPZ8B8B38Y57JUGFY/_DSC4660.jpg",
+      "altText": "Travel - Image 15",
+      "width": 2400,
+      "height": 1601,
+      "cachedFilename": "travel-14.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452052655182-18MIBUM46K4HWGYJFM2O/_DSC9261.jpg",
+      "altText": "Travel - Image 16",
+      "width": 2400,
+      "height": 1601,
+      "cachedFilename": "travel-15.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452052654866-JWURTGV3UUDMDIBZADLU/_DSC9433.jpg",
+      "altText": "Travel - Image 17",
+      "width": 2400,
+      "height": 1601,
+      "cachedFilename": "travel-16.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1492816729956-QTK8NMGSY6ZQNNFOWR03/_DSC8466.jpg",
+      "altText": "Travel - Image 18",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "travel-17.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1496807913933-6XUZ9TBEFEBOM1EX72BB/_DSC4596.jpg",
+      "altText": "Travel - Image 19",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "travel-18.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1492816688001-BODRQD66AOQ4FMYN3BS8/_DSC6705.jpg",
+      "altText": "Travel - Image 20",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "travel-19.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1441258393586-8V4LZBDRL96MADQCVHKH/_DSC4874.jpg",
+      "altText": "Travel - Image 21",
+      "width": 1602,
+      "height": 2400,
+      "cachedFilename": "travel-20.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1441258377359-K5F3I4CAHJ36I0COGAS8/_DSC2775.jpg",
+      "altText": "Travel - Image 22",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "travel-21.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1441258399193-6CINQKQT5S4NUPUNCQI6/_DSC5043.jpg",
+      "altText": "Travel - Image 23",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "travel-22.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1441258367526-5QNPBCQUS4SSHR5QU9KN/_DSC2882.jpg",
+      "altText": "Travel - Image 24",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "travel-23.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1441258410302-2ZEISCGPPKH3526YR6CY/_DSC5307.jpg",
+      "altText": "Travel - Image 25",
+      "width": 1602,
+      "height": 2400,
+      "cachedFilename": "travel-24.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1441258401676-D0HDSS8ES2SD7H4UZDAB/_DSC5019.jpg",
+      "altText": "Travel - Image 26",
+      "width": 2400,
+      "height": 1600,
+      "cachedFilename": "travel-25.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1441258404598-67J6GM64V4EYVU3N8V04/_DSC5370.jpg",
+      "altText": "Travel - Image 27",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "travel-26.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1618011466588-R4UJT71CP4BNPZSS1VRC/_DSC5665.jpg",
+      "altText": "Travel - Image 28",
+      "width": 2000,
+      "height": 1335,
+      "cachedFilename": "travel-27.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1447641576067-ND7W80IYZK46N5OM19E1/_DSC5663.jpg",
+      "altText": "Travel - Image 29",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "travel-28.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1526492993316-79LMS3Q34PEQNM4W8NO8/08_DSC1524.jpg",
+      "altText": "Travel - Image 30",
+      "width": 2400,
+      "height": 1602,
+      "cachedFilename": "travel-29.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452730371375-FNYPL8MZ3KDGP67UEIIC/_DSC0448.jpg",
+      "altText": "Travel - Image 31",
+      "width": 1600,
+      "height": 2400,
+      "cachedFilename": "travel-30.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452052643068-BTVRY3XCS1S2EYIBYSWX/_DSC3303.jpg",
+      "altText": "Travel - Image 32",
+      "width": 2400,
+      "height": 1601,
+      "cachedFilename": "travel-31.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1441258421150-KBMXW9DZQIH21K550OLT/_DSC7232.jpg",
+      "altText": "Travel - Image 33",
+      "width": 2400,
+      "height": 1596,
+      "cachedFilename": "travel-32.webp"
+    },
+    {
+      "url": "https://images.squarespace-cdn.com/content/v1/55e7bf3fe4b067b60920223e/1452811186369-7KQX3G7FY6DWCFXSUY1B/_DSC7366.jpg",
+      "altText": "Travel - Image 34",
+      "width": 2400,
+      "height": 1601,
+      "cachedFilename": "travel-33.webp"
+    }
+  ],
+  "scrapedAt": "2025-11-17T05:57:32.350Z"
+}

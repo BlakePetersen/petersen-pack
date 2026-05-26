@@ -1,0 +1,2617 @@
+
+> Luna@1.0.0 upscale:migrate /Users/blake/Sites/Luna
+> tsx scripts/upscale-and-migrate.ts
+
+🚀 Starting image upscale and migration process
+
+Configuration:
+  - Upscale factor: 2x
+  - Batch size: 5
+  - Dry run: false
+  - Max pixels for upscaling: 2,096,704
+
+📊 Found 343 images to process
+
+
+📦 Processing batch 1/69
+
+🖼️  Processing: cmh88hqja00018zjlpcj181it
+  Original URL: /uploads/1760640025349-E582D0C9-EE51-40D7-A6B9-CC67C95F14F6.webp
+  📐 Dimensions: 1800x2400 (4,320,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqja00018zjlpcj181it.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjh00038zjlqo1nkk99
+  Original URL: /uploads/animals-1760633928321-0.jpg
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjh00038zjlqo1nkk99.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqji00058zjlfc7ch3gv
+  Original URL: /uploads/animals-1760633929010-1.jpg
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqji00058zjlfc7ch3gv.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjm000d8zjl56wso4le
+  Original URL: /uploads/animals-1760633930671-5.jpg
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjm000d8zjl56wso4le.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjn000f8zjl27m8baww
+  Original URL: /uploads/branding-1760633932867-0.jpg
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjn000f8zjl27m8baww.jpg
+  ✅ Database updated
+
+📦 Processing batch 2/69
+
+🖼️  Processing: cmh88hqjn000h8zjlrxlasi2m
+  Original URL: /uploads/branding-1760633933334-1.jpg
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjn000h8zjlrxlasi2m.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjo000j8zjluk4z0pf7
+  Original URL: /uploads/branding-1760633933710-2.jpg
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjo000j8zjluk4z0pf7.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjq000l8zjl9lo1eb1a
+  Original URL: /uploads/branding-1760633934165-3.jpg
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjq000l8zjl9lo1eb1a.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjr000n8zjlly59jrhd
+  Original URL: /uploads/branding-1760633934559-4.jpg
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjr000n8zjlly59jrhd.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjs000p8zjlba5wmfhi
+  Original URL: /uploads/branding-1760633934870-5.jpg
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjs000p8zjlba5wmfhi.jpg
+  ✅ Database updated
+
+📦 Processing batch 3/69
+
+🖼️  Processing: cmh88hqjs000r8zjl27ylgdaw
+  Original URL: /uploads/headshots-1760633931300-0.jpg
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjs000r8zjl27ylgdaw.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjt000t8zjl8akuv8f7
+  Original URL: /uploads/headshots-1760633931737-1.jpg
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjt000t8zjl8akuv8f7.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjj00078zjl23a1vunz
+  Original URL: /uploads/animals-1760633929422-2.jpg
+  📐 Dimensions: 2400x1597 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjj00078zjl23a1vunz.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjk00098zjlrgzmn3r0
+  Original URL: /uploads/animals-1760633929891-3.jpg
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjk00098zjlrgzmn3r0.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88hqjl000b8zjlt921fj9o
+  Original URL: /uploads/animals-1760633930258-4.jpg
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88hqjl000b8zjlt921fj9o.jpg
+  ✅ Database updated
+
+📦 Processing batch 4/69
+
+🖼️  Processing: cmh88ls0w00028zbbrzagi1in
+  Original URL: /uploads/scraped/1761515091242-0-animals.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ls0w00028zbbrzagi1in.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ltco00048zbbe332l12r
+  Original URL: /uploads/scraped/1761515093265-1-animals.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ltco00048zbbe332l12r.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88luqu00068zbb62nwxsms
+  Original URL: /uploads/scraped/1761515094982-2-animals.webp
+  📐 Dimensions: 2400x1597 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88luqu00068zbb62nwxsms.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88lw7b00088zbbgdithhz0
+  Original URL: /uploads/scraped/1761515096790-3-animals.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88lw7b00088zbbgdithhz0.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88lxlb000a8zbb6u9mdy4w
+  Original URL: /uploads/scraped/1761515098677-4-animals.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88lxlb000a8zbb6u9mdy4w.webp
+  ✅ Database updated
+
+📦 Processing batch 5/69
+
+🖼️  Processing: cmh88lz2h000c8zbbk20j5bql
+  Original URL: /uploads/scraped/1761515100476-5-animals.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88lz2h000c8zbbk20j5bql.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88m0fj000e8zbb0db5u4se
+  Original URL: /uploads/scraped/1761515102390-6-animals.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88m0fj000e8zbb0db5u4se.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88m1yw000g8zbbfebefnmg
+  Original URL: /uploads/scraped/1761515104155-7-animals.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88m1yw000g8zbbfebefnmg.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88m3af000i8zbbhdx6kotc
+  Original URL: /uploads/scraped/1761515106149-8-animals.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88m3af000i8zbbhdx6kotc.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88m4tr000k8zbbc8i9trsj
+  Original URL: /uploads/scraped/1761515107858-9-animals.webp
+  📐 Dimensions: 2400x1596 (3,830,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88m4tr000k8zbbc8i9trsj.webp
+  ✅ Database updated
+
+📦 Processing batch 6/69
+
+🖼️  Processing: cmh88m6qi000n8zbbhr6dy8vz
+  Original URL: /uploads/scraped/1761515110619-0-animals-and-people.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88m6qi000n8zbbhr6dy8vz.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88m80e000p8zbb5oqcxarb
+  Original URL: /uploads/scraped/1761515112326-1-animals-and-people.webp
+  📐 Dimensions: 2048x1365 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88m80e000p8zbb5oqcxarb.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88m99k000r8zbb2rwczjr6
+  Original URL: /uploads/scraped/1761515113977-2-animals-and-people.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88m99k000r8zbb2rwczjr6.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88n4ur00208zbbxf3yyaun
+  Original URL: /uploads/scraped/1761515154886-0-boudoir.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88n4ur00208zbbxf3yyaun.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88n68600228zbb7cy5vyjt
+  Original URL: /uploads/scraped/1761515156544-1-boudoir.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88n68600228zbb7cy5vyjt.webp
+  ✅ Database updated
+
+📦 Processing batch 7/69
+
+🖼️  Processing: cmh88n7j700248zbb8z4n5w4p
+  Original URL: /uploads/scraped/1761515158322-2-boudoir.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88n7j700248zbb8z4n5w4p.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88n8u000268zbb92llo9oq
+  Original URL: /uploads/scraped/1761515160015-3-boudoir.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88n8u000268zbb92llo9oq.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88na5c00288zbbi33y4g9o
+  Original URL: /uploads/scraped/1761515161702-4-boudoir.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88na5c00288zbbi33y4g9o.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88nbip002a8zbbujpwuuq1
+  Original URL: /uploads/scraped/1761515163404-5-boudoir.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nbip002a8zbbujpwuuq1.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ncs2002c8zbb794bjmgc
+  Original URL: /uploads/scraped/1761515165182-6-boudoir.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ncs2002c8zbb794bjmgc.webp
+  ✅ Database updated
+
+📦 Processing batch 8/69
+
+🖼️  Processing: cmh88ne2z002e8zbbzanuash8
+  Original URL: /uploads/scraped/1761515166815-7-boudoir.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ne2z002e8zbbzanuash8.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88nfcg002g8zbbsw11b7oo
+  Original URL: /uploads/scraped/1761515168504-8-boudoir.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nfcg002g8zbbsw11b7oo.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ngov002i8zbbd2se5rr5
+  Original URL: /uploads/scraped/1761515170140-9-boudoir.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ngov002i8zbbd2se5rr5.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ni1s002k8zbbqjmx2jy2
+  Original URL: /uploads/scraped/1761515171883-10-boudoir.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ni1s002k8zbbqjmx2jy2.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88njcr002m8zbbvp6igl9r
+  Original URL: /uploads/scraped/1761515173644-11-boudoir.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88njcr002m8zbbvp6igl9r.webp
+  ✅ Database updated
+
+📦 Processing batch 9/69
+
+🖼️  Processing: cmh88nkl5002o8zbbnqmfmyia
+  Original URL: /uploads/scraped/1761515175335-12-boudoir.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nkl5002o8zbbnqmfmyia.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88nlye002q8zbbimknvrak
+  Original URL: /uploads/scraped/1761515176933-13-boudoir.webp
+  📐 Dimensions: 1601x2400 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nlye002q8zbbimknvrak.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88nn9g002s8zbbpxq35nwu
+  Original URL: /uploads/scraped/1761515178707-14-boudoir.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nn9g002s8zbbpxq35nwu.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88noi6002u8zbbmwkv8v7x
+  Original URL: /uploads/scraped/1761515180401-15-boudoir.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88noi6002u8zbbmwkv8v7x.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88npo8002w8zbb1q1tn7sw
+  Original URL: /uploads/scraped/1761515182010-16-boudoir.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88npo8002w8zbb1q1tn7sw.webp
+  ✅ Database updated
+
+📦 Processing batch 10/69
+
+🖼️  Processing: cmh88nrfg002z8zbbp9gd0jwa
+  Original URL: /uploads/scraped/1761515183962-0-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nrfg002z8zbbp9gd0jwa.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88nsqq00318zbbbo3ai4sq
+  Original URL: /uploads/scraped/1761515185801-1-lifestyle-branding.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nsqq00318zbbbo3ai4sq.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qfh6006t8zbbdn3wvxzg
+  Original URL: /uploads/scraped/1761515308458-11-fantasy.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qfh6006t8zbbdn3wvxzg.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88nu3700338zbbc5kz24nl
+  Original URL: /uploads/scraped/1761515187505-2-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nu3700338zbbc5kz24nl.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88nvff00358zbb8wkqyopg
+  Original URL: /uploads/scraped/1761515189248-3-lifestyle-branding.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nvff00358zbb8wkqyopg.webp
+  ✅ Database updated
+
+📦 Processing batch 11/69
+
+🖼️  Processing: cmh88nwo200378zbbinl7bhha
+  Original URL: /uploads/scraped/1761515190983-4-lifestyle-branding.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nwo200378zbbinl7bhha.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ny9w00398zbbey9kzg94
+  Original URL: /uploads/scraped/1761515192592-5-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ny9w00398zbbey9kzg94.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88nzl7003b8zbb3bew5t8k
+  Original URL: /uploads/scraped/1761515194673-6-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88nzl7003b8zbb3bew5t8k.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88o0vs003d8zbb3e50w57u
+  Original URL: /uploads/scraped/1761515196375-7-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88o0vs003d8zbb3e50w57u.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88o278003f8zbbf1h0l271
+  Original URL: /uploads/scraped/1761515198052-8-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88o278003f8zbbf1h0l271.webp
+  ✅ Database updated
+
+📦 Processing batch 12/69
+
+🖼️  Processing: cmh88o3jh003h8zbbqvakym33
+  Original URL: /uploads/scraped/1761515199761-9-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88o3jh003h8zbbqvakym33.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88o4tk003j8zbbrv9nnhsu
+  Original URL: /uploads/scraped/1761515201499-10-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88o4tk003j8zbbrv9nnhsu.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88o67x003l8zbb67jxgnoz
+  Original URL: /uploads/scraped/1761515203155-11-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88o67x003l8zbb67jxgnoz.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88o7m1003n8zbbjiyuhgow
+  Original URL: /uploads/scraped/1761515204972-12-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88o7m1003n8zbbjiyuhgow.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88o92b003p8zbbmwe0iv2x
+  Original URL: /uploads/scraped/1761515206774-13-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88o92b003p8zbbmwe0iv2x.webp
+  ✅ Database updated
+
+📦 Processing batch 13/69
+
+🖼️  Processing: cmh88oaci003r8zbbxfqd7012
+  Original URL: /uploads/scraped/1761515208655-14-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88oaci003r8zbbxfqd7012.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88obn8003t8zbb1mbmuoyd
+  Original URL: /uploads/scraped/1761515210318-15-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88obn8003t8zbb1mbmuoyd.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88od3r003v8zbbe8vxs4x8
+  Original URL: /uploads/scraped/1761515212000-16-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88od3r003v8zbbe8vxs4x8.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88oean003x8zbbfbtfj2b6
+  Original URL: /uploads/scraped/1761515213893-17-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88oean003x8zbbfbtfj2b6.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ofpd003z8zbbzpxaizu0
+  Original URL: /uploads/scraped/1761515215435-18-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ofpd003z8zbbzpxaizu0.webp
+  ✅ Database updated
+
+📦 Processing batch 14/69
+
+🖼️  Processing: cmh88ogys00418zbbx2nl7nz2
+  Original URL: /uploads/scraped/1761515217260-19-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ogys00418zbbx2nl7nz2.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88oibn00438zbbs6wxybds
+  Original URL: /uploads/scraped/1761515218896-20-lifestyle-branding.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88oibn00438zbbs6wxybds.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ojow00458zbbdncks1lj
+  Original URL: /uploads/scraped/1761515220655-21-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ojow00458zbbdncks1lj.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ol0a00478zbbfs7mvksy
+  Original URL: /uploads/scraped/1761515222429-22-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ol0a00478zbbfs7mvksy.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88om8v00498zbbgdgoqhwh
+  Original URL: /uploads/scraped/1761515224134-23-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88om8v00498zbbgdgoqhwh.webp
+  ✅ Database updated
+
+📦 Processing batch 15/69
+
+🖼️  Processing: cmh88onog004b8zbbclc7ekuq
+  Original URL: /uploads/scraped/1761515225738-24-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88onog004b8zbbclc7ekuq.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88op27004d8zbb1u3fhsqj
+  Original URL: /uploads/scraped/1761515227596-25-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88op27004d8zbb1u3fhsqj.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88oqfp004f8zbbhj69ymiz
+  Original URL: /uploads/scraped/1761515229388-26-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88oqfp004f8zbbhj69ymiz.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88orpg004h8zbbupr9uepl
+  Original URL: /uploads/scraped/1761515231171-27-lifestyle-branding.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88orpg004h8zbbupr9uepl.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ot1b004j8zbbl9yjkneb
+  Original URL: /uploads/scraped/1761515232816-28-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ot1b004j8zbbl9yjkneb.webp
+  ✅ Database updated
+
+📦 Processing batch 16/69
+
+🖼️  Processing: cmh88oucf004l8zbbthihn59m
+  Original URL: /uploads/scraped/1761515234539-29-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88oucf004l8zbbthihn59m.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ovq3004n8zbbffcpmhwe
+  Original URL: /uploads/scraped/1761515236235-30-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ovq3004n8zbbffcpmhwe.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ox21004p8zbbfo67ckqc
+  Original URL: /uploads/scraped/1761515238025-31-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ox21004p8zbbfo67ckqc.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88oyiz004r8zbboczew4lf
+  Original URL: /uploads/scraped/1761515239749-32-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88oyiz004r8zbboczew4lf.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ozxy004t8zbby3wuta5i
+  Original URL: /uploads/scraped/1761515241658-33-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ozxy004t8zbby3wuta5i.webp
+  ✅ Database updated
+
+📦 Processing batch 17/69
+
+🖼️  Processing: cmh88p1ox004v8zbbqcgiljzr
+  Original URL: /uploads/scraped/1761515243489-34-lifestyle-branding.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88p1ox004v8zbbqcgiljzr.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88p31f004x8zbb8w9mtsvh
+  Original URL: /uploads/scraped/1761515245757-35-lifestyle-branding.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88p31f004x8zbb8w9mtsvh.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88p4gv004z8zbbu73ca7ed
+  Original URL: /uploads/scraped/1761515247504-36-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88p4gv004z8zbbu73ca7ed.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88p5r400518zbb2z46v426
+  Original URL: /uploads/scraped/1761515249355-37-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88p5r400518zbb2z46v426.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88p77q00538zbbl37jxnuw
+  Original URL: /uploads/scraped/1761515251021-38-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88p77q00538zbbl37jxnuw.webp
+  ✅ Database updated
+
+📦 Processing batch 18/69
+
+🖼️  Processing: cmh88p8j500558zbbtvx4lyrh
+  Original URL: /uploads/scraped/1761515252914-39-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88p8j500558zbbtvx4lyrh.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88p9v800578zbb090nlz5x
+  Original URL: /uploads/scraped/1761515254622-40-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88p9v800578zbb090nlz5x.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88pb7s00598zbbylm2fmed
+  Original URL: /uploads/scraped/1761515256353-41-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pb7s00598zbbylm2fmed.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88pclr005b8zbb6mx9vfbl
+  Original URL: /uploads/scraped/1761515258100-42-lifestyle-branding.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pclr005b8zbb6mx9vfbl.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88pdyd005d8zbbesx2e6tf
+  Original URL: /uploads/scraped/1761515259899-43-lifestyle-branding.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pdyd005d8zbbesx2e6tf.webp
+  ✅ Database updated
+
+📦 Processing batch 19/69
+
+🖼️  Processing: cmh88pfez005f8zbbcwz9i95w
+  Original URL: /uploads/scraped/1761515261650-44-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pfez005f8zbbcwz9i95w.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ph82005h8zbbse0xb6w7
+  Original URL: /uploads/scraped/1761515263543-45-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ph82005h8zbbse0xb6w7.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88pith005j8zbbc5c9fsvo
+  Original URL: /uploads/scraped/1761515265886-46-lifestyle-branding.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pith005j8zbbc5c9fsvo.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88pkfi005l8zbbjac6y5k2
+  Original URL: /uploads/scraped/1761515267952-47-lifestyle-branding.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pkfi005l8zbbjac6y5k2.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88plwc005n8zbbscyoaov1
+  Original URL: /uploads/scraped/1761515270043-48-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88plwc005n8zbbscyoaov1.webp
+  ✅ Database updated
+
+📦 Processing batch 20/69
+
+🖼️  Processing: cmh88pn5u005p8zbbasm67475
+  Original URL: /uploads/scraped/1761515271944-49-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pn5u005p8zbbasm67475.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88pojm005r8zbblesx5cpo
+  Original URL: /uploads/scraped/1761515273582-50-lifestyle-branding.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pojm005r8zbblesx5cpo.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ppwz005t8zbbiy1gb8m0
+  Original URL: /uploads/scraped/1761515275375-51-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ppwz005t8zbbiy1gb8m0.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88prdt005v8zbb32g9duus
+  Original URL: /uploads/scraped/1761515277153-52-lifestyle-branding.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88prdt005v8zbb32g9duus.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ptb9005y8zbby6y56t3z
+  Original URL: /uploads/scraped/1761515279805-0-headshots.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ptb9005y8zbby6y56t3z.webp
+  ✅ Database updated
+
+📦 Processing batch 21/69
+
+🖼️  Processing: cmh88pull00608zbbtpi9qd73
+  Original URL: /uploads/scraped/1761515281554-1-headshots.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pull00608zbbtpi9qd73.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88pvwt00628zbbkfvmqz95
+  Original URL: /uploads/scraped/1761515283220-2-headshots.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pvwt00628zbbkfvmqz95.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88px8t00648zbb1jc3zgut
+  Original URL: /uploads/scraped/1761515284920-3-headshots.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88px8t00648zbb1jc3zgut.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88pz4l00678zbb9vwgkc7k
+  Original URL: /uploads/scraped/1761515287119-0-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88pz4l00678zbb9vwgkc7k.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88q0z700698zbbtclm6q6r
+  Original URL: /uploads/scraped/1761515289090-1-fantasy.webp
+  📐 Dimensions: 2400x1518 (3,643,200 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88q0z700698zbbtclm6q6r.webp
+  ✅ Database updated
+
+📦 Processing batch 22/69
+
+🖼️  Processing: cmh88q295006b8zbbibl3jrx2
+  Original URL: /uploads/scraped/1761515291487-2-fantasy.webp
+  📐 Dimensions: 1800x1202 (2,163,600 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88q295006b8zbbibl3jrx2.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88q3wc006d8zbb89d6vzl3
+  Original URL: /uploads/scraped/1761515293142-3-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88q3wc006d8zbb89d6vzl3.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88q5i8006f8zbbm7o78vaj
+  Original URL: /uploads/scraped/1761515295271-4-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88q5i8006f8zbbm7o78vaj.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88q6wm006h8zbb0q1gmj17
+  Original URL: /uploads/scraped/1761515297357-5-fantasy.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88q6wm006h8zbb0q1gmj17.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88q8g9006j8zbbtttm7pwt
+  Original URL: /uploads/scraped/1761515299169-6-fantasy.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88q8g9006j8zbbtttm7pwt.webp
+  ✅ Database updated
+
+📦 Processing batch 23/69
+
+🖼️  Processing: cmh88q9lx006l8zbbkl50oqbs
+  Original URL: /uploads/scraped/1761515301173-7-fantasy.webp
+  📐 Dimensions: 1500x1001 (1,501,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515301173-7-fantasy.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88q9lx006l8zbbkl50oqbs.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88qb42006n8zbb5fjfhr80
+  Original URL: /uploads/scraped/1761515302674-8-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qb42006n8zbb5fjfhr80.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qcgm006p8zbbckm8dtqv
+  Original URL: /uploads/scraped/1761515304623-9-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qcgm006p8zbbckm8dtqv.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qe2m006r8zbb2rkh4qwu
+  Original URL: /uploads/scraped/1761515306370-10-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qe2m006r8zbb2rkh4qwu.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qgsm006v8zbbi1h00rjz
+  Original URL: /uploads/scraped/1761515310278-12-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qgsm006v8zbbi1h00rjz.webp
+  ✅ Database updated
+
+📦 Processing batch 24/69
+
+🖼️  Processing: cmh88qiaa006x8zbbspdh6vxc
+  Original URL: /uploads/scraped/1761515311987-13-fantasy.webp
+  📐 Dimensions: 2400x1518 (3,643,200 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qiaa006x8zbbspdh6vxc.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qjm6006z8zbbckpjraid
+  Original URL: /uploads/scraped/1761515313919-14-fantasy.webp
+  📐 Dimensions: 2400x1518 (3,643,200 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qjm6006z8zbbckpjraid.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ql5400718zbbfuxb8c45
+  Original URL: /uploads/scraped/1761515315641-15-fantasy.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ql5400718zbbfuxb8c45.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qml900738zbbdp4inax3
+  Original URL: /uploads/scraped/1761515317621-16-fantasy.webp
+  📐 Dimensions: 2400x1873 (4,495,200 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qml900738zbbdp4inax3.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qo1200758zbbpg3i1gw0
+  Original URL: /uploads/scraped/1761515319497-17-fantasy.webp
+  📐 Dimensions: 2400x1885 (4,524,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qo1200758zbbpg3i1gw0.webp
+  ✅ Database updated
+
+📦 Processing batch 25/69
+
+🖼️  Processing: cmh88qpcy00778zbb68q2759j
+  Original URL: /uploads/scraped/1761515321363-18-fantasy.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qpcy00778zbb68q2759j.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qqq200798zbbwor9matn
+  Original URL: /uploads/scraped/1761515323086-19-fantasy.webp
+  📐 Dimensions: 2400x1518 (3,643,200 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qqq200798zbbwor9matn.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qs21007b8zbbzbholh1q
+  Original URL: /uploads/scraped/1761515324855-20-fantasy.webp
+  📐 Dimensions: 2400x1573 (3,775,200 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qs21007b8zbbzbholh1q.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qtjy007d8zbbc9xz0bfu
+  Original URL: /uploads/scraped/1761515326581-21-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qtjy007d8zbbc9xz0bfu.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qux8007f8zbbqvcrjd2j
+  Original URL: /uploads/scraped/1761515328523-22-fantasy.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qux8007f8zbbqvcrjd2j.webp
+  ✅ Database updated
+
+📦 Processing batch 26/69
+
+🖼️  Processing: cmh88qwm4007h8zbb5nxoaw3i
+  Original URL: /uploads/scraped/1761515330297-23-fantasy.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qwm4007h8zbb5nxoaw3i.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qy1w007j8zbbkuq9zz5a
+  Original URL: /uploads/scraped/1761515332488-24-fantasy.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qy1w007j8zbbkuq9zz5a.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88qzem007l8zbbcfm10cxp
+  Original URL: /uploads/scraped/1761515334352-25-fantasy.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88qzem007l8zbbcfm10cxp.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88r0vj007n8zbbe44wbhu1
+  Original URL: /uploads/scraped/1761515336126-26-fantasy.webp
+  📐 Dimensions: 2400x1856 (4,454,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88r0vj007n8zbbe44wbhu1.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88r2dy007p8zbbcggd8itz
+  Original URL: /uploads/scraped/1761515338012-27-fantasy.webp
+  📐 Dimensions: 2400x2400 (5,760,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88r2dy007p8zbbcggd8itz.webp
+  ✅ Database updated
+
+📦 Processing batch 27/69
+
+🖼️  Processing: cmh88r3t1007r8zbb5i51wwib
+  Original URL: /uploads/scraped/1761515339969-28-fantasy.webp
+  📐 Dimensions: 2400x2014 (4,833,600 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88r3t1007r8zbb5i51wwib.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88r54h007t8zbb6zx6njqe
+  Original URL: /uploads/scraped/1761515341810-29-fantasy.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88r54h007t8zbb6zx6njqe.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88r6e4007v8zbbty8xuz0h
+  Original URL: /uploads/scraped/1761515343518-30-fantasy.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88r6e4007v8zbbty8xuz0h.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88r7pr007x8zbbcmbvck5y
+  Original URL: /uploads/scraped/1761515345161-31-fantasy.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88r7pr007x8zbbcmbvck5y.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88r90b007z8zbbdh0dtd9l
+  Original URL: /uploads/scraped/1761515346875-32-fantasy.webp
+  📐 Dimensions: 1674x2400 (4,017,600 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88r90b007z8zbbdh0dtd9l.webp
+  ✅ Database updated
+
+📦 Processing batch 28/69
+
+🖼️  Processing: cmh88ra9o00818zbbj2elhi6l
+  Original URL: /uploads/scraped/1761515348551-33-fantasy.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ra9o00818zbbj2elhi6l.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rbt800838zbbwj6gplcc
+  Original URL: /uploads/scraped/1761515350187-34-fantasy.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rbt800838zbbwj6gplcc.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rdmh00868zbbeu491f6l
+  Original URL: /uploads/scraped/1761515352979-0-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rdmh00868zbbeu491f6l.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rewb00888zbb55yy7oxf
+  Original URL: /uploads/scraped/1761515354535-1-lifestyle-portraiture.webp
+  📐 Dimensions: 1365x2048 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rewb00888zbb55yy7oxf.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rg58008a8zbb3mr0415v
+  Original URL: /uploads/scraped/1761515356183-2-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1365 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rg58008a8zbb3mr0415v.webp
+  ✅ Database updated
+
+📦 Processing batch 29/69
+
+🖼️  Processing: cmh88rhiy008c8zbbr5kgaz79
+  Original URL: /uploads/scraped/1761515357800-3-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1365 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rhiy008c8zbbr5kgaz79.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88risp008e8zbbqf9qec23
+  Original URL: /uploads/scraped/1761515359590-4-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1365 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88risp008e8zbbqf9qec23.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rk7j008g8zbbd5u4g1kj
+  Original URL: /uploads/scraped/1761515361238-5-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rk7j008g8zbbd5u4g1kj.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rllc008i8zbbptc2t7qp
+  Original URL: /uploads/scraped/1761515363069-6-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rllc008i8zbbptc2t7qp.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rmx8008k8zbbj3jm75ei
+  Original URL: /uploads/scraped/1761515364861-7-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rmx8008k8zbbj3jm75ei.webp
+  ✅ Database updated
+
+📦 Processing batch 30/69
+
+🖼️  Processing: cmh88roxo008m8zbbbe8byq8c
+  Original URL: /uploads/scraped/1761515366582-8-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88roxo008m8zbbbe8byq8c.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rql0008o8zbbv8z61ky6
+  Original URL: /uploads/scraped/1761515369191-9-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rql0008o8zbbv8z61ky6.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rs6f008q8zbbao3lw0wm
+  Original URL: /uploads/scraped/1761515371327-10-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rs6f008q8zbbao3lw0wm.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88x3fy00g48zbbanrtxi2n
+  Original URL: /uploads/scraped/1761515619396-3-yoga-dance.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88x3fy00g48zbbanrtxi2n.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rtr5008s8zbbkqlnnk0z
+  Original URL: /uploads/scraped/1761515373395-11-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rtr5008s8zbbkqlnnk0z.webp
+  ✅ Database updated
+
+📦 Processing batch 31/69
+
+🖼️  Processing: cmh88rvde008u8zbbanbtqevs
+  Original URL: /uploads/scraped/1761515375437-12-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rvde008u8zbbanbtqevs.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88rxch008w8zbbvi07zfu8
+  Original URL: /uploads/scraped/1761515377533-13-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88rxch008w8zbbvi07zfu8.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ryte008y8zbbhcuzs2dl
+  Original URL: /uploads/scraped/1761515380092-14-lifestyle-portraiture.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ryte008y8zbbhcuzs2dl.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88s0a300908zbbxnnq7ent
+  Original URL: /uploads/scraped/1761515381998-15-lifestyle-portraiture.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88s0a300908zbbxnnq7ent.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88s1mh00928zbblt4cxyut
+  Original URL: /uploads/scraped/1761515383895-16-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1596 (3,830,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88s1mh00928zbblt4cxyut.webp
+  ✅ Database updated
+
+📦 Processing batch 32/69
+
+🖼️  Processing: cmh88s2wh00948zbbrgipq3cm
+  Original URL: /uploads/scraped/1761515385638-17-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88s2wh00948zbbrgipq3cm.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88s4ba00968zbbysrs4wrl
+  Original URL: /uploads/scraped/1761515387293-18-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88s4ba00968zbbysrs4wrl.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88s5kx00988zbbrwtcz5d0
+  Original URL: /uploads/scraped/1761515389122-19-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88s5kx00988zbbrwtcz5d0.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88s6uq009a8zbbket045yj
+  Original URL: /uploads/scraped/1761515390765-20-lifestyle-portraiture.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88s6uq009a8zbbket045yj.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88s82c009c8zbb498x5y5e
+  Original URL: /uploads/scraped/1761515392418-21-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88s82c009c8zbb498x5y5e.webp
+  ✅ Database updated
+
+📦 Processing batch 33/69
+
+🖼️  Processing: cmh88s997009e8zbbiipfripx
+  Original URL: /uploads/scraped/1761515393986-22-lifestyle-portraiture.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88s997009e8zbbiipfripx.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sak4009g8zbbc6bhzlu7
+  Original URL: /uploads/scraped/1761515395528-23-lifestyle-portraiture.webp
+  📐 Dimensions: 1365x2048 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sak4009g8zbbc6bhzlu7.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sbsa009i8zbb9u8xo8s8
+  Original URL: /uploads/scraped/1761515397216-24-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1365 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sbsa009i8zbb9u8xo8s8.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sd2w009k8zbb25d3ha7j
+  Original URL: /uploads/scraped/1761515398807-25-lifestyle-portraiture.webp
+  📐 Dimensions: 1315x2048 (2,693,120 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sd2w009k8zbb25d3ha7j.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sef5009m8zbbr1k99msd
+  Original URL: /uploads/scraped/1761515400484-26-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sef5009m8zbbr1k99msd.webp
+  ✅ Database updated
+
+📦 Processing batch 34/69
+
+🖼️  Processing: cmh88sfmj009o8zbbcu2geil4
+  Original URL: /uploads/scraped/1761515402222-27-lifestyle-portraiture.webp
+  📐 Dimensions: 1800x1202 (2,163,600 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sfmj009o8zbbcu2geil4.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sgyj009q8zbbhxe6d2br
+  Original URL: /uploads/scraped/1761515403782-28-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sgyj009q8zbbhxe6d2br.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88si8u009s8zbbp7fi4loy
+  Original URL: /uploads/scraped/1761515405511-29-lifestyle-portraiture.webp
+  📐 Dimensions: 1365x2048 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88si8u009s8zbbp7fi4loy.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sjkw009u8zbbe8iqb2sr
+  Original URL: /uploads/scraped/1761515407180-30-lifestyle-portraiture.webp
+  📐 Dimensions: 1365x2048 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sjkw009u8zbbe8iqb2sr.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88skxg009w8zbbd0lznw48
+  Original URL: /uploads/scraped/1761515408908-31-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88skxg009w8zbbd0lznw48.webp
+  ✅ Database updated
+
+📦 Processing batch 35/69
+
+🖼️  Processing: cmh88smax009y8zbbu9j6doj4
+  Original URL: /uploads/scraped/1761515410655-32-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88smax009y8zbbu9j6doj4.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88snmn00a08zbbtzoxzs4x
+  Original URL: /uploads/scraped/1761515412436-33-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88snmn00a08zbbtzoxzs4x.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88soyk00a28zbbwu572i1h
+  Original URL: /uploads/scraped/1761515414154-34-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88soyk00a28zbbwu572i1h.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sq9x00a48zbbf0exsbtg
+  Original URL: /uploads/scraped/1761515415880-35-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sq9x00a48zbbf0exsbtg.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88srnm00a68zbbtn2jbpnq
+  Original URL: /uploads/scraped/1761515417585-36-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88srnm00a68zbbtn2jbpnq.webp
+  ✅ Database updated
+
+📦 Processing batch 36/69
+
+🖼️  Processing: cmh88ssyk00a88zbb13t1t059
+  Original URL: /uploads/scraped/1761515419375-37-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ssyk00a88zbb13t1t059.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88subm00aa8zbb6w6mkuc9
+  Original URL: /uploads/scraped/1761515421063-38-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88subm00aa8zbb6w6mkuc9.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88svpd00ac8zbbqj35ptjf
+  Original URL: /uploads/scraped/1761515422829-39-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88svpd00ac8zbbqj35ptjf.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sx0j00ae8zbbyuraln8z
+  Original URL: /uploads/scraped/1761515424620-40-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sx0j00ae8zbbyuraln8z.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88sybw00ag8zbb6xg14ipb
+  Original URL: /uploads/scraped/1761515426318-41-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88sybw00ag8zbb6xg14ipb.webp
+  ✅ Database updated
+
+📦 Processing batch 37/69
+
+🖼️  Processing: cmh88szq100ai8zbbfbrz1paj
+  Original URL: /uploads/scraped/1761515428023-42-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88szq100ai8zbbfbrz1paj.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88t12000ak8zbbrfhn0swv
+  Original URL: /uploads/scraped/1761515429829-43-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88t12000ak8zbbrfhn0swv.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88t2pp00am8zbbyeainr34
+  Original URL: /uploads/scraped/1761515431557-44-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88t2pp00am8zbbyeainr34.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88t40v00ao8zbbf6jgtu4w
+  Original URL: /uploads/scraped/1761515433706-45-lifestyle-portraiture.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88t40v00ao8zbbf6jgtu4w.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88t5ok00aq8zbbpbbaknmp
+  Original URL: /uploads/scraped/1761515435404-46-lifestyle-portraiture.webp
+  📐 Dimensions: 1601x2400 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88t5ok00aq8zbbpbbaknmp.webp
+  ✅ Database updated
+
+📦 Processing batch 38/69
+
+🖼️  Processing: cmh88t75s00as8zbbu66i0jfj
+  Original URL: /uploads/scraped/1761515437553-47-lifestyle-portraiture.webp
+  📐 Dimensions: 1601x2400 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88t75s00as8zbbu66i0jfj.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88t8jf00au8zbbqnzec86z
+  Original URL: /uploads/scraped/1761515439468-48-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88t8jf00au8zbbqnzec86z.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88t9tx00aw8zbbemnjr9oe
+  Original URL: /uploads/scraped/1761515441254-49-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88t9tx00aw8zbbemnjr9oe.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tbae00ay8zbb13jwaykn
+  Original URL: /uploads/scraped/1761515442929-50-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tbae00ay8zbb13jwaykn.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tcqq00b08zbbzmna1o74
+  Original URL: /uploads/scraped/1761515444819-51-lifestyle-portraiture.webp
+  📐 Dimensions: 1601x2400 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tcqq00b08zbbzmna1o74.webp
+  ✅ Database updated
+
+📦 Processing batch 39/69
+
+🖼️  Processing: cmh88te0i00b28zbbbu0nu7u6
+  Original URL: /uploads/scraped/1761515446705-52-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1596 (3,830,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88te0i00b28zbbbu0nu7u6.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tf9k00b48zbbm2yqzvfa
+  Original URL: /uploads/scraped/1761515448351-53-lifestyle-portraiture.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tf9k00b48zbbm2yqzvfa.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tggf00b68zbbv5srfifs
+  Original URL: /uploads/scraped/1761515449973-54-lifestyle-portraiture.webp
+  📐 Dimensions: 2000x1335 (2,670,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tggf00b68zbbv5srfifs.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88thry00b88zbb072xfmnp
+  Original URL: /uploads/scraped/1761515451515-55-lifestyle-portraiture.webp
+  📐 Dimensions: 1335x2000 (2,670,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88thry00b88zbb072xfmnp.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tj2f00ba8zbb6lwuu2y0
+  Original URL: /uploads/scraped/1761515453225-56-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tj2f00ba8zbb6lwuu2y0.webp
+  ✅ Database updated
+
+📦 Processing batch 40/69
+
+🖼️  Processing: cmh88tkkp00bc8zbbaq2cgtux
+  Original URL: /uploads/scraped/1761515454899-57-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tkkp00bc8zbbaq2cgtux.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tlyr00be8zbb5tgubhvg
+  Original URL: /uploads/scraped/1761515456852-58-lifestyle-portraiture.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tlyr00be8zbb5tgubhvg.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tn8v00bg8zbb83db15uy
+  Original URL: /uploads/scraped/1761515458656-59-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tn8v00bg8zbb83db15uy.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tp4w00bi8zbb5jzjj0b6
+  Original URL: /uploads/scraped/1761515460314-60-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tp4w00bi8zbb5jzjj0b6.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tqoh00bk8zbbo1cwga0f
+  Original URL: /uploads/scraped/1761515462766-61-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tqoh00bk8zbbo1cwga0f.webp
+  ✅ Database updated
+
+📦 Processing batch 41/69
+
+🖼️  Processing: cmh88trzm00bm8zbbymfwqoy7
+  Original URL: /uploads/scraped/1761515464766-62-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88trzm00bm8zbbymfwqoy7.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ttkb00bo8zbb2gnferj7
+  Original URL: /uploads/scraped/1761515466463-63-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ttkb00bo8zbb2gnferj7.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88tv8l00bq8zbbal46pgsg
+  Original URL: /uploads/scraped/1761515468502-64-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tv8l00bq8zbbal46pgsg.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88twiv00bs8zbboxaefty2
+  Original URL: /uploads/scraped/1761515470673-65-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88twiv00bs8zbboxaefty2.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88txz800bu8zbbma8e5abq
+  Original URL: /uploads/scraped/1761515472338-66-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x2400 (5,760,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88txz800bu8zbbma8e5abq.webp
+  ✅ Database updated
+
+📦 Processing batch 42/69
+
+🖼️  Processing: cmh88tzgg00bw8zbb0sigbder
+  Original URL: /uploads/scraped/1761515474223-67-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x2400 (5,760,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88tzgg00bw8zbb0sigbder.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88u0s200by8zbbj8s2g0o9
+  Original URL: /uploads/scraped/1761515476139-68-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88u0s200by8zbbj8s2g0o9.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88u25g00c08zbblqlyzwjb
+  Original URL: /uploads/scraped/1761515477854-69-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88u25g00c08zbblqlyzwjb.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88u3gt00c28zbbacyovx1h
+  Original URL: /uploads/scraped/1761515479633-70-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88u3gt00c28zbbacyovx1h.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88u4re00c48zbb31kdf01r
+  Original URL: /uploads/scraped/1761515481336-71-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88u4re00c48zbb31kdf01r.webp
+  ✅ Database updated
+
+📦 Processing batch 43/69
+
+🖼️  Processing: cmh88u6oe00c68zbbypd7rq7j
+  Original URL: /uploads/scraped/1761515483014-72-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88u6oe00c68zbbypd7rq7j.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88u85x00c88zbb7e7on1ih
+  Original URL: /uploads/scraped/1761515485499-73-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88u85x00c88zbb7e7on1ih.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88u9ka00ca8zbbhrsqropj
+  Original URL: /uploads/scraped/1761515487424-74-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88u9ka00ca8zbbhrsqropj.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uauv00cc8zbb2pj9ttgn
+  Original URL: /uploads/scraped/1761515489238-75-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uauv00cc8zbb2pj9ttgn.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uc4400ce8zbb3xh250tp
+  Original URL: /uploads/scraped/1761515490915-76-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uc4400ce8zbb3xh250tp.webp
+  ✅ Database updated
+
+📦 Processing batch 44/69
+
+🖼️  Processing: cmh88ue1g00cg8zbb3hhmx3kn
+  Original URL: /uploads/scraped/1761515492545-77-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ue1g00cg8zbb3hhmx3kn.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ufp000ci8zbb5k4p8on6
+  Original URL: /uploads/scraped/1761515495038-78-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ufp000ci8zbb5k4p8on6.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uhce00ck8zbb9k8wz48p
+  Original URL: /uploads/scraped/1761515497183-79-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uhce00ck8zbb9k8wz48p.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uiz200cm8zbbhxljtx6w
+  Original URL: /uploads/scraped/1761515499323-80-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uiz200cm8zbbhxljtx6w.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88ukh500co8zbbz0pjvj8m
+  Original URL: /uploads/scraped/1761515501434-81-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ukh500co8zbbz0pjvj8m.webp
+  ✅ Database updated
+
+📦 Processing batch 45/69
+
+🖼️  Processing: cmh88ulun00cq8zbb5dm29e98
+  Original URL: /uploads/scraped/1761515503381-82-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1596 (3,830,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ulun00cq8zbb5dm29e98.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88unqy00cs8zbbojeqx4yf
+  Original URL: /uploads/scraped/1761515505164-83-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88unqy00cs8zbbojeqx4yf.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88upbu00cu8zbb4l8r92ih
+  Original URL: /uploads/scraped/1761515507622-84-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88upbu00cu8zbb4l8r92ih.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uqr200cw8zbb7byczxk5
+  Original URL: /uploads/scraped/1761515509671-85-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uqr200cw8zbb7byczxk5.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88useg00cy8zbbfat79i8c
+  Original URL: /uploads/scraped/1761515511515-86-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88useg00cy8zbbfat79i8c.webp
+  ✅ Database updated
+
+📦 Processing batch 46/69
+
+🖼️  Processing: cmh88utjt00d08zbb01cim0cr
+  Original URL: /uploads/scraped/1761515513654-87-lifestyle-portraiture.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88utjt00d08zbb01cim0cr.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uuui00d28zbb7smgll75
+  Original URL: /uploads/scraped/1761515515145-88-lifestyle-portraiture.webp
+  📐 Dimensions: 1366x2048 (2,797,568 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uuui00d28zbb7smgll75.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uw6g00d48zbbltyd6mkd
+  Original URL: /uploads/scraped/1761515516822-89-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uw6g00d48zbbltyd6mkd.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uxga00d68zbbyikyikse
+  Original URL: /uploads/scraped/1761515518547-90-lifestyle-portraiture.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uxga00d68zbbyikyikse.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88uypd00d88zbbd2nah167
+  Original URL: /uploads/scraped/1761515520198-91-lifestyle-portraiture.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88uypd00d88zbbd2nah167.webp
+  ✅ Database updated
+
+📦 Processing batch 47/69
+
+🖼️  Processing: cmh88v04g00da8zbblifyrdh4
+  Original URL: /uploads/scraped/1761515521822-92-lifestyle-portraiture.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88v04g00da8zbblifyrdh4.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88v1nh00dc8zbbm9ctdmkb
+  Original URL: /uploads/scraped/1761515523663-93-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88v1nh00dc8zbbm9ctdmkb.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88v32z00de8zbbomb694fh
+  Original URL: /uploads/scraped/1761515525644-94-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88v32z00de8zbbomb694fh.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88v4ei00dg8zbbzhg91dzx
+  Original URL: /uploads/scraped/1761515527495-95-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88v4ei00dg8zbbzhg91dzx.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88v5p900di8zbb1hbkny4y
+  Original URL: /uploads/scraped/1761515529205-96-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88v5p900di8zbb1hbkny4y.webp
+  ✅ Database updated
+
+📦 Processing batch 48/69
+
+🖼️  Processing: cmh88v71f00dk8zbby0xug3na
+  Original URL: /uploads/scraped/1761515530891-97-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88v71f00dk8zbby0xug3na.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88v8dr00dm8zbbofmi5515
+  Original URL: /uploads/scraped/1761515532623-98-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88v8dr00dm8zbbofmi5515.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88v9oq00do8zbb18r07oro
+  Original URL: /uploads/scraped/1761515534363-99-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88v9oq00do8zbb18r07oro.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vb1y00dq8zbbkhzo90it
+  Original URL: /uploads/scraped/1761515536055-100-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vb1y00dq8zbbkhzo90it.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vcuv00ds8zbbv1jx8tbi
+  Original URL: /uploads/scraped/1761515537827-101-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vcuv00ds8zbbv1jx8tbi.webp
+  ✅ Database updated
+
+📦 Processing batch 49/69
+
+🖼️  Processing: cmh88vejo00du8zbb0t6obigw
+  Original URL: /uploads/scraped/1761515540171-102-lifestyle-portraiture.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vejo00du8zbb0t6obigw.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vfx100dw8zbba5c6s5fr
+  Original URL: /uploads/scraped/1761515542351-103-lifestyle-portraiture.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vfx100dw8zbba5c6s5fr.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vhsh00dy8zbblme2verm
+  Original URL: /uploads/scraped/1761515544130-104-lifestyle-portraiture.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vhsh00dy8zbblme2verm.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vk0v00e18zbb8sk3kn0t
+  Original URL: /uploads/scraped/1761515547274-0-travel.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vk0v00e18zbb8sk3kn0t.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vlev00e38zbb0afz7bx7
+  Original URL: /uploads/scraped/1761515549450-1-travel.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vlev00e38zbb0afz7bx7.webp
+  ✅ Database updated
+
+📦 Processing batch 50/69
+
+🖼️  Processing: cmh88vn0400e58zbb6zmfwt1u
+  Original URL: /uploads/scraped/1761515551254-2-travel.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vn0400e58zbb6zmfwt1u.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vouo00e78zbbi7iyzyik
+  Original URL: /uploads/scraped/1761515553315-3-travel.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vouo00e78zbbi7iyzyik.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vqjz00e98zbbeehsh1tz
+  Original URL: /uploads/scraped/1761515555716-4-travel.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vqjz00e98zbbeehsh1tz.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vsnv00eb8zbby37kmlem
+  Original URL: /uploads/scraped/1761515557916-5-travel.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vsnv00eb8zbby37kmlem.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vu4500ed8zbbq3fchmt3
+  Original URL: /uploads/scraped/1761515560646-6-travel.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vu4500ed8zbbq3fchmt3.webp
+  ✅ Database updated
+
+📦 Processing batch 51/69
+
+🖼️  Processing: cmh88vw1a00ef8zbbz1zejvkq
+  Original URL: /uploads/scraped/1761515562531-7-travel.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vw1a00ef8zbbz1zejvkq.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vxm900eh8zbbwqx5ejak
+  Original URL: /uploads/scraped/1761515565018-8-travel.webp
+  📐 Dimensions: 2400x1596 (3,830,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vxm900eh8zbbwqx5ejak.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88vzdi00ej8zbbanc0h4b4
+  Original URL: /uploads/scraped/1761515567070-9-travel.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88vzdi00ej8zbbanc0h4b4.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88w0w200el8zbb68mt6zoh
+  Original URL: /uploads/scraped/1761515569350-10-travel.webp
+  📐 Dimensions: 2400x1597 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88w0w200el8zbb68mt6zoh.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88w24s00en8zbbg2msgu5b
+  Original URL: /uploads/scraped/1761515571313-11-travel.webp
+  📐 Dimensions: 2048x1367 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88w24s00en8zbbg2msgu5b.webp
+  ✅ Database updated
+
+📦 Processing batch 52/69
+
+🖼️  Processing: cmh88w3gg00ep8zbbtgrvbj2t
+  Original URL: /uploads/scraped/1761515572920-12-travel.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88w3gg00ep8zbbtgrvbj2t.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88w4y900er8zbb9rask7ki
+  Original URL: /uploads/scraped/1761515574637-13-travel.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88w4y900er8zbb9rask7ki.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88w6b000et8zbbq24pdfja
+  Original URL: /uploads/scraped/1761515576573-14-travel.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88w6b000et8zbbq24pdfja.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88w84k00ev8zbbm70e6rph
+  Original URL: /uploads/scraped/1761515578330-15-travel.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88w84k00ev8zbbm70e6rph.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88w9li00ex8zbb459qituh
+  Original URL: /uploads/scraped/1761515580688-16-travel.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88w9li00ex8zbb459qituh.webp
+  ✅ Database updated
+
+📦 Processing batch 53/69
+
+🖼️  Processing: cmh88wavs00ez8zbbs5krsfad
+  Original URL: /uploads/scraped/1761515582596-17-travel.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wavs00ez8zbbs5krsfad.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wc6w00f18zbb4iz4202y
+  Original URL: /uploads/scraped/1761515584263-18-travel.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wc6w00f18zbb4iz4202y.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wdie00f38zbbxob9qdam
+  Original URL: /uploads/scraped/1761515585956-19-travel.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wdie00f38zbbxob9qdam.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88werc00f58zbbu1cxr4h5
+  Original URL: /uploads/scraped/1761515587667-20-travel.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88werc00f58zbbu1cxr4h5.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wg4500f78zbbuzmk7j75
+  Original URL: /uploads/scraped/1761515589284-21-travel.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wg4500f78zbbuzmk7j75.webp
+  ✅ Database updated
+
+📦 Processing batch 54/69
+
+🖼️  Processing: cmh88whaz00f98zbbr619of9p
+  Original URL: /uploads/scraped/1761515591040-22-travel.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88whaz00f98zbbr619of9p.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wik300fb8zbbw3ryd9j5
+  Original URL: /uploads/scraped/1761515592583-23-travel.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wik300fb8zbbw3ryd9j5.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wjw600fd8zbbfos6ilvu
+  Original URL: /uploads/scraped/1761515594207-24-travel.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wjw600fd8zbbfos6ilvu.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wl6w00ff8zbbbqd1a8nr
+  Original URL: /uploads/scraped/1761515595938-25-travel.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wl6w00ff8zbbbqd1a8nr.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wmdu00fh8zbbuqmujso5
+  Original URL: /uploads/scraped/1761515597620-26-travel.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wmdu00fh8zbbuqmujso5.webp
+  ✅ Database updated
+
+📦 Processing batch 55/69
+
+🖼️  Processing: cmh88wnqb00fj8zbb9ae8k044
+  Original URL: /uploads/scraped/1761515599166-27-travel.webp
+  📐 Dimensions: 2000x1335 (2,670,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wnqb00fj8zbb9ae8k044.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wpp800fl8zbbbak01que
+  Original URL: /uploads/scraped/1761515600913-28-travel.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wpp800fl8zbbbak01que.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wr4l00fn8zbbrhftahwd
+  Original URL: /uploads/scraped/1761515603465-29-travel.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wr4l00fn8zbbrhftahwd.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wsnk00fp8zbb9rdj2tda
+  Original URL: /uploads/scraped/1761515605314-30-travel.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wsnk00fp8zbb9rdj2tda.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wu8m00fr8zbbfuz708yj
+  Original URL: /uploads/scraped/1761515607292-31-travel.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wu8m00fr8zbbfuz708yj.webp
+  ✅ Database updated
+
+📦 Processing batch 56/69
+
+🖼️  Processing: cmh88wvn700ft8zbbbfda641d
+  Original URL: /uploads/scraped/1761515609346-32-travel.webp
+  📐 Dimensions: 2400x1596 (3,830,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wvn700ft8zbbbfda641d.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wx5w00fv8zbbgewxfiwq
+  Original URL: /uploads/scraped/1761515611165-33-travel.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wx5w00fv8zbbgewxfiwq.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88wz6l00fy8zbbr0erfw8l
+  Original URL: /uploads/scraped/1761515613837-0-yoga-dance.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88wz6l00fy8zbbr0erfw8l.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88x0ml00g08zbb8qs4t400
+  Original URL: /uploads/scraped/1761515615752-1-yoga-dance.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88x0ml00g08zbb8qs4t400.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88x1zp00g28zbbd4fiq4ns
+  Original URL: /uploads/scraped/1761515617631-2-yoga-dance.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88x1zp00g28zbbd4fiq4ns.webp
+  ✅ Database updated
+
+📦 Processing batch 57/69
+
+🖼️  Processing: cmh88x56e00g68zbbpdh02x2v
+  Original URL: /uploads/scraped/1761515621274-4-yoga-dance.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88x56e00g68zbbpdh02x2v.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88x6np00g88zbbrbl7h1ck
+  Original URL: /uploads/scraped/1761515623523-5-yoga-dance.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88x6np00g88zbbrbl7h1ck.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88x89c00ga8zbbp373en0y
+  Original URL: /uploads/scraped/1761515625441-6-yoga-dance.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88x89c00ga8zbbp373en0y.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88x9s200gc8zbbf5n9atut
+  Original URL: /uploads/scraped/1761515627516-7-yoga-dance.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88x9s200gc8zbbf5n9atut.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xbpq00ge8zbbtuqcy75z
+  Original URL: /uploads/scraped/1761515629486-8-yoga-dance.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xbpq00ge8zbbtuqcy75z.webp
+  ✅ Database updated
+
+📦 Processing batch 58/69
+
+🖼️  Processing: cmh88xdgv00gg8zbbs3kr6ytp
+  Original URL: /uploads/scraped/1761515631996-9-yoga-dance.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xdgv00gg8zbbs3kr6ytp.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xfae00gi8zbbg6q17yby
+  Original URL: /uploads/scraped/1761515634267-10-yoga-dance.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xfae00gi8zbbg6q17yby.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xh6q00gk8zbbsa28rovg
+  Original URL: /uploads/scraped/1761515636627-11-yoga-dance.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xh6q00gk8zbbsa28rovg.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xj0q00gm8zbbjurqcf9t
+  Original URL: /uploads/scraped/1761515639086-12-yoga-dance.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xj0q00gm8zbbjurqcf9t.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xku800go8zbb8bxbzx97
+  Original URL: /uploads/scraped/1761515641463-13-yoga-dance.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xku800go8zbb8bxbzx97.webp
+  ✅ Database updated
+
+📦 Processing batch 59/69
+
+🖼️  Processing: cmh88xmj500gq8zbbo2zc0sbp
+  Original URL: /uploads/scraped/1761515643820-14-yoga-dance.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xmj500gq8zbbo2zc0sbp.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xnxz00gs8zbbtrdu4cjb
+  Original URL: /uploads/scraped/1761515646022-15-yoga-dance.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xnxz00gs8zbbtrdu4cjb.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xpev00gu8zbb3nvtk5d1
+  Original URL: /uploads/scraped/1761515647845-16-yoga-dance.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xpev00gu8zbb3nvtk5d1.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xr3j00gx8zbbvcny1o97
+  Original URL: /uploads/scraped/1761515650401-0-underwater.webp
+  📐 Dimensions: 2048x1365 (2,795,520 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xr3j00gx8zbbvcny1o97.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xscx00gz8zbbrzljv9xx
+  Original URL: /uploads/scraped/1761515651933-1-underwater.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xscx00gz8zbbrzljv9xx.webp
+  ✅ Database updated
+
+📦 Processing batch 60/69
+
+🖼️  Processing: cmh88xtkf00h18zbbnnil5lal
+  Original URL: /uploads/scraped/1761515653564-2-underwater.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xtkf00h18zbbnnil5lal.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xutg00h38zbbzr0c9rzg
+  Original URL: /uploads/scraped/1761515655131-3-underwater.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xutg00h38zbbzr0c9rzg.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xw2600h58zbbemabyx52
+  Original URL: /uploads/scraped/1761515656753-4-underwater.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xw2600h58zbbemabyx52.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xxbz00h78zbb0etnjlp3
+  Original URL: /uploads/scraped/1761515658364-5-underwater.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xxbz00h78zbb0etnjlp3.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88xyjn00h98zbbrayerf9k
+  Original URL: /uploads/scraped/1761515660014-6-underwater.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xyjn00h98zbbrayerf9k.webp
+  ✅ Database updated
+
+📦 Processing batch 61/69
+
+🖼️  Processing: cmh88xzwj00hb8zbbwmad2uog
+  Original URL: /uploads/scraped/1761515661582-7-underwater.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88xzwj00hb8zbbwmad2uog.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88y17400hd8zbbzv8q5ebo
+  Original URL: /uploads/scraped/1761515663344-8-underwater.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88y17400hd8zbbzv8q5ebo.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88y2ke00hf8zbb8myew1fy
+  Original URL: /uploads/scraped/1761515665020-9-underwater.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88y2ke00hf8zbb8myew1fy.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88y3vj00hh8zbbovsorsng
+  Original URL: /uploads/scraped/1761515666796-10-underwater.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88y3vj00hh8zbbovsorsng.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88y56100hj8zbbc56j0jxh
+  Original URL: /uploads/scraped/1761515668494-11-underwater.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88y56100hj8zbbc56j0jxh.webp
+  ✅ Database updated
+
+📦 Processing batch 62/69
+
+🖼️  Processing: cmh88y6yv00hm8zbbg88us79u
+  Original URL: /uploads/scraped/1761515670888-0-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515670888-0-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88y6yv00hm8zbbg88us79u.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88y85p00ho8zbbb9kjqnrv
+  Original URL: /uploads/scraped/1761515672499-1-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515672499-1-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88y85p00ho8zbbb9kjqnrv.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88y9df00hq8zbb69dr2jj1
+  Original URL: /uploads/scraped/1761515674042-2-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515674042-2-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88y9df00hq8zbb69dr2jj1.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yan200hs8zbbuuh7ti0k
+  Original URL: /uploads/scraped/1761515675615-3-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515675615-3-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yan200hs8zbbuuh7ti0k.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88ybv200hu8zbb5eoljeo4
+  Original URL: /uploads/scraped/1761515677258-4-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515677258-4-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88ybv200hu8zbb5eoljeo4.jpg
+  ✅ Database updated
+
+📦 Processing batch 63/69
+
+🖼️  Processing: cmh88yd3f00hw8zbbfwf8xya7
+  Original URL: /uploads/scraped/1761515678846-5-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515678846-5-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yd3f00hw8zbbfwf8xya7.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yebo00hy8zbbd8w8styl
+  Original URL: /uploads/scraped/1761515680439-6-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515680439-6-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yebo00hy8zbbd8w8styl.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yfjf00i08zbbxwuax0ry
+  Original URL: /uploads/scraped/1761515682032-7-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515682032-7-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yfjf00i08zbbxwuax0ry.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yh1w00i28zbbxbhq9ozy
+  Original URL: /uploads/scraped/1761515683606-8-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515683606-8-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yh1w00i28zbbxbhq9ozy.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yi9100i48zbbqsv4gq91
+  Original URL: /uploads/scraped/1761515685568-9-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515685568-9-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yi9100i48zbbqsv4gq91.jpg
+  ✅ Database updated
+
+📦 Processing batch 64/69
+
+🖼️  Processing: cmh88yjgt00i68zbbzzc47gpx
+  Original URL: /uploads/scraped/1761515687121-10-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515687121-10-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yjgt00i68zbbzzc47gpx.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yko100i88zbbihuz1slg
+  Original URL: /uploads/scraped/1761515688702-11-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515688702-11-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yko100i88zbbihuz1slg.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yly000ia8zbb8ahqg291
+  Original URL: /uploads/scraped/1761515690254-12-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515690254-12-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yly000ia8zbb8ahqg291.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yn4m00ic8zbb81dtev12
+  Original URL: /uploads/scraped/1761515691910-13-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515691910-13-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yn4m00ic8zbb81dtev12.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yodh00ie8zbbx1cwbq95
+  Original URL: /uploads/scraped/1761515693448-14-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515693448-14-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yodh00ie8zbbx1cwbq95.jpg
+  ✅ Database updated
+
+📦 Processing batch 65/69
+
+🖼️  Processing: cmh88yplk00ig8zbb0m0fph9u
+  Original URL: /uploads/scraped/1761515695057-15-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515695057-15-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yplk00ig8zbb0m0fph9u.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88yqrp00ii8zbbx1xlc523
+  Original URL: /uploads/scraped/1761515696646-16-rescue-tales.webp
+  📐 Dimensions: 750x474 (355,500 pixels)
+  📈 Upscaling image via Replicate...
+  📂 Reading from: /Users/blake/Sites/Luna/public/uploads/scraped/1761515696646-16-rescue-tales.webp
+  ✅ Upscaled successfully
+  ☁️  Uploading to Vercel Blob...
+  ✅ Uploaded upscaled image to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88yqrp00ii8zbbx1xlc523.jpg
+  ✅ Database updated
+
+🖼️  Processing: cmh88malb000t8zbbaki0t9lh
+  Original URL: /uploads/scraped/1761515115606-3-animals-and-people.webp
+  📐 Dimensions: 1601x2400 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88malb000t8zbbaki0t9lh.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mc18000v8zbbrnm3v3na
+  Original URL: /uploads/scraped/1761515117325-4-animals-and-people.webp
+  📐 Dimensions: 2400x1600 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mc18000v8zbbrnm3v3na.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mdk1000x8zbb6bvemp9p
+  Original URL: /uploads/scraped/1761515119192-5-animals-and-people.webp
+  📐 Dimensions: 2400x1604 (3,849,600 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mdk1000x8zbb6bvemp9p.webp
+  ✅ Database updated
+
+📦 Processing batch 66/69
+
+🖼️  Processing: cmh88mf11000z8zbbi9um0ubb
+  Original URL: /uploads/scraped/1761515121164-6-animals-and-people.webp
+  📐 Dimensions: 1600x2400 (3,840,000 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mf11000z8zbbi9um0ubb.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mgiq00118zbb2ga4c0yt
+  Original URL: /uploads/scraped/1761515123075-7-animals-and-people.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mgiq00118zbb2ga4c0yt.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mhw500138zbb3vnc4sex
+  Original URL: /uploads/scraped/1761515125006-8-animals-and-people.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mhw500138zbb3vnc4sex.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mj6700158zbbhlknrr5i
+  Original URL: /uploads/scraped/1761515126786-9-animals-and-people.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mj6700158zbbhlknrr5i.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mkg400178zbbh777xtj1
+  Original URL: /uploads/scraped/1761515128444-10-animals-and-people.webp
+  📐 Dimensions: 1367x2048 (2,799,616 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mkg400178zbbh777xtj1.webp
+  ✅ Database updated
+
+📦 Processing batch 67/69
+
+🖼️  Processing: cmh88mlyg00198zbb1sxwmo3x
+  Original URL: /uploads/scraped/1761515130095-11-animals-and-people.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mlyg00198zbb1sxwmo3x.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mnd3001b8zbbmp9qp2wt
+  Original URL: /uploads/scraped/1761515132052-12-animals-and-people.webp
+  📐 Dimensions: 2400x1596 (3,830,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mnd3001b8zbbmp9qp2wt.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mov7001d8zbbd65zm26w
+  Original URL: /uploads/scraped/1761515133875-13-animals-and-people.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mov7001d8zbbd65zm26w.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mq90001f8zbbmrrb2re4
+  Original URL: /uploads/scraped/1761515135824-14-animals-and-people.webp
+  📐 Dimensions: 2400x1584 (3,801,600 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mq90001f8zbbmrrb2re4.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mrlh001h8zbbppkb506d
+  Original URL: /uploads/scraped/1761515137616-15-animals-and-people.webp
+  📐 Dimensions: 1599x2400 (3,837,600 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mrlh001h8zbbppkb506d.webp
+  ✅ Database updated
+
+📦 Processing batch 68/69
+
+🖼️  Processing: cmh88mt20001j8zbbrke2snw5
+  Original URL: /uploads/scraped/1761515139360-16-animals-and-people.webp
+  📐 Dimensions: 1602x2400 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mt20001j8zbbrke2snw5.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88muj3001l8zbbzj4x73td
+  Original URL: /uploads/scraped/1761515141253-17-animals-and-people.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88muj3001l8zbbzj4x73td.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mvy9001n8zbbqkdhnhq8
+  Original URL: /uploads/scraped/1761515143166-18-animals-and-people.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mvy9001n8zbbqkdhnhq8.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88mxck001p8zbbvc5otmdp
+  Original URL: /uploads/scraped/1761515145007-19-animals-and-people.webp
+  📐 Dimensions: 2400x1737 (4,168,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88mxck001p8zbbvc5otmdp.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88myno001r8zbbfrnkkzys
+  Original URL: /uploads/scraped/1761515146817-20-animals-and-people.webp
+  📐 Dimensions: 2400x1724 (4,137,600 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88myno001r8zbbfrnkkzys.webp
+  ✅ Database updated
+
+📦 Processing batch 69/69
+
+🖼️  Processing: cmh88n01b001t8zbb1sr9dde2
+  Original URL: /uploads/scraped/1761515148513-21-animals-and-people.webp
+  📐 Dimensions: 2400x1601 (3,842,400 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88n01b001t8zbb1sr9dde2.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88n1p8001v8zbbplusy4by
+  Original URL: /uploads/scraped/1761515150301-22-animals-and-people.webp
+  📐 Dimensions: 1597x2400 (3,832,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88n1p8001v8zbbplusy4by.webp
+  ✅ Database updated
+
+🖼️  Processing: cmh88n33l001x8zbbe30gma4t
+  Original URL: /uploads/scraped/1761515152456-23-animals-and-people.webp
+  📐 Dimensions: 2400x1602 (3,844,800 pixels)
+  ⚠️  Image too large for upscaling, migrating original...
+  ✅ Uploaded original to Vercel Blob: https://iwdr7kqxwo00nm51.public.blob.vercel-storage.com/images/cmh88n33l001x8zbbe30gma4t.webp
+  ✅ Database updated
+
+
+✨ Migration complete!
+
+📊 Summary:
+  - Total images processed: 343
+  - Images upscaled: 18
+  - Images migrated as-is (too large): 325
+  - Images skipped (already on Vercel Blob): 0
+  - Images now on Vercel Blob: 343

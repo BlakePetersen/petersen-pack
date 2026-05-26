@@ -5,10 +5,14 @@ import fs from 'node:fs'
 import path from 'node:path'
 import type { ArtifactMetadata } from 'blink-registry'
 
-function readArtifactsJson(): ArtifactMetadata[] {
+export function readArtifactsJson(): ArtifactMetadata[] {
   const filePath = path.resolve(process.cwd(), '.velite/artifacts.json')
-  const raw = fs.readFileSync(filePath, 'utf-8')
-  return JSON.parse(raw) as ArtifactMetadata[]
+  try {
+    const raw = fs.readFileSync(filePath, 'utf-8')
+    return JSON.parse(raw) as ArtifactMetadata[]
+  } catch {
+    return []
+  }
 }
 
 export function getArtifactForContent(contentSlug: string): ArtifactMetadata | undefined {

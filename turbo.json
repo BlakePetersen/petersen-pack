@@ -20,6 +20,10 @@
       "persistent": true
     },
     "lint": {},
+    "lint:content": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
     "test": {
       "outputs": []
     },

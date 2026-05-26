@@ -1,0 +1,63 @@
+# Dependencies
+/node_modules
+/.pnpm
+pnpm-debug.log*
+
+# Next.js
+/.next/
+/out/
+next-env.d.ts
+
+# Build
+/dist
+/build
+/tmp
+/out-tsc
+
+# Environment
+.env
+.env.test
+.env*.local
+
+# IDE
+.vscode/*
+.idea
+
+# Uploads (now in Vercel Blob)
+/public/uploads/
+
+# Cached images (large binary files)
+/prisma/seed-data/images
+
+# Database dumps — never commit, may contain client PII
+/backups/
+*.dump
+
+*storybook.log
+storybook-static
+
+# Worktrees
+.worktrees/
+
+# Test artifacts
+/test-results/
+/playwright-report/
+*.tsbuildinfo
+image-url-mapping.json
+
+# GSD planning docs (kept local per project preference)
+.planning/
+
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# Claude Code runtime state
+.claude/sessions/
+# Fallow Claude Code hook (personal; remove these two lines to share with team)
+.claude/settings.json
+.claude/hooks/fallow-gate.sh
+
+# Playwright MCP server artifacts
+.playwright-mcp/
+.fallow/

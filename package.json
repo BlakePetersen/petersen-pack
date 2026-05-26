@@ -7,12 +7,12 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --filter=!Luna",
     "clean": "turbo run clean && rm -rf node_modules",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "typecheck": "turbo run typecheck",
+    "dev": "turbo run dev --filter=!Luna",
+    "lint": "turbo run lint --filter=!Luna",
+    "test": "turbo run test --filter=!Luna",
+    "typecheck": "turbo run typecheck --filter=!Luna",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
     "test:scripts": "jest --config .github/scripts/jest.config.ts",

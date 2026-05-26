@@ -7,6 +7,8 @@ const config: Config = {
   testEnvironment: 'node',
   roots: ['<rootDir>/tests'],
   moduleNameMapper: {
+    '^@/scaffold/(.*)$': '<rootDir>/../../packages/blink-cli/src/scaffold/$1',
+    '^@/writer$': '<rootDir>/../../packages/blink-cli/src/writer',
     '^@/(.*)$': '<rootDir>/src/$1',
     '^#content$': '<rootDir>/.velite',
   },

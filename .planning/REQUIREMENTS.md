@@ -32,34 +32,40 @@ Lock the data shape before any content authoring; field changes after sixteen en
 
 Generators that produce schema-valid skeletons; templates derive from the canonical schema.
 
-- [ ] **SCAFFOLD-01**: `blink scaffold skill <slug>` generates an MDX file plus companion `.artifact.md` at the correct content path with valid frontmatter
-- [ ] **SCAFFOLD-02**: `blink scaffold config <slug>`, `blink scaffold hook <slug>`, and `blink scaffold guide <slug>` produce the equivalent skeleton for each remaining collection
+- [x] **SCAFFOLD-01**: `blink scaffold skill <slug>` generates an MDX file plus companion `.artifact.md` at the correct content path with valid frontmatter
+- [x] **SCAFFOLD-02**: `blink scaffold config <slug>`, `blink scaffold hook <slug>`, and `blink scaffold guide <slug>` produce the equivalent skeleton for each remaining collection
 - [x] **SCAFFOLD-03**: Scaffold templates derive from the live Velite Zod schema (no hand-maintained template/schema duplication) — depends on SCHEMA-05
 
-- [ ] **SCAFFOLD-04**: Scaffold pre-populates the artifact frontmatter (`name`, `description`, `type`, `version`) from the MDX frontmatter so authors edit one source of truth
-- [ ] **SCAFFOLD-05**: Round-trip CI test runs `blink scaffold` for each collection, then runs Velite, and asserts the generated entries pass schema validation
-- [ ] **SCAFFOLD-06**: Scaffold respects `--dry-run` (prints the would-write paths and contents) and `--force` (overwrites an existing slug)
+- [x] **SCAFFOLD-04**: Scaffold pre-populates the artifact frontmatter (`name`, `description`, `type`, `version`) from the MDX frontmatter so authors edit one source of truth
+- [x] **SCAFFOLD-05
+**: Round-trip CI test runs `blink scaffold` for each collection, then runs Velite, and asserts the generated entries pass schema validation
+- [x] **SCAFFOLD-06**: Scaffold respects `--dry-run` (prints the would-write paths and contents) and `--force` (overwrites an existing slug)
 
 ### Content Lint
 
 Cross-file invariants that ESLint can't enforce, exposed via a `blink` subcommand.
 
-- [ ] **LINT-01**: `blink lint` subcommand validates frontmatter against the JSON Schema derived from Velite Zod (single source of truth)
-- [ ] **LINT-02**: `blink lint` enforces artifact-pair sync — entries with `requires_artifact: true` must have a sibling `.artifact.md` (error); orphan `.artifact.md` files surface as warnings
-- [ ] **LINT-03**: `blink lint` enforces voice-primitive invariants — entries that declare a `voice` value must invoke the matching JSX component in the body; entries with rationale-shaped headings flag as advisory if `voice: ['decision-rationale']` is missing
-- [ ] **LINT-04**: `pnpm lint:content` script runs `blink lint` across all collections; exits non-zero on any error
-- [ ] **LINT-05**: `lint-staged` runs `blink lint` against staged MDX/artifact files only, completing under 2s for typical 1–3 file changesets
-- [ ] **LINT-06**: Turbo `lint:content` task added; CI runs the full-tree lint
-- [ ] **LINT-07**: All voice-primitive rules ship as **advisory (warn)** in v1.4 — promotion to **error** is gated on the Phase 4 review (DEBT-04)
+- [x] **LINT-01**: `blink lint` subcommand validates frontmatter against the JSON Schema derived from Velite Zod (single source of truth)
+- [x] **LINT-02**: `blink lint` enforces artifact-pair sync — entries with `requires_artifact: true` must have a sibling `.artifact.md` (error); orphan `.artifact.md` files surface as warnings
+- [x] **LINT-03**: `blink lint` enforces voice-primitive invariants — entries that declare a `voice` value must invoke the matching JSX component in the body; entries with rationale-shaped headings flag as advisory if `voice: ['decision-rationale']` is missing
+- [x] **LINT-04
+**: `pnpm lint:content` script runs `blink lint` across all collections; exits non-zero on any error
+- [x] **LINT-05
+**: `lint-staged` runs `blink lint` against staged MDX/artifact files only, completing under 2s for typical 1–3 file changesets
+- [x] **LINT-06
+**: Turbo `lint:content` task added; CI runs the full-tree lint
+- [x] **LINT-07**: All voice-primitive rules ship as **advisory (warn)** in v1.4 — promotion to **error** is gated on the Phase 4 review (DEBT-04)
 
 ### Obsidian Port
 
 Two-step pipeline that converts vault prose into reviewable, schema-valid MDX without polluting `content/` with half-clean drafts.
 
-- [ ] **PORT-01**: `blink port stage <input-dir>` runs `obsidian-export` (Rust, out-of-band) and applies project transformations (wikilink rewrite, callout → `<AuthorNote>`, frontmatter normalization, dataview block strip), writing output to `.obsidian-port-staging/`
-- [ ] **PORT-02**: `.obsidian-port-staging/` is gitignored; staged output is reviewable as a normal diff against an empty baseline
-- [ ] **PORT-03**: `blink port commit <slug>` moves a single staged entry from `.obsidian-port-staging/` to its final `content/<collection>/` path, atomically including any companion `.artifact.md`
-- [ ] **PORT-04**: Port pipeline round-trips one Blake-selected skill end-to-end before bulk content authoring begins (smoke test, not blocking)
+- [x] **PORT-01**: `blink port stage <input-dir>` runs `obsidian-export` (Rust, out-of-band) and applies project transformations (wikilink rewrite, callout → `<AuthorNote>`, frontmatter normalization, dataview block strip), writing output to `.obsidian-port-staging/`
+- [x] **PORT-02
+**: `.obsidian-port-staging/` is gitignored; staged output is reviewable as a normal diff against an empty baseline
+- [x] **PORT-03**: `blink port commit <slug>` moves a single staged entry from `.obsidian-port-staging/` to its final `content/<collection>/` path, atomically including any companion `.artifact.md`
+- [x] **PORT-04
+**: Port pipeline round-trips one Blake-selected skill end-to-end before bulk content authoring begins (smoke test, not blocking)
 
 ### Content Density
 
@@ -69,7 +75,8 @@ Real entries shipped at the agreed floor.
 - [ ] **CONTENT-02**: Five config entries authored to production quality (MDX + companion `.artifact.md`)
 - [ ] **CONTENT-03**: Three hook entries authored to production quality (MDX + companion `.artifact.md`)
 - [ ] **CONTENT-04**: Three guide entries authored to production quality (MDX only — guides do not have artifact companions)
-- [ ] **CONTENT-05**: `<ArtifactBody slug>` MDX server component shipped — eliminates copy-paste of artifact body content into MDX docs
+- [x] **CONTENT-05
+**: `<ArtifactBody slug>` MDX server component shipped — eliminates copy-paste of artifact body content into MDX docs
 - [ ] **CONTENT-06**: First voice-primitive invocation across the catalog passes a "torture-test" pass — light/dark/mobile visual capture; any layout regression in `AuthorNote` or `DecisionRationale` is fixed in `artax-ui` before bulk authoring continues
 
 ### Editorial Debt Closure
@@ -122,22 +129,22 @@ Which phases cover which requirements. Filled by the roadmapper.
 | SCHEMA-06 | Phase 27 | Complete |
 | SCHEMA-07 | Phase 27 | Complete |
 | SCHEMA-08 | Phase 27 | Complete |
-| SCAFFOLD-01 | Phase 28 | Pending |
-| SCAFFOLD-02 | Phase 28 | Pending |
-| SCAFFOLD-03 | Phase 28 | Pending |
-| SCAFFOLD-04 | Phase 28 | Pending |
+| SCAFFOLD-01 | Phase 28 | Complete |
+| SCAFFOLD-02 | Phase 28 | Complete |
+| SCAFFOLD-03 | Phase 28 | Complete |
+| SCAFFOLD-04 | Phase 28 | Complete |
 | SCAFFOLD-05 | Phase 28 | Pending |
-| SCAFFOLD-06 | Phase 28 | Pending |
-| LINT-01 | Phase 28 | Pending |
-| LINT-02 | Phase 28 | Pending |
-| LINT-03 | Phase 28 | Pending |
+| SCAFFOLD-06 | Phase 28 | Complete |
+| LINT-01 | Phase 28 | Complete |
+| LINT-02 | Phase 28 | Complete |
+| LINT-03 | Phase 28 | Complete |
 | LINT-04 | Phase 28 | Pending |
 | LINT-05 | Phase 28 | Pending |
 | LINT-06 | Phase 28 | Pending |
-| LINT-07 | Phase 28 | Pending |
-| PORT-01 | Phase 28 | Pending |
+| LINT-07 | Phase 28 | Complete |
+| PORT-01 | Phase 28 | Complete |
 | PORT-02 | Phase 28 | Pending |
-| PORT-03 | Phase 28 | Pending |
+| PORT-03 | Phase 28 | Complete |
 | PORT-04 | Phase 28 | Pending |
 | CONTENT-01 | Phase 29 | Pending |
 | CONTENT-02 | Phase 29 | Pending |

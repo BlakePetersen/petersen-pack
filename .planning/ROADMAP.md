@@ -77,7 +77,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 ### v1.4 Content Density (Phases 27-30) — IN PROGRESS
 
 - [x] **Phase 27: Schema Foundations** — Lock `dxFields` shape, slug uniqueness, cross-ref integrity, perf baseline, CalVer + ESM debt resolution before any content authoring
-- [ ] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
+- [x] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
 - [ ] **Phase 29: Content Authoring (Greenfield + Ports)** — 16 entries shipped (5 skills, 5 configs, 3 hooks, 3 guides) plus first-invocation voice-primitive torture test
 - [ ] **Phase 30: Editorial Closure** — Real `/about` and `/start-here` copy, voice-primitive backfill across pre-existing MDX, Skills Detail typography polish, voice-lint promotion review, milestone audit
 
@@ -129,10 +129,18 @@ Plans:
   5. An MDX entry can render its sibling artifact's body via `<ArtifactBody slug="<slug>" />` instead of copy-pasting — verified by replacing one existing copy-pasted artifact-body block with the component and seeing identical rendered output
 
 **Spike callouts**:
-  - `remark-lint-frontmatter-schema@3.15.4` × unified 11 compat (~2h, Day 1 of phase). Plan B: custom plugin around Ajv 8.20 (~80 LOC; Ajv already in deps tree).
-  - `zod-to-json-schema@3.25.2` × Zod 4.3.6 coverage (~1h, Day 1 of phase). Plan B: hand-author JSON Schemas for 4 collections (~40 field defs).
+  - `remark-lint-frontmatter-schema@3.15.4` x unified 11 compat (~2h, Day 1 of phase). Plan B: custom plugin around Ajv 8.20 (~80 LOC; Ajv already in deps tree).
+  - `zod-to-json-schema@3.25.2` x Zod 4.3.6 coverage (~1h, Day 1 of phase). Plan B: hand-author JSON Schemas for 4 collections (~40 field defs).
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [x] 28-01-PLAN.md — DxFrontmatterSchema + scaffold command (SCAFFOLD-01..04, SCAFFOLD-06, SCAFFOLD-03)
+- [x] 28-02-PLAN.md — Lint rules + runner + reporter (LINT-01, LINT-02, LINT-03, LINT-07)
+- [x] 28-03-PLAN.md — Port transforms + staging (PORT-01, PORT-03)
+- [x] 28-04-PLAN.md — ArtifactBody component (CONTENT-05)
+- [x] 28-05-PLAN.md — CLI commands + CI integration (LINT-04, LINT-05, LINT-06, PORT-02)
+- [x] 28-06-PLAN.md — Round-trip test + port smoke test (SCAFFOLD-05, PORT-04)
 
 ### Phase 29: Content Authoring (Greenfield + Ports)
 
@@ -165,7 +173,7 @@ Plans:
   3. Pre-existing relevant MDX entries (those with rationale-shaped or aside-shaped content surfaced by the v1.3 audit) now invoke `<AuthorNote>` or `<DecisionRationale>` where they fit — visible by running `rg "<AuthorNote|DecisionRationale" content/` and counting non-zero invocations across collections
   4. A reader on any Skills Detail page sees the polished header typography (H1 size, max-width, prose tightening) deferred from v1.3 Phase 26-03
   5. Each voice-lint rule is logged in PROJECT.md Key Decisions as `error`, `warn`, or `off` based on Phase 29 evidence (eight-entry heuristic gate); `pnpm lint:content` reflects the promotion outcome
-  6. The v1.4 milestone audit lives at `.planning/milestones/v1.4-MILESTONE-AUDIT.md` (alongside `v1.4-REQUIREMENTS.md` and `v1.4-ROADMAP.md`) following the v1.0–v1.3 archive pattern
+  6. The v1.4 milestone audit lives at `.planning/milestones/v1.4-MILESTONE-AUDIT.md` (alongside `v1.4-REQUIREMENTS.md` and `v1.4-ROADMAP.md`) following the v1.0-v1.3 archive pattern
 
 **Plans**: TBD
 **UI hint**: yes
@@ -173,7 +181,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-v1.4 phases execute in numeric order: 27 → 28 → 29 → 30. Phase 28 has three internal tracks (scaffold, lint, port) that may proceed in parallel within the phase but all must be complete before Phase 29 begins.
+v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three internal tracks (scaffold, lint, port) that may proceed in parallel within the phase but all must be complete before Phase 29 begins.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -206,7 +214,7 @@ v1.4 phases execute in numeric order: 27 → 28 → 29 → 30. Phase 28 has thre
 | 25. blakepetersen.io Theming | v1.3 | 1/1 | Complete | 2026-04-19 |
 | 26. blakepetersen.io Page Updates | v1.3 | 7/7 | Complete | 2026-04-24 |
 | 27. Schema Foundations | v1.4 | 8/8 | Complete | 2026-04-28 |
-| 28. Authoring Scaffolds + Lint + Port | v1.4 | 0/? | Not started | — |
+| 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete | 2026-05-03 |
 | 29. Content Authoring | v1.4 | 0/? | Not started | — |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
 

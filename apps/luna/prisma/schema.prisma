@@ -1,0 +1,825 @@
+// ABOUTME: Prisma schema defining the database structure
+// ABOUTME: Contains models for users, galleries, images, bookings, and inquiries
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions                Session[]
+  clientGalleries         ClientGallery[]
+  contracts               Contract[]
+  resolvedRetouchRequests RetouchRequest[]
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum GalleryStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Gallery {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  description String?
+  featured    Boolean       @default(false)
+  sortOrder   Int           @default(0)
+  status      GalleryStatus @default(PUBLISHED)
+  publishedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  images     Image[]
+  heroSlides HeroSlide[]
+  coverImage String?
+}
+
+model Image {
+  id              String   @id @default(cuid())
+  url             String
+  publicId        String?
+  altText         String?
+  width           Int?
+  height          Int?
+  focalX          Float?   @default(0.5)
+  focalY          Float?   @default(0.5)
+  cropX           Float? // 0-1 range, left edge as percentage
+  cropY           Float? // 0-1 range, top edge as percentage
+  cropWidth       Float? // 0-1 range, width as percentage
+  cropHeight      Float? // 0-1 range, height as percentage
+  cropAspectRatio String? // e.g., "16:9", "1:1", "original"
+  flipHorizontal  Boolean  @default(false) // Mirror image horizontally
+  flipVertical    Boolean  @default(false) // Mirror image vertically
+  sortOrder       Int      @default(0)
+  galleryId       String?
+  createdAt       DateTime @default(now())
+
+  gallery         Gallery?          @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  heroSlides      HeroSlide[]
+  homepageContent HomepageContent[]
+
+  @@index([galleryId])
+}
+
+model Inquiry {
+  id                     String        @id @default(cuid())
+  name                   String
+  email                  String
+  phone                  String?
+  serviceType            String
+  message                String
+  preferredContactMethod String?       @default("EMAIL")
+  status                 InquiryStatus @default(NEW)
+  createdAt              DateTime      @default(now())
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+  CLOSED
+}
+
+enum FaqCategory {
+  GENERAL
+  BOOKING
+  PRICING
+  PROCESS
+  POLICIES
+}
+
+model ClientGallery {
+  id                 String              @id @default(cuid())
+  title              String
+  slug               String              @unique
+  clientId           String
+  password           String?
+  expiresAt          DateTime?
+  status             ClientGalleryStatus @default(DRAFT)
+  submittedAt        DateTime?
+  contractId         String?
+  downloadQuotaUsed  Int                 @default(0)
+  finalPaymentStatus PaymentStatus?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  client         User            @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  contract       Contract?       @relation(fields: [contractId], references: [id])
+  images         ClientImage[]
+  changeRequests ChangeRequest[]
+  payments       Payment[]
+
+  @@index([clientId])
+  @@index([status])
+  @@index([contractId])
+}
+
+enum ClientGalleryStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  COMPLETED
+}
+
+model ClientImage {
+  id              String   @id @default(cuid())
+  url             String
+  publicId        String?
+  altText         String?
+  width           Int?
+  height          Int?
+  focalX          Float?   @default(0.5)
+  focalY          Float?   @default(0.5)
+  sortOrder       Int      @default(0)
+  clientGalleryId String
+  isFavorite      Boolean  @default(false)
+  isArtistPick    Boolean  @default(false)
+  downloaded      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  clientGallery   ClientGallery    @relation(fields: [clientGalleryId], references: [id], onDelete: Cascade)
+  retouchRequests RetouchRequest[]
+
+  @@index([clientGalleryId])
+  @@index([isFavorite])
+  @@index([isArtistPick])
+}
+
+model RetouchRequest {
+  id                String        @id @default(cuid())
+  clientImageId     String
+  clientGalleryId   String
+  notes             String?
+  status            RetouchStatus @default(PENDING)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  resolvedAt        DateTime?
+  resolvedById      String?
+  retouchedImageUrl String?
+
+  clientImage ClientImage @relation(fields: [clientImageId], references: [id], onDelete: Cascade)
+  resolvedBy  User?       @relation(fields: [resolvedById], references: [id])
+
+  @@index([clientImageId])
+  @@index([clientGalleryId])
+  @@index([status])
+}
+
+enum RetouchStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  DECLINED
+}
+
+model GalleryPreference {
+  id               String   @id @default(cuid())
+  clientGalleryId  String
+  userId           String
+  hideRetouchModal Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([clientGalleryId, userId])
+  @@index([userId])
+}
+
+model ChangeRequest {
+  id              String              @id @default(cuid())
+  clientGalleryId String
+  requestType     ChangeRequestType
+  description     String
+  status          ChangeRequestStatus @default(PENDING)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  clientGallery ClientGallery @relation(fields: [clientGalleryId], references: [id], onDelete: Cascade)
+
+  @@index([clientGalleryId])
+  @@index([status])
+}
+
+enum ChangeRequestType {
+  FAVORITES
+  RETOUCH
+  OTHER
+}
+
+enum ChangeRequestStatus {
+  PENDING
+  APPROVED
+  DECLINED
+}
+
+model HeroSlide {
+  id    String @id @default(cuid())
+  title String
+
+  // Image source (priority: imageId > galleryId > imageUrl)
+  galleryId      String? // Auto-populate from gallery cover image
+  imageId        String? // Specific image from any gallery
+  imageUrl       String? // Manual upload fallback
+  mobileImageUrl String?
+
+  focalX       Float @default(0.5)
+  focalY       Float @default(0.5)
+  mobileFocalX Float @default(0.5)
+  mobileFocalY Float @default(0.5)
+
+  cropX           Float? // 0-1 range, left edge as percentage
+  cropY           Float? // 0-1 range, top edge as percentage
+  cropWidth       Float? // 0-1 range, width as percentage
+  cropHeight      Float? // 0-1 range, height as percentage
+  cropAspectRatio String? // e.g., "16:9", "1:1", "original"
+
+  linkUrl  String? // Custom link (overrides gallery link)
+  linkText String? // Link text for anchor
+
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  gallery Gallery? @relation(fields: [galleryId], references: [id], onDelete: SetNull)
+  image   Image?   @relation(fields: [imageId], references: [id], onDelete: SetNull)
+
+  @@index([galleryId])
+  @@index([imageId])
+}
+
+model AvailabilitySlot {
+  id          String   @id @default(cuid())
+  date        DateTime
+  startTime   String
+  endTime     String
+  isAvailable Boolean  @default(true)
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@index([date])
+}
+
+model Booking {
+  id                 String        @id @default(cuid())
+  availabilitySlotId String
+  name               String
+  email              String
+  phone              String?
+  serviceType        String
+  sessionDuration    Int
+  employeeCount      Int?
+  message            String?
+  status             BookingStatus @default(PENDING)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  availabilitySlot AvailabilitySlot @relation(fields: [availabilitySlotId], references: [id], onDelete: Cascade)
+
+  @@index([availabilitySlotId])
+  @@index([status])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model BlogPost {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String?
+  content     String
+  coverImage  String?
+  coverFocalX Float     @default(0.5)
+  coverFocalY Float     @default(0.5)
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  images     BlogPostImage[]
+  categories BlogPostCategory[]
+  tags       BlogPostTag[]
+
+  @@index([published])
+  @@index([publishedAt])
+}
+
+model BlogCategory {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+
+  posts BlogPostCategory[]
+}
+
+model BlogTag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  posts BlogPostTag[]
+}
+
+model BlogPostCategory {
+  postId     String
+  categoryId String
+
+  post     BlogPost     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category BlogCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+  @@index([postId])
+  @@index([categoryId])
+}
+
+model BlogPostTag {
+  postId String
+  tagId  String
+
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@index([postId])
+  @@index([tagId])
+}
+
+model BlogPostImage {
+  id              String   @id @default(cuid())
+  url             String
+  publicId        String?
+  altText         String?
+  width           Int?
+  height          Int?
+  focalX          Float?   @default(0.5)
+  focalY          Float?   @default(0.5)
+  cropX           Float? // 0-1 range, left edge as percentage
+  cropY           Float? // 0-1 range, top edge as percentage
+  cropWidth       Float? // 0-1 range, width as percentage
+  cropHeight      Float? // 0-1 range, height as percentage
+  cropAspectRatio String? // e.g. "16:9", "1:1", "original"
+  sortOrder       Int      @default(0)
+  postId          String
+  createdAt       DateTime @default(now())
+
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model PricingCategory {
+  id          String   @id @default(cuid())
+  serviceId   String?
+  name        String
+  description String   @db.Text
+  slug        String   @unique
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  service       Service?         @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  packages      PricingPackage[]
+  serviceImages ServiceImage[]
+
+  @@index([sortOrder])
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String   @db.Text
+  heroImage   String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  pricingCategories    PricingCategory[]
+  processSteps         ServiceProcessStep[]
+  infoCards            ServiceInfoCard[]
+  serviceSpecificSteps ProcessStep[]
+  serviceSpecificCards InfoCard[]
+  faqs                 Faq[]
+}
+
+model ProcessStep {
+  id         String   @id @default(cuid())
+  title      String
+  content    String   @db.Text
+  stepNumber Int
+  icon       String?
+  isGlobal   Boolean  @default(false)
+  serviceId  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  service  Service?             @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  services ServiceProcessStep[]
+}
+
+model InfoCard {
+  id            String   @id @default(cuid())
+  title         String
+  content       String   @db.Text
+  icon          String
+  customIconSvg String?  @db.Text
+  isGlobal      Boolean  @default(false)
+  serviceId     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  service  Service?          @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  services ServiceInfoCard[]
+}
+
+model ServiceProcessStep {
+  id            String @id @default(cuid())
+  serviceId     String
+  processStepId String
+  sortOrder     Int
+
+  service     Service     @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  processStep ProcessStep @relation(fields: [processStepId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, processStepId])
+}
+
+model ServiceInfoCard {
+  id         String @id @default(cuid())
+  serviceId  String
+  infoCardId String
+  sortOrder  Int
+
+  service  Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  infoCard InfoCard @relation(fields: [infoCardId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, infoCardId])
+}
+
+model PricingPackage {
+  id         String   @id @default(cuid())
+  categoryId String
+  name       String
+  price      Int
+  duration   String
+  features   String[]
+  isPopular  Boolean  @default(false)
+  sortOrder  Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  category PricingCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+  @@index([sortOrder])
+}
+
+model PricingAddOn {
+  id        String   @id @default(cuid())
+  name      String
+  price     String
+  unit      String
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
+model ServiceImage {
+  id              String   @id @default(cuid())
+  categoryId      String
+  url             String
+  publicId        String?
+  altText         String?
+  width           Int?
+  height          Int?
+  focalX          Float?   @default(0.5)
+  focalY          Float?   @default(0.5)
+  cropX           Float? // 0-1 range, left edge as percentage
+  cropY           Float? // 0-1 range, top edge as percentage
+  cropWidth       Float? // 0-1 range, width as percentage
+  cropHeight      Float? // 0-1 range, height as percentage
+  cropAspectRatio String? // e.g. "16:9", "1:1", "original"
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  category PricingCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+  @@index([sortOrder])
+}
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  clientName   String
+  clientPhoto  String? // URL to client photo (with permission)
+  projectType  String
+  serviceType  String? // e.g., "Wedding", "Family", "Maternity" - for filtering
+  location     String? // e.g., "San Francisco, CA"
+  quote        String
+  rating       Int      @default(5)
+  featured     Boolean  @default(false) // Highlight on homepage
+  videoUrl     String? // URL to video testimonial (if available)
+  caseStudyUrl String? // Link to full case study/blog post
+  isActive     Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([sortOrder])
+  @@index([isActive])
+  @@index([featured])
+  @@index([serviceType])
+}
+
+model Faq {
+  id        String      @id @default(cuid())
+  question  String
+  answer    Json
+  category  FaqCategory
+  serviceId String?
+  sortOrder Int         @default(0)
+  isActive  Boolean     @default(true)
+  viewCount Int         @default(0)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  service Service? @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([serviceId])
+  @@index([category])
+  @@index([isActive])
+  @@index([sortOrder])
+}
+
+model HomepageContent {
+  id        String   @id @default(cuid())
+  section   String   @unique // about, services, cta
+  content   Json // Flexible JSON content for each section
+  imageId   String? // Optional reference to an Image (e.g., About section photo)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  image Image? @relation(fields: [imageId], references: [id], onDelete: SetNull)
+
+  @@index([section])
+  @@index([imageId])
+}
+
+model Contract {
+  id        String  @id @default(cuid())
+  clientId  String
+  inquiryId String?
+  bookingId String?
+
+  // Shoot details
+  shootType               String
+  shootDate               DateTime
+  shootLocation           String
+  sessionDuration         String
+  deliverablesDescription String   @db.Text
+
+  // Pricing
+  totalAmount          Int // In cents
+  depositAmount        Int // In cents
+  retouchesIncluded    Int
+  pricePerExtraRetouch Int // In cents
+  downloadQuota        Int
+  maxFileSizePx        Int
+
+  // Signature
+  signedAt           DateTime?
+  signatureType      String? // TYPED or DRAWN
+  signatureData      String?   @db.Text
+  signatureIpAddress String?
+  signedPdfUrl       String?
+
+  // Status
+  status    ContractStatus @default(DRAFT)
+  sentAt    DateTime?
+  expiresAt DateTime?
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  client          User                 @relation(fields: [clientId], references: [id])
+  payments        Payment[]
+  usageRights     ContractUsageRight[]
+  clientGalleries ClientGallery[]
+
+  @@index([clientId])
+  @@index([status])
+  @@index([deletedAt])
+  @@index([shootDate])
+  @@index([expiresAt])
+}
+
+enum ContractStatus {
+  DRAFT
+  SENT
+  SIGNED
+  EXPIRED
+}
+
+model UsageRight {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String   @db.Text
+  price       Int // In cents
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  contracts ContractUsageRight[]
+
+  @@index([sortOrder])
+  @@index([isActive])
+}
+
+model ContractUsageRight {
+  contractId   String
+  usageRightId String
+
+  contract   Contract   @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  usageRight UsageRight @relation(fields: [usageRightId], references: [id], onDelete: Cascade)
+
+  @@id([contractId, usageRightId])
+  @@index([contractId])
+  @@index([usageRightId])
+}
+
+model Payment {
+  id              String  @id @default(cuid())
+  contractId      String
+  clientGalleryId String?
+
+  type   PaymentType
+  amount Int // In cents
+  status PaymentStatus @default(PENDING)
+
+  stripePaymentIntentId String? @unique
+  stripeReceiptUrl      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contract      Contract       @relation(fields: [contractId], references: [id])
+  clientGallery ClientGallery? @relation(fields: [clientGalleryId], references: [id])
+
+  @@index([contractId])
+  @@index([clientGalleryId])
+  @@index([status])
+  @@index([type])
+}
+
+enum PaymentType {
+  DEPOSIT
+  FINAL_BALANCE
+  EXTRA_RETOUCHES
+  ADDITIONAL_DOWNLOADS
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model ContractTemplate {
+  id        String   @id @default(cuid())
+  section   String   @unique
+  content   String   @db.Text
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+  @@index([isActive])
+}
+
+model PreviewToken {
+  id           String    @id @default(cuid())
+  token        String    @unique
+  resourceType String // "gallery"
+  resourceId   String
+  expiresAt    DateTime
+  createdAt    DateTime  @default(now())
+  createdBy    String // admin user ID
+  revokedAt    DateTime? // SEC-06: token revocation; null = active, non-null = revoked at this time
+
+  @@index([token])
+  @@index([expiresAt])
+  @@index([resourceType, resourceId])
+}
+
+/// SEC-08: Stripe webhook idempotency — one row per inbound event, keyed on event.id
+model WebhookEvent {
+  id          String    @id @default(cuid())
+  eventId     String    @unique
+  source      String // "stripe" today; future: "resend", etc.
+  eventType   String // "checkout.session.completed", etc.
+  receivedAt  DateTime  @default(now())
+  processedAt DateTime?
+
+  @@index([eventId])
+  @@index([source, eventType, receivedAt(sort: Desc)])
+}
+
+/// SEC-10: client-supplied idempotency keys — 24h TTL, scope keyed
+model IdempotencyKey {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  scope     String // e.g., "payment.create_session", "retouch.approve"
+  actorId   String?
+  response  Json? // cached response body, null while in-flight
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([key])
+  @@index([expiresAt])
+  @@index([actorId, scope, createdAt(sort: Desc)])
+}
+
+enum AuditResourceType {
+  USER
+  CLIENT_GALLERY
+  GALLERY
+  CONTRACT
+  BOOKING
+  INQUIRY
+  PAYMENT
+  PREVIEW_TOKEN
+  FAQ
+  SERVICE
+}
+
+model AuditLog {
+  id           String            @id @default(cuid())
+  actorId      String
+  actorRole    String
+  actorEmail   String
+  action       String
+  resourceType AuditResourceType
+  resourceId   String
+  requestId    String
+  ip           String
+  ua           String
+  metadata     Json
+  beforeJson   Json?
+  afterJson    Json?
+  createdAt    DateTime          @default(now())
+
+  @@index([actorId, createdAt(sort: Desc)])
+  @@index([resourceType, resourceId, createdAt(sort: Desc)])
+  @@index([requestId])
+}
