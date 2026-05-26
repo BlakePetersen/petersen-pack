@@ -6,7 +6,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
-function Navigation() {
+export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   // Handle Escape key to close mobile menu

@@ -7,6 +7,6 @@
 
 import Header from '@/components/luna/Header'
 
-function HeaderWithSession() {
+export default function HeaderWithSession() {
   return <Header />
 }
