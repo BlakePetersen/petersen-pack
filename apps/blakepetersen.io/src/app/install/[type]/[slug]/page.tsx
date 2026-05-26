@@ -22,6 +22,21 @@ const TYPE_SEGMENT_TO_ARTIFACT_TYPE: Record<string, string> = {
   hooks: 'hook',
 }
 
+const ARTIFACT_TYPE_TO_SEGMENT: Record<string, string> = {
+  skill: 'skills',
+  config: 'configs',
+  hook: 'hooks',
+}
+
+// Pre-render every installable artifact at build time so the link checker
+// can resolve `/install/<type>/<slug>` links from content pages, and so
+// the install view doesn't pay an SSR cost on first paint.
+export function generateStaticParams() {
+  return readArtifactsJson()
+    .filter((a) => ARTIFACT_TYPE_TO_SEGMENT[a.type])
+    .map((a) => ({ type: ARTIFACT_TYPE_TO_SEGMENT[a.type], slug: a.slug }))
+}
+
 export default async function InstallContextViewPage({
   params,
 }: {
