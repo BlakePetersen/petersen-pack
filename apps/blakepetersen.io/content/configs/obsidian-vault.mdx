@@ -53,7 +53,7 @@ Obsidian's "core plugins" are the ones bundled with the app. The ones that earn 
 
 <DecisionRationale
   decision="Use Markdown links, not Obsidian wikilinks"
-  rationale="Wikilinks ([[Page]]) are Obsidian-native and convenient inside Obsidian, but they're invisible to every other Markdown renderer (GitHub, Pandoc, MDX pipelines). Markdown links ([Page](Page.md)) work in Obsidian *and* render correctly when you port the vault content to MDX or paste it into a PR. For a Monodex that's the source of truth for content that eventually leaves the vault, the portability wins."
+  rationale="Wikilinks (`[[Page]]`) are Obsidian-native and convenient inside Obsidian, but they're invisible to every other Markdown renderer (GitHub, Pandoc, MDX pipelines). Markdown links (`[Page](Page.md)`) work in Obsidian *and* render correctly when you port the vault content to MDX or paste it into a PR. For a Monodex that's the source of truth for content that eventually leaves the vault, the portability wins."
   alternatives={[
     { name: "Use wikilinks for in-vault convenience", reason: "Locks the content to Obsidian and breaks every downstream renderer when notes get ported" }
   ]}
