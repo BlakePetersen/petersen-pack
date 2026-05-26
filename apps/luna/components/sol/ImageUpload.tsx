@@ -14,7 +14,7 @@ type ImageUploadProps = {
   uploadType?: 'hero' | 'general'
 }
 
-function ImageUpload({
+export function ImageUpload({
   currentImageUrl,
   onImageChange,
   label = 'Image',

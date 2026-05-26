@@ -9,7 +9,7 @@ type GalleryAdminLinkWithSessionProps = {
   galleryId: string
 }
 
-function GalleryAdminLinkWithSession({
+export default function GalleryAdminLinkWithSession({
   galleryId,
 }: GalleryAdminLinkWithSessionProps) {
   return <GalleryAdminLink galleryId={galleryId} />

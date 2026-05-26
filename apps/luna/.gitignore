@@ -29,6 +29,10 @@ next-env.d.ts
 # Cached images (large binary files)
 /prisma/seed-data/images
 
+# Database dumps — never commit, may contain client PII
+/backups/
+*.dump
+
 *storybook.log
 storybook-static
 

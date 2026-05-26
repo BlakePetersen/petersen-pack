@@ -25,7 +25,7 @@ type HeroSlideFormProps = {
   slide?: HeroSlide
 }
 
-function HeroSlideForm({ slide }: HeroSlideFormProps) {
+export default function HeroSlideForm({ slide }: HeroSlideFormProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isUploading, setIsUploading] = useState(false)

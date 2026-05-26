@@ -16,7 +16,7 @@ type OrderSummaryCardsProps = {
   retouchImages: ImageData[]
 }
 
-function OrderSummaryCards({
+export default function OrderSummaryCards({
   favoriteImages,
   retouchImages,
 }: OrderSummaryCardsProps) {

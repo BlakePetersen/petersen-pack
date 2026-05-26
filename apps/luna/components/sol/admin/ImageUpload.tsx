@@ -20,7 +20,7 @@ interface UploadingFile {
   error?: string
 }
 
-function ImageUpload({ galleries }: ImageUploadProps) {
+export default function ImageUpload({ galleries }: ImageUploadProps) {
   const router = useRouter()
   const [selectedGalleryId, setSelectedGalleryId] = useState('')
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([])

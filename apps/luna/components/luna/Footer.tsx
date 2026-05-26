@@ -4,7 +4,7 @@
 import Link from 'next/link'
 import { LogoBranding } from '@/components/commons/LogoBranding'
 
-function Footer() {
+export default function Footer() {
   return (
     <footer className="border-t bg-gray-900 text-gray-300">
       <div className="container mx-auto p-gutter py-section-sm">

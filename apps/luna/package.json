@@ -141,15 +141,6 @@
     "typescript": "^5.5.3",
     "vitest": "^4.0.8"
   },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,css}": [
-      "prettier --write"
-    ]
-  },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
