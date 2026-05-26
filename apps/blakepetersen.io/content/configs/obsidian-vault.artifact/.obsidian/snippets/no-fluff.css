@@ -1,0 +1,14 @@
+.markdown-source-view.mod-cm6 .cm-line {
+  max-width: 760px;
+}
+.cm-content {
+  font-family: 'JetBrains Mono', 'iA Writer Mono', monospace;
+}
+.markdown-preview-view {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.HyperMD-codeblock {
+  font-size: 0.9em;
+}

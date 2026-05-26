@@ -18,6 +18,10 @@
 
 .vercel
 
+# Playwright runtime output (committed baselines live in tests/visual/*.spec.ts-snapshots/)
+/playwright-report/
+/test-results/
+
 # Yarn 2 w/ Zero-Installs
 .yarn/*
 !.yarn/cache

@@ -1,0 +1,184 @@
+---
+title: "Next.js stack patterns: auth, data, UI"
+description: "A reference for the load-bearing choices in a modern Next.js App Router app — auth strategy, data layer, UI kit — drawn from two production stacks and the small, opinionated build that sits between them."
+applies_to: ["nextjs", "prisma", "next-auth", "shadcn"]
+dependencies: []
+order: 2
+draft: false
+tags: ["nextjs", "auth", "prisma", "shadcn"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Email-OTP over OAuth or password auth for low-traffic personal apps"
+    rationale: "OAuth requires per-provider setup, password auth requires a credential store and a recovery flow. For a single-tenant, allowlist-only site, OTP collapses to one moving part: a hashed allowlist, a 6-digit code, and a 10-minute expiry. NextAuth v5's JWT strategy carries the session; no DB session table required."
+  - choice: "Hashed email allowlist over a plaintext one"
+    rationale: "The allowlist is a list of who is allowed in, but a leaked plaintext list is a leaked address book. Hashing on insert and on every lookup makes the table useless to an attacker who reads it without changing any user-facing behavior — the form still takes plaintext input, the lookup still works."
+---
+
+If you ship two Next.js apps in the same year, the second one teaches you which choices in the first one were load-bearing and which were decoration. This entry pulls those decisions forward into a stack you can lift into a third app without re-deriving them. It assumes App Router, React 19, and a TypeScript-first codebase; it does not assume any particular hosting target.
+
+The shape below is opinionated for small-to-medium apps: one-tier auth, a thin persistence layer, and a UI kit that ships components instead of locking you to a runtime. Everything is replaceable a piece at a time; nothing is load-bearing on the rest.
+
+## Where the pieces live in a Next.js project
+
+A working stack settles into a small number of directories that map to a single concern each. `app/` holds the routes, `lib/` holds the singletons and helpers that routes import, `prisma/` holds the schema and migrations, and `components/` holds anything reused across more than one route. Auth lives at the root as `auth.ts` so the same module is importable from a Server Component, a Route Handler, and the middleware.
+
+```text
+app/
+  (auth)/login/page.tsx     # email-entry form
+  (auth)/verify/page.tsx    # OTP-entry form
+  admin/page.tsx            # allowlist management
+  api/auth/[...nextauth]/route.ts
+auth.ts                     # NextAuth v5 config
+middleware.ts               # session check on every protected route
+lib/
+  prisma.ts                 # PrismaClient singleton
+  email.ts                  # Resend wrapper for OTP send
+prisma/
+  schema.prisma             # AllowedEmail, OtpCode tables
+```
+
+The shape stays the same as the app grows; new features add domain files (`lib/billing.ts`, `lib/notifications.ts`) rather than reshuffling the directory tree.
+
+## Auth as the smallest moving part
+
+The auth surface you can afford to maintain is smaller than the one you reach for by default. For a single-tier app where every authenticated user has the same access, NextAuth v5's Credentials provider lets you implement an email-OTP flow without a session table. The provider's `authorize` function runs your verification logic; if it returns a user object, NextAuth issues a JWT and the session is portable across edge middleware and route handlers.
+
+```ts
+// auth.ts
+import NextAuth from 'next-auth'
+import Credentials from 'next-auth/providers/credentials'
+import { verifyOtp } from '@/lib/otp'
+
+export const { auth, handlers, signIn, signOut } = NextAuth({
+  session: { strategy: 'jwt' },
+  providers: [
+    Credentials({
+      credentials: { email: {}, code: {} },
+      authorize: async (raw) => {
+        const user = await verifyOtp(raw.email as string, raw.code as string)
+        return user ?? null
+      },
+    }),
+  ],
+  pages: { signIn: '/login' },
+})
+```
+
+<a href="/install/skills/nextjs-stack-patterns" target="_blank" rel="noopener">View full auth.ts →</a>
+
+The OTP flow itself is two routes (`/login` collects the email, `/verify` collects the code) and one server action that generates a code, stores its hash, and sends the plaintext via Resend. Codes live 10 minutes and are single-use — once the row's `used` flag flips, the code is dead.
+
+<DecisionRationale
+  decision="Single-use OTP rows over a rolling code"
+  rationale="A reusable code is a stealable code — once it lands in someone's inbox, every replay is a valid login until expiry. Marking the row used on first verification makes the second attempt fail loudly, which surfaces a compromised inbox the moment it matters. The cost is one extra column and an UPDATE in the verify path."
+  alternatives={[
+    { name: "Rolling code valid until expiry", reason: "Defensible only on flows where the code never leaves the same browser session — not the case for email." }
+  ]}
+/>
+
+## Prisma as the singleton you keep in `lib/`
+
+Prisma's client is expensive to instantiate and very cheap to reuse. In a Next.js dev server, the route file modules reload on every change; if you `new PrismaClient()` at the top of a route handler, you accumulate a connection per hot reload and exhaust Postgres in twenty minutes. The fix is a one-file singleton in `lib/prisma.ts` that the rest of the app imports.
+
+```ts
+// lib/prisma.ts
+import { PrismaClient } from '@prisma/client'
+
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient }
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma
+}
+```
+
+<a href="/install/skills/nextjs-stack-patterns" target="_blank" rel="noopener">View full lib/prisma.ts →</a>
+
+The `globalThis` stash is the trick — production builds bundle this module once and the conditional never fires, but the dev server's per-reload re-evaluation reuses the same client because `globalThis` survives module reloads. Every route handler, server action, and middleware imports `{ prisma }` from this file and never constructs its own.
+
+## Schema is small and indexed where it has to be
+
+Two tables carry the OTP flow: one for the allowlist, one for the codes. The allowlist's `emailHash` is unique because a duplicate would let two admin entries point at the same inbox. The OTP code table needs an index on `emailHash` because the verify path filters by it on every login.
+
+```prisma
+// prisma/schema.prisma
+model AllowedEmail {
+  id        String   @id @default(cuid())
+  emailHash String   @unique
+  label     String?
+  addedBy   String
+  createdAt DateTime @default(now())
+}
+
+model OtpCode {
+  id        String   @id @default(cuid())
+  emailHash String
+  code      String   // bcrypt hash of the 6-digit code
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([emailHash])
+}
+```
+
+<a href="/install/skills/nextjs-stack-patterns" target="_blank" rel="noopener">View full prisma/schema.prisma →</a>
+
+Both the email and the code are stored as hashes (bcrypt is fine for both — the work factor only matters once per login attempt, which is rate-limit-bounded). The plaintext code is the one thing that leaves the server, going to Resend and into the user's inbox; everything in the database is opaque.
+
+## Middleware is the single chokepoint
+
+App Router middleware runs on the edge and gets the JWT in `auth()` for free if NextAuth's handlers are mounted at `app/api/auth/[...nextauth]/route.ts`. One middleware file gates everything except the auth-entry routes, and a `matcher` config keeps it off static assets.
+
+```ts
+// middleware.ts
+import { auth } from '@/auth'
+import { NextResponse } from 'next/server'
+
+export default auth((req) => {
+  const isAuthRoute = req.nextUrl.pathname.startsWith('/login')
+    || req.nextUrl.pathname.startsWith('/verify')
+  if (!req.auth && !isAuthRoute) {
+    const signIn = new URL('/login', req.nextUrl)
+    signIn.searchParams.set('callbackUrl', req.nextUrl.pathname)
+    return NextResponse.redirect(signIn)
+  }
+})
+
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+}
+```
+
+<a href="/install/skills/nextjs-stack-patterns" target="_blank" rel="noopener">View full middleware.ts →</a>
+
+The `callbackUrl` round-trip is the bit that's easy to leave out and annoying to add later. Capturing the requested path at the redirect and threading it through `/login` and `/verify` means a deep link survives login; without it, the user always lands on the home page.
+
+## shadcn/ui is a code generator, not a library
+
+The difference matters. A UI library lives in `node_modules` and you upgrade it; shadcn copies component source into your repo and you own it. That sounds heavier and it is — every component is a file you maintain — but it pays off the first time you need a one-line tweak: there's no fork, no wrapper, no `displayName` patching. You open the file and you change the line.
+
+```bash
+# Install shadcn into an existing Next.js app
+pnpm dlx shadcn@latest init
+# Pick: New York, Neutral base, CSS variables yes, RSC yes
+
+# Add what you actually need; everything else stays uninstalled
+pnpm dlx shadcn@latest add button input card dialog form badge
+```
+
+<a href="/install/skills/nextjs-stack-patterns" target="_blank" rel="noopener">View full components.json →</a>
+
+The CLI writes a `components.json` next to your `tsconfig` and adds files under `components/ui/`. Radix UI primitives come along as dependencies because the components are thin wrappers over them; `class-variance-authority` handles variants and `tailwind-merge` cleans up `className` collisions through the project's `cn()` helper.
+
+<AuthorNote>
+The thing that took me longest to internalize about shadcn is that the components are yours the moment they land. The instinct from years of `npm install` was to leave them alone and grumble about the API; with shadcn you open the file, change what you need, and the diff is in your own PR. Treat them as scaffolded source, not a dependency.
+</AuthorNote>
+
+## What you do not need on day one
+
+A small app on this stack does not need Turbo (single workspace, single build), feature flags (you can ship a branch), or a queue system (Vercel cron + Resend webhooks cover the cases you actually have). Each of those becomes worth installing when a specific pain shows up; until then, the smaller surface is the feature.
+
+The companion artifact ships a working version of every file referenced above. Drop it into a fresh Next.js project, run `pnpm install`, set `DATABASE_URL` + `RESEND_API_KEY` + `AUTH_SECRET` in `.env.local`, run `pnpm prisma migrate dev`, and the app is ready for its first allowlist entry.

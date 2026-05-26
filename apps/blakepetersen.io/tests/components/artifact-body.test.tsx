@@ -126,7 +126,7 @@ describe('ArtifactBody', () => {
     expect(inferLanguage('file.css')).toBe('css')
   })
 
-  it('includes rawCode prop for copy button functionality', () => {
+  it('does not pass rawCode prop — install-page CopyCommandBlock handles copy intent (Phase 29 Variant 3)', () => {
     render(
       <ArtifactDataProvider artifacts={[singleFileArtifact]}>
         <ArtifactBody slug="eslint-flat-config" />
@@ -134,7 +134,7 @@ describe('ArtifactBody', () => {
     )
 
     const codeBlock = screen.getByTestId('code-block')
-    expect(codeBlock).toHaveAttribute('data-raw-code', 'export default []')
+    expect(codeBlock).not.toHaveAttribute('data-raw-code')
   })
 
   it('multi-file artifact tab labels match file names from artifact data', () => {

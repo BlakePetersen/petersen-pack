@@ -1,0 +1,123 @@
+---
+title: "DX Registry Contribution"
+description: "How to contribute a new entry to the DX registry — what a skill, config, hook, or guide actually is, the v1.4 voice contract, the artifact-pair convention, and the lint rules that gate every commit."
+applies_to: ["blink-registry", "mdx", "velite", "content-authoring"]
+dependencies: ["guides/content-authoring"]
+order: 6
+draft: false
+tags: ["registry", "mdx", "blink-cli", "content", "authoring"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: false
+decisions:
+  - choice: "Scaffold every new entry via `blink scaffold`, never hand-author the frontmatter"
+    rationale: "The scaffold derives its frontmatter shape from the live Velite Zod schema, not a copy of a copy. Hand-authored frontmatter drifts the moment the schema changes — a new required field gets added, half the entries silently miss it, and the build breaks during a future refactor. Scaffolding guarantees every new entry starts at the current schema's exact shape."
+  - choice: "Treat lint warnings as advisory, lint errors as blocking"
+    rationale: "Frontmatter shape errors (LINT-01) and artifact-pair sync errors (LINT-02) are blocking because they break the build or break the install flow — the registry consumer downloads broken JSON or misses files. Voice-primitive warnings (LINT-07) are advisory because they're a heuristic about prose quality, not a correctness gate. Treating advisories as errors trains authors to add `<DecisionRationale>` blocks where none belong; treating errors as advisories lets broken entries ship."
+related: ["guides/content-authoring", "configs/eslint-flat-config"]
+---
+
+The DX registry is a content collection plus a CLI plus a build pipeline. A contribution is a Markdown file (sometimes paired with an artifact file), a few frontmatter fields, and an opinion clearly enough stated that a reader can pick it up and apply it without negotiating with the author. The contribution flow is intentionally narrow — there are four collections, one schema, one voice contract, and a single command that scaffolds every new entry in the shape the build expects.
+
+This guide assumes you already understand *what* the registry is and *why* it's structured the way it is — see [content-authoring](/guides/content-authoring) for that. This guide covers the contribution flow itself: scaffolding, authoring, linting, and the lint rules that gate the commit.
+
+## What a Registry Entry Is
+
+Four collections, each with a slightly different shape:
+
+- **Skills** — a reusable capability the reader applies to their codebase or workflow. Has an MDX explanation and an `.artifact.md` that ships the actual skill definition (typically a Markdown file Claude Code reads).
+- **Configs** — a tool or environment configuration. Has an MDX explanation and an `.artifact.md` (or `.artifact/` directory) shipping the real config file at its standard destination.
+- **Hooks** — a git hook or Claude Code hook. Same shape as configs: MDX explanation + executable artifact at the hook's expected destination.
+- **Guides** — prose-only. No artifact. Reference walk-throughs and explanatory pieces that point at other registry entries rather than shipping a file themselves.
+
+The split between MDX explanation and `.artifact.md` is the central design decision of the registry. The MDX is for *reading* on the site — it explains the why, captures decision rationale, and points the reader at related entries. The artifact is for *applying* via the CLI — the raw bytes that get written into the reader's project. The same slug binds them; the build verifies they stay in sync.
+
+Guides are the exception. By design they have no artifact ([Phase 28 D-04](/configs/obsidian-vault) in the project's planning history) because a guide isn't a file you install — it's a piece of reference prose. The `requires_artifact: false` frontmatter field, default for guides, makes this explicit.
+
+## The Scaffold Command
+
+Every new entry starts here:
+
+```bash title="Scaffold a new entry"
+pnpm exec blink scaffold <collection> <slug> --voice author-note,decision-rationale
+```
+
+`<collection>` is one of `skill`, `config`, `hook`, `guide`. `<slug>` is a kebab-case identifier — letters, numbers, hyphens. The `--voice` flag stubs the voice-primitive imports and placeholder invocations matching the LINT-03 contract (more on this below).
+
+The scaffold produces:
+
+- An `apps/blakepetersen.io/content/<collection>/<slug>.mdx` file with v1.4-compliant frontmatter (all required fields stubbed, `draft: true` initially)
+- If the collection takes an artifact, a sibling `apps/blakepetersen.io/content/<collection>/<slug>.artifact.md` with frontmatter pre-populated from the MDX values (per [SCAFFOLD-04](/guides/content-authoring))
+
+What the scaffold doesn't do: it doesn't write your prose. It's a structural starting point — the file shape is correct, every required field is present, the imports and stubs match the voice contract. The author replaces the TODOs with real content. See the implementation at [`packages/blink-cli/src/scaffold/templates.ts`](https://github.com/blakepetersen/petersen-group/blob/main/packages/blink-cli/src/scaffold/templates.ts) for the exact per-collection body templates.
+
+## The Voice Contract (D-11 / LINT-03)
+
+Every entry must invoke at least one voice primitive in the body:
+
+- `<AuthorNote>` — first-person framing. Used for personal experience, surprise, the time you learned something the hard way, the opinion that doesn't fit elsewhere. Sets the entry apart from generic documentation.
+- `<DecisionRationale>` — structured "we chose X over Y" reasoning. Captured as a JSX prop so the same content can flow into a `decisions:` frontmatter array for downstream tooling (the catalog UI surfaces decisions in listings).
+
+The lint rule (LINT-03) checks that `voice:` frontmatter matches body invocations exactly. If `voice: ['author-note', 'decision-rationale']` is declared but only `<AuthorNote>` is invoked, lint emits a warning. The fix is either to add the missing primitive in the body or remove the declaration from frontmatter.
+
+<DecisionRationale
+  decision="Voice primitives as components, not Markdown conventions"
+  rationale="A voice primitive could have been a Markdown blockquote convention — `> [!note]` for an author note, `> [!decision]` for a rationale. We chose components because the same JSX serves three roles at once: it renders the voice prose with consistent styling on the site, it parses as structured data the build can extract into the `decisions:` array, and it surfaces in lint heuristics that catch missing or mismatched voice. A blockquote convention would have given us role one but neither of the other two."
+  alternatives={[
+    { name: "Use Markdown callout syntax", reason: "Simpler to author but loses the structured-data path; the build can't extract decisions from prose conventions reliably." },
+    { name: "Make voice an MDX export", reason: "Forces every entry to declare a JS export, which doubles the cognitive load for prose authors who don't otherwise need JSX." }
+  ]}
+/>
+
+## The Lint Rules
+
+`pnpm --filter blakepetersen.io lint:content` (which wraps `blink lint`) runs three categories of check:
+
+- **Frontmatter schema (LINT-01)** — errors. Required fields present, types correct, cross-refs path-shaped (`<collection>/<slug>`).
+- **Artifact pair (LINT-02)** — errors for skills/configs/hooks. `.mdx` and `.artifact.md` must be in sync; orphan `.artifact.md` (no sibling MDX) is a warning; `requires_artifact: false` on an MDX with a sibling artifact is a warning.
+- **Voice consistency (LINT-03 / LINT-07)** — warnings. Frontmatter `voice:` matches body invocations; H2 headings that look like decisions trigger a heuristic.
+
+Per-entry lint runs in lint-staged on commit — only the changed files. Run the full sweep before opening a PR:
+
+```bash title="Run lint across the whole content tree"
+pnpm --filter blakepetersen.io lint:content
+```
+
+The baseline is captured at each phase boundary. New errors compared to the baseline are a blocker; new warnings are a discussion. The Phase 29 baseline is 24 errors / 5 warnings, all in `content/posts/*` (pre-v1.4 entries pending Phase 30 cleanup). Net-new entries in skills/configs/hooks/guides should add zero errors.
+
+## Cross-References: `dependencies:` vs `related:`
+
+Both fields take an array of path-shaped slugs. The difference is reader intent:
+
+- `dependencies:` — prerequisites. "You need to understand X before this entry makes sense."
+- `related:` — siblings. "X is also worth looking at if you're working on this."
+
+The build validates that every cross-ref points to a real entry — broken refs fail the build (SCHEMA-04). This means the registry is always internally consistent: a published entry can't link to a phantom entry, and deleting an entry surfaces every place that referenced it. The schema lives in [`packages/blink-registry/src/schema.ts`](https://github.com/blakepetersen/petersen-group/blob/main/packages/blink-registry/src/schema.ts).
+
+## What to Skip in Frontmatter
+
+<AuthorNote>
+The instinct on a new entry is to fill in every optional field — `decisions:`, `applies_to:`, `tags:`, `dependencies:`, `related:` — because they're all there in the schema. Don't. An entry with a manufactured `decisions:` array (one entry, written specifically because the schema has the field) is worse than one with no decisions array at all. The catalog UI surfaces the decisions list; an empty or low-quality entry signals to the reader that the field is bureaucratic, not informative. Fill in what the entry actually has; leave the rest out.
+</AuthorNote>
+
+Optional frontmatter fields that are worth being honest about:
+
+- **`decisions:`** — include only real architectural decisions worth surfacing. If the entry has none, omit the field. Two strong decisions are better than five weak ones.
+- **`dependencies:`** — only if the reader genuinely cannot use this entry without reading the dependency first. Otherwise it's `related:`.
+- **`applies_to:`** — agents filter on this field. Be specific (`react` instead of `frontend`, `pnpm-workspaces` instead of `package-management`).
+- **`tags:`** — search and filtering. 3-5 tags is the sweet spot; ten tags signal noise.
+
+## The Commit Shape
+
+A single new entry should be a single atomic commit:
+
+```text title="Conventional commit for a new entry"
+feat(<phase>-<plan>): scaffold + author <slug> <collection>
+```
+
+For an entry that ships an artifact, both files (MDX + `.artifact.md`) go in the same commit. The MDX explains the artifact; the artifact is what the MDX explains. Splitting them across commits produces a half-state where one references the other but the other doesn't exist yet — fine on a feature branch with squash merge, confusing on a linear history.
+
+## After the Commit
+
+The pre-commit hook runs lint-staged on the new entry; if lint is clean, the commit lands. The build (`pnpm --filter blakepetersen.io build`) catches anything lint missed — cross-ref resolution, artifact-content validity, schema-level constraints. On a green build, the entry is live on the next deploy: `/<collection>/<slug>` renders the MDX page, `/install/<collection>/<slug>` ships the artifact (for the three artifact-bearing collections), and `public/r/<collection>/<slug>.json` joins the registry index.
+
+The contribution is done when both the page and the install endpoint resolve. After that it's editorial — Blake's 24-hour re-read pass, occasional cross-link adjustments, and the eventual decision about whether the entry's `decisions:` rationale still applies.

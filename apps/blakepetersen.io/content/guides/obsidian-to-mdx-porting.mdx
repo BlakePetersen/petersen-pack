@@ -1,0 +1,101 @@
+---
+title: "Obsidian to MDX Porting"
+description: "How to port Obsidian vault notes into MDX content entries — the callout-mapping convention, the two-step staging pipeline, voice-primitive placement, and the snippets-not-walls-of-code pattern."
+applies_to: ["obsidian", "mdx", "blink-cli", "content-authoring"]
+dependencies: []
+order: 7
+draft: false
+tags: ["obsidian", "mdx", "content-authoring", "blink-cli", "port-pipeline"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: false
+decisions:
+  - choice: "Two-step staging-then-commit pipeline instead of a single port command"
+    rationale: "A single-command port writes directly into the catalog tree, which means the first time you see the result is in `git status` — and by then the wikilink rewrites, callout mappings, and frontmatter normalization have all already been applied. Staging into a gitignored intermediate directory gives a reviewable diff before any catalog file changes, so you can spot a misfired transform (a wikilink that didn't resolve, a callout type that doesn't map to a voice primitive) before it lands."
+  - choice: "Map only `[!note]`/`[!tip]`/`[!warning]`/`[!important]` callouts; leave the others as Markdown blockquotes"
+    rationale: "Obsidian supports a long callout vocabulary (`[!info]`, `[!example]`, `[!quote]`, `[!success]`, custom types). Mapping all of them to voice primitives would either invent a bunch of new primitives (each needing styling, lint coverage, and editorial intent) or collapse semantics that the vault author kept distinct. The four mapped types cover the cases where a voice primitive is a clear semantic improvement; the rest stay as blockquotes and render correctly without dragging the primitives into territory they don't belong in."
+related: ["configs/obsidian-vault"]
+---
+
+A vault full of well-organized Obsidian notes has roughly 80% of the content needed for a publishable DX entry — the structure, the prose, the worked examples, the personal observations. The remaining 20% is the shape that makes the content work on the site: v1.4 frontmatter, callouts as voice primitives, wikilinks rewritten to MDX-shaped paths, code blocks tagged with explicit languages, an opener that frames the entry architecturally instead of diving into setup. The port pipeline handles the mechanical transforms; the human handles the structural reshape.
+
+This guide distills the pattern from Phase 29, the phase that ported the first five vault entries into the catalog. The takeaways are practical, not aspirational — they're what the pattern *actually* needed by the time the fifth port landed.
+
+## The Pipeline
+
+Two commands, one intermediate directory:
+
+```bash title="Port a vault note in two steps"
+pnpm exec blink port stage ~/Monodex
+pnpm exec blink port commit <slug>
+```
+
+`stage` reads every Markdown file under the vault root, applies the transforms (frontmatter normalization, callout mapping, wikilink rewriting), and writes the staged output to `.obsidian-port-staging/<slug>.mdx`. The staging directory is gitignored and exists exactly to be a reviewable scratch space — the staged file is what's *about* to land in the catalog, presented as a normal file so you can read it, diff it, edit it.
+
+`commit` moves the staged file into `apps/blakepetersen.io/content/skills/<slug>.mdx` (or whichever collection matches the vault note's frontmatter). After `commit`, the file is a normal catalog entry — Velite picks it up on the next build, lint runs against it, the standard authoring flow takes over.
+
+<DecisionRationale
+  decision="Stage into a gitignored intermediate directory, not directly into the catalog"
+  rationale="The staged file is the place where you catch the transforms that didn't work right — a wikilink that resolved to a phantom slug, a callout type the mapping doesn't cover, a frontmatter field the vault uses but Velite doesn't. If the port wrote directly into the catalog tree, those problems would show up as broken-build failures after the fact. Staging surfaces them as a diff you can read before anything lands, which is exactly when you want to catch them."
+  alternatives={[
+    { name: "Single-command port-and-commit", reason: "Loses the diff-before-landing checkpoint; transforms that misfire end up in `git status` instead of `.obsidian-port-staging/`." },
+    { name: "Stage in-place with a `.staged` extension", reason: "Co-locates staged content with the final destination, which means a typo in `git add` can publish a staged file before review." }
+  ]}
+/>
+
+## The Callout Mapping
+
+Obsidian callouts and MDX voice primitives don't have a 1:1 vocabulary. The port maps four callout types and leaves the rest alone:
+
+| Obsidian callout | Mapped to | Why |
+|---|---|---|
+| `[!note]` | `<AuthorNote>` | First-person observation, "the surprising thing here was…" |
+| `[!tip]` | `<AuthorNote>` | Same primitive — practical advice from the author |
+| `[!warning]` | `<DecisionRationale>` | The "we chose X over Y because…" shape — a decision is a warning about doing it the other way |
+| `[!important]` | `<DecisionRationale>` | Same primitive — load-bearing decision worth surfacing |
+
+Other callout types (`[!info]`, `[!example]`, `[!quote]`, `[!success]`, `[!failure]`, custom labels) stay as Markdown blockquotes. They render correctly without a primitive and they don't drag the primitives into semantic territory that wasn't theirs to start with.
+
+This is also where Option B comes in: a vault note with no callouts at all still ports cleanly — the transform passes through the prose unchanged, and the human author places voice primitives during the structural reshape. Most vault notes have at least one `[!note]` or `[!tip]`, but the pipeline doesn't depend on them.
+
+## Wikilink Rewriting
+
+Obsidian wikilinks (`[[Some Note]]`) get rewritten to MDX path-shaped links during stage. The rule the transform uses:
+
+- `[[Some Note]]` → `[Some Note](/<collection>/some-note)` if a vault note with that name maps to a known catalog slug
+- `[[Some Note|Display Text]]` → `[Display Text](/<collection>/some-note)`
+- Unresolved wikilinks (no matching slug) get flagged in the staged file as `[Some Note](TODO-RESOLVE)` and surface in the diff for the human to fix
+
+The resolution step is where most of the manual cleanup happens. A vault that's been growing for a year has dozens of internal links, some of which won't map cleanly — the wikilink referenced a note that didn't get ported, or it referenced a section heading that doesn't exist on the rendered MDX. The staged file's `TODO-RESOLVE` markers make these visible in one pass before the file lands.
+
+## The Structural Reshape
+
+The transform handles the mechanical shape changes. The author handles the structural reshape — turning a vault note (which was written for the author's future self) into a catalog entry (which is written for an unknown reader).
+
+The pattern Phase 29 settled on, after the second skill went sideways with too much code and not enough framing:
+
+1. **Architectural framing opener.** The first paragraph or two explains *why this entry exists* and *what mental model the reader needs* before any code or config appears. Vault notes often start with the first thing the author was thinking about that day, which is rarely the first thing the reader needs.
+2. **H2/H3 only.** No H4+ — the catalog's typography stops earning hierarchical signal past three levels. Vault notes sometimes nest five deep; flatten them during reshape.
+3. **Snippets, not walls of code.** Pull 5-15-line snippets that show the key shape; link to the full file elsewhere (the artifact, an external doc, a GitHub URL). A vault note can dump 200 lines of TypeScript because the author is the only reader; a catalog entry can't.
+4. **At least one voice primitive.** If the callout map produced one or two, keep them where the transform placed them. If the vault note had no callouts, the reshape phase is where you decide which paragraph deserves a `<AuthorNote>` lift.
+5. **500-1500 body words.** Vault notes vary wildly in length; the band exists so the catalog has a consistent reading commitment per entry. Under 500 means there's not enough substance to earn an entry; over 1500 means the entry is doing two jobs and should split.
+
+See the worked examples that came out of Phase 29: [convex-patterns](/skills/convex-patterns), [nextjs-stack-patterns](/skills/nextjs-stack-patterns), [macbook-dev-setup](/skills/macbook-dev-setup), [terminal-webdev-tuning](/skills/terminal-webdev-tuning), [tmux-power-workflows](/skills/tmux-power-workflows). Each one went through the same pipeline; each one needed roughly an hour of structural reshape after the transform produced a syntactically-clean MDX.
+
+## What the Pipeline Can't Do
+
+<AuthorNote>
+After porting the first three skills I was ready to believe the pipeline could carry 80% of the work and I'd just edit the seams. After porting the fifth, the actual ratio felt more like 60/40 — the pipeline got the mechanical stuff right (frontmatter, callouts, links, code fences), but the architectural reshape was the same amount of work regardless of how clean the input was. A vault note written to be read by my future self is a fundamentally different artifact from a catalog entry written for an unknown reader, and no port transform fixes that gap. The pipeline saves you the typing; it doesn't save you the thinking.
+</AuthorNote>
+
+The mechanical transforms handle frontmatter normalization, callout mapping, wikilink rewriting, code-fence language tagging, and section-heading flattening. They don't handle:
+
+- **Opening reshape.** The vault note's opener almost always needs to be replaced with an architectural framing. The transform doesn't know what the architectural frame is.
+- **Snippet curation.** A wall of code in a vault note is a wall of code in the staged MDX. The reshape decides what to keep inline and what to link out to.
+- **Voice primitive placement.** If the callouts mapped cleanly, the primitives are already there. If not, the human places them.
+- **Cross-ref selection.** The `dependencies:` and `related:` arrays don't carry over from the vault — the catalog has different sibling entries than the vault has neighboring notes.
+
+The 60/40 ratio is the right expectation to set before starting. The pipeline isn't a write-it-once-port-it-forever solution; it's a structured starting point that removes the parts of porting that are mechanical, so the parts that aren't mechanical get the full attention.
+
+## When Not to Port
+
+A vault note doesn't need to become a catalog entry just because it exists. The filter Phase 29 used: would a stranger find this useful, distilled to its essence, written for them. If the answer is no — the note is too inside-baseball, the take is half-formed, the topic is covered better elsewhere — leave it in the vault. The catalog earns its place by being curated, not exhaustive.

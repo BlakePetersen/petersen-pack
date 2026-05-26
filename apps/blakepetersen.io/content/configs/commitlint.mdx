@@ -1,0 +1,114 @@
+---
+title: "Commitlint + Conventional Commits"
+description: "Commitlint config that enforces Conventional Commits on every commit, with project-scope rules and a Husky commit-msg hook that runs in under a second."
+applies_to: ["commitlint", "husky", "conventional-commits"]
+dependencies: []
+order: 8
+draft: false
+tags: ["commitlint", "conventional-commits", "husky", "git-hooks"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Enforce a fixed set of scope tokens via scope-enum"
+    rationale: "Free-form scopes drift — every contributor invents their own (auth, authz, login, signin). A fixed enum keeps the history greppable and makes the eventual changelog generation a string-match instead of a normalization pass. The cost is a one-line config update when a new scope is needed, which is roughly never."
+---
+
+Conventional Commits is a deceptively boring spec. It says every commit message starts with a type (`feat`, `fix`, `chore`, …), optionally followed by a scope in parentheses, then a colon, then the subject. That's the entire content. What it buys you is enormous: machine-readable history, automatic changelog generation, deterministic semver bumps from `BREAKING CHANGE:` footers, and — most importantly — a commit log that can be scanned in two seconds instead of two minutes.
+
+Commitlint is the linter that enforces the spec. It runs on every commit via a Husky `commit-msg` hook, rejects malformed messages before they hit `.git/`, and points the offender at the exact rule that failed. The total runtime budget is under a second on a modern laptop — fast enough that nobody resents the gate.
+
+## Where the Config Lives
+
+Commitlint reads its config from `commitlint.config.js` (or `.commitlintrc.js`, `.commitlintrc.json`, the `commitlint` key in `package.json` — pick one and stick with it). For a monorepo, put the config at the repo root and let every package inherit it. There's no per-package customization to be done here.
+
+```js title="commitlint.config.js"
+export default {
+  extends: ['@commitlint/config-conventional'],
+}
+```
+
+<a href="/install/configs/commitlint" target="_blank" rel="noopener">View full commitlint.config.js →</a>
+
+That one-line config gets you the entire Conventional Commits spec — every type, every formatting rule, every body-line-length check. For most projects, it's enough. The customization below is for teams that want a closed scope vocabulary and a slightly stricter subject case.
+
+## The Husky Hook
+
+Commitlint isn't doing anything until Husky wires it up. The `commit-msg` hook is a one-liner that pipes the message into commitlint's CLI:
+
+```bash title=".husky/commit-msg"
+#!/usr/bin/env sh
+pnpm exec commitlint --edit "$1"
+```
+
+<a href="/install/configs/commitlint" target="_blank" rel="noopener">View full commit-msg hook →</a>
+
+The `$1` is Git's path to the staged commit message file; `--edit` tells commitlint to read from that path. If the message fails any rule, the hook exits non-zero and Git aborts the commit — the message file stays edited in `.git/COMMIT_EDITMSG`, so you can `git commit --reuse-message=ORIG_HEAD` or just retry with `-m` to re-trigger validation.
+
+<AuthorNote>
+I used to skip `--no-verify` whenever I was in a hurry. The commits I rushed through that gate are the ones I now grep through trying to remember what they did. Bypass once and the cost is small; bypass routinely and the entire history becomes opaque. The rule I follow now: if commitlint is rejecting a real commit, the message is wrong, not the linter. Fix the message.
+</AuthorNote>
+
+## Project-Scope Rules
+
+The defaults are deliberately loose so they fit any project. For a monorepo with named workspaces, locking down the scope to a fixed enum makes the commit log dramatically more useful:
+
+```js title="commitlint.config.js"
+export default {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'scope-enum': [
+      2,
+      'always',
+      [
+        'site',
+        'ui',
+        'cli',
+        'registry',
+        'docs',
+        'deps',
+        'config',
+        'release',
+      ],
+    ],
+    'subject-case': [2, 'never', ['pascal-case', 'upper-case']],
+    'body-max-line-length': [1, 'always', 100],
+  },
+}
+```
+
+<DecisionRationale
+  decision="Pin scope-enum to the workspace names, not free-form text"
+  rationale="A scope vocabulary is a vocabulary — the value comes from people using the same words for the same things. Two months of free-form scopes produces seven variants for 'authentication' (auth, authz, login, signin, oauth, user, session). A locked enum forces the discussion up front (what are the surfaces we ship?) and gives every contributor the same word list. Adding a new scope is a one-line PR — friction in exactly the right place."
+  alternatives={[
+    { name: "Leave scope free-form", reason: "Every contributor invents their own vocabulary and the changelog becomes noisy" }
+  ]}
+/>
+
+The rule severity levels are `[level, applicability, value]` — level `2` is an error (rejects the commit), level `1` is a warning (commit proceeds but with a yellow message), level `0` disables. The `subject-case` rule with `'never'` flagged on `pascal-case` and `upper-case` keeps subject lines in sentence-case without forbidding initialisms (`JWT`, `OAuth`, `URL`). The `body-max-line-length` at level 1 is intentional — body wrapping is a code-review nice-to-have, not a hard block.
+
+## Common Errors
+
+The three errors that fire most often have one-line fixes:
+
+```
+✖ scope must be one of [site, ui, cli, registry, docs, deps, config, release]
+```
+You typed a scope that isn't in the enum. Either pick an existing one or add the new scope to `scope-enum`. The discussion of "should this be its own scope" is the discussion you want to be having.
+
+```
+✖ subject may not be empty
+```
+The colon-and-space after the type was followed by nothing. You typed `feat:` and hit enter. Add a subject.
+
+```
+⚠ body's lines must not be longer than 100 characters
+```
+A line in the commit body is over 100 chars. The hook accepts it (level 1 = warning) but the message will look ugly in `git log` on an 80-column terminal. Wrap it.
+
+## Bypass Etiquette
+
+`git commit --no-verify` bypasses every git hook including commitlint. There are exactly two situations where it's defensible: (a) you're committing a temporary save-point on a feature branch you're about to squash anyway, and (b) the linter itself has a bug. Outside those, every `--no-verify` commit is a future grep that won't find what it's looking for.
+
+## Releasing on Top of Conventional Commits
+
+Conventional Commits' real payoff arrives at release time. Tools like `changesets`, `semantic-release`, or `release-please` parse the `feat:` / `fix:` / `BREAKING CHANGE:` footers and produce a changelog plus a semver bump automatically. Without the commit conventions, those tools are guessing; with them, the release becomes a CI job. The commitlint gate is what makes that downstream automation trustworthy — there's no point parsing commit types if half the commits don't have them.

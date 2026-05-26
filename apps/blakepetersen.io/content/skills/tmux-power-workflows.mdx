@@ -1,0 +1,160 @@
+---
+title: "tmux power-user workflows"
+description: "How a long-time tmux user actually uses the thing day-to-day — popups, session juggling, copy-mode tricks, and the small handful of plugins that change the shape of terminal work."
+applies_to: ["tmux", "terminal", "lazygit", "fzf"]
+dependencies: []
+order: 5
+draft: false
+tags: ["terminal", "tmux", "workflow", "developer-experience"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Popups over splits for ephemeral work (git, scratch shell, session picker)"
+    rationale: "A split steals real estate from whatever you were doing and stays around after the task. A popup is a one-shot overlay — opens centered, closes back to the original layout, never reshuffles panes. For lazygit, a scratch shell, or fzf-driven pickers, the workflow shape is 'do a thing, close it,' and popups model that exactly."
+  - choice: "zoxide-backed session manager over a tmuxinator-style YAML config"
+    rationale: "tmuxinator describes sessions as static YAML — fine for projects you know about, painful for projects you visit once. A zoxide-backed session picker indexes whatever directories you actually cd into, makes them fuzzy-pickable from anywhere in tmux, and creates the session on demand. No config to maintain, no list to keep in sync with disk."
+---
+
+A tmux config is the easy artifact to share — paste the file, restart, done. The harder thing to convey is how you actually use it day-to-day: which bindings carry the workload, what session structure looks like for a real project, which plugins change the shape of the work. This entry is the workflow side, paired to the config side in the companion entry.
+
+The framing assumes the `tmux-power-workflows` baseline: backtick prefix, XDG layout, popup-driven lazygit, extrakto, smart session manager. Install that first; everything below references those bindings.
+
+## The mental model: a session is a project
+
+Forget windows and panes for a moment. The unit of tmux that matters is the session — one session per project, named after the project. Open a project, attach the session. Close the laptop, the session keeps running. Reboot, continuum restores the session. The session is the unit of context, and the rest (windows, panes) is layout inside it.
+
+```bash
+# Create a named session for a project
+tmux new -s blakepetersen-io
+
+# Detach (session keeps running): prefix + d
+# Reattach from any shell:
+tmux a -t blakepetersen-io
+
+# List all running sessions:
+tmux ls
+```
+
+<a href="/install/skills/tmux-power-workflows" target="_blank" rel="noopener">View full session lifecycle reference →</a>
+
+Naming sessions by project name turns `tmux ls` into a per-project status list. The cost is zero (one extra flag on `new`); the payoff is that `tmux a -t <name>` becomes a portable bookmark across machines, ssh sessions, and reboots.
+
+## Session juggling: prefix + Shift+T over `tmux a`
+
+The baseline `tmux a -t <name>` works fine when you remember the session names. The day-to-day move is the smart session picker — `prefix + Shift+T` opens an fzf popup ranked by zoxide's frecency over directories you've visited recently. Pick a directory; if a session for it exists, attach; if not, create it.
+
+```bash
+# Inside tmux: prefix + Shift+T
+# fzf popup opens — type to filter, Enter to attach/create
+```
+
+<a href="/install/skills/tmux-power-workflows" target="_blank" rel="noopener">View full session-manager config →</a>
+
+The reason this shape works is that zoxide is already tracking the directories you actually live in. The session picker doesn't need a separate index, doesn't need a YAML config, and doesn't need you to maintain a list — every project you've cd'd into in the last month is already in the picker.
+
+<DecisionRationale
+  decision="Smart session picker over a sessions list in your prompt"
+  rationale="A status-bar segment listing all sessions makes the bar busy and rewards memorizing session names. The smart picker is invisible until you need it, opens on a familiar fzf interface, and creates sessions on demand — the cost of switching projects collapses to two keystrokes plus typing a fragment of the path."
+  alternatives={[
+    { name: "All-sessions status segment", reason: "Defensible if you usually run 3-4 sessions and never juggle more — under those conditions the constant visibility is worth the screen real estate." }
+  ]}
+/>
+
+## Popups are the secret weapon
+
+The single feature that changed how I use tmux is `display-popup` (tmux 3.2+). A popup is a floating overlay — a centered window above the current pane, opened by a binding, closed by exiting whatever process is running inside. It does not reshuffle the underlying panes. It does not survive when you close it. That ephemerality is the point.
+
+```tmux
+# ~/.config/tmux/tmux.conf
+# Lazygit full-screen — the binding I press more than any other
+bind g display-popup -E -w 90% -h 90% -d "#{pane_current_path}" "lazygit"
+
+# Scratch shell — ephemeral terminal that closes back to the pane
+bind P display-popup -E -w 80% -h 75% -d "#{pane_current_path}"
+```
+
+<a href="/install/skills/tmux-power-workflows" target="_blank" rel="noopener">View full popup bindings →</a>
+
+`prefix + g` opens lazygit centered over whatever pane you're in, with the working directory set to that pane's path. The full TUI stages, commits, browses logs, and pushes — then I close it (`q`) and I'm back in the editor pane I was looking at thirty seconds ago. Same for `prefix + P`: a scratch shell for a one-off `pnpm why <pkg>` or `gh pr view 1234`, then it disappears.
+
+## Copy-mode is a search-and-yank tool
+
+The first month of tmux, copy-mode feels like a clumsy scrollback. After it clicks, it becomes the in-pane search-and-yank tool. The flow: `prefix + [` enters copy-mode (vi-keys), `?` searches backward (or `/` forward), `v` starts selection, `y` yanks to the macOS clipboard. Exit with `q`.
+
+```text
+# Inside tmux, copy-mode workflow:
+prefix + [          # enter copy-mode
+?error              # search backward for "error"
+v                   # start visual selection
+G                   # extend to bottom of buffer (or hjkl/g for finer scope)
+y                   # yank selection to macOS clipboard
+q                   # exit copy-mode
+```
+
+<a href="/install/skills/tmux-power-workflows" target="_blank" rel="noopener">View full copy-mode bindings →</a>
+
+`set -g set-clipboard on` plus the `copy-pipe-and-cancel pbcopy` binding wires the yank to the OS clipboard. Anything you select in copy-mode is on your clipboard the moment you press `y`, ready to paste anywhere. No tmux buffer indirection, no `pbpaste` round-trip in your shell.
+
+## Extrakto: fzf over every token in the pane
+
+`prefix + Tab` opens extrakto — an fzf picker over every URL, file path, hash, and word in the visible scrollback. The use case that sells it: a `git log --oneline` shows ten commit hashes, you want to copy one to paste into `git show`, extrakto picks it. Or `next dev` prints a Local URL, you want to copy it without reaching for the mouse, extrakto picks it.
+
+```text
+prefix + Tab        # fzf over every token in pane
+Tab in fzf          # toggle insert mode (paste into shell vs copy to clipboard)
+```
+
+<a href="/install/skills/tmux-power-workflows" target="_blank" rel="noopener">View full extrakto bindings →</a>
+
+The extrakto picker filters as you type — typing `https` narrows to URLs, typing `.ts` narrows to TypeScript paths, typing `feat:` narrows to commit messages. The selected token either pastes at the current prompt or copies to the clipboard, depending on which fzf binding you use.
+
+<AuthorNote>
+The thing that always surprises new tmux users is how fast a popup-driven workflow gets. The mental cost of "open lazygit in a new pane, do a thing, close the pane, restore the layout" is enough that you start avoiding git for small stuff. A popup makes the cost basically zero — open, do, close, no residue.
+</AuthorNote>
+
+## Resize is muscle memory, not a thing you think about
+
+Three binding shapes cover every resize you actually need. `prefix + H/J/K/L` (uppercase, repeatable) resize the current pane edge in 5-column / 3-row steps — repeat-tap once the prefix is in. `Alt + arrow` (no prefix) does the same thing without the prefix dance, for when you want to dial a pane in fast. `prefix + z` zooms a single pane to fullscreen and back, which is the binding you use to suddenly need the whole screen.
+
+```tmux
+# Repeatable resize after prefix
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 3
+bind -r K resize-pane -U 3
+bind -r L resize-pane -R 5
+
+# Prefix-less for live tuning
+bind -n M-Left  resize-pane -L 5
+bind -n M-Right resize-pane -R 5
+bind -n M-Up    resize-pane -U 3
+bind -n M-Down  resize-pane -D 3
+
+# Zoom toggle — the "I need this whole pane" binding
+# (already bound by default; mention for completeness)
+# prefix + z
+```
+
+<a href="/install/skills/tmux-power-workflows" target="_blank" rel="noopener">View full resize bindings →</a>
+
+The zoom toggle is the binding you'll under-use until you train into it. A two-pane split (editor + dev server) gets cramped the moment a stack trace shows up; zoom the dev-server pane (`prefix + z`), read the trace, zoom back. Same keystroke twice; no layout damage.
+
+## Resurrection: continuum saves you from yourself
+
+`tmux-continuum` saves the session geometry every 15 minutes and restores it on tmux start. The first reboot after configuring it feels like a slot-machine win — every session, every window, every pane, in roughly the right shape. The catch is that it restores layout, not running processes; for the dev-server side, see the companion `terminal-webdev-tuning` entry.
+
+```tmux
+# ~/.config/tmux/tmux.conf
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @resurrect-capture-pane-contents 'on'
+set -g @continuum-restore 'on'
+set -g @continuum-save-interval '15'
+```
+
+`@resurrect-capture-pane-contents 'on'` saves the visible scrollback so the restored panes don't open blank.
+
+## The surface that matters
+
+Once the bindings are in muscle memory, the daily surface is small — about eight bindings carry 90% of the workflow. `prefix + g` for lazygit, `prefix + Shift+T` for project jumping, `prefix + P` for a scratch shell, `prefix + Tab` for extrakto, `prefix + z` for zoom, `prefix + [` for copy-mode, `prefix + d` to detach, `tmux a` to reattach. The rest of the config is plumbing that keeps these frictionless.
+
+The companion artifact ships the full workflow cheat sheet as a standalone reference card — every binding above plus copy-mode commands, session lifecycle, and a troubleshooting section. It prints to a single page or pastes into a team onboarding doc.

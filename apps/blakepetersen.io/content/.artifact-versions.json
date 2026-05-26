@@ -7,28 +7,88 @@
     "hash": "72ba5eb110409272f26d0303793846f45655cb014f95d43f03c9431b60a2a835",
     "version": "2026.03.15.1"
   },
+  "commit-msg-ai-assist": {
+    "hash": "6a54d52720199fbf53cc2240bff449a9e442697b35d95c242143556707465381",
+    "version": "2026.05.13.1"
+  },
+  "commitlint": {
+    "hash": "1b92d2496cfa6d9e0755aab2d23bdbcff50bcb3058390836e8098e147ae609b2",
+    "version": "2026.05.13.4"
+  },
+  "convex-patterns": {
+    "hash": "fc27f356e78a82cacca44bee11448550e35dbf80b5058a2536dced80796cc5b2",
+    "version": "2026.05.13.0"
+  },
   "eslint-flat-config": {
     "hash": "f857972bada548c9b0f038e43544dbdc990680944768904b0cd0e7bf9ec102fb",
     "version": "2026.03.15.0"
+  },
+  "ghostty-terminal": {
+    "hash": "021e367199d4a2d794a7ad19fd12113b7180d0e02357bf25858ec0279c3618e2",
+    "version": "2026.05.13.5"
   },
   "husky-lint-staged": {
     "hash": "10c7b8719345b4824ff121cbadbde80d8be17a89f96553386632bec042b71a03",
     "version": "2026.03.15.5"
   },
+  "macbook-dev-setup": {
+    "hash": "ae7fece40b7ed263166c4740be96e60f3511f57a3863ea0e3c974a31ece3860b",
+    "version": "2026.05.13.0"
+  },
+  "nextjs-stack-patterns": {
+    "hash": "d9546294cbc5cad762bfd25993a0a3fb2be62108427bdd4f169d3c82b2cc0477",
+    "version": "2026.05.13.1"
+  },
+  "obsidian-vault": {
+    "hash": "7aba852e8d5d696f036b52a5cb2ad2953d8c62c354275a39cba15caba88a3006",
+    "version": "2026.05.14.0"
+  },
+  "post-merge-dep-sync": {
+    "hash": "8d01bc53d471c2aeeb19a3e23a4ea108d03abfbde45434cd8d180f9b6d91ac3c",
+    "version": "2026.05.13.2"
+  },
+  "pre-push-validation": {
+    "hash": "471144f3cc9154a9f746a3b2f81ddb37c683b637eb039c72bbbc5254743a3bef",
+    "version": "2026.05.14.0"
+  },
   "prettier-config": {
     "hash": "44c2365c0d70781af156a58a75cbf6b8ae26d452f3ec7e7add7bb969c908cc86",
     "version": "2026.03.15.4"
   },
+  "terminal-webdev-tuning": {
+    "hash": "fd542468708d58a1e2884c0e43a5ef38c31573ccf5d7788a2dc795da1e8eb4e8",
+    "version": "2026.05.13.0"
+  },
+  "tmux-popup-workflows": {
+    "hash": "3bbd83a82d2e0c2870b2e586fcb625d61e7efaf3dd171adbff7c21ee5202ee8b",
+    "version": "2026.05.13.6"
+  },
+  "tmux-power-workflows": {
+    "hash": "944bab2dac6c0a765ab58b12306a5cf9a8667206d059c141f070c087647ff708",
+    "version": "2026.05.13.0"
+  },
   "tmux-poweruser": {
-    "hash": "e9608c4b41411e9605ba4b42eff43ec5a8212c6f49be0062e22fdfcc5766ef10",
+    "hash": "1aaaf5088c2f9576827b8d974cd90d86818bf03eef58d695fc68fd57ab4aaf09",
     "version": "2026.04.05.0"
+  },
+  "turborepo-pipeline": {
+    "hash": "e299cbe6404e51af162b3a31fd72595c722303f9411e6dd50e8cd0c9680d0008",
+    "version": "2026.05.13.0"
   },
   "typescript-config": {
     "hash": "b5431f9a8b4876e8262f4166164c40fac93b37d00191cc198d156cbd79177f59",
     "version": "2026.03.15.3"
   },
+  "typescript-strict": {
+    "hash": "04f654fce987438b4a07e2a714f3b496bf5d31fd356ee12fc7b161808d778d3b",
+    "version": "2026.05.13.1"
+  },
   "writing-custom-skills": {
     "hash": "b7e370ff5ea0ee0a346eea9ca33ae1e7e9d1b590803461fcd19a5a75d30835f4",
     "version": "2026.03.15.6"
+  },
+  "zed-editor": {
+    "hash": "25b9d7437fead3f41112653c07ffe878df4ec8c7fb61a9f30131ddf888310a0b",
+    "version": "2026.05.13.1"
   }
 }

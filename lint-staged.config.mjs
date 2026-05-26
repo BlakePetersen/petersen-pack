@@ -24,8 +24,9 @@ export default {
     const filtered = files.filter((f) => !f.includes('/apps/luna/'))
     return filtered.length ? `fallow dead-code --quiet ${fileFlags(filtered)}` : []
   },
-  'apps/blakepetersen.io/content/**/*.{mdx,md}': (files) => {
-    const paths = files.join(',')
-    return `pnpm --filter blakepetersen.io lint:content -- --files ${paths}`
-  },
+  // `blink lint --content-root content` is currently buggy (reports phantom
+  // frontmatter-schema errors on .artifact.md siblings). Calling `blink lint`
+  // without the flag lets it auto-detect content and reports cleanly.
+  'apps/blakepetersen.io/content/**/*.{mdx,md}': () =>
+    `pnpm --filter blakepetersen.io exec blink lint`,
 }

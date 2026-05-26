@@ -1,0 +1,152 @@
+---
+title: "Turborepo Pipeline Config"
+description: "turbo.json pipeline for a pnpm/Next.js monorepo — content-hashed caching, dependsOn DAG, env passthroughs, and the persistent-task pattern that keeps dev servers off the cache."
+applies_to: ["turborepo", "pnpm", "nextjs", "monorepo"]
+dependencies: []
+order: 9
+draft: false
+tags: ["turborepo", "monorepo", "caching", "build-pipeline"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Lean on Turbo's content-hash cache, not timestamps"
+    rationale: "Turbo hashes every input file plus every relevant env var into a single key. Timestamps lie — git checkout rewrites every file's mtime, CI workspaces are fresh on every run. Content-hashing means a cache hit is correct regardless of when or where the inputs got there, which is what makes the remote cache usable across machines and branches."
+  - choice: "Mark dev as persistent and uncached"
+    rationale: "Dev servers are long-running processes, not jobs that produce outputs. Without persistent: true, Turbo tries to cache the output of `next dev` and gets very confused; with cache: false on top, Turbo stops trying to fingerprint a streaming process. The cost is one explicit task config; the alternative is a dev workflow that occasionally serves stale CSS from cache."
+related: ["configs/typescript-strict"]
+---
+
+Turbo is the build orchestrator that lets `pnpm build` in a monorepo finish in 12 seconds instead of three minutes — and let CI finish in zero seconds when nothing has changed. The win comes from two things working in concert: a task DAG that knows which packages depend on which, and a content-addressable cache that fingerprints every input (source files, deps, env vars) into a single key. When the key already has an entry, Turbo restores the outputs and skips the task. When it doesn't, Turbo runs the task, captures the outputs, and stores them under the new key.
+
+The whole thing is configured in one file: `turbo.json` at the repo root. This entry walks through the pipeline shape for a typical pnpm + Next.js monorepo with shared `packages/` and runnable `apps/`.
+
+## Where the Config Lives
+
+`turbo.json` sits at the repo root, next to `pnpm-workspace.yaml`. There's an optional `turbo.json` per package for package-specific overrides, but for most projects the root file is enough. The top-level shape is a single `tasks` object — each key is a task name (`build`, `test`, `lint`, `dev`), each value is the config that controls how that task runs and caches:
+
+```json title="turbo.json"
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": ["NODE_ENV"]
+    }
+  }
+}
+```
+
+<a href="/install/configs/turborepo-pipeline" target="_blank" rel="noopener">View full turbo.json →</a>
+
+The `^build` syntax is the dependency arrow: "run `build` in every dependency package before running `build` here." That single character is what makes the DAG work — Turbo walks `package.json` `dependencies` + `devDependencies` for each workspace, builds the graph, and topologically sorts so libraries finish before the apps that import them.
+
+## Caching and the `outputs` Field
+
+The `outputs` glob is what Turbo captures and restores on a cache hit. For Next.js, the canonical entry is `.next/**` minus `.next/cache/**` — Next's own incremental cache is per-machine state, not a build artifact, and shipping it through Turbo's cache would just slow things down. For library packages emitting to `dist/`, `dist/**` is enough.
+
+```json title="turbo.json"
+{
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", ".velite/**"]
+    }
+  }
+}
+```
+
+The cache key is computed from: every file that matches the package's `inputs` (or `package.json` files glob if `inputs` is omitted), the hashes of every dependency package's cache key (recursive), the env vars listed in `env`, and a few global settings like Turbo's own version. If any of those change, the key changes, and Turbo runs the task fresh. If none of them change, Turbo restores the outputs verbatim and is done in milliseconds.
+
+<DecisionRationale
+  decision="Always exclude .next/cache from outputs"
+  rationale="Next's incremental cache is per-machine warm state — fetch responses, compiled chunks, optimistic prerenders. Shipping it through Turbo's cache makes every cache restore copy hundreds of MB of files that another machine can't usefully consume. Excluding it makes the cache restore <2s instead of >30s; the missing warmth costs maybe one slow page render that Next rebuilds on demand."
+  alternatives={[
+    { name: "Include .next/cache in outputs", reason: "Inflates cache size 10× with state that's not portable across machines" }
+  ]}
+/>
+
+## The `dependsOn` DAG
+
+`dependsOn` controls task ordering. The two patterns that cover 95% of monorepo cases:
+
+- `["^build"]` — wait for `build` in every dependency package first. This is what app builds need.
+- `["lint", "test"]` — wait for these tasks in the *same* package first. This is what a `release` task might use.
+
+```json title="turbo.json"
+{
+  "tasks": {
+    "lint": {
+      "dependsOn": ["^topo"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^topo"]
+    }
+  }
+}
+```
+
+<a href="/install/configs/turborepo-pipeline" target="_blank" rel="noopener">View full turbo.json →</a>
+
+`^topo` is Turbo's "wait for the same task in upstream packages, but only to enforce topological order — don't actually run anything." It's the right answer for `lint` and `typecheck`, which don't produce outputs that downstream packages consume, but which should respect package dependency order so that a library's TypeScript errors don't show up as "cannot find module" in the app that imports it.
+
+<AuthorNote>
+The first time I ran a clean `pnpm build` after adding Turbo, the wall-clock time went from 2m40s to 0.8s — and I assumed I'd broken the build. The output looked identical because Turbo had restored everything from a previous CI cache I didn't know existed. The thing that finally convinced me: `pnpm turbo run build --dry=json | jq '.tasks[] | {package, hash, cache}'` showed every task at `"cache": {"status": "HIT"}` with a real hash. Turbo is doing exactly what it says.
+</AuthorNote>
+
+## Env Vars
+
+Anything an env var can change about the build output has to be in the task's `env` array — otherwise Turbo treats two builds with different env vars as cache-equivalent and serves the wrong outputs. The two most common gotchas: `NODE_ENV` (which Next consumes implicitly) and any `NEXT_PUBLIC_*` var that gets baked into the client bundle at build time.
+
+```json title="turbo.json"
+{
+  "tasks": {
+    "build": {
+      "env": [
+        "NODE_ENV",
+        "NEXT_PUBLIC_SITE_URL",
+        "NEXT_PUBLIC_ANALYTICS_ID",
+        "DATABASE_URL"
+      ]
+    }
+  }
+}
+```
+
+For env vars that should bust the cache but never leak into the build (CI tokens, deploy keys), use the `globalPassThroughEnv` field at the root of `turbo.json` instead — the var is available to the task but not part of the hash, so cache stays warm across `CI_RUN_ID` changes.
+
+## Persistent and Uncached Tasks
+
+`dev` and `watch`-style tasks are different animals — they don't terminate, don't produce outputs, and shouldn't be cached. Turbo handles them with `persistent: true` plus `cache: false`:
+
+```json title="turbo.json"
+{
+  "tasks": {
+    "dev": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": []
+    }
+  }
+}
+```
+
+`persistent: true` tells Turbo "this task never exits — don't wait for it to finish before declaring the run complete." Without it, `pnpm dev` orchestrated through Turbo would hang waiting for upstream `build` tasks that already finished. `cache: false` is belt-and-suspenders: Turbo wouldn't try to hash the output of an infinite process anyway, but the explicit declaration makes the intent obvious.
+
+## Remote Cache
+
+The single biggest performance win after the local cache is the remote cache — a shared cache that every machine on the team (and CI) reads from and writes to. Vercel hosts a free tier; self-hosting with `turborepo-remote-cache` is one Cloudflare Worker plus an R2 bucket. The wire-up is two lines in CI:
+
+```bash title=".github/workflows/ci.yml"
+- run: pnpm turbo run build --remote-cache-timeout=30
+  env:
+    TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+```
+
+With remote cache on, the first time a build runs on any machine (CI or local), Turbo populates the remote cache. Every subsequent build that hits the same cache key — on any machine, any branch, any time — restores the outputs in seconds. This is the move that takes CI from "wait three minutes for the same build twice" to "wait three seconds." It's worth every minute of the one-time setup.

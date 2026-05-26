@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: verifying
-stopped_at: Completed 28-06-PLAN.md (Phase 28 complete)
-last_updated: "2026-05-04T20:54:55.991Z"
-last_activity: 2026-05-04
+status: ready_to_plan
+stopped_at: Completed 29-07-PLAN.md — Phase 29 phase gate verified, all 5 ROADMAP success criteria evidenced, ready for /gsd-verify-work
+last_updated: "2026-05-13T09:34:06.696Z"
+last_activity: 2026-05-13
 progress:
   total_phases: 7
-  completed_phases: 2
-  total_plans: 14
-  completed_plans: 14
-  percent: 100
+  completed_phases: 4
+  total_plans: 21
+  completed_plans: 21
+  percent: 57
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-24)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 28 — authoring-scaffolds-lint-port
+**Current focus:** Phase 29 — content-authoring-greenfield-ports
 
 ## Current Position
 
-Phase: 28 (authoring-scaffolds-lint-port) — EXECUTING
-Plan: 6 of 6
-Status: Phase complete — ready for verification
-Last activity: 2026-05-04
+Phase: 999.1
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-05-14
 
 Progress: [██████████] 100%
 
@@ -131,6 +131,28 @@ Progress: [██████████] 100%
 - 28-04: ArtifactBody is 'use client' (renders inside MDXContent client component + Radix Tabs); data supplied via React context from server-side DxContentLayout
 - 28-05: createRequire shim in tsup banner for gray-matter CJS require('fs') compatibility in ESM bundle — standard pattern for CJS interop in bundled ESM binaries
 - 28-06: Schema-validation round-trip (DxFrontmatterSchema.safeParse) over full Velite fixture build — faster, more reliable, same source of truth
+- 29-01: Option B authorization — port Monodex notes unmodified; Plan 02 (convex-patterns) and Plan 03 (4 batch entries) must manually inject <AuthorNote> + <DecisionRationale> to satisfy D-06/D-11 (vault has zero callouts across 135 notes)
+- 29-01: Slug #5 renamed from tmux-poweruser-setup to tmux-power-workflows to avoid collision with content/configs/tmux-poweruser.mdx and signal workflow-focused angle vs config-focused existing entry
+- 29-01: Monodex shortlist ranked by skill-shape (reusability/opinion-shape) not callout density since vault callout count is uniform zero — torture-test selection is qualitative
+- 29-02: Variant 3 (install-context view) picked over Variant 1 (bare artifact viewer) — blink apply command is the page protagonist; file render is supporting context
+- 29-02: Install route generalized to /install/[type]/[slug] (parametric) — single page handles skills/configs/hooks; guides 404 via INSTALLABLE_TYPES allowlist per D-14
+- 29-02: New-tab anchor pattern (target=_blank rel=noopener) for snippet links — Blake-requested; defers full-file context to install route without breaking reading flow
+- 29-02: No inline <ArtifactBody> in entry body — supersedes Pitfall 4 path-shaped-slug guidance for entries authored to the architectural-framing pattern; Phase 30 doc cleanup item
+- 29-03: Apply Plan 02 Variant 3 pattern verbatim to all 4 batch ports; supersedes plan-file ArtifactBody acceptance criterion (stale)
+- 29-03: Manual voice primitives per Option B — all 4 entries have both AuthorNote AND DecisionRationale despite D-11 minimum of one
+- 29-03: Regenerate voice-primitives Playwright baselines after grown skills sidebar drift (per Plan 02 finalize precedent)
+- 29-04: Variant 3 pattern (no inline ArtifactBody) applied to 7 configs — supersedes plan-file invariant per Plan 02 inheritance
+- 29-04: tmux collision resolved by shipping tmux-popup-workflows; pre-existing tmux-poweruser untouched (0 diff)
+- 29-04: scaffold-emitted artax-ui imports stripped from all 7 entries (Phase 30 cleanup — fix scaffold template)
+- 29-05: Use grep -qE with anchored regex in shell artifacts instead of case-glob — prettier mangles bare asterisks into Markdown italics on .md files
+- 29-05: Husky v9 hook artifacts omit shebang line; runtime invokes via sh directly
+- 29-05: AI_COMMIT_CMD env var (default claude) is trust boundary for commit-msg AI assist; provider-agnostic
+- 29-06: Guide-adapted Variant 3 pattern locked — same prose shape as skills/configs/hooks (architectural framing + voice primitives + cross-refs) but NO companion artifact (D-14) and NO /install/guides/<slug> anchor (route 404s by INSTALLABLE_TYPES exclusion); requires_artifact: false in frontmatter
+- 29-06: All 4 guides ship with both voice primitives; D-11 minimum is one but source material had real first-person + decision content for every entry. 20-entry both-primitives sample built across Phase 29 for DEBT-05 lint promotion review
+- 29-06: Word-count band enforcement uses prose-only count (excluding fenced code), 500-1500 — paragraph prose is denser than bulleted lists when trimming, applied to ai-code-review wr-01 first draft
+- 29-07: Auto-verified human-verify checkpoint per Wave 3 less-hand-holding pacing — all 5 acceptance gates pass; bulk editorial review routed to /gsd-verify-work
+- 29-07: Did not re-run scripts/perf-baseline.ts (overwrites Phase 27 yardstick); hand-captured fullBuildWallMs/veliteWallMs/webpackCompileMs from gate runs; migrated build-perf-baseline.json schema flat→phased+delta (phase_27, phase_29, delta sub-objects); pattern reusable for v1.5+
+- 29-07: Variant 3 (architectural framing + quoted snippets + voice primitives + new-tab anchor to /install/[type]/[slug] for installable + NO inline ArtifactBody) locked as v1.4 canonical authoring pattern for all 4 DX collections; guides use MDX-only adaptation (no companion, no install anchor, requires_artifact:false) per D-14
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -163,8 +185,8 @@ Progress: [██████████] 100%
 
 ## Session Continuity
 
-Last session: 2026-05-04T20:54:55.988Z
-Stopped at: Completed 28-06-PLAN.md (Phase 28 complete)
-Resume file: .planning/phases/28-authoring-scaffolds-lint-port/28-06-SUMMARY.md
+Last session: 2026-05-13T09:34:06.693Z
+Stopped at: Completed 29-07-PLAN.md — Phase 29 phase gate verified, all 5 ROADMAP success criteria evidenced, ready for /gsd-verify-work
+Resume file: None
 
-**Planned Phase:** 28 (authoring-scaffolds-lint-port) — 6 plans — 2026-05-03T06:51:23.263Z
+**Planned Phase:** 29 (Content Authoring (Greenfield + Ports)) — 7 plans — 2026-05-10T07:19:23.134Z

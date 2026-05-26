@@ -71,13 +71,18 @@ Two-step pipeline that converts vault prose into reviewable, schema-valid MDX wi
 
 Real entries shipped at the agreed floor.
 
-- [ ] **CONTENT-01**: Five skill entries authored to production quality (frontmatter complete, body uses voice primitives where they fit, companion `.artifact.md` shipped)
-- [ ] **CONTENT-02**: Five config entries authored to production quality (MDX + companion `.artifact.md`)
-- [ ] **CONTENT-03**: Three hook entries authored to production quality (MDX + companion `.artifact.md`)
-- [ ] **CONTENT-04**: Three guide entries authored to production quality (MDX only — guides do not have artifact companions)
+- [x] **CONTENT-01
+**: Five skill entries authored to production quality (frontmatter complete, body uses voice primitives where they fit, companion `.artifact.md` shipped)
+- [x] **CONTENT-02
+**: Five config entries authored to production quality (MDX + companion `.artifact.md`)
+- [x] **CONTENT-03
+**: Three hook entries authored to production quality (MDX + companion `.artifact.md`)
+- [x] **CONTENT-04
+**: Three guide entries authored to production quality (MDX only — guides do not have artifact companions)
 - [x] **CONTENT-05
 **: `<ArtifactBody slug>` MDX server component shipped — eliminates copy-paste of artifact body content into MDX docs
-- [ ] **CONTENT-06**: First voice-primitive invocation across the catalog passes a "torture-test" pass — light/dark/mobile visual capture; any layout regression in `AuthorNote` or `DecisionRationale` is fixed in `artax-ui` before bulk authoring continues
+- [x] **CONTENT-06
+**: First voice-primitive invocation across the catalog passes a "torture-test" pass — light/dark/mobile visual capture; any layout regression in `AuthorNote` or `DecisionRationale` is fixed in `artax-ui` before bulk authoring continues
 
 ### Editorial Debt Closure
 
@@ -133,25 +138,25 @@ Which phases cover which requirements. Filled by the roadmapper.
 | SCAFFOLD-02 | Phase 28 | Complete |
 | SCAFFOLD-03 | Phase 28 | Complete |
 | SCAFFOLD-04 | Phase 28 | Complete |
-| SCAFFOLD-05 | Phase 28 | Pending |
+| SCAFFOLD-05 | Phase 28 | Complete |
 | SCAFFOLD-06 | Phase 28 | Complete |
 | LINT-01 | Phase 28 | Complete |
 | LINT-02 | Phase 28 | Complete |
 | LINT-03 | Phase 28 | Complete |
-| LINT-04 | Phase 28 | Pending |
-| LINT-05 | Phase 28 | Pending |
-| LINT-06 | Phase 28 | Pending |
+| LINT-04 | Phase 28 | Complete |
+| LINT-05 | Phase 28 | Complete |
+| LINT-06 | Phase 28 | Complete |
 | LINT-07 | Phase 28 | Complete |
 | PORT-01 | Phase 28 | Complete |
-| PORT-02 | Phase 28 | Pending |
+| PORT-02 | Phase 28 | Complete |
 | PORT-03 | Phase 28 | Complete |
-| PORT-04 | Phase 28 | Pending |
-| CONTENT-01 | Phase 29 | Pending |
-| CONTENT-02 | Phase 29 | Pending |
-| CONTENT-03 | Phase 29 | Pending |
-| CONTENT-04 | Phase 29 | Pending |
-| CONTENT-05 | Phase 28 | Pending |
-| CONTENT-06 | Phase 29 | Pending |
+| PORT-04 | Phase 28 | Complete |
+| CONTENT-01 | Phase 29 | Complete |
+| CONTENT-02 | Phase 29 | Complete |
+| CONTENT-03 | Phase 29 | Complete |
+| CONTENT-04 | Phase 29 | Complete |
+| CONTENT-05 | Phase 28 | Complete |
+| CONTENT-06 | Phase 29 | Complete |
 | DEBT-01 | Phase 30 | Pending |
 | DEBT-02 | Phase 30 | Pending |
 | DEBT-03 | Phase 30 | Pending |

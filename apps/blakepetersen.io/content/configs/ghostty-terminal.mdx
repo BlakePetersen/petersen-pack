@@ -1,0 +1,115 @@
+---
+title: "Ghostty Terminal Config"
+description: "Ghostty config for a Catppuccin Mocha + tmux + Vim setup — font, theme, padding, true-color forwarding, and the keybinding overrides that make it play nicely with tmux."
+applies_to: ["ghostty", "terminal", "macos"]
+dependencies: []
+order: 12
+draft: false
+tags: ["terminal", "ghostty", "dotfiles", "developer-experience"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Use Ghostty over iTerm2, Alacritty, and Kitty for tmux-centric workflows"
+    rationale: "Ghostty's macOS feel is identical to a native AppKit terminal (correct font smoothing, correct cursor blink rate, correct copy/paste behavior) while keeping GPU rendering at 120fps. Alacritty and Kitty both feel slightly off on macOS — font rendering looks more like a Linux terminal, and the AppKit affordances (window restoration, Mission Control) need workarounds. iTerm2 is feature-rich but visibly slower to draw and the config surface is enormous."
+related: ["configs/tmux-poweruser", "configs/tmux-popup-workflows"]
+---
+
+Ghostty is a GPU-accelerated terminal written by Mitchell Hashimoto, released as open-source in late 2024 after two years of private beta. The pitch — and what it delivers — is "a native, fast, opinionated terminal that just works." On macOS, it feels indistinguishable from a native AppKit terminal app (because it is one — Ghostty uses the platform-native windowing layer where possible), but the cell renderer hits 120fps consistently and the latency-to-first-frame on launch is under 80ms.
+
+This entry covers the config for a tmux-heavy, Vim-flavored, dark-mode workflow. Ghostty's config language is a flat key-value format — one option per line, comments with `#`, no nesting, no sections. That simplicity is intentional: there's no "where in the file does this go" question, and `grep` against the config tells you everything.
+
+## Where the Config Lives
+
+Ghostty reads `~/.config/ghostty/config` on macOS and Linux. There's no GUI, no preferences pane — every setting is in that one file, and the app picks up changes on the fly via `ghostty --reload-config` or by re-opening a window. For a multi-machine setup, the file checks into dotfiles cleanly because there's no embedded state.
+
+```ghostty title="~/.config/ghostty/config"
+font-family = "JetBrains Mono"
+font-size = 14
+font-thicken = true
+adjust-cell-height = 10%
+```
+
+<a href="/install/configs/ghostty-terminal" target="_blank" rel="noopener">View full ghostty config →</a>
+
+`font-thicken = true` applies a subtle thickness boost that compensates for the way macOS's font-smoothing works on retina displays — without it, Ghostty's font looks slightly thinner than the same font in iTerm or Terminal.app. `adjust-cell-height = 10%` gives lines a bit more breathing room, which makes long sessions easier on the eyes without significantly reducing the visible row count.
+
+## Theme
+
+Ghostty ships with hundreds of built-in themes (every popular palette you've ever seen, plus the Base16 set). Pick one with a single setting:
+
+```ghostty title="~/.config/ghostty/config"
+theme = "catppuccin-mocha"
+background-opacity = 1.0
+window-padding-x = 12
+window-padding-y = 10
+window-padding-balance = true
+```
+
+`background-opacity = 1.0` (fully opaque) is the right default — transparency in a terminal is aesthetically tempting but practically distracting. The padding settings give the cell area a small margin from the window chrome, which makes the cursor at column 1 feel less crowded against the window edge. `window-padding-balance = true` ensures the padding is symmetric even when the cell math doesn't divide evenly into the window size.
+
+<DecisionRationale
+  decision="Use a built-in theme rather than a custom palette"
+  rationale="Ghostty's theme system bundles palette files at build time — a built-in theme is one config line and works identically on every machine. A custom palette is 20+ lines of hex codes that drift over time as you tweak. Unless the palette is itself the value (a brand, a paper-prototype-matching design system), the built-in is the right default — pick one of the ~250 included themes and move on."
+  alternatives={[
+    { name: "Hand-roll a custom palette inline", reason: "Adds 20+ lines that need to stay in sync across machines and have no upside over picking from the bundled set" }
+  ]}
+/>
+
+## True-Color and tmux
+
+For tmux to render 24-bit colors correctly under Ghostty, Ghostty's `TERM` value has to be recognized by tmux's `terminal-overrides`. Ghostty defaults to `xterm-ghostty` as `TERM` — set tmux to recognize it and you're done:
+
+```ghostty title="~/.config/ghostty/config"
+term = "xterm-256color"
+```
+
+The simplest fix is the line above — tell Ghostty to advertise `xterm-256color` as its `TERM`, which every tool on the planet already understands. The alternative is to teach tmux about `xterm-ghostty` in `tmux.conf` (`set -ag terminal-overrides ",xterm-ghostty:RGB"`) — both work, the override-the-TERM approach is one line in one file and breaks nothing.
+
+<AuthorNote>
+I spent a week using Ghostty with the default `term = xterm-ghostty` and chasing weird tmux color glitches — italics in Vim rendering as inverse video, status-bar colors wrong by one shade. The fix is the one-line `term = xterm-256color` override. Every tool already knows what `xterm-256color` means; Ghostty advertising itself as something exotic just creates problems with no offsetting benefit on a tmux-heavy setup.
+</AuthorNote>
+
+## Keybindings That Play Nice with tmux
+
+By default, Ghostty binds `⌘+T` for new tabs, `⌘+W` for close tab, and a handful of `⌘+arrow` shortcuts. Most of these are fine. The ones that conflict with tmux are the split-pane and tab-switching keys — tmux already handles splits and windows, and the Ghostty equivalents create a confusing two-layer hierarchy. Disable them at the Ghostty level:
+
+```ghostty title="~/.config/ghostty/config"
+keybind = cmd+t=unbind
+keybind = cmd+shift+t=unbind
+keybind = cmd+d=unbind
+keybind = cmd+shift+d=unbind
+keybind = clear_default=ctrl+tab
+keybind = clear_default=ctrl+shift+tab
+```
+
+<a href="/install/configs/ghostty-terminal" target="_blank" rel="noopener">View full ghostty config →</a>
+
+The result is that Ghostty becomes a single-window, single-tab terminal — exactly what it should be when tmux is doing the multiplexing. The `Ctrl+Tab` unbind frees the keystroke for whatever shell-level binding wants it (I use it for fzf history search).
+
+## Shell Integration
+
+Ghostty has optional shell integration that powers a few QoL features — semantic prompts, smart copy/paste of multi-line shell commands, and accurate "current working directory" reporting for the macOS proxy icon. Enable it in one line:
+
+```ghostty title="~/.config/ghostty/config"
+shell-integration = "detect"
+shell-integration-features = "cursor,sudo,title"
+```
+
+`detect` auto-picks the right integration for your shell. The features list enables the bits I find useful and disables the ones I don't (`shell-integration-features = no-sudo` if you find the sudo-prompt highlighting distracting).
+
+## Performance Settings
+
+Ghostty's performance defaults are sensible, but a couple of overrides matter for tmux + scrollback-heavy use:
+
+```ghostty title="~/.config/ghostty/config"
+scrollback-limit = 100000
+copy-on-select = "clipboard"
+mouse-hide-while-typing = true
+mouse-shift-capture = false
+```
+
+A 100,000-line scrollback buffer costs ~12MB of RAM and saves you the next time you scroll back two hours looking for an error. `copy-on-select = "clipboard"` mirrors tmux's `set -g set-clipboard on` behavior — selecting text with the mouse immediately puts it in the system clipboard, no `Cmd+C` needed. `mouse-shift-capture = false` lets `Shift+drag` bypass tmux's mouse handling for cases where you want a native OS selection instead of a tmux-aware one.
+
+## The Install
+
+`brew install --cask ghostty` puts the app at `/Applications/Ghostty.app`. The config file doesn't exist by default — create `~/.config/ghostty/config` with the artifact below, launch the app, and you're in a fully-themed terminal at first paint. There's no first-launch wizard, no "pick a profile," no settings to migrate. That minimalism is the entire pitch.

@@ -6,6 +6,7 @@ const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: ['<rootDir>/tests'],
+  testPathIgnorePatterns: ['/node_modules/', '/tests/visual/'],
   moduleNameMapper: {
     '^@/scaffold/(.*)$': '<rootDir>/../../packages/blink-cli/src/scaffold/$1',
     '^@/writer$': '<rootDir>/../../packages/blink-cli/src/writer',

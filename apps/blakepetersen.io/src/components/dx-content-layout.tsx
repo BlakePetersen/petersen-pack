@@ -3,12 +3,10 @@
 
 import { Badge, PrevNextNav } from 'artax-ui'
 import { MDXContent } from './mdx-content'
-import { ArtifactBody, ArtifactDataProvider } from './mdx/artifact-body'
 import { DependencyGraph } from './dependency-graph'
 import { Breadcrumbs } from './breadcrumbs'
 import { buildNavData, getPrevNext } from '../lib/navigation'
 import { getLocalGraphSvg } from '../lib/content'
-import { readArtifactsJson } from '../lib/artifacts'
 import { ApplyActionBar } from './apply-action-bar'
 import { ContentFreshness } from './content-freshness'
 import { ReactionCountProvider, ReactionCount } from './reaction-count'
@@ -17,14 +15,6 @@ import type { DxContent } from '../lib/content'
 
 export function DxContentLayout({ item, artifact }: { item: DxContent; artifact?: { type: string; slug: string } }) {
   const graphSvg = getLocalGraphSvg(item.slug)
-
-  const allArtifacts = readArtifactsJson()
-  const artifactData = allArtifacts.map((a) => ({
-    slug: a.slug,
-    name: a.name,
-    type: a.type,
-    files: a.files.map((f) => ({ path: f.path, content: f.content })),
-  }))
 
   const navData = buildNavData()
   const found = navData.findBySlug(item.slug)
@@ -68,9 +58,7 @@ export function DxContentLayout({ item, artifact }: { item: DxContent; artifact?
       {artifact && <ApplyActionBar type={artifact.type} slug={artifact.slug} />}
 
       <div className={`prose-terminal${artifact ? ' mt-5' : ''}`}>
-        <ArtifactDataProvider artifacts={artifactData}>
-          <MDXContent code={item.code} components={{ ArtifactBody }} />
-        </ArtifactDataProvider>
+        <MDXContent code={item.code} />
       </div>
 
       {item.decisions.length > 0 && (

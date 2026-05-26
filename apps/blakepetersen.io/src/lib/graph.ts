@@ -233,10 +233,8 @@ export function renderGraphSvg(
     `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${viewWidth} ${viewHeight}" width="${viewWidth}" height="${viewHeight}" style="font-family: monospace;">`,
   )
 
-  // Section label
-  parts.push(
-    `<text x="${padding}" y="${padding - 10}" fill="#71717a" font-size="12" font-family="monospace">// dependency_graph</text>`,
-  )
+  // Note: the `// dependency_graph` caption is rendered by the React DependencyGraph
+  // component (<h3>) — emitting it inside the SVG too produced a duplicate label.
 
   // Render edges first (behind nodes)
   for (const edge of layout.edges) {

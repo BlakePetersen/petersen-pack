@@ -1,0 +1,110 @@
+---
+title: "AI Code Review"
+description: "How to put an AI in the review loop without it becoming a rubber stamp — prompt patterns, what AI catches vs misses, and where it sits next to human review."
+applies_to: ["claude-code", "code-review", "ai-assisted-development"]
+dependencies: []
+order: 4
+draft: false
+tags: ["ai-assisted-development", "code-review", "claude-code", "developer-workflow"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: false
+decisions:
+  - choice: "Run AI review after author self-review, not as a replacement for it"
+    rationale: "AI review on an unconsidered diff is a force amplifier for noise — the AI flags everything, the author dismisses everything, the human reviewer sees a wall of resolved threads with no signal left. Author self-review first kills the obvious bugs and trims the diff's surface area before the AI sees it; the AI then catches the higher-order issues (security, performance, naming consistency) that humans tire of catching."
+  - choice: "Pipe the AI's review through the human reviewer, not directly to the PR thread"
+    rationale: "An AI comment in a PR thread looks the same as a human comment. Authors reply to it, the AI doesn't reply back, and the thread reads like the reviewer ghosted. Surface the AI's suggestions in a separate channel — a sidecar file, a draft comment the human reviewer edits, a CLI summary — and let the human decide which suggestions go on the PR."
+related: ["hooks/commit-msg-ai-assist", "hooks/pre-push-validation"]
+---
+
+A code review is a structured conversation about a diff. When you put an AI in the loop, the question isn't "can the AI review code" — it can, well enough to be useful — it's "what role does the AI play and what role do the humans play around it." Done well, the AI catches an entire category of issues that humans tire of catching (security guards, error-path coverage, naming consistency across files) and frees the human reviewer to focus on the things humans are better at (does this change make sense at all, does the architecture hold up, is there a simpler way to do this).
+
+This guide covers a working setup: where to put the AI in the workflow, what to ask it for, what to ignore, and how to keep the review from devolving into a thread of resolved AI comments that nobody reads.
+
+## Where the AI Sits in the Review Loop
+
+There are three plausible places to invoke an AI reviewer, and the difference between them is everything:
+
+1. **Pre-commit, on the author's machine.** Catches the embarrassing stuff (debug logs, hardcoded secrets, obvious bugs) before the diff leaves the laptop. Cheap, fast, owned by the author.
+2. **Pre-push, on the author's machine.** Catches issues that span multiple commits — patterns established in commit A then violated in commit B. Still owned by the author, but starts to feel like the AI is the first reviewer.
+3. **Post-PR-open, in CI or as a reviewer sidecar.** The AI reviews the diff like a human would, posts a summary somewhere a human can read it, and the human decides which suggestions become PR comments.
+
+The first two are what the [pre-push-validation hook](/hooks/pre-push-validation) and [commit-msg-ai-assist hook](/hooks/commit-msg-ai-assist) already wire up — typecheck, lint, tests scoped to changed files, and an AI pass on the commit message itself. The third is what this guide focuses on, because it's the one most teams get wrong.
+
+<DecisionRationale
+  decision="Author self-review BEFORE AI review, AI review BEFORE human review"
+  rationale="The order matters because each pass removes a different category of issue from the diff. Self-review kills the obvious stuff (left-over debug, broken builds, half-finished refactors). The AI then sees a focused diff and catches the medium-grain issues (missing error handling, inconsistent naming, security gaps, untested edge cases). The human reviewer then sees a diff that's been through two passes and can focus on the things only humans can judge — does this match the team's taste, does it fit the larger system, is there a simpler shape. Reverse this order and each pass is overwhelmed by issues the previous pass should have caught."
+  alternatives={[
+    { name: "Run all three in parallel", reason: "AI comments and human comments race; authors burn cycles reconciling. The serial order produces a cleaner thread." },
+    { name: "Skip self-review, AI does the first pass", reason: "AI flags everything, author dismisses everything, the noise floor makes the genuine issues invisible." }
+  ]}
+/>
+
+## Prompt Patterns That Produce Useful Reviews
+
+A useful AI code review is one where the AI tells you something you didn't already know. The prompt structures that produce useful reviews share three properties: they give the AI a role, they give the AI a focus, and they tell the AI what to skip.
+
+### Role: Reviewer for the Codebase, Not the Diff
+
+A bare "review this diff" prompt produces generic feedback. A prompt that grounds the AI in the codebase — "you are reviewing a pull request against `apps/blakepetersen.io`, a Next.js 16 + React 19 + Velite MDX site; the team prefers small atomic commits, conventional commit messages, and component-as-source-code patterns over tarball deps" — produces feedback that's specific to your codebase's taste.
+
+```text title="Prompt skeleton — role section"
+You are a senior code reviewer for a Next.js 16 + React 19 monorepo that ships
+content via Velite MDX and a Pagefind search index. The codebase follows these
+conventions:
+- All new files start with a two-line `// ABOUTME:` comment
+- TypeScript strict mode + exactOptionalPropertyTypes + noUncheckedIndexedAccess
+- Imports from `artax-ui` resolve to a workspace package, not a tarball
+- New components live in `artax-ui`; site routes only assemble components
+```
+
+Most modern AI tools — [Claude Code](https://docs.claude.com/claude-code), [GitHub Copilot's PR review](https://docs.github.com/en/copilot/using-github-copilot/code-review/using-copilot-code-review), [Vercel's Agent code reviewer](https://vercel.com/docs/agents/code-review) — accept a system prompt or repository-level config where this kind of context belongs. Put it there once, not in every review.
+
+### Focus: One Concern Per Pass
+
+A single prompt that asks for "any issues with security, performance, correctness, naming, tests, and architectural fit" produces a diffuse review where nothing is examined deeply. A prompt that asks for one concern per pass produces a focused review where the AI can actually find things.
+
+A practical breakdown:
+
+- **Pass 1 — Security and data flow.** Where does user input enter, where does it leave, what crosses a trust boundary, are there any places where untrusted data flows into a sink (SQL, shell, HTML, file paths) without an explicit boundary check.
+- **Pass 2 — Correctness and error paths.** For each new function or branch, what happens when the input is empty, null, malformed, or larger than expected. What does the test coverage look like for those paths.
+- **Pass 3 — Naming and consistency.** Does the new code's naming match the rest of the codebase. Are similar concepts named similarly across files. Does any new abstraction earn its place or could the code stay flat.
+
+You can run all three passes in one CLI invocation, just keep them as separate prompts with separate outputs. Concatenating their results in a single AI response produces a wall of text that nobody reads.
+
+### Skip List: What Not to Flag
+
+AI reviewers love to flag low-value issues that humans have already decided to live with — missing JSDoc, unused imports the linter already catches, "consider adding more comments," "this function could be refactored." Tell the AI explicitly what to skip:
+
+```text title="Prompt skeleton — skip section"
+DO NOT flag:
+- Missing JSDoc or inline comments unless the code is genuinely unclear
+- Style issues that the linter or formatter handles
+- Speculative refactor suggestions ("this could be split into smaller functions")
+- "Consider adding tests" — only flag missing tests for specific risky paths
+```
+
+The skip list is the highest-ROI part of the prompt. Without it, the AI's review is 80% noise. With it, the review is 80% signal.
+
+## Where AI Beats Humans (And Where Humans Beat AI)
+
+<AuthorNote>
+The first time I ran a serious AI review against a PR I'd already had a human reviewer approve, the AI caught a real bug — a missing `await` on a database write inside `Promise.all`. The human had skimmed past it because the surrounding code looked right; the AI flagged it because it cross-referenced the return type against how the caller used it. Same diff, different attention budget. That experience reset my expectations: AI review is not a replacement for human review, it's a different *kind* of attention.
+</AuthorNote>
+
+AI consistently outperforms a tired human reviewer on async correctness (missing awaits, unhandled rejections), security boundaries (untrusted input flowing into sinks), specific-path test coverage (is *this* error branch tested), naming consistency across more than two or three files, and configuration drift across the repo. The AI doesn't get tired of tracing data flow.
+
+Humans still win on whether the change should exist at all, architectural fit ("this belongs in `artax-ui`, not the route file"), taste judgments, and cross-PR context the AI doesn't have unless you explicitly feed it.
+
+## Practical Setup
+
+For a working setup that doesn't require building tooling from scratch, the path of least resistance is:
+
+1. **Run AI review locally via a CLI tool, gated by the [pre-push-validation hook](/hooks/pre-push-validation).** The hook runs typecheck, lint, and tests; on green, it pipes the diff into Claude Code or another AI CLI for a review pass.
+2. **Capture the AI's output into a draft PR comment, not a published one.** The author reads the AI's suggestions before pushing, addresses what makes sense, and discards the rest.
+3. **Let the human reviewer do their pass on a diff that's already been through two filters.** The human's job becomes architectural review and taste, not bug-catching.
+
+The exact shape of step 1 is a five-line addition to the existing pre-push hook — if you've already wired up the [commit-msg-ai-assist hook](/hooks/commit-msg-ai-assist), you have the AI CLI invocation pattern ready to reuse. Pipe `git diff @{u}..HEAD` into the AI with a focused prompt, capture the output, and exit zero regardless of what the AI says — the hook isn't a gate on push, it's a notification system.
+
+## What This Doesn't Replace
+
+A working AI review setup doesn't replace any of: pair programming for hard problems, the team's coding standards document, a human reviewer's ability to say "this is correct but I'd write it differently and we should talk about why," or the author's responsibility for the code they push. The AI is a force multiplier on the parts of review that humans don't enjoy doing well; the parts humans enjoy doing well are still where the actual review happens.

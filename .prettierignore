@@ -1,0 +1,11 @@
+# Artifact bodies are language-specific payloads (JS / JSON / shell) embedded
+# in `.md` for the Velite pipeline. Prettier treats them as Markdown prose and
+# strips their indentation, so the source bytes diverge from what ships to
+# `blink apply` consumers. Keep prettier away from them; bodies are hand-formatted.
+**/*.artifact.md
+
+# Velite build output, lockfile, etc.
+**/.velite/
+**/.next/
+**/.turbo/
+pnpm-lock.yaml

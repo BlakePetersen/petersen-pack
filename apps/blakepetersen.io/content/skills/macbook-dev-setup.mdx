@@ -1,0 +1,165 @@
+---
+title: "Setting up a new MacBook for AI-assisted development"
+description: "An opinionated walk through provisioning a new Apple Silicon MacBook for fullstack TypeScript work — what to install, what to skip, and the handful of choices that actually shape day-to-day productivity."
+applies_to: ["macos", "homebrew", "asdf", "claude-code"]
+dependencies: []
+order: 3
+draft: false
+tags: ["setup", "macos", "dev-environment", "tooling"]
+voice: ["author-note", "decision-rationale"]
+requires_artifact: true
+decisions:
+  - choice: "Native ARM shell over Rosetta-translated x86"
+    rationale: "Running the terminal under Rosetta on Apple Silicon is the most common machine-setup mistake — it lands Homebrew at /usr/local instead of /opt/homebrew and quietly translates every CLI binary on every invocation. The fix is one Get Info checkbox before the first brew install, and the cost of getting it wrong is a full reinstall later."
+  - choice: "asdf (or mise) for Node/Python/pnpm instead of system installers"
+    rationale: "Different projects pin different runtime versions; a system Node makes the wrong version the default for every shell. A version manager reads .tool-versions per directory and switches transparently, which keeps the same machine usable across years of pinned legacy projects and bleeding-edge new ones."
+---
+
+A new machine is the rare moment when you can do the foundation right without unwinding the wrong version of every choice from the last one. This entry is a reference for that moment: what to put on an Apple Silicon MacBook before you start shipping, and which choices to actually think about versus copy-paste.
+
+The setup below is opinionated for AI-assisted fullstack TypeScript work — Claude Code, Cursor, and a heavy terminal habit. Adjust the application list for what you actually use; the foundations (shell, runtimes, dotfiles, SSH) generalise.
+
+## Pre-flight: don't run your shell under Rosetta
+
+The single decision that determines whether the rest of this setup goes smoothly is whether the terminal app is allowed to translate to x86. If it is, every brew install lands in `/usr/local/` (the Intel path), every binary runs through Rosetta on each invocation, and the machine quietly stays half-translated for its entire life. The fix is to confirm "Open using Rosetta" is unchecked on the terminal before the first command runs.
+
+```bash
+# Verify you're native ARM before installing anything
+arch
+# Should print: arm64
+# If it prints i386, your terminal is running under Rosetta — quit it and uncheck
+# the "Open using Rosetta" box in the app's Get Info pane.
+```
+
+Install Rosetta itself for the occasional Intel-only app that genuinely needs it, but don't route your shell through it.
+
+<DecisionRationale
+  decision="Verify arch before the first brew install"
+  rationale="Homebrew makes its install path decision on first run based on the active architecture; flipping the terminal to native ARM after Homebrew lands at /usr/local won't move it. The verify is two seconds. The recovery is a full Homebrew reinstall and several hours of regretted PATH archaeology."
+  alternatives={[
+    { name: "Install Rosetta and don't worry about it", reason: "Defensible only if you actively need x86 binaries — most modern Mac dev workflows do not." }
+  ]}
+/>
+
+## System foundations: Xcode CLI tools, then Homebrew
+
+Two installs precede everything else. Xcode Command Line Tools provides the system compiler that Homebrew formulas need; Homebrew is the package manager every other foundation passes through. On Apple Silicon, Homebrew installs to `/opt/homebrew` and adds itself to PATH only after you opt in via `~/.zprofile`.
+
+```bash
+xcode-select --install
+# Wait for the GUI installer to finish before continuing.
+
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+```
+
+<a href="/install/skills/macbook-dev-setup" target="_blank" rel="noopener">View full setup script →</a>
+
+`~/.zprofile` runs on login shells (every new terminal window); `~/.zshrc` runs on every shell. PATH belongs in zprofile so it's set once per session and inherited by every nested shell.
+
+## Shell: Oh My Zsh + Powerlevel10k via Homebrew
+
+The shell layer is the surface you actually live in. Two pieces matter: a framework that handles completion and plugin loading (Oh My Zsh), and a prompt that gives you the context you need at a glance (Powerlevel10k). Installing P10k via Homebrew rather than the manual git clone keeps it on the upgrade path with everything else.
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+brew install powerlevel10k
+```
+
+Then in `~/.zshrc`, the top-of-file instant-prompt block runs before Oh My Zsh loads (so the prompt renders immediately while the rest of the shell warms up), the theme line is empty (because P10k handles it), and the bottom of the file sources the theme.
+
+```bash
+# Top of ~/.zshrc (before Oh My Zsh loads):
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+ZSH_THEME=""
+
+# Bottom of ~/.zshrc:
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+```
+
+<a href="/install/skills/macbook-dev-setup" target="_blank" rel="noopener">View full .zshrc skeleton →</a>
+
+The `~/.p10k.zsh` file is where the prompt is actually configured — segments, colours, separators. Copy it from the old machine rather than re-running `p10k configure`; the customisation accumulates over months and is annoying to redo.
+
+## Runtimes: asdf manages Node, pnpm, Python per project
+
+A system Node version is the wrong default the moment you touch a second project. `asdf` (or its newer cousin `mise`) reads a `.tool-versions` file in any directory and activates the pinned runtime transparently — cd into the project, the right Node version is on PATH. Pin Node, pnpm, and Python; everything else can be Homebrew.
+
+```bash
+brew install asdf
+echo '. $(brew --prefix)/opt/asdf/libexec/asdf.sh' >> ~/.zshrc
+source ~/.zshrc
+
+asdf plugin add nodejs
+asdf plugin add pnpm
+asdf plugin add python
+
+asdf install nodejs 24.13.0
+asdf set --home nodejs 24.13.0
+asdf install pnpm 10.28.2
+asdf set --home pnpm 10.28.2
+asdf install python 3.12.12
+asdf set --home python 3.12.12
+```
+
+`asdf set --home <plugin> <version>` writes the version into `~/.tool-versions`, making it the system-wide default; per-project pins (a `.tool-versions` in the repo) override it. Commit the per-project file alongside `package.json` and `tsconfig.json`.
+
+## Tooling: one brew install, opinionated picks
+
+Beyond runtimes, a small set of CLI tools and a handful of GUI apps cover most of what daily fullstack work needs. Batch the brew installs so the whole roster lands in a single network round trip.
+
+```bash
+brew install \
+  bat btop eza fzf gh git tmux \
+  zoxide lazygit jq lychee
+
+brew install --cask \
+  ghostty raycast rectangle obsidian docker \
+  cursor visual-studio-code claude
+
+npm install -g @anthropic-ai/claude-code
+pnpm add -g vercel turbo
+```
+
+<a href="/install/skills/macbook-dev-setup" target="_blank" rel="noopener">View full brew bundle →</a>
+
+`bat` is `cat` with syntax highlighting; `eza` is `ls` with icons and git-awareness; `fzf` powers the in-shell file picker and feeds tmux/extrakto/zoxide; `zoxide` replaces `cd` with a frecency-ranked smart jumper; `lazygit` is the terminal Git UI that pairs perfectly with the tmux popup binding from the companion skill.
+
+## SSH and Git: transfer the key, don't regenerate
+
+If you have an existing SSH key, transfer it; don't regenerate. Re-keying means re-adding to GitHub, every server, every deploy target, and any signed-commit verification chain. The key is portable.
+
+```bash
+# After copying ~/.ssh/ from the old machine:
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/id_ed25519.pub ~/.ssh/config
+
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+git config --global init.defaultBranch main
+```
+
+<a href="/install/skills/macbook-dev-setup" target="_blank" rel="noopener">View full SSH config →</a>
+
+`AddKeysToAgent yes` + `UseKeychain yes` in `~/.ssh/config` is the macOS-specific incantation that gets the key loaded from the system keychain on every shell — no passphrase prompt per terminal window.
+
+<AuthorNote>
+The thing I always forget to mention is to also copy `~/.claude/` along with the dotfiles. It carries every project setting, custom agent, hook, and skill you've built up over months of using Claude Code — losing it costs a week of re-discovering the workflows you'd already converged on.
+</AuthorNote>
+
+## What to install second, or never
+
+Resist the temptation to mirror the old machine exactly. A new machine is a free chance to drop the four apps you opened three times last year. The accumulating tax of "but I might need it" is real — every install adds login items, menu bar icons, and background updaters that drain the resource budget you were trying to reclaim.
+
+Things worth deferring until a specific project demands them: Docker Desktop (heavy; only if you actually run containers locally), JetBrains tooling (only if a project mandates it), Adobe Creative Cloud (only if you're producing assets this week). The principle: a fresh machine should reach "I can ship" with the smallest possible install set, then grow exactly the surface each new project pulls in.
+
+The companion artifact ships the full setup as an executable script. Run it phase-by-phase on a fresh machine; comment out anything you don't need. The dotfiles directory it lays down (`~/.zshrc`, `~/.gitconfig`, `~/.ssh/config` template) is opinionated but easy to overwrite section-by-section.
