@@ -30,6 +30,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm test
+      - run: pnpm test:scripts
 
       - name: Link check
         uses: lycheeverse/lychee-action@v2
