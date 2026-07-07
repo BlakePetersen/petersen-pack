@@ -7,5 +7,35 @@
     "veliteWallMs": 3509.5498750000006,
     "webpackCompileMs": 6300,
     "nextDevReadyMs": 181
+  },
+  "notes": "Phase 27 SCHEMA-07 v1.4 baseline. Yardstick for content scale-up regression checks. Top-level shape preserved for SCHEMA-07 test contract; Phase 29 measurements live under `phase29` sibling.",
+  "phase29": {
+    "capturedAt": "2026-05-13T09:30:00.000Z",
+    "nodeVersion": "v24.14.0",
+    "contentCount": 43,
+    "metrics": {
+      "fullBuildWallMs": 12812,
+      "veliteWallMs": 5424.09,
+      "webpackCompileMs": 6900,
+      "pagefindWallMs": 61,
+      "nextDevReadyMs": null
+    },
+    "entryCountsByCollection": {
+      "skills": 6,
+      "configs": 13,
+      "hooks": 5,
+      "guides": 7,
+      "posts": 12
+    },
+    "pagefindPagesIndexed": 44,
+    "notes": "Captured at Phase 29 Wave 4 end-of-phase gate. contentCount jumped from 23 to 43 (87% growth) via 20 net-new entries across 4 collections. fullBuildWallMs sourced from `time pnpm --filter blakepetersen.io build` user-visible wall (12.812s total). veliteWallMs sourced from full-build run (5424.09ms) for fair apples-to-apples vs Phase 27's velite-inside-next measurement. webpackCompileMs sourced from `Compiled successfully in 6.9s` line in build output. nextDevReadyMs not re-captured at phase end (orthogonal to content-scale regression; Phase 30 will revalidate). Plan 29-07 acceptance criterion: fullBuildWallMs < 35000ms (250% of Phase 27). Plan 29-07 frontmatter tolerance: ±50% of Phase 27 (6228-18685ms). Both satisfied."
+  },
+  "delta": {
+    "fullBuildWallMsPct": 2.85,
+    "veliteWallMsPct": 54.55,
+    "webpackCompileMsPct": 9.52,
+    "withinTolerance_50pct_fullBuild": true,
+    "withinTolerance_250pct_fullBuild": true,
+    "interpretation": "Full-build wall time grew only 2.85% (12456.79 -> 12812ms) despite 87% content growth (23 -> 43 entries). Velite alone grew 54.55% (3509.55 -> 5424.09ms) — outside the ±50% frontmatter tolerance but well inside the plan's 250% acceptance gate; Velite is ~42% of full build. Velite's prepare hook is roughly linear in content count, so 54% Velite growth on 87% content growth indicates sublinear scaling. Webpack compile grew 9.52% (6300 -> 6900ms), trivial. Pagefind postbuild ran in 61ms over 44 indexed pages. Net: Phase 29 content scale-up did NOT introduce a perf regression. The 'Velite prepare-hook perf at scale' watch-point is closed for v1.4 — extrapolating linearly, the next doubling (43 -> ~85 entries in v1.5+) would push Velite past 10s, a reasonable Phase 30 or v1.5 perf-investigation trigger."
   }
 }

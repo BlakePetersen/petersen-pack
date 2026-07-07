@@ -1,0 +1,76 @@
+# Lint baseline captured at Wave 0 of Phase 29.
+# Expected at phase end: same count or lower; if higher, NEW errors must be diagnosed and fixed.
+# Pre-existing errors in content/posts/* are out of scope (Phase 30 owns).
+# Scope-relevant baseline (skills/configs/hooks/guides): 0 errors / 5 warnings.
+# Captured 2026-05-10 via `pnpm --filter blakepetersen.io lint:content`.
+
+> blakepetersen.io@0.0.0 lint:content /Users/blakepetersen/Projects/petersen-group/apps/blakepetersen.io
+> blink lint --content-root content
+
+content/posts/a11y-images-should-always-bring-an-alt-attribute-along.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/hhvm-nginx-vagrant-provisioning-script.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/homebrew-osx-package-management.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/how-to-always-keep-your-copyright-statement-up-to-date.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/how-to-force-on-off-www-subdomain-with-htaccess.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/how-to-ios-and-css-hover-events.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/how-to-mongodb-on-osx-with-homebrew-launchd.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/localization-consideration.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/node-not-found-but-i-just-installed-it.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/understanding-keyword-density.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/untitled-entry-2018-04-23-at-07-34-09.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/posts/when-to-convert-an-svg-to-png.mdx
+    error  /: must have required property 'applies_to'  frontmatter-schema
+    error  /: must NOT have additional properties  frontmatter-schema
+
+content/configs/claude-global.artifact.md
+    warning  orphan .artifact.md — no sibling .mdx found  artifact-pair
+
+content/configs/claude-project.artifact.md
+    warning  orphan .artifact.md — no sibling .mdx found  artifact-pair
+
+content/configs/eslint-flat-config.artifact.md
+    warning  sibling .mdx has requires_artifact: false — consider setting to true or removing .artifact.md  artifact-pair
+
+content/configs/tmux-poweruser.artifact.md
+    warning  sibling .mdx has requires_artifact: false — consider setting to true or removing .artifact.md  artifact-pair
+
+content/configs/typescript-config.artifact.md
+    warning  orphan .artifact.md — no sibling .mdx found  artifact-pair
+
+24 error(s), 5 warning(s)
+/Users/blakepetersen/Projects/petersen-group/apps/blakepetersen.io:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  blakepetersen.io@0.0.0 lint:content: `blink lint --content-root content`
+Exit status 1
