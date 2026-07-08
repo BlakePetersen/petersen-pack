@@ -30,7 +30,7 @@
     "migrate": "tsx scripts/migrate-content.ts",
     "perf:baseline": "tsx scripts/perf-baseline.ts",
     "start": "next start",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "test:visual": "playwright test tests/visual",
     "test:visual:update": "playwright test tests/visual --update-snapshots",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
