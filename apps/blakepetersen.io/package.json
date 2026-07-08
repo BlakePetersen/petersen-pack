@@ -26,7 +26,7 @@
     "clean": "rm -rf .next && rm -rf .turbo && rm -rf node_modules",
     "dev": "next dev --webpack",
     "lint": "eslint .",
-    "lint:content": "blink lint --content-root content",
+    "lint:content": "node ../../packages/blink-cli/dist/cli.mjs lint --content-root content",
     "migrate": "tsx scripts/migrate-content.ts",
     "perf:baseline": "tsx scripts/perf-baseline.ts",
     "start": "next start",
