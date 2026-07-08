@@ -27,11 +27,11 @@ export default {
   // Staged-only content lint (LINT-05). The runner dispatches by collection,
   // so posts and .artifact.md siblings passed here are filtered, not
   // mis-validated against the DX schema (the old "phantom errors").
-  // The CLI bin resolves to packages/blink-cli/dist/, which doesn't exist on
-  // a fresh clone — build it first (tsup, sub-second when warm) so the hook
-  // fails on real lint errors rather than a missing binary.
+  // Invoked by node path, not the `blink` bin: pnpm only links workspace bins
+  // whose dist/ exists at install time, so the bin is absent in CI and fresh
+  // clones (install runs before build). Build first — tsup, sub-second warm.
   'apps/blakepetersen.io/content/**/*.{mdx,md}': (files) => [
     'pnpm --filter @blink/cli build',
-    `pnpm --filter blakepetersen.io exec blink lint --files ${files.join(',')}`,
+    `node packages/blink-cli/dist/cli.mjs lint --files ${files.join(',')}`,
   ],
 }
