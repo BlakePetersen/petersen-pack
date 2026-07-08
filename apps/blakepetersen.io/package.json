@@ -37,6 +37,7 @@
     "velite": "velite build"
   },
   "devDependencies": {
+    "@blink/cli": "workspace:*",
     "@dagrejs/dagre": "^3.0.0",
     "@playwright/test": "^1.59.1",
     "@types/jest": "^30.0.0",

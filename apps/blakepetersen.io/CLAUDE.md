@@ -25,6 +25,7 @@ Personal site. Next.js 16 + React 19, MDX content via Velite, Pagefind for searc
 
 - Consumes `artax-ui` (design system) via `workspace:*`
 - Imports types only from `blink-registry` (e.g. `ArtifactMetadata` in `src/lib/artifacts.ts`); the registry's runtime/Zod usage lives in `@blink/cli`, not here
+- Dev-depends on `@blink/cli` so the `blink` bin (used by `lint:content` and the pre-commit hook) resolves deterministically
 
 ## Gotchas
 

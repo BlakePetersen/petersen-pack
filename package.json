@@ -11,6 +11,7 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "dev": "turbo run dev --filter=!Luna",
     "lint": "turbo run lint --filter=!Luna",
+    "lint:content": "turbo run lint:content --filter=!Luna",
     "test": "turbo run test --filter=!Luna",
     "typecheck": "turbo run typecheck --filter=!Luna",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
