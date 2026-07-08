@@ -37,6 +37,12 @@ const validIndex: RegistryIndex = {
   generatedAt: '2026-03-15T00:00:00.000Z',
 }
 
+let mockHomedir: string
+jest.mock('node:os', () => ({
+  ...jest.requireActual('node:os'),
+  homedir: () => mockHomedir,
+}))
+
 jest.mock('citty', () => ({
   defineCommand: (config: any) => config,
 }))
@@ -82,6 +88,7 @@ let mockConsoleLog: jest.SpyInstance
 
 beforeEach(() => {
   tmpDir = mkdtempSync(join(tmpdir(), 'blink-status-'))
+  mockHomedir = mkdtempSync(join(tmpdir(), 'blink-status-home-'))
   originalCwd = process.cwd()
   process.chdir(tmpDir)
   mockFetchIndex.mockReset()
@@ -116,6 +123,24 @@ async function runStatus(args: Record<string, boolean> = {}) {
   const command = mod.default
   await command.run!({ args: { json: false, ...args } } as any)
 }
+
+describe('blink status --global', () => {
+  it('reads the global manifest from the home directory', async () => {
+    // Global installs were write-only: apply --global recorded to the homedir
+    // manifest, but every reader hardcoded process.cwd().
+    const globalEntry = { ...sampleEntry, slug: 'global-skill', name: 'Global Skill', scope: 'global' as const }
+    mkdirSync(join(mockHomedir, BLINK_DIR), { recursive: true })
+    writeFileSync(
+      join(mockHomedir, BLINK_DIR, 'manifest.json'),
+      JSON.stringify({ version: 1, items: [globalEntry] }, null, 2),
+    )
+
+    await runStatus({ json: true, global: true })
+
+    const logged = mockConsoleLog.mock.calls.map((c) => c[0]).join('\n')
+    expect(logged).toContain('global-skill')
+  })
+})
 
 describe('blink status', () => {
   it('shows warning when no manifest exists', async () => {

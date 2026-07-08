@@ -7,7 +7,7 @@ import { readFile } from 'node:fs/promises'
 import { fetchArtifact } from '@/registry'
 import { readManifest } from '@/manifest'
 import { findManagedSections } from '@/markers'
-import { resolveDestination } from '@/scope'
+import { resolveDestination, resolveManifestRoot } from '@/scope'
 import { formatColoredDiff } from '@/output'
 
 async function readFileSafe(path: string): Promise<string | null> {
@@ -29,13 +29,19 @@ export default defineCommand({
       description: 'Artifact slug to diff',
       required: true,
     },
+    global: {
+      type: 'boolean',
+      description: 'Operate on the global (home-directory) manifest',
+      default: false,
+    },
   },
   async run({ args }) {
     const slug = args.slug as string
     const cwd = process.cwd()
 
     // 1. Read manifest
-    const manifest = await readManifest(cwd)
+    const manifestRoot = resolveManifestRoot(args.global ? 'global' : 'project', cwd)
+    const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
       consola.error('No blink manifest found. Run blink init first.')

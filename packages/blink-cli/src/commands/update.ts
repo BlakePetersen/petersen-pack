@@ -41,6 +41,11 @@ export default defineCommand({
       description: 'Skip confirmation prompts',
       default: false,
     },
+    global: {
+      type: 'boolean',
+      description: 'Operate on the global (home-directory) manifest',
+      default: false,
+    },
   },
   async run({ args }) {
     const slug = args.slug as string | undefined
@@ -49,7 +54,8 @@ export default defineCommand({
     const cwd = process.cwd()
 
     // 1. Read manifest
-    const manifest = await readManifest(cwd)
+    const manifestRoot = resolveManifestRoot(args.global ? 'global' : 'project', cwd)
+    const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
       consola.error('No blink manifest found. Run blink init first.')
@@ -74,7 +80,9 @@ export default defineCommand({
 
     for (const entry of items) {
       const artifact = await fetchArtifact(entry.type, entry.slug)
-      const manifestRoot = resolveManifestRoot(entry.scope, cwd)
+      // The manifest is written back to the root it was read from — the old
+      // per-entry resolveManifestRoot(entry.scope, …) could write a project
+      // manifest into the home directory (and vice versa).
       const newFileEntries: ManifestFileEntry[] = []
       let hasChanges = false
 
