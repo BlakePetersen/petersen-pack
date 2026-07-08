@@ -38,6 +38,7 @@ export type DxItem = {
 export type PostItem = {
   slug: string
   draft?: boolean
+  related: string[]
 }
 
 type SingleArtifactInput = {
@@ -76,6 +77,8 @@ export type ValidatedArtifact = {
   type: string
   version: string
   description: string
+  /** Full content path (e.g. 'skills/claude-code/writing-custom-skills') — the site route. */
+  pagePath: string
   files: Array<{ path: string; content: string; merge: string }>
   devDependencies?: Record<string, string>
 }
@@ -142,10 +145,31 @@ export function validateCrossReferences(data: DxData): void {
     }
   }
 
+  // Posts' `related` refs may target DX entries or other posts; they used to
+  // bypass validation entirely and silently drop at render time.
+  const postSlugs = new Set(data.posts.map((p) => p.slug))
+  for (const post of data.posts) {
+    for (const ref of post.related) {
+      const coll = ref.slice(0, ref.indexOf('/'))
+      const known =
+        coll === 'posts'
+          ? postSlugs.has(ref)
+          : coll in collectionSlugs &&
+            collectionSlugs[coll as DxCollectionName].has(ref)
+      if (!known) {
+        brokenRefs.push(`  ${post.slug} related: '${ref}' — target not found`)
+      }
+    }
+  }
+
   if (brokenRefs.length > 0) {
-    throw new Error(
-      `Broken cross-references in DX content (${brokenRefs.length}):\n${brokenRefs.join('\n')}`,
+    const error = new Error(
+      `Broken cross-references in content (${brokenRefs.length}):\n${brokenRefs.join('\n')}`,
     )
+    // Stable name for error tracking — a bare Error from inside Velite's
+    // prepare hook is indistinguishable from any other build failure.
+    error.name = 'BlinkCrossRefError'
+    throw error
   }
 }
 
@@ -217,12 +241,14 @@ export function extractGitHistory(
 
 type VersionManifest = Record<string, { hash: string; version: string }>
 
-function deriveArtifactSlug(velitePath: string): string {
-  const cleaned = velitePath
+function deriveArtifactPaths(velitePath: string): { slug: string; pagePath: string } {
+  const pagePath = velitePath
     .replace(/\.artifact\/manifest$/, '')
     .replace(/\.artifact$/, '')
-  // Extract just the filename portion to produce a valid slug (no slashes)
-  return cleaned.split('/').pop() || cleaned
+  // Slug is the filename portion (SlugSchema forbids slashes); the full
+  // pagePath is kept separately — registry URLs built from `<type>s/<slug>`
+  // 404'd for every entry nested below its collection root.
+  return { slug: pagePath.split('/').pop() || pagePath, pagePath }
 }
 
 function sha256Hex(payload: string): string {
@@ -240,14 +266,24 @@ export function versionAndValidateArtifacts(
   contentDir: string,
 ): ValidatedArtifact[] {
   const versionManifestPath = path.resolve(contentDir, '.artifact-versions.json')
-  const priorVersionManifest: VersionManifest = fs.existsSync(versionManifestPath)
-    ? JSON.parse(fs.readFileSync(versionManifestPath, 'utf-8'))
-    : {}
+  let priorVersionManifest: VersionManifest = {}
+  if (fs.existsSync(versionManifestPath)) {
+    try {
+      priorVersionManifest = JSON.parse(fs.readFileSync(versionManifestPath, 'utf-8'))
+    } catch (cause) {
+      // Merge conflicts are the usual culprit — a raw SyntaxError from inside
+      // Velite's prepare hook gave no path and no recovery step.
+      throw new Error(
+        `Version manifest corrupted at ${versionManifestPath} — fix or delete it to regenerate (versions will re-derive from git dates)`,
+        { cause },
+      )
+    }
+  }
   const updatedVersionManifest: VersionManifest = {}
   const dateCounters = new Map<string, number>()
 
   const singles: ValidatedArtifact[] = data.singleArtifacts.map((artifact) => {
-    const slug = deriveArtifactSlug(artifact.slug)
+    const { slug, pagePath } = deriveArtifactPaths(artifact.slug)
     // D-05: hash the distributed-payload bytes only (single-file = body).
     const hash = sha256Hex(artifact.body)
     const prior = priorVersionManifest[slug]
@@ -266,6 +302,7 @@ export function versionAndValidateArtifacts(
       type: artifact.type,
       version,
       description: artifact.description,
+      pagePath,
       files: [
         {
           path: artifact.destination,
@@ -278,7 +315,7 @@ export function versionAndValidateArtifacts(
   })
 
   const multis: ValidatedArtifact[] = data.multiArtifacts.map((artifact) => {
-    const slug = deriveArtifactSlug(artifact.slug)
+    const { slug, pagePath } = deriveArtifactPaths(artifact.slug)
     // D-05: hash concatenated file.content in declared order (no separator —
     // boundaries are immaterial to the consumer-facing payload).
     const concatenated = artifact.files.map((f) => f.content).join('')
@@ -299,12 +336,38 @@ export function versionAndValidateArtifacts(
       type: artifact.type,
       version,
       description: artifact.description,
+      pagePath,
       files: artifact.files,
       devDependencies: artifact.devDependencies,
     }
   })
 
   const allArtifacts = [...singles, ...multis]
+
+  // Duplicate derived slugs and duplicate replace-merge destinations were
+  // silent last-write-wins — the Bug 012 class. Fail the build instead.
+  const slugSources = new Map<string, string>()
+  const replaceDestinations = new Map<string, string>()
+  for (const artifact of allArtifacts) {
+    const priorSlugSource = slugSources.get(artifact.slug)
+    if (priorSlugSource) {
+      throw new Error(
+        `Duplicate artifact slug '${artifact.slug}' derived from both '${priorSlugSource}' and '${artifact.pagePath}'`,
+      )
+    }
+    slugSources.set(artifact.slug, artifact.pagePath)
+
+    for (const file of artifact.files) {
+      if (file.merge !== 'replace') continue
+      const priorDest = replaceDestinations.get(file.path)
+      if (priorDest) {
+        throw new Error(
+          `Duplicate replace-merge destination '${file.path}' declared by both '${priorDest}' and '${artifact.slug}' — the second silently clobbers the first on apply`,
+        )
+      }
+      replaceDestinations.set(file.path, artifact.slug)
+    }
+  }
 
   for (const artifact of allArtifacts) {
     if (!SlugSchema.safeParse(artifact.slug).success) {
@@ -341,10 +404,14 @@ export function versionAndValidateArtifacts(
 
 // --- 6. Static registry JSON files for CLI/HTTP consumption ---
 
-export function writeRegistryFiles(allArtifacts: ValidatedArtifact[]): void {
+export function writeRegistryFiles(
+  allArtifacts: ValidatedArtifact[],
+  registryDirOverride?: string,
+): void {
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://blakepetersen.io'
-  const registryDir = path.resolve(process.cwd(), 'public', 'r')
+  const registryDir =
+    registryDirOverride ?? path.resolve(process.cwd(), 'public', 'r')
 
   // Clean stale files
   fs.rmSync(registryDir, { recursive: true, force: true })
@@ -356,7 +423,8 @@ export function writeRegistryFiles(allArtifacts: ValidatedArtifact[]): void {
     type: artifact.type,
     version: artifact.version,
     description: artifact.description,
-    url: `${baseUrl}/${artifact.type}s/${artifact.slug}`,
+    // pagePath is the real site route — `<type>s/<slug>` 404'd for nested entries
+    url: `${baseUrl}/${artifact.pagePath}`,
   }))
 
   // Use max CalVer version as generatedAt (avoids noisy git diffs from wall-clock time)
@@ -385,9 +453,11 @@ export function writeRegistryFiles(allArtifacts: ValidatedArtifact[]): void {
     const typeDir = path.join(registryDir, artifact.type)
     fs.mkdirSync(typeDir, { recursive: true })
 
+    // pagePath is site-internal; the published detail carries the resolved url
+    const { pagePath, ...publishable } = artifact
     const detail = {
-      ...artifact,
-      url: `${baseUrl}/${artifact.type}s/${artifact.slug}`,
+      ...publishable,
+      url: `${baseUrl}/${pagePath}`,
     }
 
     fs.writeFileSync(

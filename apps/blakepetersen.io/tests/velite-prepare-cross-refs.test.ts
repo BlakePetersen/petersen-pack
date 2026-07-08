@@ -84,7 +84,7 @@ describe('validateCrossReferences', () => {
         makeDxItem({ slug: 'skills/b', title: 'B', related: ['guides/missing-3'] }),
       ],
     })
-    expect(() => validateCrossReferences(data)).toThrow(/Broken cross-references in DX content \(3\)/)
+    expect(() => validateCrossReferences(data)).toThrow(/Broken cross-references in content \(3\)/)
   })
 
   it('handles nested-slug refs against path-shaped slugs', () => {
