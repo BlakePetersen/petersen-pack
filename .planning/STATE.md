@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-24)
 
 **Core value:** Developers can discover, reference, and apply opinionated AI-first DX practices from a single authoritative source
-**Current focus:** Phase 29 — content-authoring-greenfield-ports
+**Current focus:** Phase 30 — editorial-closure (next up; needs Blake-authored content + 24h re-read gate)
 
 ## Current Position
 
-Phase: 999.1
+Phase: 30
 Plan: Not started
-Status: Phase 29 shipped — code merged via PR #121; planning artifacts landing via docs PR
-Last activity: 2026-07-07
+Status: Phase 29 shipped (PR #121, docs PR #127). Betterment sweep landed 2026-07-08: WS-1 CI security rot (#128), WS-3 Velite dev loop (#129), WS-2 turbo graph (#130), WS-4 content lint gate (#131), WS-5 registry pipeline (#132), WS-6 blink-cli write-safety (#133). Remaining audit workstreams filed as backlog 999.x.
+Last activity: 2026-07-08
 
-Progress: [██████████] 100%
+Progress: [████████░░] ~85% (Phase 30 remains for v1.4)
 
 ## Performance Metrics
 
@@ -172,21 +172,19 @@ Progress: [██████████] 100%
 
 ### Pending Todos
 
-- Run CalVer behavior spike (~30min read of `apps/blakepetersen.io/src/lib/calver.ts` + 1h regression test) at Phase 27 start — SCHEMA-08 deliverable
-- Run `remark-lint-frontmatter-schema@3.15.4` × unified 11 compat spike (~2h) at Phase 28 Day 1 — Plan B is custom Ajv plugin (~80 LOC)
-- Run `zod-to-json-schema@3.25.2` × Zod 4.3.6 coverage spike (~1h) at Phase 28 Day 1 — Plan B is hand-author JSON Schemas
+(none — the three Phase 27/28 spikes (CalVer behavior, remark-lint compat, zod-to-json-schema coverage) all ran and resolved during those phases; see the decision log)
 
 ### Blockers/Concerns
 
 - ~~**react-live React 19 compat (Phase 24):** Spike (24-01) runs first as Wave 1. Per Blake's directive, fail-path is fix-forward — investigate, fix, re-spike — not deferral.~~ **Resolved 2026-04-18: VERDICT PASS** — react-live 4.1.8 renders Button under React 19; warning is dev-only, absent from prod build. Recommendation: enumerate named scope (68 artax-ui exports too large to spread). See `24-01-SPIKE-RESULT.md`.
-- **Pre-commit budget (v1.4 Phase 28):** Husky pre-commit currently runs commitlint + lint-staged Prettier (~sub-second). Adding `blink lint --files` for staged content must keep total under 2s typical (PITFALLS.md #10 — `--no-verify` rebellion risk). Distribute slower checks to pre-push or CI.
-- **Velite prepare-hook perf at scale (v1.4 Phase 27):** Capture cold-build + warm-dev baseline (SCHEMA-07) before Phase 29 content scale-up. If HMR latency exceeds 2s for content edits during Phase 29, add caching to graph + git-history + registry rewrite (PITFALLS.md #1).
+- ~~**Pre-commit budget (v1.4 Phase 28):** keep total under 2s typical.~~ **Resolved 2026-07-08:** pre-commit content lint is staged-only (`blink lint --files`) after the WS-4 dispatch fix; a warm `@blink/cli` tsup build (~40ms) runs first so the hook fails on lint errors rather than a missing binary (PR #131).
+- ~~**Velite prepare-hook perf at scale (v1.4 Phase 27).**~~ **Resolved 2026-07-08:** git-history extraction halved to one subprocess per file (build ~6.5s → ~5.0s, PR #132); dev watch loop restored under `next dev --webpack` (PR #129). Full git-log batching remains a future option if content grows past ~100 entries.
 - **Editorial debt human gate (v1.4 Phase 30):** /about and /start-here copy doesn't satisfy v1.4 closure until Blake re-reads 24h after writing and confirms voice (PITFALLS.md #6). Cannot be automated.
 
 ## Session Continuity
 
-Last session: 2026-05-13T09:34:06.693Z
-Stopped at: Completed 29-07-PLAN.md — Phase 29 phase gate verified, all 5 ROADMAP success criteria evidenced, ready for /gsd-verify-work
+Last session: 2026-07-08
+Stopped at: Betterment sweep complete (WS-1..6 merged, PRs #128–#133); remaining audit workstreams filed as backlog 999.x. Next: /gsd-plan-phase 30 (editorial closure — needs Blake-authored content).
 Resume file: None
 
 **Planned Phase:** 29 (Content Authoring (Greenfield + Ports)) — 7 plans — 2026-05-10T07:19:23.134Z
