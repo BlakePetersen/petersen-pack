@@ -2,11 +2,13 @@
 // ABOUTME: Supports both full-tree scan and --files mode for staged-only lint (LINT-05).
 
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, relative, resolve, sep } from 'node:path'
 import matter from 'gray-matter'
+import { DX_COLLECTIONS } from 'blink-registry'
 import { frontmatterSchemaRule } from '@/lint/rules/frontmatter-schema'
 import { artifactPairRule } from '@/lint/rules/artifact-pair'
 import { voicePrimitiveRule } from '@/lint/rules/voice-primitive'
+import { noInlineArtifactBodyRule } from '@/lint/rules/no-inline-artifact-body'
 import type { LintDiagnostic, LintContext, LintRule } from '@/lint/types'
 
 export interface LintOptions {
@@ -22,7 +24,27 @@ export interface LintResult {
   warningCount: number
 }
 
-const rules: LintRule[] = [frontmatterSchemaRule, artifactPairRule, voicePrimitiveRule]
+const rules: LintRule[] = [
+  frontmatterSchemaRule,
+  artifactPairRule,
+  voicePrimitiveRule,
+  noInlineArtifactBodyRule,
+]
+
+/**
+ * Lint targets are `.mdx` entries inside DX collections. `posts/` (and any
+ * future non-DX collection) has its own schema in velite.config.ts — running
+ * the DX frontmatter schema against it produced 2 false errors per post.
+ * `.artifact.md` siblings are validated transitively via the artifact-pair
+ * rule on their parent entry, never as standalone lint targets.
+ */
+function isDxEntry(contentRoot: string, file: string): boolean {
+  if (!file.endsWith('.mdx')) return false
+  const rel = relative(resolve(contentRoot), resolve(file))
+  if (rel.startsWith('..')) return false
+  const collection = rel.split(sep)[0]
+  return (DX_COLLECTIONS as readonly string[]).includes(collection)
+}
 
 function discoverMdxFiles(dir: string): string[] {
   const files: string[] = []
@@ -60,7 +82,28 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
   const diagnostics: LintDiagnostic[] = []
   const fixed: string[] = []
 
-  const mdxFiles = specifiedFiles ?? discoverMdxFiles(contentRoot)
+  const candidates = specifiedFiles ?? discoverMdxFiles(contentRoot)
+  const mdxFiles = candidates.filter((f) => isDxEntry(contentRoot, f))
+
+  // A missing or empty content root must never read as a clean run — that
+  // exact silence let the pre-commit gate no-op for a whole phase. Explicit
+  // --files selections may legitimately filter to nothing (e.g. a commit
+  // touching only posts), so only full-tree scans get this guard.
+  if (!specifiedFiles && mdxFiles.length === 0) {
+    return {
+      diagnostics: [
+        {
+          file: contentRoot,
+          severity: 'error',
+          rule: 'content-root',
+          message: `no lintable DX entries found under '${contentRoot}' — wrong --content-root?`,
+        },
+      ],
+      fixed: [],
+      errorCount: 1,
+      warningCount: 0,
+    }
+  }
 
   for (const file of mdxFiles) {
     let content: string
@@ -117,9 +160,13 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
     }
   }
 
-  // Run orphan scan
-  const orphanDiagnostics = artifactPairRule.checkOrphans(contentRoot)
-  diagnostics.push(...orphanDiagnostics)
+  // Orphan scan sweeps the whole tree — full-tree runs only. In --files mode
+  // (staged-only lint per LINT-05) it would report pre-existing orphans
+  // unrelated to the commit being checked.
+  if (!specifiedFiles) {
+    const orphanDiagnostics = artifactPairRule.checkOrphans(contentRoot)
+    diagnostics.push(...orphanDiagnostics)
+  }
 
   const errorCount = diagnostics.filter((d) => d.severity === 'error').length
   const warningCount = diagnostics.filter((d) => d.severity === 'warning').length
