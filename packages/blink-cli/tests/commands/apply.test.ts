@@ -619,4 +619,45 @@ describe('blink apply', () => {
       expect(existsSync(join(tmpDir, '.eslintrc.json'))).toBe(true)
     })
   })
+
+  describe('marker-conflict pre-flight', () => {
+    it('writes nothing and exits non-zero when any file has a marker conflict', async () => {
+      // Two files: the second collides with an existing managed section.
+      // The old mid-loop check wrote the first file, then returned exit 0,
+      // leaving an untracked partial install.
+      const twoFileArtifact = {
+        slug: 'shellrc',
+        name: 'Shell RC',
+        type: 'config' as const,
+        version: '2026.03.14.1',
+        description: 'Shell RC managed section',
+        url: 'https://blakepetersen.io/r/config/shellrc',
+        files: [
+          { path: 'fresh-file.txt', content: 'new content', merge: 'replace' as const },
+          { path: '.zshrc', content: 'export FOO=1', merge: 'section' as const },
+        ],
+        devDependencies: undefined,
+      }
+      // Existing managed section for the same slug in .zshrc → conflict
+      writeFileSync(
+        join(tmpDir, '.zshrc'),
+        '# blink:start shellrc\nold\n# blink:end shellrc\n',
+      )
+
+      const originalExitCode = process.exitCode
+      fetchMock = jest.fn()
+        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_INDEX_EXTENDED })
+        .mockResolvedValueOnce({ ok: true, json: async () => twoFileArtifact })
+      global.fetch = fetchMock
+
+      await runApply({ slug: 'shellrc', yes: true })
+
+      expect(existsSync(join(tmpDir, 'fresh-file.txt'))).toBe(false)
+      expect(consolaMock.error).toHaveBeenCalledWith(
+        expect.stringContaining('already installed'),
+      )
+      expect(process.exitCode).toBe(1)
+      process.exitCode = originalExitCode
+    })
+  })
 })

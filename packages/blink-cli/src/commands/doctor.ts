@@ -8,7 +8,7 @@ import { readdir, stat } from 'node:fs/promises'
 import { join } from 'node:path'
 import { readManifest, checksum } from '@/manifest'
 import { validateMarkers, findManagedSections } from '@/markers'
-import { resolveDestination } from '@/scope'
+import { resolveDestination, resolveManifestRoot } from '@/scope'
 
 interface DoctorIssue {
   severity: 'error' | 'warning' | 'info'
@@ -51,13 +51,20 @@ export default defineCommand({
     name: 'doctor',
     description: 'Check integrity of blink-managed files and manifest',
   },
-  args: {},
+  args: {
+    global: {
+      type: 'boolean',
+      description: 'Operate on the global (home-directory) manifest',
+      default: false,
+    },
+  },
   async run({ args }) {
     const cwd = process.cwd()
     const issues: DoctorIssue[] = []
 
     // 1. Read manifest
-    const manifest = await readManifest(cwd)
+    const manifestRoot = resolveManifestRoot(args.global ? 'global' : 'project', cwd)
+    const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
       consola.info(

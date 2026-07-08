@@ -126,6 +126,24 @@ describe('fetchIndex', () => {
     expect(mockFetch).toHaveBeenCalledTimes(2)
     expect(result).toEqual(validIndex)
   })
+
+  it('does not retry 4xx responses — a 404 will not heal on backoff', async () => {
+    const mockFetch = jest
+      .fn()
+      .mockResolvedValue({ ok: false, status: 404, statusText: 'Not Found' })
+    globalThis.fetch = mockFetch
+
+    await expect(fetchIndex()).rejects.toThrow(/404/)
+    expect(mockFetch).toHaveBeenCalledTimes(1)
+  })
+
+  it('includes the failing URL in HTTP error messages', async () => {
+    globalThis.fetch = jest
+      .fn()
+      .mockResolvedValue({ ok: false, status: 404, statusText: 'Not Found' })
+
+    await expect(fetchIndex()).rejects.toThrow(/r\/index\.json/)
+  })
 })
 
 describe('fetchArtifact', () => {

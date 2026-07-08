@@ -5,6 +5,7 @@ import { consola } from 'consola'
 import { readManifest } from '@/manifest'
 import { fetchIndex } from '@/registry'
 import { formatStatusTable } from '@/output'
+import { resolveManifestRoot } from '@/scope'
 
 export default defineCommand({
   meta: {
@@ -17,9 +18,18 @@ export default defineCommand({
       description: 'Output raw JSON',
       default: false,
     },
+    global: {
+      type: 'boolean',
+      description: 'Operate on the global (home-directory) manifest',
+      default: false,
+    },
   },
   async run({ args }) {
-    const manifest = await readManifest(process.cwd())
+    const manifestRoot = resolveManifestRoot(
+      args.global ? 'global' : 'project',
+      process.cwd(),
+    )
+    const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
       consola.warn('blink is not initialized. Run `blink init` first.')

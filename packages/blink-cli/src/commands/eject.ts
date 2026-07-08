@@ -43,14 +43,20 @@ export default defineCommand({
       description: 'Skip confirmation prompts',
       default: false,
     },
+    global: {
+      type: 'boolean',
+      description: 'Operate on the global (home-directory) manifest',
+      default: false,
+    },
   },
   async run({ args }) {
     const slug = args.slug as string
     const dryRun = args['dry-run']
     const cwd = process.cwd()
 
-    // 1. Read manifest
-    const manifest = await readManifest(cwd)
+    // 1. Read manifest — written back to the same root it was read from
+    const manifestRoot = resolveManifestRoot(args.global ? 'global' : 'project', cwd)
+    const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
       consola.error('No blink manifest found. Run blink init or blink apply first.')
@@ -64,8 +70,6 @@ export default defineCommand({
       consola.error(`${pc.bold(slug)} is not installed.`)
       process.exit(1)
     }
-
-    const manifestRoot = resolveManifestRoot(entry.scope, cwd)
 
     // 3. Process each file
     for (const file of entry.files) {

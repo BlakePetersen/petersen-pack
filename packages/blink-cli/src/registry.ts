@@ -25,12 +25,24 @@ async function fetchWithRetry(url: string): Promise<Response> {
       })
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status} ${response.statusText}`)
+        const error = new Error(
+          `HTTP ${response.status} ${response.statusText} for ${url}`,
+        )
+        // 4xx is deterministic — retrying a 404/403 just burns the backoff
+        // budget and delays the real error by several seconds.
+        if (response.status >= 400 && response.status < 500) {
+          throw Object.assign(error, { permanent: true })
+        }
+        throw error
       }
 
       return response
     } catch (error) {
       lastError = error as Error
+
+      if ((error as { permanent?: boolean }).permanent) {
+        throw error
+      }
 
       if (attempt < MAX_RETRIES - 1) {
         const delay = Math.min(1000 * 2 ** attempt, 5000)

@@ -1,9 +1,10 @@
 // ABOUTME: Manifest manager for tracking installed blink artifacts.
 // ABOUTME: Handles reading, writing, and creating .blink/manifest.json files.
-import { readFile, writeFile, mkdir } from 'node:fs/promises'
+import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { createHash } from 'node:crypto'
 import { ManifestSchema, type Manifest, type ManifestEntry } from 'blink-registry'
+import { atomicWrite } from '@/writer'
 
 export const BLINK_DIR = '.blink'
 const MANIFEST_FILE = 'manifest.json'
@@ -40,10 +41,10 @@ export async function writeManifest(
   cwd: string,
   manifest: Manifest
 ): Promise<void> {
-  const dir = join(cwd, BLINK_DIR)
-  await mkdir(dir, { recursive: true })
-  await writeFile(
-    join(dir, MANIFEST_FILE),
+  // Atomic (temp + rename): a crash mid-write must not leave a truncated
+  // manifest, which readers surface as MANIFEST_CORRUPT with no recovery.
+  await atomicWrite(
+    join(cwd, BLINK_DIR, MANIFEST_FILE),
     JSON.stringify(manifest, null, 2) + '\n'
   )
 }
