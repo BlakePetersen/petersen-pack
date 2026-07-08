@@ -1,20 +1,21 @@
 # petersen-group
 
-Monorepo: pnpm workspaces + Turbo. Two Next.js 16 apps, four shared packages.
+Monorepo: pnpm workspaces + Turbo. Three Next.js 16 apps (two CI-gated; `apps/luna` is gate-exempt pending reintegration — backlog 999.4), four shared packages.
 
 ## Stack
 
 - Node 24.14.0, pnpm 10.28.2 (pinned via `.tool-versions` / mise)
-- Next.js 16.2.2, React 19.2.4, Tailwind v4
+- Next.js 16.2.x, React 19.2.4, Tailwind v4
 - Turbo 2.x, ESLint flat config, Jest, Husky + commitlint
 
 ## Commands (run from repo root)
 
 - `pnpm dev` — run every app's dev server in parallel
 - `pnpm build` — production build across workspaces
-- `pnpm test` — Jest across workspaces (`--passWithNoTests` in apps)
+- `pnpm test` — Jest across workspaces (turbo builds dependencies first)
 - `pnpm typecheck` — `tsc --noEmit` against each app's `tsconfig.typecheck.json`
 - `pnpm lint` — ESLint flat config
+- `pnpm lint:content` — `blink lint` over bp.io's MDX content (frontmatter schema, artifact pairs, voice primitives)
 - `pnpm format` — Prettier on `**/*.{ts,tsx,md}`
 - `pnpm test:scripts` — Jest for `.github/scripts/` (separate config)
 

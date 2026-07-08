@@ -22,8 +22,13 @@ Defined as lazy imports in `src/cli.ts`:
 - `list` — list available artifacts from the registry
 - `eject` — stop tracking an artifact (leaves files on disk)
 - `doctor` — health check on manifest + workspace
+- `lint` — content lint for MDX entries (frontmatter schema, artifact-pair, voice primitives; `src/lint/`)
+- `port` — port existing repo files into content entries
+- `scaffold` — generate a new content entry from templates (`src/scaffold/`)
 
-Each subcommand is its own file under `src/commands/`.
+Each subcommand is its own file under `src/commands/`. Manifest readers
+(`update`/`status`/`diff`/`eject`/`doctor`) take `--global` to operate on the
+home-directory manifest that `apply --global` writes to.
 
 ## Architecture (the deep module here is the pipeline)
 
