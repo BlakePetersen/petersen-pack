@@ -1,7 +1,7 @@
 // ABOUTME: Git history extraction and content freshness label computation.
 // ABOUTME: Provides build-time git log queries and pure functions for freshness display.
 
-import { execSync } from 'node:child_process'
+import { execFileSync } from 'node:child_process'
 
 type GitHistory = {
   lastModified: string
@@ -12,26 +12,35 @@ type GitHistory = {
  * Extracts git history for a file path. Uses --follow to track renames.
  * Returns fallback values if git commands fail.
  */
+function fallbackHistory(filePath: string, reason: string): GitHistory {
+  // Shallow clones and non-git checkouts land here. The fabricated value
+  // labels the entry "New (today)" — say so instead of lying silently.
+  console.warn(
+    `[git-history] no history for ${filePath} (${reason}) — using fallback freshness (today, 1 commit)`,
+  )
+  return { lastModified: new Date().toISOString(), commitCount: 1 }
+}
+
 export function getGitHistoryForFile(filePath: string): GitHistory {
   try {
-    const lastModified = execSync(
-      `git log -1 --follow --format=%cI -- "${filePath}"`,
+    // One dated line per commit: first line is lastModified, line count is
+    // commitCount — a single subprocess per file (was two plus a shell pipe).
+    const dates = execFileSync(
+      'git',
+      ['log', '--follow', '--format=%cI', '--', filePath],
       { encoding: 'utf-8' },
-    ).trim()
+    )
+      .trim()
+      .split('\n')
+      .filter(Boolean)
 
-    const commitCountOutput = execSync(
-      `git log --follow --oneline -- "${filePath}" | wc -l`,
-      { encoding: 'utf-8', shell: '/bin/sh' },
-    ).trim()
-    const commitCount = parseInt(commitCountOutput, 10)
-
-    if (!lastModified || isNaN(commitCount)) {
-      return { lastModified: new Date().toISOString(), commitCount: 1 }
+    if (dates.length === 0) {
+      return fallbackHistory(filePath, 'no commits found')
     }
 
-    return { lastModified, commitCount }
-  } catch {
-    return { lastModified: new Date().toISOString(), commitCount: 1 }
+    return { lastModified: dates[0], commitCount: dates.length }
+  } catch (err) {
+    return fallbackHistory(filePath, err instanceof Error ? err.message : 'git failed')
   }
 }
 
