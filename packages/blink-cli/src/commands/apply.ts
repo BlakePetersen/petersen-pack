@@ -92,17 +92,23 @@ export default defineCommand({
       }
     }
 
-    // 6. Write files
-    const fileEntries: ManifestFileEntry[] = []
-
-    for (const plan of filePlans) {
-      if (plan.markerConflict) {
+    // 6. Write files — conflicts are known up-front, so check them all before
+    // writing anything. The old mid-loop check wrote earlier files, then
+    // returned exit 0, leaving an untracked partial install in the repo.
+    const conflicts = filePlans.filter((plan) => plan.markerConflict)
+    if (conflicts.length > 0) {
+      for (const plan of conflicts) {
         consola.error(
           `${pc.bold(slug)} is already installed in ${plan.path}. Use ${pc.dim('blink update')} to update.`,
         )
-        return
       }
+      process.exitCode = 1
+      return
+    }
 
+    const fileEntries: ManifestFileEntry[] = []
+
+    for (const plan of filePlans) {
       if (plan.exists && plan.merge === 'replace') {
         if (dryRun) {
           consola.log(
