@@ -8,7 +8,7 @@ Personal site. Next.js 16 + React 19, MDX content via Velite, Pagefind for searc
 - `pnpm build` — `next build --webpack` (see gotcha below) + `pagefind` postbuild
 - `pnpm velite` — rebuild Velite collections only (`.velite/`)
 - `pnpm typecheck` — uses `tsconfig.typecheck.json` (stricter than build config)
-- `pnpm test` — Jest, `--passWithNoTests`
+- `pnpm test` — Jest (via turbo it builds this app first — registry-endpoint tests read `public/r/`)
 
 ## Key files
 
@@ -30,11 +30,11 @@ Personal site. Next.js 16 + React 19, MDX content via Velite, Pagefind for searc
 
 - **Build uses webpack, not Turbopack** — Velite's transformer pipeline isn't Turbopack-compatible yet. Do not switch to `next build --turbo`.
 - **Pagefind runs in `postbuild`** against `.next/server/app` → writes `public/pagefind/`. Search breaks if `.next/` is cleaned after build without a rebuild.
-- **MDX articles can reference `.artifact.md` / `.artifact/` siblings** — these are inputs to the build, see `velite.config.ts` inputs in `turbo.json`.
+- **MDX articles can reference `.artifact.md` / `.artifact/` siblings** — these are inputs to the build (turbo hashes all tracked package files by default).
 - **`stitches.config.ts` is legacy** — styling is now Tailwind v4 (`@tailwindcss/postcss`). Don't add new Stitches usage.
 - **Shiki via `@shikijs/rehype`** — changes to code block rendering go through Velite's rehype pipeline, not Next's.
 
 ## Workflow notes
 
-- Adding a new content type = new Velite collection in `velite.config.ts` + matching `turbo.json` input glob at repo root.
+- Adding a new content type = new Velite collection in `velite.config.ts` (turbo picks up new content files automatically — no input glob needed).
 - The GSD workflow artifacts for this app live at the repo root (`.planning/`), not here.

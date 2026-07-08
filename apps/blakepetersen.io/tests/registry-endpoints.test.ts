@@ -15,11 +15,17 @@ const indexPath = join(registryDir, 'index.json')
 const registryExists = existsSync(indexPath)
 
 describe('Registry Endpoints (REG-02/03/04/05)', () => {
-  const skipReason = registryExists
-    ? undefined
-    : 'public/r/index.json not found — run pnpm build first'
+  // A missing registry used to test.skip the whole contract, so a build that
+  // stopped emitting public/r/ still produced a green test run. Turbo now
+  // builds this app before its tests (blakepetersen.io#test dependsOn build);
+  // if the registry is absent, that's a real failure worth hearing about.
+  if (!registryExists) {
+    throw new Error(
+      'public/r/index.json not found — run `pnpm build` (or `pnpm test` via turbo, which builds first) before the registry endpoint tests'
+    )
+  }
 
-  const conditionalTest = skipReason ? test.skip : test
+  const conditionalTest = test
 
   conditionalTest('index.json exists and is valid JSON', () => {
     const raw = readFileSync(indexPath, 'utf-8')

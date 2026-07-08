@@ -9,7 +9,7 @@
     "dev": "next dev",
     "lint": "eslint .",
     "start": "next start",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
   },
   "dependencies": {

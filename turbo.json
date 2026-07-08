@@ -3,14 +3,13 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "src/**",
-        "content/**/*.mdx",
-        "content/**/*.artifact.md",
-        "content/**/*.artifact/**",
-        "velite.config.ts"
-      ],
-      "outputs": [".next/**", "dist/**", ".velite/**"]
+      "outputs": [
+        ".next/**",
+        "dist/**",
+        ".velite/**",
+        "public/pagefind/**",
+        "public/r/**"
+      ]
     },
     "clean": {
       "cache": false
@@ -25,9 +24,15 @@
       "outputs": []
     },
     "test": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "blakepetersen.io#test": {
+      "dependsOn": ["build"],
       "outputs": []
     },
     "typecheck": {
+      "dependsOn": ["^build"],
       "outputs": []
     }
   }

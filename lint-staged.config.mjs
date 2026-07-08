@@ -27,6 +27,11 @@ export default {
   // `blink lint --content-root content` is currently buggy (reports phantom
   // frontmatter-schema errors on .artifact.md siblings). Calling `blink lint`
   // without the flag lets it auto-detect content and reports cleanly.
-  'apps/blakepetersen.io/content/**/*.{mdx,md}': () =>
-    `pnpm --filter blakepetersen.io exec blink lint`,
+  // The CLI bin resolves to packages/blink-cli/dist/, which doesn't exist on
+  // a fresh clone — build it first (tsup, sub-second when warm) so the hook
+  // fails on real lint errors rather than a missing binary.
+  'apps/blakepetersen.io/content/**/*.{mdx,md}': () => [
+    'pnpm --filter @blink/cli build',
+    'pnpm --filter blakepetersen.io exec blink lint',
+  ],
 }
