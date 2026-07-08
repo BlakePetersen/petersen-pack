@@ -1,5 +1,5 @@
 // ABOUTME: LINT-03 — checks voice-primitive invocation in MDX body matches voice[] frontmatter.
-// ABOUTME: All diagnostics are warnings (advisory) per v1.4-PLAN-06 / LINT-07.
+// ABOUTME: Declared-but-uninvoked is an error (promoted on a 20/20 organic pass rate); heading advisory stays warning.
 
 import type { LintDiagnostic, LintRule, LintContext } from '@/lint/types'
 
@@ -25,7 +25,7 @@ export const voicePrimitiveRule: LintRule = {
       if (!mapping.pattern.test(ctx.body)) {
         diagnostics.push({
           file: ctx.file,
-          severity: 'warning',
+          severity: 'error',
           rule: 'voice-primitive',
           message: `voice '${value}' declared but <${mapping.component}> not found in body`,
         })

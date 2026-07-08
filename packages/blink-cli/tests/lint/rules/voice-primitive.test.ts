@@ -25,26 +25,26 @@ describe('voicePrimitiveRule', () => {
     expect(diagnostics).toEqual([])
   })
 
-  it('warning when voice=[author-note] but body does NOT contain <AuthorNote', () => {
+  it('error when voice=[author-note] but body does NOT contain <AuthorNote', () => {
     const ctx = makeContext(
       { voice: ['author-note'] },
       '## Overview\n\nNo author note here.',
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     expect(diagnostics.length).toBe(1)
-    expect(diagnostics[0].severity).toBe('warning')
+    expect(diagnostics[0].severity).toBe('error')
     expect(diagnostics[0].message).toContain('author-note')
     expect(diagnostics[0].message).toContain('AuthorNote')
   })
 
-  it('warning when voice=[decision-rationale] but body does NOT contain <DecisionRationale', () => {
+  it('error when voice=[decision-rationale] but body does NOT contain <DecisionRationale', () => {
     const ctx = makeContext(
       { voice: ['decision-rationale'] },
       '## Overview\n\nNo rationale component.',
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     expect(diagnostics.length).toBe(1)
-    expect(diagnostics[0].severity).toBe('warning')
+    expect(diagnostics[0].severity).toBe('error')
     expect(diagnostics[0].message).toContain('decision-rationale')
     expect(diagnostics[0].message).toContain('DecisionRationale')
   })
@@ -76,16 +76,24 @@ describe('voicePrimitiveRule', () => {
     expect(diagnostics[0].message).toContain('heading')
   })
 
-  it('all voice-primitive diagnostics have severity warning (NOT error)', () => {
+  it('declared-but-uninvoked diagnostics are errors; the heading advisory stays a warning', () => {
+    // LINT-03 promoted warn→error per the Phase 29 delta report (20/20
+    // organic invocation rate). The rationale-heading nudge remains advisory.
     const ctx = makeContext(
       { voice: ['author-note', 'decision-rationale'] },
       '## Overview\n\nNo components at all.',
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     expect(diagnostics.length).toBeGreaterThan(0)
-    for (const d of diagnostics) {
-      expect(d.severity).toBe('warning')
+    for (const d of diagnostics.filter((x) => x.message.includes('declared but'))) {
+      expect(d.severity).toBe('error')
     }
+
+    const advisory = voicePrimitiveRule.check(
+      makeContext({ voice: [] }, '## Why\n\nBecause.'),
+    )
+    expect(advisory.length).toBe(1)
+    expect(advisory[0].severity).toBe('warning')
   })
 
   it('fix mode adds missing voice value when rationale-shaped heading detected', () => {

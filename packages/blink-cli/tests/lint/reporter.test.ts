@@ -61,8 +61,11 @@ describe('formatDiagnostics', () => {
     const { tmpdir } = await import('node:os')
 
     const dir = mkdtempSync(join(tmpdir(), 'blink-lint-runner-'))
+    // Lint targets live inside DX collections — files at the content root
+    // are not dispatched to any schema.
+    mkdirSync(join(dir, 'skills'))
     writeFileSync(
-      join(dir, 'valid.mdx'),
+      join(dir, 'skills', 'valid.mdx'),
       [
         '---',
         'title: Valid Skill',
@@ -84,13 +87,14 @@ describe('formatDiagnostics', () => {
 
   it('runLint on directory with invalid MDX returns frontmatter-schema error', async () => {
     const { runLint } = await import('@/lint/runner')
-    const { mkdtempSync, writeFileSync } = await import('node:fs')
+    const { mkdtempSync, writeFileSync, mkdirSync } = await import('node:fs')
     const { join } = await import('node:path')
     const { tmpdir } = await import('node:os')
 
     const dir = mkdtempSync(join(tmpdir(), 'blink-lint-runner-'))
+    mkdirSync(join(dir, 'skills'))
     writeFileSync(
-      join(dir, 'invalid.mdx'),
+      join(dir, 'skills', 'invalid.mdx'),
       [
         '---',
         'description: Missing title field.',
