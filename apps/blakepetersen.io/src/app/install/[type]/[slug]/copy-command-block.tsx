@@ -6,12 +6,20 @@
 import { useState } from 'react'
 
 export function CopyCommandBlock({ command }: { command: string }) {
-  const [copied, setCopied] = useState(false)
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>(
+    'idle'
+  )
 
   async function handleCopy() {
-    await navigator.clipboard.writeText(command)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    try {
+      await navigator.clipboard.writeText(command)
+      setCopyState('copied')
+    } catch {
+      // Clipboard access can be denied (permissions policy, insecure context);
+      // a mute button reads as broken, so surface the failure.
+      setCopyState('failed')
+    }
+    setTimeout(() => setCopyState('idle'), 2000)
   }
 
   return (
@@ -28,7 +36,11 @@ export function CopyCommandBlock({ command }: { command: string }) {
           onClick={handleCopy}
           className="shrink-0 rounded border border-border bg-background px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary"
         >
-          {copied ? 'copied!' : 'copy'}
+          {copyState === 'copied'
+            ? 'copied!'
+            : copyState === 'failed'
+              ? 'copy failed'
+              : 'copy'}
         </button>
       </div>
     </section>
