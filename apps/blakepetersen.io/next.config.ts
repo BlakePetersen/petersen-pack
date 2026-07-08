@@ -3,8 +3,6 @@
 
 import type { NextConfig } from 'next'
 
-const isDev = process.argv.indexOf('dev') !== -1
-
 const config: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ['artax-ui'],
@@ -18,20 +16,31 @@ const config: NextConfig = {
     ],
   },
   turbopack: {},
-  webpack(config) {
-    config.plugins.push(new VeliteWebpackPlugin())
+  webpack(config, { dev }) {
+    // `dev` comes from Next's webpack context — checking process.argv for
+    // 'dev' breaks in Next 16, where the config runs in a forked next-server
+    // worker with a rewritten argv (watch mode silently never started).
+    config.plugins.push(new VeliteWebpackPlugin(dev))
     return config
   },
 }
 
 class VeliteWebpackPlugin {
   static started = false
+  constructor(private readonly dev: boolean) {}
   apply(compiler: { hooks: { beforeCompile: { tapPromise: (name: string, fn: () => Promise<void>) => void } } }) {
     compiler.hooks.beforeCompile.tapPromise('VeliteWebpackPlugin', async () => {
       if (VeliteWebpackPlugin.started) return
       VeliteWebpackPlugin.started = true
       const { build } = await import('velite')
-      await build({ watch: isDev, clean: !isDev })
+      try {
+        await build({ watch: this.dev, clean: !this.dev })
+      } catch (err) {
+        // tapPromise rejections only surface when a page compiles — in dev
+        // that can be never, leaving a silent half-dead server. Log eagerly.
+        console.error('[VELITE] build failed:', err)
+        throw err
+      }
     })
   }
 }

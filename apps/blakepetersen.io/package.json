@@ -24,7 +24,7 @@
     "build": "next build --webpack",
     "postbuild": "pagefind --site .next/server/app --output-path public/pagefind",
     "clean": "rm -rf .next && rm -rf .turbo && rm -rf node_modules",
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "lint": "eslint .",
     "lint:content": "blink lint --content-root content",
     "migrate": "tsx scripts/migrate-content.ts",
