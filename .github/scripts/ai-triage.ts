@@ -19,6 +19,10 @@ function buildAiPort(): AiPort {
       const response = await anthropic.messages.create({
         model: CLAUDE_MODEL,
         max_tokens: DEFAULT_TRIAGE_MAX_TOKENS,
+        // Sonnet 5 runs adaptive thinking when `thinking` is omitted; thinking
+        // tokens count against max_tokens, which would starve the 1024-token
+        // classification budget. Keep the pre-migration thinking-off behavior.
+        thinking: { type: 'disabled' },
         system: systemPrompt,
         messages: [{ role: 'user', content: userMessage }],
       });
