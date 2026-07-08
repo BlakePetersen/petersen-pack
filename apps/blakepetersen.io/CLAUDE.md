@@ -4,7 +4,7 @@ Personal site. Next.js 16 + React 19, MDX content via Velite, Pagefind for searc
 
 ## Commands (from `apps/blakepetersen.io/`)
 
-- `pnpm dev` — Next dev server
+- `pnpm dev` — Next dev server (`next dev --webpack` — the VeliteWebpackPlugin only fires in the webpack hook, so Turbopack dev serves stale `.velite/` content)
 - `pnpm build` — `next build --webpack` (see gotcha below) + `pagefind` postbuild
 - `pnpm velite` — rebuild Velite collections only (`.velite/`)
 - `pnpm typecheck` — uses `tsconfig.typecheck.json` (stricter than build config)

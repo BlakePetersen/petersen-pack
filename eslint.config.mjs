@@ -57,6 +57,8 @@ export default tseslint.config(
       '**/node_modules/**',
       '**/.turbo/**',
       '**/.next/**',
+      '**/.velite/**',
+      '**/.velite-fixture/**',
       '**/public/**',
       '**/dist/**',
       '.trash/**',
