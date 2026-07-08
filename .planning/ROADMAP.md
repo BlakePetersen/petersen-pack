@@ -10,7 +10,7 @@ Transform the existing Turborepo monorepo from a collection of independent Next.
 - ✅ **v1.1 GitHub Integration** — Phases 8-11 (shipped 2026-03-14)
 - ✅ **v1.2 Blink CLI & DX Registry** — Phases 12-20 (shipped 2026-03-16)
 - ✅ **v1.3 Artax Design System** — Phases 21-26 (shipped 2026-04-24)
-- 🚧 **v1.4 Content Density** — Phases 27-30 (in progress, started 2026-04-24)
+- 🚧 **v1.4 Content Density** — Phases 27-36 (in progress, started 2026-04-24; phases 31-36 promoted from backlog 2026-07-08)
 
 ## Phases
 
@@ -74,12 +74,18 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 
 </details>
 
-### v1.4 Content Density (Phases 27-30) — IN PROGRESS
+### v1.4 Content Density (Phases 27-36) — IN PROGRESS
 
 - [x] **Phase 27: Schema Foundations** — Lock `dxFields` shape, slug uniqueness, cross-ref integrity, perf baseline, CalVer + ESM debt resolution before any content authoring
 - [x] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
 - [x] **Phase 29: Content Authoring (Greenfield + Ports)** — 20 net-new entries shipped (5 skills, 7 configs, 4 hooks, 4 guides) — exceeded all CONTENT-01..04 floors; Variant 3 pattern locked; voice-primitive torture test green across desktop-light/dark + mobile
 - [ ] **Phase 30: Editorial Closure** — Real `/about` and `/start-here` copy, voice-primitive backfill across pre-existing MDX, Skills Detail typography polish, voice-lint promotion review, milestone audit
+- [ ] **Phase 31: Schema Single-Source-of-Truth** — Shared const arrays/regexes/unions between blink-registry, Velite, and CLI; fix `updated_context` drift; round-trip fixture test *(promoted from 999.1, audit WS-7)*
+- [ ] **Phase 32: Test-Signal Integrity** — Fix tests that pass without proving what they claim: stale-cache passthrough, manifest byte-compare, visual suite in CI, CommandPalette a11y, turbo dependsOn *(promoted from 999.2, audit WS-8)*
+- [ ] **Phase 33: Code-Comment Citation Rot** — Rewrite `.planning/`-artifact-ID citations as self-contained WHYs; delete redundant step comments *(promoted from 999.3)*
+- [ ] **Phase 34: apps/luna Containment & Reintegration** — Luna vitest suite in CI (Postgres service container), vuln overrides refresh, toolchain drift, repo-wide prettier enforcement *(promoted from 999.4, audit WS-9)*
+- [ ] **Phase 35: Dead & Unlinted Code Sweep** — Lint shared packages, wire-or-delete half-built AI PR-review pipeline, drop phantom deps *(promoted from 999.5, audit WS-10)*
+- [ ] **Phase 36: Artax Showcase Parity & Design-System Hygiene** — Document 4 missing components + parity test, dedupe ThemeToggle into artax-ui, Prism token-sync test *(promoted from 999.6, audit WS-11)*
 
 ## Phase Details
 
@@ -187,10 +193,138 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
+### Phase 31: Schema Single-Source-of-Truth — blink-registry ↔ Velite
+
+**Goal**: Every schema fact shared between blink-registry, the Velite config, and the CLI has exactly one canonical export — const arrays, regexes, and unions are imported, never hand-mirrored — with a round-trip fixture test guarding the seam. *(Promoted from backlog 999.1; audit WS-7.)*
+
+**Depends on**: Phase 29 (schema and content landed; independent of Phase 30)
+
+**Requirements**: TBD
+
+Thirteen frontmatter fields, the cross-ref regex, collection lists, artifact-type/merge enums, the voice union, and the Scope type are each hand-mirrored across the registry, Velite config, and CLI — synced only by comments, with one live drift (`updated_context`: `s.isodate()` in Velite vs `z.string()` in the registry, so lint accepts what the build rejects). The Zod-instance constraint (decision 28-01) rules out sharing schema objects; share exported const arrays/regexes plus a round-trip fixture test instead.
+
+- `dxFields` ↔ `DxFrontmatterSchema` hand-mirror with the live `updated_context` drift (`velite.config.ts` vs `packages/blink-registry/src/schemas/dx-frontmatter.ts`)
+- `CrossRefSchema` + `DX_COLLECTIONS` duplicated, both claiming "single source of truth"
+- Inline `s.enum` type/merge literals in `velite.config.ts` vs registry `ArtifactTypeSchema`/`MergeStrategySchema` — share const arrays
+- Voice union inlined twice; export `VoiceSchema`/`type Voice` so renderers can be exhaustive
+- `const config: any = defineConfig(...)` kills inference; `DxData` hand-mirrors collections (`velite.config.ts`, `velite-prepare.ts`)
+- CLI redeclares the Scope union ×3 vs the registry's canonical export (`pipeline.ts`, `scope.ts`)
+- Define `Sha256Hex` primitive in `blink-registry`; retype `VersionManifest` as `Record<Slug, { hash: Sha256Hex; version: CalVer }>` (`velite-prepare.ts`)
+- Tighten `Migration` interface (`scripts/migrate-content.ts`) to `run(opts)` and lift `MigrationResult` to a shared module — gate on Migration #001
+- (Needs sign-off) collapse the dual-Ajv round-trip in `frontmatter-schema.ts` to `DxFrontmatterSchema.safeParse` — supersedes recorded LINT-01 decision
+
+**Plans**: TBD
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 31 to break down)
+
+### Phase 32: Test-Signal Integrity
+
+**Goal**: Every test proves what it claims — no stale-cache passthroughs, no asserting proxies of the real invariant, no suites that run in no workflow. *(Promoted from backlog 999.2; audit WS-8.)*
+
+**Depends on**: Phase 31 (the dual-Ajv collapse in `frontmatter-schema.ts` lands first, so its test fixes target the final shape)
+
+**Requirements**: TBD
+
+Tests that pass without proving what they claim. (The JSON.parse manifest guard and BlinkError tagging from the original Phase 27 review landed in PR #132.)
+
+- `frontmatter-schema.test.ts` only builds Velite if `.velite/` is missing — stale-cache passthrough muffles the "build green" signal; capture the build exit and fail loudly
+- Manifest determinism test asserts key order, not a write-twice byte-compare (the actual D-06 invariant) — `phase27-manifest-shape.test.ts`
+- Visual Playwright suite runs in no workflow; committed snapshots rot silently; baselines captured against `pnpm dev` instead of a prod build (WR-02)
+- `waitForLoadState('networkidle')` in `voice-primitives.spec.ts` is redundant/discouraged (WR-04)
+- CommandPalette missing Radix Description — a real a11y gap plus warning noise on every jest run (`command-palette.tsx`)
+- App tests import blink-cli `src/` directly; two dead `moduleNameMapper` entries (`scaffold-roundtrip.test.ts`, `jest.config.ts`)
+- Dangling-cross-ref fixture has only 1 broken ref — no multi-error accumulation coverage
+- No `loadMigrations` sort-order test; velite-runner drops `result.signal` (SIGKILL collapses to `-1`); `perf-baseline.ts` swallows stderr; migration catch stringifies non-Error throws as `[object Object]`
+- `@blink/cli#test` needs `dependsOn: ["build"]` in turbo.json — `build.test.ts` asserts the built bundle and fails on fresh clones
+
+**Plans**: TBD
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 32 to break down)
+
+### Phase 33: Code-Comment Citation Rot
+
+**Goal**: Code comments explain themselves — no `.planning/`-artifact-ID citations that require the planning directory to decode, no numbered-step comments that restate the next line. *(Promoted from backlog 999.3.)*
+
+**Depends on**: Phase 31 (the citation comments live in `velite-prepare.ts`, `velite.config.ts`, and the phase27 tests that Phase 31 refactors — rewriting after avoids churn)
+
+**Requirements**: TBD
+
+(The CLAUDE.md drift items from the original review were fixed in the 2026-07-08 docs pass.)
+
+- Rewrite the `.planning/`-artifact-ID citations in code comments (D-01..D-07, Risk #3, 27-VALIDATION.md refs) with self-contained WHYs — now spread across `velite-prepare.ts`, `velite.config.ts`, and the phase27 tests; grep for `D-0` and `Risk #`
+- Delete redundant numbered-step comments in `scripts/perf-baseline.ts` and `scripts/migrate-content.ts` (they restate the next line); keep the regex explanation
+- Optional one-liner WHY for the `fileURLToPath(import.meta.url)` shims in both scripts
+
+**Plans**: TBD
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 33 to break down)
+
+### Phase 34: apps/luna Containment & Reintegration
+
+**Goal**: Luna's gate exemption is contained and shrinking — its security-load-bearing test suite runs in CI, its vulnerability reservoir is drained via overrides, and toolchain drift is closed enough that reintegration is a config change, not a rewrite. *(Promoted from backlog 999.4; audit WS-9.)*
+
+**Depends on**: Nothing (luna is isolated from the other v1.4 phases)
+
+**Requirements**: TBD
+
+Luna is fully gate-exempt (`--filter=!Luna` everywhere, commit f5fcb07 "until proper integration work happens") with the exemption previously untracked — this entry is that tracking item.
+
+- Luna's security-load-bearing vitest suite (auth/CSRF/rate-limit wrappers, ~19 files) runs nowhere; `test:unit` chains `prisma migrate deploy`, so CI needs a Postgres service container
+- ~19–20 of the repo's 35 dependency vulns (9 of 15 high) are luna transitives (undici ×4 high, ws, form-data, fast-uri) — refresh the root `pnpm.overrides` block
+- Toolchain drift on every axis: pnpm 9 vs 10, Tailwind 3 vs 4, TS 5.5 vs 6, stripe 3 majors behind; `packageManager` contradicts its own CLAUDE.md
+- Deprecated packages (@react-email/components at latest is deprecated; stale @types stubs shadowing bundled types)
+- Dual majors across workspaces: lucide-react 0.554 vs 1.x, @vercel/analytics 1.x vs 2.x
+- Repo-wide prettier enforcement (CI `--check` + glob consistency) deferred from WS-3 — needs a whole-tree normalization commit first
+- Scoped eslint config for node-side build files (velite-prepare, git-history, scripts/) where `console` is the right tool — kills ~60 no-console warnings
+
+**Plans**: TBD
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 34 to break down)
+
+### Phase 35: Dead & Unlinted Code Sweep
+
+**Goal**: No code ships unlinted and no dead machinery lingers — shared packages get real lint runs, half-built pipelines are wired or deleted, phantom deps are dropped. *(Promoted from backlog 999.5; audit WS-10.)*
+
+**Depends on**: Phase 31 (lint the packages after the registry/CLI refactor so new lint scripts run against final code)
+
+**Requirements**: TBD
+
+- Shared packages are never linted — no lint script in any package, and the `import-x/no-cycle` block for artax-ui literally never executes (`eslint.config.mjs`)
+- Half-built AI PR-review pipeline in `.github/scripts` (review-helpers + tests, no entry point or workflow) — wire it or delete it
+- Bare `playwright` dep in blakepetersen.io never imported (`@playwright/test` is the real one)
+- 7.8 MB gitignored `storybook-static/` residue in artax-ui + the removal-test gap
+
+**Plans**: TBD
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 35 to break down)
+
+### Phase 36: Artax Showcase Parity & Design-System Hygiene
+
+**Goal**: The artax showcase documents every component the design system exports — pinned by a parity test — and shared UI lives in artax-ui, not copy-pasted across apps. *(Promoted from backlog 999.6; audit WS-11.)*
+
+**Depends on**: Nothing (independent of the other v1.4 phases)
+
+**Requirements**: TBD
+
+- 15 of 19 components documented while the landing page claims 19 — contradiction pinned by two tests each asserting a different count; missing: modal, prev-next-nav, author-note, decision-rationale; add a barrel↔registry parity test
+- Byte-identical 87-line ThemeToggle duplicated in both apps — belongs in artax-ui per the repo's own design-system rule
+- Playground Prism theme hand-mirrors hex values from artax-ui `globals.css` with no token-sync test (the marker-parsing machinery already exists in `token-registry.ts`)
+- shamefully-hoist phantoms: artax-ui → `next/link` undeclared peer (`prev-next-nav.tsx`), artax → `prism-react-renderer` undeclared
+
+**Plans**: TBD
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 36 to break down)
+
 ## Progress
 
 **Execution Order:**
-v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three internal tracks (scaffold, lint, port) that may proceed in parallel within the phase but all must be complete before Phase 29 begins.
+v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three internal tracks (scaffold, lint, port) that may proceed in parallel within the phase but all must be complete before Phase 29 begins. Phases 31-36 (promoted engineering-debt phases) are independent of Phase 30 and may execute before it; within them, 32/33/35 depend on 31, while 34 and 36 are fully independent.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -226,105 +360,13 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete    | 2026-05-05 |
 | 29. Content Authoring | v1.4 | 7/7 | Complete    | 2026-05-14 |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
+| 31. Schema Single-Source-of-Truth | v1.4 | 0/? | Not started | — |
+| 32. Test-Signal Integrity | v1.4 | 0/? | Not started | — |
+| 33. Code-Comment Citation Rot | v1.4 | 0/? | Not started | — |
+| 34. apps/luna Containment & Reintegration | v1.4 | 0/? | Not started | — |
+| 35. Dead & Unlinted Code Sweep | v1.4 | 0/? | Not started | — |
+| 36. Artax Showcase Parity & Design-System Hygiene | v1.4 | 0/? | Not started | — |
 
 ## Backlog
 
-Backlog refreshed 2026-07-08 after the betterment-audit sweep (WS-1..6 landed as PRs #128–#134). Items closed by the sweep are removed; citations re-anchored (the Phase 27 prepare-hook code moved from `velite.config.ts` to `apps/blakepetersen.io/src/lib/velite-prepare.ts`). Audit evidence for 999.4–999.6 lives in the 2026-07-07 audit (88 verified findings).
-
-### Phase 999.1: Schema single-source-of-truth — blink-registry ↔ Velite (BACKLOG)
-
-**Goal:** [Captured for future planning — audit WS-7]
-**Requirements:** TBD
-
-Thirteen frontmatter fields, the cross-ref regex, collection lists, artifact-type/merge enums, the voice union, and the Scope type are each hand-mirrored across the registry, Velite config, and CLI — synced only by comments, with one live drift (`updated_context`: `s.isodate()` in Velite vs `z.string()` in the registry, so lint accepts what the build rejects). The Zod-instance constraint (decision 28-01) rules out sharing schema objects; share exported const arrays/regexes plus a round-trip fixture test instead.
-
-- `dxFields` ↔ `DxFrontmatterSchema` hand-mirror with the live `updated_context` drift (`velite.config.ts` vs `packages/blink-registry/src/schemas/dx-frontmatter.ts`)
-- `CrossRefSchema` + `DX_COLLECTIONS` duplicated, both claiming "single source of truth"
-- Inline `s.enum` type/merge literals in `velite.config.ts` vs registry `ArtifactTypeSchema`/`MergeStrategySchema` — share const arrays
-- Voice union inlined twice; export `VoiceSchema`/`type Voice` so renderers can be exhaustive
-- `const config: any = defineConfig(...)` kills inference; `DxData` hand-mirrors collections (`velite.config.ts`, `velite-prepare.ts`)
-- CLI redeclares the Scope union ×3 vs the registry's canonical export (`pipeline.ts`, `scope.ts`)
-- Define `Sha256Hex` primitive in `blink-registry`; retype `VersionManifest` as `Record<Slug, { hash: Sha256Hex; version: CalVer }>` (`velite-prepare.ts`)
-- Tighten `Migration` interface (`scripts/migrate-content.ts`) to `run(opts)` and lift `MigrationResult` to a shared module — gate on Migration #001
-- (Needs sign-off) collapse the dual-Ajv round-trip in `frontmatter-schema.ts` to `DxFrontmatterSchema.safeParse` — supersedes recorded LINT-01 decision
-
-Plans:
-- [ ] TBD (promote with /gsd-review-backlog when ready)
-
-### Phase 999.2: Test-signal integrity (BACKLOG)
-
-**Goal:** [Captured for future planning — audit WS-8]
-**Requirements:** TBD
-
-Tests that pass without proving what they claim. (The JSON.parse manifest guard and BlinkError tagging from the original Phase 27 review landed in PR #132.)
-
-- `frontmatter-schema.test.ts` only builds Velite if `.velite/` is missing — stale-cache passthrough muffles the "build green" signal; capture the build exit and fail loudly
-- Manifest determinism test asserts key order, not a write-twice byte-compare (the actual D-06 invariant) — `phase27-manifest-shape.test.ts`
-- Visual Playwright suite runs in no workflow; committed snapshots rot silently; baselines captured against `pnpm dev` instead of a prod build (WR-02)
-- `waitForLoadState('networkidle')` in `voice-primitives.spec.ts` is redundant/discouraged (WR-04)
-- CommandPalette missing Radix Description — a real a11y gap plus warning noise on every jest run (`command-palette.tsx`)
-- App tests import blink-cli `src/` directly; two dead `moduleNameMapper` entries (`scaffold-roundtrip.test.ts`, `jest.config.ts`)
-- Dangling-cross-ref fixture has only 1 broken ref — no multi-error accumulation coverage
-- No `loadMigrations` sort-order test; velite-runner drops `result.signal` (SIGKILL collapses to `-1`); `perf-baseline.ts` swallows stderr; migration catch stringifies non-Error throws as `[object Object]`
-- `@blink/cli#test` needs `dependsOn: ["build"]` in turbo.json — `build.test.ts` asserts the built bundle and fails on fresh clones
-
-Plans:
-- [ ] TBD (promote with /gsd-review-backlog when ready)
-
-### Phase 999.3: Code-comment citation rot (BACKLOG)
-
-**Goal:** [Captured for future planning — remainder of the Phase 27 review docs items]
-**Requirements:** TBD
-
-(The CLAUDE.md drift items from the original review were fixed in the 2026-07-08 docs pass.)
-
-- Rewrite the `.planning/`-artifact-ID citations in code comments (D-01..D-07, Risk #3, 27-VALIDATION.md refs) with self-contained WHYs — now spread across `velite-prepare.ts`, `velite.config.ts`, and the phase27 tests; grep for `D-0` and `Risk #`
-- Delete redundant numbered-step comments in `scripts/perf-baseline.ts` and `scripts/migrate-content.ts` (they restate the next line); keep the regex explanation
-- Optional one-liner WHY for the `fileURLToPath(import.meta.url)` shims in both scripts
-
-Plans:
-- [ ] TBD (promote with /gsd-review-backlog when ready)
-
-### Phase 999.4: apps/luna containment & reintegration (BACKLOG)
-
-**Goal:** [Captured for future planning — audit WS-9]
-**Requirements:** TBD
-
-Luna is fully gate-exempt (`--filter=!Luna` everywhere, commit f5fcb07 "until proper integration work happens") with the exemption previously untracked — this entry is that tracking item.
-
-- Luna's security-load-bearing vitest suite (auth/CSRF/rate-limit wrappers, ~19 files) runs nowhere; `test:unit` chains `prisma migrate deploy`, so CI needs a Postgres service container
-- ~19–20 of the repo's 35 dependency vulns (9 of 15 high) are luna transitives (undici ×4 high, ws, form-data, fast-uri) — refresh the root `pnpm.overrides` block
-- Toolchain drift on every axis: pnpm 9 vs 10, Tailwind 3 vs 4, TS 5.5 vs 6, stripe 3 majors behind; `packageManager` contradicts its own CLAUDE.md
-- Deprecated packages (@react-email/components at latest is deprecated; stale @types stubs shadowing bundled types)
-- Dual majors across workspaces: lucide-react 0.554 vs 1.x, @vercel/analytics 1.x vs 2.x
-- Repo-wide prettier enforcement (CI `--check` + glob consistency) deferred from WS-3 — needs a whole-tree normalization commit first
-- Scoped eslint config for node-side build files (velite-prepare, git-history, scripts/) where `console` is the right tool — kills ~60 no-console warnings
-
-Plans:
-- [ ] TBD (promote with /gsd-review-backlog when ready)
-
-### Phase 999.5: Dead & unlinted code sweep (BACKLOG)
-
-**Goal:** [Captured for future planning — audit WS-10]
-**Requirements:** TBD
-
-- Shared packages are never linted — no lint script in any package, and the `import-x/no-cycle` block for artax-ui literally never executes (`eslint.config.mjs`)
-- Half-built AI PR-review pipeline in `.github/scripts` (review-helpers + tests, no entry point or workflow) — wire it or delete it
-- Bare `playwright` dep in blakepetersen.io never imported (`@playwright/test` is the real one)
-- 7.8 MB gitignored `storybook-static/` residue in artax-ui + the removal-test gap
-
-Plans:
-- [ ] TBD (promote with /gsd-review-backlog when ready)
-
-### Phase 999.6: artax showcase parity & design-system hygiene (BACKLOG)
-
-**Goal:** [Captured for future planning — audit WS-11]
-**Requirements:** TBD
-
-- 15 of 19 components documented while the landing page claims 19 — contradiction pinned by two tests each asserting a different count; missing: modal, prev-next-nav, author-note, decision-rationale; add a barrel↔registry parity test
-- Byte-identical 87-line ThemeToggle duplicated in both apps — belongs in artax-ui per the repo's own design-system rule
-- Playground Prism theme hand-mirrors hex values from artax-ui `globals.css` with no token-sync test (the marker-parsing machinery already exists in `token-registry.ts`)
-- shamefully-hoist phantoms: artax-ui → `next/link` undeclared peer (`prev-next-nav.tsx`), artax → `prism-react-renderer` undeclared
-
-Plans:
-- [ ] TBD (promote with /gsd-review-backlog when ready)
+(Empty — all six audit-filed items were promoted to phases 31-36 on 2026-07-08. File new items with /gsd-add-backlog.)
