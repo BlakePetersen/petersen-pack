@@ -24,7 +24,7 @@ Personal site. Next.js 16 + React 19, MDX content via Velite, Pagefind for searc
 ## Cross-package usage
 
 - Consumes `artax-ui` (design system) via `workspace:*`
-- Imports types only from `blink-registry` (e.g. `ArtifactMetadata` in `src/lib/artifacts.ts`); the registry's runtime/Zod usage lives in `@blink/cli`, not here
+- Imports both types AND runtime Zod schemas from `blink-registry` — `src/lib/velite-prepare.ts` calls `safeParse` on `SlugSchema`/`CalVerSchema`/`ArtifactTypeSchema`/`MergeStrategySchema` at build time (Phase 27-02); `@blink/cli` is the other runtime consumer
 - Dev-depends on `@blink/cli` so the `blink` bin (used by `lint:content` and the pre-commit hook) resolves deterministically
 
 ## Gotchas
@@ -32,7 +32,6 @@ Personal site. Next.js 16 + React 19, MDX content via Velite, Pagefind for searc
 - **Build uses webpack, not Turbopack** — Velite's transformer pipeline isn't Turbopack-compatible yet. Do not switch to `next build --turbo`.
 - **Pagefind runs in `postbuild`** against `.next/server/app` → writes `public/pagefind/`. Search breaks if `.next/` is cleaned after build without a rebuild.
 - **MDX articles can reference `.artifact.md` / `.artifact/` siblings** — these are inputs to the build (turbo hashes all tracked package files by default).
-- **`stitches.config.ts` is legacy** — styling is now Tailwind v4 (`@tailwindcss/postcss`). Don't add new Stitches usage.
 - **Shiki via `@shikijs/rehype`** — changes to code block rendering go through Velite's rehype pipeline, not Next's.
 
 ## Workflow notes
