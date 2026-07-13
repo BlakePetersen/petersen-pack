@@ -2,15 +2,19 @@
 // ABOUTME: Single entry point for consuming packages to import from blink-registry.
 export {
   ArtifactTypeSchema,
+  ARTIFACT_TYPES,
   SlugSchema,
   CalVerSchema,
   MergeStrategySchema,
+  MERGE_STRATEGIES,
   ScopeSchema,
+  Sha256HexSchema,
   type ArtifactType,
   type Slug,
   type CalVer,
   type MergeStrategy,
   type Scope,
+  type Sha256Hex,
 } from './schemas/primitives.ts'
 
 export {
@@ -49,5 +53,9 @@ export {
   DX_COLLECTIONS,
   DxFrontmatterSchema,
   getDxJsonSchema,
+  crossRefRegex,
+  VOICE_PRIMITIVES,
+  VoiceSchema,
   type DxFrontmatter,
+  type Voice,
 } from './schemas/dx-frontmatter.ts'

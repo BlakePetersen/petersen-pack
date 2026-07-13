@@ -17,37 +17,8 @@ import {
   writeRegistryFiles,
   type DxData,
 } from './src/lib/velite-prepare'
-
-// DX collection names — single source of truth for cross-ref prefix validation.
-const DX_COLLECTIONS = ['skills', 'hooks', 'configs', 'guides'] as const
-
-// Cross-references in `dependencies` and `related` must be of shape
-// `<dx-collection>/<slug-path>`. Catches typos like 'skill/foo' (singular) or
-// 'foo' (no collection prefix) at frontmatter-parse time, before the cross-ref
-// validator's existence check runs in the prepare hook.
-const CrossRefSchema = s
-  .string()
-  .regex(
-    new RegExp(`^(${DX_COLLECTIONS.join('|')})/[a-z0-9-]+(/[a-z0-9-]+)*$`),
-    `must be '<collection>/<slug-path>' where collection is one of: ${DX_COLLECTIONS.join(', ')}`,
-  )
-
-// Shared fields for DX content types (skills, hooks, configs, guides)
-const dxFields = {
-  title: s.string().max(120),
-  description: s.string().max(260),
-  applies_to: s.array(s.string()),
-  dependencies: s.array(CrossRefSchema).default([]),
-  order: s.number().optional(),
-  draft: s.boolean().default(false),
-  tags: s.array(s.string()).default([]),
-  voice: s.array(s.enum(['author-note', 'decision-rationale'])).default([]),
-  requires_artifact: s.boolean().default(false),
-  category: s.string().optional(),
-  decisions: s.array(s.object({ choice: s.string(), rationale: s.string() })).default([]),
-  related: s.array(CrossRefSchema).default([]),
-  updated_context: s.isodate().optional(),
-}
+import { ARTIFACT_TYPES, MERGE_STRATEGIES } from 'blink-registry'
+import { dxFields } from './src/lib/velite-fields'
 
 /**
  * Per-collection bare-slug uniqueness helper for SCHEMA-03.
@@ -151,8 +122,8 @@ const singleArtifacts = defineCollection({
   schema: s.object({
     name: s.string(),
     description: s.string(),
-    type: s.enum(['config', 'skill', 'hook', 'guide']),
-    merge: s.enum(['replace', 'section']),
+    type: s.enum([...ARTIFACT_TYPES]),
+    merge: s.enum([...MERGE_STRATEGIES]),
     destination: s.string(),
     devDependencies: s.record(s.string(), s.string()).optional().default({}),
     slug: s.path(),
@@ -167,12 +138,12 @@ const multiArtifacts = defineCollection({
     .object({
       name: s.string(),
       description: s.string(),
-      type: s.enum(['config', 'skill', 'hook', 'guide']),
+      type: s.enum([...ARTIFACT_TYPES]),
       devDependencies: s.record(s.string(), s.string()).optional().default({}),
       files: s.array(
         s.object({
           path: s.string(),
-          merge: s.enum(['replace', 'section']),
+          merge: s.enum([...MERGE_STRATEGIES]),
         }),
       ),
       slug: s.path(),
@@ -188,8 +159,7 @@ const multiArtifacts = defineCollection({
     }),
 })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const config: any = defineConfig({
+const config = defineConfig({
   root: 'content',
   output: {
     data: '.velite',

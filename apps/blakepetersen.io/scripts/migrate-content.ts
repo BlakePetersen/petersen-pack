@@ -4,12 +4,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-
-interface Migration {
-  name: string
-  description: string
-  run(contentRoot: string): Promise<{ filesChanged: number }>
-}
+import type { Migration } from './migrations/types'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

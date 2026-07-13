@@ -1,69 +1,29 @@
-// ABOUTME: LINT-01 — validates MDX frontmatter against JSON Schema derived from DxFrontmatterSchema.
-// ABOUTME: Uses Ajv 8 with z.toJSONSchema() output. Severity: error (blocks CI per D-06).
-
-import Ajv, { type ValidateFunction } from 'ajv'
-import addFormats from 'ajv-formats'
-import { getDxJsonSchema } from 'blink-registry'
+// ABOUTME: LINT-01 — validates MDX frontmatter against DxFrontmatterSchema (Zod v4) directly.
+// ABOUTME: Supersedes the Ajv + z.toJSONSchema path (Blake 2026-07-12). Severity: error (blocks CI).
+import { DxFrontmatterSchema } from 'blink-registry'
 import type { LintDiagnostic, LintRule, LintContext } from '@/lint/types'
-
-const ajv = new Ajv({ allErrors: true, strict: false, validateSchema: false, useDefaults: true })
-addFormats(ajv)
-
-const fixAjv = new Ajv({ allErrors: true, strict: false, useDefaults: true, validateSchema: false })
-addFormats(fixAjv)
-
-let cachedValidate: ValidateFunction | null = null
-let cachedFixValidate: ValidateFunction | null = null
-
-function getSchema(): object {
-  const schema = getDxJsonSchema() as Record<string, unknown>
-  // Remove $schema field — Ajv 8 core doesn't support draft-2020-12 meta-schema
-  // but all validation keywords used (type, properties, required, default, pattern) are compatible
-  const { $schema, ...rest } = schema
-  return rest
-}
-
-function getValidator(): ValidateFunction {
-  if (!cachedValidate) {
-    cachedValidate = ajv.compile(getSchema())
-  }
-  return cachedValidate
-}
-
-function getFixValidator(): ValidateFunction {
-  if (!cachedFixValidate) {
-    cachedFixValidate = fixAjv.compile(getSchema())
-  }
-  return cachedFixValidate
-}
 
 export const frontmatterSchemaRule: LintRule = {
   name: 'frontmatter-schema',
 
   check(ctx: LintContext): LintDiagnostic[] {
-    const validate = getValidator()
-    const data = structuredClone(ctx.frontmatter)
-    const valid = validate(data)
+    const result = DxFrontmatterSchema.safeParse(ctx.frontmatter)
+    if (result.success) return []
 
-    if (valid) return []
-
-    return (validate.errors ?? []).map((err) => ({
+    return result.error.issues.map((issue) => ({
       file: ctx.file,
       severity: 'error' as const,
       rule: 'frontmatter-schema',
-      message: `${err.instancePath || '/'}: ${err.message}`,
+      message: `${issue.path.length ? '/' + issue.path.join('/') : '/'}: ${issue.message}`,
     }))
   },
 
   fix(ctx: LintContext): { frontmatter?: Record<string, unknown>; body?: string } | null {
-    const validate = getFixValidator()
-    const normalized = structuredClone(ctx.frontmatter)
-    validate(normalized)
+    const result = DxFrontmatterSchema.safeParse(ctx.frontmatter)
+    if (!result.success) return null // cannot apply defaults to structurally-invalid frontmatter
 
-    // Check if defaults were applied (object changed)
+    const normalized = result.data as Record<string, unknown>
     const changed = JSON.stringify(normalized) !== JSON.stringify(ctx.frontmatter)
-    if (!changed) return null
-
-    return { frontmatter: normalized as Record<string, unknown> }
+    return changed ? { frontmatter: normalized } : null
   },
 }

@@ -2,10 +2,11 @@
 // ABOUTME: Maps file paths to project root or home directory based on scope flag.
 import { homedir } from 'node:os'
 import { join } from 'node:path'
+import type { Scope } from 'blink-registry'
 
 export function resolveDestination(
   filePath: string,
-  scope: 'project' | 'global',
+  scope: Scope,
   cwd: string
 ): string {
   if (scope === 'global') {
@@ -15,7 +16,7 @@ export function resolveDestination(
 }
 
 export function resolveManifestRoot(
-  scope: 'project' | 'global',
+  scope: Scope,
   cwd: string
 ): string {
   if (scope === 'global') {
