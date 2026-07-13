@@ -2,10 +2,13 @@
 // ABOUTME: Validates both acceptance of valid data and rejection of invalid data.
 import {
   ArtifactTypeSchema,
+  ARTIFACT_TYPES,
   SlugSchema,
   CalVerSchema,
   MergeStrategySchema,
+  MERGE_STRATEGIES,
   ScopeSchema,
+  Sha256HexSchema,
 } from '../src/index'
 
 describe('ArtifactTypeSchema', () => {
@@ -68,4 +71,33 @@ describe('ScopeSchema', () => {
   it.each(['local', 'user', ''])('rejects "%s"', (value) => {
     expect(ScopeSchema.safeParse(value).success).toBe(false)
   })
+})
+
+describe('ARTIFACT_TYPES', () => {
+  it("is exactly ['config', 'skill', 'hook', 'guide'] in that order", () => {
+    expect(ARTIFACT_TYPES).toEqual(['config', 'skill', 'hook', 'guide'])
+  })
+})
+
+describe('MERGE_STRATEGIES', () => {
+  it("is exactly ['replace', 'section'] in that order", () => {
+    expect(MERGE_STRATEGIES).toEqual(['replace', 'section'])
+  })
+})
+
+describe('Sha256HexSchema', () => {
+  it('accepts 64 lowercase hex characters', () => {
+    expect(Sha256HexSchema.safeParse('a'.repeat(64)).success).toBe(true)
+  })
+
+  it('rejects uppercase hex', () => {
+    expect(Sha256HexSchema.safeParse('A'.repeat(64)).success).toBe(false)
+  })
+
+  it.each(['abc', '', 'a'.repeat(63), 'a'.repeat(65), 'g'.repeat(64)])(
+    'rejects "%s"',
+    (value) => {
+      expect(Sha256HexSchema.safeParse(value).success).toBe(false)
+    }
+  )
 })
