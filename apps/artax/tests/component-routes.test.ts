@@ -1,5 +1,5 @@
 // ABOUTME: Tests for generateStaticParams on the dynamic component route.
-// ABOUTME: Verifies that all 19 registered components produce buildable static params.
+// ABOUTME: Verifies that all 20 registered components produce buildable static params.
 
 import { getAllComponents } from '@/lib/component-registry'
 
@@ -9,9 +9,9 @@ import { getAllComponents } from '@/lib/component-registry'
 import { generateStaticParams } from '@/app/components/[tier]/[component]/page'
 
 describe('component dynamic route generateStaticParams', () => {
-  it('returns exactly 19 entries (one per registered component)', () => {
+  it('returns exactly 20 entries (one per registered component)', () => {
     const params = generateStaticParams()
-    expect(params).toHaveLength(19)
+    expect(params).toHaveLength(20)
     expect(params).toHaveLength(getAllComponents().length)
   })
 
@@ -36,8 +36,8 @@ describe('component dynamic route generateStaticParams', () => {
 })
 
 describe('registry size guard', () => {
-  it('registry contains exactly 19 components', () => {
-    expect(getAllComponents()).toHaveLength(19)
+  it('registry contains exactly 20 components', () => {
+    expect(getAllComponents()).toHaveLength(20)
   })
 
   it('static params match registry slugs (no drift)', () => {

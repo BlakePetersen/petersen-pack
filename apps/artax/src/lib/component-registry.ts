@@ -1,5 +1,5 @@
 // ABOUTME: Registry types, navigation data, and component definitions for the catalog.
-// ABOUTME: Provides lookup functions, sidebar section structure, and preview renderers for all 19 artax-ui components.
+// ABOUTME: Provides lookup functions, sidebar section structure, and preview renderers for all 20 artax-ui components.
 
 import { createElement, type ReactNode } from 'react'
 import {
@@ -34,6 +34,7 @@ import {
   PrevNextNav,
   AuthorNote,
   DecisionRationale,
+  ThemeToggle,
   Accordion,
   AccordionItem,
   AccordionTrigger,
@@ -1047,6 +1048,30 @@ const components: ComponentDef[] = [
         className: 'my-0 max-w-md',
       }),
   },
+  {
+    name: 'ThemeToggle',
+    slug: 'theme-toggle',
+    tier: 'molecules',
+    description:
+      'Header button that cycles the color theme dark → light → system, reading and persisting the preference through the artax-ui theme provider.',
+    imports: "import { ThemeToggle } from 'artax-ui'",
+    props: [
+      {
+        name: '(none)',
+        type: '-',
+        default: '-',
+        description:
+          'Takes no props. Clicking cycles dark → light → system; the current mode drives the Sun/Moon/Monitor icon and aria-label.',
+      },
+    ],
+    codeExamples: [{ label: 'Basic', code: '<ThemeToggle />' }],
+    a11y: [
+      'Renders a real <button> with type="button", so it is focusable and keyboard operable.',
+      'aria-label and title reflect the active mode (Light mode / Dark mode / System theme) for screen readers.',
+      'Guards against hydration mismatch with a useSyncExternalStore mount check before rendering the icon.',
+    ],
+    preview: () => h(ThemeToggle),
+  },
   // ─────────────────────────────────────────────────────── Organisms ──
   {
     name: 'Accordion',
@@ -1471,6 +1496,7 @@ export function getSidebarSections(): SidebarSection[] {
         { name: 'PrevNextNav', href: '/components/molecules/prev-next-nav' },
         { name: 'AuthorNote', href: '/components/molecules/author-note' },
         { name: 'DecisionRationale', href: '/components/molecules/decision-rationale' },
+        { name: 'ThemeToggle', href: '/components/molecules/theme-toggle' },
       ],
     },
     {

@@ -1,5 +1,5 @@
 // ABOUTME: Tests for the component registry module.
-// ABOUTME: Validates types, lookup functions, sidebar sections, and completeness of all 19 components.
+// ABOUTME: Validates types, lookup functions, sidebar sections, and completeness of all 20 components.
 
 import {
   getComponent,
@@ -9,7 +9,7 @@ import {
 } from '@/lib/component-registry'
 import type { ComponentDef } from '@/lib/component-registry'
 
-// All 19 components expected in the registry, grouped by tier.
+// All 20 components expected in the registry, grouped by tier.
 const EXPECTED_ATOMS = ['button', 'input', 'badge', 'separator', 'copy-button', 'toggle']
 const EXPECTED_MOLECULES = [
   'card',
@@ -21,6 +21,7 @@ const EXPECTED_MOLECULES = [
   'prev-next-nav',
   'author-note',
   'decision-rationale',
+  'theme-toggle',
 ]
 const EXPECTED_ORGANISMS = ['accordion', 'dialog', 'dropdown', 'modal']
 
@@ -90,7 +91,7 @@ describe('component-registry', () => {
 
     const moleculesSection = sections.find((s) => s.label === '// molecules')
     expect(moleculesSection).toBeDefined()
-    expect(moleculesSection!.items.length).toBe(9)
+    expect(moleculesSection!.items.length).toBe(10)
 
     const organismsSection = sections.find((s) => s.label === '// organisms')
     expect(organismsSection).toBeDefined()
@@ -101,13 +102,13 @@ describe('component-registry', () => {
     expect(lastSection.items.some((i) => i.name === 'Tokens')).toBe(true)
   })
 
-  it('registry contains exactly 19 components', () => {
-    expect(getAllComponents()).toHaveLength(19)
+  it('registry contains exactly 20 components', () => {
+    expect(getAllComponents()).toHaveLength(20)
   })
 
-  it('has 6 atoms, 9 molecules, and 4 organisms', () => {
+  it('has 6 atoms, 10 molecules, and 4 organisms', () => {
     expect(getComponentsByTier('atoms')).toHaveLength(6)
-    expect(getComponentsByTier('molecules')).toHaveLength(9)
+    expect(getComponentsByTier('molecules')).toHaveLength(10)
     expect(getComponentsByTier('organisms')).toHaveLength(4)
   })
 
@@ -234,6 +235,7 @@ const EXCLUDED_PLAYGROUND_SLUGS = [
   'author-note',
   'decision-rationale',
   'modal',
+  'theme-toggle',
 ]
 
 describe('playground opt-in', () => {
