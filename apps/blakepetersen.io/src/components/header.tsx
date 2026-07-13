@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { buildNavSections } from '../lib/navigation'
 import { CommandPalette } from './command-palette'
 import { SidebarDrawer } from './sidebar-drawer'
-import { ThemeToggle } from './theme-toggle'
+import { ThemeToggle } from 'artax-ui'
 
 export function Header() {
   const sections = buildNavSections()

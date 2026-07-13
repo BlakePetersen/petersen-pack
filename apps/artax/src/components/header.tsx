@@ -4,7 +4,7 @@
 import Link from 'next/link'
 import { Menu } from 'lucide-react'
 
-import { ThemeToggle } from '@/components/theme-toggle'
+import { ThemeToggle } from 'artax-ui'
 import { SidebarDrawer } from '@/components/sidebar-drawer'
 import { getSidebarSections } from '@/lib/component-registry'
 
