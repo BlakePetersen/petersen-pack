@@ -53,5 +53,9 @@ export {
   DX_COLLECTIONS,
   DxFrontmatterSchema,
   getDxJsonSchema,
+  crossRefRegex,
+  VOICE_PRIMITIVES,
+  VoiceSchema,
   type DxFrontmatter,
+  type Voice,
 } from './schemas/dx-frontmatter.ts'

@@ -4,6 +4,9 @@ import {
   DxFrontmatterSchema,
   getDxJsonSchema,
   DX_COLLECTIONS,
+  crossRefRegex,
+  VOICE_PRIMITIVES,
+  VoiceSchema,
 } from '../src/index'
 
 describe('DxFrontmatterSchema', () => {
@@ -46,6 +49,57 @@ describe('DxFrontmatterSchema', () => {
       voice: ['not-a-voice'],
     })
     expect(result.success).toBe(false)
+  })
+
+  it('accepts a valid voice primitive', () => {
+    const result = DxFrontmatterSchema.safeParse({
+      ...validSkillFrontmatter,
+      voice: ['author-note'],
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('accepts an ISO date updated_context', () => {
+    const result = DxFrontmatterSchema.safeParse({
+      ...validSkillFrontmatter,
+      updated_context: '2026-07-01',
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects a non-ISO updated_context (closes the s.isodate drift)', () => {
+    const result = DxFrontmatterSchema.safeParse({
+      ...validSkillFrontmatter,
+      updated_context: 'last week',
+    })
+    expect(result.success).toBe(false)
+  })
+})
+
+describe('crossRefRegex', () => {
+  it('matches a well-formed cross-ref', () => {
+    expect(crossRefRegex(DX_COLLECTIONS).test('skills/foo')).toBe(true)
+  })
+
+  it('rejects an unknown collection', () => {
+    expect(crossRefRegex(DX_COLLECTIONS).test('skill/foo')).toBe(false)
+  })
+
+  it('rejects path-traversal-shaped slugs', () => {
+    expect(crossRefRegex(DX_COLLECTIONS).test('skills/../etc')).toBe(false)
+  })
+})
+
+describe('VOICE_PRIMITIVES', () => {
+  it("is exactly ['author-note', 'decision-rationale'] in that order", () => {
+    expect(VOICE_PRIMITIVES).toEqual(['author-note', 'decision-rationale'])
+  })
+
+  it('VoiceSchema accepts each primitive and rejects others', () => {
+    for (const v of VOICE_PRIMITIVES) {
+      expect(VoiceSchema.safeParse(v).success).toBe(true)
+    }
+    expect(VoiceSchema.safeParse('bogus').success).toBe(false)
   })
 })
 
