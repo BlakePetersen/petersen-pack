@@ -159,8 +159,7 @@ const multiArtifacts = defineCollection({
     }),
 })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const config: any = defineConfig({
+const config = defineConfig({
   root: 'content',
   output: {
     data: '.velite',
