@@ -18,6 +18,9 @@ import {
   CalVerSchema,
   ArtifactTypeSchema,
   MergeStrategySchema,
+  type Slug,
+  type CalVer,
+  type Sha256Hex,
 } from 'blink-registry'
 
 // --- Types ---
@@ -239,7 +242,7 @@ export function extractGitHistory(
 
 // --- 5. Artifact versioning + Zod validation (SCHEMA-08 / D-05..D-07) ---
 
-type VersionManifest = Record<string, { hash: string; version: string }>
+type VersionManifest = Record<Slug, { hash: Sha256Hex; version: CalVer }>
 
 function deriveArtifactPaths(velitePath: string): { slug: string; pagePath: string } {
   const pagePath = velitePath
