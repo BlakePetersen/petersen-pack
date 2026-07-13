@@ -17,11 +17,11 @@ import { injectMarkers, findManagedSections } from '@/markers'
 import { resolveDestination, resolveManifestRoot } from '@/scope'
 import { findMissingDeps } from '@/deps'
 import { addToGitignore } from '@/gitignore'
-import type { Manifest, ManifestEntry, ManifestFileEntry, MergeStrategy, RegistryArtifact } from 'blink-registry'
+import type { Manifest, ManifestEntry, ManifestFileEntry, MergeStrategy, RegistryArtifact, Scope } from 'blink-registry'
 
 // --- Pipeline types ---
 
-export type Scope = 'project' | 'global'
+export type { Scope } from 'blink-registry'
 
 export interface ResolveResult {
   artifact: RegistryArtifact
