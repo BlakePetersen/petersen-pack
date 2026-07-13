@@ -1,6 +1,13 @@
 {
   "extends": "../../packages/tsconfig/nextjs.json",
   "compilerOptions": {
+    // This app never emits declaration files (noEmit); `declaration` is inherited
+    // from the shared base preset. Leaving it on makes tsc enforce declaration-emit
+    // nameability (TS4023) on exported values whose inferred types reference Velite's
+    // bundled-but-unexported Zod internals (ParseContext, RefinementCtx, ...) — which
+    // blocks sharing `dxFields` from velite-fields.ts. Off here; packages still emit.
+    "declaration": false,
+    "declarationMap": false,
     "paths": {
       "@/*": ["./src/*"],
       "#content": ["./.velite"]
