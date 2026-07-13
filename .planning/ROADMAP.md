@@ -80,7 +80,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 - [x] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
 - [x] **Phase 29: Content Authoring (Greenfield + Ports)** — 20 net-new entries shipped (5 skills, 7 configs, 4 hooks, 4 guides) — exceeded all CONTENT-01..04 floors; Variant 3 pattern locked; voice-primitive torture test green across desktop-light/dark + mobile
 - [ ] **Phase 30: Editorial Closure** — Real `/about` and `/start-here` copy, voice-primitive backfill across pre-existing MDX, Skills Detail typography polish, voice-lint promotion review, milestone audit
-- [ ] **Phase 31: Schema Single-Source-of-Truth** — Shared const arrays/regexes/unions between blink-registry, Velite, and CLI; fix `updated_context` drift; round-trip fixture test *(promoted from 999.1, audit WS-7)*
+- [x] **Phase 31: Schema Single-Source-of-Truth** — Shared const arrays/regexes/unions between blink-registry, Velite, and CLI; fix `updated_context` drift; round-trip fixture test *(promoted from 999.1, audit WS-7)*
 - [ ] **Phase 32: Test-Signal Integrity** — Fix tests that pass without proving what they claim: stale-cache passthrough, manifest byte-compare, visual suite in CI, CommandPalette a11y, turbo dependsOn *(promoted from 999.2, audit WS-8)*
 - [ ] **Phase 33: Code-Comment Citation Rot** — Rewrite `.planning/`-artifact-ID citations as self-contained WHYs; delete redundant step comments *(promoted from 999.3)*
 - [ ] **Phase 34: apps/luna Containment & Reintegration** — Luna vitest suite in CI (Postgres service container), vuln overrides refresh, toolchain drift, repo-wide prettier enforcement *(promoted from 999.4, audit WS-9)*
@@ -373,7 +373,7 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete    | 2026-05-05 |
 | 29. Content Authoring | v1.4 | 7/7 | Complete    | 2026-05-14 |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
-| 31. Schema Single-Source-of-Truth | v1.4 | 0/? | Not started | — |
+| 31. Schema Single-Source-of-Truth | v1.4 | 6/6 | Complete | 2026-07-13 |
 | 32. Test-Signal Integrity | v1.4 | 0/? | Not started | — |
 | 33. Code-Comment Citation Rot | v1.4 | 0/? | Not started | — |
 | 34. apps/luna Containment & Reintegration | v1.4 | 0/4 | Not started | — |
