@@ -199,7 +199,7 @@ Plans:
 
 **Depends on**: Phase 29 (schema and content landed; independent of Phase 30)
 
-**Requirements**: TBD
+**Requirements**: SSOT-01, SSOT-02, SSOT-03, SSOT-04, SSOT-05, SSOT-06, SSOT-07, SSOT-08, SSOT-09 (derived in 31-RESEARCH.md; no REQUIREMENTS.md mapping for this promoted backlog phase)
 
 Thirteen frontmatter fields, the cross-ref regex, collection lists, artifact-type/merge enums, the voice union, and the Scope type are each hand-mirrored across the registry, Velite config, and CLI — synced only by comments, with one live drift (`updated_context`: `s.isodate()` in Velite vs `z.string()` in the registry, so lint accepts what the build rejects). The Zod-instance constraint (decision 28-01) rules out sharing schema objects; share exported const arrays/regexes plus a round-trip fixture test instead.
 
@@ -213,10 +213,15 @@ Thirteen frontmatter fields, the cross-ref regex, collection lists, artifact-typ
 - Tighten `Migration` interface (`scripts/migrate-content.ts`) to `run(opts)` and lift `MigrationResult` to a shared module — gate on Migration #001
 - (Needs sign-off) collapse the dual-Ajv round-trip in `frontmatter-schema.ts` to `DxFrontmatterSchema.safeParse` — supersedes recorded LINT-01 decision
 
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 31 to break down)
+- [ ] 31-01-PLAN.md — Registry canonical exports: const arrays, crossRefRegex, VoiceSchema, Sha256Hex, updated_context fix (SSOT-01/02/03/04/07)
+- [ ] 31-02-PLAN.md — Velite dedup + side-effect-free velite-fields + round-trip parity test (SSOT-01/02/03/04/08)
+- [ ] 31-03-PLAN.md — CLI imports canonical Scope from registry (SSOT-06)
+- [ ] 31-04-PLAN.md — Shared Migration/MigrationResult type module; run(opts) deferred (SSOT-09, low-risk half)
+- [ ] 31-05-PLAN.md — VersionManifest retype + remove `const config: any` / DxData inference (SSOT-05/07)
+- [ ] 31-06-PLAN.md — FINAL (Blake-locked): collapse dual-Ajv to DxFrontmatterSchema.safeParse, drop ajv deps (supersedes LINT-01)
 
 ### Phase 32: Test-Signal Integrity
 
@@ -268,7 +273,7 @@ Plans:
 
 **Depends on**: Nothing (luna is isolated from the other v1.4 phases)
 
-**Requirements**: TBD
+**Requirements**: LUNA-CI-01, LUNA-VULN-01, LUNA-DRIFT-01, REPO-FMT-01, REPO-LINT-01 *(derived from research must-haves — no formal REQ IDs mapped for this promoted-backlog phase)*
 
 Luna is fully gate-exempt (`--filter=!Luna` everywhere, commit f5fcb07 "until proper integration work happens") with the exemption previously untracked — this entry is that tracking item.
 
@@ -280,10 +285,15 @@ Luna is fully gate-exempt (`--filter=!Luna` everywhere, commit f5fcb07 "until pr
 - Repo-wide prettier enforcement (CI `--check` + glob consistency) deferred from WS-3 — needs a whole-tree normalization commit first
 - Scoped eslint config for node-side build files (velite-prepare, git-history, scripts/) where `console` is the right tool — kills ~60 no-console warnings
 
-**Plans**: TBD
+**Two tracks** (per 34-RESEARCH.md): Track A = luna containment (CI job, vuln overrides, safe drift); Track B = repo-wide enforcement (prettier gate, scoped eslint). **Explicitly deferred** (breaking; documented with rationale in `34-DEFERRALS.md`): Tailwind 3→4, Stripe 19→22, @react-email/components replacement, TypeScript 5.5→6. **luna-tests CI job ships advisory** (not a required merge check) this phase; promotion is a documented human follow-up.
+
+**Plans**: 4 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 34 to break down)
+- [ ] 34-01-PLAN.md — Wave 1 (Track A): luna vuln overrides refresh + turbo bump + safe toolchain drift (LUNA-VULN-01, LUNA-DRIFT-01)
+- [ ] 34-02-PLAN.md — Wave 1 (Track A): local green baseline + luna-tests CI job with postgres:16-alpine service (LUNA-CI-01)
+- [ ] 34-03-PLAN.md — Wave 2 (Track B): whole-tree prettier normalization + format:check CI gate + scoped no-console eslint (REPO-FMT-01, REPO-LINT-01)
+- [ ] 34-04-PLAN.md — Wave 3: deferral log + STATE update + phase-gate checkpoint (luna-tests green on PR)
 
 ### Phase 35: Dead & Unlinted Code Sweep
 
@@ -366,7 +376,7 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 31. Schema Single-Source-of-Truth | v1.4 | 0/? | Not started | — |
 | 32. Test-Signal Integrity | v1.4 | 0/? | Not started | — |
 | 33. Code-Comment Citation Rot | v1.4 | 0/? | Not started | — |
-| 34. apps/luna Containment & Reintegration | v1.4 | 0/? | Not started | — |
+| 34. apps/luna Containment & Reintegration | v1.4 | 0/4 | Not started | — |
 | 35. Dead & Unlinted Code Sweep | v1.4 | 0/? | Not started | — |
 | 36. Artax Showcase Parity & Design-System Hygiene | v1.4 | 0/4 | Not started | — |
 
