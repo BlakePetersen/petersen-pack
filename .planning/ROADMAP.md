@@ -309,17 +309,20 @@ Plans:
 
 **Depends on**: Nothing (independent of the other v1.4 phases)
 
-**Requirements**: TBD
+**Requirements**: PARITY-01, PARITY-02, PARITY-03, DEDUP-01, DEDUP-02, TOKEN-01, DEP-01 *(derived from research must-haves — no formal REQ IDs mapped for this promoted-backlog phase)*
 
 - 15 of 19 components documented while the landing page claims 19 — contradiction pinned by two tests each asserting a different count; missing: modal, prev-next-nav, author-note, decision-rationale; add a barrel↔registry parity test
 - Byte-identical 87-line ThemeToggle duplicated in both apps — belongs in artax-ui per the repo's own design-system rule
 - Playground Prism theme hand-mirrors hex values from artax-ui `globals.css` with no token-sync test (the marker-parsing machinery already exists in `token-registry.ts`)
 - shamefully-hoist phantoms: artax-ui → `next/link` undeclared peer (`prev-next-nav.tsx`), artax → `prism-react-renderer` undeclared
 
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 36 to break down)
+- [ ] 36-01-PLAN.md — Document 4 missing components + shared barrel parser + set-based parity test (reconcile counts to 19)
+- [ ] 36-02-PLAN.md — Prism↔token sync test (curated 3 token-backed hexes, reuses token-registry parser)
+- [ ] 36-03-PLAN.md — Declare phantom deps (next peer in artax-ui, prism-react-renderer dep in artax)
+- [ ] 36-04-PLAN.md — Dedupe ThemeToggle into artax-ui + document as 20th showcase component (bump counts to 20)
 
 ## Progress
 
@@ -365,7 +368,7 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 33. Code-Comment Citation Rot | v1.4 | 0/? | Not started | — |
 | 34. apps/luna Containment & Reintegration | v1.4 | 0/? | Not started | — |
 | 35. Dead & Unlinted Code Sweep | v1.4 | 0/? | Not started | — |
-| 36. Artax Showcase Parity & Design-System Hygiene | v1.4 | 0/? | Not started | — |
+| 36. Artax Showcase Parity & Design-System Hygiene | v1.4 | 0/4 | Not started | — |
 
 ## Backlog
 
