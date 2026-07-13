@@ -89,6 +89,10 @@ describe('parsePropType', () => {
     "'single' | 'multiple'": 'select',
     'string | string[]': 'text',
     '(open: boolean) => void': 'text',
+    "'sm' | 'md' | 'lg'": 'select',
+    '{ href: string; label: string }': 'text',
+    '{ name: string; avatar?: string; href?: string }': 'text',
+    'Array<{ name: string; reason: string }>': 'text',
   }
 
   it('classifies every real PropDef.type in the registry without falling through silently', () => {

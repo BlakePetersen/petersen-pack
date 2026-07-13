@@ -1,5 +1,5 @@
 // ABOUTME: Tests for the component registry module.
-// ABOUTME: Validates types, lookup functions, sidebar sections, and completeness of all 15 components.
+// ABOUTME: Validates types, lookup functions, sidebar sections, and completeness of all 19 components.
 
 import {
   getComponent,
@@ -9,10 +9,20 @@ import {
 } from '@/lib/component-registry'
 import type { ComponentDef } from '@/lib/component-registry'
 
-// All 15 components expected in the registry, grouped by tier.
+// All 19 components expected in the registry, grouped by tier.
 const EXPECTED_ATOMS = ['button', 'input', 'badge', 'separator', 'copy-button', 'toggle']
-const EXPECTED_MOLECULES = ['card', 'table', 'callout', 'code-block', 'tabs', 'tooltip']
-const EXPECTED_ORGANISMS = ['accordion', 'dialog', 'dropdown']
+const EXPECTED_MOLECULES = [
+  'card',
+  'table',
+  'callout',
+  'code-block',
+  'tabs',
+  'tooltip',
+  'prev-next-nav',
+  'author-note',
+  'decision-rationale',
+]
+const EXPECTED_ORGANISMS = ['accordion', 'dialog', 'dropdown', 'modal']
 
 // Components with cva variant enums that must include a "Variants" code example.
 const VARIANT_COMPONENTS = ['button', 'badge', 'toggle', 'callout']
@@ -80,25 +90,25 @@ describe('component-registry', () => {
 
     const moleculesSection = sections.find((s) => s.label === '// molecules')
     expect(moleculesSection).toBeDefined()
-    expect(moleculesSection!.items.length).toBe(6)
+    expect(moleculesSection!.items.length).toBe(9)
 
     const organismsSection = sections.find((s) => s.label === '// organisms')
     expect(organismsSection).toBeDefined()
-    expect(organismsSection!.items.length).toBe(3)
+    expect(organismsSection!.items.length).toBe(4)
 
     // Last section: Tokens
     const lastSection = sections[sections.length - 1]
     expect(lastSection.items.some((i) => i.name === 'Tokens')).toBe(true)
   })
 
-  it('registry contains exactly 15 components', () => {
-    expect(getAllComponents()).toHaveLength(15)
+  it('registry contains exactly 19 components', () => {
+    expect(getAllComponents()).toHaveLength(19)
   })
 
-  it('has 6 atoms, 6 molecules, and 3 organisms', () => {
+  it('has 6 atoms, 9 molecules, and 4 organisms', () => {
     expect(getComponentsByTier('atoms')).toHaveLength(6)
-    expect(getComponentsByTier('molecules')).toHaveLength(6)
-    expect(getComponentsByTier('organisms')).toHaveLength(3)
+    expect(getComponentsByTier('molecules')).toHaveLength(9)
+    expect(getComponentsByTier('organisms')).toHaveLength(4)
   })
 
   it('has every expected atom slug registered', () => {
@@ -215,7 +225,16 @@ const ENABLED_PLAYGROUND_SLUGS = [
   'code-block',
   'tabs',
 ]
-const EXCLUDED_PLAYGROUND_SLUGS = ['tooltip', 'accordion', 'dialog', 'dropdown']
+const EXCLUDED_PLAYGROUND_SLUGS = [
+  'tooltip',
+  'accordion',
+  'dialog',
+  'dropdown',
+  'prev-next-nav',
+  'author-note',
+  'decision-rationale',
+  'modal',
+]
 
 describe('playground opt-in', () => {
   it('exactly 11 components have playground.enabled === true', () => {
