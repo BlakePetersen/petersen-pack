@@ -10,8 +10,8 @@ describe('getComponentCounts', () => {
     expect(counts.atoms).toBe(6)
   })
 
-  it('returns molecules count of 9', () => {
-    expect(counts.molecules).toBe(9)
+  it('returns molecules count of 10', () => {
+    expect(counts.molecules).toBe(10)
   })
 
   it('returns organisms count of 4', () => {
@@ -22,7 +22,7 @@ describe('getComponentCounts', () => {
     expect(counts.total).toBe(counts.atoms + counts.molecules + counts.organisms)
   })
 
-  it('returns total of 19', () => {
-    expect(counts.total).toBe(19)
+  it('returns total of 20', () => {
+    expect(counts.total).toBe(20)
   })
 })

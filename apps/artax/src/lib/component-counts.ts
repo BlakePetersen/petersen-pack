@@ -11,14 +11,16 @@ interface ComponentCounts {
   total: number
 }
 
-function countUniqueSourcePaths(section: string, tier: string): number {
+type Tier = 'atoms' | 'molecules' | 'organisms'
+
+function collectSourceFolders(section: string, tier: string): Set<string> {
   const pattern = new RegExp(`from\\s+['"]\\./components/${tier}/([^/]+)/`, 'g')
   const paths = new Set<string>()
   let match: RegExpExecArray | null
   while ((match = pattern.exec(section)) !== null) {
     paths.add(match[1])
   }
-  return paths.size
+  return paths
 }
 
 function resolveIndexPath(): string {
@@ -41,7 +43,7 @@ function resolveIndexPath(): string {
   throw new Error('Could not locate artax-ui/src/index.ts')
 }
 
-export function getComponentCounts(): ComponentCounts {
+export function getBarrelComponentSlugs(): Record<Tier, Set<string>> {
   const indexPath = resolveIndexPath()
   const content = readFileSync(indexPath, 'utf-8')
 
@@ -56,14 +58,19 @@ export function getComponentCounts(): ComponentCounts {
     ? content.slice(organismsStart, organismsEnd)
     : content.slice(organismsStart)
 
-  const atoms = countUniqueSourcePaths(atomsSection, 'atoms')
-  const molecules = countUniqueSourcePaths(moleculesSection, 'molecules')
-  const organisms = countUniqueSourcePaths(organismsSection, 'organisms')
-
   return {
-    atoms,
-    molecules,
-    organisms,
-    total: atoms + molecules + organisms,
+    atoms: collectSourceFolders(atomsSection, 'atoms'),
+    molecules: collectSourceFolders(moleculesSection, 'molecules'),
+    organisms: collectSourceFolders(organismsSection, 'organisms'),
+  }
+}
+
+export function getComponentCounts(): ComponentCounts {
+  const slugs = getBarrelComponentSlugs()
+  return {
+    atoms: slugs.atoms.size,
+    molecules: slugs.molecules.size,
+    organisms: slugs.organisms.size,
+    total: slugs.atoms.size + slugs.molecules.size + slugs.organisms.size,
   }
 }

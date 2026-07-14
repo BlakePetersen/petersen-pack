@@ -1,5 +1,5 @@
 // ABOUTME: Registry types, navigation data, and component definitions for the catalog.
-// ABOUTME: Provides lookup functions, sidebar section structure, and preview renderers for all 15 artax-ui components.
+// ABOUTME: Provides lookup functions, sidebar section structure, and preview renderers for all 20 artax-ui components.
 
 import { createElement, type ReactNode } from 'react'
 import {
@@ -31,6 +31,10 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  PrevNextNav,
+  AuthorNote,
+  DecisionRationale,
+  ThemeToggle,
   Accordion,
   AccordionItem,
   AccordionTrigger,
@@ -41,6 +45,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
+  Modal,
   Dropdown,
   DropdownTrigger,
   DropdownContent,
@@ -877,6 +882,196 @@ const components: ComponentDef[] = [
         }),
       }),
   },
+  {
+    name: 'PrevNextNav',
+    slug: 'prev-next-nav',
+    tier: 'molecules',
+    description:
+      'Symmetric previous/next article navigation for the foot of content pages; consumers resolve slugs and pass { href, label } slots.',
+    imports: "import { PrevNextNav } from 'artax-ui'",
+    props: [
+      {
+        name: 'prev',
+        type: '{ href: string; label: string }',
+        default: '-',
+        description: 'Optional previous-article slot; omitted when there is no earlier page.',
+      },
+      {
+        name: 'next',
+        type: '{ href: string; label: string }',
+        default: '-',
+        description: 'Optional next-article slot; omitted when there is no later page.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        default: '-',
+        description: 'Additional classes merged via cn().',
+      },
+    ],
+    codeExamples: [
+      {
+        label: 'Basic',
+        code: `<PrevNextNav
+  prev={{ href: '/intro', label: 'intro' }}
+  next={{ href: '/setup', label: 'setup' }}
+/>`,
+      },
+    ],
+    a11y: [
+      'Wrapped in a <nav aria-label="Article navigation"> landmark for quick jump access.',
+      'Each slot renders a real next/link anchor, so it is keyboard focusable and announced as a link.',
+      'Arrow glyphs are decorative; the destination label carries the meaning.',
+    ],
+    preview: () =>
+      h(PrevNextNav, {
+        prev: { href: '#', label: 'intro' },
+        next: { href: '#', label: 'setup' },
+        className: 'mt-0 w-full max-w-md',
+      }),
+  },
+  {
+    name: 'AuthorNote',
+    slug: 'author-note',
+    tier: 'molecules',
+    description:
+      'Generic editorial aside with an optional byline and date header, rendered as a role="note" landmark.',
+    imports: "import { AuthorNote } from 'artax-ui'",
+    props: [
+      {
+        name: 'author',
+        type: '{ name: string; avatar?: string; href?: string }',
+        default: '-',
+        description: 'Optional byline rendered in the meta line above the note body.',
+      },
+      {
+        name: 'date',
+        type: 'string',
+        default: '-',
+        description: 'Optional date shown next to the author in the meta line.',
+      },
+      {
+        name: 'children',
+        type: 'ReactNode',
+        default: '-',
+        description: 'Note body content.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        default: '-',
+        description: 'Additional classes merged via cn().',
+      },
+    ],
+    codeExamples: [
+      {
+        label: 'Basic',
+        code: `<AuthorNote author={{ name: 'blake' }} date="2026-07-13">
+  Sandbox sessions reset nightly — export anything worth keeping.
+</AuthorNote>`,
+      },
+    ],
+    a11y: [
+      'Rendered as <aside role="note" aria-label="Author\'s note"> so assistive tech announces a supplementary note.',
+      'The meta line (author + date) is plain text — keep the byline meaningful on its own.',
+    ],
+    preview: () =>
+      h(AuthorNote, {
+        author: { name: 'blake' },
+        date: '2026-07-13',
+        className: 'my-0 max-w-md',
+        children: 'Sandbox sessions reset nightly — export anything worth keeping.',
+      }),
+  },
+  {
+    name: 'DecisionRationale',
+    slug: 'decision-rationale',
+    tier: 'molecules',
+    description:
+      'Decision card pairing a rationale body with an optional list of rejected alternatives; collapses into a <details> disclosure when requested.',
+    imports: "import { DecisionRationale } from 'artax-ui'",
+    props: [
+      {
+        name: 'decision',
+        type: 'string',
+        default: '-',
+        description: 'Short statement of the decision that was made.',
+      },
+      {
+        name: 'rationale',
+        type: 'ReactNode',
+        default: '-',
+        description: 'Body explaining why the decision was made.',
+      },
+      {
+        name: 'alternatives',
+        type: 'Array<{ name: string; reason: string }>',
+        default: '-',
+        description: 'Optional list of rejected options with the reason each was passed over.',
+      },
+      {
+        name: 'collapsed',
+        type: 'boolean',
+        default: 'false',
+        description: 'When true, renders inside a native <details>/<summary> disclosure.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        default: '-',
+        description: 'Additional classes merged via cn().',
+      },
+    ],
+    codeExamples: [
+      {
+        label: 'Basic',
+        code: `<DecisionRationale
+  decision="Use next/link for prev/next navigation"
+  rationale="Client-side transitions keep article reading fast and preserve scroll position."
+  alternatives={[{ name: 'Plain anchors', reason: 'Full page reloads drop the SPA feel.' }]}
+/>`,
+      },
+    ],
+    a11y: [
+      'Default layout uses a <section> with an <h3> decision heading for the document outline.',
+      'The collapsed variant uses native <details>/<summary>, which is keyboard operable and announces expanded state.',
+      'Alternatives render as a plain <ul>; each item pairs the option name with its reason.',
+    ],
+    preview: () =>
+      h(DecisionRationale, {
+        decision: 'Use next/link for prev/next navigation',
+        rationale:
+          'Client-side transitions keep article reading fast and preserve scroll position.',
+        alternatives: [
+          { name: 'Plain anchors', reason: 'Full page reloads drop the SPA feel.' },
+        ],
+        className: 'my-0 max-w-md',
+      }),
+  },
+  {
+    name: 'ThemeToggle',
+    slug: 'theme-toggle',
+    tier: 'molecules',
+    description:
+      'Header button that cycles the color theme dark → light → system, reading and persisting the preference through the artax-ui theme provider.',
+    imports: "import { ThemeToggle } from 'artax-ui'",
+    props: [
+      {
+        name: '(none)',
+        type: '-',
+        default: '-',
+        description:
+          'Takes no props. Clicking cycles dark → light → system; the current mode drives the Sun/Moon/Monitor icon and aria-label.',
+      },
+    ],
+    codeExamples: [{ label: 'Basic', code: '<ThemeToggle />' }],
+    a11y: [
+      'Renders a real <button> with type="button", so it is focusable and keyboard operable.',
+      'aria-label and title reflect the active mode (Light mode / Dark mode / System theme) for screen readers.',
+      'Guards against hydration mismatch with a useSyncExternalStore mount check before rendering the icon.',
+    ],
+    preview: () => h(ThemeToggle),
+  },
   // ─────────────────────────────────────────────────────── Organisms ──
   {
     name: 'Accordion',
@@ -1161,6 +1356,95 @@ const components: ComponentDef[] = [
         ),
       ),
   },
+  {
+    name: 'Modal',
+    slug: 'modal',
+    tier: 'organisms',
+    description:
+      'Thin composition over the artax-ui Dialog with size slots and a mounted-flag SSR gate; exposes Modal.Title, Modal.Description, and Modal.Close.',
+    imports: "import { Modal } from 'artax-ui'",
+    props: [
+      {
+        name: 'open',
+        type: 'boolean',
+        default: '-',
+        description: 'Controlled open state.',
+      },
+      {
+        name: 'onOpenChange',
+        type: '(open: boolean) => void',
+        default: '-',
+        description: 'Called when the modal opens or closes.',
+      },
+      {
+        name: 'size',
+        type: "'sm' | 'md' | 'lg'",
+        default: "'md'",
+        description: 'Content width slot mapped to a max-width class.',
+      },
+      {
+        name: 'trigger',
+        type: 'ReactNode',
+        default: '-',
+        description: 'Element that opens the modal; wrapped in a DialogTrigger.',
+      },
+      {
+        name: 'children',
+        type: 'ReactNode',
+        default: '-',
+        description: 'Modal body, typically Modal.Title, Modal.Description, and actions.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        default: '-',
+        description: 'Additional classes merged via cn() on the content.',
+      },
+    ],
+    codeExamples: [
+      {
+        label: 'Basic',
+        code: `<Modal trigger={<Button>open</Button>}>
+  <Modal.Title>confirm</Modal.Title>
+  <Modal.Description>This cannot be undone.</Modal.Description>
+</Modal>`,
+      },
+      {
+        label: 'Composition',
+        code: `<Modal size="sm" trigger={<Button variant="outline">delete</Button>}>
+  <Modal.Title>destroy sandbox?</Modal.Title>
+  <Modal.Description>This cannot be undone.</Modal.Description>
+  <div className="mt-4 flex justify-end gap-2">
+    <Modal.Close asChild>
+      <Button variant="ghost">cancel</Button>
+    </Modal.Close>
+    <Modal.Close asChild>
+      <Button>destroy</Button>
+    </Modal.Close>
+  </div>
+</Modal>`,
+      },
+    ],
+    a11y: [
+      'Composes artax-ui Dialog: content exposes role="dialog" with aria-modal="true".',
+      'Focus is trapped while open and restored to the trigger on close; Escape dismisses.',
+      'Always include a Modal.Title so assistive tech can announce the modal purpose.',
+      'Applies a mounted-flag SSR gate so the trigger renders server-side without a hydration mismatch.',
+    ],
+    preview: () =>
+      h(Modal, {
+        trigger: h(Button, { variant: 'outline' }, 'open modal'),
+        children: [
+          h(Modal.Title, { key: 'title' }, 'confirm'),
+          h(Modal.Description, { key: 'description' }, 'This is a Modal preview.'),
+          h(
+            'div',
+            { key: 'actions', className: 'mt-4 flex justify-end' },
+            h(Modal.Close, { asChild: true }, h(Button, { variant: 'ghost' }, 'close')),
+          ),
+        ],
+      }),
+  },
 ]
 
 export function getComponent(tier: string, slug: string): ComponentDef | undefined {
@@ -1209,6 +1493,10 @@ export function getSidebarSections(): SidebarSection[] {
         { name: 'CodeBlock', href: '/components/molecules/code-block' },
         { name: 'Tabs', href: '/components/molecules/tabs' },
         { name: 'Tooltip', href: '/components/molecules/tooltip' },
+        { name: 'PrevNextNav', href: '/components/molecules/prev-next-nav' },
+        { name: 'AuthorNote', href: '/components/molecules/author-note' },
+        { name: 'DecisionRationale', href: '/components/molecules/decision-rationale' },
+        { name: 'ThemeToggle', href: '/components/molecules/theme-toggle' },
       ],
     },
     {
@@ -1217,6 +1505,7 @@ export function getSidebarSections(): SidebarSection[] {
         { name: 'Accordion', href: '/components/organisms/accordion' },
         { name: 'Dialog', href: '/components/organisms/dialog' },
         { name: 'Dropdown', href: '/components/organisms/dropdown' },
+        { name: 'Modal', href: '/components/organisms/modal' },
       ],
     },
     {

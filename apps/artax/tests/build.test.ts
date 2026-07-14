@@ -40,7 +40,8 @@ describe('artax build prerequisites', () => {
     expect(existsSync(join(root, 'src/components/header.tsx'))).toBe(true)
   })
 
-  it('has theme toggle component', () => {
-    expect(existsSync(join(root, 'src/components/theme-toggle.tsx'))).toBe(true)
+  it('sources the theme toggle from the artax-ui barrel', () => {
+    const header = readFileSync(join(root, 'src/components/header.tsx'), 'utf-8')
+    expect(header).toMatch(/import \{ ThemeToggle \} from 'artax-ui'/)
   })
 })

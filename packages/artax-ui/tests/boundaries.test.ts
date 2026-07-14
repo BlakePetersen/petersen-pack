@@ -27,7 +27,8 @@ const clientFiles = [
   'organisms/accordion/accordion.tsx',
   'organisms/dialog/dialog.tsx',
   'organisms/dropdown/dropdown-menu.tsx',
-  'organisms/modal/modal.tsx'
+  'organisms/modal/modal.tsx',
+  'molecules/theme-toggle/theme-toggle.tsx'
 ]
 
 function walkTsx(dir: string): string[] {

@@ -51,6 +51,7 @@ export { AuthorNote } from './components/molecules/author-note/author-note'
 export type { AuthorNoteProps } from './components/molecules/author-note/author-note'
 export { DecisionRationale } from './components/molecules/decision-rationale/decision-rationale'
 export type { DecisionRationaleProps, Alternative } from './components/molecules/decision-rationale/decision-rationale'
+export { ThemeToggle } from './components/molecules/theme-toggle/theme-toggle'
 
 // Organisms
 export {

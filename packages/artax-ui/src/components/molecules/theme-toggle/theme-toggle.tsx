@@ -1,10 +1,9 @@
+'use client'
 // ABOUTME: Toggle button for switching between light, dark, and system themes.
 // ABOUTME: Uses next-themes to persist preference and avoid hydration mismatch.
 
-'use client'
-
-import { useTheme } from 'next-themes'
 import { useSyncExternalStore } from 'react'
+import { useTheme } from '../../../providers/theme-provider'
 
 const emptySubscribe = () => () => {}
 
