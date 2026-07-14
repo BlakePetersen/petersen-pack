@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-06 stub migration — no-op placeholder validating harness wiring.
+// ABOUTME: Stub migration — no-op placeholder validating harness wiring.
 // ABOUTME: Real migrations replace this pattern: read contentRoot, transform files, return count.
 
 import type { MigrationResult } from './types'

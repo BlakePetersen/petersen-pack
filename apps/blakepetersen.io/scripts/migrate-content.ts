@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-06 codemod harness — discovers and runs migrations from scripts/migrations/.
+// ABOUTME: Codemod harness — discovers and runs migrations from scripts/migrations/.
 // ABOUTME: Skeleton: ships with 000-noop only. Real migrations land as new <NNN>-<name>.ts files.
 
 import fs from 'node:fs'
@@ -6,6 +6,7 @@ import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import type { Migration } from './migrations/types'
 
+// tsx runs this as native ESM, where __dirname is undefined — derive it.
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
