@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-07 perf-baseline capture — four measurements + metadata to JSON.
+// ABOUTME: Build-perf baseline capture — four measurements + metadata to JSON.
 // ABOUTME: Manual run via `pnpm perf:baseline`. Spawns subprocesses with argv arrays (no shell).
 
 import { spawnSync, spawn } from 'node:child_process'
@@ -14,6 +14,7 @@ interface SyncTiming {
   status: number | null
 }
 
+// tsx runs this as native ESM, where __dirname is undefined — derive it.
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -71,7 +72,7 @@ function countMdx(root: string): number {
 }
 
 async function main(): Promise<void> {
-  // 1. Cold full build (next build --webpack runs velite as part of next build).
+  // Cold full build — next build --webpack runs Velite as part of the build.
   console.log(
     '[perf-baseline] Running full build (pnpm --filter blakepetersen.io build)...',
   )
@@ -86,7 +87,6 @@ async function main(): Promise<void> {
     process.exit(1)
   }
 
-  // 2. Velite-only.
   console.log(
     '[perf-baseline] Running velite-only (pnpm --filter blakepetersen.io velite)...',
   )
@@ -97,7 +97,6 @@ async function main(): Promise<void> {
     process.exit(1)
   }
 
-  // 3. Extract webpack compile time from fullBuild.stdout.
   // Next.js logs "Compiled successfully in 5.2s" or " 5234ms" — match either.
   const webpackMatch = fullBuild.stdout.match(
     /Compiled successfully in\s+([\d.]+)\s*(s|ms)/i,
@@ -107,11 +106,9 @@ async function main(): Promise<void> {
       (webpackMatch[2].toLowerCase() === 's' ? 1000 : 1)
     : null
 
-  // 4. Warm next dev.
   console.log('[perf-baseline] Measuring warm next dev time-to-ready...')
   const nextDevReadyMs = await timeNextDev()
 
-  // 5. Content count + metadata.
   const appRoot = path.resolve(__dirname, '..')
   const contentCount = countMdx(path.join(appRoot, 'content'))
 

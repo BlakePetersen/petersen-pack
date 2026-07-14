@@ -7,7 +7,7 @@ import { runVeliteFixture } from './lib/phase27-velite-runner'
 // Velite 0.3.x is ESM-only (type: module, sole ./dist/index.js export, no CJS
 // build) and cannot be imported into the app's CJS ts-jest runtime. The Velite
 // half of the parity check is therefore driven through a real `velite build`
-// subprocess (the Phase 27 velite-runner) against fixture content validated by
+// subprocess (the velite-runner) against fixture content validated by
 // the SAME dxFields schema (velite.config.ts -> src/lib/velite-fields.ts). A
 // build also exercises Velite's isodate throw-on-invalid-date as a clean
 // non-zero exit, which an in-process safeParse would surface as a raw throw.

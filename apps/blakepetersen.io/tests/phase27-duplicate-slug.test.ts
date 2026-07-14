@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-03 — duplicate bare-slug across same collection fails the build.
+// ABOUTME: Duplicate bare-slug across same collection fails the build.
 // ABOUTME: Asserts both offending file paths are named in the error message.
 
 import { runVeliteFixture, fixtureDir } from './lib/phase27-velite-runner'

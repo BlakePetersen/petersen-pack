@@ -1,6 +1,6 @@
 ---
 name: Sample Config
-description: Phase 27 fixture artifact for hash-gate behavior testing
+description: Fixture artifact for hash-gate behavior testing
 type: config
 merge: section
 destination: sample.config.js

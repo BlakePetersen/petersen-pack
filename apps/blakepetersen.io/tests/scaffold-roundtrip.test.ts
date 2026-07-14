@@ -1,4 +1,4 @@
-// ABOUTME: SCAFFOLD-05 round-trip CI test for blink scaffold.
+// ABOUTME: Round-trip CI test for blink scaffold.
 // ABOUTME: Generates one entry per collection, validates frontmatter against DxFrontmatterSchema.
 
 import { mkdtempSync, readFileSync, existsSync, rmSync } from 'node:fs'

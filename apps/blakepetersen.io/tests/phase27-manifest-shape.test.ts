@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-08 — manifest invariants (hash format, version format, slug coverage).
+// ABOUTME: Artifact-version manifest invariants (hash format, version format, slug coverage).
 // ABOUTME: Asserts on the real .artifact-versions.json after pnpm velite runs.
 
 import fs from 'node:fs'
@@ -25,7 +25,7 @@ describe('SCHEMA-08: .artifact-versions.json shape', () => {
     }
   })
 
-  it('emits keys in lexicographic order (consecutive-run determinism per D-06)', () => {
+  it('emits keys in lexicographic order for consecutive-run determinism', () => {
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8')) as Record<string, unknown>
     const keys = Object.keys(manifest)
     const sorted = [...keys].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))

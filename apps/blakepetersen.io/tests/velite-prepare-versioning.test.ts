@@ -1,5 +1,5 @@
 // ABOUTME: Unit tests for versionAndValidateArtifacts — Zod shape validation throw paths
-// ABOUTME: and multi-artifact hash gate behavior (SCHEMA-08 D-05/D-07).
+// ABOUTME: and multi-artifact hash gate behavior (payload-hash gates the CalVer bump).
 
 import { createHash } from 'node:crypto'
 import fs from 'node:fs'
@@ -164,7 +164,7 @@ describe('versionAndValidateArtifacts — Zod shape validation', () => {
   })
 })
 
-describe('versionAndValidateArtifacts — multi-artifact hash gate (D-05)', () => {
+describe('versionAndValidateArtifacts — multi-artifact hash gate', () => {
   it('reuses prior version when concatenated file content matches prior hash', () => {
     const contentDir = makeContentDir()
     const concatenated = 'firstsecond'

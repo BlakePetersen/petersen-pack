@@ -98,13 +98,16 @@ export function filterDrafts(data: DxData): void {
   data.posts = data.posts.filter((p) => !p.draft)
 }
 
-// --- 2. Cross-reference integrity (SCHEMA-04 / D-01..D-04) ---
+// --- 2. Cross-reference integrity ---
 
-// Caller must apply filterDrafts first in production so dev/prod validate the
-// same set. Walks dependencies/related only — decisions is wrong shape (D-01).
-// Cross-collection refs allowed (D-02), `<collection>/<slug>` format (D-03);
-// nested-slug refs are compared against the path-shaped slug directly.
-// Accumulator-then-throw per D-04.
+// Caller must apply filterDrafts first in production so dev and prod
+// validate the same set. Walks dependencies/related only — the `decisions`
+// field holds {choice, rationale} objects with no slugs to resolve.
+// Cross-collection refs are allowed (shipped content already relies on
+// them); refs keep the `<collection>/<slug>` format and nested-slug refs
+// compare against the path-shaped slug directly. Broken refs accumulate
+// into one throw so authors fix the whole batch in a single pass instead
+// of one rebuild per bad ref.
 export function validateCrossReferences(data: DxData): void {
   const collectionSlugs: Record<DxCollectionName, Set<string>> = {
     skills: new Set(data.skills.map((i) => i.slug)),
@@ -240,7 +243,7 @@ export function extractGitHistory(
   )
 }
 
-// --- 5. Artifact versioning + Zod validation (SCHEMA-08 / D-05..D-07) ---
+// --- 5. Artifact versioning + Zod validation ---
 
 type VersionManifest = Record<Slug, { hash: Sha256Hex; version: CalVer }>
 
@@ -258,12 +261,13 @@ function sha256Hex(payload: string): string {
   return createHash('sha256').update(payload).digest('hex')
 }
 
-// Version each artifact via the SCHEMA-08 hash gate (D-05/D-07): unchanged
-// distributed-payload bytes preserve the prior CalVer, so prose-only edits
-// don't bump version. Manifest is git-tracked per D-06 for cross-machine
-// determinism. Throws on the first artifact that fails Zod shape validation,
-// before persisting the version manifest, so a bad artifact never corrupts
-// the on-disk hash gate.
+// Version each artifact by hashing its distributed-payload bytes: an
+// unchanged hash preserves the prior CalVer, so prose-only frontmatter
+// edits don't bump the version (the daily `.N` counter only advances when
+// the payload hash changes). The manifest is git-tracked so versions are
+// deterministic across machines, survive clean checkouts, and diff in PRs.
+// Throws on the first artifact that fails Zod shape validation, before
+// persisting the manifest, so a bad artifact never corrupts the hash gate.
 export function versionAndValidateArtifacts(
   data: DxData,
   contentDir: string,
@@ -287,7 +291,7 @@ export function versionAndValidateArtifacts(
 
   const singles: ValidatedArtifact[] = data.singleArtifacts.map((artifact) => {
     const { slug, pagePath } = deriveArtifactPaths(artifact.slug)
-    // D-05: hash the distributed-payload bytes only (single-file = body).
+    // Hash the distributed-payload bytes only (single-file artifact = the body).
     const hash = sha256Hex(artifact.body)
     const prior = priorVersionManifest[slug]
     let version: string
@@ -319,8 +323,8 @@ export function versionAndValidateArtifacts(
 
   const multis: ValidatedArtifact[] = data.multiArtifacts.map((artifact) => {
     const { slug, pagePath } = deriveArtifactPaths(artifact.slug)
-    // D-05: hash concatenated file.content in declared order (no separator —
-    // boundaries are immaterial to the consumer-facing payload).
+    // Hash the concatenated file contents in declared order (no separator —
+    // file boundaries are immaterial to the consumer-facing payload).
     const concatenated = artifact.files.map((f) => f.content).join('')
     const hash = sha256Hex(concatenated)
     const prior = priorVersionManifest[slug]
@@ -347,8 +351,8 @@ export function versionAndValidateArtifacts(
 
   const allArtifacts = [...singles, ...multis]
 
-  // Duplicate derived slugs and duplicate replace-merge destinations were
-  // silent last-write-wins — the Bug 012 class. Fail the build instead.
+  // Duplicate derived slugs and duplicate replace-merge destinations used
+  // to be a silent last-write-wins clobber. Fail the build instead.
   const slugSources = new Map<string, string>()
   const replaceDestinations = new Map<string, string>()
   for (const artifact of allArtifacts) {
@@ -392,8 +396,9 @@ export function versionAndValidateArtifacts(
     }
   }
 
-  // Sort top-level keys for byte-identical consecutive runs (D-06).
-  // Single-process serial build (Risk #3) — no atomic write needed.
+  // Sort top-level keys so consecutive runs produce a byte-identical manifest.
+  // Velite's prepare hook runs serially in a single build process (no
+  // parallel builds), so a plain write is safe — no write-temp-then-rename.
   const sortedVersionManifest = Object.fromEntries(
     Object.entries(updatedVersionManifest).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
   )

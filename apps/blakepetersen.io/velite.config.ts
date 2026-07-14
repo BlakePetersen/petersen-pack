@@ -21,16 +21,16 @@ import { ARTIFACT_TYPES, MERGE_STRATEGIES } from 'blink-registry'
 import { dxFields } from './src/lib/velite-fields'
 
 /**
- * Per-collection bare-slug uniqueness helper for SCHEMA-03.
+ * Per-collection bare-slug uniqueness helper.
  *
- * Deviates from the literal D-19 wording ("swap to s.slug('<collection>')") to
- * preserve the path-shaped value of `entry.slug` that every consumer of
- * `.velite/<collection>.json` depends on. Same substance as `s.slug(by)`'s
- * dedup namespace, applied to the bare-slug component.
- *
- * Reuses Velite's own `meta.config.cache` (Map<string,string>) — the same
- * mechanism `s.slug()` uses internally. See node_modules/velite/dist/index.js
- * around the `s.slug` definition for the reference implementation.
+ * Keeps `slug: s.path()` (path-shaped, e.g. 'skills/foo') rather than
+ * `s.slug('<collection>')` (which returns a bare 'foo'): every consumer of
+ * `.velite/<collection>.json` — plus `dxSchemaFor`'s category fallback below —
+ * depends on the path shape, and swapping would force `slug:` frontmatter
+ * onto every existing MDX file. Reproduces `s.slug()`'s per-namespace dedup
+ * on just the bare-slug component, reusing Velite's own `meta.config.cache`
+ * (Map<string,string>) — the same mechanism `s.slug()` uses internally (see
+ * node_modules/velite/dist/index.js around the `s.slug` definition).
  */
 function pathSlugWithCollectionDedup(collection: string) {
   return s.path().superRefine((value, { meta, addIssue }) => {

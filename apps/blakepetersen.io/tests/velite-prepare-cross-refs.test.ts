@@ -44,7 +44,7 @@ describe('validateCrossReferences', () => {
     expect(() => validateCrossReferences(data)).not.toThrow()
   })
 
-  it('allows cross-collection references (D-02)', () => {
+  it('allows cross-collection references', () => {
     const data = makeData({
       skills: [makeDxItem({ slug: 'skills/a', title: 'A', dependencies: ['configs/x'] })],
       configs: [makeDxItem({ slug: 'configs/x', title: 'X' })],
@@ -73,7 +73,7 @@ describe('validateCrossReferences', () => {
     expect(() => validateCrossReferences(data)).toThrow(/target not found in collection 'skills'/)
   })
 
-  it('accumulates multiple broken refs in a single error (D-04)', () => {
+  it('accumulates multiple broken refs in a single error', () => {
     const data = makeData({
       skills: [
         makeDxItem({
