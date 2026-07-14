@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-05 — proves the velite ↔ blink-registry import is wired.
+// ABOUTME: Proves the velite ↔ blink-registry import is wired.
 // ABOUTME: Combines a grep-based regression check with a Zod-shape sanity check.
 
 import fs from 'node:fs'

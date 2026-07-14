@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-06 — codemod harness skeleton tests.
+// ABOUTME: Codemod harness skeleton tests.
 // ABOUTME: Smoke + dry-run failure-path. Uses spawnSync (argv array, no shell).
 
 import path from 'node:path'

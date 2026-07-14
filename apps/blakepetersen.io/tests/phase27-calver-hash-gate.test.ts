@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-08 — three-step CalVer behavior test.
+// ABOUTME: Three-step CalVer behavior test.
 // ABOUTME: Capture baseline; edit frontmatter only (no body change); edit body. Asserts version stability across edits 1-2 and version change across edits 2-3.
 
 import fs from 'node:fs'
@@ -15,7 +15,7 @@ const SLUG = 'sample-config'
 // either the artifact source or the fixture's manifest in a mutated state.
 const ARTIFACT_BASELINE = `---
 name: Sample Config
-description: Phase 27 fixture artifact for hash-gate behavior testing
+description: Fixture artifact for hash-gate behavior testing
 type: config
 merge: section
 destination: sample.config.js

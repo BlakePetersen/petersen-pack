@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 SCHEMA-01 voice field — fixture-driven happy + failure path tests.
+// ABOUTME: Voice field — fixture-driven happy + failure path tests.
 // ABOUTME: Uses the phase27-velite-runner helper to spawn isolated fixture builds.
 
 import fs from 'node:fs'

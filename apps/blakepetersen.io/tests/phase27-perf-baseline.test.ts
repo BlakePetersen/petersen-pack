@@ -1,5 +1,5 @@
-// ABOUTME: Phase 27 SCHEMA-07 perf-baseline shape-only test.
-// ABOUTME: Eyeball-checking absolute values is manual (per 27-VALIDATION.md Manual-Only Verifications).
+// ABOUTME: Perf-baseline shape-only test.
+// ABOUTME: Checks JSON shape only — absolute wall-times are machine-specific, so a human eyeballs the values.
 
 import fs from 'node:fs'
 import path from 'node:path'

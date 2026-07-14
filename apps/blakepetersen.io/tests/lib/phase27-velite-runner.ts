@@ -1,4 +1,4 @@
-// ABOUTME: Phase 27 shared test helper — runs Velite against a fixture config.
+// ABOUTME: Shared test helper — runs Velite against a fixture config.
 // ABOUTME: Returns exitCode + stdout + stderr for failure-path assertions.
 
 import { spawnSync, type SpawnSyncReturns } from 'node:child_process'
