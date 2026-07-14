@@ -80,7 +80,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 - [x] **Phase 28: Authoring Scaffolds + Lint + Port** — `blink scaffold`, `blink lint` (advisory voice rules), `blink port` two-step pipeline, `<ArtifactBody>` include component
 - [x] **Phase 29: Content Authoring (Greenfield + Ports)** — 20 net-new entries shipped (5 skills, 7 configs, 4 hooks, 4 guides) — exceeded all CONTENT-01..04 floors; Variant 3 pattern locked; voice-primitive torture test green across desktop-light/dark + mobile
 - [ ] **Phase 30: Editorial Closure** — Real `/about` and `/start-here` copy, voice-primitive backfill across pre-existing MDX, Skills Detail typography polish, voice-lint promotion review, milestone audit
-- [ ] **Phase 31: Schema Single-Source-of-Truth** — Shared const arrays/regexes/unions between blink-registry, Velite, and CLI; fix `updated_context` drift; round-trip fixture test *(promoted from 999.1, audit WS-7)*
+- [x] **Phase 31: Schema Single-Source-of-Truth** — Shared const arrays/regexes/unions between blink-registry, Velite, and CLI; fix `updated_context` drift; round-trip fixture test *(promoted from 999.1, audit WS-7)*
 - [ ] **Phase 32: Test-Signal Integrity** — Fix tests that pass without proving what they claim: stale-cache passthrough, manifest byte-compare, visual suite in CI, CommandPalette a11y, turbo dependsOn *(promoted from 999.2, audit WS-8)*
 - [ ] **Phase 33: Code-Comment Citation Rot** — Rewrite `.planning/`-artifact-ID citations as self-contained WHYs; delete redundant step comments *(promoted from 999.3)*
 - [ ] **Phase 34: apps/luna Containment & Reintegration** — Luna vitest suite in CI (Postgres service container), vuln overrides refresh, toolchain drift, repo-wide prettier enforcement *(promoted from 999.4, audit WS-9)*
@@ -199,7 +199,7 @@ Plans:
 
 **Depends on**: Phase 29 (schema and content landed; independent of Phase 30)
 
-**Requirements**: TBD
+**Requirements**: SSOT-01, SSOT-02, SSOT-03, SSOT-04, SSOT-05, SSOT-06, SSOT-07, SSOT-08, SSOT-09 (derived in 31-RESEARCH.md; no REQUIREMENTS.md mapping for this promoted backlog phase)
 
 Thirteen frontmatter fields, the cross-ref regex, collection lists, artifact-type/merge enums, the voice union, and the Scope type are each hand-mirrored across the registry, Velite config, and CLI — synced only by comments, with one live drift (`updated_context`: `s.isodate()` in Velite vs `z.string()` in the registry, so lint accepts what the build rejects). The Zod-instance constraint (decision 28-01) rules out sharing schema objects; share exported const arrays/regexes plus a round-trip fixture test instead.
 
@@ -213,10 +213,15 @@ Thirteen frontmatter fields, the cross-ref regex, collection lists, artifact-typ
 - Tighten `Migration` interface (`scripts/migrate-content.ts`) to `run(opts)` and lift `MigrationResult` to a shared module — gate on Migration #001
 - (Needs sign-off) collapse the dual-Ajv round-trip in `frontmatter-schema.ts` to `DxFrontmatterSchema.safeParse` — supersedes recorded LINT-01 decision
 
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 31 to break down)
+- [ ] 31-01-PLAN.md — Registry canonical exports: const arrays, crossRefRegex, VoiceSchema, Sha256Hex, updated_context fix (SSOT-01/02/03/04/07)
+- [ ] 31-02-PLAN.md — Velite dedup + side-effect-free velite-fields + round-trip parity test (SSOT-01/02/03/04/08)
+- [ ] 31-03-PLAN.md — CLI imports canonical Scope from registry (SSOT-06)
+- [ ] 31-04-PLAN.md — Shared Migration/MigrationResult type module; run(opts) deferred (SSOT-09, low-risk half)
+- [ ] 31-05-PLAN.md — VersionManifest retype + remove `const config: any` / DxData inference (SSOT-05/07)
+- [ ] 31-06-PLAN.md — FINAL (Blake-locked): collapse dual-Ajv to DxFrontmatterSchema.safeParse, drop ajv deps (supersedes LINT-01)
 
 ### Phase 32: Test-Signal Integrity
 
@@ -268,7 +273,7 @@ Plans:
 
 **Depends on**: Nothing (luna is isolated from the other v1.4 phases)
 
-**Requirements**: TBD
+**Requirements**: LUNA-CI-01, LUNA-VULN-01, LUNA-DRIFT-01, REPO-FMT-01, REPO-LINT-01 *(derived from research must-haves — no formal REQ IDs mapped for this promoted-backlog phase)*
 
 Luna is fully gate-exempt (`--filter=!Luna` everywhere, commit f5fcb07 "until proper integration work happens") with the exemption previously untracked — this entry is that tracking item.
 
@@ -280,10 +285,15 @@ Luna is fully gate-exempt (`--filter=!Luna` everywhere, commit f5fcb07 "until pr
 - Repo-wide prettier enforcement (CI `--check` + glob consistency) deferred from WS-3 — needs a whole-tree normalization commit first
 - Scoped eslint config for node-side build files (velite-prepare, git-history, scripts/) where `console` is the right tool — kills ~60 no-console warnings
 
-**Plans**: TBD
+**Two tracks** (per 34-RESEARCH.md): Track A = luna containment (CI job, vuln overrides, safe drift); Track B = repo-wide enforcement (prettier gate, scoped eslint). **Explicitly deferred** (breaking; documented with rationale in `34-DEFERRALS.md`): Tailwind 3→4, Stripe 19→22, @react-email/components replacement, TypeScript 5.5→6. **luna-tests CI job ships advisory** (not a required merge check) this phase; promotion is a documented human follow-up.
+
+**Plans**: 4 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 34 to break down)
+- [ ] 34-01-PLAN.md — Wave 1 (Track A): luna vuln overrides refresh + turbo bump + safe toolchain drift (LUNA-VULN-01, LUNA-DRIFT-01)
+- [ ] 34-02-PLAN.md — Wave 1 (Track A): local green baseline + luna-tests CI job with postgres:16-alpine service (LUNA-CI-01)
+- [ ] 34-03-PLAN.md — Wave 2 (Track B): whole-tree prettier normalization + format:check CI gate + scoped no-console eslint (REPO-FMT-01, REPO-LINT-01)
+- [ ] 34-04-PLAN.md — Wave 3: deferral log + STATE update + phase-gate checkpoint (luna-tests green on PR)
 
 ### Phase 35: Dead & Unlinted Code Sweep
 
@@ -309,17 +319,20 @@ Plans:
 
 **Depends on**: Nothing (independent of the other v1.4 phases)
 
-**Requirements**: TBD
+**Requirements**: PARITY-01, PARITY-02, PARITY-03, DEDUP-01, DEDUP-02, TOKEN-01, DEP-01 *(derived from research must-haves — no formal REQ IDs mapped for this promoted-backlog phase)*
 
 - 15 of 19 components documented while the landing page claims 19 — contradiction pinned by two tests each asserting a different count; missing: modal, prev-next-nav, author-note, decision-rationale; add a barrel↔registry parity test
 - Byte-identical 87-line ThemeToggle duplicated in both apps — belongs in artax-ui per the repo's own design-system rule
 - Playground Prism theme hand-mirrors hex values from artax-ui `globals.css` with no token-sync test (the marker-parsing machinery already exists in `token-registry.ts`)
 - shamefully-hoist phantoms: artax-ui → `next/link` undeclared peer (`prev-next-nav.tsx`), artax → `prism-react-renderer` undeclared
 
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 36 to break down)
+- [ ] 36-01-PLAN.md — Document 4 missing components + shared barrel parser + set-based parity test (reconcile counts to 19)
+- [ ] 36-02-PLAN.md — Prism↔token sync test (curated 3 token-backed hexes, reuses token-registry parser)
+- [ ] 36-03-PLAN.md — Declare phantom deps (next peer in artax-ui, prism-react-renderer dep in artax)
+- [ ] 36-04-PLAN.md — Dedupe ThemeToggle into artax-ui + document as 20th showcase component (bump counts to 20)
 
 ## Progress
 
@@ -360,12 +373,12 @@ v1.4 phases execute in numeric order: 27 -> 28 -> 29 -> 30. Phase 28 has three i
 | 28. Authoring Scaffolds + Lint + Port | v1.4 | 6/6 | Complete    | 2026-05-05 |
 | 29. Content Authoring | v1.4 | 7/7 | Complete    | 2026-05-14 |
 | 30. Editorial Closure | v1.4 | 0/? | Not started | — |
-| 31. Schema Single-Source-of-Truth | v1.4 | 0/? | Not started | — |
+| 31. Schema Single-Source-of-Truth | v1.4 | 6/6 | Complete | 2026-07-13 |
 | 32. Test-Signal Integrity | v1.4 | 0/? | Not started | — |
 | 33. Code-Comment Citation Rot | v1.4 | 0/? | Not started | — |
-| 34. apps/luna Containment & Reintegration | v1.4 | 0/? | Not started | — |
+| 34. apps/luna Containment & Reintegration | v1.4 | 0/4 | Not started | — |
 | 35. Dead & Unlinted Code Sweep | v1.4 | 0/? | Not started | — |
-| 36. Artax Showcase Parity & Design-System Hygiene | v1.4 | 0/? | Not started | — |
+| 36. Artax Showcase Parity & Design-System Hygiene | v1.4 | 0/4 | Not started | — |
 
 ## Backlog
 

@@ -45,7 +45,7 @@ Generators that produce schema-valid skeletons; templates derive from the canoni
 
 Cross-file invariants that ESLint can't enforce, exposed via a `blink` subcommand.
 
-- [x] **LINT-01**: `blink lint` subcommand validates frontmatter against the JSON Schema derived from Velite Zod (single source of truth)
+- [x] **LINT-01**: `blink lint` subcommand validates frontmatter via `DxFrontmatterSchema.safeParse` (single source of truth) — *original JSON-Schema/Ajv mechanism superseded by Phase 31 (31-06), Blake sign-off 2026-07-12*
 - [x] **LINT-02**: `blink lint` enforces artifact-pair sync — entries with `requires_artifact: true` must have a sibling `.artifact.md` (error); orphan `.artifact.md` files surface as warnings
 - [x] **LINT-03**: `blink lint` enforces voice-primitive invariants — entries that declare a `voice` value must invoke the matching JSX component in the body; entries with rationale-shaped headings flag as advisory if `voice: ['decision-rationale']` is missing
 - [x] **LINT-04
@@ -140,7 +140,7 @@ Which phases cover which requirements. Filled by the roadmapper.
 | SCAFFOLD-04 | Phase 28 | Complete |
 | SCAFFOLD-05 | Phase 28 | Complete |
 | SCAFFOLD-06 | Phase 28 | Complete |
-| LINT-01 | Phase 28 | Complete |
+| LINT-01 | Phase 28 (mechanism superseded in Phase 31) | Complete |
 | LINT-02 | Phase 28 | Complete |
 | LINT-03 | Phase 28 | Complete |
 | LINT-04 | Phase 28 | Complete |

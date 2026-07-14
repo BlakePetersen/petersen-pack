@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Content Density
-status: planning
-stopped_at: Completed 29-07-PLAN.md — Phase 29 phase gate verified, all 5 ROADMAP success criteria evidenced, ready for /gsd-verify-work
-last_updated: "2026-07-07T23:08:48.093Z"
-last_activity: 2026-07-07
+status: "Phase 29 shipped (PR #121, docs PR #127). Betterment sweep landed 2026-07-08: WS-1 CI security rot (#128), WS-3 Velite dev loop (#129), WS-2 turbo graph (#130), WS-4 content lint gate (#131), WS-5 registry pipeline (#132), WS-6 blink-cli write-safety (#133). Remaining audit workstreams filed as backlog 999.x."
+stopped_at: "Betterment sweep complete (WS-1..6 merged, PRs #128–#133); remaining audit workstreams filed as backlog 999.x. Next: /gsd-plan-phase 30 (editorial closure — needs Blake-authored content)."
+last_updated: "2026-07-13T06:36:22.281Z"
+last_activity: 2026-07-08
 progress:
-  total_phases: 7
-  completed_phases: 3
-  total_plans: 29
-  completed_plans: 21
-  percent: 72
+  total_phases: 10
+  completed_phases: 4
+  total_plans: 43
+  completed_plans: 27
+  percent: 63
 ---
 
 # Project State
@@ -153,6 +153,7 @@ Progress: [████████░░] ~85% (Phase 30 remains for v1.4)
 - 29-07: Auto-verified human-verify checkpoint per Wave 3 less-hand-holding pacing — all 5 acceptance gates pass; bulk editorial review routed to /gsd-verify-work
 - 29-07: Did not re-run scripts/perf-baseline.ts (overwrites Phase 27 yardstick); hand-captured fullBuildWallMs/veliteWallMs/webpackCompileMs from gate runs; migrated build-perf-baseline.json schema flat→phased+delta (phase_27, phase_29, delta sub-objects); pattern reusable for v1.5+
 - 29-07: Variant 3 (architectural framing + quoted snippets + voice primitives + new-tab anchor to /install/[type]/[slug] for installable + NO inline ArtifactBody) locked as v1.4 canonical authoring pattern for all 4 DX collections; guides use MDX-only adaptation (no companion, no install anchor, requires_artifact:false) per D-14
+- **31-06:** Collapsed blink-cli `frontmatter-schema.ts` from the dual-Ajv round-trip (over `z.toJSONSchema()`) to `DxFrontmatterSchema.safeParse` — drops `ajv` + `ajv-formats`, removes the 28-02 `$schema`-stripping workaround. **Supersedes LINT-01 and decision 28-02.** Blake sign-off 2026-07-12. Error messages now use Zod issue paths (`/field: message`); `fix()` applies Zod defaults on successful parse only (no in-place mutation of invalid input). Lint tests in both `@blink/cli` and `blakepetersen.io` updated to the Zod format.
 
 ### v1.4 Roadmap Decisions (locked at planning time)
 
@@ -187,4 +188,4 @@ Last session: 2026-07-08
 Stopped at: Betterment sweep complete (WS-1..6 merged, PRs #128–#133); remaining audit workstreams filed as backlog 999.x. Next: /gsd-plan-phase 30 (editorial closure — needs Blake-authored content).
 Resume file: None
 
-**Planned Phase:** 29 (Content Authoring (Greenfield + Ports)) — 7 plans — 2026-05-10T07:19:23.134Z
+**Planned Phase:** 34 (apps/luna Containment & Reintegration) — 4 plans — 2026-07-13T06:36:22.277Z
