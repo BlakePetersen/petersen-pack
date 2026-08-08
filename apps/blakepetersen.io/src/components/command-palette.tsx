@@ -162,6 +162,9 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
             }}
           >
             <Dialog.Title className="sr-only">Search content</Dialog.Title>
+            <Dialog.Description className="sr-only">
+              Search across all site content by title and body text.
+            </Dialog.Description>
 
             <div className="border-b border-border p-3">
               <input
