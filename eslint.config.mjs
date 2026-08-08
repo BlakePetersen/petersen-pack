@@ -50,6 +50,19 @@ export default tseslint.config(
     },
   },
   {
+    // Node-side build tooling: these run outside the browser, where the
+    // console is the output channel (build logs, migration progress).
+    files: [
+      'apps/blakepetersen.io/next.config.ts',
+      'apps/blakepetersen.io/scripts/**/*.ts',
+      'apps/blakepetersen.io/src/lib/git-history.ts',
+      'apps/blakepetersen.io/src/lib/velite-prepare.ts',
+    ],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
     ignores: [
       '**/*.js',
       '**/*.mjs',
@@ -62,6 +75,9 @@ export default tseslint.config(
       '**/public/**',
       '**/dist/**',
       '.trash/**',
+      // Stale checkouts under .claude/worktrees/** duplicate every source file
+      // and double-count their warnings.
+      '**/.claude/**',
     ],
   },
 )
