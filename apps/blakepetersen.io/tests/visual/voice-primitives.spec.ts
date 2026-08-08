@@ -18,7 +18,6 @@ test.describe('Voice primitives torture test (CONTENT-06)', () => {
     }, theme)
 
     await page.goto(`/skills/${SKILL_SLUG}`)
-    await page.waitForLoadState('networkidle')
 
     // Anchor on AuthorNote — fails fast if the component isn't rendered
     // (e.g., 404 page would have no <aside role="note">).

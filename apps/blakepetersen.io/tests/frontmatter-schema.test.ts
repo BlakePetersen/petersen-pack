@@ -1,16 +1,24 @@
 // ABOUTME: Tests proving schema validation enforces correct frontmatter per collection type.
 // ABOUTME: Validates CONT-03: DX content requires applies_to/dependencies, posts require date.
 
-import { execSync } from 'child_process'
+import { spawnSync } from 'child_process'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 
 const appRoot = join(__dirname, '..')
 const veliteDir = join(appRoot, '.velite')
 
+// Rebuild on every run: a pre-populated .velite/ (CI runs `pnpm build` before
+// `pnpm test`) would otherwise let a schema regression pass against stale output.
+// `--strict` is required for signal — a plain `velite build` drops documents that
+// fail validation and still exits 0, so the assertions below would never see them.
 beforeAll(() => {
-  if (!existsSync(veliteDir)) {
-    execSync('pnpm velite', { cwd: appRoot, stdio: 'pipe' })
+  const result = spawnSync('pnpm', ['velite', '--strict'], {
+    cwd: appRoot,
+    encoding: 'utf-8'
+  })
+  if (result.status !== 0) {
+    throw new Error(`velite build failed:\n${result.stdout}${result.stderr}`)
   }
 }, 30000)
 
