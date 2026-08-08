@@ -267,6 +267,17 @@ function sha256Hex(payload: string): string {
   return createHash('sha256').update(payload).digest('hex')
 }
 
+// Serialize the version manifest deterministically: top-level keys sorted, one
+// trailing newline. Pure, so logically-identical input yields byte-identical
+// output regardless of key insertion order (D-06). Kept separate from the write
+// so that invariant is unit-testable without a git-dependent full build.
+export function serializeVersionManifest(manifest: VersionManifest): string {
+  const sorted = Object.fromEntries(
+    Object.entries(manifest).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+  )
+  return JSON.stringify(sorted, null, 2) + '\n'
+}
+
 // Version each artifact by hashing its distributed-payload bytes: an
 // unchanged hash preserves the prior CalVer, so prose-only frontmatter
 // edits don't bump the version (the daily `.N` counter only advances when
@@ -415,17 +426,11 @@ export function versionAndValidateArtifacts(
     }
   }
 
-  // Sort top-level keys so consecutive runs produce a byte-identical manifest.
   // Velite's prepare hook runs serially in a single build process (no
   // parallel builds), so a plain write is safe — no write-temp-then-rename.
-  const sortedVersionManifest = Object.fromEntries(
-    Object.entries(updatedVersionManifest).sort(([a], [b]) =>
-      a < b ? -1 : a > b ? 1 : 0
-    )
-  )
   fs.writeFileSync(
     versionManifestPath,
-    JSON.stringify(sortedVersionManifest, null, 2) + '\n'
+    serializeVersionManifest(updatedVersionManifest)
   )
 
   return allArtifacts
