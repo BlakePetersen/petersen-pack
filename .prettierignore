@@ -4,8 +4,15 @@
 # `blink apply` consumers. Keep prettier away from them; bodies are hand-formatted.
 **/*.artifact.md
 
-# Velite build output, lockfile, etc.
+# Next regenerates next-env.d.ts on every build with its own quoting/semicolons,
+# so a prettier-normalized copy reverts and dirties the tree (and `format:check`)
+# after any `next build` / `next dev`. Leave it as Next writes it.
+**/next-env.d.ts
+
+# Build output, lockfile, etc. Package `dist/` is ignored via nested
+# .gitignore files, which prettier doesn't read — only the root one.
 **/.velite/
 **/.next/
 **/.turbo/
+**/dist/
 pnpm-lock.yaml
