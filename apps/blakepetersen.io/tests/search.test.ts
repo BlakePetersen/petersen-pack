@@ -43,8 +43,8 @@ describe('searchContent', () => {
               url: '/skills/typescript',
               title: 'TypeScript',
               excerpt: 'A <mark>typed</mark> language',
-              meta: { category: 'skills' },
-            }),
+              meta: { category: 'skills' }
+            })
           },
           {
             id: '2',
@@ -52,11 +52,11 @@ describe('searchContent', () => {
               url: '/hooks/use-state',
               title: 'useState',
               excerpt: 'React <mark>state</mark> hook',
-              meta: { category: 'hooks' },
-            }),
-          },
-        ],
-      }),
+              meta: { category: 'hooks' }
+            })
+          }
+        ]
+      })
     }
 
     const { searchContent: search } = await import('@/lib/search')
@@ -67,13 +67,13 @@ describe('searchContent', () => {
       url: '/skills/typescript',
       title: 'TypeScript',
       excerpt: 'A <mark>typed</mark> language',
-      meta: { category: 'skills' },
+      meta: { category: 'skills' }
     })
     expect(results[1]).toEqual({
       url: '/hooks/use-state',
       title: 'useState',
       excerpt: 'React <mark>state</mark> hook',
-      meta: { category: 'hooks' },
+      meta: { category: 'hooks' }
     })
   })
 
@@ -82,7 +82,7 @@ describe('searchContent', () => {
       url: '/test',
       title: 'Test',
       excerpt: 'excerpt',
-      meta: { key: 'value' },
+      meta: { key: 'value' }
     }
     expect(result.url).toBe('/test')
     expect(result.title).toBe('Test')
@@ -97,12 +97,12 @@ describe('searchContent', () => {
         url: `/page-${i}`,
         title: `Page ${i}`,
         excerpt: `Excerpt ${i}`,
-        meta: {},
-      }),
+        meta: {}
+      })
     }))
 
     mockPagefind = {
-      search: jest.fn().mockResolvedValue({ results: manyResults }),
+      search: jest.fn().mockResolvedValue({ results: manyResults })
     }
 
     const { searchContent: search } = await import('@/lib/search')

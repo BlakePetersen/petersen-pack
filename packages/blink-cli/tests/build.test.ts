@@ -19,7 +19,7 @@ describe('blink-cli build output', () => {
   })
 
   it('dist/ contains exactly one .mjs file (no chunk splitting)', () => {
-    const files = readdirSync(DIST_DIR).filter((f) => f.endsWith('.mjs'))
+    const files = readdirSync(DIST_DIR).filter(f => f.endsWith('.mjs'))
     expect(files).toHaveLength(1)
     expect(files[0]).toBe('cli.mjs')
   })
@@ -29,7 +29,7 @@ describe('blink-cli build output', () => {
     try {
       output = execSync(`node ${CLI_PATH} 2>&1`, {
         encoding: 'utf-8',
-        cwd: join(__dirname, '..'),
+        cwd: join(__dirname, '..')
       })
     } catch (error: any) {
       // citty exits with code 1 when no subcommand given
@@ -46,7 +46,7 @@ describe('blink-cli build output', () => {
     try {
       output = execSync(`node ${CLI_PATH} apply --help 2>&1`, {
         encoding: 'utf-8',
-        cwd: join(__dirname, '..'),
+        cwd: join(__dirname, '..')
       })
     } catch (error: any) {
       output = error.stdout || error.stderr || ''

@@ -11,7 +11,7 @@ export const CrossRefSchema = s
   .string()
   .regex(
     crossRefRegex(DX_COLLECTIONS),
-    `must be '<collection>/<slug-path>' where collection is one of: ${DX_COLLECTIONS.join(', ')}`,
+    `must be '<collection>/<slug-path>' where collection is one of: ${DX_COLLECTIONS.join(', ')}`
   )
 
 // Shared fields for DX content types (skills, hooks, configs, guides)
@@ -26,7 +26,9 @@ export const dxFields = {
   voice: s.array(s.enum([...VOICE_PRIMITIVES])).default([]),
   requires_artifact: s.boolean().default(false),
   category: s.string().optional(),
-  decisions: s.array(s.object({ choice: s.string(), rationale: s.string() })).default([]),
+  decisions: s
+    .array(s.object({ choice: s.string(), rationale: s.string() }))
+    .default([]),
   related: s.array(CrossRefSchema).default([]),
-  updated_context: s.isodate().optional(),
+  updated_context: s.isodate().optional()
 }

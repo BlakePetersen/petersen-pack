@@ -4,19 +4,19 @@
 import React from 'react'
 
 jest.mock('@/lib/github', () => ({
-  getReleases: jest.fn(),
+  getReleases: jest.fn()
 }))
 
 jest.mock('@/components/content-shell', () => ({
-  ContentShell: ({ children }: { children: React.ReactNode }) => children,
+  ContentShell: ({ children }: { children: React.ReactNode }) => children
 }))
 
 jest.mock('@/components/sidebar', () => ({
-  Sidebar: () => null,
+  Sidebar: () => null
 }))
 
 jest.mock('@/components/release-body', () => ({
-  ReleaseBody: ({ body }: { body: string }) => <pre>{body}</pre>,
+  ReleaseBody: ({ body }: { body: string }) => <pre>{body}</pre>
 }))
 
 import { getReleases } from '@/lib/github'
@@ -25,13 +25,17 @@ import ChangelogPage, { revalidate } from '@/app/changelog/page'
 
 const mockGetReleases = getReleases as jest.MockedFunction<typeof getReleases>
 
-function findInTree(element: React.ReactElement, predicate: (el: React.ReactElement) => boolean): React.ReactElement[] {
+function findInTree(
+  element: React.ReactElement,
+  predicate: (el: React.ReactElement) => boolean
+): React.ReactElement[] {
   const results: React.ReactElement[] = []
   if (predicate(element)) results.push(element)
   const children = element.props?.children
   if (Array.isArray(children)) {
     for (const child of children) {
-      if (React.isValidElement(child)) results.push(...findInTree(child, predicate))
+      if (React.isValidElement(child))
+        results.push(...findInTree(child, predicate))
     }
   } else if (React.isValidElement(children)) {
     results.push(...findInTree(children, predicate))
@@ -50,15 +54,15 @@ const fakeReleases = [
     name: 'Big Feature Release',
     body: '## Changes\n- Added feature A',
     publishedAt: '2026-01-15T12:00:00Z',
-    htmlUrl: 'https://github.com/example/repo/releases/tag/v1.2.0',
+    htmlUrl: 'https://github.com/example/repo/releases/tag/v1.2.0'
   },
   {
     tagName: 'v1.1.0',
     name: 'v1.1.0',
     body: '## Fixes\n- Fixed bug B',
     publishedAt: '2025-12-01T12:00:00Z',
-    htmlUrl: 'https://github.com/example/repo/releases/tag/v1.1.0',
-  },
+    htmlUrl: 'https://github.com/example/repo/releases/tag/v1.1.0'
+  }
 ]
 
 describe('changelog page', () => {
@@ -91,7 +95,7 @@ describe('changelog page', () => {
   it('renders ReleaseBody component for each entry', async () => {
     mockGetReleases.mockResolvedValue(fakeReleases)
     const tree = await ChangelogPage()
-    const releaseBodies = findInTree(tree, (el) => el.type === ReleaseBody)
+    const releaseBodies = findInTree(tree, el => el.type === ReleaseBody)
     expect(releaseBodies).toHaveLength(2)
     expect(releaseBodies[0].props.body).toBe('## Changes\n- Added feature A')
     expect(releaseBodies[1].props.body).toBe('## Fixes\n- Fixed bug B')

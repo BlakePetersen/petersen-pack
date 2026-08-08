@@ -10,7 +10,9 @@ import {
 describe('DropdownMenu primitive components', () => {
   it('renders DropdownContentPrimitive with terminal styling', () => {
     render(
-      <DropdownContentPrimitive data-testid="content">items</DropdownContentPrimitive>
+      <DropdownContentPrimitive data-testid="content">
+        items
+      </DropdownContentPrimitive>
     )
     const content = screen.getByTestId('content')
     expect(content.className).toContain('bg-popover')
@@ -18,7 +20,9 @@ describe('DropdownMenu primitive components', () => {
   })
 
   it('renders DropdownItemPrimitive with monospace font', () => {
-    render(<DropdownItemPrimitive data-testid="item">Option 1</DropdownItemPrimitive>)
+    render(
+      <DropdownItemPrimitive data-testid="item">Option 1</DropdownItemPrimitive>
+    )
     expect(screen.getByTestId('item').className).toContain('font-mono')
   })
 

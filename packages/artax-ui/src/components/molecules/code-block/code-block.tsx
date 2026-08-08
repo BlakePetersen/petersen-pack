@@ -21,7 +21,7 @@ function CodeBlock({
     <div
       className={cn(
         'bg-card border border-border my-4 overflow-hidden font-mono text-sm',
-        className,
+        className
       )}
       {...props}
     >
@@ -45,16 +45,13 @@ function CodeBlock({
           className={cn(
             'overflow-x-auto',
             '[&_pre]:!bg-transparent [&_pre]:!p-4 [&_pre]:!m-0',
-            '[&_.highlighted]:bg-primary/10',
+            '[&_.highlighted]:bg-primary/10'
           )}
         >
           {children}
         </div>
         {rawCode && (
-          <CopyButton
-            text={rawCode}
-            className="absolute top-2 right-2"
-          />
+          <CopyButton text={rawCode} className="absolute top-2 right-2" />
         )}
       </div>
     </div>

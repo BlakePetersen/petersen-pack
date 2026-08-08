@@ -41,6 +41,7 @@ DRY_RUN=true pnpm upscale:migrate
 ```
 
 This will:
+
 - Show you which images would be processed
 - Estimate costs
 - Not upscale or modify anything
@@ -54,6 +55,7 @@ pnpm upscale:migrate
 ```
 
 This will:
+
 1. Fetch all images from your database
 2. Upscale each image using Real-ESRGAN (2x by default)
 3. Upload the upscaled image to Vercel Blob
@@ -65,14 +67,15 @@ This will:
 You can modify these settings in `scripts/upscale-and-migrate.ts`:
 
 ```typescript
-const BATCH_SIZE = 5        // How many images to process at once
-const UPSCALE_FACTOR = 2    // 2x or 4x upscaling
-const DRY_RUN = false       // Test mode
+const BATCH_SIZE = 5 // How many images to process at once
+const UPSCALE_FACTOR = 2 // 2x or 4x upscaling
+const DRY_RUN = false // Test mode
 ```
 
 ## Cost Estimate
 
 For your **343 images**:
+
 - Replicate upscaling: ~$3-7 one-time
 - Vercel Blob storage: ~$3-4/month ongoing
 
@@ -110,12 +113,14 @@ Check your Vercel dashboard → Storage to monitor usage and costs.
 ### Rate Limits
 
 If you hit rate limits, the script will automatically retry with delays. You can also:
+
 - Reduce `BATCH_SIZE` to process fewer images at once
 - Run the script in smaller batches
 
 ### Failed Images
 
 The script will log any failed images. You can:
+
 - Re-run the script (it skips already-migrated images)
 - Check the logs for specific error messages
 

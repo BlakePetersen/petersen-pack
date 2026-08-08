@@ -14,24 +14,20 @@ const componentFiles = [
 ]
 
 describe('component files have use client', () => {
-  it.each(componentFiles)(
-    '%s has "use client" directive',
-    filename => {
-      const content = readFileSync(
-        resolve(__dirname, '../../src/components', filename),
-        'utf-8'
-      )
-      const firstLine = content.split('\n')[0].trim()
-      expect(firstLine).toBe("'use client'")
-    }
-  )
+  it.each(componentFiles)('%s has "use client" directive', filename => {
+    const content = readFileSync(
+      resolve(__dirname, '../../src/components', filename),
+      'utf-8'
+    )
+    const firstLine = content.split('\n')[0].trim()
+    expect(firstLine).toBe("'use client'")
+  })
 })
 
 describe('Accordion', () => {
   it('renders with terminal styling', async () => {
-    const { Accordion } = await import(
-      '../../src/components/organisms/accordion/accordion'
-    )
+    const { Accordion } =
+      await import('../../src/components/organisms/accordion/accordion')
     render(
       <Accordion type="single" collapsible data-testid="accordion">
         <div>item</div>
@@ -54,7 +50,8 @@ describe('Dialog', () => {
 
 describe('Dropdown', () => {
   it('exports Dropdown component', async () => {
-    const mod = await import('../../src/components/organisms/dropdown/dropdown-menu')
+    const mod =
+      await import('../../src/components/organisms/dropdown/dropdown-menu')
     expect(mod.Dropdown).toBeDefined()
     expect(mod.DropdownTrigger).toBeDefined()
     expect(mod.DropdownContent).toBeDefined()
@@ -64,9 +61,8 @@ describe('Dropdown', () => {
 
 describe('Tabs', () => {
   it('renders with terminal styling', async () => {
-    const { Tabs, TabsList, TabsTrigger, TabsContent } = await import(
-      '../../src/components/molecules/tabs/tabs'
-    )
+    const { Tabs, TabsList, TabsTrigger, TabsContent } =
+      await import('../../src/components/molecules/tabs/tabs')
     render(
       <Tabs defaultValue="tab1" data-testid="tabs">
         <TabsList>
@@ -81,9 +77,7 @@ describe('Tabs', () => {
 
 describe('Toggle', () => {
   it('renders with terminal styling', async () => {
-    const { Toggle } = await import(
-      '../../src/components/atoms/toggle/toggle'
-    )
+    const { Toggle } = await import('../../src/components/atoms/toggle/toggle')
     render(<Toggle data-testid="toggle">Bold</Toggle>)
     const el = screen.getByTestId('toggle')
     expect(el).toBeInTheDocument()

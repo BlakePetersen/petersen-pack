@@ -22,7 +22,7 @@ export function HeadingAnchor({ id }: { id?: string }) {
         // Clipboard API may not be available
       }
     },
-    [id],
+    [id]
   )
 
   if (!id) return null

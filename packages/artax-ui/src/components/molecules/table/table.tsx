@@ -14,15 +14,9 @@ function Table({ className, ...props }: React.ComponentProps<'table'>) {
   )
 }
 
-function TableHeader({
-  className,
-  ...props
-}: React.ComponentProps<'thead'>) {
+function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
   return (
-    <thead
-      className={cn('border-b border-border', className)}
-      {...props}
-    />
+    <thead className={cn('border-b border-border', className)} {...props} />
   )
 }
 
@@ -69,10 +63,7 @@ function TableCaption({
 }: React.ComponentProps<'caption'>) {
   return (
     <caption
-      className={cn(
-        'mt-4 text-sm font-mono text-muted-foreground',
-        className
-      )}
+      className={cn('mt-4 text-sm font-mono text-muted-foreground', className)}
       {...props}
     />
   )

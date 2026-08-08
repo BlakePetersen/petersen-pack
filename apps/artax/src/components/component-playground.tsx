@@ -30,12 +30,12 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
-  TabsContent,
+  TabsContent
 } from 'artax-ui'
 import type { ComponentDef } from '@/lib/component-registry'
 import {
   decodePlaygroundParams,
-  pushPlaygroundParams,
+  pushPlaygroundParams
 } from '@/lib/playground-url-state'
 import { PlaygroundPropsForm } from '@/components/playground-props-form'
 import { PlaygroundJsxEditor } from '@/components/playground-jsx-editor'
@@ -83,7 +83,7 @@ const jsxEditorScope: Record<string, unknown> = {
   Tabs,
   TabsList,
   TabsTrigger,
-  TabsContent,
+  TabsContent
 }
 
 // Split body from gate so hooks are never called on excluded components
@@ -160,7 +160,7 @@ function PlaygroundBody({ comp }: { comp: ComponentDef }) {
           key={resetCounter}
           code={seedCode}
           scope={jsxEditorScope}
-          onReset={() => setResetCounter((n) => n + 1)}
+          onReset={() => setResetCounter(n => n + 1)}
         />
       )}
     </div>

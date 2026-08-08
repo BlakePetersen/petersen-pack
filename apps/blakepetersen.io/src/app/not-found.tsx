@@ -13,10 +13,7 @@ export default function NotFound() {
         <p className="mb-8 text-muted-foreground">
           The requested path does not exist in the current directory.
         </p>
-        <Link
-          href="/"
-          className="text-primary hover:underline"
-        >
+        <Link href="/" className="text-primary hover:underline">
           $ cd /
         </Link>
       </div>

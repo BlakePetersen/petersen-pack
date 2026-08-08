@@ -6,26 +6,26 @@ import { getComponent, getAllComponents } from '@/lib/component-registry'
 import { ComponentPageClient } from '@/components/component-page-client'
 
 export function generateStaticParams() {
-  return getAllComponents().map((c) => ({
+  return getAllComponents().map(c => ({
     tier: c.tier,
-    component: c.slug,
+    component: c.slug
   }))
 }
 
 export async function generateMetadata({
-  params,
+  params
 }: {
   params: Promise<{ tier: string; component: string }>
 }) {
   const { tier, component: slug } = await params
   const comp = getComponent(tier, slug)
   return {
-    title: comp?.name ?? 'Component',
+    title: comp?.name ?? 'Component'
   }
 }
 
 export default async function ComponentPage({
-  params,
+  params
 }: {
   params: Promise<{ tier: string; component: string }>
 }) {

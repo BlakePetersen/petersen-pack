@@ -34,9 +34,13 @@ async function findTempFiles(dir: string): Promise<string[]> {
 
       if (entry.isFile() && entry.name.includes('.blink-tmp-')) {
         results.push(entry.name)
-      } else if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
+      } else if (
+        entry.isDirectory() &&
+        entry.name !== 'node_modules' &&
+        entry.name !== '.git'
+      ) {
         const nested = await findTempFiles(fullPath)
-        results.push(...nested.map((n) => join(entry.name, n)))
+        results.push(...nested.map(n => join(entry.name, n)))
       }
     }
   } catch {
@@ -49,21 +53,24 @@ async function findTempFiles(dir: string): Promise<string[]> {
 export default defineCommand({
   meta: {
     name: 'doctor',
-    description: 'Check integrity of blink-managed files and manifest',
+    description: 'Check integrity of blink-managed files and manifest'
   },
   args: {
     global: {
       type: 'boolean',
       description: 'Operate on the global (home-directory) manifest',
-      default: false,
-    },
+      default: false
+    }
   },
   async run({ args }) {
     const cwd = process.cwd()
     const issues: DoctorIssue[] = []
 
     // 1. Read manifest
-    const manifestRoot = resolveManifestRoot(args.global ? 'global' : 'project', cwd)
+    const manifestRoot = resolveManifestRoot(
+      args.global ? 'global' : 'project',
+      cwd
+    )
     const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
@@ -83,7 +90,7 @@ export default defineCommand({
         if (content === null) {
           issues.push({
             severity: 'error',
-            message: `Orphaned manifest entry: ${file.path} (file not found)`,
+            message: `Orphaned manifest entry: ${file.path} (file not found)`
           })
           continue
         }
@@ -107,7 +114,7 @@ export default defineCommand({
               // Reconstruct: if managed content differs from what was stored, it's modified
               issues.push({
                 severity: 'warning',
-                message: `Locally modified: ${file.path}`,
+                message: `Locally modified: ${file.path}`
               })
             }
           }
@@ -117,7 +124,7 @@ export default defineCommand({
           if (currentChecksum !== file.checksum) {
             issues.push({
               severity: 'warning',
-              message: `Locally modified: ${file.path}`,
+              message: `Locally modified: ${file.path}`
             })
           }
         }
@@ -129,7 +136,7 @@ export default defineCommand({
     for (const tempFile of tempFiles) {
       issues.push({
         severity: 'warning',
-        message: `Orphaned temp file: ${tempFile} (safe to delete)`,
+        message: `Orphaned temp file: ${tempFile} (safe to delete)`
       })
     }
 
@@ -139,9 +146,9 @@ export default defineCommand({
       return
     }
 
-    const errors = issues.filter((i) => i.severity === 'error')
-    const warnings = issues.filter((i) => i.severity === 'warning')
-    const infos = issues.filter((i) => i.severity === 'info')
+    const errors = issues.filter(i => i.severity === 'error')
+    const warnings = issues.filter(i => i.severity === 'warning')
+    const infos = issues.filter(i => i.severity === 'info')
 
     for (const issue of issues) {
       const prefix =
@@ -157,5 +164,5 @@ export default defineCommand({
     consola.info(
       `Found ${issues.length} issue(s): ${errors.length} error(s), ${warnings.length} warning(s)`
     )
-  },
+  }
 })

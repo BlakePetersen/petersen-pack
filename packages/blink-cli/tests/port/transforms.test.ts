@@ -5,7 +5,7 @@ import {
   transformCallouts,
   transformWikilinks,
   transformFrontmatter,
-  transformDataviewBlocks,
+  transformDataviewBlocks
 } from '@/port/transforms'
 
 describe('transformCallouts', () => {
@@ -24,13 +24,17 @@ describe('transformCallouts', () => {
   it('converts [!warning] with title to DecisionRationale', () => {
     const input = '> [!warning] Be careful\n> Warning content'
     const result = transformCallouts(input)
-    expect(result).toBe('<DecisionRationale>\nWarning content\n</DecisionRationale>')
+    expect(result).toBe(
+      '<DecisionRationale>\nWarning content\n</DecisionRationale>'
+    )
   })
 
   it('converts [!important] to DecisionRationale', () => {
     const input = '> [!important]\n> Important content'
     const result = transformCallouts(input)
-    expect(result).toBe('<DecisionRationale>\nImportant content\n</DecisionRationale>')
+    expect(result).toBe(
+      '<DecisionRationale>\nImportant content\n</DecisionRationale>'
+    )
   })
 
   it('converts [!info] to plain blockquote', () => {
@@ -48,7 +52,9 @@ describe('transformCallouts', () => {
   it('preserves multi-line callout content correctly', () => {
     const input = '> [!note] Title\n> Line one\n> Line two\n> Line three'
     const result = transformCallouts(input)
-    expect(result).toBe('<AuthorNote>\nLine one\nLine two\nLine three\n</AuthorNote>')
+    expect(result).toBe(
+      '<AuthorNote>\nLine one\nLine two\nLine three\n</AuthorNote>'
+    )
   })
 
   it('transforms multiple callouts in same document', () => {
@@ -59,43 +65,63 @@ describe('transformCallouts', () => {
       'Some text between',
       '',
       '> [!warning] Second',
-      '> Warning content',
+      '> Warning content'
     ].join('\n')
     const result = transformCallouts(input)
     expect(result).toContain('<AuthorNote>\nNote content\n</AuthorNote>')
-    expect(result).toContain('<DecisionRationale>\nWarning content\n</DecisionRationale>')
+    expect(result).toContain(
+      '<DecisionRationale>\nWarning content\n</DecisionRationale>'
+    )
     expect(result).toContain('Some text between')
   })
 })
 
 describe('transformWikilinks', () => {
   const slugMap = new Map<string, { title: string; href: string }>([
-    ['writing-custom-skills', { title: 'Writing Custom Claude Code Skills', href: '/skills/claude-code/writing-custom-skills' }],
-    ['eslint-flat-config', { title: 'ESLint Flat Config', href: '/configs/eslint-flat-config' }],
+    [
+      'writing-custom-skills',
+      {
+        title: 'Writing Custom Claude Code Skills',
+        href: '/skills/claude-code/writing-custom-skills'
+      }
+    ],
+    [
+      'eslint-flat-config',
+      { title: 'ESLint Flat Config', href: '/configs/eslint-flat-config' }
+    ]
   ])
 
   it('resolves wikilink with matching slug to markdown link', () => {
     const input = 'See [[writing-custom-skills]] for details.'
     const result = transformWikilinks(input, slugMap)
-    expect(result).toBe('See [Writing Custom Claude Code Skills](/skills/claude-code/writing-custom-skills) for details.')
+    expect(result).toBe(
+      'See [Writing Custom Claude Code Skills](/skills/claude-code/writing-custom-skills) for details.'
+    )
   })
 
   it('renders unresolved wikilink as plain text with TODO comment', () => {
     const input = 'See [[unknown-note]] for details.'
     const result = transformWikilinks(input, slugMap)
-    expect(result).toBe('See unknown-note{/* TODO: resolve wikilink */} for details.')
+    expect(result).toBe(
+      'See unknown-note{/* TODO: resolve wikilink */} for details.'
+    )
   })
 
   it('preserves custom display text in resolved wikilink', () => {
     const input = 'See [[writing-custom-skills|custom text]] for details.'
     const result = transformWikilinks(input, slugMap)
-    expect(result).toBe('See [custom text](/skills/claude-code/writing-custom-skills) for details.')
+    expect(result).toBe(
+      'See [custom text](/skills/claude-code/writing-custom-skills) for details.'
+    )
   })
 
   it('transforms multiple wikilinks in same line', () => {
-    const input = 'Check [[writing-custom-skills]] and [[eslint-flat-config]] pages.'
+    const input =
+      'Check [[writing-custom-skills]] and [[eslint-flat-config]] pages.'
     const result = transformWikilinks(input, slugMap)
-    expect(result).toBe('Check [Writing Custom Claude Code Skills](/skills/claude-code/writing-custom-skills) and [ESLint Flat Config](/configs/eslint-flat-config) pages.')
+    expect(result).toBe(
+      'Check [Writing Custom Claude Code Skills](/skills/claude-code/writing-custom-skills) and [ESLint Flat Config](/configs/eslint-flat-config) pages.'
+    )
   })
 })
 
@@ -121,7 +147,9 @@ describe('transformFrontmatter', () => {
   it('preserves unknown keys in comment string', () => {
     const data = { title: 'Title', custom_field: 'value' }
     const result = transformFrontmatter(data)
-    expect(result.unknownComment).toContain('{/* Obsidian meta (review + delete): custom_field: value */}')
+    expect(result.unknownComment).toContain(
+      '{/* Obsidian meta (review + delete): custom_field: value */}'
+    )
   })
 
   it('preserves multiple unknown keys in comment block', () => {
@@ -142,7 +170,7 @@ describe('transformDataviewBlocks', () => {
       'FROM #skills',
       '```',
       '',
-      'More text',
+      'More text'
     ].join('\n')
     const result = transformDataviewBlocks(input)
     expect(result).not.toContain('dataview')
@@ -152,11 +180,7 @@ describe('transformDataviewBlocks', () => {
   })
 
   it('preserves non-dataview code blocks', () => {
-    const input = [
-      '```typescript',
-      'const x = 1',
-      '```',
-    ].join('\n')
+    const input = ['```typescript', 'const x = 1', '```'].join('\n')
     const result = transformDataviewBlocks(input)
     expect(result).toContain('```typescript')
     expect(result).toContain('const x = 1')

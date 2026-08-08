@@ -8,7 +8,7 @@ describe('buildBreadcrumbs', () => {
     const crumbs = buildBreadcrumbs('/skills/commit-hooks')
     expect(crumbs).toEqual([
       { label: 'skills', href: '/skills' },
-      { label: 'commit hooks', href: '/skills/commit-hooks' },
+      { label: 'commit hooks', href: '/skills/commit-hooks' }
     ])
   })
 
@@ -24,7 +24,7 @@ describe('buildBreadcrumbs', () => {
     const crumbs = buildBreadcrumbs('/posts/some-post')
     expect(crumbs).toEqual([
       { label: 'posts', href: '/posts' },
-      { label: 'some post', href: '/posts/some-post' },
+      { label: 'some post', href: '/posts/some-post' }
     ])
   })
 

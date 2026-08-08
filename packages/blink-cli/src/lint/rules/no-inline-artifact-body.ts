@@ -17,8 +17,8 @@ export const noInlineArtifactBodyRule: LintRule = {
         severity: 'error',
         rule: 'no-inline-artifact-body',
         message:
-          '<ArtifactBody> is not registered in mdxComponents and renders nothing from MDX — link to the /install route instead',
-      },
+          '<ArtifactBody> is not registered in mdxComponents and renders nothing from MDX — link to the /install route instead'
+      }
     ]
-  },
+  }
 }

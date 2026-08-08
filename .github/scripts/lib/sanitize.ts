@@ -12,5 +12,5 @@ export function sanitize(input: string): string {
       .replace(/^(system|assistant)\s*:/gim, '[redacted]:')
       // Remove control characters (keep normal whitespace: \t \n \r \x20)
       .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
-  );
+  )
 }

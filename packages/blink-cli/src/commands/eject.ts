@@ -4,11 +4,7 @@ import { defineCommand } from 'citty'
 import { consola } from 'consola'
 import pc from 'picocolors'
 import { readFile } from 'node:fs/promises'
-import {
-  readManifest,
-  writeManifest,
-  removeManifestEntry,
-} from '@/manifest'
+import { readManifest, writeManifest, removeManifestEntry } from '@/manifest'
 import { stripMarkers } from '@/markers'
 import { atomicWrite } from '@/writer'
 import { resolveDestination, resolveManifestRoot } from '@/scope'
@@ -24,30 +20,30 @@ async function readFileSafe(path: string): Promise<string | null> {
 export default defineCommand({
   meta: {
     name: 'eject',
-    description: 'Strip markers from managed files and remove from manifest',
+    description: 'Strip markers from managed files and remove from manifest'
   },
   args: {
     slug: {
       type: 'positional',
       description: 'Artifact slug to eject',
-      required: true,
+      required: true
     },
     'dry-run': {
       type: 'boolean',
       description: 'Preview changes without applying them',
-      default: false,
+      default: false
     },
     yes: {
       type: 'boolean',
       alias: 'y',
       description: 'Skip confirmation prompts',
-      default: false,
+      default: false
     },
     global: {
       type: 'boolean',
       description: 'Operate on the global (home-directory) manifest',
-      default: false,
-    },
+      default: false
+    }
   },
   async run({ args }) {
     const slug = args.slug as string
@@ -55,16 +51,21 @@ export default defineCommand({
     const cwd = process.cwd()
 
     // 1. Read manifest — written back to the same root it was read from
-    const manifestRoot = resolveManifestRoot(args.global ? 'global' : 'project', cwd)
+    const manifestRoot = resolveManifestRoot(
+      args.global ? 'global' : 'project',
+      cwd
+    )
     const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
-      consola.error('No blink manifest found. Run blink init or blink apply first.')
+      consola.error(
+        'No blink manifest found. Run blink init or blink apply first.'
+      )
       process.exit(1)
     }
 
     // 2. Find entry by slug
-    const entry = manifest.items.find((i) => i.slug === slug)
+    const entry = manifest.items.find(i => i.slug === slug)
 
     if (!entry) {
       consola.error(`${pc.bold(slug)} is not installed.`)
@@ -103,5 +104,5 @@ export default defineCommand({
     consola.success(
       `Ejected ${pc.bold(entry.name)}. Files are now fully yours.`
     )
-  },
+  }
 })

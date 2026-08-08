@@ -10,7 +10,7 @@ import {
   transformCallouts,
   transformWikilinks,
   transformFrontmatter,
-  transformDataviewBlocks,
+  transformDataviewBlocks
 } from '@/port/transforms'
 
 export const STAGING_DIR = '.obsidian-port-staging'
@@ -38,7 +38,7 @@ export interface CommitOptions {
  * Maps bare slug (filename without extension) to { title, href }.
  */
 export async function buildContentSlugMap(
-  contentRoot: string,
+  contentRoot: string
 ): Promise<Map<string, { title: string; href: string }>> {
   const slugMap = new Map<string, { title: string; href: string }>()
 
@@ -53,7 +53,7 @@ export async function buildContentSlugMap(
 async function walkMdxFiles(
   dir: string,
   contentRoot: string,
-  slugMap: Map<string, { title: string; href: string }>,
+  slugMap: Map<string, { title: string; href: string }>
 ): Promise<void> {
   let entries: string[]
   try {
@@ -76,13 +76,15 @@ async function walkMdxFiles(
           const relativePath = fullPath
             .slice(contentRoot.length)
             .replace(/\.mdx$/, '')
-          const href = relativePath.startsWith('/') ? relativePath : `/${relativePath}`
+          const href = relativePath.startsWith('/')
+            ? relativePath
+            : `/${relativePath}`
           const title =
             typeof data.title === 'string'
               ? data.title
               : slug
                   .split('-')
-                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                  .map(w => w.charAt(0).toUpperCase() + w.slice(1))
                   .join(' ')
           slugMap.set(slug, { title, href })
         } catch {
@@ -107,7 +109,7 @@ export async function stageEntry(options: StageOptions): Promise<StageResult> {
 
   // Discover .md files in inputDir
   const files = await readdir(inputDir)
-  const mdFiles = files.filter((f) => f.endsWith('.md'))
+  const mdFiles = files.filter(f => f.endsWith('.md'))
 
   const staged: Array<{ slug: string; path: string }> = []
 
@@ -127,7 +129,7 @@ export async function stageEntry(options: StageOptions): Promise<StageResult> {
 
     // Transform frontmatter
     const { mapped, unknownComment } = transformFrontmatter(
-      data as Record<string, unknown>,
+      data as Record<string, unknown>
     )
 
     // Transform body: callouts -> dataview strip -> wikilinks
@@ -181,7 +183,7 @@ export async function stageEntry(options: StageOptions): Promise<StageResult> {
 function validateSlug(slug: string): void {
   if (slug.includes('..') || slug.includes('/') || slug.startsWith('.')) {
     throw new Error(
-      `Invalid slug "${slug}": must not contain path separators or traversal patterns`,
+      `Invalid slug "${slug}": must not contain path separators or traversal patterns`
     )
   }
 }
@@ -190,9 +192,13 @@ function validateSlug(slug: string): void {
  * Validate a collection name for path traversal attacks.
  */
 function validateCollection(collection: string): void {
-  if (collection.includes('..') || collection.includes('/') || collection.startsWith('.')) {
+  if (
+    collection.includes('..') ||
+    collection.includes('/') ||
+    collection.startsWith('.')
+  ) {
     throw new Error(
-      `Invalid collection "${collection}": must not contain path separators or traversal patterns`,
+      `Invalid collection "${collection}": must not contain path separators or traversal patterns`
     )
   }
 }
@@ -213,7 +219,7 @@ export async function commitEntry(options: CommitOptions): Promise<void> {
 
   if (!existsSync(stagedPath)) {
     throw new Error(
-      `Slug "${slug}" not found in staging directory: ${sourceDir}`,
+      `Slug "${slug}" not found in staging directory: ${sourceDir}`
     )
   }
 
@@ -224,13 +230,13 @@ export async function commitEntry(options: CommitOptions): Promise<void> {
   const resolvedContentRoot = resolve(contentRoot)
   if (!targetPath.startsWith(resolvedContentRoot)) {
     throw new Error(
-      `Target path "${targetPath}" escapes content root "${resolvedContentRoot}"`,
+      `Target path "${targetPath}" escapes content root "${resolvedContentRoot}"`
     )
   }
 
   if (existsSync(targetPath)) {
     throw new Error(
-      `Target already exists: ${targetPath}. Use --force to overwrite (not supported in port commit).`,
+      `Target already exists: ${targetPath}. Use --force to overwrite (not supported in port commit).`
     )
   }
 
@@ -241,10 +247,14 @@ export async function commitEntry(options: CommitOptions): Promise<void> {
   // Move companion .artifact.md if present
   const artifactStagedPath = join(sourceDir, `${slug}.artifact.md`)
   if (existsSync(artifactStagedPath)) {
-    const artifactTargetPath = resolve(contentRoot, collection, `${slug}.artifact.md`)
+    const artifactTargetPath = resolve(
+      contentRoot,
+      collection,
+      `${slug}.artifact.md`
+    )
     if (!artifactTargetPath.startsWith(resolvedContentRoot)) {
       throw new Error(
-        `Artifact target path "${artifactTargetPath}" escapes content root "${resolvedContentRoot}"`,
+        `Artifact target path "${artifactTargetPath}" escapes content root "${resolvedContentRoot}"`
       )
     }
     const artifactContent = await readFile(artifactStagedPath, 'utf-8')

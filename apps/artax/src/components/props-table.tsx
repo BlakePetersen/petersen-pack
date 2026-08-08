@@ -7,7 +7,7 @@ import {
   TableBody,
   TableRow,
   TableHead,
-  TableCell,
+  TableCell
 } from 'artax-ui'
 import type { PropDef } from '@/lib/component-registry'
 
@@ -29,7 +29,7 @@ export function PropsTable({ props }: { props: PropDef[] }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {props.map((prop) => (
+        {props.map(prop => (
           <TableRow key={prop.name}>
             <TableCell className="font-mono">{prop.name}</TableCell>
             <TableCell className="font-mono text-muted-foreground">

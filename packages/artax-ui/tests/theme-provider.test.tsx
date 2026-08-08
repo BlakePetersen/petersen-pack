@@ -8,7 +8,7 @@ import type { Theme } from '../src/providers/theme-provider'
 const mockUseTheme = jest.fn().mockReturnValue({
   theme: 'system',
   setTheme: jest.fn(),
-  resolvedTheme: 'dark',
+  resolvedTheme: 'dark'
 })
 
 jest.mock('next-themes', () => ({
@@ -17,7 +17,7 @@ jest.mock('next-themes', () => ({
       {children as React.ReactNode}
     </div>
   )),
-  useTheme: (...args: unknown[]) => mockUseTheme(...args),
+  useTheme: (...args: unknown[]) => mockUseTheme(...args)
 }))
 
 describe('ThemeProvider', () => {

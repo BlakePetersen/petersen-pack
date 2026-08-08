@@ -16,7 +16,7 @@ function fallbackHistory(filePath: string, reason: string): GitHistory {
   // Shallow clones and non-git checkouts land here. The fabricated value
   // labels the entry "New (today)" — say so instead of lying silently.
   console.warn(
-    `[git-history] no history for ${filePath} (${reason}) — using fallback freshness (today, 1 commit)`,
+    `[git-history] no history for ${filePath} (${reason}) — using fallback freshness (today, 1 commit)`
   )
   return { lastModified: new Date().toISOString(), commitCount: 1 }
 }
@@ -28,7 +28,7 @@ export function getGitHistoryForFile(filePath: string): GitHistory {
     const dates = execFileSync(
       'git',
       ['log', '--follow', '--format=%cI', '--', filePath],
-      { encoding: 'utf-8' },
+      { encoding: 'utf-8' }
     )
       .trim()
       .split('\n')
@@ -40,7 +40,10 @@ export function getGitHistoryForFile(filePath: string): GitHistory {
 
     return { lastModified: dates[0], commitCount: dates.length }
   } catch (err) {
-    return fallbackHistory(filePath, err instanceof Error ? err.message : 'git failed')
+    return fallbackHistory(
+      filePath,
+      err instanceof Error ? err.message : 'git failed'
+    )
   }
 }
 
@@ -51,11 +54,14 @@ export function getGitHistoryForFile(filePath: string): GitHistory {
  * - "Recently updated": updated within 90 days
  * - "Stable": not updated recently
  */
-export function getFreshnessLabel(commitCount: number, lastModified: string): string {
+export function getFreshnessLabel(
+  commitCount: number,
+  lastModified: string
+): string {
   if (commitCount <= 1) return 'New'
 
   const daysSince = Math.floor(
-    (Date.now() - new Date(lastModified).getTime()) / 86400000,
+    (Date.now() - new Date(lastModified).getTime()) / 86400000
   )
 
   if (daysSince <= 30 && commitCount >= 3) return 'Actively maintained'
@@ -68,9 +74,7 @@ export function getFreshnessLabel(commitCount: number, lastModified: string): st
  * Returns "today", "yesterday", "N days ago", "N months ago", or "N years ago".
  */
 export function formatRelativeDate(isoDate: string): string {
-  const days = Math.floor(
-    (Date.now() - new Date(isoDate).getTime()) / 86400000,
-  )
+  const days = Math.floor((Date.now() - new Date(isoDate).getTime()) / 86400000)
 
   if (days === 0) return 'today'
   if (days === 1) return 'yesterday'

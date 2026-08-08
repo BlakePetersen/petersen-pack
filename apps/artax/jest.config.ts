@@ -8,16 +8,16 @@ const config: Config = {
   roots: ['<rootDir>/tests'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
-        tsconfig: 'tsconfig.test.json',
-      },
-    ],
-  },
+        tsconfig: 'tsconfig.test.json'
+      }
+    ]
+  }
 }
 
 export default config

@@ -14,14 +14,14 @@ export {
   type CalVer,
   type MergeStrategy,
   type Scope,
-  type Sha256Hex,
+  type Sha256Hex
 } from './schemas/primitives.ts'
 
 export {
   ArtifactFileSchema,
   ArtifactMetadataSchema,
   type ArtifactFile,
-  type ArtifactMetadata,
+  type ArtifactMetadata
 } from './schemas/artifact.ts'
 
 export {
@@ -30,7 +30,7 @@ export {
   ManifestSchema,
   type ManifestFileEntry,
   type ManifestEntry,
-  type Manifest,
+  type Manifest
 } from './schemas/manifest.ts'
 
 export {
@@ -39,14 +39,14 @@ export {
   RegistryArtifactSchema,
   type RegistryItem,
   type RegistryIndex,
-  type RegistryArtifact,
+  type RegistryArtifact
 } from './schemas/registry.ts'
 
 export {
   BlinkErrorCode,
   BlinkErrorSchema,
   type BlinkErrorCodeType,
-  type BlinkError,
+  type BlinkError
 } from './schemas/errors.ts'
 
 export {
@@ -57,5 +57,5 @@ export {
   VOICE_PRIMITIVES,
   VoiceSchema,
   type DxFrontmatter,
-  type Voice,
+  type Voice
 } from './schemas/dx-frontmatter.ts'

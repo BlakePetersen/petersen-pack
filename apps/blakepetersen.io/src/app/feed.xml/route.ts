@@ -24,7 +24,9 @@ function truncate(str: string, maxLength: number): string {
 function buildItem(item: FeedItem): string {
   const link = `${SITE_URL}/${item.slug}`
   const desc = truncate(item.excerpt ?? item.description ?? '', 300)
-  const pubDate = item.date ? `<pubDate>${new Date(item.date).toUTCString()}</pubDate>` : ''
+  const pubDate = item.date
+    ? `<pubDate>${new Date(item.date).toUTCString()}</pubDate>`
+    : ''
 
   return `    <item>
       <title>${escapeXml(item.title)}</title>
@@ -36,12 +38,12 @@ function buildItem(item: FeedItem): string {
 }
 
 export async function GET(): Promise<Response> {
-  const feedCollections = getAllCollections().filter((c) => c.showInFeed)
-  const postCollection = feedCollections.find((c) => c.slug === 'posts')
+  const feedCollections = getAllCollections().filter(c => c.showInFeed)
+  const postCollection = feedCollections.find(c => c.slug === 'posts')
   const posts = postCollection ? postCollection.getter() : []
   const dxItems = feedCollections
-    .filter((c) => c.slug !== 'posts')
-    .flatMap((c) => c.getter())
+    .filter(c => c.slug !== 'posts')
+    .flatMap(c => c.getter())
 
   // Posts sorted by date descending (already sorted from getPosts), then DX content
   const items = [...posts, ...dxItems]
@@ -60,7 +62,7 @@ ${items.map(buildItem).join('\n')}
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/rss+xml; charset=utf-8',
-    },
+      'Content-Type': 'application/rss+xml; charset=utf-8'
+    }
   })
 }

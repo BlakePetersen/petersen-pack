@@ -6,7 +6,7 @@ import type { ReactNode } from 'react'
 export function ContentShell({
   sidebar,
   toc,
-  children,
+  children
 }: {
   sidebar: ReactNode
   toc?: ReactNode

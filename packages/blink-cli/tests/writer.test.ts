@@ -1,6 +1,12 @@
 // ABOUTME: Tests for the atomic file writer module.
 // ABOUTME: Verifies temp+rename pattern, directory creation, and cleanup on failure.
-import { mkdtempSync, readFileSync, rmSync, existsSync, mkdirSync } from 'node:fs'
+import {
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  existsSync,
+  mkdirSync
+} from 'node:fs'
 import { rename } from 'node:fs/promises'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'

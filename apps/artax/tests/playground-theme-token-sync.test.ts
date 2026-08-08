@@ -20,15 +20,15 @@ import { artaxTerminalTheme } from '@/lib/playground-theme'
 const PRISM_TO_TOKEN = {
   '#0A0A0A': '--background', // plain.backgroundColor
   '#F59E0B': '--primary', // keyword/operator, number/boolean
-  '#6B7280': '--muted-foreground', // comment
+  '#6B7280': '--muted-foreground' // comment
 } as const
 
 describe('playground Prism theme ↔ artax-ui dark tokens', () => {
   // Reuse the existing CSS parser — do NOT re-parse globals.css here.
   const byVar = new Map(
-    getTokensByCategory().flatMap((c) =>
-      c.tokens.map((t) => [t.cssVar, t.darkValue] as const),
-    ),
+    getTokensByCategory().flatMap(c =>
+      c.tokens.map(t => [t.cssVar, t.darkValue] as const)
+    )
   )
 
   for (const [prismHex, cssVar] of Object.entries(PRISM_TO_TOKEN)) {
@@ -43,7 +43,7 @@ describe('playground Prism theme ↔ artax-ui dark tokens', () => {
     // Cross-check the actual Prism object (not just the token registry) so the
     // test proves the editor theme really consumes the token-backed literal.
     expect(artaxTerminalTheme.plain.backgroundColor?.toUpperCase()).toBe(
-      '#0A0A0A',
+      '#0A0A0A'
     )
     expect(byVar.get('--background')!.toUpperCase()).toBe('#0A0A0A')
   })

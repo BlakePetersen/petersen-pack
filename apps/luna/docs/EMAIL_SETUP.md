@@ -60,6 +60,7 @@ For production use, you need to verify your domain:
 Two email templates are sent for each inquiry:
 
 ### Admin Notification
+
 - **To**: `ADMIN_EMAIL`
 - **Subject**: "New Inquiry from [Name] - [Service Type]"
 - **Content**:
@@ -69,6 +70,7 @@ Two email templates are sent for each inquiry:
   - Link to view in admin panel
 
 ### Customer Confirmation
+
 - **To**: Customer's email from form
 - **Subject**: "Thank you for your inquiry - Ashley Petersen Photography"
 - **Content**:
@@ -92,12 +94,14 @@ Create a test inquiry through the contact form:
 ### Expected Logs
 
 Successful emails:
+
 ```
 ✓ Admin notification sent to admin@example.com
 ✓ Customer confirmation sent to customer@example.com
 ```
 
 Configuration warnings:
+
 ```
 RESEND_API_KEY not configured - skipping email notifications
 ```
@@ -105,6 +109,7 @@ RESEND_API_KEY not configured - skipping email notifications
 ### Test Without Real API Key
 
 If you don't have an API key yet, the system will:
+
 - Still save inquiries to the database
 - Log a warning about missing configuration
 - Not send emails
@@ -122,6 +127,7 @@ If you don't have an API key yet, the system will:
 ### Domain Not Verified
 
 If you see "Domain not verified" errors:
+
 - Use `onboarding@resend.dev` temporarily
 - Or wait for DNS records to propagate (can take up to 24 hours)
 - Use Resend's DNS checker to verify records
@@ -129,6 +135,7 @@ If you see "Domain not verified" errors:
 ### Rate Limits
 
 Free tier limits:
+
 - 100 emails/day during trial
 - 3,000 emails/month on paid plan ($20/month)
 
@@ -145,6 +152,7 @@ For a photography business, this is typically more than enough.
 When deploying to production (Vercel, etc.):
 
 1. Add environment variables to your hosting platform:
+
    ```
    RESEND_API_KEY=re_xxxxx
    ADMIN_EMAIL=admin@ashleypetersenphoto.com
@@ -162,6 +170,7 @@ When deploying to production (Vercel, etc.):
 ### Modify Email Templates
 
 Templates are in `lib/email-templates/`:
+
 - `admin-inquiry-notification.tsx` - Admin notification
 - `customer-confirmation.tsx` - Customer confirmation
 
@@ -170,6 +179,7 @@ Edit the HTML to customize branding, colors, or content.
 ### Change Response Time
 
 In `customer-confirmation.tsx`, update this line:
+
 ```tsx
 I'll review your message and get back to you within <strong>24-48 hours</strong>.
 ```

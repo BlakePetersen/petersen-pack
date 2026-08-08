@@ -3,7 +3,7 @@
 import {
   RegistryItemSchema,
   RegistryIndexSchema,
-  RegistryArtifactSchema,
+  RegistryArtifactSchema
 } from '../src/index'
 
 const validItem = {
@@ -12,12 +12,12 @@ const validItem = {
   type: 'config' as const,
   version: '2026.03.14.1',
   description: 'Opinionated ESLint configuration',
-  url: 'https://blakepetersen.io/configs/eslint-config',
+  url: 'https://blakepetersen.io/configs/eslint-config'
 }
 
 const validIndex = {
   items: [validItem],
-  generatedAt: '2026-03-14T12:00:00Z',
+  generatedAt: '2026-03-14T12:00:00Z'
 }
 
 describe('RegistryItemSchema', () => {
@@ -61,21 +61,22 @@ describe('RegistryIndexSchema', () => {
 
   it('accepts empty items array', () => {
     expect(
-      RegistryIndexSchema.safeParse({ items: [], generatedAt: '2026-03-14T12:00:00Z' })
-        .success
+      RegistryIndexSchema.safeParse({
+        items: [],
+        generatedAt: '2026-03-14T12:00:00Z'
+      }).success
     ).toBe(true)
   })
 
   it('rejects invalid datetime', () => {
     expect(
-      RegistryIndexSchema.safeParse({ items: [], generatedAt: 'not-a-date' }).success
+      RegistryIndexSchema.safeParse({ items: [], generatedAt: 'not-a-date' })
+        .success
     ).toBe(false)
   })
 
   it('rejects missing generatedAt', () => {
-    expect(
-      RegistryIndexSchema.safeParse({ items: [] }).success
-    ).toBe(false)
+    expect(RegistryIndexSchema.safeParse({ items: [] }).success).toBe(false)
   })
 })
 
@@ -89,16 +90,18 @@ describe('RegistryArtifactSchema', () => {
       description: 'Opinionated ESLint configuration',
       url: 'https://blakepetersen.io/configs/eslint-config',
       files: [
-        { path: 'eslint.config.mjs', content: 'export default {}', merge: 'replace' as const },
-      ],
+        {
+          path: 'eslint.config.mjs',
+          content: 'export default {}',
+          merge: 'replace' as const
+        }
+      ]
     }
     expect(RegistryArtifactSchema.safeParse(fullArtifact).success).toBe(true)
   })
 
   it('rejects missing files field', () => {
-    expect(
-      RegistryArtifactSchema.safeParse(validItem).success
-    ).toBe(false)
+    expect(RegistryArtifactSchema.safeParse(validItem).success).toBe(false)
   })
 
   it('rejects missing url field', () => {
@@ -109,9 +112,15 @@ describe('RegistryArtifactSchema', () => {
       version: '2026.03.14.1',
       description: 'Opinionated ESLint configuration',
       files: [
-        { path: 'eslint.config.mjs', content: 'export default {}', merge: 'replace' as const },
-      ],
+        {
+          path: 'eslint.config.mjs',
+          content: 'export default {}',
+          merge: 'replace' as const
+        }
+      ]
     }
-    expect(RegistryArtifactSchema.safeParse(artifactWithoutUrl).success).toBe(false)
+    expect(RegistryArtifactSchema.safeParse(artifactWithoutUrl).success).toBe(
+      false
+    )
   })
 })

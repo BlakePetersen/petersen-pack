@@ -22,36 +22,36 @@ function defaultContentRoot(): string {
 export default defineCommand({
   meta: {
     name: 'lint',
-    description: 'Lint content files',
+    description: 'Lint content files'
   },
   args: {
     files: {
       type: 'string',
       description: 'Lint only these files (comma-separated paths)',
-      required: false,
+      required: false
     },
     fix: {
       type: 'boolean',
       description: 'Auto-fix fixable violations',
-      default: false,
+      default: false
     },
     'content-root': {
       type: 'string',
       description:
         'Path to content directory (default: ./content if present, else apps/blakepetersen.io/content)',
-      required: false,
-    },
+      required: false
+    }
   },
   async run({ args }) {
     const contentRoot = (args['content-root'] as string) || defaultContentRoot()
     const parsedFiles = args.files
-      ? (args.files as string).split(',').map((f) => f.trim())
+      ? (args.files as string).split(',').map(f => f.trim())
       : undefined
 
     const result = await runLint({
       contentRoot,
       files: parsedFiles,
-      fix: args.fix as boolean,
+      fix: args.fix as boolean
     })
 
     if (result.diagnostics.length > 0) {
@@ -73,5 +73,5 @@ export default defineCommand({
     if (result.diagnostics.length === 0) {
       consola.success('No issues found')
     }
-  },
+  }
 })

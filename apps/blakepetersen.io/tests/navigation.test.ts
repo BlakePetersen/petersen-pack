@@ -1,28 +1,33 @@
 // ABOUTME: Tests for navigation data helpers used by sidebar and prev/next links.
 // ABOUTME: Validates section building, item ordering, and prev/next boundary behavior.
 
-import { buildNavSections, buildNavData, getPrevNext, type NavItem } from '@/lib/navigation'
+import {
+  buildNavSections,
+  buildNavData,
+  getPrevNext,
+  type NavItem
+} from '@/lib/navigation'
 
 // Mock the content module
 jest.mock('@/lib/content', () => ({
   getSkills: () => [
     { slug: 'skills/ai-prompting', title: 'AI Prompting', order: 1 },
-    { slug: 'skills/cursor-rules', title: 'Cursor Rules', order: 2 },
+    { slug: 'skills/cursor-rules', title: 'Cursor Rules', order: 2 }
   ],
   getHooks: () => [
-    { slug: 'hooks/pre-commit', title: 'Pre-Commit Hook', order: 1 },
+    { slug: 'hooks/pre-commit', title: 'Pre-Commit Hook', order: 1 }
   ],
   getConfigs: () => [
     { slug: 'configs/eslint', title: 'ESLint Config', order: 1 },
-    { slug: 'configs/prettier', title: 'Prettier Config', order: 2 },
+    { slug: 'configs/prettier', title: 'Prettier Config', order: 2 }
   ],
   getGuides: () => [
-    { slug: 'guides/monorepo-setup', title: 'Monorepo Setup', order: 1 },
+    { slug: 'guides/monorepo-setup', title: 'Monorepo Setup', order: 1 }
   ],
   getPosts: () => [
     { slug: 'posts/newer-post', title: 'Newer Post', date: '2025-06-15' },
-    { slug: 'posts/older-post', title: 'Older Post', date: '2025-01-01' },
-  ],
+    { slug: 'posts/older-post', title: 'Older Post', date: '2025-01-01' }
+  ]
 }))
 
 describe('buildNavSections', () => {
@@ -30,21 +35,21 @@ describe('buildNavSections', () => {
     const sections = buildNavSections()
 
     expect(sections).toHaveLength(6)
-    expect(sections.map((s) => s.label)).toEqual([
+    expect(sections.map(s => s.label)).toEqual([
       'Skills',
       'Hooks',
       'Configs',
       'Guides',
       'Posts',
-      'Project',
+      'Project'
     ])
-    expect(sections.map((s) => s.href)).toEqual([
+    expect(sections.map(s => s.href)).toEqual([
       '/skills',
       '/hooks',
       '/configs',
       '/guides',
       '/posts',
-      '/changelog',
+      '/changelog'
     ])
   })
 
@@ -86,7 +91,14 @@ describe('buildNavData', () => {
   it('populates itemsByCollection for each collection', () => {
     const navData = buildNavData()
     expect(Object.keys(navData.itemsByCollection)).toEqual(
-      expect.arrayContaining(['skills', 'hooks', 'configs', 'guides', 'posts', 'project']),
+      expect.arrayContaining([
+        'skills',
+        'hooks',
+        'configs',
+        'guides',
+        'posts',
+        'project'
+      ])
     )
     expect(navData.itemsByCollection['skills']).toHaveLength(2)
     expect(navData.itemsByCollection['posts']).toHaveLength(2)
@@ -98,7 +110,11 @@ describe('buildNavData', () => {
     const result = navData.findBySlug('skills/ai-prompting')
     expect(result).toEqual({
       collection: 'skills',
-      item: { title: 'AI Prompting', slug: 'skills/ai-prompting', href: '/skills/ai-prompting' },
+      item: {
+        title: 'AI Prompting',
+        slug: 'skills/ai-prompting',
+        href: '/skills/ai-prompting'
+      }
     })
   })
 
@@ -112,7 +128,7 @@ describe('getPrevNext', () => {
   const items: NavItem[] = [
     { title: 'First', slug: 'a', href: '/skills/a' },
     { title: 'Second', slug: 'b', href: '/skills/b' },
-    { title: 'Third', slug: 'c', href: '/skills/c' },
+    { title: 'Third', slug: 'c', href: '/skills/c' }
   ]
 
   it('returns prev and next for a middle item', () => {

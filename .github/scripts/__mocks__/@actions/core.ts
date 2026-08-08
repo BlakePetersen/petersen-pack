@@ -6,5 +6,5 @@ export function warning(_message: string): void {}
 export function error(_message: string): void {}
 export function setFailed(_message: string): void {}
 export function getInput(_name: string): string {
-  return '';
+  return ''
 }

@@ -114,8 +114,8 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 text-sm md:flex-row">
           <p>
-            © {new Date().getFullYear()} Ashley Petersen Photography. All
-            rights reserved.
+            © {new Date().getFullYear()} Ashley Petersen Photography. All rights
+            reserved.
           </p>
           <div className="flex items-center gap-6">
             <Link

@@ -15,7 +15,7 @@ import {
   extractGitHistory,
   versionAndValidateArtifacts,
   writeRegistryFiles,
-  type DxData,
+  type DxData
 } from './src/lib/velite-prepare'
 import { ARTIFACT_TYPES, MERGE_STRATEGIES } from 'blink-registry'
 import { dxFields } from './src/lib/velite-fields'
@@ -42,7 +42,7 @@ function pathSlugWithCollectionDedup(collection: string) {
       addIssue({
         fatal: true,
         code: 'custom',
-        message: `Duplicate slug '${bareSlug}' in collection '${collection}': '${meta.path}' conflicts with '${prior}'`,
+        message: `Duplicate slug '${bareSlug}' in collection '${collection}': '${meta.path}' conflicts with '${prior}'`
       })
     } else {
       cache.set(key, meta.path)
@@ -57,38 +57,38 @@ function dxSchemaFor(collection: string) {
       slug: pathSlugWithCollectionDedup(collection),
       excerpt: s.excerpt(),
       metadata: s.metadata(),
-      code: s.mdx(),
+      code: s.mdx()
     })
     .transform(({ metadata, ...data }) => ({
       ...data,
       category: data.category || data.slug.split('/')[0] || 'uncategorized',
       readingTime: metadata.readingTime,
-      wordCount: metadata.wordCount,
+      wordCount: metadata.wordCount
     }))
 }
 
 const skills = defineCollection({
   name: 'Skill',
   pattern: 'skills/**/*.mdx',
-  schema: dxSchemaFor('skills'),
+  schema: dxSchemaFor('skills')
 })
 
 const hooks = defineCollection({
   name: 'Hook',
   pattern: 'hooks/**/*.mdx',
-  schema: dxSchemaFor('hooks'),
+  schema: dxSchemaFor('hooks')
 })
 
 const configs = defineCollection({
   name: 'Config',
   pattern: 'configs/**/*.mdx',
-  schema: dxSchemaFor('configs'),
+  schema: dxSchemaFor('configs')
 })
 
 const guides = defineCollection({
   name: 'Guide',
   pattern: 'guides/**/*.mdx',
-  schema: dxSchemaFor('guides'),
+  schema: dxSchemaFor('guides')
 })
 
 const posts = defineCollection({
@@ -106,14 +106,14 @@ const posts = defineCollection({
       slug: s.path(),
       excerpt: s.excerpt(),
       metadata: s.metadata(),
-      code: s.mdx(),
+      code: s.mdx()
     })
     .transform(({ metadata, ...data }) => ({
       ...data,
       category: 'posts',
       readingTime: metadata.readingTime,
-      wordCount: metadata.wordCount,
-    })),
+      wordCount: metadata.wordCount
+    }))
 })
 
 const singleArtifacts = defineCollection({
@@ -127,8 +127,8 @@ const singleArtifacts = defineCollection({
     destination: s.string(),
     devDependencies: s.record(s.string(), s.string()).optional().default({}),
     slug: s.path(),
-    body: s.raw(),
-  }),
+    body: s.raw()
+  })
 })
 
 const multiArtifacts = defineCollection({
@@ -143,20 +143,20 @@ const multiArtifacts = defineCollection({
       files: s.array(
         s.object({
           path: s.string(),
-          merge: s.enum([...MERGE_STRATEGIES]),
-        }),
+          merge: s.enum([...MERGE_STRATEGIES])
+        })
       ),
-      slug: s.path(),
+      slug: s.path()
     })
     .transform((data, { meta }) => {
       const manifestDir = path.dirname(meta.path)
-      const resolvedFiles = data.files.map((f) => {
+      const resolvedFiles = data.files.map(f => {
         const filePath = path.join(manifestDir, f.path)
         const content = fs.readFileSync(filePath, 'utf-8')
         return { path: f.path, content, merge: f.merge }
       })
       return { ...data, files: resolvedFiles }
-    }),
+    })
 })
 
 const config = defineConfig({
@@ -165,19 +165,30 @@ const config = defineConfig({
     data: '.velite',
     assets: 'public/static',
     base: '/static/',
-    clean: true,
+    clean: true
   },
   mdx: {
     rehypePlugins: [
       rehypeSlug,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      [rehypeShiki as any, {
-        theme: terminalTheme,
-        transformers: [transformerMetaHighlight()],
-      }],
-    ],
+      [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        rehypeShiki as any,
+        {
+          theme: terminalTheme,
+          transformers: [transformerMetaHighlight()]
+        }
+      ]
+    ]
   },
-  collections: { skills, hooks, configs, guides, posts, singleArtifacts, multiArtifacts },
+  collections: {
+    skills,
+    hooks,
+    configs,
+    guides,
+    posts,
+    singleArtifacts,
+    multiArtifacts
+  },
   strict: true,
   prepare: (data: DxData) => {
     if (process.env.NODE_ENV === 'production') {
@@ -197,11 +208,11 @@ const config = defineConfig({
     const allArtifacts = versionAndValidateArtifacts(data, contentDir)
     fs.writeFileSync(
       path.join(outputDir, 'artifacts.json'),
-      JSON.stringify(allArtifacts, null, 2),
+      JSON.stringify(allArtifacts, null, 2)
     )
 
     writeRegistryFiles(allArtifacts)
-  },
+  }
 })
 
 export default config

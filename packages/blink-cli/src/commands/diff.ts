@@ -21,26 +21,29 @@ async function readFileSafe(path: string): Promise<string | null> {
 export default defineCommand({
   meta: {
     name: 'diff',
-    description: 'Show upstream changes for an installed artifact',
+    description: 'Show upstream changes for an installed artifact'
   },
   args: {
     slug: {
       type: 'positional',
       description: 'Artifact slug to diff',
-      required: true,
+      required: true
     },
     global: {
       type: 'boolean',
       description: 'Operate on the global (home-directory) manifest',
-      default: false,
-    },
+      default: false
+    }
   },
   async run({ args }) {
     const slug = args.slug as string
     const cwd = process.cwd()
 
     // 1. Read manifest
-    const manifestRoot = resolveManifestRoot(args.global ? 'global' : 'project', cwd)
+    const manifestRoot = resolveManifestRoot(
+      args.global ? 'global' : 'project',
+      cwd
+    )
     const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
@@ -49,7 +52,7 @@ export default defineCommand({
     }
 
     // 2. Find entry
-    const entry = manifest.items.find((i) => i.slug === slug)
+    const entry = manifest.items.find(i => i.slug === slug)
 
     if (!entry) {
       consola.error(`${pc.bold(slug)} is not installed.`)
@@ -67,7 +70,9 @@ export default defineCommand({
       const currentContent = await readFileSafe(destPath)
 
       if (currentContent === null) {
-        diffs.push(`${pc.bold(file.path)}: file not found on disk (would be created)`)
+        diffs.push(
+          `${pc.bold(file.path)}: file not found on disk (would be created)`
+        )
         continue
       }
 
@@ -103,5 +108,5 @@ export default defineCommand({
     for (const diff of diffs) {
       consola.log(diff)
     }
-  },
+  }
 })

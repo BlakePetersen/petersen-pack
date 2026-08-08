@@ -16,7 +16,9 @@ async function main() {
 
   // Delete all blog post-category relationships
   const deletedPostCategories = await prisma.blogPostCategory.deleteMany({})
-  console.log(`✓ Deleted ${deletedPostCategories.count} post-category relationships`)
+  console.log(
+    `✓ Deleted ${deletedPostCategories.count} post-category relationships`
+  )
 
   // Delete all blog post-tag relationships
   const deletedPostTags = await prisma.blogPostTag.deleteMany({})

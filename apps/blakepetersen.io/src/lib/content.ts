@@ -52,34 +52,48 @@ type GraphJson = {
 }
 
 export function getSkills() {
-  return [...skills].sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
+  return [...skills].sort(
+    (a, b) => (a.order ?? Infinity) - (b.order ?? Infinity)
+  )
 }
 
 export function getHooks() {
-  return [...hooks].sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
+  return [...hooks].sort(
+    (a, b) => (a.order ?? Infinity) - (b.order ?? Infinity)
+  )
 }
 
 export function getConfigs() {
-  return [...configs].sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
+  return [...configs].sort(
+    (a, b) => (a.order ?? Infinity) - (b.order ?? Infinity)
+  )
 }
 
 export function getGuides() {
-  return [...guides].sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
+  return [...guides].sort(
+    (a, b) => (a.order ?? Infinity) - (b.order ?? Infinity)
+  )
 }
 
 export function getPosts() {
   return [...posts].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 }
 
-export function resolveRelatedSlugs(slugs: string[]): { title: string; href: string }[] {
+export function resolveRelatedSlugs(
+  slugs: string[]
+): { title: string; href: string }[] {
   const allContent: CollectionItem[] = [
-    ...getSkills(), ...getHooks(), ...getConfigs(), ...getGuides(), ...getPosts(),
+    ...getSkills(),
+    ...getHooks(),
+    ...getConfigs(),
+    ...getGuides(),
+    ...getPosts()
   ]
   return slugs
-    .map((slug) => {
-      const item = allContent.find((c) => c.slug === slug)
+    .map(slug => {
+      const item = allContent.find(c => c.slug === slug)
       if (!item) return null
       return { title: item.title, href: `/${slug}` }
     })

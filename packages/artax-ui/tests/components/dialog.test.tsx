@@ -15,20 +15,28 @@ describe('Dialog primitive components', () => {
   })
 
   it('renders DialogContentPrimitive with terminal styling', () => {
-    render(<DialogContentPrimitive data-testid="content">Dialog body</DialogContentPrimitive>)
+    render(
+      <DialogContentPrimitive data-testid="content">
+        Dialog body
+      </DialogContentPrimitive>
+    )
     const content = screen.getByTestId('content')
     expect(content.className).toContain('bg-card')
     expect(content.className).toContain('border-border')
   })
 
   it('renders DialogTitlePrimitive with monospace font', () => {
-    render(<DialogTitlePrimitive data-testid="title">Title</DialogTitlePrimitive>)
+    render(
+      <DialogTitlePrimitive data-testid="title">Title</DialogTitlePrimitive>
+    )
     expect(screen.getByTestId('title').className).toContain('font-mono')
   })
 
   it('renders DialogDescriptionPrimitive', () => {
     render(
-      <DialogDescriptionPrimitive data-testid="desc">Description</DialogDescriptionPrimitive>
+      <DialogDescriptionPrimitive data-testid="desc">
+        Description
+      </DialogDescriptionPrimitive>
     )
     expect(screen.getByText('Description')).toBeInTheDocument()
   })

@@ -11,10 +11,11 @@ export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Changelog',
-  description: 'Release history for blakepetersen.io — browse all published versions and release notes.',
+  description:
+    'Release history for blakepetersen.io — browse all published versions and release notes.',
   alternates: {
-    canonical: 'https://blakepetersen.io/changelog',
-  },
+    canonical: 'https://blakepetersen.io/changelog'
+  }
 }
 
 function formatDate(iso: string): string {
@@ -22,7 +23,7 @@ function formatDate(iso: string): string {
   return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
-    year: 'numeric',
+    year: 'numeric'
   })
 }
 
@@ -52,9 +53,7 @@ export default async function ChangelogPage() {
                 <div key={release.tagName} className="flex gap-4 pb-8">
                   {/* Timeline connector */}
                   <div className="flex flex-col items-center font-mono text-muted-foreground">
-                    <span className="text-sm">
-                      {isLast ? '└─' : '├─'}
-                    </span>
+                    <span className="text-sm">{isLast ? '└─' : '├─'}</span>
                     {!isLast && (
                       <div className="w-px flex-1 border-l border-border" />
                     )}

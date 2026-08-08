@@ -10,14 +10,21 @@ import {
   writeManifest,
   createEmptyManifest,
   addManifestEntry,
-  checksum,
+  checksum
 } from '@/manifest'
 import { atomicWrite } from '@/writer'
 import { injectMarkers, findManagedSections } from '@/markers'
 import { resolveDestination, resolveManifestRoot } from '@/scope'
 import { findMissingDeps } from '@/deps'
 import { addToGitignore } from '@/gitignore'
-import type { Manifest, ManifestEntry, ManifestFileEntry, MergeStrategy, RegistryArtifact, Scope } from 'blink-registry'
+import type {
+  Manifest,
+  ManifestEntry,
+  ManifestFileEntry,
+  MergeStrategy,
+  RegistryArtifact,
+  Scope
+} from 'blink-registry'
 
 // --- Pipeline types ---
 
@@ -54,10 +61,10 @@ export interface PrepareResult {
 export async function resolve(
   slug: string,
   scope: Scope,
-  cwd: string,
+  cwd: string
 ): Promise<ResolveResult> {
   const index = await fetchIndex()
-  const item = index.items.find((i) => i.slug === slug)
+  const item = index.items.find(i => i.slug === slug)
 
   if (!item) {
     consola.error(`Artifact "${slug}" not found in registry.`)
@@ -82,7 +89,7 @@ export async function resolve(
 export async function prepare(
   resolved: ResolveResult,
   scope: Scope,
-  cwd: string,
+  cwd: string
 ): Promise<PrepareResult> {
   const { artifact, manifest } = resolved
 
@@ -112,18 +119,18 @@ export async function prepare(
       content,
       merge: file.merge,
       exists,
-      markerConflict,
+      markerConflict
     })
   }
 
-  const installedSlugs = manifest.items.map((i) => i.slug)
+  const installedSlugs = manifest.items.map(i => i.slug)
   const missing = artifact.dependencies
     ? findMissingDeps(artifact.dependencies, installedSlugs)
     : []
 
   const depPlan: DepPlan = {
     missing,
-    devDeps: artifact.devDependencies ?? {},
+    devDeps: artifact.devDependencies ?? {}
   }
 
   return { filePlans, depPlan }
@@ -132,13 +139,13 @@ export async function prepare(
 // --- Stage: Execute (file writing) ---
 
 export async function executeFileWrite(
-  plan: FilePlan,
+  plan: FilePlan
 ): Promise<ManifestFileEntry> {
   await atomicWrite(plan.destPath, plan.content)
   return {
     path: plan.path,
     checksum: checksum(plan.content),
-    merge: plan.merge,
+    merge: plan.merge
   }
 }
 
@@ -146,7 +153,7 @@ export function buildFileEntry(plan: FilePlan): ManifestFileEntry {
   return {
     path: plan.path,
     checksum: checksum(plan.content),
-    merge: plan.merge,
+    merge: plan.merge
   }
 }
 
@@ -156,7 +163,7 @@ export async function record(
   resolved: ResolveResult,
   fileEntries: ManifestFileEntry[],
   scope: Scope,
-  cwd: string,
+  cwd: string
 ): Promise<void> {
   const { artifact, manifest, manifestRoot, wasAutoInit } = resolved
 
@@ -171,7 +178,7 @@ export async function record(
     version: artifact.version,
     scope,
     installedAt: new Date().toISOString(),
-    files: fileEntries,
+    files: fileEntries
   }
 
   const updatedManifest = addManifestEntry(manifest, entry)

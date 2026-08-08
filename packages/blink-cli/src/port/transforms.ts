@@ -40,24 +40,27 @@ export function transformCallouts(content: string): string {
   // Match callout blocks: starts with > [!type], followed by continuation lines starting with >
   const calloutRegex = /^> \[!([a-z]+)\][^\n]*\n((?:> [^\n]*(?:\n|$))*)/gm
 
-  return content.replace(calloutRegex, (match, type: string, bodyRaw: string) => {
-    const component = getCalloutComponent(type)
+  return content.replace(
+    calloutRegex,
+    (match, type: string, bodyRaw: string) => {
+      const component = getCalloutComponent(type)
 
-    // Strip > prefix from each body line
-    const bodyLines = bodyRaw
-      .split('\n')
-      .filter((line) => line.startsWith('> '))
-      .map((line) => line.slice(2))
+      // Strip > prefix from each body line
+      const bodyLines = bodyRaw
+        .split('\n')
+        .filter(line => line.startsWith('> '))
+        .map(line => line.slice(2))
 
-    const body = bodyLines.join('\n')
+      const body = bodyLines.join('\n')
 
-    if (component === 'blockquote') {
-      // Keep as plain blockquote with body only (strip the [!info] header line)
-      return bodyLines.map((line) => `> ${line}`).join('\n')
+      if (component === 'blockquote') {
+        // Keep as plain blockquote with body only (strip the [!info] header line)
+        return bodyLines.map(line => `> ${line}`).join('\n')
+      }
+
+      return `<${component}>\n${body}\n</${component}>`
     }
-
-    return `<${component}>\n${body}\n</${component}>`
-  })
+  )
 }
 
 /**
@@ -69,19 +72,22 @@ export function transformCallouts(content: string): string {
  */
 export function transformWikilinks(
   content: string,
-  contentSlugs: Map<string, { title: string; href: string }>,
+  contentSlugs: Map<string, { title: string; href: string }>
 ): string {
   const wikilinkRegex = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g
 
-  return content.replace(wikilinkRegex, (_match, bareSlug: string, displayText?: string) => {
-    const entry = contentSlugs.get(bareSlug)
-    if (entry) {
-      const text = displayText || entry.title
-      return `[${text}](${entry.href})`
+  return content.replace(
+    wikilinkRegex,
+    (_match, bareSlug: string, displayText?: string) => {
+      const entry = contentSlugs.get(bareSlug)
+      if (entry) {
+        const text = displayText || entry.title
+        return `[${text}](${entry.href})`
+      }
+      const text = displayText || bareSlug
+      return `${text}{/* TODO: resolve wikilink */}`
     }
-    const text = displayText || bareSlug
-    return `${text}{/* TODO: resolve wikilink */}`
-  })
+  )
 }
 
 /**
@@ -100,7 +106,7 @@ export function transformFrontmatter(data: Record<string, unknown>): {
 } {
   const mapped: Record<string, unknown> = {
     draft: true,
-    applies_to: [],
+    applies_to: []
   }
 
   const unknownPairs: string[] = []

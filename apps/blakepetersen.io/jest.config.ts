@@ -11,17 +11,17 @@ const config: Config = {
     '^@/scaffold/(.*)$': '<rootDir>/../../packages/blink-cli/src/scaffold/$1',
     '^@/writer$': '<rootDir>/../../packages/blink-cli/src/writer',
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^#content$': '<rootDir>/.velite',
+    '^#content$': '<rootDir>/.velite'
   },
   testTimeout: 30000,
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
-        tsconfig: 'tsconfig.test.json',
-      },
-    ],
-  },
+        tsconfig: 'tsconfig.test.json'
+      }
+    ]
+  }
 }
 
 export default config

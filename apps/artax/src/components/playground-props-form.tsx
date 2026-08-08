@@ -15,10 +15,10 @@ export interface PlaygroundPropsFormProps {
 export function PlaygroundPropsForm({
   props,
   values,
-  onChange,
+  onChange
 }: PlaygroundPropsFormProps) {
   const visibleProps = props.filter(
-    (p) => p.name !== 'children' && !p.type.includes('=>')
+    p => p.name !== 'children' && !p.type.includes('=>')
   )
 
   if (visibleProps.length === 0) {
@@ -32,7 +32,7 @@ export function PlaygroundPropsForm({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {visibleProps.map((prop) => {
+      {visibleProps.map(prop => {
         const control = parsePropType(prop.type)
         const current = values[prop.name] ?? prop.default ?? ''
 
@@ -46,7 +46,7 @@ export function PlaygroundPropsForm({
                 <Toggle
                   aria-label={prop.name}
                   pressed={current === 'true'}
-                  onPressedChange={(v) => update(prop.name, String(v))}
+                  onPressedChange={v => update(prop.name, String(v))}
                 >
                   {prop.name}
                 </Toggle>
@@ -62,10 +62,10 @@ export function PlaygroundPropsForm({
                 <select
                   name={prop.name}
                   value={current}
-                  onChange={(e) => update(prop.name, e.target.value)}
+                  onChange={e => update(prop.name, e.target.value)}
                   className="bg-card border border-border px-2 py-1"
                 >
-                  {control.options.map((o) => (
+                  {control.options.map(o => (
                     <option key={o} value={o}>
                       {o}
                     </option>
@@ -84,7 +84,7 @@ export function PlaygroundPropsForm({
                   type="number"
                   name={prop.name}
                   value={current}
-                  onChange={(e) => update(prop.name, e.target.value)}
+                  onChange={e => update(prop.name, e.target.value)}
                 />
               </label>
             )
@@ -100,7 +100,7 @@ export function PlaygroundPropsForm({
                   type="text"
                   name={prop.name}
                   value={current}
-                  onChange={(e) => update(prop.name, e.target.value)}
+                  onChange={e => update(prop.name, e.target.value)}
                 />
               </label>
             )

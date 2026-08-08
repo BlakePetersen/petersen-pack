@@ -30,7 +30,7 @@ function resolveIndexPath(): string {
   const candidates = [
     join(process.cwd(), 'packages/artax-ui/src/index.ts'),
     join(process.cwd(), '../../packages/artax-ui/src/index.ts'),
-    join(__dirname, '../../../../packages/artax-ui/src/index.ts'),
+    join(__dirname, '../../../../packages/artax-ui/src/index.ts')
   ]
   for (const candidate of candidates) {
     try {
@@ -54,14 +54,15 @@ export function getBarrelComponentSlugs(): Record<Tier, Set<string>> {
   const atomsSection = content.slice(atomsStart, moleculesStart)
   const moleculesSection = content.slice(moleculesStart, organismsStart)
   const organismsEnd = content.indexOf('\n// ', organismsStart + 1)
-  const organismsSection = organismsEnd !== -1
-    ? content.slice(organismsStart, organismsEnd)
-    : content.slice(organismsStart)
+  const organismsSection =
+    organismsEnd !== -1
+      ? content.slice(organismsStart, organismsEnd)
+      : content.slice(organismsStart)
 
   return {
     atoms: collectSourceFolders(atomsSection, 'atoms'),
     molecules: collectSourceFolders(moleculesSection, 'molecules'),
-    organisms: collectSourceFolders(organismsSection, 'organisms'),
+    organisms: collectSourceFolders(organismsSection, 'organisms')
   }
 }
 
@@ -71,6 +72,6 @@ export function getComponentCounts(): ComponentCounts {
     atoms: slugs.atoms.size,
     molecules: slugs.molecules.size,
     organisms: slugs.organisms.size,
-    total: slugs.atoms.size + slugs.molecules.size + slugs.organisms.size,
+    total: slugs.atoms.size + slugs.molecules.size + slugs.organisms.size
   }
 }

@@ -5,12 +5,19 @@ import {
   getComponent,
   getComponentsByTier,
   getSidebarSections,
-  getAllComponents,
+  getAllComponents
 } from '@/lib/component-registry'
 import type { ComponentDef } from '@/lib/component-registry'
 
 // All 20 components expected in the registry, grouped by tier.
-const EXPECTED_ATOMS = ['button', 'input', 'badge', 'separator', 'copy-button', 'toggle']
+const EXPECTED_ATOMS = [
+  'button',
+  'input',
+  'badge',
+  'separator',
+  'copy-button',
+  'toggle'
+]
 const EXPECTED_MOLECULES = [
   'card',
   'table',
@@ -21,7 +28,7 @@ const EXPECTED_MOLECULES = [
   'prev-next-nav',
   'author-note',
   'decision-rationale',
-  'theme-toggle',
+  'theme-toggle'
 ]
 const EXPECTED_ORGANISMS = ['accordion', 'dialog', 'dropdown', 'modal']
 
@@ -36,7 +43,7 @@ const COMPOSITION_COMPONENTS = [
   'tooltip',
   'accordion',
   'dialog',
-  'dropdown',
+  'dropdown'
 ]
 
 describe('component-registry', () => {
@@ -69,11 +76,11 @@ describe('component-registry', () => {
   it('getComponentsByTier(tier) returns components filtered by tier', () => {
     const atoms = getComponentsByTier('atoms')
     expect(atoms.length).toBeGreaterThan(0)
-    atoms.forEach((c) => expect(c.tier).toBe('atoms'))
+    atoms.forEach(c => expect(c.tier).toBe('atoms'))
 
     const molecules = getComponentsByTier('molecules')
     expect(molecules.length).toBeGreaterThan(0)
-    molecules.forEach((c) => expect(c.tier).toBe('molecules'))
+    molecules.forEach(c => expect(c.tier).toBe('molecules'))
   })
 
   it('getSidebarSections() returns navigation sections with correct structure', () => {
@@ -81,25 +88,25 @@ describe('component-registry', () => {
     expect(sections.length).toBeGreaterThanOrEqual(5)
 
     // First section: Overview + Getting Started
-    expect(sections[0].items.some((i) => i.name === 'Overview')).toBe(true)
-    expect(sections[0].items.some((i) => i.name === 'Getting Started')).toBe(true)
+    expect(sections[0].items.some(i => i.name === 'Overview')).toBe(true)
+    expect(sections[0].items.some(i => i.name === 'Getting Started')).toBe(true)
 
     // Tier sections with labels
-    const atomsSection = sections.find((s) => s.label === '// atoms')
+    const atomsSection = sections.find(s => s.label === '// atoms')
     expect(atomsSection).toBeDefined()
     expect(atomsSection!.items.length).toBe(6)
 
-    const moleculesSection = sections.find((s) => s.label === '// molecules')
+    const moleculesSection = sections.find(s => s.label === '// molecules')
     expect(moleculesSection).toBeDefined()
     expect(moleculesSection!.items.length).toBe(10)
 
-    const organismsSection = sections.find((s) => s.label === '// organisms')
+    const organismsSection = sections.find(s => s.label === '// organisms')
     expect(organismsSection).toBeDefined()
     expect(organismsSection!.items.length).toBe(4)
 
     // Last section: Tokens
     const lastSection = sections[sections.length - 1]
-    expect(lastSection.items.some((i) => i.name === 'Tokens')).toBe(true)
+    expect(lastSection.items.some(i => i.name === 'Tokens')).toBe(true)
   })
 
   it('registry contains exactly 20 components', () => {
@@ -113,29 +120,29 @@ describe('component-registry', () => {
   })
 
   it('has every expected atom slug registered', () => {
-    const atoms = getComponentsByTier('atoms').map((c) => c.slug)
-    EXPECTED_ATOMS.forEach((slug) => {
+    const atoms = getComponentsByTier('atoms').map(c => c.slug)
+    EXPECTED_ATOMS.forEach(slug => {
       expect(atoms).toContain(slug)
     })
   })
 
   it('has every expected molecule slug registered', () => {
-    const molecules = getComponentsByTier('molecules').map((c) => c.slug)
-    EXPECTED_MOLECULES.forEach((slug) => {
+    const molecules = getComponentsByTier('molecules').map(c => c.slug)
+    EXPECTED_MOLECULES.forEach(slug => {
       expect(molecules).toContain(slug)
     })
   })
 
   it('has every expected organism slug registered', () => {
-    const organisms = getComponentsByTier('organisms').map((c) => c.slug)
-    EXPECTED_ORGANISMS.forEach((slug) => {
+    const organisms = getComponentsByTier('organisms').map(c => c.slug)
+    EXPECTED_ORGANISMS.forEach(slug => {
       expect(organisms).toContain(slug)
     })
   })
 
   it('every component has non-empty description, imports, props, codeExamples, and a11y', () => {
     const all = getAllComponents()
-    all.forEach((c) => {
+    all.forEach(c => {
       expect(c.description.length).toBeGreaterThan(0)
       expect(c.imports.length).toBeGreaterThan(0)
       expect(c.imports).toMatch(/from ['"]artax-ui['"]/)
@@ -150,35 +157,35 @@ describe('component-registry', () => {
 
   it('every component has at least a "Basic" code example', () => {
     const all = getAllComponents()
-    all.forEach((c) => {
-      const labels = c.codeExamples.map((ex) => ex.label)
+    all.forEach(c => {
+      const labels = c.codeExamples.map(ex => ex.label)
       expect(labels).toContain('Basic')
       // Each example must carry real code
-      c.codeExamples.forEach((ex) => expect(ex.code.length).toBeGreaterThan(0))
+      c.codeExamples.forEach(ex => expect(ex.code.length).toBeGreaterThan(0))
     })
   })
 
   it('components with variants include a "Variants" code example', () => {
-    VARIANT_COMPONENTS.forEach((slug) => {
-      const comp = getAllComponents().find((c) => c.slug === slug)
+    VARIANT_COMPONENTS.forEach(slug => {
+      const comp = getAllComponents().find(c => c.slug === slug)
       expect(comp).toBeDefined()
-      const labels = comp!.codeExamples.map((ex) => ex.label)
+      const labels = comp!.codeExamples.map(ex => ex.label)
       expect(labels).toContain('Variants')
     })
   })
 
   it('multi-part components include a "Composition" code example', () => {
-    COMPOSITION_COMPONENTS.forEach((slug) => {
-      const comp = getAllComponents().find((c) => c.slug === slug)
+    COMPOSITION_COMPONENTS.forEach(slug => {
+      const comp = getAllComponents().find(c => c.slug === slug)
       expect(comp).toBeDefined()
-      const labels = comp!.codeExamples.map((ex) => ex.label)
+      const labels = comp!.codeExamples.map(ex => ex.label)
       expect(labels).toContain('Composition')
     })
   })
 
   it('every component has a preview function that returns a truthy ReactNode', () => {
     const all = getAllComponents()
-    all.forEach((c) => {
+    all.forEach(c => {
       expect(typeof c.preview).toBe('function')
       const node = c.preview()
       // ReactNode can be many shapes; it must at minimum not be null or undefined
@@ -190,7 +197,7 @@ describe('component-registry', () => {
   it('every component slug is unique per tier', () => {
     const all = getAllComponents()
     const seen = new Set<string>()
-    all.forEach((c) => {
+    all.forEach(c => {
       const key = `${c.tier}/${c.slug}`
       expect(seen.has(key)).toBe(false)
       seen.add(key)
@@ -198,7 +205,7 @@ describe('component-registry', () => {
   })
 
   it('getComponent returns the right component for every registered pair', () => {
-    getAllComponents().forEach((c) => {
+    getAllComponents().forEach(c => {
       const found = getComponent(c.tier, c.slug)
       expect(found).toBeDefined()
       expect(found?.name).toBe(c.name)
@@ -224,7 +231,7 @@ const ENABLED_PLAYGROUND_SLUGS = [
   'table',
   'callout',
   'code-block',
-  'tabs',
+  'tabs'
 ]
 const EXCLUDED_PLAYGROUND_SLUGS = [
   'tooltip',
@@ -235,40 +242,45 @@ const EXCLUDED_PLAYGROUND_SLUGS = [
   'author-note',
   'decision-rationale',
   'modal',
-  'theme-toggle',
+  'theme-toggle'
 ]
 
 describe('playground opt-in', () => {
   it('exactly 11 components have playground.enabled === true', () => {
-    const enabled = getAllComponents().filter((c) => c.playground?.enabled)
+    const enabled = getAllComponents().filter(c => c.playground?.enabled)
     expect(enabled).toHaveLength(11)
   })
 
   it('enabled playground slugs match the agreed list exactly', () => {
     const enabledSlugs = getAllComponents()
-      .filter((c) => c.playground?.enabled)
-      .map((c) => c.slug)
+      .filter(c => c.playground?.enabled)
+      .map(c => c.slug)
       .sort()
     expect(enabledSlugs).toEqual([...ENABLED_PLAYGROUND_SLUGS].sort())
   })
 
   it('excluded components have no enabled playground (undefined or enabled === false)', () => {
     const excluded = getAllComponents().filter(
-      (c) => c.playground === undefined || c.playground.enabled === false,
+      c => c.playground === undefined || c.playground.enabled === false
     )
-    const excludedSlugs = excluded.map((c) => c.slug).sort()
+    const excludedSlugs = excluded.map(c => c.slug).sort()
     expect(excludedSlugs).toEqual([...EXCLUDED_PLAYGROUND_SLUGS].sort())
   })
 
   it('enabled and excluded lists partition the registry exactly (no overlap, no gap)', () => {
-    const all = getAllComponents().map((c) => c.slug).sort()
-    const partition = [...ENABLED_PLAYGROUND_SLUGS, ...EXCLUDED_PLAYGROUND_SLUGS].sort()
+    const all = getAllComponents()
+      .map(c => c.slug)
+      .sort()
+    const partition = [
+      ...ENABLED_PLAYGROUND_SLUGS,
+      ...EXCLUDED_PLAYGROUND_SLUGS
+    ].sort()
     expect(all).toEqual(partition)
   })
 
   it('every playground.defaultExampleIndex (when present) is a valid codeExamples index', () => {
     const all = getAllComponents()
-    all.forEach((c) => {
+    all.forEach(c => {
       const idx = c.playground?.defaultExampleIndex
       if (idx !== undefined) {
         expect(Number.isInteger(idx)).toBe(true)

@@ -41,7 +41,10 @@ describe('artax build prerequisites', () => {
   })
 
   it('sources the theme toggle from the artax-ui barrel', () => {
-    const header = readFileSync(join(root, 'src/components/header.tsx'), 'utf-8')
+    const header = readFileSync(
+      join(root, 'src/components/header.tsx'),
+      'utf-8'
+    )
     expect(header).toMatch(/import \{ ThemeToggle \} from 'artax-ui'/)
   })
 })

@@ -8,14 +8,14 @@ import { formatListTable } from '@/output'
 export default defineCommand({
   meta: {
     name: 'list',
-    description: 'List available configs, skills, and hooks',
+    description: 'List available configs, skills, and hooks'
   },
   args: {
     json: {
       type: 'boolean',
       description: 'Output raw JSON',
-      default: false,
-    },
+      default: false
+    }
   },
   async run({ args }) {
     try {
@@ -28,8 +28,10 @@ export default defineCommand({
 
       consola.log(formatListTable(index.items))
     } catch {
-      consola.error('Failed to fetch registry. Check your connection and try again.')
+      consola.error(
+        'Failed to fetch registry. Check your connection and try again.'
+      )
       process.exit(1)
     }
-  },
+  }
 })

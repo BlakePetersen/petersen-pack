@@ -10,24 +10,24 @@ import { resolveManifestRoot } from '@/scope'
 export default defineCommand({
   meta: {
     name: 'status',
-    description: 'Show installed items and update availability',
+    description: 'Show installed items and update availability'
   },
   args: {
     json: {
       type: 'boolean',
       description: 'Output raw JSON',
-      default: false,
+      default: false
     },
     global: {
       type: 'boolean',
       description: 'Operate on the global (home-directory) manifest',
-      default: false,
-    },
+      default: false
+    }
   },
   async run({ args }) {
     const manifestRoot = resolveManifestRoot(
       args.global ? 'global' : 'project',
-      process.cwd(),
+      process.cwd()
     )
     const manifest = await readManifest(manifestRoot)
 
@@ -56,5 +56,5 @@ export default defineCommand({
     }
 
     consola.log(formatStatusTable(manifest.items, registryItems))
-  },
+  }
 })

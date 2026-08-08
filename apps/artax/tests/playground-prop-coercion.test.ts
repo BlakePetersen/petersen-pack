@@ -17,21 +17,21 @@ describe('parsePropType', () => {
   it('classifies a single-quoted literal union as { kind: "select" }', () => {
     expect(parsePropType("'default' | 'outline' | 'ghost'")).toEqual({
       kind: 'select',
-      options: ['default', 'outline', 'ghost'],
+      options: ['default', 'outline', 'ghost']
     })
   })
 
   it('classifies another single-quoted literal union as select', () => {
     expect(parsePropType("'sm' | 'md' | 'lg'")).toEqual({
       kind: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['sm', 'md', 'lg']
     })
   })
 
   it('classifies a double-quoted literal union as select', () => {
     expect(parsePropType('"sm" | "md"')).toEqual({
       kind: 'select',
-      options: ['sm', 'md'],
+      options: ['sm', 'md']
     })
   })
 
@@ -44,14 +44,16 @@ describe('parsePropType', () => {
   })
 
   it('classifies a callback signature as { kind: "text" } (fallthrough)', () => {
-    expect(parsePropType('(pressed: boolean) => void')).toEqual({ kind: 'text' })
+    expect(parsePropType('(pressed: boolean) => void')).toEqual({
+      kind: 'text'
+    })
   })
 
   it('falls back to text when a literal-looking union ends with "..."', () => {
     // Real registry example from Input.type — trailing `...` defeats the regex.
     // The fallback is acceptable per RESEARCH.md Pattern 3.
     expect(
-      parsePropType("'text' | 'email' | 'password' | 'number' | 'search' | ..."),
+      parsePropType("'text' | 'email' | 'password' | 'number' | 'search' | ...")
     ).toEqual({ kind: 'text' })
   })
 
@@ -60,7 +62,7 @@ describe('parsePropType', () => {
     expect(parsePropType('  number  ')).toEqual({ kind: 'number' })
     expect(parsePropType("  'a' | 'b'  ")).toEqual({
       kind: 'select',
-      options: ['a', 'b'],
+      options: ['a', 'b']
     })
   })
 
@@ -93,7 +95,7 @@ describe('parsePropType', () => {
     '{ href: string; label: string }': 'text',
     '{ name: string; avatar?: string; href?: string }': 'text',
     'Array<{ name: string; reason: string }>': 'text',
-    '-': 'text',
+    '-': 'text'
   }
 
   it('classifies every real PropDef.type in the registry without falling through silently', () => {
@@ -106,23 +108,23 @@ describe('parsePropType', () => {
           componentSlug: comp.slug,
           propName: prop.name,
           propType: prop.type,
-          expectedKind,
+          expectedKind
         }).toMatchObject({
           // Fail loudly if a registry prop.type isn't in our expectation table —
           // every real prop.type must be classified.
-          expectedKind: expect.any(String),
+          expectedKind: expect.any(String)
         })
         const result = parsePropType(prop.type)
         expect({
           componentSlug: comp.slug,
           propName: prop.name,
           propType: prop.type,
-          kind: result.kind,
+          kind: result.kind
         }).toEqual({
           componentSlug: comp.slug,
           propName: prop.name,
           propType: prop.type,
-          kind: expectedKind,
+          kind: expectedKind
         })
       }
     }

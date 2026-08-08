@@ -7,15 +7,15 @@ async function listGalleries() {
   const galleries = await prisma.gallery.findMany({
     include: {
       _count: {
-        select: { images: true }
-      }
+        select: { images: true },
+      },
     },
-    orderBy: { title: 'asc' }
+    orderBy: { title: 'asc' },
   })
 
   console.log('Current galleries in database:')
   console.log('='.repeat(60))
-  galleries.forEach(g => {
+  galleries.forEach((g) => {
     console.log(`${g.title.padEnd(40)} | ${g._count.images} images | ${g.slug}`)
   })
   console.log(`\nTotal: ${galleries.length} galleries`)

@@ -11,7 +11,7 @@ import { SidebarNav, type SidebarSection } from './sidebar-nav'
 
 function DrawerInner({
   sections,
-  children,
+  children
 }: {
   sections: SidebarSection[]
   children: React.ReactNode
@@ -34,7 +34,7 @@ function DrawerInner({
 
 export function SidebarDrawer({
   sections,
-  children,
+  children
 }: {
   sections: SidebarSection[]
   children: React.ReactNode

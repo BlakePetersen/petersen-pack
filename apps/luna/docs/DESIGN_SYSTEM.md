@@ -8,11 +8,11 @@ Use semantic spacing tokens instead of arbitrary values for consistency.
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `gutter` | 24px (1.5rem) | Standard horizontal and vertical padding |
-| `section` | 96px (6rem) | Vertical spacing between major sections |
-| `section-sm` | 64px (4rem) | Smaller vertical section spacing |
+| Token        | Value         | Usage                                    |
+| ------------ | ------------- | ---------------------------------------- |
+| `gutter`     | 24px (1.5rem) | Standard horizontal and vertical padding |
+| `section`    | 96px (6rem)   | Vertical spacing between major sections  |
+| `section-sm` | 64px (4rem)   | Smaller vertical section spacing         |
 
 ### Usage Examples
 
@@ -39,34 +39,34 @@ Use semantic typography tokens for consistent text sizing and line heights.
 
 Large, impactful text for hero sections and major headings.
 
-| Token | Size | Line Height | Letter Spacing | Usage |
-|-------|------|-------------|----------------|-------|
-| `display-xl` | 80px (5rem) | 1.0 | -0.02em | Extra large displays |
-| `display-lg` | 64px (4rem) | 1.0 | -0.02em | Large displays |
-| `display-md` | 48px (3rem) | 1.1 | -0.01em | Medium displays |
-| `display-sm` | 40px (2.5rem) | 1.1 | -0.01em | Small displays |
+| Token        | Size          | Line Height | Letter Spacing | Usage                |
+| ------------ | ------------- | ----------- | -------------- | -------------------- |
+| `display-xl` | 80px (5rem)   | 1.0         | -0.02em        | Extra large displays |
+| `display-lg` | 64px (4rem)   | 1.0         | -0.02em        | Large displays       |
+| `display-md` | 48px (3rem)   | 1.1         | -0.01em        | Medium displays      |
+| `display-sm` | 40px (2.5rem) | 1.1         | -0.01em        | Small displays       |
 
 ### Headings
 
 Standard heading hierarchy for content sections.
 
-| Token | Size | Line Height | Letter Spacing | HTML |
-|-------|------|-------------|----------------|------|
-| `heading-xl` | 32px (2rem) | 1.2 | -0.01em | h1 |
-| `heading-lg` | 28px (1.75rem) | 1.2 | -0.01em | h2 |
-| `heading-md` | 24px (1.5rem) | 1.3 | 0 | h3 |
-| `heading-sm` | 20px (1.25rem) | 1.4 | 0 | h4 |
+| Token        | Size           | Line Height | Letter Spacing | HTML |
+| ------------ | -------------- | ----------- | -------------- | ---- |
+| `heading-xl` | 32px (2rem)    | 1.2         | -0.01em        | h1   |
+| `heading-lg` | 28px (1.75rem) | 1.2         | -0.01em        | h2   |
+| `heading-md` | 24px (1.5rem)  | 1.3         | 0              | h3   |
+| `heading-sm` | 20px (1.25rem) | 1.4         | 0              | h4   |
 
 ### Body Text
 
 Standard body copy and UI text.
 
-| Token | Size | Line Height | Letter Spacing | Usage |
-|-------|------|-------------|----------------|-------|
-| `body-lg` | 18px (1.125rem) | 1.6 | 0 | Large body text, introductions |
-| `body-md` | 16px (1rem) | 1.6 | 0 | Standard body text |
-| `body-sm` | 14px (0.875rem) | 1.5 | 0 | Small body text, captions |
-| `caption` | 12px (0.75rem) | 1.4 | 0.02em | Tiny text, labels |
+| Token     | Size            | Line Height | Letter Spacing | Usage                          |
+| --------- | --------------- | ----------- | -------------- | ------------------------------ |
+| `body-lg` | 18px (1.125rem) | 1.6         | 0              | Large body text, introductions |
+| `body-md` | 16px (1rem)     | 1.6         | 0              | Standard body text             |
+| `body-sm` | 14px (0.875rem) | 1.5         | 0              | Small body text, captions      |
+| `caption` | 12px (0.75rem)  | 1.4         | 0.02em         | Tiny text, labels              |
 
 ### Usage Examples
 
@@ -110,11 +110,11 @@ All color tokens automatically support dark mode through the `.dark` class.
 
 ## Border Radius
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `rounded-sm` | calc(var(--radius) - 4px) | Small radius (~2px) |
+| Token        | Value                     | Usage                |
+| ------------ | ------------------------- | -------------------- |
+| `rounded-sm` | calc(var(--radius) - 4px) | Small radius (~2px)  |
 | `rounded-md` | calc(var(--radius) - 2px) | Medium radius (~6px) |
-| `rounded-lg` | var(--radius) | Large radius (8px) |
+| `rounded-lg` | var(--radius)             | Large radius (8px)   |
 
 Default `--radius` is 0.5rem (8px).
 

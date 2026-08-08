@@ -24,7 +24,7 @@ describe('Content Structure (CONT-02)', () => {
   test('skill in skills/claude-code/ gets slug containing the subdirectory path', () => {
     const items = readCollection('skills')
     const nested = items.find((i: { slug: string }) =>
-      i.slug.includes('claude-code'),
+      i.slug.includes('claude-code')
     )
     expect(nested).toBeDefined()
     expect(nested.slug).toContain('claude-code/')
@@ -33,7 +33,7 @@ describe('Content Structure (CONT-02)', () => {
   test('hook in hooks/pre-commit/ gets slug containing the subdirectory path', () => {
     const items = readCollection('hooks')
     const nested = items.find((i: { slug: string }) =>
-      i.slug.includes('pre-commit'),
+      i.slug.includes('pre-commit')
     )
     expect(nested).toBeDefined()
     expect(nested.slug).toContain('pre-commit/')
@@ -71,7 +71,7 @@ describe('Content Structure (CONT-02)', () => {
       ...hooks.map((i: { slug: string }) => `hooks/${i.slug}`),
       ...configs.map((i: { slug: string }) => `configs/${i.slug}`),
       ...guides.map((i: { slug: string }) => `guides/${i.slug}`),
-      ...posts.map((i: { slug: string }) => `posts/${i.slug}`),
+      ...posts.map((i: { slug: string }) => `posts/${i.slug}`)
     ]
     const uniqueSlugs = new Set(allSlugs)
     expect(uniqueSlugs.size).toBe(allSlugs.length)

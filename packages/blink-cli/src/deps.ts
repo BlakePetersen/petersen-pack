@@ -45,5 +45,5 @@ export function findMissingDeps(
   artifactDeps: string[],
   installedSlugs: string[]
 ): string[] {
-  return artifactDeps.filter((dep) => !installedSlugs.includes(dep))
+  return artifactDeps.filter(dep => !installedSlugs.includes(dep))
 }

@@ -22,30 +22,30 @@ async function readFileSafe(path: string): Promise<string | null> {
 export default defineCommand({
   meta: {
     name: 'update',
-    description: 'Update installed artifacts to latest upstream versions',
+    description: 'Update installed artifacts to latest upstream versions'
   },
   args: {
     slug: {
       type: 'positional',
       description: 'Artifact slug to update (updates all if omitted)',
-      required: false,
+      required: false
     },
     'dry-run': {
       type: 'boolean',
       description: 'Preview changes without applying them',
-      default: false,
+      default: false
     },
     yes: {
       type: 'boolean',
       alias: 'y',
       description: 'Skip confirmation prompts',
-      default: false,
+      default: false
     },
     global: {
       type: 'boolean',
       description: 'Operate on the global (home-directory) manifest',
-      default: false,
-    },
+      default: false
+    }
   },
   async run({ args }) {
     const slug = args.slug as string | undefined
@@ -54,7 +54,10 @@ export default defineCommand({
     const cwd = process.cwd()
 
     // 1. Read manifest
-    const manifestRoot = resolveManifestRoot(args.global ? 'global' : 'project', cwd)
+    const manifestRoot = resolveManifestRoot(
+      args.global ? 'global' : 'project',
+      cwd
+    )
     const manifest = await readManifest(manifestRoot)
 
     if (!manifest) {
@@ -66,7 +69,7 @@ export default defineCommand({
     let items: ManifestEntry[]
 
     if (slug) {
-      const entry = manifest.items.find((i) => i.slug === slug)
+      const entry = manifest.items.find(i => i.slug === slug)
       if (!entry) {
         consola.error(`${pc.bold(slug)} is not installed.`)
         process.exit(1)
@@ -89,7 +92,7 @@ export default defineCommand({
       for (const file of artifact.files) {
         const destPath = resolveDestination(file.path, entry.scope, cwd)
         const currentContent = await readFileSafe(destPath)
-        const manifestFileEntry = entry.files.find((f) => f.path === file.path)
+        const manifestFileEntry = entry.files.find(f => f.path === file.path)
 
         const result = await reconcileFile({
           file,
@@ -97,11 +100,12 @@ export default defineCommand({
           currentContent,
           manifestFileEntry,
           slug: entry.slug,
-          skipPrompt,
+          skipPrompt
         })
 
         if (result.action.kind === 'write') {
-          if (!dryRun) await atomicWrite(result.action.destPath, result.action.content)
+          if (!dryRun)
+            await atomicWrite(result.action.destPath, result.action.content)
           hasChanges = true
         }
 
@@ -109,9 +113,7 @@ export default defineCommand({
       }
 
       if (!hasChanges) {
-        consola.info(
-          `${pc.bold(entry.name)} is already up to date.`
-        )
+        consola.info(`${pc.bold(entry.name)} is already up to date.`)
         continue
       }
 
@@ -120,7 +122,7 @@ export default defineCommand({
           ...entry,
           version: artifact.version,
           installedAt: new Date().toISOString(),
-          files: newFileEntries,
+          files: newFileEntries
         }
         updatedManifest = updateManifestEntry(
           updatedManifest,
@@ -133,5 +135,5 @@ export default defineCommand({
         )
       }
     }
-  },
+  }
 })

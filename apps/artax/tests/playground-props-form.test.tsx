@@ -11,42 +11,42 @@ const variantProp: PropDef = {
   name: 'variant',
   type: "'default' | 'outline'",
   default: 'default',
-  description: 'Visual style',
+  description: 'Visual style'
 }
 
 const disabledProp: PropDef = {
   name: 'disabled',
   type: 'boolean',
   default: 'false',
-  description: 'Disabled state',
+  description: 'Disabled state'
 }
 
 const sizeProp: PropDef = {
   name: 'size',
   type: 'number',
   default: '0',
-  description: 'Size in px',
+  description: 'Size in px'
 }
 
 const placeholderProp: PropDef = {
   name: 'placeholder',
   type: 'string',
   default: '',
-  description: 'Placeholder text',
+  description: 'Placeholder text'
 }
 
 const childrenProp: PropDef = {
   name: 'children',
   type: 'ReactNode',
   default: '',
-  description: 'Children content',
+  description: 'Children content'
 }
 
 const onClickProp: PropDef = {
   name: 'onClick',
   type: '(e: MouseEvent) => void',
   default: '',
-  description: 'Click handler',
+  description: 'Click handler'
 }
 
 describe('PlaygroundPropsForm', () => {
@@ -64,7 +64,7 @@ describe('PlaygroundPropsForm', () => {
     expect(select).toHaveValue('default')
 
     const options = Array.from(select.querySelectorAll('option')).map(
-      (o) => o.value
+      o => o.value
     )
     expect(options).toEqual(['default', 'outline'])
   })
@@ -96,7 +96,9 @@ describe('PlaygroundPropsForm', () => {
       />
     )
 
-    const input = container.querySelector('input[name="size"]') as HTMLInputElement
+    const input = container.querySelector(
+      'input[name="size"]'
+    ) as HTMLInputElement
     expect(input).toBeInTheDocument()
     expect(input).toHaveAttribute('type', 'number')
     expect(input).toHaveValue(12)
@@ -146,9 +148,7 @@ describe('PlaygroundPropsForm', () => {
   })
 
   it('renders the "No props documented" empty state when props=[]', () => {
-    render(
-      <PlaygroundPropsForm props={[]} values={{}} onChange={() => {}} />
-    )
+    render(<PlaygroundPropsForm props={[]} values={{}} onChange={() => {}} />)
 
     expect(screen.getByText('No props documented')).toBeInTheDocument()
   })

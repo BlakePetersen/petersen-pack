@@ -19,7 +19,9 @@ export function formatListTable(items: RegistryItem[]): string {
   for (const [type, groupItems] of Object.entries(grouped)) {
     lines.push(pc.bold(type))
     for (const item of groupItems) {
-      lines.push(`  ${pc.bold(item.name)} ${pc.dim(item.version)} ${item.description}`)
+      lines.push(
+        `  ${pc.bold(item.name)} ${pc.dim(item.version)} ${item.description}`
+      )
     }
     lines.push('')
   }
@@ -36,7 +38,7 @@ export function formatStatusTable(
   const lines: string[] = []
 
   for (const entry of entries) {
-    const registryItem = registryItems.find((r) => r.slug === entry.slug)
+    const registryItem = registryItems.find(r => r.slug === entry.slug)
     const isOutdated = registryItem && registryItem.version !== entry.version
     const indicator = isOutdated ? pc.yellow('\u2191') : pc.green('\u2713')
 
@@ -63,11 +65,17 @@ export function formatColoredDiff(
   newContent: string,
   filename: string
 ): string {
-  const patch = createPatch(filename, oldContent, newContent, 'installed', 'upstream')
+  const patch = createPatch(
+    filename,
+    oldContent,
+    newContent,
+    'installed',
+    'upstream'
+  )
 
   return patch
     .split('\n')
-    .map((line) => {
+    .map(line => {
       if (line.startsWith('+++') || line.startsWith('---')) return pc.dim(line)
       if (line.startsWith('+')) return pc.green(line)
       if (line.startsWith('-')) return pc.red(line)

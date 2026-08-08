@@ -18,10 +18,16 @@ export function Header() {
           blake_petersen
         </Link>
         <nav className="flex items-center gap-3">
-          <Link href="/start-here" className="hidden font-mono text-xs text-muted-foreground transition-colors hover:text-foreground sm:block">
+          <Link
+            href="/start-here"
+            className="hidden font-mono text-xs text-muted-foreground transition-colors hover:text-foreground sm:block"
+          >
             start_here
           </Link>
-          <Link href="/about" className="hidden font-mono text-xs text-muted-foreground transition-colors hover:text-foreground sm:block">
+          <Link
+            href="/about"
+            className="hidden font-mono text-xs text-muted-foreground transition-colors hover:text-foreground sm:block"
+          >
             about
           </Link>
           <ThemeToggle />

@@ -11,19 +11,19 @@ import { addToGitignore } from '@/gitignore'
 export default defineCommand({
   meta: {
     name: 'init',
-    description: 'Initialize blink in this project',
+    description: 'Initialize blink in this project'
   },
   args: {
     yes: {
       type: 'boolean',
       description: 'Skip confirmation prompts',
-      default: false,
+      default: false
     },
     'dry-run': {
       type: 'boolean',
       description: 'Preview what would be created without writing files',
-      default: false,
-    },
+      default: false
+    }
   },
   async run({ args }) {
     const cwd = process.cwd()
@@ -53,5 +53,5 @@ export default defineCommand({
     const pm = detectPackageManager(cwd)
     consola.success(`Initialized blink in ${pc.dim('.blink/')}`)
     consola.info(`Detected package manager: ${pc.bold(pm)}`)
-  },
+  }
 })

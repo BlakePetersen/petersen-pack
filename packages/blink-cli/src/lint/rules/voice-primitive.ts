@@ -3,19 +3,28 @@
 
 import type { LintDiagnostic, LintRule, LintContext } from '@/lint/types'
 
-const VOICE_COMPONENT_MAP: Record<string, { component: string; pattern: RegExp }> = {
+const VOICE_COMPONENT_MAP: Record<
+  string,
+  { component: string; pattern: RegExp }
+> = {
   'author-note': { component: 'AuthorNote', pattern: /<AuthorNote[\s>]/ },
-  'decision-rationale': { component: 'DecisionRationale', pattern: /<DecisionRationale[\s>]/ },
+  'decision-rationale': {
+    component: 'DecisionRationale',
+    pattern: /<DecisionRationale[\s>]/
+  }
 }
 
-const RATIONALE_HEADING_PATTERN = /^##\s+(Why|Decision|Trade-?off|Rationale|Reasoning)/mi
+const RATIONALE_HEADING_PATTERN =
+  /^##\s+(Why|Decision|Trade-?off|Rationale|Reasoning)/im
 
 export const voicePrimitiveRule: LintRule = {
   name: 'voice-primitive',
 
   check(ctx: LintContext): LintDiagnostic[] {
     const diagnostics: LintDiagnostic[] = []
-    const voice = Array.isArray(ctx.frontmatter.voice) ? ctx.frontmatter.voice as string[] : []
+    const voice = Array.isArray(ctx.frontmatter.voice)
+      ? (ctx.frontmatter.voice as string[])
+      : []
 
     // Check declared voice values have matching components in body
     for (const value of voice) {
@@ -27,7 +36,7 @@ export const voicePrimitiveRule: LintRule = {
           file: ctx.file,
           severity: 'error',
           rule: 'voice-primitive',
-          message: `voice '${value}' declared but <${mapping.component}> not found in body`,
+          message: `voice '${value}' declared but <${mapping.component}> not found in body`
         })
       }
     }
@@ -40,7 +49,7 @@ export const voicePrimitiveRule: LintRule = {
           file: ctx.file,
           severity: 'warning',
           rule: 'voice-primitive',
-          message: `heading '## ${match[1]}' looks like a decision rationale — consider adding voice: ['decision-rationale'] to frontmatter`,
+          message: `heading '## ${match[1]}' looks like a decision rationale — consider adding voice: ['decision-rationale'] to frontmatter`
         })
       }
     }
@@ -48,8 +57,12 @@ export const voicePrimitiveRule: LintRule = {
     return diagnostics
   },
 
-  fix(ctx: LintContext): { frontmatter?: Record<string, unknown>; body?: string } | null {
-    const voice = Array.isArray(ctx.frontmatter.voice) ? [...ctx.frontmatter.voice as string[]] : []
+  fix(
+    ctx: LintContext
+  ): { frontmatter?: Record<string, unknown>; body?: string } | null {
+    const voice = Array.isArray(ctx.frontmatter.voice)
+      ? [...(ctx.frontmatter.voice as string[])]
+      : []
 
     // If rationale-shaped heading detected and voice missing 'decision-rationale', add it
     if (!voice.includes('decision-rationale')) {
@@ -61,5 +74,5 @@ export const voicePrimitiveRule: LintRule = {
     }
 
     return null
-  },
+  }
 }

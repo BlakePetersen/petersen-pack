@@ -160,7 +160,8 @@ async function scrapePost(postUrl: string) {
     }
 
     // Use first image as cover if available
-    const coverImage = processedImages.length > 0 ? processedImages[0].url : null
+    const coverImage =
+      processedImages.length > 0 ? processedImages[0].url : null
 
     // Create or find categories
     const categoryConnections = await Promise.all(
@@ -231,7 +232,10 @@ async function scrapePost(postUrl: string) {
   }
 }
 
-async function scrapeBlogPage(url: string, allPostUrls: Set<string>): Promise<string | null> {
+async function scrapeBlogPage(
+  url: string,
+  allPostUrls: Set<string>
+): Promise<string | null> {
   console.log(`\nFetching blog page: ${url}`)
 
   try {
@@ -282,7 +286,8 @@ async function main() {
     let currentPageUrl: string | null = `${LEGACY_BASE_URL}/blog`
     let pageCount = 0
 
-    while (currentPageUrl && pageCount < 20) { // Safety limit of 20 pages
+    while (currentPageUrl && pageCount < 20) {
+      // Safety limit of 20 pages
       pageCount++
       const nextPageUrl = await scrapeBlogPage(currentPageUrl, allPostUrls)
 

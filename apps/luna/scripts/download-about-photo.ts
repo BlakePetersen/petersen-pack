@@ -20,14 +20,17 @@ async function downloadAboutPhoto() {
     console.log('Fetching about page...')
     const response = await axios.get(ABOUT_URL, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+        'User-Agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
       },
     })
 
     const $ = cheerio.load(response.data)
 
     // Find the main portrait image
-    const imageUrl = $('.sqs-block-image img').first().attr('data-src') || $('.sqs-block-image img').first().attr('src')
+    const imageUrl =
+      $('.sqs-block-image img').first().attr('data-src') ||
+      $('.sqs-block-image img').first().attr('src')
 
     if (!imageUrl) {
       console.log('No image found on about page')
@@ -48,7 +51,8 @@ async function downloadAboutPhoto() {
       responseType: 'arraybuffer',
       timeout: 30000,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+        'User-Agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
       },
     })
 

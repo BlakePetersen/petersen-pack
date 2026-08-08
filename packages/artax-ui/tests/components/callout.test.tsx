@@ -11,9 +11,7 @@ describe('Callout', () => {
 
   it('renders with terminal surface background', () => {
     render(<Callout data-testid="callout">content</Callout>)
-    expect(screen.getByTestId('callout').className).toContain(
-      'bg-card'
-    )
+    expect(screen.getByTestId('callout').className).toContain('bg-card')
   })
 
   it('renders with left border accent', () => {
@@ -36,7 +34,9 @@ describe('Callout', () => {
         warning
       </Callout>
     )
-    expect(screen.getByTestId('callout').className).toContain('border-l-warning')
+    expect(screen.getByTestId('callout').className).toContain(
+      'border-l-warning'
+    )
   })
 
   it('renders error variant with red border', () => {
@@ -45,7 +45,9 @@ describe('Callout', () => {
         error
       </Callout>
     )
-    expect(screen.getByTestId('callout').className).toContain('border-l-destructive')
+    expect(screen.getByTestId('callout').className).toContain(
+      'border-l-destructive'
+    )
   })
 
   it('renders success variant with green border', () => {
@@ -54,7 +56,9 @@ describe('Callout', () => {
         success
       </Callout>
     )
-    expect(screen.getByTestId('callout').className).toContain('border-l-success')
+    expect(screen.getByTestId('callout').className).toContain(
+      'border-l-success'
+    )
   })
 
   it('renders monospace label', () => {

@@ -19,7 +19,7 @@ async function loadMigrations(): Promise<Migration[]> {
   }
   const files = fs
     .readdirSync(migrationsDir)
-    .filter((f) => /^\d{3}-[a-z0-9-]+\.ts$/.test(f))
+    .filter(f => /^\d{3}-[a-z0-9-]+\.ts$/.test(f))
     .sort()
 
   const loaded: Migration[] = []
@@ -71,7 +71,7 @@ async function main(): Promise<void> {
       process.exitCode = 1
       return
     }
-    const m = migrations.find((x) => x.name === name)
+    const m = migrations.find(x => x.name === name)
     if (!m) {
       console.error(`Migration not found: ${name}`)
       process.exitCode = 1
@@ -85,7 +85,7 @@ async function main(): Promise<void> {
 
   // Positional: execute
   const name = args[0]
-  const m = migrations.find((x) => x.name === name)
+  const m = migrations.find(x => x.name === name)
   if (!m) {
     console.error(`Migration not found: ${name}`)
     process.exitCode = 1
@@ -96,7 +96,7 @@ async function main(): Promise<void> {
   console.log(`filesChanged: ${result.filesChanged}`)
 }
 
-main().catch((err) => {
+main().catch(err => {
   console.error(err)
   process.exitCode = 1
 })

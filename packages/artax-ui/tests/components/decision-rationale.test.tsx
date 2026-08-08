@@ -16,10 +16,7 @@ describe('DecisionRationale', () => {
 
   it('renders the decision headline', () => {
     render(
-      <DecisionRationale
-        decision="Use Postgres"
-        rationale={<p>body</p>}
-      />
+      <DecisionRationale decision="Use Postgres" rationale={<p>body</p>} />
     )
     expect(screen.getByText('Use Postgres')).toBeInTheDocument()
   })
@@ -42,7 +39,7 @@ describe('DecisionRationale', () => {
         alternatives={[
           { name: 'MySQL', reason: 'less JSON support' },
           { name: 'SQLite', reason: 'single-writer limit' },
-          { name: 'Mongo', reason: 'no relational guarantees' },
+          { name: 'Mongo', reason: 'no relational guarantees' }
         ]}
       />
     )
@@ -54,10 +51,7 @@ describe('DecisionRationale', () => {
 
   it('renders as <section> when collapsed is falsy', () => {
     const { container } = render(
-      <DecisionRationale
-        decision="D"
-        rationale={<p>r</p>}
-      />
+      <DecisionRationale decision="D" rationale={<p>r</p>} />
     )
     expect(container.querySelector('section')).not.toBeNull()
     expect(container.querySelector('details')).toBeNull()
@@ -65,11 +59,7 @@ describe('DecisionRationale', () => {
 
   it('renders as <details>/<summary> when collapsed is true', () => {
     const { container } = render(
-      <DecisionRationale
-        decision="D"
-        rationale={<p>r</p>}
-        collapsed
-      />
+      <DecisionRationale decision="D" rationale={<p>r</p>} collapsed />
     )
     expect(container.querySelector('details')).not.toBeNull()
     expect(container.querySelector('summary')).not.toBeNull()
@@ -78,10 +68,7 @@ describe('DecisionRationale', () => {
 
   it('applies border-l-primary left accent', () => {
     const { container } = render(
-      <DecisionRationale
-        decision="D"
-        rationale={<p>r</p>}
-      />
+      <DecisionRationale decision="D" rationale={<p>r</p>} />
     )
     const section = container.querySelector('section')
     expect(section?.className).toContain('border-l-primary')

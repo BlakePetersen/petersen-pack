@@ -35,6 +35,7 @@ npm install
 ```
 
 This installs all required packages including:
+
 - Next.js
 - React
 - TypeScript
@@ -51,12 +52,14 @@ This installs all required packages including:
 **Install PostgreSQL**:
 
 macOS:
+
 ```bash
 brew install postgresql@14
 brew services start postgresql@14
 ```
 
 Ubuntu/Debian:
+
 ```bash
 sudo apt update
 sudo apt install postgresql postgresql-contrib
@@ -96,6 +99,7 @@ docker run --name luna-postgres \
 #### Option C: Cloud Database
 
 Use a managed PostgreSQL service:
+
 - **Supabase**: Free tier with PostgreSQL
 - **Railway**: PostgreSQL with easy setup
 - **Neon**: Serverless PostgreSQL
@@ -160,6 +164,7 @@ npm run db:seed
 ```
 
 **Default Admin Credentials**:
+
 - Email: `admin@example.com`
 - Password: `admin123`
 
@@ -209,6 +214,7 @@ Opens GUI at `http://localhost:5555` to view database records.
 ### Development
 
 For development, email sending can be disabled:
+
 - Don't set `RESEND_API_KEY` in `.env`
 - Emails will fail silently (logged to console)
 - Inquiries and bookings still save to database
@@ -239,7 +245,9 @@ For development, email sending can be disabled:
 **Error**: `Can't reach database server`
 
 **Solutions**:
+
 1. Verify PostgreSQL is running:
+
    ```bash
    # macOS
    brew services list | grep postgresql
@@ -262,6 +270,7 @@ For development, email sending can be disabled:
 **Error**: `@prisma/client did not initialize yet`
 
 **Solution**:
+
 ```bash
 npm run db:generate
 ```
@@ -271,6 +280,7 @@ npm run db:generate
 **Error**: `EACCES: permission denied`
 
 **Solution**:
+
 ```bash
 chmod 755 public/uploads
 ```
@@ -278,6 +288,7 @@ chmod 755 public/uploads
 **Error**: `Sharp installation failed`
 
 **Solution**:
+
 ```bash
 npm install --platform=<your-platform> --arch=<your-arch> sharp
 ```
@@ -287,12 +298,15 @@ npm install --platform=<your-platform> --arch=<your-arch> sharp
 **Error**: `Port 3000 is already in use`
 
 **Solutions**:
+
 1. Change port:
+
    ```bash
    PORT=3001 npm run dev
    ```
 
 2. Kill process using port:
+
    ```bash
    # macOS/Linux
    lsof -ti:3000 | xargs kill -9
@@ -307,6 +321,7 @@ npm install --platform=<your-platform> --arch=<your-arch> sharp
 **Error**: Type errors on build
 
 **Solution**:
+
 ```bash
 # Delete generated types and rebuild
 rm -rf node_modules/.prisma

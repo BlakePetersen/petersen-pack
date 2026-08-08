@@ -6,13 +6,7 @@
 import { useState } from 'react'
 import { cn } from '../../../lib/utils'
 
-function CopyButton({
-  text,
-  className,
-}: {
-  text: string
-  className?: string
-}) {
+function CopyButton({ text, className }: { text: string; className?: string }) {
   const [copied, setCopied] = useState(false)
 
   async function handleCopy() {
@@ -27,7 +21,7 @@ function CopyButton({
       aria-label="Copy code"
       className={cn(
         'text-muted-foreground hover:text-foreground transition-colors p-1 font-mono text-xs',
-        className,
+        className
       )}
     >
       {copied ? '\u2713' : '\u2398'}

@@ -7,47 +7,47 @@ jest.mock('@/lib/content', () => ({
       slug: 'skills/ai-prompting',
       title: 'AI Prompting',
       excerpt: 'Learn AI prompting techniques for better results',
-      order: 1,
-    },
+      order: 1
+    }
   ],
   getHooks: () => [
     {
       slug: 'hooks/pre-commit',
       title: 'Pre-Commit Hook',
       excerpt: 'Git pre-commit hook for code quality',
-      order: 1,
-    },
+      order: 1
+    }
   ],
   getConfigs: () => [
     {
       slug: 'configs/eslint',
       title: 'ESLint Config',
       excerpt: 'Opinionated ESLint configuration',
-      order: 1,
-    },
+      order: 1
+    }
   ],
   getGuides: () => [
     {
       slug: 'guides/monorepo-setup',
       title: 'Monorepo Setup',
       excerpt: 'Setting up a Turborepo monorepo',
-      order: 1,
-    },
+      order: 1
+    }
   ],
   getPosts: () => [
     {
       slug: 'posts/newer-post',
       title: 'Newer Post',
       excerpt: 'A newer blog post about things',
-      date: '2025-06-15',
+      date: '2025-06-15'
     },
     {
       slug: 'posts/older-post',
       title: 'Older Post',
       excerpt: 'An older blog post about stuff',
-      date: '2025-01-01',
-    },
-  ],
+      date: '2025-01-01'
+    }
+  ]
 }))
 
 import { GET } from '@/app/feed.xml/route'
@@ -63,7 +63,9 @@ describe('RSS feed', () => {
   test('contains valid RSS channel with title, link, description', () => {
     expect(xml).toContain('<title>Blake Petersen</title>')
     expect(xml).toContain('<link>https://blakepetersen.io</link>')
-    expect(xml).toContain('<description>AI-first DX practices, documented and applied</description>')
+    expect(xml).toContain(
+      '<description>AI-first DX practices, documented and applied</description>'
+    )
   })
 
   test('contains atom:self link', () => {
@@ -82,8 +84,12 @@ describe('RSS feed', () => {
 
   test('each item has title, link, guid, description', () => {
     // Check one item has all required elements
-    expect(xml).toContain('<link>https://blakepetersen.io/skills/ai-prompting</link>')
-    expect(xml).toContain('<guid>https://blakepetersen.io/skills/ai-prompting</guid>')
+    expect(xml).toContain(
+      '<link>https://blakepetersen.io/skills/ai-prompting</link>'
+    )
+    expect(xml).toContain(
+      '<guid>https://blakepetersen.io/skills/ai-prompting</guid>'
+    )
     expect(xml).toContain('Learn AI prompting')
   })
 
@@ -107,6 +113,8 @@ describe('RSS feed', () => {
 
   test('response has correct content type', async () => {
     const response = await GET()
-    expect(response.headers.get('Content-Type')).toBe('application/rss+xml; charset=utf-8')
+    expect(response.headers.get('Content-Type')).toBe(
+      'application/rss+xml; charset=utf-8'
+    )
   })
 })

@@ -32,7 +32,7 @@ import {
   TooltipProvider,
   Tooltip,
   TooltipTrigger,
-  TooltipContent,
+  TooltipContent
 } from 'artax-ui'
 
 export default function DevComponentsPage() {
@@ -57,7 +57,10 @@ export default function DevComponentsPage() {
 
 function ThemeColumn({ theme }: { theme: 'light' | 'dark' }) {
   return (
-    <div data-theme={theme} className="space-y-8 bg-background p-6 text-foreground border border-border">
+    <div
+      data-theme={theme}
+      className="space-y-8 bg-background p-6 text-foreground border border-border"
+    >
       <h2 className="font-mono text-lg font-bold">{theme} mode</h2>
 
       <Section title="Badge">
@@ -115,7 +118,9 @@ function ThemeColumn({ theme }: { theme: 'light' | 'dark' }) {
 
       <Section title="CodeBlock">
         <CodeBlock filename="example.ts" language="typescript">
-          <pre><code>{'const greeting = "hello world"'}</code></pre>
+          <pre>
+            <code>{'const greeting = "hello world"'}</code>
+          </pre>
         </CodeBlock>
       </Section>
 
@@ -186,9 +191,7 @@ function ThemeColumn({ theme }: { theme: 'light' | 'dark' }) {
                 hover for tooltip
               </span>
             </TooltipTrigger>
-            <TooltipContent>
-              Tooltip content here
-            </TooltipContent>
+            <TooltipContent>Tooltip content here</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </Section>
@@ -196,7 +199,13 @@ function ThemeColumn({ theme }: { theme: 'light' | 'dark' }) {
   )
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children
+}: {
+  title: string
+  children: React.ReactNode
+}) {
   return (
     <div>
       <h3 className="mb-2 font-mono text-sm text-muted-foreground">{`// ${title}`}</h3>

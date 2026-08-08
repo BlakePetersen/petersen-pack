@@ -11,32 +11,56 @@ import '@testing-library/jest-dom'
 
 // Mock artax-ui components as simple div wrappers that pass through props
 jest.mock('artax-ui', () => ({
-  CodeBlock: ({ filename, language, rawCode, children, ...props }: Record<string, unknown>) => (
-    <div data-testid="code-block" data-filename={filename} data-language={language} data-raw-code={rawCode} {...props}>
+  CodeBlock: ({
+    filename,
+    language,
+    rawCode,
+    children,
+    ...props
+  }: Record<string, unknown>) => (
+    <div
+      data-testid="code-block"
+      data-filename={filename}
+      data-language={language}
+      data-raw-code={rawCode}
+      {...props}
+    >
       {children as React.ReactNode}
     </div>
   ),
   Tabs: ({ children, ...props }: Record<string, unknown>) => (
-    <div data-testid="tabs" {...props}>{children as React.ReactNode}</div>
+    <div data-testid="tabs" {...props}>
+      {children as React.ReactNode}
+    </div>
   ),
   TabsList: ({ children, ...props }: Record<string, unknown>) => (
-    <div data-testid="tabs-list" {...props}>{children as React.ReactNode}</div>
+    <div data-testid="tabs-list" {...props}>
+      {children as React.ReactNode}
+    </div>
   ),
   TabsTrigger: ({ children, value, ...props }: Record<string, unknown>) => (
-    <button data-testid="tabs-trigger" data-value={value} {...props}>{children as React.ReactNode}</button>
+    <button data-testid="tabs-trigger" data-value={value} {...props}>
+      {children as React.ReactNode}
+    </button>
   ),
   TabsContent: ({ children, value, ...props }: Record<string, unknown>) => (
-    <div data-testid="tabs-content" data-value={value} {...props}>{children as React.ReactNode}</div>
-  ),
+    <div data-testid="tabs-content" data-value={value} {...props}>
+      {children as React.ReactNode}
+    </div>
+  )
 }))
 
-import { ArtifactBody, ArtifactDataProvider, inferLanguage } from '@/components/mdx/artifact-body'
+import {
+  ArtifactBody,
+  ArtifactDataProvider,
+  inferLanguage
+} from '@/components/mdx/artifact-body'
 
 const singleFileArtifact = {
   slug: 'eslint-flat-config',
   name: 'ESLint Flat Config',
   type: 'config',
-  files: [{ path: 'eslint.config.ts', content: 'export default []' }],
+  files: [{ path: 'eslint.config.ts', content: 'export default []' }]
 }
 
 const multiFileArtifact = {
@@ -46,8 +70,8 @@ const multiFileArtifact = {
   files: [
     { path: '.prettierrc', content: '{ "semi": false }' },
     { path: '.prettierignore', content: 'node_modules' },
-    { path: 'prettier.config.ts', content: 'export default {}' },
-  ],
+    { path: 'prettier.config.ts', content: 'export default {}' }
+  ]
 }
 
 describe('ArtifactBody', () => {
@@ -55,7 +79,7 @@ describe('ArtifactBody', () => {
     render(
       <ArtifactDataProvider artifacts={[singleFileArtifact]}>
         <ArtifactBody slug="eslint-flat-config" />
-      </ArtifactDataProvider>,
+      </ArtifactDataProvider>
     )
 
     const codeBlock = screen.getByTestId('code-block')
@@ -67,7 +91,7 @@ describe('ArtifactBody', () => {
     render(
       <ArtifactDataProvider artifacts={[multiFileArtifact]}>
         <ArtifactBody slug="prettier-setup" />
-      </ArtifactDataProvider>,
+      </ArtifactDataProvider>
     )
 
     const tabs = screen.getByTestId('tabs')
@@ -90,10 +114,10 @@ describe('ArtifactBody', () => {
       render(
         <ArtifactDataProvider artifacts={[singleFileArtifact]}>
           <ArtifactBody slug="nonexistent-slug" />
-        </ArtifactDataProvider>,
-      ),
+        </ArtifactDataProvider>
+      )
     ).toThrow(
-      'ArtifactBody: artifact "nonexistent-slug" not found. Ensure the artifact exists and data is provided via ArtifactDataProvider.',
+      'ArtifactBody: artifact "nonexistent-slug" not found. Ensure the artifact exists and data is provided via ArtifactDataProvider.'
     )
 
     spy.mockRestore()
@@ -107,7 +131,7 @@ describe('ArtifactBody', () => {
     render(
       <ArtifactDataProvider artifacts={[singleFileArtifact]}>
         <ArtifactBody slug="nonexistent-slug" />
-      </ArtifactDataProvider>,
+      </ArtifactDataProvider>
     )
 
     expect(screen.getByText(/not found/)).toBeInTheDocument()
@@ -130,7 +154,7 @@ describe('ArtifactBody', () => {
     render(
       <ArtifactDataProvider artifacts={[singleFileArtifact]}>
         <ArtifactBody slug="eslint-flat-config" />
-      </ArtifactDataProvider>,
+      </ArtifactDataProvider>
     )
 
     const codeBlock = screen.getByTestId('code-block')
@@ -141,7 +165,7 @@ describe('ArtifactBody', () => {
     render(
       <ArtifactDataProvider artifacts={[multiFileArtifact]}>
         <ArtifactBody slug="prettier-setup" />
-      </ArtifactDataProvider>,
+      </ArtifactDataProvider>
     )
 
     const triggers = screen.getAllByTestId('tabs-trigger')

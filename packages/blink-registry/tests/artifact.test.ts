@@ -1,14 +1,11 @@
 // ABOUTME: Tests for artifact metadata and file Zod schemas.
 // ABOUTME: Validates complete artifact objects, required fields, and optional dependencies.
-import {
-  ArtifactFileSchema,
-  ArtifactMetadataSchema,
-} from '../src/index'
+import { ArtifactFileSchema, ArtifactMetadataSchema } from '../src/index'
 
 const validFile = {
   path: 'eslint.config.mjs',
   content: 'export default {}',
-  merge: 'replace' as const,
+  merge: 'replace' as const
 }
 
 const validArtifact = {
@@ -17,7 +14,7 @@ const validArtifact = {
   type: 'config' as const,
   version: '2026.03.14.1',
   description: 'Opinionated ESLint configuration',
-  files: [validFile],
+  files: [validFile]
 }
 
 describe('ArtifactFileSchema', () => {
@@ -52,7 +49,7 @@ describe('ArtifactMetadataSchema', () => {
     const withDeps = {
       ...validArtifact,
       dependencies: ['prettier-config'],
-      devDependencies: { eslint: '^9.0.0' },
+      devDependencies: { eslint: '^9.0.0' }
     }
     expect(ArtifactMetadataSchema.safeParse(withDeps).success).toBe(true)
   })
@@ -73,19 +70,22 @@ describe('ArtifactMetadataSchema', () => {
 
   it('rejects invalid slug format', () => {
     expect(
-      ArtifactMetadataSchema.safeParse({ ...validArtifact, slug: 'BAD SLUG' }).success
+      ArtifactMetadataSchema.safeParse({ ...validArtifact, slug: 'BAD SLUG' })
+        .success
     ).toBe(false)
   })
 
   it('rejects invalid artifact type', () => {
     expect(
-      ArtifactMetadataSchema.safeParse({ ...validArtifact, type: 'plugin' }).success
+      ArtifactMetadataSchema.safeParse({ ...validArtifact, type: 'plugin' })
+        .success
     ).toBe(false)
   })
 
   it('rejects invalid calver format', () => {
     expect(
-      ArtifactMetadataSchema.safeParse({ ...validArtifact, version: '1.0.0' }).success
+      ArtifactMetadataSchema.safeParse({ ...validArtifact, version: '1.0.0' })
+        .success
     ).toBe(false)
   })
 
@@ -99,7 +99,7 @@ describe('ArtifactMetadataSchema', () => {
     expect(
       ArtifactMetadataSchema.safeParse({
         ...validArtifact,
-        dependencies: ['BAD SLUG'],
+        dependencies: ['BAD SLUG']
       }).success
     ).toBe(false)
   })

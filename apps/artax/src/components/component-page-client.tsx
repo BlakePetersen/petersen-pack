@@ -12,7 +12,7 @@ import { ComponentPlayground } from '@/components/component-playground'
 
 export function ComponentPageClient({
   tier,
-  slug,
+  slug
 }: {
   tier: string
   slug: string
@@ -33,10 +33,7 @@ export function ComponentPageClient({
         </p>
       </div>
 
-      <ComponentPreview
-        variants={comp.variants}
-        renderPreview={comp.preview}
-      />
+      <ComponentPreview variants={comp.variants} renderPreview={comp.preview} />
 
       <Separator />
 
@@ -68,7 +65,7 @@ export function ComponentPageClient({
           {'// accessibility'}
         </h2>
         <ul className="space-y-1 text-sm text-foreground">
-          {comp.a11y.map((note) => (
+          {comp.a11y.map(note => (
             <li key={note} className="flex gap-2">
               <span className="text-muted-foreground">-</span>
               {note}

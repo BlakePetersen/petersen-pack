@@ -8,7 +8,7 @@ import { createElement } from 'react'
 import { render, screen } from '@testing-library/react'
 
 jest.mock('next/navigation', () => ({
-  usePathname: () => '/',
+  usePathname: () => '/'
 }))
 
 import { CodeExamples } from '@/components/code-examples'
@@ -16,7 +16,7 @@ import { CodeExamples } from '@/components/code-examples'
 describe('CodeExamples', () => {
   const sampleExamples = [
     { label: 'Basic', code: '<Button>Click</Button>' },
-    { label: 'Variants', code: '<Button variant="outline">Outline</Button>' },
+    { label: 'Variants', code: '<Button variant="outline">Outline</Button>' }
   ]
 
   it('renders labeled code blocks', () => {
@@ -36,9 +36,7 @@ describe('CodeExamples', () => {
   })
 
   it('renders nothing meaningful when examples array is empty', () => {
-    const { container } = render(
-      createElement(CodeExamples, { examples: [] })
-    )
+    const { container } = render(createElement(CodeExamples, { examples: [] }))
 
     const preElements = container.querySelectorAll('pre')
     expect(preElements.length).toBe(0)

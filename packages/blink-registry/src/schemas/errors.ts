@@ -8,13 +8,13 @@ export const BlinkErrorCode = z.enum([
   'MANIFEST_CORRUPT',
   'CHECKSUM_MISMATCH',
   'MARKER_BROKEN',
-  'DEPENDENCY_MISSING',
+  'DEPENDENCY_MISSING'
 ])
 
 export const BlinkErrorSchema = z.object({
   code: BlinkErrorCode,
   message: z.string(),
-  slug: z.string().optional(),
+  slug: z.string().optional()
 })
 
 export type BlinkErrorCodeType = z.infer<typeof BlinkErrorCode>

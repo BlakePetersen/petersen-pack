@@ -15,11 +15,13 @@ export function readArtifactsJson(): ArtifactMetadata[] {
   }
 }
 
-export function getArtifactForContent(contentSlug: string): ArtifactMetadata | undefined {
+export function getArtifactForContent(
+  contentSlug: string
+): ArtifactMetadata | undefined {
   // Content slugs include directory prefix (e.g., "configs/eslint-flat-config")
   // Artifact slugs are just the filename part (e.g., "eslint-flat-config")
   // Match by checking if the content slug ends with the artifact slug
   return readArtifactsJson().find(
-    (a) => contentSlug === a.slug || contentSlug.endsWith(`/${a.slug}`),
+    a => contentSlug === a.slug || contentSlug.endsWith(`/${a.slug}`)
   )
 }

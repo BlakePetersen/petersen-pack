@@ -9,29 +9,29 @@ import { stageEntry, commitEntry } from '@/port/staging'
 export default defineCommand({
   meta: {
     name: 'port',
-    description: 'Port Obsidian markdown to MDX content',
+    description: 'Port Obsidian markdown to MDX content'
   },
   args: {
     action: {
       type: 'positional',
       description: 'Action: stage or commit',
-      required: true,
+      required: true
     },
     target: {
       type: 'positional',
       description: 'Input directory (stage) or slug (commit)',
-      required: true,
+      required: true
     },
     collection: {
       type: 'string',
       description: 'Target collection for commit (e.g., skills)',
-      required: false,
+      required: false
     },
     'content-root': {
       type: 'string',
       description: 'Path to content directory',
-      default: 'apps/blakepetersen.io/content',
-    },
+      default: 'apps/blakepetersen.io/content'
+    }
   },
   async run({ args }) {
     const contentRoot = args['content-root'] as string
@@ -46,7 +46,7 @@ export default defineCommand({
 
       const result = await stageEntry({ inputDir: target, contentRoot })
       consola.success(
-        `Staged ${result.staged.length} file(s) to .obsidian-port-staging/`,
+        `Staged ${result.staged.length} file(s) to .obsidian-port-staging/`
       )
       for (const file of result.staged) {
         consola.info(`  ${file.slug} -> ${file.path}`)
@@ -54,7 +54,7 @@ export default defineCommand({
     } else if (action === 'commit') {
       if (!args.collection) {
         consola.error(
-          'The --collection flag is required for commit (e.g., --collection skills)',
+          'The --collection flag is required for commit (e.g., --collection skills)'
         )
         process.exit(1)
       }
@@ -62,14 +62,14 @@ export default defineCommand({
       await commitEntry({
         slug: target,
         collection: args.collection as string,
-        contentRoot,
+        contentRoot
       })
       consola.success(
-        `Committed ${target} to content/${args.collection}/${target}.mdx`,
+        `Committed ${target} to content/${args.collection}/${target}.mdx`
       )
     } else {
       consola.error('Unknown action. Use "stage" or "commit".')
       process.exit(1)
     }
-  },
+  }
 })

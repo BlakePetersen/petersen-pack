@@ -9,7 +9,9 @@ const REPO = 'petersen-group'
 function getOctokit(): Octokit | null {
   const token = process.env.GITHUB_TOKEN
   if (!token) {
-    console.warn('[github] GITHUB_TOKEN is not set — API calls will return empty results')
+    console.warn(
+      '[github] GITHUB_TOKEN is not set — API calls will return empty results'
+    )
     return null
   }
   return new Octokit({ auth: token })
@@ -51,22 +53,22 @@ export async function getReleases(): Promise<Release[]> {
     const { data } = await octokit.rest.repos.listReleases({
       owner: OWNER,
       repo: REPO,
-      per_page: 100,
+      per_page: 100
     })
 
     return data
-      .filter((r) => !r.prerelease && !r.draft)
+      .filter(r => !r.prerelease && !r.draft)
       .sort((a, b) => {
         const dateA = a.published_at ?? ''
         const dateB = b.published_at ?? ''
         return dateB.localeCompare(dateA)
       })
-      .map((r) => ({
+      .map(r => ({
         tagName: r.tag_name,
         name: r.name,
         body: r.body ?? '',
         publishedAt: r.published_at ?? '',
-        htmlUrl: r.html_url,
+        htmlUrl: r.html_url
       }))
   } catch (error) {
     console.error('[github] Failed to fetch releases:', error)
@@ -87,17 +89,17 @@ export async function getContributors(): Promise<Contributor[]> {
     const { data } = await octokit.rest.repos.listContributors({
       owner: OWNER,
       repo: REPO,
-      per_page: 100,
+      per_page: 100
     })
 
     return data
       .sort((a, b) => (b.contributions ?? 0) - (a.contributions ?? 0))
-      .map((c) => ({
+      .map(c => ({
         login: c.login ?? '',
         avatarUrl: c.avatar_url ?? '',
         htmlUrl: c.html_url ?? '',
         contributions: c.contributions ?? 0,
-        isBot: isBot(c.login ?? '', c.type ?? undefined),
+        isBot: isBot(c.login ?? '', c.type ?? undefined)
       }))
   } catch (error) {
     console.error('[github] Failed to fetch contributors:', error)
@@ -106,7 +108,7 @@ export async function getContributors(): Promise<Contributor[]> {
 }
 
 function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 export async function getContributorStats(): Promise<ContributorStats[]> {
@@ -114,13 +116,13 @@ export async function getContributorStats(): Promise<ContributorStats[]> {
   if (!octokit) return []
 
   const contributors = await getContributors()
-  const contributorMap = new Map(contributors.map((c) => [c.login, c]))
+  const contributorMap = new Map(contributors.map(c => [c.login, c]))
 
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const response = await octokit.rest.repos.getContributorsStats({
         owner: OWNER,
-        repo: REPO,
+        repo: REPO
       })
 
       // GitHub returns 202 while computing stats — retry after delay
@@ -136,12 +138,15 @@ export async function getContributorStats(): Promise<ContributorStats[]> {
       }>
 
       return data
-        .map((entry) => {
+        .map(entry => {
           const login = entry.author.login
           const contributor = contributorMap.get(login)
-          const nonZeroWeeks = entry.weeks.filter((w) => w.c > 0)
+          const nonZeroWeeks = entry.weeks.filter(w => w.c > 0)
           const firstWeek = nonZeroWeeks.length > 0 ? nonZeroWeeks[0] : null
-          const lastWeek = nonZeroWeeks.length > 0 ? nonZeroWeeks[nonZeroWeeks.length - 1] : null
+          const lastWeek =
+            nonZeroWeeks.length > 0
+              ? nonZeroWeeks[nonZeroWeeks.length - 1]
+              : null
 
           return {
             login,
@@ -151,8 +156,12 @@ export async function getContributorStats(): Promise<ContributorStats[]> {
             totalAdditions: entry.weeks.reduce((sum, w) => sum + w.a, 0),
             totalDeletions: entry.weeks.reduce((sum, w) => sum + w.d, 0),
             isBot: contributor?.isBot ?? isBot(login),
-            firstContribution: firstWeek ? new Date(firstWeek.w * 1000).toISOString() : null,
-            lastContribution: lastWeek ? new Date(lastWeek.w * 1000).toISOString() : null,
+            firstContribution: firstWeek
+              ? new Date(firstWeek.w * 1000).toISOString()
+              : null,
+            lastContribution: lastWeek
+              ? new Date(lastWeek.w * 1000).toISOString()
+              : null
           }
         })
         .sort((a, b) => b.totalCommits - a.totalCommits)

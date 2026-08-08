@@ -13,10 +13,10 @@ jest.mock('@octokit/rest', () => ({
       repos: {
         listReleases: mockListReleases,
         listContributors: mockListContributors,
-        getContributorsStats: mockGetContributorsStats,
-      },
-    },
-  })),
+        getContributorsStats: mockGetContributorsStats
+      }
+    }
+  }))
 }))
 
 beforeEach(() => {
@@ -34,10 +34,11 @@ function makeRelease(overrides: Record<string, unknown> = {}) {
     name: 'Release 1.0.0',
     body: 'Release notes',
     published_at: '2026-01-01T00:00:00Z',
-    html_url: 'https://github.com/blakepetersen/petersen-group/releases/tag/v1.0.0',
+    html_url:
+      'https://github.com/blakepetersen/petersen-group/releases/tag/v1.0.0',
     prerelease: false,
     draft: false,
-    ...overrides,
+    ...overrides
   }
 }
 
@@ -48,7 +49,7 @@ function makeContributor(overrides: Record<string, unknown> = {}) {
     html_url: 'https://github.com/alice',
     contributions: 10,
     type: 'User',
-    ...overrides,
+    ...overrides
   }
 }
 
@@ -57,10 +58,19 @@ describe('lib/github', () => {
     it('returns releases sorted newest first by publishedAt', async () => {
       mockListReleases.mockResolvedValue({
         data: [
-          makeRelease({ tag_name: 'v1.0.0', published_at: '2026-01-01T00:00:00Z' }),
-          makeRelease({ tag_name: 'v3.0.0', published_at: '2026-03-01T00:00:00Z' }),
-          makeRelease({ tag_name: 'v2.0.0', published_at: '2026-02-01T00:00:00Z' }),
-        ],
+          makeRelease({
+            tag_name: 'v1.0.0',
+            published_at: '2026-01-01T00:00:00Z'
+          }),
+          makeRelease({
+            tag_name: 'v3.0.0',
+            published_at: '2026-03-01T00:00:00Z'
+          }),
+          makeRelease({
+            tag_name: 'v2.0.0',
+            published_at: '2026-02-01T00:00:00Z'
+          })
+        ]
       })
 
       const releases = await getReleases()
@@ -75,8 +85,8 @@ describe('lib/github', () => {
       mockListReleases.mockResolvedValue({
         data: [
           makeRelease({ tag_name: 'v1.0.0' }),
-          makeRelease({ tag_name: 'v2.0.0-beta', prerelease: true }),
-        ],
+          makeRelease({ tag_name: 'v2.0.0-beta', prerelease: true })
+        ]
       })
 
       const releases = await getReleases()
@@ -89,8 +99,8 @@ describe('lib/github', () => {
       mockListReleases.mockResolvedValue({
         data: [
           makeRelease({ tag_name: 'v1.0.0' }),
-          makeRelease({ tag_name: 'v2.0.0-draft', draft: true }),
-        ],
+          makeRelease({ tag_name: 'v2.0.0-draft', draft: true })
+        ]
       })
 
       const releases = await getReleases()
@@ -108,7 +118,7 @@ describe('lib/github', () => {
       expect(releases).toEqual([])
       expect(console.error).toHaveBeenCalledWith(
         '[github] Failed to fetch releases:',
-        expect.any(Error),
+        expect.any(Error)
       )
     })
 
@@ -120,7 +130,7 @@ describe('lib/github', () => {
 
       expect(releases).toEqual([])
       expect(console.warn).toHaveBeenCalledWith(
-        '[github] GITHUB_TOKEN is not set — API calls will return empty results',
+        '[github] GITHUB_TOKEN is not set — API calls will return empty results'
       )
     })
 
@@ -132,9 +142,10 @@ describe('lib/github', () => {
             name: 'Fifth Release',
             body: 'Big update',
             published_at: '2026-05-15T12:00:00Z',
-            html_url: 'https://github.com/blakepetersen/petersen-group/releases/tag/v5.0.0',
-          }),
-        ],
+            html_url:
+              'https://github.com/blakepetersen/petersen-group/releases/tag/v5.0.0'
+          })
+        ]
       })
 
       const releases = await getReleases()
@@ -145,7 +156,8 @@ describe('lib/github', () => {
         name: 'Fifth Release',
         body: 'Big update',
         publishedAt: '2026-05-15T12:00:00Z',
-        htmlUrl: 'https://github.com/blakepetersen/petersen-group/releases/tag/v5.0.0',
+        htmlUrl:
+          'https://github.com/blakepetersen/petersen-group/releases/tag/v5.0.0'
       })
     })
   })
@@ -156,8 +168,8 @@ describe('lib/github', () => {
         data: [
           makeContributor({ login: 'alice', contributions: 5 }),
           makeContributor({ login: 'charlie', contributions: 50 }),
-          makeContributor({ login: 'bob', contributions: 20 }),
-        ],
+          makeContributor({ login: 'bob', contributions: 20 })
+        ]
       })
 
       const contributors = await getContributors()
@@ -171,8 +183,12 @@ describe('lib/github', () => {
     it('detects bots via type field', async () => {
       mockListContributors.mockResolvedValue({
         data: [
-          makeContributor({ login: 'dependabot', type: 'Bot', contributions: 10 }),
-        ],
+          makeContributor({
+            login: 'dependabot',
+            type: 'Bot',
+            contributions: 10
+          })
+        ]
       })
 
       const contributors = await getContributors()
@@ -184,8 +200,12 @@ describe('lib/github', () => {
     it('detects bots via [bot] suffix fallback', async () => {
       mockListContributors.mockResolvedValue({
         data: [
-          makeContributor({ login: 'renovate[bot]', type: 'User', contributions: 8 }),
-        ],
+          makeContributor({
+            login: 'renovate[bot]',
+            type: 'User',
+            contributions: 8
+          })
+        ]
       })
 
       const contributors = await getContributors()
@@ -203,7 +223,7 @@ describe('lib/github', () => {
       expect(contributors).toEqual([])
       expect(console.error).toHaveBeenCalledWith(
         '[github] Failed to fetch contributors:',
-        expect.any(Error),
+        expect.any(Error)
       )
     })
   })
@@ -211,9 +231,7 @@ describe('lib/github', () => {
   describe('getContributorStats', () => {
     function setupContributorStatsTest() {
       mockListContributors.mockResolvedValue({
-        data: [
-          makeContributor({ login: 'alice', contributions: 30 }),
-        ],
+        data: [makeContributor({ login: 'alice', contributions: 30 })]
       })
     }
 
@@ -228,10 +246,10 @@ describe('lib/github', () => {
             weeks: [
               { w: 1704067200, a: 100, d: 20, c: 5 },
               { w: 1704672000, a: 200, d: 30, c: 10 },
-              { w: 1705276800, a: 50, d: 10, c: 0 },
-            ],
-          },
-        ],
+              { w: 1705276800, a: 50, d: 10, c: 0 }
+            ]
+          }
+        ]
       })
 
       const stats = await getContributorStats()
@@ -256,17 +274,21 @@ describe('lib/github', () => {
             weeks: [
               { w: week1Timestamp, a: 0, d: 0, c: 0 },
               { w: week2Timestamp, a: 50, d: 10, c: 3 },
-              { w: week3Timestamp, a: 20, d: 5, c: 7 },
-            ],
-          },
-        ],
+              { w: week3Timestamp, a: 20, d: 5, c: 7 }
+            ]
+          }
+        ]
       })
 
       const stats = await getContributorStats()
 
       expect(stats).toHaveLength(1)
-      expect(stats[0].firstContribution).toBe(new Date(week2Timestamp * 1000).toISOString())
-      expect(stats[0].lastContribution).toBe(new Date(week3Timestamp * 1000).toISOString())
+      expect(stats[0].firstContribution).toBe(
+        new Date(week2Timestamp * 1000).toISOString()
+      )
+      expect(stats[0].lastContribution).toBe(
+        new Date(week3Timestamp * 1000).toISOString()
+      )
     })
 
     it('retries on 202 response up to 3 times', async () => {
@@ -308,7 +330,7 @@ describe('lib/github', () => {
 
       expect(stats).toEqual([])
       expect(console.warn).toHaveBeenCalledWith(
-        '[github] Contributor stats still computing after 3 retries',
+        '[github] Contributor stats still computing after 3 retries'
       )
 
       jest.useRealTimers()

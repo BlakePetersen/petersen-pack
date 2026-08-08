@@ -132,9 +132,9 @@ Numbered step cards in responsive grid. Does not include Section wrapper.
 
 ```tsx
 <div className="relative min-h-screen">
-  <section className="relative px-gutter pb-section pt-page-top">
+  <section className="px-gutter pb-section pt-page-top relative">
     <div className="mx-auto max-w-4xl text-center">
-      <h1 className="font-serif text-display-lg text-gray-900 dark:text-white">
+      <h1 className="text-display-lg font-serif text-gray-900 dark:text-white">
         Portfolio
       </h1>
     </div>

@@ -9,7 +9,7 @@ export const context = {
       title: 'Test PR',
       body: 'Test body',
       labels: [],
-      head: { repo: { fork: false } },
-    },
-  },
-};
+      head: { repo: { fork: false } }
+    }
+  }
+}

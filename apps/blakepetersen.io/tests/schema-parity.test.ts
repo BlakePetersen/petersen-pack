@@ -17,26 +17,41 @@ const parityFixture = (scenario: string) =>
 const base = {
   title: 'Parity Fixture',
   description: 'A frontmatter fixture exercised through both schemas',
-  applies_to: ['claude-code'],
+  applies_to: ['claude-code']
 }
 
 // [name, frontmatter, both-schemas-should-accept]. The Velite fixtures under
 // test-fixtures/phase31/ carry the same frontmatter values.
-const registryFixtures: [name: string, input: Record<string, unknown>, shouldPass: boolean][] = [
+const registryFixtures: [
+  name: string,
+  input: Record<string, unknown>,
+  shouldPass: boolean
+][] = [
   ['valid baseline', { ...base }, true],
   ['valid updated_context', { ...base, updated_context: '2026-07-01' }, true],
-  ['malformed updated_context', { ...base, updated_context: 'last week' }, false],
-  ['singular cross-ref prefix', { ...base, dependencies: ['skill/foo'] }, false],
+  [
+    'malformed updated_context',
+    { ...base, updated_context: 'last week' },
+    false
+  ],
+  [
+    'singular cross-ref prefix',
+    { ...base, dependencies: ['skill/foo'] },
+    false
+  ],
   ['valid cross-ref', { ...base, dependencies: ['skills/foo-bar'] }, true],
-  ['unknown voice value', { ...base, voice: ['bogus'] }, false],
+  ['unknown voice value', { ...base, voice: ['bogus'] }, false]
 ]
 
 describe('registry ↔ Velite schema parity (SSOT-08)', () => {
   // Registry half (Zod v4): field-level validation on the in-memory fixtures.
   describe('registry DxFrontmatterSchema (Zod v4)', () => {
-    test.each(registryFixtures)('%s → accepts=%s', (_name, input, shouldPass) => {
-      expect(DxFrontmatterSchema.safeParse(input).success).toBe(shouldPass)
-    })
+    test.each(registryFixtures)(
+      '%s → accepts=%s',
+      (_name, input, shouldPass) => {
+        expect(DxFrontmatterSchema.safeParse(input).success).toBe(shouldPass)
+      }
+    )
   })
 
   // Velite half (Zod v3): the same frontmatter driven through a real Velite
@@ -49,15 +64,21 @@ describe('registry ↔ Velite schema parity (SSOT-08)', () => {
     })
 
     it('rejects malformed updated_context "last week" (the drift SSOT-08 guards)', () => {
-      const result = runVeliteFixture(parityFixture('schema-parity-bad-updated-context'))
+      const result = runVeliteFixture(
+        parityFixture('schema-parity-bad-updated-context')
+      )
       expect(result.exitCode).not.toBe(0)
       // Velite's s.isodate() rejects the non-ISO value; the registry's z.iso.date()
       // rejects the same string (registry half above) — the seam agrees.
-      expect(result.combined.toLowerCase()).toMatch(/invalid time value|invalid date/)
+      expect(result.combined.toLowerCase()).toMatch(
+        /invalid time value|invalid date/
+      )
     })
 
     it('rejects singular cross-ref prefix "skill/foo"', () => {
-      const result = runVeliteFixture(parityFixture('schema-parity-singular-cross-ref'))
+      const result = runVeliteFixture(
+        parityFixture('schema-parity-singular-cross-ref')
+      )
       expect(result.exitCode).not.toBe(0)
       // CrossRefSchema is rebuilt from crossRefRegex(DX_COLLECTIONS).
       expect(result.combined).toContain("must be '<collection>/<slug-path>'")
@@ -65,7 +86,9 @@ describe('registry ↔ Velite schema parity (SSOT-08)', () => {
     })
 
     it('rejects unknown voice value "bogus"', () => {
-      const result = runVeliteFixture(parityFixture('schema-parity-unknown-voice'))
+      const result = runVeliteFixture(
+        parityFixture('schema-parity-unknown-voice')
+      )
       expect(result.exitCode).not.toBe(0)
       // voice enum is rebuilt from VOICE_PRIMITIVES.
       expect(result.combined.toLowerCase()).toMatch(/voice/)

@@ -26,7 +26,7 @@ function timeSync(cmd: string, args: string[]): SyncTiming {
     wallMs: t1 - t0,
     stdout: r.stdout ?? '',
     stderr: r.stderr ?? '',
-    status: r.status,
+    status: r.status
   }
 }
 
@@ -34,7 +34,7 @@ function timeSync(cmd: string, args: string[]): SyncTiming {
 async function timeNextDev(): Promise<number> {
   return new Promise((resolve, reject) => {
     const proc = spawn('pnpm', ['--filter', 'blakepetersen.io', 'dev'], {
-      stdio: 'pipe',
+      stdio: 'pipe'
     })
     const timer = setTimeout(() => {
       proc.kill()
@@ -50,7 +50,7 @@ async function timeNextDev(): Promise<number> {
         resolve(ms)
       }
     })
-    proc.on('error', (err) => {
+    proc.on('error', err => {
       clearTimeout(timer)
       reject(err)
     })
@@ -74,13 +74,9 @@ function countMdx(root: string): number {
 async function main(): Promise<void> {
   // Cold full build — next build --webpack runs Velite as part of the build.
   console.log(
-    '[perf-baseline] Running full build (pnpm --filter blakepetersen.io build)...',
+    '[perf-baseline] Running full build (pnpm --filter blakepetersen.io build)...'
   )
-  const fullBuild = timeSync('pnpm', [
-    '--filter',
-    'blakepetersen.io',
-    'build',
-  ])
+  const fullBuild = timeSync('pnpm', ['--filter', 'blakepetersen.io', 'build'])
   if (fullBuild.status !== 0) {
     console.error('Full build failed; cannot capture baseline.')
     console.error(fullBuild.stderr)
@@ -88,7 +84,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    '[perf-baseline] Running velite-only (pnpm --filter blakepetersen.io velite)...',
+    '[perf-baseline] Running velite-only (pnpm --filter blakepetersen.io velite)...'
   )
   const velite = timeSync('pnpm', ['--filter', 'blakepetersen.io', 'velite'])
   if (velite.status !== 0) {
@@ -99,7 +95,7 @@ async function main(): Promise<void> {
 
   // Next.js logs "Compiled successfully in 5.2s" or " 5234ms" — match either.
   const webpackMatch = fullBuild.stdout.match(
-    /Compiled successfully in\s+([\d.]+)\s*(s|ms)/i,
+    /Compiled successfully in\s+([\d.]+)\s*(s|ms)/i
   )
   const webpackCompileMs: number | null = webpackMatch
     ? Number(webpackMatch[1]) *
@@ -120,8 +116,8 @@ async function main(): Promise<void> {
       fullBuildWallMs: fullBuild.wallMs,
       veliteWallMs: velite.wallMs,
       webpackCompileMs,
-      nextDevReadyMs,
-    },
+      nextDevReadyMs
+    }
   }
 
   const outDir = path.resolve(appRoot, '..', '..', '.planning', 'intel')
@@ -133,7 +129,7 @@ async function main(): Promise<void> {
   console.log(JSON.stringify(baseline, null, 2))
 }
 
-main().catch((err) => {
+main().catch(err => {
   console.error(err)
   process.exitCode = 1
 })

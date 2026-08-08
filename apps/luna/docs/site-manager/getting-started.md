@@ -49,15 +49,18 @@ Cards with links to common tasks:
 The left sidebar provides access to all features:
 
 ### Portfolio Management
+
 - **Galleries**: Manage public portfolio galleries
 - **Upload**: Add photos to galleries
 
 ### Client Management
+
 - **Client Galleries**: Private photo delivery for clients
 - **Bookings**: Session booking requests
 - **Availability**: Set available dates/times
 
 ### Communications
+
 - **Inquiries**: Contact form submissions
 
 ## Common Tasks Quick Reference
@@ -95,28 +98,34 @@ The left sidebar provides access to all features:
 Your website has several public-facing pages:
 
 ### Homepage (`/`)
+
 - Featured galleries
 - About preview
 - Call-to-action buttons
 
 ### Portfolio (`/portfolio`)
+
 - All public galleries
 - Filter by shoot type
 - Click gallery to view full collection
 
 ### Book a Session (`/book`)
+
 - Calendar view of your availability
 - Booking request form
 - Clients can request specific dates/times
 
 ### Contact (`/contact`)
+
 - Contact form
 - Inquiry submissions go to your Inquiries page
 
 ### About (`/about`)
+
 - Your photography story and bio
 
 ### Pricing (`/pricing`)
+
 - Service offerings and packages
 
 ## Getting Help

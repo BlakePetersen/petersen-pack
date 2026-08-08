@@ -23,23 +23,23 @@ function readCollection(name: string) {
 describe('Frontmatter Schema (CONT-03)', () => {
   test.each(['skills', 'hooks', 'configs', 'guides'])(
     'DX %s items have required applies_to field (array)',
-    (collection) => {
+    collection => {
       const items = readCollection(collection)
       for (const item of items) {
         expect(Array.isArray(item.applies_to)).toBe(true)
         expect(item.applies_to.length).toBeGreaterThan(0)
       }
-    },
+    }
   )
 
   test.each(['skills', 'hooks', 'configs', 'guides'])(
     'DX %s items have dependencies field (array, may be empty)',
-    (collection) => {
+    collection => {
       const items = readCollection(collection)
       for (const item of items) {
         expect(Array.isArray(item.dependencies)).toBe(true)
       }
-    },
+    }
   )
 
   test('posts do NOT have applies_to or dependencies fields', () => {
@@ -60,7 +60,7 @@ describe('Frontmatter Schema (CONT-03)', () => {
 
   test.each(['skills', 'hooks', 'configs', 'guides', 'posts'])(
     'all %s items have title and description fields',
-    (collection) => {
+    collection => {
       const items = readCollection(collection)
       for (const item of items) {
         expect(typeof item.title).toBe('string')
@@ -68,28 +68,28 @@ describe('Frontmatter Schema (CONT-03)', () => {
         expect(typeof item.description).toBe('string')
         expect(item.description.length).toBeGreaterThan(0)
       }
-    },
+    }
   )
 })
 
 describe('SCHEMA-01 / SCHEMA-02 — voice + requires_artifact defaults', () => {
   test.each(['skills', 'hooks', 'configs', 'guides'])(
     'every %s entry has voice as an array',
-    (collection) => {
+    collection => {
       const items = readCollection(collection)
       for (const item of items) {
         expect(Array.isArray(item.voice)).toBe(true)
       }
-    },
+    }
   )
 
   test.each(['skills', 'hooks', 'configs', 'guides'])(
     'every %s entry has requires_artifact as a boolean',
-    (collection) => {
+    collection => {
       const items = readCollection(collection)
       for (const item of items) {
         expect(typeof item.requires_artifact).toBe('boolean')
       }
-    },
+    }
   )
 })

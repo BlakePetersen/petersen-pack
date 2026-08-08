@@ -4,7 +4,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { readArtifactsJson } from '../../../../lib/artifacts'
-import { ArtifactBody, ArtifactDataProvider } from '../../../../components/mdx/artifact-body'
+import {
+  ArtifactBody,
+  ArtifactDataProvider
+} from '../../../../components/mdx/artifact-body'
 import { getCollection } from '../../../../lib/collection-registry'
 import { CopyCommandBlock } from './copy-command-block'
 
@@ -19,13 +22,13 @@ const INSTALLABLE_TYPES = new Set(['skills', 'configs', 'hooks'])
 const TYPE_SEGMENT_TO_ARTIFACT_TYPE: Record<string, string> = {
   skills: 'skill',
   configs: 'config',
-  hooks: 'hook',
+  hooks: 'hook'
 }
 
 const ARTIFACT_TYPE_TO_SEGMENT: Record<string, string> = {
   skill: 'skills',
   config: 'configs',
-  hook: 'hooks',
+  hook: 'hooks'
 }
 
 // Pre-render every installable artifact at build time so the link checker
@@ -33,12 +36,12 @@ const ARTIFACT_TYPE_TO_SEGMENT: Record<string, string> = {
 // the install view doesn't pay an SSR cost on first paint.
 export function generateStaticParams() {
   return readArtifactsJson()
-    .filter((a) => ARTIFACT_TYPE_TO_SEGMENT[a.type])
-    .map((a) => ({ type: ARTIFACT_TYPE_TO_SEGMENT[a.type], slug: a.slug }))
+    .filter(a => ARTIFACT_TYPE_TO_SEGMENT[a.type])
+    .map(a => ({ type: ARTIFACT_TYPE_TO_SEGMENT[a.type], slug: a.slug }))
 }
 
 export default async function InstallContextViewPage({
-  params,
+  params
 }: {
   params: Promise<{ type: string; slug: string }>
 }) {
@@ -51,7 +54,7 @@ export default async function InstallContextViewPage({
   // Filter by type too — bare-slug uniqueness is only enforced within a
   // collection, so cross-collection basename collisions would otherwise let
   // /install/skills/foo resolve a config artifact named foo.
-  const artifact = all.find((a) => a.slug === slug && a.type === artifactType)
+  const artifact = all.find(a => a.slug === slug && a.type === artifactType)
 
   if (!artifact) notFound()
 
@@ -62,20 +65,19 @@ export default async function InstallContextViewPage({
   const contentItem = getCollection(type)
     .getter()
     .find(
-      (item) =>
-        item.slug === `${type}/${slug}` || item.slug.endsWith(`/${slug}`),
+      item => item.slug === `${type}/${slug}` || item.slug.endsWith(`/${slug}`)
     )
   const contentHref = contentItem ? `/${contentItem.slug}` : null
 
   const command = `blink apply ${slug}`
   const fileCount = artifact.files.length
-  const destinations = artifact.files.map((f) => f.path)
+  const destinations = artifact.files.map(f => f.path)
 
   const artifactForRoute = {
     slug: artifact.slug,
     name: artifact.name,
     type: artifact.type,
-    files: artifact.files.map((f) => ({ path: f.path, content: f.content })),
+    files: artifact.files.map(f => ({ path: f.path, content: f.content }))
   }
 
   return (
@@ -102,7 +104,8 @@ export default async function InstallContextViewPage({
       <CopyCommandBlock command={command} />
 
       <p className="mb-8 font-mono text-xs text-muted-foreground">
-        Writes {fileCount === 1 ? 'this file' : `these ${fileCount} files`} into your project at{' '}
+        Writes {fileCount === 1 ? 'this file' : `these ${fileCount} files`} into
+        your project at{' '}
         {destinations.map((path, i) => (
           <span key={path}>
             <code className="text-foreground">{path}</code>

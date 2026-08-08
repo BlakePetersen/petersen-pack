@@ -11,24 +11,24 @@ import './globals.css'
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-mono'
 })
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-sans'
 })
 
 export const metadata: Metadata = {
   title: {
     default: 'Artax UI',
-    template: '%s | Artax UI',
+    template: '%s | Artax UI'
   },
-  description: 'Component library and design system reference',
+  description: 'Component library and design system reference'
 }
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {

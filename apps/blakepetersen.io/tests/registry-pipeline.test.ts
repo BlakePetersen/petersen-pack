@@ -9,7 +9,7 @@ import {
   versionAndValidateArtifacts,
   writeRegistryFiles,
   validateCrossReferences,
-  type DxData,
+  type DxData
 } from '../src/lib/velite-prepare'
 
 function sha256Hex(payload: string): string {
@@ -29,7 +29,7 @@ function emptyData(overrides: Partial<DxData> = {}): DxData {
     posts: [],
     singleArtifacts: [],
     multiArtifacts: [],
-    ...overrides,
+    ...overrides
   }
 }
 
@@ -38,7 +38,10 @@ function seedVersions(
   entries: Array<{ slug: string; content: string; version: string }>
 ): void {
   const manifest = Object.fromEntries(
-    entries.map((e) => [e.slug, { hash: sha256Hex(e.content), version: e.version }])
+    entries.map(e => [
+      e.slug,
+      { hash: sha256Hex(e.content), version: e.version }
+    ])
   )
   fs.writeFileSync(
     path.join(contentDir, '.artifact-versions.json'),
@@ -54,7 +57,7 @@ function makeSingle(velitePath: string, body = 'body', destination = 'dest') {
     description: 'd',
     destination,
     body,
-    merge: 'replace' as const,
+    merge: 'replace' as const
   }
 }
 
@@ -62,10 +65,16 @@ describe('nested artifact page paths (registry 404 fix)', () => {
   it('derives slug from the basename but keeps the full page path', () => {
     const contentDir = makeContentDir()
     seedVersions(contentDir, [
-      { slug: 'writing-custom-skills', content: 'body', version: '2026.01.01.0' },
+      {
+        slug: 'writing-custom-skills',
+        content: 'body',
+        version: '2026.01.01.0'
+      }
     ])
     const data = emptyData({
-      singleArtifacts: [makeSingle('skills/claude-code/writing-custom-skills.artifact')],
+      singleArtifacts: [
+        makeSingle('skills/claude-code/writing-custom-skills.artifact')
+      ]
     })
 
     const [artifact] = versionAndValidateArtifacts(data, contentDir)
@@ -76,10 +85,16 @@ describe('nested artifact page paths (registry 404 fix)', () => {
   it('writes registry URLs from the page path, not the reconstructed type/slug', () => {
     const contentDir = makeContentDir()
     seedVersions(contentDir, [
-      { slug: 'writing-custom-skills', content: 'body', version: '2026.01.01.0' },
+      {
+        slug: 'writing-custom-skills',
+        content: 'body',
+        version: '2026.01.01.0'
+      }
     ])
     const data = emptyData({
-      singleArtifacts: [makeSingle('skills/claude-code/writing-custom-skills.artifact')],
+      singleArtifacts: [
+        makeSingle('skills/claude-code/writing-custom-skills.artifact')
+      ]
     })
     const artifacts = versionAndValidateArtifacts(data, contentDir)
 
@@ -110,12 +125,14 @@ describe('nested artifact page paths (registry 404 fix)', () => {
 describe('duplicate guards (Bug 012 class)', () => {
   it('throws when two artifacts derive the same slug', () => {
     const contentDir = makeContentDir()
-    seedVersions(contentDir, [{ slug: 'foo', content: 'body', version: '2026.01.01.0' }])
+    seedVersions(contentDir, [
+      { slug: 'foo', content: 'body', version: '2026.01.01.0' }
+    ])
     const data = emptyData({
       singleArtifacts: [
         makeSingle('skills/foo.artifact', 'body', 'dest-a'),
-        makeSingle('skills/claude-code/foo.artifact', 'body', 'dest-b'),
-      ],
+        makeSingle('skills/claude-code/foo.artifact', 'body', 'dest-b')
+      ]
     })
 
     expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(
@@ -127,13 +144,13 @@ describe('duplicate guards (Bug 012 class)', () => {
     const contentDir = makeContentDir()
     seedVersions(contentDir, [
       { slug: 'foo', content: 'body', version: '2026.01.01.0' },
-      { slug: 'bar', content: 'body', version: '2026.01.01.1' },
+      { slug: 'bar', content: 'body', version: '2026.01.01.1' }
     ])
     const data = emptyData({
       singleArtifacts: [
         makeSingle('skills/foo.artifact', 'body', '.husky/pre-push'),
-        makeSingle('skills/bar.artifact', 'body', '.husky/pre-push'),
-      ],
+        makeSingle('skills/bar.artifact', 'body', '.husky/pre-push')
+      ]
     })
 
     expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(
@@ -145,13 +162,19 @@ describe('duplicate guards (Bug 012 class)', () => {
     const contentDir = makeContentDir()
     seedVersions(contentDir, [
       { slug: 'foo', content: 'body', version: '2026.01.01.0' },
-      { slug: 'bar', content: 'body', version: '2026.01.01.1' },
+      { slug: 'bar', content: 'body', version: '2026.01.01.1' }
     ])
     const data = emptyData({
       singleArtifacts: [
-        { ...makeSingle('skills/foo.artifact', 'body', '.zshrc'), merge: 'section' as const },
-        { ...makeSingle('skills/bar.artifact', 'body', '.zshrc'), merge: 'section' as const },
-      ],
+        {
+          ...makeSingle('skills/foo.artifact', 'body', '.zshrc'),
+          merge: 'section' as const
+        },
+        {
+          ...makeSingle('skills/bar.artifact', 'body', '.zshrc'),
+          merge: 'section' as const
+        }
+      ]
     })
 
     expect(() => versionAndValidateArtifacts(data, contentDir)).not.toThrow()
@@ -166,7 +189,7 @@ describe('version manifest corruption', () => {
       '{ "broken": '
     )
     const data = emptyData({
-      singleArtifacts: [makeSingle('skills/foo.artifact')],
+      singleArtifacts: [makeSingle('skills/foo.artifact')]
     })
 
     expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(
@@ -184,15 +207,15 @@ describe('posts cross-reference validation', () => {
           title: 'Real',
           category: 'c',
           dependencies: [],
-          related: [],
-        },
+          related: []
+        }
       ],
       posts: [
         {
           slug: 'posts/my-post',
-          related: ['skills/does-not-exist'],
-        },
-      ],
+          related: ['skills/does-not-exist']
+        }
+      ]
     })
 
     expect(() => validateCrossReferences(data)).toThrow(/does-not-exist/)
@@ -206,13 +229,13 @@ describe('posts cross-reference validation', () => {
           title: 'Real',
           category: 'c',
           dependencies: [],
-          related: [],
-        },
+          related: []
+        }
       ],
       posts: [
         { slug: 'posts/first', related: ['skills/real-skill', 'posts/second'] },
-        { slug: 'posts/second', related: [] },
-      ],
+        { slug: 'posts/second', related: [] }
+      ]
     })
 
     expect(() => validateCrossReferences(data)).not.toThrow()

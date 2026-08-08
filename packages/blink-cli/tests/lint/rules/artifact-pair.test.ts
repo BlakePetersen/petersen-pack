@@ -13,13 +13,13 @@ function makeTmpDir(): string {
 function makeContext(
   file: string,
   frontmatter: Record<string, unknown>,
-  contentRoot: string,
+  contentRoot: string
 ): LintContext {
   return {
     file,
     frontmatter,
     body: '## Overview\n\nContent here.',
-    contentRoot,
+    contentRoot
   }
 }
 
@@ -103,16 +103,22 @@ describe('artifactPairRule', () => {
     const mdxPath = join(dir, 'my-config.mdx')
     writeFileSync(mdxPath, '---\ntitle: My Config\n---\n')
 
-    const ctx = makeContext(mdxPath, {
-      requires_artifact: true,
-      title: 'My Config',
-      description: 'A config artifact.',
-    }, dir)
+    const ctx = makeContext(
+      mdxPath,
+      {
+        requires_artifact: true,
+        title: 'My Config',
+        description: 'A config artifact.'
+      },
+      dir
+    )
     const result = artifactPairRule.fix!(ctx)
     expect(result).not.toBeNull()
     expect(result!.siblingFiles).toBeDefined()
     expect(result!.siblingFiles).toHaveLength(1)
-    expect(result!.siblingFiles![0].path).toBe(mdxPath.replace(/\.mdx$/, '.artifact.md'))
+    expect(result!.siblingFiles![0].path).toBe(
+      mdxPath.replace(/\.mdx$/, '.artifact.md')
+    )
     expect(result!.siblingFiles![0].content).toContain('My Config')
   })
 })

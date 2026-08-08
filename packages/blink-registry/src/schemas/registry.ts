@@ -11,16 +11,16 @@ export const RegistryItemSchema = z.object({
   type: ArtifactTypeSchema,
   version: CalVerSchema,
   description: z.string(),
-  url: z.string().url(),
+  url: z.string().url()
 })
 
 export const RegistryIndexSchema = z.object({
   items: z.array(RegistryItemSchema),
-  generatedAt: z.string().datetime(),
+  generatedAt: z.string().datetime()
 })
 
 export const RegistryArtifactSchema = ArtifactMetadataSchema.extend({
-  url: z.string().url(),
+  url: z.string().url()
 })
 
 export type RegistryItem = z.infer<typeof RegistryItemSchema>

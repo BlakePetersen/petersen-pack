@@ -17,13 +17,17 @@ const ArtifactMapContext = createContext<Map<string, ArtifactData>>(new Map())
 
 export function ArtifactDataProvider({
   artifacts,
-  children,
+  children
 }: {
   artifacts: ArtifactData[]
   children: React.ReactNode
 }) {
-  const map = new Map(artifacts.map((a) => [a.slug, a]))
-  return <ArtifactMapContext.Provider value={map}>{children}</ArtifactMapContext.Provider>
+  const map = new Map(artifacts.map(a => [a.slug, a]))
+  return (
+    <ArtifactMapContext.Provider value={map}>
+      {children}
+    </ArtifactMapContext.Provider>
+  )
 }
 
 const EXTENSION_MAP: Record<string, string> = {
@@ -37,7 +41,7 @@ const EXTENSION_MAP: Record<string, string> = {
   '.md': 'markdown',
   '.css': 'css',
   '.sh': 'bash',
-  '.toml': 'toml',
+  '.toml': 'toml'
 }
 
 export function inferLanguage(filename: string): string {
@@ -54,12 +58,13 @@ export function ArtifactBody({ slug }: { slug: string }) {
   if (!artifact) {
     if (process.env.NODE_ENV === 'development') {
       throw new Error(
-        `ArtifactBody: artifact "${slug}" not found. Ensure the artifact exists and data is provided via ArtifactDataProvider.`,
+        `ArtifactBody: artifact "${slug}" not found. Ensure the artifact exists and data is provided via ArtifactDataProvider.`
       )
     }
     return (
       <div className="rounded border border-destructive p-4 text-sm text-destructive">
-        Artifact &quot;{slug}&quot; not found. Run <code>pnpm velite</code> to rebuild.
+        Artifact &quot;{slug}&quot; not found. Run <code>pnpm velite</code> to
+        rebuild.
       </div>
     )
   }
@@ -80,13 +85,13 @@ export function ArtifactBody({ slug }: { slug: string }) {
   return (
     <Tabs defaultValue={files[0].path}>
       <TabsList>
-        {files.map((file) => (
+        {files.map(file => (
           <TabsTrigger key={file.path} value={file.path}>
             {file.path}
           </TabsTrigger>
         ))}
       </TabsList>
-      {files.map((file) => (
+      {files.map(file => (
         <TabsContent key={file.path} value={file.path}>
           <CodeBlock filename={file.path} language={inferLanguage(file.path)}>
             <pre>

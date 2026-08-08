@@ -3,7 +3,11 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { createHash } from 'node:crypto'
-import { ManifestSchema, type Manifest, type ManifestEntry } from 'blink-registry'
+import {
+  ManifestSchema,
+  type Manifest,
+  type ManifestEntry
+} from 'blink-registry'
 import { atomicWrite } from '@/writer'
 
 export const BLINK_DIR = '.blink'
@@ -68,7 +72,7 @@ export function removeManifestEntry(
   manifest: Manifest,
   slug: string
 ): Manifest {
-  return { ...manifest, items: manifest.items.filter((e) => e.slug !== slug) }
+  return { ...manifest, items: manifest.items.filter(e => e.slug !== slug) }
 }
 
 export function updateManifestEntry(
@@ -78,6 +82,6 @@ export function updateManifestEntry(
 ): Manifest {
   return {
     ...manifest,
-    items: manifest.items.map((e) => (e.slug === slug ? entry : e)),
+    items: manifest.items.map(e => (e.slug === slug ? entry : e))
   }
 }

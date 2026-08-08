@@ -172,7 +172,9 @@ async function scrapeBlogPage(
 }
 
 async function main() {
-  console.log('Updating blog post categories and tags from ashleypetersenphoto.com/blog')
+  console.log(
+    'Updating blog post categories and tags from ashleypetersenphoto.com/blog'
+  )
   console.log('='.repeat(80))
 
   try {

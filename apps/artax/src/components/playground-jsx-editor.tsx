@@ -15,7 +15,7 @@ export interface PlaygroundJsxEditorProps {
 export function PlaygroundJsxEditor({
   code,
   scope,
-  onReset,
+  onReset
 }: PlaygroundJsxEditorProps) {
   return (
     <div className="bg-card border border-border overflow-hidden font-mono text-sm">

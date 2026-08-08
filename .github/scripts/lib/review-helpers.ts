@@ -4,25 +4,23 @@
 const LOCKFILE_PATTERNS = [
   /pnpm-lock\.yaml$/,
   /package-lock\.json$/,
-  /yarn\.lock$/,
-];
+  /yarn\.lock$/
+]
 
 export interface ReviewComment {
-  file: string;
-  line: number;
-  body: string;
+  file: string
+  line: number
+  body: string
 }
 
 export interface ReviewResponse {
-  summary: string;
-  verdict: 'APPROVE' | 'REQUEST_CHANGES' | 'COMMENT';
-  comments: ReviewComment[];
+  summary: string
+  verdict: 'APPROVE' | 'REQUEST_CHANGES' | 'COMMENT'
+  comments: ReviewComment[]
 }
 
 export function isLockfileOnlyPR(files: { filename: string }[]): boolean {
-  return files.every((f) =>
-    LOCKFILE_PATTERNS.some((p) => p.test(f.filename))
-  );
+  return files.every(f => LOCKFILE_PATTERNS.some(p => p.test(f.filename)))
 }
 
 export function buildReviewPrompt(
@@ -37,17 +35,17 @@ export function buildReviewPrompt(
     '',
     `<pr_description>${body}</pr_description>`,
     '',
-    `<diff>${diff}</diff>`,
-  ].join('\n');
+    `<diff>${diff}</diff>`
+  ].join('\n')
 }
 
 export function parseReviewResponse(text: string): ReviewResponse {
   // Try to extract JSON from a markdown code block first
-  const codeBlockMatch = text.match(/```(?:json)?\s*\n([\s\S]*?)\n```/);
-  const jsonText = codeBlockMatch ? codeBlockMatch[1] : text;
+  const codeBlockMatch = text.match(/```(?:json)?\s*\n([\s\S]*?)\n```/)
+  const jsonText = codeBlockMatch ? codeBlockMatch[1] : text
 
   try {
-    const parsed = JSON.parse(jsonText);
+    const parsed = JSON.parse(jsonText)
     return {
       summary: parsed.summary ?? '',
       verdict: ['APPROVE', 'REQUEST_CHANGES', 'COMMENT'].includes(
@@ -55,13 +53,13 @@ export function parseReviewResponse(text: string): ReviewResponse {
       )
         ? parsed.verdict
         : 'COMMENT',
-      comments: Array.isArray(parsed.comments) ? parsed.comments : [],
-    };
+      comments: Array.isArray(parsed.comments) ? parsed.comments : []
+    }
   } catch {
     return {
       summary: text,
       verdict: 'COMMENT',
-      comments: [],
-    };
+      comments: []
+    }
   }
 }

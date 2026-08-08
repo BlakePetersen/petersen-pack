@@ -37,7 +37,9 @@ export function Header() {
             </button>
           </SidebarDrawer>
         </div>
-        <Link href="/" className="font-mono font-bold text-foreground">Artax UI</Link>
+        <Link href="/" className="font-mono font-bold text-foreground">
+          Artax UI
+        </Link>
       </div>
       <ThemeToggle />
     </header>

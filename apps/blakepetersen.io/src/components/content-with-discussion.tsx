@@ -10,7 +10,7 @@ import { GiscusComments } from './giscus-comments'
 export function DiscussionWithReactions({
   slug,
   title,
-  pageUrl,
+  pageUrl
 }: {
   slug: string
   title: string
@@ -21,14 +21,12 @@ export function DiscussionWithReactions({
   return (
     <section className="mt-8 border border-border p-4">
       <div className="flex items-baseline justify-between">
-        <h3 className="font-mono text-xs text-info">
-          {'// discussion'}
-        </h3>
+        <h3 className="font-mono text-xs text-info">{'// discussion'}</h3>
         <ReportProblemLink title={title} pageUrl={pageUrl} />
       </div>
       <GiscusComments
         term={slug}
-        onMetadata={(data) => setCount(data.reactionCount)}
+        onMetadata={data => setCount(data.reactionCount)}
       />
     </section>
   )

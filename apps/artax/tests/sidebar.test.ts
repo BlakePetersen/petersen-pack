@@ -9,14 +9,21 @@ import { render, screen } from '@testing-library/react'
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
-  usePathname: () => '/components/atoms/button',
+  usePathname: () => '/components/atoms/button'
 }))
 
 // Mock next/link to render a simple anchor
 jest.mock('next/link', () => ({
   __esModule: true,
-  default: ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) =>
-    createElement('a', { href, className }, children),
+  default: ({
+    href,
+    children,
+    className
+  }: {
+    href: string
+    children: React.ReactNode
+    className?: string
+  }) => createElement('a', { href, className }, children)
 }))
 
 import { SidebarNav } from '@/components/sidebar-nav'
@@ -27,8 +34,8 @@ function getSections() {
       label: '',
       items: [
         { name: 'Overview', href: '/' },
-        { name: 'Getting Started', href: '/getting-started' },
-      ],
+        { name: 'Getting Started', href: '/getting-started' }
+      ]
     },
     {
       label: '// atoms',
@@ -38,8 +45,8 @@ function getSections() {
         { name: 'Badge', href: '/components/atoms/badge' },
         { name: 'Separator', href: '/components/atoms/separator' },
         { name: 'CopyButton', href: '/components/atoms/copy-button' },
-        { name: 'Toggle', href: '/components/atoms/toggle' },
-      ],
+        { name: 'Toggle', href: '/components/atoms/toggle' }
+      ]
     },
     {
       label: '// molecules',
@@ -49,21 +56,21 @@ function getSections() {
         { name: 'Callout', href: '/components/molecules/callout' },
         { name: 'CodeBlock', href: '/components/molecules/code-block' },
         { name: 'Tabs', href: '/components/molecules/tabs' },
-        { name: 'Tooltip', href: '/components/molecules/tooltip' },
-      ],
+        { name: 'Tooltip', href: '/components/molecules/tooltip' }
+      ]
     },
     {
       label: '// organisms',
       items: [
         { name: 'Accordion', href: '/components/organisms/accordion' },
         { name: 'Dialog', href: '/components/organisms/dialog' },
-        { name: 'Dropdown', href: '/components/organisms/dropdown' },
-      ],
+        { name: 'Dropdown', href: '/components/organisms/dropdown' }
+      ]
     },
     {
       label: '',
-      items: [{ name: 'Tokens', href: '/tokens' }],
-    },
+      items: [{ name: 'Tokens', href: '/tokens' }]
+    }
   ]
 }
 
@@ -97,23 +104,33 @@ describe('SidebarNav', () => {
   })
 
   it('renders all 15 component links with correct hrefs', () => {
-    const { container } = render(createElement(SidebarNav, { sections: getSections() }))
+    const { container } = render(
+      createElement(SidebarNav, { sections: getSections() })
+    )
 
     const componentLinks = container.querySelectorAll('a[href^="/components/"]')
     expect(componentLinks.length).toBe(15)
 
-    const atomLinks = container.querySelectorAll('a[href^="/components/atoms/"]')
+    const atomLinks = container.querySelectorAll(
+      'a[href^="/components/atoms/"]'
+    )
     expect(atomLinks.length).toBe(6)
 
-    const moleculeLinks = container.querySelectorAll('a[href^="/components/molecules/"]')
+    const moleculeLinks = container.querySelectorAll(
+      'a[href^="/components/molecules/"]'
+    )
     expect(moleculeLinks.length).toBe(6)
 
-    const organismLinks = container.querySelectorAll('a[href^="/components/organisms/"]')
+    const organismLinks = container.querySelectorAll(
+      'a[href^="/components/organisms/"]'
+    )
     expect(organismLinks.length).toBe(3)
   })
 
   it('tier headings are always visible (no collapse/expand)', () => {
-    const { container } = render(createElement(SidebarNav, { sections: getSections() }))
+    const { container } = render(
+      createElement(SidebarNav, { sections: getSections() })
+    )
 
     // All component items should be visible, no collapsible mechanism
     expect(screen.getByText('Accordion')).toBeDefined()

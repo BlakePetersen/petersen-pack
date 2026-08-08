@@ -18,7 +18,8 @@ const categoryMappings: CategoryMapping[] = [
     newCategory: {
       name: 'Portraits',
       slug: 'portraits',
-      description: 'Professional portrait photography including seniors, kids, and headshots',
+      description:
+        'Professional portrait photography including seniors, kids, and headshots',
     },
     oldSlugs: ['portraiture', 'senior-portrait', 'minis'],
   },
@@ -74,7 +75,8 @@ const categoryMappings: CategoryMapping[] = [
     newCategory: {
       name: 'Creative & Conceptual',
       slug: 'creative-conceptual',
-      description: 'Creative and conceptual photography including underwater, yoga, and fantasy',
+      description:
+        'Creative and conceptual photography including underwater, yoga, and fantasy',
     },
     oldSlugs: ['fantasy', 'underwater', 'yoga'],
   },
@@ -184,7 +186,9 @@ async function consolidate() {
     for (const oldCategory of oldCategories) {
       if (oldCategory.id === newCategory.id) continue
 
-      console.log(`  Migrating ${oldCategory.posts.length} posts from "${oldCategory.name}"`)
+      console.log(
+        `  Migrating ${oldCategory.posts.length} posts from "${oldCategory.name}"`
+      )
 
       for (const postLink of oldCategory.posts) {
         // Check if post already has the new category
@@ -257,7 +261,9 @@ async function consolidate() {
     for (const oldTag of oldTags) {
       if (oldTag.id === newTag.id) continue
 
-      console.log(`  Migrating ${oldTag.posts.length} posts from "${oldTag.name}"`)
+      console.log(
+        `  Migrating ${oldTag.posts.length} posts from "${oldTag.name}"`
+      )
 
       for (const postLink of oldTag.posts) {
         // Check if post already has the new tag

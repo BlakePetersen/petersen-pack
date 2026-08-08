@@ -12,7 +12,7 @@ import type { PrismTheme } from 'prism-react-renderer'
 export const artaxTerminalTheme: PrismTheme = {
   plain: {
     backgroundColor: '#0A0A0A',
-    color: '#D4D4D4',
+    color: '#D4D4D4'
   },
   styles: [
     { types: ['keyword', 'operator'], style: { color: '#F59E0B' } },
@@ -22,6 +22,6 @@ export const artaxTerminalTheme: PrismTheme = {
     { types: ['tag', 'attr-name'], style: { color: '#93C5FD' } },
     { types: ['number', 'boolean'], style: { color: '#F59E0B' } },
     { types: ['function'], style: { color: '#D4D4D4' } },
-    { types: ['class-name', 'maybe-class-name'], style: { color: '#FBBF24' } },
-  ],
+    { types: ['class-name', 'maybe-class-name'], style: { color: '#FBBF24' } }
+  ]
 }

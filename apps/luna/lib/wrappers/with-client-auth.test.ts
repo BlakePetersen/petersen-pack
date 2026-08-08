@@ -44,9 +44,8 @@ describe('withClientAuth', () => {
   })
 
   it('attaches __wrapperKind and __wrappedHandler back-pointer', async () => {
-    const { withClientAuth, WRAPPER_KIND_CLIENT_AUTH } = await import(
-      './with-client-auth'
-    )
+    const { withClientAuth, WRAPPER_KIND_CLIENT_AUTH } =
+      await import('./with-client-auth')
     const inner = async () => new Response('ok')
     const wrapped = withClientAuth(inner) as unknown as {
       __wrapperKind: symbol

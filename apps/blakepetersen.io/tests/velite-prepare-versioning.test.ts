@@ -5,7 +5,10 @@ import { createHash } from 'node:crypto'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { versionAndValidateArtifacts, type DxData } from '../src/lib/velite-prepare'
+import {
+  versionAndValidateArtifacts,
+  type DxData
+} from '../src/lib/velite-prepare'
 
 function sha256Hex(payload: string): string {
   return createHash('sha256').update(payload).digest('hex')
@@ -24,17 +27,22 @@ function emptyData(overrides: Partial<DxData> = {}): DxData {
     posts: [],
     singleArtifacts: [],
     multiArtifacts: [],
-    ...overrides,
+    ...overrides
   }
 }
 
 // Pre-populate version manifest so deriveCalVer (shells to git) is short-circuited.
-function seedVersion(contentDir: string, slug: string, content: string, version: string): void {
+function seedVersion(
+  contentDir: string,
+  slug: string,
+  content: string,
+  version: string
+): void {
   const hash = sha256Hex(content)
   const manifest = { [slug]: { hash, version } }
   fs.writeFileSync(
     path.join(contentDir, '.artifact-versions.json'),
-    JSON.stringify(manifest),
+    JSON.stringify(manifest)
   )
 }
 
@@ -52,11 +60,13 @@ describe('versionAndValidateArtifacts — Zod shape validation', () => {
           description: 'd',
           destination: 'dest',
           body,
-          merge: 'replace',
-        },
-      ],
+          merge: 'replace'
+        }
+      ]
     })
-    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(/Invalid artifact slug/)
+    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(
+      /Invalid artifact slug/
+    )
   })
 
   it('throws on invalid CalVer', () => {
@@ -72,11 +82,13 @@ describe('versionAndValidateArtifacts — Zod shape validation', () => {
           description: 'd',
           destination: 'dest',
           body,
-          merge: 'replace',
-        },
-      ],
+          merge: 'replace'
+        }
+      ]
     })
-    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(/Invalid artifact version/)
+    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(
+      /Invalid artifact version/
+    )
   })
 
   it('throws on invalid artifact type', () => {
@@ -92,11 +104,13 @@ describe('versionAndValidateArtifacts — Zod shape validation', () => {
           description: 'd',
           destination: 'dest',
           body,
-          merge: 'replace',
-        },
-      ],
+          merge: 'replace'
+        }
+      ]
     })
-    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(/Invalid artifact type/)
+    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(
+      /Invalid artifact type/
+    )
   })
 
   it('throws on invalid merge strategy', () => {
@@ -112,12 +126,18 @@ describe('versionAndValidateArtifacts — Zod shape validation', () => {
           description: 'd',
           files: [
             { path: 'f1', content: 'a', merge: 'replace' },
-            { path: 'f2', content: 'b', merge: 'rebase' as unknown as 'replace' },
-          ],
-        },
-      ],
+            {
+              path: 'f2',
+              content: 'b',
+              merge: 'rebase' as unknown as 'replace'
+            }
+          ]
+        }
+      ]
     })
-    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(/Invalid merge strategy/)
+    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(
+      /Invalid merge strategy/
+    )
   })
 
   it('throws on empty file content', () => {
@@ -130,11 +150,13 @@ describe('versionAndValidateArtifacts — Zod shape validation', () => {
           name: 'x',
           type: 'config',
           description: 'd',
-          files: [{ path: 'f', content: '', merge: 'replace' }],
-        },
-      ],
+          files: [{ path: 'f', content: '', merge: 'replace' }]
+        }
+      ]
     })
-    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(/Empty file content/)
+    expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow(
+      /Empty file content/
+    )
   })
 
   it('does not persist the version manifest when validation throws', () => {
@@ -153,9 +175,9 @@ describe('versionAndValidateArtifacts — Zod shape validation', () => {
           description: 'd',
           destination: 'dest',
           body,
-          merge: 'replace',
-        },
-      ],
+          merge: 'replace'
+        }
+      ]
     })
     expect(() => versionAndValidateArtifacts(data, contentDir)).toThrow()
 
@@ -178,10 +200,10 @@ describe('versionAndValidateArtifacts — multi-artifact hash gate', () => {
           description: 'd',
           files: [
             { path: 'a', content: 'first', merge: 'replace' },
-            { path: 'b', content: 'second', merge: 'replace' },
-          ],
-        },
-      ],
+            { path: 'b', content: 'second', merge: 'replace' }
+          ]
+        }
+      ]
     })
     const result = versionAndValidateArtifacts(data, contentDir)
     expect(result[0]?.version).toBe('2024.06.15.0')
@@ -201,10 +223,10 @@ describe('versionAndValidateArtifacts — multi-artifact hash gate', () => {
           description: 'd',
           files: [
             { path: 'a', content: 'first', merge: 'replace' },
-            { path: 'b', content: 'CHANGED', merge: 'replace' },
-          ],
-        },
-      ],
+            { path: 'b', content: 'CHANGED', merge: 'replace' }
+          ]
+        }
+      ]
     })
     // deriveCalVer would shell to git; we expect either a fresh CalVer-shaped string
     // or a throw. Either way, the prior version must NOT survive.

@@ -8,7 +8,7 @@ import { createElement } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 
 jest.mock('next/navigation', () => ({
-  usePathname: () => '/',
+  usePathname: () => '/'
 }))
 
 import { ComponentPreview } from '@/components/component-preview'
@@ -17,7 +17,7 @@ describe('ComponentPreview', () => {
   it('renders dot-grid background pattern', () => {
     const { container } = render(
       createElement(ComponentPreview, {
-        renderPreview: () => createElement('span', null, 'Hello'),
+        renderPreview: () => createElement('span', null, 'Hello')
       })
     )
 
@@ -31,7 +31,7 @@ describe('ComponentPreview', () => {
       createElement(ComponentPreview, {
         variants: ['default', 'outline', 'ghost'],
         renderPreview: (values?: Record<string, string>) =>
-          createElement('span', null, `Variant: ${values?.variant}`),
+          createElement('span', null, `Variant: ${values?.variant}`)
       })
     )
 
@@ -43,7 +43,7 @@ describe('ComponentPreview', () => {
   it('does not render variant buttons when no variants provided', () => {
     const { container } = render(
       createElement(ComponentPreview, {
-        renderPreview: () => createElement('span', null, 'Hello'),
+        renderPreview: () => createElement('span', null, 'Hello')
       })
     )
 
@@ -59,24 +59,28 @@ describe('ComponentPreview', () => {
           createElement(
             'span',
             { 'data-testid': 'preview-content' },
-            `Variant: ${values?.variant}`,
-          ),
+            `Variant: ${values?.variant}`
+          )
       })
     )
 
     // Initially shows first variant
-    expect(screen.getByTestId('preview-content').textContent).toBe('Variant: default')
+    expect(screen.getByTestId('preview-content').textContent).toBe(
+      'Variant: default'
+    )
 
     // Click outline
     fireEvent.click(screen.getByText('outline'))
-    expect(screen.getByTestId('preview-content').textContent).toBe('Variant: outline')
+    expect(screen.getByTestId('preview-content').textContent).toBe(
+      'Variant: outline'
+    )
   })
 
   it('applies active style to selected variant button', () => {
     render(
       createElement(ComponentPreview, {
         variants: ['default', 'outline'],
-        renderPreview: () => createElement('span', null, 'Hello'),
+        renderPreview: () => createElement('span', null, 'Hello')
       })
     )
 

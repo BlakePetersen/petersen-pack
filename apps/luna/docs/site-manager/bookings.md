@@ -53,11 +53,13 @@ Availability slots are the dates and times you're open for sessions.
 Some systems allow creating multiple slots at once:
 
 **Multiple Dates, Same Times**:
+
 - Select multiple dates (e.g., all Saturdays in a month)
 - Set same start/end time for all
 - Create in one action
 
 **Recurring Availability**:
+
 - Set pattern (e.g., every Saturday)
 - Choose date range
 - System creates individual slots
@@ -95,6 +97,7 @@ Instead of deleting, you can mark a slot as unavailable:
 - Can re-enable later
 
 **When to Use**:
+
 - Slot is tentatively booked (waiting for confirmation)
 - Personal event on calendar
 - Weather concerns
@@ -107,6 +110,7 @@ Instead of deleting, you can mark a slot as unavailable:
 **Access**: Click "Bookings" in sidebar
 
 **What You See**:
+
 - All booking requests
 - Status (Pending, Confirmed, Cancelled, Completed)
 - Client information
@@ -116,21 +120,25 @@ Instead of deleting, you can mark a slot as unavailable:
 ### Booking Statuses
 
 **PENDING** (Yellow/Orange)
+
 - Newly submitted booking request
 - Awaiting your response
 - Action needed
 
 **CONFIRMED** (Green)
+
 - You've accepted the booking
 - Client has been notified
 - Session scheduled
 
 **CANCELLED** (Red)
+
 - Booking was cancelled
 - By you or by request
 - Client notified
 
 **COMPLETED** (Blue/Gray)
+
 - Session has occurred
 - Archival status
 - Historical record
@@ -146,6 +154,7 @@ When a new booking comes in:
 3. **Click on the booking** to view full details
 
 **Review**:
+
 - Client name, email, phone
 - Requested date and time
 - Service type (Wedding, Portrait, etc.)
@@ -163,12 +172,14 @@ If you want to accept:
 4. **Save**
 
 **What Happens**:
+
 - Status changes to CONFIRMED
 - Client receives confirmation email
 - You receive copy/notification
 - Recommended: Mark availability slot as unavailable
 
 **Next Steps**:
+
 - Add to your personal calendar
 - Send follow-up with session details
 - Send contract/invoice (outside system)
@@ -183,11 +194,13 @@ If you need to decline:
 4. **Save**
 
 **What Happens**:
+
 - Status changes to CANCELLED
 - Client receives notification
 - Slot remains available for other bookings
 
 **Professional Communication**:
+
 - Consider personal follow-up email
 - Explain reason if appropriate
 - Suggest alternative dates if available
@@ -202,6 +215,7 @@ After the session occurs:
 3. **Save**
 
 **Purpose**:
+
 - Keeps records organized
 - Archives past bookings
 - Separates from active bookings
@@ -211,18 +225,22 @@ After the session occurs:
 ### Automatic Emails Sent
 
 **When Booking Created**:
+
 - **To You**: Notification of new booking request
 - **To Client**: Confirmation that request was received
 
 **When You Confirm**:
+
 - **To Client**: Booking confirmed notification with details
 
 **When You Cancel**:
+
 - **To Client**: Booking cancelled notification
 
 ### Email Content
 
 Emails automatically include:
+
 - Client/your name
 - Date and time
 - Service type and duration
@@ -236,6 +254,7 @@ Emails automatically include:
 ### What Clients See
 
 **Booking Page** (`/book`):
+
 1. **Calendar View**:
    - Available dates highlighted
    - Unavailable dates grayed out
@@ -268,17 +287,20 @@ Emails automatically include:
 ### Setting Availability
 
 **Be Realistic**:
+
 - Only add slots you can truly honor
 - Account for travel time between locations
 - Leave buffer time for setup/breakdown
 - Consider seasonal light (for outdoor shoots)
 
 **Plan Ahead**:
+
 - Add availability 2-3 months out
 - Update weekly or monthly
 - Remove past dates periodically
 
 **Strategic Scheduling**:
+
 - Popular dates (weekends, holidays): Add early
 - Less popular times: Add closer to date
 - Block out personal time
@@ -286,11 +308,13 @@ Emails automatically include:
 ### Responding Quickly
 
 **Response Time**:
+
 - Aim for within 24 hours
 - Faster = better client experience
 - Check dashboard daily during busy season
 
 **Communication**:
+
 - Be professional and warm
 - Answer any questions in their message
 - Provide next steps
@@ -299,16 +323,19 @@ Emails automatically include:
 ### Managing Your Calendar
 
 **Personal Calendar Sync**:
+
 - Add confirmed bookings to your personal calendar
 - Set reminders
 - Block out time
 
 **Availability Updates**:
+
 - Mark slots unavailable once booked
 - Add new slots as previous ones fill
 - Adjust for weather/season
 
 **Regular Review**:
+
 - Weekly: Check upcoming bookings
 - Monthly: Add new availability
 - Seasonally: Plan for peak times
@@ -320,12 +347,14 @@ Emails automatically include:
 **Problem**: Two clients want same slot
 
 **Solution**:
+
 1. First booking stays PENDING
 2. Manually mark slot as unavailable
 3. Confirm first booking
 4. Second client can't select that slot
 
 **OR**:
+
 1. Confirm first booking immediately
 2. Decline second booking
 3. Offer alternative dates
@@ -364,6 +393,7 @@ Emails automatically include:
 ### Filtering Bookings
 
 View bookings by status:
+
 - **Pending**: Action needed
 - **Confirmed**: Upcoming sessions
 - **Completed**: Past sessions
@@ -388,11 +418,13 @@ View bookings by status:
 ### Seasonal Planning
 
 **Peak Season** (e.g., Spring/Fall weddings):
+
 - Add availability well in advance
 - More weekend slots
 - Higher volume of bookings
 
 **Off Season**:
+
 - Fewer slots or shorter timeframes
 - Promotional pricing periods
 - Focus on indoor sessions
@@ -400,11 +432,13 @@ View bookings by status:
 ### Holiday & Special Dates
 
 **Valentine's Day, Mother's Day, etc.**:
+
 - Add slots early (popular dates)
 - Consider special packages
 - Expect higher demand
 
 **Block Out**:
+
 - Your personal holidays
 - Editing/delivery time
 - Workshops/education days
@@ -412,12 +446,14 @@ View bookings by status:
 ### Time Management
 
 **Buffer Time**:
+
 - Travel between locations
 - Setup/breakdown
 - Editing time after session
 - Administrative tasks
 
 **Session Length**:
+
 - Match duration to service type
 - Wedding: 6-8 hours
 - Portrait: 1-2 hours

@@ -6,7 +6,7 @@ import {
   readFileSync,
   mkdirSync,
   rmSync,
-  existsSync,
+  existsSync
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -14,10 +14,15 @@ import { BLINK_DIR } from '@/manifest'
 
 let tmpDir: string
 let originalCwd: string
-let consolaMock: { info: jest.Mock; success: jest.Mock; log: jest.Mock; warn: jest.Mock }
+let consolaMock: {
+  info: jest.Mock
+  success: jest.Mock
+  log: jest.Mock
+  warn: jest.Mock
+}
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config,
+  defineCommand: (config: any) => config
 }))
 
 jest.mock('consola', () => {
@@ -25,7 +30,7 @@ jest.mock('consola', () => {
     info: jest.fn(),
     success: jest.fn(),
     log: jest.fn(),
-    warn: jest.fn(),
+    warn: jest.fn()
   }
   return { consola: mock, default: mock, __esModule: true }
 })
@@ -33,11 +38,11 @@ jest.mock('consola', () => {
 jest.mock('picocolors', () => ({
   default: {
     dim: (s: string) => s,
-    bold: (s: string) => s,
+    bold: (s: string) => s
   },
   __esModule: true,
   dim: (s: string) => s,
-  bold: (s: string) => s,
+  bold: (s: string) => s
 }))
 
 beforeEach(() => {
@@ -134,9 +139,9 @@ describe('blink init', () => {
             version: '2026.03.14.1',
             scope: 'project',
             installedAt: '2026-03-14T00:00:00.000Z',
-            files: [{ path: '.prettierrc', checksum: 'abc', merge: 'replace' }],
-          },
-        ],
+            files: [{ path: '.prettierrc', checksum: 'abc', merge: 'replace' }]
+          }
+        ]
       })
     )
 

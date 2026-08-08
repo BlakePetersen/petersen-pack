@@ -6,7 +6,9 @@ import { TooltipContentPrimitive } from '../../src/components/molecules/tooltip/
 describe('Tooltip primitive component', () => {
   it('renders TooltipContentPrimitive with terminal styling', () => {
     render(
-      <TooltipContentPrimitive data-testid="tooltip">Hint text</TooltipContentPrimitive>
+      <TooltipContentPrimitive data-testid="tooltip">
+        Hint text
+      </TooltipContentPrimitive>
     )
     const content = screen.getByTestId('tooltip')
     expect(content.className).toContain('bg-popover')

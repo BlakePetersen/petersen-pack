@@ -15,18 +15,18 @@ const PM_CONFIGS: PmConfig[] = [
   {
     name: 'pnpm',
     lockfile: 'pnpm-lock.yaml',
-    installDev: (pkgs) => `pnpm add -D ${pkgs.join(' ')}`,
+    installDev: pkgs => `pnpm add -D ${pkgs.join(' ')}`
   },
   {
     name: 'yarn',
     lockfile: 'yarn.lock',
-    installDev: (pkgs) => `yarn add -D ${pkgs.join(' ')}`,
+    installDev: pkgs => `yarn add -D ${pkgs.join(' ')}`
   },
   {
     name: 'npm',
     lockfile: 'package-lock.json',
-    installDev: (pkgs) => `npm install -D ${pkgs.join(' ')}`,
-  },
+    installDev: pkgs => `npm install -D ${pkgs.join(' ')}`
+  }
 ]
 
 export function detectPackageManager(cwd: string): PackageManager {
@@ -42,6 +42,6 @@ export function installDevCommand(
   pm: PackageManager,
   packages: string[]
 ): string {
-  const config = PM_CONFIGS.find((c) => c.name === pm)!
+  const config = PM_CONFIGS.find(c => c.name === pm)!
   return config.installDev(packages)
 }

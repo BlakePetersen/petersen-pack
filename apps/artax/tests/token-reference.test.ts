@@ -4,12 +4,12 @@
 import {
   getTokensByCategory,
   getTypographyTokens,
-  getSpacingTokens,
+  getSpacingTokens
 } from '@/lib/token-registry'
 
 describe('getTokensByCategory', () => {
   const categories = getTokensByCategory()
-  const categoryNames = categories.map((c) => c.name)
+  const categoryNames = categories.map(c => c.name)
 
   it('returns Background, Text, Border, Ring, Status, and Surface categories', () => {
     expect(categoryNames).toContain('Background')
@@ -21,23 +21,21 @@ describe('getTokensByCategory', () => {
   })
 
   it('pairs light and dark values for --background token', () => {
-    const bg = categories.find((c) => c.name === 'Background')!
-    const bgToken = bg.tokens.find((t) => t.cssVar === '--background')!
+    const bg = categories.find(c => c.name === 'Background')!
+    const bgToken = bg.tokens.find(t => t.cssVar === '--background')!
     expect(bgToken.lightValue).toBe('#F5F5F5')
     expect(bgToken.darkValue).toBe('#0A0A0A')
   })
 
   it('pairs light and dark values for --primary token', () => {
-    const bg = categories.find((c) => c.name === 'Background')!
-    const token = bg.tokens.find((t) => t.cssVar === '--primary')!
+    const bg = categories.find(c => c.name === 'Background')!
+    const token = bg.tokens.find(t => t.cssVar === '--primary')!
     expect(token.lightValue).toBe('#D97706')
     expect(token.darkValue).toBe('#F59E0B')
   })
 
   it('includes all semantic color tokens', () => {
-    const allTokenVars = categories.flatMap((c) =>
-      c.tokens.map((t) => t.cssVar),
-    )
+    const allTokenVars = categories.flatMap(c => c.tokens.map(t => t.cssVar))
     const expected = [
       '--background',
       '--foreground',
@@ -60,7 +58,7 @@ describe('getTokensByCategory', () => {
       '--destructive-foreground',
       '--success',
       '--info',
-      '--warning',
+      '--warning'
     ]
     for (const varName of expected) {
       expect(allTokenVars).toContain(varName)
@@ -68,32 +66,32 @@ describe('getTokensByCategory', () => {
   })
 
   it('provides correct naming formats for --background', () => {
-    const bg = categories.find((c) => c.name === 'Background')!
-    const token = bg.tokens.find((t) => t.cssVar === '--background')!
+    const bg = categories.find(c => c.name === 'Background')!
+    const token = bg.tokens.find(t => t.cssVar === '--background')!
     expect(token.cssProperty).toBe('var(--color-background)')
     expect(token.tailwind).toBe('bg-background')
     expect(token.tsConstant).toBe('tokens.bg.background')
   })
 
   it('provides correct naming formats for --foreground (text category)', () => {
-    const text = categories.find((c) => c.name === 'Text')!
-    const token = text.tokens.find((t) => t.cssVar === '--foreground')!
+    const text = categories.find(c => c.name === 'Text')!
+    const token = text.tokens.find(t => t.cssVar === '--foreground')!
     expect(token.cssProperty).toBe('var(--color-foreground)')
     expect(token.tailwind).toBe('text-foreground')
     expect(token.tsConstant).toBe('tokens.text.foreground')
   })
 
   it('provides correct naming formats for --border', () => {
-    const border = categories.find((c) => c.name === 'Border')!
-    const token = border.tokens.find((t) => t.cssVar === '--border')!
+    const border = categories.find(c => c.name === 'Border')!
+    const token = border.tokens.find(t => t.cssVar === '--border')!
     expect(token.cssProperty).toBe('var(--color-border)')
     expect(token.tailwind).toBe('border-border')
     expect(token.tsConstant).toBe('tokens.border.border')
   })
 
   it('provides correct naming formats for --ring', () => {
-    const ring = categories.find((c) => c.name === 'Ring')!
-    const token = ring.tokens.find((t) => t.cssVar === '--ring')!
+    const ring = categories.find(c => c.name === 'Ring')!
+    const token = ring.tokens.find(t => t.cssVar === '--ring')!
     expect(token.cssProperty).toBe('var(--color-ring)')
     expect(token.tailwind).toBe('ring-ring')
     expect(token.tsConstant).toBe('tokens.ring.ring')
@@ -118,19 +116,19 @@ describe('getTypographyTokens', () => {
   const typography = getTypographyTokens()
 
   it('includes JetBrains Mono font family', () => {
-    const mono = typography.find((t) => t.name === 'mono')
+    const mono = typography.find(t => t.name === 'mono')
     expect(mono).toBeDefined()
     expect(mono!.value).toContain('JetBrains Mono')
   })
 
   it('includes Inter font family', () => {
-    const sans = typography.find((t) => t.name === 'sans')
+    const sans = typography.find(t => t.name === 'sans')
     expect(sans).toBeDefined()
     expect(sans!.value).toContain('Inter')
   })
 
   it('includes mono-alt font family', () => {
-    const monoAlt = typography.find((t) => t.name === 'mono-alt')
+    const monoAlt = typography.find(t => t.name === 'mono-alt')
     expect(monoAlt).toBeDefined()
     expect(monoAlt!.value).toContain('IBM Plex Mono')
   })

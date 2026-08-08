@@ -9,18 +9,18 @@ const sections = [
   {
     href: '/getting-started',
     title: 'Getting Started',
-    description: 'Installation, setup, and configuration',
+    description: 'Installation, setup, and configuration'
   },
   {
     href: '/components',
     title: 'Components',
-    description: 'Browse all components by tier',
+    description: 'Browse all components by tier'
   },
   {
     href: '/tokens',
     title: 'Design Tokens',
-    description: 'Colors, typography, spacing, and radii',
-  },
+    description: 'Colors, typography, spacing, and radii'
+  }
 ] as const
 
 export default function HomePage() {
@@ -43,7 +43,7 @@ export default function HomePage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        {sections.map((section) => (
+        {sections.map(section => (
           <Link key={section.href} href={section.href} className="group">
             <Card className="transition-colors group-hover:border-foreground/25">
               <CardHeader>

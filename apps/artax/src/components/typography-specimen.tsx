@@ -7,12 +7,16 @@ interface TypographySpecimenProps {
   sizes: { label: string; className: string; cssValue: string }[]
 }
 
-export function TypographySpecimen({ fontFamily, fontClass, sizes }: TypographySpecimenProps) {
+export function TypographySpecimen({
+  fontFamily,
+  fontClass,
+  sizes
+}: TypographySpecimenProps) {
   return (
     <div className="space-y-4">
       <h3 className="font-mono text-sm text-muted-foreground">{fontFamily}</h3>
       <div className="space-y-3">
-        {sizes.map((size) => (
+        {sizes.map(size => (
           <div key={size.label} className="flex items-baseline gap-4">
             <span className="w-20 shrink-0 text-right font-mono text-xs text-muted-foreground">
               {size.label}

@@ -11,7 +11,7 @@ const COLLECTION_PLURAL: Record<string, string> = {
   skill: 'skills',
   config: 'configs',
   hook: 'hooks',
-  guide: 'guides',
+  guide: 'guides'
 }
 
 const VALID_COLLECTIONS = Object.keys(COLLECTION_PLURAL)
@@ -33,7 +33,7 @@ export interface ScaffoldResult {
 function slugToTitle(slug: string): string {
   return slug
     .split('-')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ')
 }
 
@@ -44,14 +44,14 @@ function slugToTitle(slug: string): string {
  * both .mdx and companion .artifact.md.
  */
 export async function generateScaffold(
-  options: ScaffoldOptions,
+  options: ScaffoldOptions
 ): Promise<ScaffoldResult> {
   const { collection, slug, contentRoot, dryRun, force, voice } = options
 
   // Validate collection
   if (!VALID_COLLECTIONS.includes(collection)) {
     throw new Error(
-      `Invalid collection "${collection}". Must be one of: ${VALID_COLLECTIONS.join(', ')}`,
+      `Invalid collection "${collection}". Must be one of: ${VALID_COLLECTIONS.join(', ')}`
     )
   }
 
@@ -59,7 +59,7 @@ export async function generateScaffold(
   const slugResult = SlugSchema.safeParse(slug)
   if (!slugResult.success) {
     throw new Error(
-      `Invalid slug "${slug}". Must match pattern: ^[a-z0-9]+(-[a-z0-9]+)*$`,
+      `Invalid slug "${slug}". Must match pattern: ^[a-z0-9]+(-[a-z0-9]+)*$`
     )
   }
 
@@ -75,7 +75,7 @@ export async function generateScaffold(
     if (hasArtifact && existsSync(artifactPath)) existing.push(artifactPath)
     if (existing.length > 0) {
       throw new Error(
-        `Files already exist (use --force to overwrite): ${existing.join(', ')}`,
+        `Files already exist (use --force to overwrite): ${existing.join(', ')}`
       )
     }
   }
@@ -100,7 +100,7 @@ ${body}`
 
   // Assemble file plans
   const files: Array<{ path: string; content: string }> = [
-    { path: mdxPath, content: mdxContent },
+    { path: mdxPath, content: mdxContent }
   ]
   if (artifactContent) {
     files.push({ path: artifactPath, content: artifactContent })

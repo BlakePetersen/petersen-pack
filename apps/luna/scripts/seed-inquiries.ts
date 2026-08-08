@@ -11,7 +11,8 @@ const testInquiries = [
     email: 'sarah.j@example.com',
     phone: '510-555-0123',
     serviceType: 'Wedding',
-    message: 'Hi Ashley! We\'re getting married next June and would love to discuss wedding photography. We saw your work on Instagram and absolutely love your style. Would you be available for a consultation?',
+    message:
+      "Hi Ashley! We're getting married next June and would love to discuss wedding photography. We saw your work on Instagram and absolutely love your style. Would you be available for a consultation?",
     status: 'NEW' as const,
   },
   {
@@ -19,7 +20,8 @@ const testInquiries = [
     email: 'mike.chen@techcorp.com',
     phone: '415-555-0198',
     serviceType: 'Headshots',
-    message: 'Need professional headshots for our executive team (5 people). Looking to schedule sometime next week if possible.',
+    message:
+      'Need professional headshots for our executive team (5 people). Looking to schedule sometime next week if possible.',
     status: 'CONTACTED' as const,
   },
   {
@@ -27,7 +29,8 @@ const testInquiries = [
     email: 'emma.m@startup.io',
     phone: null,
     serviceType: 'Branding',
-    message: 'Our startup needs branding photos for our website and marketing materials. Can we schedule a call to discuss packages?',
+    message:
+      'Our startup needs branding photos for our website and marketing materials. Can we schedule a call to discuss packages?',
     status: 'NEW' as const,
   },
   {
@@ -35,7 +38,8 @@ const testInquiries = [
     email: 'dkim@example.com',
     phone: '925-555-0142',
     serviceType: 'Family Portrait',
-    message: 'Would like to book a family session for this fall. We have 2 kids (ages 5 and 8) and a dog. Do you do outdoor sessions?',
+    message:
+      'Would like to book a family session for this fall. We have 2 kids (ages 5 and 8) and a dog. Do you do outdoor sessions?',
     status: 'CONVERTED' as const,
   },
   {
@@ -43,7 +47,8 @@ const testInquiries = [
     email: 'rachel.green@email.com',
     phone: '510-555-0167',
     serviceType: 'Pet Photography',
-    message: 'I have a golden retriever and would love some professional photos. What locations do you recommend?',
+    message:
+      'I have a golden retriever and would love some professional photos. What locations do you recommend?',
     status: 'CONTACTED' as const,
   },
   {
@@ -51,7 +56,8 @@ const testInquiries = [
     email: 'tom.wilson@corp.com',
     phone: null,
     serviceType: 'Other',
-    message: 'Interested in your underwater photography. Can you tell me more about this service?',
+    message:
+      'Interested in your underwater photography. Can you tell me more about this service?',
     status: 'CLOSED' as const,
   },
 ]

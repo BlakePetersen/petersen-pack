@@ -18,7 +18,7 @@ export function buildBreadcrumbs(pathname: string): Breadcrumb[] {
 
   return segments.map((segment, index) => ({
     label: segment.replace(/-/g, ' '),
-    href: '/' + segments.slice(0, index + 1).join('/'),
+    href: '/' + segments.slice(0, index + 1).join('/')
   }))
 }
 

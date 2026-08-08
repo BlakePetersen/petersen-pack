@@ -16,7 +16,11 @@ type BookingData = {
   bookingId: string
 }
 
-export function AdminBookingNotification({ booking }: { booking: BookingData }) {
+export function AdminBookingNotification({
+  booking,
+}: {
+  booking: BookingData
+}) {
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
 
   return {
@@ -43,11 +47,15 @@ export function AdminBookingNotification({ booking }: { booking: BookingData }) 
       <p style="margin: 5px 0; color: #4b5563;">
         <strong>Email:</strong> <a href="mailto:${booking.email}" style="color: #1f2937; text-decoration: none;">${booking.email}</a>
       </p>
-      ${booking.phone ? `
+      ${
+        booking.phone
+          ? `
       <p style="margin: 5px 0; color: #4b5563;">
         <strong>Phone:</strong> <a href="tel:${booking.phone}" style="color: #1f2937; text-decoration: none;">${booking.phone}</a>
       </p>
-      ` : ''}
+      `
+          : ''
+      }
     </div>
 
     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
@@ -58,20 +66,24 @@ export function AdminBookingNotification({ booking }: { booking: BookingData }) 
       <p style="margin: 5px 0; color: #4b5563;">
         <strong>Duration:</strong> ${booking.sessionDuration} hour${booking.sessionDuration !== 1 ? 's' : ''}
       </p>
-      ${booking.employeeCount ? `
+      ${
+        booking.employeeCount
+          ? `
       <p style="margin: 5px 0; color: #4b5563;">
         <strong>Number of Employees:</strong> ${booking.employeeCount}
       </p>
       <p style="margin: 5px 0; color: #4b5563;">
         <strong>Estimated Price:</strong> $${(() => {
-          const basePrice = 2500;
-          const extraEmployees = Math.max(0, booking.employeeCount - 10);
-          const additionalCost = extraEmployees * 250;
-          return (basePrice + additionalCost).toLocaleString();
+          const basePrice = 2500
+          const extraEmployees = Math.max(0, booking.employeeCount - 10)
+          const additionalCost = extraEmployees * 250
+          return (basePrice + additionalCost).toLocaleString()
         })()}
         ${booking.employeeCount > 10 ? ` ($2,500 base + ${booking.employeeCount - 10} × $250)` : ' (base price for up to 10 employees)'}
       </p>
-      ` : ''}
+      `
+          : ''
+      }
       <p style="margin: 5px 0; color: #4b5563;">
         <strong>Date:</strong> ${new Date(booking.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
       </p>
@@ -80,12 +92,16 @@ export function AdminBookingNotification({ booking }: { booking: BookingData }) 
       </p>
     </div>
 
-    ${booking.message ? `
+    ${
+      booking.message
+        ? `
     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
       <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Additional Details</p>
       <p style="margin: 0; color: #4b5563; white-space: pre-wrap; line-height: 1.6;">${booking.message}</p>
     </div>
-    ` : ''}
+    `
+        : ''
+    }
 
     <div style="text-align: center; margin-bottom: 20px;">
       <a href="${baseUrl}/admin/bookings" style="display: inline-block; background: linear-gradient(135deg, #1f2937 0%, #111827 100%); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">

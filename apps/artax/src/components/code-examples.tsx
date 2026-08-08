@@ -11,7 +11,7 @@ export function CodeExamples({ examples }: { examples: CodeExample[] }) {
 
   return (
     <div className="space-y-6">
-      {examples.map((example) => (
+      {examples.map(example => (
         <div key={example.label}>
           <h3 className="font-mono text-sm text-muted-foreground mb-2">
             {example.label}

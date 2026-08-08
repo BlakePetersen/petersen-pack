@@ -18,13 +18,13 @@ async function optimizeImages() {
       gallery: {
         select: {
           title: true,
-          slug: true
-        }
-      }
+          slug: true,
+        },
+      },
     },
     orderBy: {
-      createdAt: 'asc'
-    }
+      createdAt: 'asc',
+    },
   })
 
   console.log(`\nFound ${images.length} images to optimize\n`)
@@ -38,7 +38,9 @@ async function optimizeImages() {
     const image = images[i]
     const imagePath = path.join(PUBLIC_DIR, image.url)
 
-    console.log(`[${i + 1}/${images.length}] Processing: ${path.basename(image.url)}`)
+    console.log(
+      `[${i + 1}/${images.length}] Processing: ${path.basename(image.url)}`
+    )
     console.log(`  Gallery: ${image.gallery?.title || 'Unknown'}`)
 
     if (!fs.existsSync(imagePath)) {
@@ -72,7 +74,7 @@ async function optimizeImages() {
         })
         .webp({
           quality: 85,
-          effort: 6 // Higher effort = better compression (0-6)
+          effort: 6, // Higher effort = better compression (0-6)
         })
         .toBuffer()
 
@@ -98,24 +100,34 @@ async function optimizeImages() {
 
       totalSavings += savings
 
-      console.log(`  ✓ Optimized: ${(originalSize / 1024 / 1024).toFixed(2)}MB → ${(newSize / 1024 / 1024).toFixed(2)}MB`)
-      console.log(`  💾 Saved: ${(savings / 1024 / 1024).toFixed(2)}MB (${savingsPercent}%)`)
+      console.log(
+        `  ✓ Optimized: ${(originalSize / 1024 / 1024).toFixed(2)}MB → ${(newSize / 1024 / 1024).toFixed(2)}MB`
+      )
+      console.log(
+        `  💾 Saved: ${(savings / 1024 / 1024).toFixed(2)}MB (${savingsPercent}%)`
+      )
       console.log(`  📐 Dimensions: ${newMetadata.width}x${newMetadata.height}`)
 
       // Update database with new dimensions if changed
-      if (newMetadata.width !== image.width || newMetadata.height !== image.height) {
+      if (
+        newMetadata.width !== image.width ||
+        newMetadata.height !== image.height
+      ) {
         await prisma.image.update({
           where: { id: image.id },
           data: {
             width: newMetadata.width || image.width,
-            height: newMetadata.height || image.height
-          }
+            height: newMetadata.height || image.height,
+          },
         })
       }
 
       optimized++
     } catch (error) {
-      console.error(`  ✗ Failed:`, error instanceof Error ? error.message : error)
+      console.error(
+        `  ✗ Failed:`,
+        error instanceof Error ? error.message : error
+      )
       failed++
     }
 
@@ -129,7 +141,9 @@ async function optimizeImages() {
   console.log(`  ✓ Optimized: ${optimized} images`)
   console.log(`  ⚠️  Skipped: ${skipped} images`)
   console.log(`  ✗ Failed: ${failed} images`)
-  console.log(`  💾 Total savings: ${(totalSavings / 1024 / 1024).toFixed(2)}MB`)
+  console.log(
+    `  💾 Total savings: ${(totalSavings / 1024 / 1024).toFixed(2)}MB`
+  )
   console.log('')
 }
 

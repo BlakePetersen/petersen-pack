@@ -2,7 +2,11 @@
 // ABOUTME: Takes injected AI and GitHub ports for testability without @actions mocks.
 
 import { sanitize } from './sanitize'
-import { buildTriagePrompt, parseTriageResponse, validateLabels } from './triage-helpers'
+import {
+  buildTriagePrompt,
+  parseTriageResponse,
+  validateLabels
+} from './triage-helpers'
 import { ensureLabelsExist } from './labels'
 import type { Octokit } from '@octokit/rest'
 
@@ -100,11 +104,14 @@ export function createTriageEngine(deps: { ai: AiPort; github: GitHubPort }) {
       area: parsed.area,
       isDuplicate: parsed.is_duplicate,
       tldr: parsed.tldr,
-      labels,
+      labels
     }
   }
 
-  async function apply(result: TriageResult, issue: IssueInput): Promise<ApplyOutcome> {
+  async function apply(
+    result: TriageResult,
+    issue: IssueInput
+  ): Promise<ApplyOutcome> {
     const { octokit, owner, repo } = deps.github
 
     await ensureLabelsExist(octokit, owner, repo, result.labels)
@@ -113,27 +120,27 @@ export function createTriageEngine(deps: { ai: AiPort; github: GitHubPort }) {
       owner,
       repo,
       issue_number: issue.number,
-      labels: result.labels,
+      labels: result.labels
     })
 
     await octokit.rest.issues.createComment({
       owner,
       repo,
       issue_number: issue.number,
-      body: `🤖 **TL;DR:** ${result.tldr}`,
+      body: `🤖 **TL;DR:** ${result.tldr}`
     })
 
     await octokit.rest.issues.addAssignees({
       owner,
       repo,
       issue_number: issue.number,
-      assignees: ['blakepetersen'],
+      assignees: ['blakepetersen']
     })
 
     return {
       labelsApplied: result.labels,
       commentPosted: true,
-      assigned: true,
+      assigned: true
     }
   }
 

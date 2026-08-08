@@ -6,7 +6,7 @@ import {
   readFileSync,
   existsSync,
   mkdirSync,
-  rmSync,
+  rmSync
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -72,14 +72,12 @@ describe('generateScaffold', () => {
       slug: 'test-skill',
       contentRoot,
       dryRun: false,
-      force: false,
+      force: false
     })
 
     expect(result.files).toHaveLength(2)
-    const mdxFile = result.files.find((f) => f.path.endsWith('.mdx'))
-    const artifactFile = result.files.find((f) =>
-      f.path.endsWith('.artifact.md'),
-    )
+    const mdxFile = result.files.find(f => f.path.endsWith('.mdx'))
+    const artifactFile = result.files.find(f => f.path.endsWith('.artifact.md'))
     expect(mdxFile).toBeDefined()
     expect(artifactFile).toBeDefined()
     expect(mdxFile!.written).toBe(true)
@@ -94,7 +92,7 @@ describe('generateScaffold', () => {
       slug: 'test-guide',
       contentRoot,
       dryRun: false,
-      force: false,
+      force: false
     })
 
     expect(result.files).toHaveLength(1)
@@ -108,12 +106,10 @@ describe('generateScaffold', () => {
       slug: 'my-config',
       contentRoot,
       dryRun: false,
-      force: false,
+      force: false
     })
 
-    const artifactFile = result.files.find((f) =>
-      f.path.endsWith('.artifact.md'),
-    )
+    const artifactFile = result.files.find(f => f.path.endsWith('.artifact.md'))
     expect(artifactFile).toBeDefined()
     const content = readFileSync(artifactFile!.path, 'utf8')
     expect(content).toContain('name: My Config')
@@ -126,7 +122,7 @@ describe('generateScaffold', () => {
       slug: 'dry-test',
       contentRoot,
       dryRun: true,
-      force: false,
+      force: false
     })
 
     expect(result.files.length).toBeGreaterThan(0)
@@ -146,7 +142,7 @@ describe('generateScaffold', () => {
       slug: 'existing',
       contentRoot,
       dryRun: false,
-      force: true,
+      force: true
     })
 
     expect(result.files[0].written).toBe(true)
@@ -165,8 +161,8 @@ describe('generateScaffold', () => {
         slug: 'existing',
         contentRoot,
         dryRun: false,
-        force: false,
-      }),
+        force: false
+      })
     ).rejects.toThrow()
   })
 })

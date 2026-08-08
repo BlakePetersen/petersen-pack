@@ -19,7 +19,9 @@ describe('getComponentCounts', () => {
   })
 
   it('returns total equal to sum of all tiers', () => {
-    expect(counts.total).toBe(counts.atoms + counts.molecules + counts.organisms)
+    expect(counts.total).toBe(
+      counts.atoms + counts.molecules + counts.organisms
+    )
   })
 
   it('returns total of 20', () => {

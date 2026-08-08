@@ -46,7 +46,10 @@ describe('deriveCalVer', () => {
   it('falls back to current date when git history has no meaningful date', () => {
     const counters = new Map<string, number>()
     // Pass a non-existent file path - should fall back gracefully
-    const result = deriveCalVer('nonexistent-file-that-does-not-exist.ts', counters)
+    const result = deriveCalVer(
+      'nonexistent-file-that-does-not-exist.ts',
+      counters
+    )
     const today = new Date()
     const year = today.getUTCFullYear().toString()
     expect(result).toMatch(new RegExp(`^${year}\\.\\d{2}\\.\\d{2}\\.\\d+$`))

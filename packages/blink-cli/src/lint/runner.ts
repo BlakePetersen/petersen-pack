@@ -28,7 +28,7 @@ const rules: LintRule[] = [
   frontmatterSchemaRule,
   artifactPairRule,
   voicePrimitiveRule,
-  noInlineArtifactBodyRule,
+  noInlineArtifactBodyRule
 ]
 
 /**
@@ -83,7 +83,7 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
   const fixed: string[] = []
 
   const candidates = specifiedFiles ?? discoverMdxFiles(contentRoot)
-  const mdxFiles = candidates.filter((f) => isDxEntry(contentRoot, f))
+  const mdxFiles = candidates.filter(f => isDxEntry(contentRoot, f))
 
   // A missing or empty content root must never read as a clean run — that
   // exact silence let the pre-commit gate no-op for a whole phase. Explicit
@@ -96,12 +96,12 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
           file: contentRoot,
           severity: 'error',
           rule: 'content-root',
-          message: `no lintable DX entries found under '${contentRoot}' — wrong --content-root?`,
-        },
+          message: `no lintable DX entries found under '${contentRoot}' — wrong --content-root?`
+        }
       ],
       fixed: [],
       errorCount: 1,
-      warningCount: 0,
+      warningCount: 0
     }
   }
 
@@ -118,7 +118,7 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
       file,
       frontmatter: parsed.data,
       body: parsed.content,
-      contentRoot,
+      contentRoot
     }
 
     for (const rule of rules) {
@@ -145,7 +145,7 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
             ctx = {
               ...ctx,
               frontmatter: fixResult.frontmatter ?? ctx.frontmatter,
-              body: fixResult.body ?? ctx.body,
+              body: fixResult.body ?? ctx.body
             }
             const output = matter.stringify(ctx.body, ctx.frontmatter)
             try {
@@ -168,8 +168,8 @@ export async function runLint(options: LintOptions): Promise<LintResult> {
     diagnostics.push(...orphanDiagnostics)
   }
 
-  const errorCount = diagnostics.filter((d) => d.severity === 'error').length
-  const warningCount = diagnostics.filter((d) => d.severity === 'warning').length
+  const errorCount = diagnostics.filter(d => d.severity === 'error').length
+  const warningCount = diagnostics.filter(d => d.severity === 'warning').length
 
   return { diagnostics, fixed, errorCount, warningCount }
 }

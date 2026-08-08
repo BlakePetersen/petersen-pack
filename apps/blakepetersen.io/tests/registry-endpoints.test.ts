@@ -3,10 +3,7 @@
 
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
-import {
-  RegistryIndexSchema,
-  RegistryArtifactSchema,
-} from 'blink-registry'
+import { RegistryIndexSchema, RegistryArtifactSchema } from 'blink-registry'
 
 const appRoot = join(__dirname, '..')
 const registryDir = join(appRoot, 'public', 'r')
@@ -76,20 +73,26 @@ describe('Registry Endpoints (REG-02/03/04/05)', () => {
     }
   })
 
-  conditionalTest('detail files validate against RegistryArtifactSchema', () => {
-    const raw = readFileSync(indexPath, 'utf-8')
-    const parsed = JSON.parse(raw)
-    for (const item of parsed.items) {
-      const detailPath = join(registryDir, item.type, `${item.slug}.json`)
-      const detailRaw = readFileSync(detailPath, 'utf-8')
-      const detail = JSON.parse(detailRaw)
-      const result = RegistryArtifactSchema.safeParse(detail)
-      if (!result.success) {
-        console.error(`Validation errors for ${item.slug}:`, result.error.format())
+  conditionalTest(
+    'detail files validate against RegistryArtifactSchema',
+    () => {
+      const raw = readFileSync(indexPath, 'utf-8')
+      const parsed = JSON.parse(raw)
+      for (const item of parsed.items) {
+        const detailPath = join(registryDir, item.type, `${item.slug}.json`)
+        const detailRaw = readFileSync(detailPath, 'utf-8')
+        const detail = JSON.parse(detailRaw)
+        const result = RegistryArtifactSchema.safeParse(detail)
+        if (!result.success) {
+          console.error(
+            `Validation errors for ${item.slug}:`,
+            result.error.format()
+          )
+        }
+        expect(result.success).toBe(true)
       }
-      expect(result.success).toBe(true)
     }
-  })
+  )
 
   conditionalTest('detail files include url field', () => {
     const raw = readFileSync(indexPath, 'utf-8')
@@ -103,15 +106,20 @@ describe('Registry Endpoints (REG-02/03/04/05)', () => {
     }
   })
 
-  conditionalTest('no stale type directories beyond what index references', () => {
-    const raw = readFileSync(indexPath, 'utf-8')
-    const parsed = JSON.parse(raw)
-    const expectedTypes = new Set(parsed.items.map((item: { type: string }) => item.type))
-    const actualDirs = readdirSync(registryDir, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name)
-    for (const dir of actualDirs) {
-      expect(expectedTypes.has(dir)).toBe(true)
+  conditionalTest(
+    'no stale type directories beyond what index references',
+    () => {
+      const raw = readFileSync(indexPath, 'utf-8')
+      const parsed = JSON.parse(raw)
+      const expectedTypes = new Set(
+        parsed.items.map((item: { type: string }) => item.type)
+      )
+      const actualDirs = readdirSync(registryDir, { withFileTypes: true })
+        .filter(entry => entry.isDirectory())
+        .map(entry => entry.name)
+      for (const dir of actualDirs) {
+        expect(expectedTypes.has(dir)).toBe(true)
+      }
     }
-  })
+  )
 })

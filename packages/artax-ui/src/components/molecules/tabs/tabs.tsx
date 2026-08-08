@@ -9,13 +9,7 @@ function TabsListPrimitive({
   ...props
 }: React.ComponentProps<'div'>) {
   return (
-    <div
-      className={cn(
-        'flex border-b border-border',
-        className
-      )}
-      {...props}
-    />
+    <div className={cn('flex border-b border-border', className)} {...props} />
   )
 }
 
@@ -39,10 +33,7 @@ function TabsContentPrimitive({
   ...props
 }: React.ComponentProps<'div'>) {
   return (
-    <div
-      className={cn('pt-4 text-sm text-foreground', className)}
-      {...props}
-    />
+    <div className={cn('pt-4 text-sm text-foreground', className)} {...props} />
   )
 }
 
@@ -50,12 +41,7 @@ function Tabs({
   className,
   ...props
 }: React.ComponentProps<typeof RadixTabs.Root>) {
-  return (
-    <RadixTabs.Root
-      className={cn('w-full', className)}
-      {...props}
-    />
-  )
+  return <RadixTabs.Root className={cn('w-full', className)} {...props} />
 }
 
 function TabsList({
@@ -64,10 +50,7 @@ function TabsList({
 }: React.ComponentProps<typeof RadixTabs.List>) {
   return (
     <RadixTabs.List
-      className={cn(
-        'flex border-b border-border',
-        className
-      )}
+      className={cn('flex border-b border-border', className)}
       {...props}
     />
   )

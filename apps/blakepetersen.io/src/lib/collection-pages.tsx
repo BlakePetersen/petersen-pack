@@ -13,7 +13,7 @@ import { getArtifactForContent } from './artifacts'
 import {
   buildMetadata,
   buildArticleJsonLd,
-  buildBreadcrumbJsonLd,
+  buildBreadcrumbJsonLd
 } from './metadata'
 import { JsonLd } from '../components/json-ld'
 import { DxContentLayout } from '../components/dx-content-layout'
@@ -33,45 +33,55 @@ export function createCollectionDetailPage(collectionSlug: string) {
   const collection = getCollection(collectionSlug)
 
   function generateStaticParams() {
-    return collection.getter().map((item) => ({
-      slug: item.slug.split('/').slice(1),
+    return collection.getter().map(item => ({
+      slug: item.slug.split('/').slice(1)
     }))
   }
 
   async function generateMetadata({
-    params,
+    params
   }: {
     params: Promise<{ slug: string[] }>
   }) {
     const { slug } = await params
     const fullSlug = `${collectionSlug}/${slug.join('/')}`
-    const item = collection.getter().find((i) => i.slug === fullSlug)
+    const item = collection.getter().find(i => i.slug === fullSlug)
     if (!item) return {}
     return buildMetadata(item, collectionSlug)
   }
 
-  async function Page({
-    params,
-  }: {
-    params: Promise<{ slug: string[] }>
-  }) {
+  async function Page({ params }: { params: Promise<{ slug: string[] }> }) {
     const { slug } = await params
     const fullSlug = `${collectionSlug}/${slug.join('/')}`
-    const item = collection.getter().find((i) => i.slug === fullSlug)
+    const item = collection.getter().find(i => i.slug === fullSlug)
 
     if (!item) notFound()
 
     // The getter return type is loose ({ [key: string]: unknown }) for registry generality.
     // Cast through unknown to access collection-specific fields safely at the page boundary.
     const anyItem = item as unknown as Record<string, unknown>
-    const relatedItems = resolveRelatedSlugs((anyItem.related as string[] | undefined) ?? [])
+    const relatedItems = resolveRelatedSlugs(
+      (anyItem.related as string[] | undefined) ?? []
+    )
 
     if (collection.layout === 'post') {
       return (
-        <ContentShell sidebar={<Sidebar />} toc={<><TableOfContents /><RelatedContent items={relatedItems} /></>}>
+        <ContentShell
+          sidebar={<Sidebar />}
+          toc={
+            <>
+              <TableOfContents />
+              <RelatedContent items={relatedItems} />
+            </>
+          }
+        >
           <JsonLd data={buildArticleJsonLd(item, collectionSlug)} />
-          <JsonLd data={buildBreadcrumbJsonLd(`/${collectionSlug}/${slug.join('/')}`)} />
-          <PostLayout post={anyItem as Parameters<typeof PostLayout>[0]['post']} />
+          <JsonLd
+            data={buildBreadcrumbJsonLd(`/${collectionSlug}/${slug.join('/')}`)}
+          />
+          <PostLayout
+            post={anyItem as Parameters<typeof PostLayout>[0]['post']}
+          />
         </ContentShell>
       )
     }
@@ -79,12 +89,24 @@ export function createCollectionDetailPage(collectionSlug: string) {
     const artifact = getArtifactForContent(fullSlug)
 
     return (
-      <ContentShell sidebar={<Sidebar />} toc={<><TableOfContents /><RelatedContent items={relatedItems} /></>}>
+      <ContentShell
+        sidebar={<Sidebar />}
+        toc={
+          <>
+            <TableOfContents />
+            <RelatedContent items={relatedItems} />
+          </>
+        }
+      >
         <JsonLd data={buildArticleJsonLd(item, collectionSlug)} />
-        <JsonLd data={buildBreadcrumbJsonLd(`/${collectionSlug}/${slug.join('/')}`)} />
+        <JsonLd
+          data={buildBreadcrumbJsonLd(`/${collectionSlug}/${slug.join('/')}`)}
+        />
         <DxContentLayout
           item={anyItem as Parameters<typeof DxContentLayout>[0]['item']}
-          artifact={artifact ? { type: artifact.type, slug: artifact.slug } : undefined}
+          artifact={
+            artifact ? { type: artifact.type, slug: artifact.slug } : undefined
+          }
         />
       </ContentShell>
     )
@@ -104,8 +126,8 @@ export function createCollectionIndexPage(collectionSlug: string) {
       title: collection.label,
       description: collection.indexDescription(count),
       alternates: {
-        canonical: `https://blakepetersen.io/${collectionSlug}`,
-      },
+        canonical: `https://blakepetersen.io/${collectionSlug}`
+      }
     }
   }
 
@@ -140,7 +162,8 @@ export function createCollectionIndexPage(collectionSlug: string) {
         <div className="px-4 py-8">
           <header className="mb-8">
             <p className="mb-2 font-mono text-xs text-muted-foreground">
-              {'// '}{collectionSlug}
+              {'// '}
+              {collectionSlug}
             </p>
             <div className="flex items-baseline gap-3">
               <h1 className="font-mono-alt text-3xl leading-tight">
@@ -153,7 +176,7 @@ export function createCollectionIndexPage(collectionSlug: string) {
             </p>
           </header>
           <div className="space-y-4">
-            {items.map((item) => {
+            {items.map(item => {
               const a = item as unknown as Record<string, unknown>
               return (
                 <Link
@@ -171,11 +194,14 @@ export function createCollectionIndexPage(collectionSlug: string) {
                           dateTime={a.date as string}
                           className="shrink-0 font-mono text-xs text-muted-foreground"
                         >
-                          {new Date(a.date as string).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
+                          {new Date(a.date as string).toLocaleDateString(
+                            'en-US',
+                            {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric'
+                            }
+                          )}
                         </time>
                       </div>
                       <p className="mt-1 font-mono text-base text-muted-foreground">

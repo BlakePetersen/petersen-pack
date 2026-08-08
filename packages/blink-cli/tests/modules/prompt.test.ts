@@ -9,7 +9,7 @@ let consolaMock: {
 jest.mock('consola', () => {
   const mock = {
     info: jest.fn(),
-    prompt: jest.fn(),
+    prompt: jest.fn()
   }
   return { consola: mock, default: mock, __esModule: true }
 })
@@ -38,7 +38,9 @@ describe('confirmAction', () => {
     })
     const { confirmAction } = await import('@/modules/prompt')
 
-    await expect(confirmAction('Continue?', false)).rejects.toThrow('process.exit')
+    await expect(confirmAction('Continue?', false)).rejects.toThrow(
+      'process.exit'
+    )
 
     expect(consolaMock.info).toHaveBeenCalledWith('Cancelled.')
     exitSpy.mockRestore()

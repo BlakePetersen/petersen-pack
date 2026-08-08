@@ -36,10 +36,7 @@ async function generateIcon(size: number, filename: string) {
   `
 
   const buffer = Buffer.from(svg)
-  await sharp(buffer)
-    .resize(size, size)
-    .png()
-    .toFile(join(publicDir, filename))
+  await sharp(buffer).resize(size, size).png().toFile(join(publicDir, filename))
 
   console.log(`✓ Created ${filename} (${size}x${size})`)
 }
@@ -70,9 +67,7 @@ async function generateFavicon() {
   `
 
   const buffer = Buffer.from(svg)
-  await sharp(buffer)
-    .resize(32, 32)
-    .toFile(join(publicDir, 'favicon.ico'))
+  await sharp(buffer).resize(32, 32).toFile(join(publicDir, 'favicon.ico'))
 
   console.log('✓ Created favicon.ico (32x32)')
 }

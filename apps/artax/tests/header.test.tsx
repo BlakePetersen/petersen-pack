@@ -18,7 +18,7 @@ describe('Header', () => {
 
   it('renders without hydration warnings', () => {
     render(<Header />)
-    const hydrationWarnings = errorSpy.mock.calls.filter((args) => {
+    const hydrationWarnings = errorSpy.mock.calls.filter(args => {
       const msg = String(args[0] ?? '')
       return /hydrat|did not match|Text content/i.test(msg)
     })

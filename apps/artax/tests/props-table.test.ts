@@ -8,15 +8,25 @@ import { createElement } from 'react'
 import { render, screen } from '@testing-library/react'
 
 jest.mock('next/navigation', () => ({
-  usePathname: () => '/',
+  usePathname: () => '/'
 }))
 
 import { PropsTable } from '@/components/props-table'
 
 describe('PropsTable', () => {
   const sampleProps = [
-    { name: 'variant', type: "'default' | 'outline'", default: "'default'", description: 'Visual style' },
-    { name: 'size', type: "'sm' | 'lg'", default: "'sm'", description: 'Button size' },
+    {
+      name: 'variant',
+      type: "'default' | 'outline'",
+      default: "'default'",
+      description: 'Visual style'
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'lg'",
+      default: "'sm'",
+      description: 'Button size'
+    }
   ]
 
   it('renders a 4-column table with Prop, Type, Default, Description headers', () => {

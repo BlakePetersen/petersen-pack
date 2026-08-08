@@ -10,7 +10,7 @@ describe('buildMetadata', () => {
       description: 'A great skill',
       excerpt: 'Short excerpt',
       slug: 'skills/my-skill',
-      seo_title: 'SEO Title Override',
+      seo_title: 'SEO Title Override'
     }
     const result = buildMetadata(item, 'skills')
     expect(result.title).toBe('SEO Title Override')
@@ -21,7 +21,7 @@ describe('buildMetadata', () => {
       title: 'My Skill',
       description: 'A great skill',
       excerpt: 'Short excerpt',
-      slug: 'skills/my-skill',
+      slug: 'skills/my-skill'
     }
     const result = buildMetadata(item, 'skills')
     expect(result.title).toBe('My Skill')
@@ -33,7 +33,7 @@ describe('buildMetadata', () => {
       description: 'A great skill',
       excerpt: 'Short excerpt',
       slug: 'skills/my-skill',
-      seo_description: 'SEO description override',
+      seo_description: 'SEO description override'
     }
     const result = buildMetadata(item, 'skills')
     expect(result.description).toBe('SEO description override')
@@ -44,7 +44,7 @@ describe('buildMetadata', () => {
       title: 'My Skill',
       description: 'A great skill',
       excerpt: 'Short excerpt',
-      slug: 'skills/my-skill',
+      slug: 'skills/my-skill'
     }
     const result = buildMetadata(item, 'skills')
     expect(result.description).toBe('Short excerpt')
@@ -54,11 +54,11 @@ describe('buildMetadata', () => {
     const item = {
       title: 'My Skill',
       description: 'A great skill',
-      slug: 'skills/my-skill',
+      slug: 'skills/my-skill'
     }
     const result = buildMetadata(item, 'skills')
     expect(result.alternates.canonical).toBe(
-      'https://blakepetersen.io/skills/my-skill',
+      'https://blakepetersen.io/skills/my-skill'
     )
   })
 
@@ -67,11 +67,11 @@ describe('buildMetadata', () => {
       title: 'My Post',
       description: 'A post',
       slug: 'posts/hello-world',
-      date: '2025-01-01',
+      date: '2025-01-01'
     }
     const result = buildMetadata(item, 'posts')
     expect(result.alternates.canonical).toBe(
-      'https://blakepetersen.io/posts/hello-world',
+      'https://blakepetersen.io/posts/hello-world'
     )
   })
 })

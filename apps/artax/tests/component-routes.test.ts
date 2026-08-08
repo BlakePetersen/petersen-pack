@@ -17,9 +17,12 @@ describe('component dynamic route generateStaticParams', () => {
 
   it('covers every registered component by tier/slug', () => {
     const params = generateStaticParams()
-    const expected = getAllComponents().map((c) => ({ tier: c.tier, component: c.slug }))
+    const expected = getAllComponents().map(c => ({
+      tier: c.tier,
+      component: c.slug
+    }))
 
-    expected.forEach((pair) => {
+    expected.forEach(pair => {
       expect(params).toContainEqual(pair)
     })
   })
@@ -27,7 +30,7 @@ describe('component dynamic route generateStaticParams', () => {
   it('every entry has a valid tier and non-empty slug', () => {
     const params = generateStaticParams()
     const validTiers = ['atoms', 'molecules', 'organisms']
-    params.forEach((p) => {
+    params.forEach(p => {
       expect(validTiers).toContain(p.tier)
       expect(typeof p.component).toBe('string')
       expect(p.component.length).toBeGreaterThan(0)
@@ -42,16 +45,16 @@ describe('registry size guard', () => {
 
   it('static params match registry slugs (no drift)', () => {
     const params = generateStaticParams()
-    const paramKeys = new Set(params.map((p) => `${p.tier}/${p.component}`))
+    const paramKeys = new Set(params.map(p => `${p.tier}/${p.component}`))
     const registryKeys = new Set(
-      getAllComponents().map((c) => `${c.tier}/${c.slug}`),
+      getAllComponents().map(c => `${c.tier}/${c.slug}`)
     )
 
     expect(paramKeys.size).toBe(registryKeys.size)
-    registryKeys.forEach((key) => {
+    registryKeys.forEach(key => {
       expect(paramKeys.has(key)).toBe(true)
     })
-    paramKeys.forEach((key) => {
+    paramKeys.forEach(key => {
       expect(registryKeys.has(key)).toBe(true)
     })
   })

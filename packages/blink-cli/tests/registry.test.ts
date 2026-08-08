@@ -11,10 +11,10 @@ const validIndex: RegistryIndex = {
       type: 'config',
       version: '2026.03.14.1',
       description: 'Prettier config',
-      url: 'https://blakepetersen.io/r/config/prettier.json',
-    },
+      url: 'https://blakepetersen.io/r/config/prettier.json'
+    }
   ],
-  generatedAt: '2026-03-14T00:00:00.000Z',
+  generatedAt: '2026-03-14T00:00:00.000Z'
 }
 
 const validArtifact: RegistryArtifact = {
@@ -24,9 +24,7 @@ const validArtifact: RegistryArtifact = {
   version: '2026.03.14.1',
   description: 'Prettier config',
   url: 'https://blakepetersen.io/r/config/prettier.json',
-  files: [
-    { path: '.prettierrc', content: '{}', merge: 'replace' },
-  ],
+  files: [{ path: '.prettierrc', content: '{}', merge: 'replace' }]
 }
 
 let originalFetch: typeof globalThis.fetch
@@ -51,7 +49,7 @@ describe('fetchIndex', () => {
   it('fetches from default base URL and parses through schema', async () => {
     const mockFetch = jest.fn().mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve(validIndex),
+      json: () => Promise.resolve(validIndex)
     })
     globalThis.fetch = mockFetch
 
@@ -68,7 +66,7 @@ describe('fetchIndex', () => {
     process.env.BLINK_REGISTRY_URL = 'https://custom.example.com'
     const mockFetch = jest.fn().mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve(validIndex),
+      json: () => Promise.resolve(validIndex)
     })
     globalThis.fetch = mockFetch
 
@@ -82,7 +80,7 @@ describe('fetchIndex', () => {
   it('throws on invalid schema data', async () => {
     globalThis.fetch = jest.fn().mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve({ invalid: true }),
+      json: () => Promise.resolve({ invalid: true })
     })
 
     await expect(fetchIndex()).rejects.toThrow()
@@ -95,7 +93,7 @@ describe('fetchIndex', () => {
       .mockRejectedValueOnce(new Error('Network error'))
       .mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve(validIndex),
+        json: () => Promise.resolve(validIndex)
       })
     globalThis.fetch = mockFetch
 
@@ -114,10 +112,14 @@ describe('fetchIndex', () => {
   it('retries on non-ok HTTP responses', async () => {
     const mockFetch = jest
       .fn()
-      .mockResolvedValueOnce({ ok: false, status: 503, statusText: 'Service Unavailable' })
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 503,
+        statusText: 'Service Unavailable'
+      })
       .mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve(validIndex),
+        json: () => Promise.resolve(validIndex)
       })
     globalThis.fetch = mockFetch
 
@@ -150,7 +152,7 @@ describe('fetchArtifact', () => {
   it('fetches artifact by type and slug', async () => {
     globalThis.fetch = jest.fn().mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve(validArtifact),
+      json: () => Promise.resolve(validArtifact)
     })
 
     const result = await fetchArtifact('config', 'prettier')
@@ -163,7 +165,7 @@ describe('fetchArtifact', () => {
   it('throws on invalid artifact data', async () => {
     globalThis.fetch = jest.fn().mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve({ slug: 'x' }),
+      json: () => Promise.resolve({ slug: 'x' })
     })
 
     await expect(fetchArtifact('config', 'prettier')).rejects.toThrow()
