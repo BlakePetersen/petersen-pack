@@ -36,10 +36,29 @@ async function timeNextDev(): Promise<number> {
     const proc = spawn('pnpm', ['--filter', 'blakepetersen.io', 'dev'], {
       stdio: 'pipe'
     })
+    // Accumulated so a failure carries the child's diagnostic instead of
+    // discarding it — a crashed dev server is otherwise indistinguishable
+    // from a slow one.
+    let stderrBuf = ''
+    proc.stderr?.on('data', (chunk: Buffer) => {
+      stderrBuf += chunk.toString()
+    })
     const timer = setTimeout(() => {
       proc.kill()
-      reject(new Error('next dev did not become ready within 60s'))
+      reject(
+        new Error(`next dev did not become ready within 60s\n${stderrBuf}`)
+      )
     }, 60_000)
+    // 'close' rather than 'exit' — stdio is drained by then, so a "Ready in"
+    // line emitted just before exit still wins the race and resolves first.
+    proc.on('close', (code, signal) => {
+      clearTimeout(timer)
+      reject(
+        new Error(
+          `next dev exited before becoming ready (code=${code}, signal=${signal})\n${stderrBuf}`
+        )
+      )
+    })
     proc.stdout?.on('data', (chunk: Buffer) => {
       const s = chunk.toString()
       const m = s.match(/Ready in\s+([\d.]+)\s*(s|ms)/i)
