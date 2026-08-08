@@ -15,6 +15,7 @@
     "test": "turbo run test --filter=!Luna",
     "typecheck": "turbo run typecheck --filter=!Luna",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
     "test:scripts": "jest --config .github/scripts/jest.config.ts",
     "fallow": "fallow",
