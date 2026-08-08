@@ -3,6 +3,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+import { serializeVersionManifest } from '../src/lib/velite-prepare'
 
 const manifestPath = path.resolve(
   __dirname,
@@ -29,13 +30,19 @@ describe('SCHEMA-08: .artifact-versions.json shape', () => {
     }
   })
 
-  it('emits keys in lexicographic order for consecutive-run determinism', () => {
-    const manifest = JSON.parse(
-      fs.readFileSync(manifestPath, 'utf-8')
-    ) as Record<string, unknown>
-    const keys = Object.keys(manifest)
-    const sorted = [...keys].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
-    expect(keys).toEqual(sorted)
+  // Key order on the written file is a proxy; the invariant D-06 actually needs is
+  // that logically-identical input serializes to identical bytes. Proven against the
+  // pure serializer rather than two full builds — deriveCalVer reads git history, so
+  // a build-to-build byte compare would test git determinism, not the serializer.
+  it('serializes byte-identically regardless of key insertion order (D-06)', () => {
+    const entryA = { hash: 'a'.repeat(64), version: '2026.07.13.1' }
+    const entryB = { hash: 'b'.repeat(64), version: '2026.07.13.2' }
+    const first = serializeVersionManifest({ 'z-slug': entryB, 'a-slug': entryA })
+    const second = serializeVersionManifest({ 'a-slug': entryA, 'z-slug': entryB })
+
+    expect(second).toBe(first)
+    expect(first.endsWith('\n')).toBe(true)
+    expect(Object.keys(JSON.parse(first))).toEqual(['a-slug', 'z-slug'])
   })
 
   it('every published artifact in public/r/index.json has a manifest entry', () => {
