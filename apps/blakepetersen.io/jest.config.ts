@@ -8,8 +8,6 @@ const config: Config = {
   roots: ['<rootDir>/tests'],
   testPathIgnorePatterns: ['/node_modules/', '/tests/visual/'],
   moduleNameMapper: {
-    '^@/scaffold/(.*)$': '<rootDir>/../../packages/blink-cli/src/scaffold/$1',
-    '^@/writer$': '<rootDir>/../../packages/blink-cli/src/writer',
     '^@/(.*)$': '<rootDir>/src/$1',
     '^#content$': '<rootDir>/.velite'
   },
