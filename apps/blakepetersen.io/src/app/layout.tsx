@@ -11,36 +11,36 @@ import './globals.css'
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-mono'
 })
 
 const ibmPlexMono = IBM_Plex_Mono({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-mono-alt',
+  variable: '--font-mono-alt'
 })
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-sans'
 })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://blakepetersen.io'),
   title: {
     default: 'Blake Petersen',
-    template: '%s | Blake Petersen',
+    template: '%s | Blake Petersen'
   },
   description: 'AI-first DX practices, documented and applied',
   alternates: {
     types: {
-      'application/rss+xml': '/feed.xml',
-    },
-  },
+      'application/rss+xml': '/feed.xml'
+    }
+  }
 }
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {

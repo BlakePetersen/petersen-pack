@@ -7,7 +7,7 @@ describe('topologicalSort', () => {
     const nodes = new Map<string, string[]>([
       ['a', []],
       ['b', []],
-      ['c', []],
+      ['c', []]
     ])
 
     const result = topologicalSort(nodes)
@@ -18,7 +18,7 @@ describe('topologicalSort', () => {
     const nodes = new Map<string, string[]>([
       ['c', ['b']],
       ['b', ['a']],
-      ['a', []],
+      ['a', []]
     ])
 
     const result = topologicalSort(nodes)
@@ -35,7 +35,7 @@ describe('topologicalSort', () => {
       ['d', ['b', 'c']],
       ['b', ['a']],
       ['c', ['a']],
-      ['a', []],
+      ['a', []]
     ])
 
     const result = topologicalSort(nodes)
@@ -52,7 +52,7 @@ describe('topologicalSort', () => {
   it('throws on circular dependencies', () => {
     const nodes = new Map<string, string[]>([
       ['a', ['b']],
-      ['b', ['a']],
+      ['b', ['a']]
     ])
 
     expect(() => topologicalSort(nodes)).toThrow(/[Cc]ircular/)

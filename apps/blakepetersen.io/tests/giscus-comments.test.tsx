@@ -15,7 +15,7 @@ const mockDisconnect = jest.fn()
 
 class MockIntersectionObserver {
   constructor(
-    callback: (entries: Partial<IntersectionObserverEntry>[]) => void,
+    callback: (entries: Partial<IntersectionObserverEntry>[]) => void
   ) {
     observerCallback = callback
   }
@@ -26,7 +26,7 @@ class MockIntersectionObserver {
 
 Object.defineProperty(window, 'IntersectionObserver', {
   writable: true,
-  value: MockIntersectionObserver,
+  value: MockIntersectionObserver
 })
 
 import { GiscusComments } from '@/components/giscus-comments'
@@ -124,15 +124,15 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
     })
 
     const script = container.querySelector('.giscus script')!
-    expect(script.getAttribute('data-theme')).toBe('https://blakepetersen.io/giscus-theme.css')
+    expect(script.getAttribute('data-theme')).toBe(
+      'https://blakepetersen.io/giscus-theme.css'
+    )
     delete process.env.NEXT_PUBLIC_SITE_URL
   })
 
   test('postMessage handler calls onMetadata with reactionCount', () => {
     const onMetadata = jest.fn()
-    render(
-      <GiscusComments term="skills/test-skill" onMetadata={onMetadata} />,
-    )
+    render(<GiscusComments term="skills/test-skill" onMetadata={onMetadata} />)
 
     // Dispatch a MessageEvent from giscus origin
     const event = new MessageEvent('message', {
@@ -141,10 +141,10 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
         giscus: {
           discussion: {
             reactionCount: 5,
-            reactions: { THUMBS_UP: { count: 3 } },
-          },
-        },
-      },
+            reactions: { THUMBS_UP: { count: 3 } }
+          }
+        }
+      }
     })
     window.dispatchEvent(event)
 
@@ -153,19 +153,17 @@ describe('GiscusComments (COMM-01, COMM-02)', () => {
 
   test('postMessage handler uses reactionCount as fallback when THUMBS_UP not available', () => {
     const onMetadata = jest.fn()
-    render(
-      <GiscusComments term="skills/test-skill" onMetadata={onMetadata} />,
-    )
+    render(<GiscusComments term="skills/test-skill" onMetadata={onMetadata} />)
 
     const event = new MessageEvent('message', {
       origin: 'https://giscus.app',
       data: {
         giscus: {
           discussion: {
-            reactionCount: 7,
-          },
-        },
-      },
+            reactionCount: 7
+          }
+        }
+      }
     })
     window.dispatchEvent(event)
 

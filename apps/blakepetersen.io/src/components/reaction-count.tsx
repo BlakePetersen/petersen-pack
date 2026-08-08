@@ -12,7 +12,7 @@ type ReactionCountContextValue = {
 }
 
 const ReactionCountContext = createContext<ReactionCountContextValue | null>(
-  null,
+  null
 )
 
 export function ReactionCountProvider({ children }: { children: ReactNode }) {
@@ -27,7 +27,9 @@ export function ReactionCountProvider({ children }: { children: ReactNode }) {
 export function useReactionCount(): ReactionCountContextValue {
   const ctx = useContext(ReactionCountContext)
   if (!ctx) {
-    throw new Error('useReactionCount must be used within ReactionCountProvider')
+    throw new Error(
+      'useReactionCount must be used within ReactionCountProvider'
+    )
   }
   return ctx
 }

@@ -6,25 +6,25 @@ import { prisma } from '../lib/prisma'
 // Tag consolidation map: oldTagName -> newTagName
 const tagMergeMap: Record<string, string> = {
   // Nature/Outdoor consolidation
-  'forest': 'nature',
-  'redwoods': 'nature',
-  'barn': 'nature',
-  'ranch': 'nature',
+  forest: 'nature',
+  redwoods: 'nature',
+  barn: 'nature',
+  ranch: 'nature',
 
   // Water/Beach
-  'beach': 'outdoor',
-  'lake': 'outdoor',
+  beach: 'outdoor',
+  lake: 'outdoor',
 
   // Indoor settings
-  'cafe': 'indoor',
+  cafe: 'indoor',
   'home session': 'indoor',
 
   // Animals
   'mixed breeds': 'dogs',
 
   // Fantasy/Whimsical
-  'fantasy': 'whimsical',
-  'disney': 'whimsical',
+  fantasy: 'whimsical',
+  disney: 'whimsical',
 
   // Family/People
   'grandma and grandson': 'family',
@@ -35,11 +35,11 @@ const tagMergeMap: Record<string, string> = {
   'yellow flowers': 'garden',
 
   // Time of day - remove very specific ones
-  'morning': 'golden hour',
+  morning: 'golden hour',
 
   // Location - East Bay cities
-  'Danville': 'East Bay',
-  'Lafayette': 'East Bay',
+  Danville: 'East Bay',
+  Lafayette: 'East Bay',
   'Walnut Creek': 'East Bay',
 }
 
@@ -51,7 +51,7 @@ async function consolidateTags() {
 
     // Find or create the target tag
     let targetTag = await prisma.blogTag.findFirst({
-      where: { name: newTagName }
+      where: { name: newTagName },
     })
 
     if (!targetTag) {
@@ -59,8 +59,8 @@ async function consolidateTags() {
       targetTag = await prisma.blogTag.create({
         data: {
           name: newTagName,
-          slug: newTagName.toLowerCase().replace(/\s+/g, '-')
-        }
+          slug: newTagName.toLowerCase().replace(/\s+/g, '-'),
+        },
       })
     }
 
@@ -70,10 +70,10 @@ async function consolidateTags() {
       include: {
         posts: {
           select: {
-            postId: true
-          }
-        }
-      }
+            postId: true,
+          },
+        },
+      },
     })
 
     if (!oldTag) {
@@ -89,16 +89,16 @@ async function consolidateTags() {
       const existing = await prisma.blogPostTag.findFirst({
         where: {
           postId: post.postId,
-          tagId: targetTag.id
-        }
+          tagId: targetTag.id,
+        },
       })
 
       if (!existing) {
         await prisma.blogPostTag.create({
           data: {
             postId: post.postId,
-            tagId: targetTag.id
-          }
+            tagId: targetTag.id,
+          },
         })
         console.log(`    Added "${newTagName}" to post ${post.postId}`)
       }
@@ -107,15 +107,15 @@ async function consolidateTags() {
     // Delete all relationships with the old tag
     await prisma.blogPostTag.deleteMany({
       where: {
-        tagId: oldTag.id
-      }
+        tagId: oldTag.id,
+      },
     })
 
     // Delete the old tag
     await prisma.blogTag.delete({
       where: {
-        id: oldTag.id
-      }
+        id: oldTag.id,
+      },
     })
 
     console.log(`  ✓ Deleted old tag "${oldTagName}"\n`)
@@ -128,18 +128,20 @@ async function consolidateTags() {
   const tags = await prisma.blogTag.findMany({
     include: {
       _count: {
-        select: { posts: true }
-      }
+        select: { posts: true },
+      },
     },
     orderBy: {
-      name: 'asc'
-    }
+      name: 'asc',
+    },
   })
 
   console.log('Updated tags:')
   console.log('='.repeat(60))
-  const sortedByCount = [...tags].sort((a, b) => b._count.posts - a._count.posts)
-  sortedByCount.forEach(tag => {
+  const sortedByCount = [...tags].sort(
+    (a, b) => b._count.posts - a._count.posts
+  )
+  sortedByCount.forEach((tag) => {
     console.log(`${tag.name.padEnd(30)} | ${tag._count.posts} post(s)`)
   })
 

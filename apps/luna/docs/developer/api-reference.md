@@ -11,6 +11,7 @@ All admin API endpoints require authentication via NextAuth.js session cookies.
 Login with credentials.
 
 **Request Body**:
+
 ```json
 {
   "email": "admin@example.com",
@@ -19,6 +20,7 @@ Login with credentials.
 ```
 
 **Response**:
+
 ```json
 {
   "user": {
@@ -30,6 +32,7 @@ Login with credentials.
 ```
 
 **Status Codes**:
+
 - `200`: Success
 - `401`: Invalid credentials
 - `400`: Missing required fields
@@ -39,6 +42,7 @@ Login with credentials.
 Logout current session.
 
 **Response**:
+
 ```json
 {
   "success": true
@@ -54,6 +58,7 @@ Create a new gallery.
 **Authentication**: Required (ADMIN)
 
 **Request Body**:
+
 ```json
 {
   "title": "Wedding 2024",
@@ -66,6 +71,7 @@ Create a new gallery.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "gallery_id",
@@ -82,6 +88,7 @@ Create a new gallery.
 ```
 
 **Status Codes**:
+
 - `201`: Gallery created
 - `400`: Invalid data
 - `401`: Unauthorized
@@ -106,12 +113,14 @@ Upload and process images.
 **Content-Type**: `multipart/form-data`
 
 **Request Body** (FormData):
+
 ```
 file: <image file>
 galleryId: "gallery_id"
 ```
 
 **Response**:
+
 ```json
 {
   "id": "image_id",
@@ -127,6 +136,7 @@ galleryId: "gallery_id"
 ```
 
 **Processing**:
+
 - Validates image format (via Sharp)
 - Resizes to max 2400x2400px (maintains aspect ratio)
 - Converts to WebP format
@@ -134,12 +144,14 @@ galleryId: "gallery_id"
 - Saves to `/public/uploads/`
 
 **Status Codes**:
+
 - `200`: Image uploaded
 - `400`: Invalid file or missing gallery ID
 - `401`: Unauthorized
 - `500`: Processing error
 
 **Error Response**:
+
 ```json
 {
   "error": "No file provided"
@@ -155,6 +167,7 @@ Create a booking request.
 **Authentication**: Not required (public endpoint)
 
 **Request Body**:
+
 ```json
 {
   "availabilitySlotId": "slot_id",
@@ -168,6 +181,7 @@ Create a booking request.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "booking_id",
@@ -189,15 +203,18 @@ Create a booking request.
 ```
 
 **Validations**:
+
 - All fields required except `message`
 - Availability slot must exist
 - Slot must be marked as available
 
 **Side Effects**:
+
 - Sends email to admin (non-blocking)
 - Sends confirmation email to customer (non-blocking)
 
 **Status Codes**:
+
 - `201`: Booking created
 - `400`: Invalid data or slot unavailable
 - `404`: Availability slot not found
@@ -214,6 +231,7 @@ Update booking status.
 **Authentication**: Required (ADMIN)
 
 **Request Body**:
+
 ```json
 {
   "status": "CONFIRMED"
@@ -221,12 +239,14 @@ Update booking status.
 ```
 
 **Valid Statuses**:
+
 - `PENDING`
 - `CONFIRMED`
 - `CANCELLED`
 - `COMPLETED`
 
 **Response**:
+
 ```json
 {
   "id": "booking_id",
@@ -236,9 +256,11 @@ Update booking status.
 ```
 
 **Side Effects**:
+
 - Sends status update email to customer
 
 **Status Codes**:
+
 - `200`: Status updated
 - `400`: Invalid status
 - `401`: Unauthorized
@@ -253,6 +275,7 @@ Submit contact form / inquiry.
 **Authentication**: Not required (public endpoint)
 
 **Request Body**:
+
 ```json
 {
   "name": "Jane Smith",
@@ -264,6 +287,7 @@ Submit contact form / inquiry.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "inquiry_id",
@@ -278,15 +302,18 @@ Submit contact form / inquiry.
 ```
 
 **Side Effects**:
+
 - Sends notification to admin (non-blocking)
 - Sends confirmation to customer (non-blocking)
 
 **Status Codes**:
+
 - `201`: Inquiry created
 - `400`: Missing required fields
 - `500`: Server error
 
 **Notes**:
+
 - Inquiry is saved even if emails fail
 - Email failures are logged but don't affect response
 
@@ -301,6 +328,7 @@ Update inquiry status.
 **Authentication**: Required (ADMIN)
 
 **Request Body**:
+
 ```json
 {
   "status": "CONTACTED"
@@ -308,12 +336,14 @@ Update inquiry status.
 ```
 
 **Valid Statuses**:
+
 - `NEW`
 - `CONTACTED`
 - `CONVERTED`
 - `CLOSED`
 
 **Response**:
+
 ```json
 {
   "id": "inquiry_id",
@@ -323,6 +353,7 @@ Update inquiry status.
 ```
 
 **Status Codes**:
+
 - `200`: Status updated
 - `400`: Invalid status
 - `401`: Unauthorized
@@ -337,6 +368,7 @@ Create a private client gallery.
 **Authentication**: Required (ADMIN)
 
 **Request Body**:
+
 ```json
 {
   "title": "Smith Wedding Delivery",
@@ -348,6 +380,7 @@ Create a private client gallery.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "gallery_id",
@@ -367,6 +400,7 @@ Create a private client gallery.
 ```
 
 **Process**:
+
 1. Generates unique slug from title
 2. Checks if user exists with provided email
 3. Creates new CLIENT user if needed (with random password)
@@ -374,6 +408,7 @@ Create a private client gallery.
 5. Creates ClientGallery record
 
 **Status Codes**:
+
 - `201`: Gallery created
 - `400`: Missing required fields
 - `401`: Unauthorized (non-admin)
@@ -388,11 +423,13 @@ Upload images to client gallery.
 **Content-Type**: `multipart/form-data`
 
 **Request Body** (FormData):
+
 ```
 file: <image file>
 ```
 
 **Response**:
+
 ```json
 {
   "id": "image_id",
@@ -407,6 +444,7 @@ file: <image file>
 ```
 
 **Status Codes**:
+
 - `200`: Image uploaded
 - `400`: Invalid file
 - `401`: Unauthorized
@@ -419,6 +457,7 @@ Verify password for password-protected gallery.
 **Authentication**: Required (CLIENT - must be gallery owner)
 
 **Request Body**:
+
 ```json
 {
   "password": "gallery-password"
@@ -426,6 +465,7 @@ Verify password for password-protected gallery.
 ```
 
 **Response**:
+
 ```json
 {
   "success": true
@@ -433,6 +473,7 @@ Verify password for password-protected gallery.
 ```
 
 **Status Codes**:
+
 - `200`: Password correct
 - `401`: Unauthorized or incorrect password
 - `404`: Gallery not found
@@ -444,6 +485,7 @@ Toggle favorite status on client image.
 **Authentication**: Required (CLIENT - must be gallery owner)
 
 **Request Body**:
+
 ```json
 {
   "isFavorite": true
@@ -451,6 +493,7 @@ Toggle favorite status on client image.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "image_id",
@@ -460,6 +503,7 @@ Toggle favorite status on client image.
 ```
 
 **Status Codes**:
+
 - `200`: Favorite toggled
 - `401`: Unauthorized
 - `404`: Image not found
@@ -471,6 +515,7 @@ Track image download.
 **Authentication**: Required (CLIENT - must be gallery owner)
 
 **Response**:
+
 ```json
 {
   "id": "image_id",
@@ -480,10 +525,12 @@ Track image download.
 ```
 
 **Side Effects**:
+
 - Updates `downloaded` field to `true`
 - Sets `downloadedAt` timestamp
 
 **Status Codes**:
+
 - `200`: Download tracked
 - `401`: Unauthorized
 - `404`: Image not found
@@ -497,6 +544,7 @@ Create availability slot(s).
 **Authentication**: Required (ADMIN)
 
 **Request Body** (single slot):
+
 ```json
 {
   "date": "2024-02-14",
@@ -507,6 +555,7 @@ Create availability slot(s).
 ```
 
 **Request Body** (bulk creation):
+
 ```json
 {
   "dates": ["2024-02-14", "2024-02-15", "2024-02-16"],
@@ -516,6 +565,7 @@ Create availability slot(s).
 ```
 
 **Response**:
+
 ```json
 {
   "id": "slot_id",
@@ -529,6 +579,7 @@ Create availability slot(s).
 ```
 
 **Status Codes**:
+
 - `201`: Slot(s) created
 - `400`: Invalid data
 - `401`: Unauthorized
@@ -539,6 +590,7 @@ Create availability slot(s).
 Get all availability slots (handled via page component).
 
 **Query Parameters**:
+
 - `available`: Filter by availability (`true`/`false`)
 - `from`: Start date (ISO 8601)
 - `to`: End date (ISO 8601)
@@ -550,6 +602,7 @@ Update availability slot.
 **Authentication**: Required (ADMIN)
 
 **Request Body**:
+
 ```json
 {
   "isAvailable": false,
@@ -558,6 +611,7 @@ Update availability slot.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "slot_id",
@@ -568,6 +622,7 @@ Update availability slot.
 ```
 
 **Status Codes**:
+
 - `200`: Slot updated
 - `400`: Invalid data
 - `401`: Unauthorized
@@ -580,6 +635,7 @@ Delete availability slot.
 **Authentication**: Required (ADMIN)
 
 **Response**:
+
 ```json
 {
   "success": true
@@ -587,6 +643,7 @@ Delete availability slot.
 ```
 
 **Status Codes**:
+
 - `200`: Slot deleted
 - `401`: Unauthorized
 - `404`: Slot not found
@@ -618,6 +675,7 @@ All API endpoints return errors in this format:
 ### Common Errors
 
 **Authentication Errors**:
+
 ```json
 {
   "error": "Unauthorized"
@@ -625,6 +683,7 @@ All API endpoints return errors in this format:
 ```
 
 **Validation Errors**:
+
 ```json
 {
   "error": "Missing required fields: title, slug"
@@ -632,6 +691,7 @@ All API endpoints return errors in this format:
 ```
 
 **Not Found**:
+
 ```json
 {
   "error": "Gallery not found"
@@ -639,6 +699,7 @@ All API endpoints return errors in this format:
 ```
 
 **Conflict**:
+
 ```json
 {
   "error": "A gallery with this slug already exists"
@@ -648,6 +709,7 @@ All API endpoints return errors in this format:
 ## Rate Limiting
 
 Currently not implemented. Consider adding for production:
+
 - Contact form: 5 submissions per hour per IP
 - Booking requests: 10 per hour per IP
 - API endpoints: 100 requests per minute per session
@@ -675,6 +737,7 @@ async headers() {
 ## Webhooks
 
 Currently not implemented. Future consideration for:
+
 - Email delivery status (Resend webhooks)
 - Payment processing (Stripe webhooks)
 - External calendar sync
@@ -684,5 +747,6 @@ Currently not implemented. Future consideration for:
 Currently v1 (implicit). No version prefix in URLs.
 
 For future versions, consider:
+
 - `/api/v2/galleries`
 - Or header-based versioning: `Accept: application/vnd.api+json;version=2`

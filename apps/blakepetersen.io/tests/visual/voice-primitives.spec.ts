@@ -7,13 +7,13 @@ const SKILL_SLUG = 'convex-patterns'
 
 test.describe('Voice primitives torture test (CONTENT-06)', () => {
   test('renders AuthorNote and DecisionRationale without layout regression', async ({
-    page,
+    page
   }, testInfo) => {
     // next-themes reads localStorage.theme BEFORE prefers-color-scheme.
     // colorScheme device emulation alone does not flip data-theme.
     // Force the attribute pre-navigation by writing localStorage.theme.
     const theme = testInfo.project.name.includes('dark') ? 'dark' : 'light'
-    await page.addInitScript((t) => {
+    await page.addInitScript(t => {
       window.localStorage.setItem('theme', t)
     }, theme)
 
@@ -26,9 +26,12 @@ test.describe('Voice primitives torture test (CONTENT-06)', () => {
     await expect(authorNote).toBeVisible()
 
     // Full-page snapshot per UI-SPEC D-07
-    await expect(page).toHaveScreenshot(`skill-detail-${testInfo.project.name}.png`, {
-      fullPage: true,
-      animations: 'disabled',
-    })
+    await expect(page).toHaveScreenshot(
+      `skill-detail-${testInfo.project.name}.png`,
+      {
+        fullPage: true,
+        animations: 'disabled'
+      }
+    )
   })
 })

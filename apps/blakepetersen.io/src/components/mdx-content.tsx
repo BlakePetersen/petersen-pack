@@ -17,25 +17,27 @@ const headingOverrides: MDXComponents = {
       'h2',
       {
         id,
-        className: `group relative font-mono text-xl font-bold text-foreground mt-8 mb-3 ${className || ''}`.trim(),
-        ...props,
+        className:
+          `group relative font-mono text-xl font-bold text-foreground mt-8 mb-3 ${className || ''}`.trim(),
+        ...props
       },
       createElement(HeadingAnchor, { id }),
       createElement('span', { className: 'text-muted-foreground' }, '// '),
-      children,
+      children
     ),
   h3: ({ children, id, className, ...props }: HeadingProps) =>
     createElement(
       'h3',
       {
         id,
-        className: `group relative font-mono text-lg font-semibold text-foreground mt-6 mb-2 ${className || ''}`.trim(),
-        ...props,
+        className:
+          `group relative font-mono text-lg font-semibold text-foreground mt-6 mb-2 ${className || ''}`.trim(),
+        ...props
       },
       createElement(HeadingAnchor, { id }),
       createElement('span', { className: 'text-muted-foreground' }, '> '),
-      children,
-    ),
+      children
+    )
 }
 
 function getMDXComponent(code: string) {
@@ -45,13 +47,13 @@ function getMDXComponent(code: string) {
 
 export function MDXContent({
   code,
-  components,
+  components
 }: {
   code: string
   components?: MDXComponents
 }) {
   const Component = useMemo(() => getMDXComponent(code), [code])
   return createElement(Component, {
-    components: { ...mdxComponents, ...headingOverrides, ...components },
+    components: { ...mdxComponents, ...headingOverrides, ...components }
   })
 }

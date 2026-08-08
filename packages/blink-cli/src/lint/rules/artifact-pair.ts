@@ -15,7 +15,10 @@ function getSiblingArtifactDirPath(mdxFile: string): string {
 }
 
 function hasArtifactSibling(mdxFile: string): boolean {
-  return existsSync(getSiblingArtifactPath(mdxFile)) || existsSync(getSiblingArtifactDirPath(mdxFile))
+  return (
+    existsSync(getSiblingArtifactPath(mdxFile)) ||
+    existsSync(getSiblingArtifactDirPath(mdxFile))
+  )
 }
 
 export const artifactPairRule: LintRule & {
@@ -30,12 +33,14 @@ export const artifactPairRule: LintRule & {
 
     if (hasArtifactSibling(ctx.file)) return []
 
-    return [{
-      file: ctx.file,
-      severity: 'error',
-      rule: 'artifact-pair',
-      message: 'requires_artifact is true but sibling .artifact.md is missing',
-    }]
+    return [
+      {
+        file: ctx.file,
+        severity: 'error',
+        rule: 'artifact-pair',
+        message: 'requires_artifact is true but sibling .artifact.md is missing'
+      }
+    ]
   },
 
   fix(ctx: LintContext) {
@@ -53,8 +58,10 @@ export const artifactPairRule: LintRule & {
       description ? `${description}` : '',
       description ? '' : '',
       '<!-- TODO: Add artifact content -->',
-      '',
-    ].filter((line, i, arr) => !(line === '' && arr[i - 1] === '')).join('\n')
+      ''
+    ]
+      .filter((line, i, arr) => !(line === '' && arr[i - 1] === ''))
+      .join('\n')
 
     const artifactPath = getSiblingArtifactPath(ctx.file)
     return { siblingFiles: [{ path: artifactPath, content: stubContent }] }
@@ -100,7 +107,7 @@ export const artifactPairRule: LintRule & {
             file: fullPath,
             severity: 'warning',
             rule: 'artifact-pair',
-            message: 'orphan .artifact.md — no sibling .mdx found',
+            message: 'orphan .artifact.md — no sibling .mdx found'
           })
           continue
         }
@@ -114,7 +121,8 @@ export const artifactPairRule: LintRule & {
               file: fullPath,
               severity: 'warning',
               rule: 'artifact-pair',
-              message: 'sibling .mdx has requires_artifact: false — consider setting to true or removing .artifact.md',
+              message:
+                'sibling .mdx has requires_artifact: false — consider setting to true or removing .artifact.md'
             })
           }
         } catch {
@@ -125,5 +133,5 @@ export const artifactPairRule: LintRule & {
 
     scanDir(contentRoot)
     return diagnostics
-  },
+  }
 }

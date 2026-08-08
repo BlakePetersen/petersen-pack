@@ -7,7 +7,10 @@ import { execFileSync } from 'node:child_process'
  * Derives a CalVer string from a date, tracking daily counters for uniqueness.
  * Pure function suitable for direct testing.
  */
-export function calverFromDate(date: Date, dateCounters: Map<string, number>): string {
+export function calverFromDate(
+  date: Date,
+  dateCounters: Map<string, number>
+): string {
   const year = date.getUTCFullYear()
   const month = String(date.getUTCMonth() + 1).padStart(2, '0')
   const day = String(date.getUTCDate()).padStart(2, '0')
@@ -27,18 +30,21 @@ export function calverFromDate(date: Date, dateCounters: Map<string, number>): s
  * Returns today's date when git succeeds but the file is untracked (legitimate
  * freshly-added artifact path).
  */
-export function deriveCalVer(filePath: string, dateCounters: Map<string, number>): string {
+export function deriveCalVer(
+  filePath: string,
+  dateCounters: Map<string, number>
+): string {
   let lastModified: string
   try {
     lastModified = execFileSync(
       'git',
       ['log', '-1', '--follow', '--format=%cI', '--', filePath],
-      { encoding: 'utf-8' },
+      { encoding: 'utf-8' }
     ).trim()
   } catch (err) {
     throw new Error(
       `deriveCalVer: git log failed for ${filePath}: ${err instanceof Error ? err.message : String(err)}`,
-      { cause: err },
+      { cause: err }
     )
   }
   const date = lastModified ? new Date(lastModified) : new Date()

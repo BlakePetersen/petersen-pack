@@ -24,14 +24,14 @@ export type NavData = {
 
 function collectionToItems(
   collection: string,
-  items: { slug: string; title: string }[],
+  items: { slug: string; title: string }[]
 ): NavItem[] {
-  return items.map((item) => {
+  return items.map(item => {
     const slugWithoutPrefix = item.slug.split('/').slice(1).join('/')
     return {
       title: item.title,
       slug: item.slug,
-      href: `/${collection}/${slugWithoutPrefix}`,
+      href: `/${collection}/${slugWithoutPrefix}`
     }
   })
 }
@@ -39,7 +39,7 @@ function collectionToItems(
 export function buildNavData(): NavData {
   const itemsByCollection: Record<string, NavItem[]> = {}
 
-  const collectionSections: NavSection[] = getVisibleCollections().map((c) => {
+  const collectionSections: NavSection[] = getVisibleCollections().map(c => {
     const items = collectionToItems(c.slug, c.getter())
     itemsByCollection[c.slug] = items
     return { label: c.label, href: c.href, color: c.color, items }
@@ -48,19 +48,26 @@ export function buildNavData(): NavData {
   const projectItems: NavItem[] = [
     { title: 'Changelog', slug: 'changelog', href: '/changelog' },
     { title: 'Contributors', slug: 'contributors', href: '/contributors' },
-    { title: 'Roadmap', slug: 'roadmap', href: '/roadmap' },
+    { title: 'Roadmap', slug: 'roadmap', href: '/roadmap' }
   ]
   itemsByCollection['project'] = projectItems
 
   const sections: NavSection[] = [
     ...collectionSections,
     // theme-static: same brand-accent pattern as collection-registry — fixed across themes
-    { label: 'Project', href: '/changelog', color: '#6B7280', items: projectItems },
+    {
+      label: 'Project',
+      href: '/changelog',
+      color: '#6B7280',
+      items: projectItems
+    }
   ]
 
-  function findBySlug(slug: string): { collection: string; item: NavItem } | null {
+  function findBySlug(
+    slug: string
+  ): { collection: string; item: NavItem } | null {
     for (const [collection, items] of Object.entries(itemsByCollection)) {
-      const item = items.find((i) => i.slug === slug)
+      const item = items.find(i => i.slug === slug)
       if (item) return { collection, item }
     }
     return null
@@ -75,14 +82,14 @@ export function buildNavSections(): NavSection[] {
 
 export function getPrevNext(
   items: NavItem[],
-  currentHref: string,
+  currentHref: string
 ): { prev: NavItem | null; next: NavItem | null } {
-  const index = items.findIndex((item) => item.href === currentHref)
+  const index = items.findIndex(item => item.href === currentHref)
   if (index === -1) {
     return { prev: null, next: null }
   }
   return {
     prev: index > 0 ? items[index - 1] : null,
-    next: index < items.length - 1 ? items[index + 1] : null,
+    next: index < items.length - 1 ? items[index + 1] : null
   }
 }

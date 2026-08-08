@@ -13,6 +13,7 @@ npm run db:studio
 ```
 
 Access points:
+
 - **App**: http://localhost:3000
 - **Prisma Studio**: http://localhost:5555
 
@@ -41,7 +42,7 @@ Luna/
 ```tsx
 // components/MyComponent.tsx
 export default function MyComponent({ title }: { title: string }) {
-  return <div>{title}</div>;
+  return <div>{title}</div>
 }
 ```
 
@@ -49,18 +50,14 @@ export default function MyComponent({ title }: { title: string }) {
 
 ```tsx
 // components/MyInteractiveComponent.tsx
-'use client';
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
 export default function MyInteractiveComponent() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  );
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>
 }
 ```
 
@@ -78,17 +75,17 @@ Example:
 // ABOUTME: Used in portfolio grid and featured galleries section
 
 interface GalleryCardProps {
-  title: string;
-  slug: string;
-  coverImageUrl?: string;
-  description?: string;
+  title: string
+  slug: string
+  coverImageUrl?: string
+  description?: string
 }
 
 export default function GalleryCard({
   title,
   slug,
   coverImageUrl,
-  description
+  description,
 }: GalleryCardProps) {
   // Component implementation
 }
@@ -110,7 +107,7 @@ export default function AboutPage() {
       <h1>About</h1>
       <p>Content here</p>
     </main>
-  );
+  )
 }
 ```
 
@@ -118,20 +115,20 @@ export default function AboutPage() {
 
 ```tsx
 // app/portfolio/[slug]/page.tsx
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma'
 
 export default async function GalleryPage({
   params,
 }: {
-  params: { slug: string };
+  params: { slug: string }
 }) {
   const gallery = await prisma.gallery.findUnique({
     where: { slug: params.slug },
     include: { images: { orderBy: { sortOrder: 'asc' } } },
-  });
+  })
 
   if (!gallery) {
-    return <div>Gallery not found</div>;
+    return <div>Gallery not found</div>
   }
 
   return (
@@ -139,7 +136,7 @@ export default async function GalleryPage({
       <h1>{gallery.title}</h1>
       {/* Render gallery */}
     </main>
-  );
+  )
 }
 ```
 
@@ -148,12 +145,12 @@ export default async function GalleryPage({
 Always define metadata for SEO:
 
 ```tsx
-import { Metadata } from 'next';
+import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Portfolio | Luna Photography',
   description: 'View our photography portfolio',
-};
+}
 
 export default function PortfolioPage() {
   // Page content
@@ -170,10 +167,10 @@ API routes are created in `app/api/` with `route.ts` files.
 
 ```tsx
 // app/api/hello/route.ts
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
 
 export async function GET() {
-  return NextResponse.json({ message: 'Hello' });
+  return NextResponse.json({ message: 'Hello' })
 }
 ```
 
@@ -181,21 +178,18 @@ export async function GET() {
 
 ```tsx
 // app/api/admin/galleries/route.ts
-import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
+import { NextResponse } from 'next/server'
+import { auth } from '@/auth'
+import { prisma } from '@/lib/prisma'
 
 export async function POST(request: Request) {
-  const session = await auth();
+  const session = await auth()
 
   if (!session || session.user.role !== 'ADMIN') {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const data = await request.json();
+  const data = await request.json()
 
   // Create gallery
   const gallery = await prisma.gallery.create({
@@ -204,9 +198,9 @@ export async function POST(request: Request) {
       slug: data.slug,
       // ...
     },
-  });
+  })
 
-  return NextResponse.json(gallery);
+  return NextResponse.json(gallery)
 }
 ```
 
@@ -215,34 +209,31 @@ export async function POST(request: Request) {
 ```tsx
 export async function POST(request: Request) {
   try {
-    const session = await auth();
+    const session = await auth()
     if (!session?.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const data = await request.json();
+    const data = await request.json()
 
     // Validate required fields
     if (!data.title || !data.slug) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
-      );
+      )
     }
 
     // Business logic here
-    const result = await prisma.gallery.create({ data });
+    const result = await prisma.gallery.create({ data })
 
-    return NextResponse.json(result);
+    return NextResponse.json(result)
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('API Error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
-    );
+    )
   }
 }
 ```
@@ -256,7 +247,7 @@ export async function POST(request: Request) {
 ```tsx
 const user = await prisma.user.findUnique({
   where: { email: 'user@example.com' },
-});
+})
 ```
 
 **Find Multiple Records**:
@@ -266,7 +257,7 @@ const galleries = await prisma.gallery.findMany({
   where: { featured: true },
   orderBy: { sortOrder: 'asc' },
   include: { images: true },
-});
+})
 ```
 
 **Create Record**:
@@ -278,7 +269,7 @@ const gallery = await prisma.gallery.create({
     slug: 'new-gallery',
     description: 'Description here',
   },
-});
+})
 ```
 
 **Update Record**:
@@ -287,7 +278,7 @@ const gallery = await prisma.gallery.create({
 const updated = await prisma.gallery.update({
   where: { id: galleryId },
   data: { title: 'Updated Title' },
-});
+})
 ```
 
 **Delete Record**:
@@ -295,7 +286,7 @@ const updated = await prisma.gallery.update({
 ```tsx
 await prisma.gallery.delete({
   where: { id: galleryId },
-});
+})
 ```
 
 ### With Relations
@@ -315,7 +306,7 @@ const gallery = await prisma.gallery.create({
     },
   },
   include: { images: true },
-});
+})
 ```
 
 **Include Relations**:
@@ -328,7 +319,7 @@ const gallery = await prisma.gallery.findUnique({
       orderBy: { sortOrder: 'asc' },
     },
   },
-});
+})
 ```
 
 ### Transactions
@@ -339,7 +330,7 @@ For atomic operations:
 const result = await prisma.$transaction(async (tx) => {
   const user = await tx.user.create({
     data: { email: 'client@example.com', role: 'CLIENT' },
-  });
+  })
 
   const gallery = await tx.clientGallery.create({
     data: {
@@ -347,10 +338,10 @@ const result = await prisma.$transaction(async (tx) => {
       slug: 'client-2024',
       clientId: user.id,
     },
-  });
+  })
 
-  return { user, gallery };
-});
+  return { user, gallery }
+})
 ```
 
 ## Schema Changes
@@ -411,12 +402,12 @@ Images are processed through Sharp before storage:
 
 ```tsx
 // In API route
-import sharp from 'sharp';
+import sharp from 'sharp'
 
-const buffer = Buffer.from(await file.arrayBuffer());
+const buffer = Buffer.from(await file.arrayBuffer())
 
 // Get metadata
-const metadata = await sharp(buffer).metadata();
+const metadata = await sharp(buffer).metadata()
 
 // Process image
 const processedBuffer = await sharp(buffer)
@@ -425,20 +416,19 @@ const processedBuffer = await sharp(buffer)
     withoutEnlargement: true,
   })
   .webp({ quality: 85 })
-  .toBuffer();
+  .toBuffer()
 
 // Save to disk
-const filename = `${Date.now()}-${sanitizeFilename(file.name)}.webp`;
-const filepath = path.join(process.cwd(), 'public/uploads', filename);
-await fs.writeFile(filepath, processedBuffer);
+const filename = `${Date.now()}-${sanitizeFilename(file.name)}.webp`
+const filepath = path.join(process.cwd(), 'public/uploads', filename)
+await fs.writeFile(filepath, processedBuffer)
 ```
 
 ### Image Component Usage
 
 ```tsx
-import Image from 'next/image';
-
-<Image
+import Image from 'next/image'
+;<Image
   src={imageUrl}
   alt={altText}
   width={width}
@@ -453,8 +443,8 @@ import Image from 'next/image';
 ### Sending Emails
 
 ```tsx
-import { sendEmail } from '@/lib/email';
-import { AdminInquiryNotification } from '@/lib/email-templates/admin-inquiry-notification';
+import { sendEmail } from '@/lib/email'
+import { AdminInquiryNotification } from '@/lib/email-templates/admin-inquiry-notification'
 
 // In API route
 await sendEmail({
@@ -465,7 +455,7 @@ await sendEmail({
     email: inquiry.email,
     message: inquiry.message,
   }),
-});
+})
 ```
 
 ### Creating Email Templates
@@ -473,8 +463,8 @@ await sendEmail({
 ```tsx
 // lib/email-templates/my-email.tsx
 interface MyEmailProps {
-  name: string;
-  message: string;
+  name: string
+  message: string
 }
 
 export function MyEmail({ name, message }: MyEmailProps) {
@@ -483,7 +473,7 @@ export function MyEmail({ name, message }: MyEmailProps) {
       <h1>Hello {name}</h1>
       <p>{message}</p>
     </div>
-  );
+  )
 }
 ```
 
@@ -494,17 +484,15 @@ export function MyEmail({ name, message }: MyEmailProps) {
 **Utility-First Approach**:
 
 ```tsx
-<div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-soft">
-  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-    Title
-  </h2>
+<div className="shadow-soft rounded-lg bg-white p-6 dark:bg-gray-900">
+  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Title</h2>
 </div>
 ```
 
 **Responsive Design**:
 
 ```tsx
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
   {/* Cards */}
 </div>
 ```
@@ -515,7 +503,7 @@ export function MyEmail({ name, message }: MyEmailProps) {
 /* globals.css */
 @layer components {
   .btn-primary {
-    @apply bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700;
+    @apply rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700;
   }
 }
 ```
@@ -526,9 +514,7 @@ Components should support dark mode:
 
 ```tsx
 <div className="bg-white dark:bg-gray-900">
-  <p className="text-gray-900 dark:text-gray-100">
-    Text content
-  </p>
+  <p className="text-gray-900 dark:text-gray-100">Text content</p>
 </div>
 ```
 
@@ -555,6 +541,7 @@ Components should support dark mode:
 ### Database Testing
 
 Use Prisma Studio to:
+
 - View created records
 - Manually create test data
 - Verify relationships
@@ -563,6 +550,7 @@ Use Prisma Studio to:
 ### API Testing
 
 Use tools like:
+
 - **curl**: Command-line requests
 - **Postman**: GUI for API testing
 - **Thunder Client**: VS Code extension
@@ -585,13 +573,14 @@ curl -X POST http://localhost:3000/api/contact \
 ### Console Logging
 
 ```tsx
-console.log('Debug info:', data);
-console.error('Error occurred:', error);
+console.log('Debug info:', data)
+console.error('Error occurred:', error)
 ```
 
 ### Next.js Error Overlay
 
 Development mode shows detailed errors:
+
 - Stack traces
 - Component tree
 - Error source
@@ -604,12 +593,13 @@ Enable query logging:
 // lib/prisma.ts
 const prisma = new PrismaClient({
   log: ['query', 'error', 'warn'],
-});
+})
 ```
 
 ### React DevTools
 
 Install browser extension for:
+
 - Component tree inspection
 - Props and state viewing
 - Performance profiling
@@ -665,11 +655,11 @@ Install browser extension for:
 - Use dynamic imports for heavy components:
 
 ```tsx
-import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic'
 
 const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
   loading: () => <p>Loading...</p>,
-});
+})
 ```
 
 ## Git Workflow

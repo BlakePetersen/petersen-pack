@@ -29,8 +29,12 @@ async function main() {
     return
   }
 
-  console.log(`Found Animals gallery with ${animalsGallery.images.length} images`)
-  console.log(`Found Animals and People gallery with ${animalsAndPeopleGallery.images.length} images`)
+  console.log(
+    `Found Animals gallery with ${animalsGallery.images.length} images`
+  )
+  console.log(
+    `Found Animals and People gallery with ${animalsAndPeopleGallery.images.length} images`
+  )
 
   // Move all images from "Animals and People" to "Animals"
   if (animalsAndPeopleGallery.images.length > 0) {
@@ -38,7 +42,9 @@ async function main() {
       where: { galleryId: animalsAndPeopleGallery.id },
       data: { galleryId: animalsGallery.id },
     })
-    console.log(`Moved ${animalsAndPeopleGallery.images.length} images to Animals gallery`)
+    console.log(
+      `Moved ${animalsAndPeopleGallery.images.length} images to Animals gallery`
+    )
   }
 
   // Delete the "Animals and People" gallery
@@ -52,7 +58,9 @@ async function main() {
     include: { _count: { select: { images: true } } },
   })
 
-  console.log(`✅ Successfully consolidated into Animals gallery with ${updatedGallery?._count.images} images`)
+  console.log(
+    `✅ Successfully consolidated into Animals gallery with ${updatedGallery?._count.images} images`
+  )
 }
 
 main()

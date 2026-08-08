@@ -6,6 +6,7 @@ import { createCollectionDetailPage } from '../../../lib/collection-pages'
 export const dynamicParams = false
 export const revalidate = 3600
 
-const { generateStaticParams, generateMetadata, Page } = createCollectionDetailPage('configs')
+const { generateStaticParams, generateMetadata, Page } =
+  createCollectionDetailPage('configs')
 export { generateStaticParams, generateMetadata }
 export default Page

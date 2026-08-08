@@ -13,20 +13,20 @@ import '@testing-library/jest-dom'
 let capturedOnMetadata: ((data: { reactionCount: number }) => void) | undefined
 jest.mock('@/components/giscus-comments', () => ({
   GiscusComments: ({
-    onMetadata,
+    onMetadata
   }: {
     onMetadata?: (data: { reactionCount: number }) => void
   }) => {
     capturedOnMetadata = onMetadata
     return <div data-testid="giscus-comments" />
-  },
+  }
 }))
 
 // Mock ReportProblemLink
 jest.mock('@/components/report-problem-link', () => ({
   ReportProblemLink: ({
     title,
-    pageUrl,
+    pageUrl
   }: {
     title: string
     pageUrl: string
@@ -34,13 +34,13 @@ jest.mock('@/components/report-problem-link', () => ({
     <a data-testid="report-problem-link" href={pageUrl}>
       {title}
     </a>
-  ),
+  )
 }))
 
 import {
   ReactionCount,
   ReactionCountProvider,
-  useReactionCount,
+  useReactionCount
 } from '@/components/reaction-count'
 import { DiscussionWithReactions } from '@/components/content-with-discussion'
 
@@ -49,7 +49,7 @@ describe('ReactionCount', () => {
     render(
       <ReactionCountProvider>
         <ReactionCount />
-      </ReactionCountProvider>,
+      </ReactionCountProvider>
     )
     expect(screen.getByText('👍')).toBeInTheDocument()
     expect(screen.getByText('0')).toBeInTheDocument()
@@ -59,7 +59,7 @@ describe('ReactionCount', () => {
     render(
       <ReactionCountProvider>
         <ReactionCount />
-      </ReactionCountProvider>,
+      </ReactionCountProvider>
     )
     expect(screen.getByText('0')).toBeInTheDocument()
   })
@@ -76,7 +76,7 @@ describe('ReactionCount', () => {
     render(
       <ReactionCountProvider>
         <TestWrapper />
-      </ReactionCountProvider>,
+      </ReactionCountProvider>
     )
     expect(screen.getByText('42')).toBeInTheDocument()
   })
@@ -85,7 +85,7 @@ describe('ReactionCount', () => {
     render(
       <ReactionCountProvider>
         <ReactionCount />
-      </ReactionCountProvider>,
+      </ReactionCountProvider>
     )
     expect(screen.getByText('0')).toBeInTheDocument()
   })
@@ -104,7 +104,7 @@ describe('DiscussionWithReactions', () => {
           title="Test Skill"
           pageUrl="https://blakepetersen.io/skills/test"
         />
-      </ReactionCountProvider>,
+      </ReactionCountProvider>
     )
     expect(screen.getByText('// discussion')).toBeInTheDocument()
   })
@@ -117,7 +117,7 @@ describe('DiscussionWithReactions', () => {
           title="Test Skill"
           pageUrl="https://blakepetersen.io/skills/test"
         />
-      </ReactionCountProvider>,
+      </ReactionCountProvider>
     )
     expect(screen.getByTestId('report-problem-link')).toBeInTheDocument()
   })
@@ -130,7 +130,7 @@ describe('DiscussionWithReactions', () => {
           title="Test Skill"
           pageUrl="https://blakepetersen.io/skills/test"
         />
-      </ReactionCountProvider>,
+      </ReactionCountProvider>
     )
     const giscus = screen.getByTestId('giscus-comments')
     expect(giscus).toBeInTheDocument()
@@ -145,7 +145,7 @@ describe('DiscussionWithReactions', () => {
           title="Test Skill"
           pageUrl="https://blakepetersen.io/skills/test"
         />
-      </ReactionCountProvider>,
+      </ReactionCountProvider>
     )
 
     // Initially 0

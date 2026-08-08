@@ -47,6 +47,7 @@ model User {
 ```
 
 **Fields**:
+
 - `id`: Unique identifier (CUID)
 - `email`: User's email (unique, used for login)
 - `password`: Bcrypt-hashed password (10 salt rounds)
@@ -58,9 +59,11 @@ model User {
 - `updatedAt`: Last modification timestamp
 
 **Indexes**:
+
 - Unique on `email`
 
 **Usage**:
+
 - Admin users: Access admin dashboard, manage content
 - Client users: Access private client galleries
 
@@ -81,6 +84,7 @@ model Session {
 ```
 
 **Fields**:
+
 - `id`: Session identifier
 - `sessionToken`: Unique token stored in cookie
 - `userId`: Reference to authenticated user
@@ -88,9 +92,11 @@ model Session {
 - `user`: Related user record
 
 **Indexes**:
+
 - Unique on `sessionToken`
 
 **Cascade Behavior**:
+
 - Deleting user deletes all their sessions
 
 ---
@@ -117,6 +123,7 @@ model Gallery {
 ```
 
 **Fields**:
+
 - `id`: Gallery identifier
 - `title`: Gallery name (e.g., "Summer Weddings 2024")
 - `slug`: URL-friendly identifier (unique, e.g., "summer-weddings-2024")
@@ -131,13 +138,16 @@ model Gallery {
 - `updatedAt`: Last modification timestamp
 
 **Indexes**:
+
 - Unique on `slug`
 
 **Relationships**:
+
 - One-to-many with `Image`
 - Self-referential one-to-one with `Image` (cover)
 
 **Cascade Behavior**:
+
 - Deleting gallery deletes all images
 
 ---
@@ -163,6 +173,7 @@ model Image {
 ```
 
 **Fields**:
+
 - `id`: Image identifier
 - `url`: File path (e.g., "/uploads/12345-image.webp")
 - `publicId`: Optional external storage ID (Vercel Blob, Cloudinary)
@@ -176,12 +187,15 @@ model Image {
 - `createdAt`: Upload timestamp
 
 **Indexes**:
+
 - Foreign key on `galleryId`
 
 **Cascade Behavior**:
+
 - Deleting parent gallery deletes image
 
 **Storage**:
+
 - Local: `/public/uploads/` directory
 - Optional: Vercel Blob (url would be CDN URL)
 
@@ -207,6 +221,7 @@ model ClientGallery {
 ```
 
 **Fields**:
+
 - `id`: Gallery identifier
 - `title`: Gallery name (e.g., "Smith Wedding Delivery")
 - `slug`: URL-friendly identifier (unique)
@@ -219,15 +234,18 @@ model ClientGallery {
 - `updatedAt`: Last modification timestamp
 
 **Indexes**:
+
 - Unique on `slug`
 - Foreign key on `clientId`
 
 **Access Control**:
+
 - Only assigned client can view (enforced in middleware)
 - Admin can view all
 - Optional password adds extra protection layer
 
 **Cascade Behavior**:
+
 - Deleting client deletes their galleries
 - Deleting gallery deletes all images
 
@@ -256,6 +274,7 @@ model ClientImage {
 ```
 
 **Fields**:
+
 - `id`: Image identifier
 - `url`: File path
 - `publicId`: Optional external storage ID
@@ -271,14 +290,17 @@ model ClientImage {
 - `createdAt`: Upload timestamp
 
 **Indexes**:
+
 - Foreign key on `clientGalleryId`
 
 **Client Features**:
+
 - Mark favorites (useful for ordering prints)
 - Track downloads
 - Filter by favorites
 
 **Cascade Behavior**:
+
 - Deleting parent gallery deletes image
 
 ---
@@ -302,6 +324,7 @@ model AvailabilitySlot {
 ```
 
 **Fields**:
+
 - `id`: Slot identifier
 - `date`: Date of availability (date portion only)
 - `startTime`: Start time (HH:MM format)
@@ -313,6 +336,7 @@ model AvailabilitySlot {
 - `updatedAt`: Last modification timestamp
 
 **Usage**:
+
 - Admin creates slots for open dates
 - Public booking page shows available slots
 - Multiple bookings can reference same slot (pending approval)
@@ -342,6 +366,7 @@ model Booking {
 ```
 
 **Fields**:
+
 - `id`: Booking identifier
 - `availabilitySlotId`: Requested time slot
 - `availabilitySlot`: Related availability slot
@@ -356,6 +381,7 @@ model Booking {
 - `updatedAt`: Last status change timestamp
 
 **Status Flow**:
+
 ```
 PENDING → CONFIRMED or CANCELLED
        ↓
@@ -363,9 +389,11 @@ PENDING → CONFIRMED or CANCELLED
 ```
 
 **Indexes**:
+
 - Foreign key on `availabilitySlotId`
 
 **Email Notifications**:
+
 - Created: Notify admin + confirm to client
 - Status change: Notify client
 
@@ -390,6 +418,7 @@ model Inquiry {
 ```
 
 **Fields**:
+
 - `id`: Inquiry identifier
 - `name`: Contact name
 - `email`: Contact email
@@ -401,11 +430,13 @@ model Inquiry {
 - `updatedAt`: Last status change timestamp
 
 **Status Flow**:
+
 ```
 NEW → CONTACTED → CONVERTED or CLOSED
 ```
 
 **Email Notifications**:
+
 - Created: Notify admin + confirm to sender
 
 ---
@@ -424,6 +455,7 @@ enum Role {
 ```
 
 **Values**:
+
 - `ADMIN`: Full access to admin dashboard
 - `CLIENT`: Access only to assigned client galleries
 
@@ -443,6 +475,7 @@ enum BookingStatus {
 ```
 
 **Values**:
+
 - `PENDING`: Newly submitted, awaiting admin review
 - `CONFIRMED`: Admin has confirmed the booking
 - `CANCELLED`: Booking was cancelled (by admin or client)
@@ -464,6 +497,7 @@ enum InquiryStatus {
 ```
 
 **Values**:
+
 - `NEW`: Newly submitted, not yet contacted
 - `CONTACTED`: Admin has reached out
 - `CONVERTED`: Converted to booking/client
@@ -483,6 +517,7 @@ enum InquiryStatus {
 ### Foreign Keys
 
 All relations have automatic foreign key indexes:
+
 - `Session.userId`
 - `Image.galleryId`
 - `ClientImage.clientGalleryId`
@@ -530,6 +565,7 @@ npm run db:migrate -- --name description_of_change
 Location: `prisma/migrations/`
 
 Each migration creates a timestamped directory:
+
 ```
 prisma/migrations/
 └── 20240101000000_initial_schema/
@@ -563,11 +599,13 @@ npm run db:seed
 Location: `prisma/seed.ts`
 
 Creates:
+
 - Admin user (admin@example.com / admin123)
 - Sample galleries
 - Sample images
 
 **Run**:
+
 ```bash
 npm run db:seed
 ```
@@ -579,22 +617,25 @@ npm run db:seed
 ### Import
 
 ```typescript
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma'
 ```
 
 ### Singleton Pattern
 
 ```typescript
 // lib/prisma.ts
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = global as unknown as { prisma: PrismaClient }
 
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  });
+    log:
+      process.env.NODE_ENV === 'development'
+        ? ['query', 'error', 'warn']
+        : ['error'],
+  })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 ```
 
 **Why**: Prevents multiple instances in development hot reload
@@ -608,7 +649,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 ```typescript
 const user = await prisma.user.findUnique({
   where: { email: 'user@example.com' },
-});
+})
 ```
 
 ### Get Gallery with Images
@@ -621,7 +662,7 @@ const gallery = await prisma.gallery.findUnique({
       orderBy: { sortOrder: 'asc' },
     },
   },
-});
+})
 ```
 
 ### Create Booking with Slot
@@ -638,7 +679,7 @@ const booking = await prisma.booking.create({
   include: {
     availabilitySlot: true,
   },
-});
+})
 ```
 
 ### Update Inquiry Status
@@ -647,7 +688,7 @@ const booking = await prisma.booking.create({
 await prisma.inquiry.update({
   where: { id: inquiryId },
   data: { status: 'CONTACTED' },
-});
+})
 ```
 
 ---
@@ -671,7 +712,7 @@ const user: User = await prisma.user.findUnique(...);
 // Include: Add related data
 const gallery = await prisma.gallery.findUnique({
   include: { images: true },
-});
+})
 
 // Select: Choose specific fields
 const gallery = await prisma.gallery.findUnique({
@@ -680,7 +721,7 @@ const gallery = await prisma.gallery.findUnique({
     slug: true,
     images: { select: { url: true } },
   },
-});
+})
 ```
 
 ### Transactions
@@ -689,12 +730,12 @@ For atomic operations:
 
 ```typescript
 await prisma.$transaction(async (tx) => {
-  const user = await tx.user.create({ data: userData });
+  const user = await tx.user.create({ data: userData })
   const gallery = await tx.clientGallery.create({
     data: { ...galleryData, clientId: user.id },
-  });
-  return { user, gallery };
-});
+  })
+  return { user, gallery }
+})
 ```
 
 ### Connection Management
@@ -703,7 +744,7 @@ Prisma manages connection pooling automatically. Close in serverless:
 
 ```typescript
 // Usually not needed with Next.js
-await prisma.$disconnect();
+await prisma.$disconnect()
 ```
 
 ---
@@ -713,6 +754,7 @@ await prisma.$disconnect();
 ### Adding Fields
 
 1. Add to `schema.prisma`:
+
    ```prisma
    model Gallery {
      // ...
@@ -721,6 +763,7 @@ await prisma.$disconnect();
    ```
 
 2. Create migration:
+
    ```bash
    npm run db:migrate -- --name add_new_field
    ```

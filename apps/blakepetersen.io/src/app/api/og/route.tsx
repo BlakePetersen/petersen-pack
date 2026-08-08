@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   }
 
   const items = collection.getter()
-  const item = items.find((i) => i.slug === slug)
+  const item = items.find(i => i.slug === slug)
   const title = item?.title ?? category
 
   return renderOgImage({ title, category })

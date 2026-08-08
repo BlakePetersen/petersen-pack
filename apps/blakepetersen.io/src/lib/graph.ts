@@ -132,19 +132,19 @@ export function getLocalGraph(graph: GraphData, slug: string): GraphData {
 
   // Build subgraph using forEach for Map iteration compatibility
   const nodes = new Map<string, ContentNode>()
-  localSlugs.forEach((s) => {
+  localSlugs.forEach(s => {
     const node = graph.nodes.get(s)
     if (node) nodes.set(s, node)
   })
 
   const edges = graph.edges.filter(
-    (e) => localSlugs.has(e.from) && localSlugs.has(e.to),
+    e => localSlugs.has(e.from) && localSlugs.has(e.to)
   )
 
   const reverseEdges = new Map<string, string[]>()
   graph.reverseEdges.forEach((values, key) => {
     if (localSlugs.has(key)) {
-      const filtered = values.filter((v) => localSlugs.has(v))
+      const filtered = values.filter(v => localSlugs.has(v))
       if (filtered.length > 0) {
         reverseEdges.set(key, filtered)
       }
@@ -169,7 +169,7 @@ export function computeLayout(graph: GraphData): LayoutResult {
       height: 40,
       slug: node.slug,
       title: node.title,
-      category: node.category,
+      category: node.category
     })
   })
 
@@ -190,7 +190,7 @@ export function computeLayout(graph: GraphData): LayoutResult {
         x: n.x,
         y: n.y,
         width: n.width,
-        height: n.height,
+        height: n.height
       })
     }
   }
@@ -202,7 +202,7 @@ export function computeLayout(graph: GraphData): LayoutResult {
       edges.push({
         from: e.v,
         to: e.w,
-        points: edgeData.points || [],
+        points: edgeData.points || []
       })
     }
   }
@@ -219,7 +219,7 @@ export function computeLayout(graph: GraphData): LayoutResult {
  */
 export function renderGraphSvg(
   layout: LayoutResult,
-  options?: { currentSlug?: string; basePath?: string },
+  options?: { currentSlug?: string; basePath?: string }
 ): string {
   const padding = 40
   const viewWidth = layout.width + padding * 2
@@ -230,7 +230,7 @@ export function renderGraphSvg(
   const parts: string[] = []
 
   parts.push(
-    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${viewWidth} ${viewHeight}" width="${viewWidth}" height="${viewHeight}" style="font-family: monospace;">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${viewWidth} ${viewHeight}" width="${viewWidth}" height="${viewHeight}" style="font-family: monospace;">`
   )
 
   // Note: the `// dependency_graph` caption is rendered by the React DependencyGraph
@@ -240,10 +240,12 @@ export function renderGraphSvg(
   for (const edge of layout.edges) {
     if (edge.points.length > 0) {
       const pathData = edge.points
-        .map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x + padding} ${p.y + padding}`)
+        .map(
+          (p, i) => `${i === 0 ? 'M' : 'L'} ${p.x + padding} ${p.y + padding}`
+        )
         .join(' ')
       parts.push(
-        `<path d="${pathData}" fill="none" stroke="#F59E0B" stroke-width="1.5" />`,
+        `<path d="${pathData}" fill="none" stroke="#F59E0B" stroke-width="1.5" />`
       )
     }
   }
@@ -260,15 +262,15 @@ export function renderGraphSvg(
 
     parts.push(`<a xlink:href="${href}">`)
     parts.push(
-      `<rect x="${nx}" y="${ny}" width="${node.width}" height="${node.height}" fill="${fill}" stroke="#27272a" stroke-width="1" rx="2" />`,
+      `<rect x="${nx}" y="${ny}" width="${node.width}" height="${node.height}" fill="${fill}" stroke="#27272a" stroke-width="1" rx="2" />`
     )
     // Title text
     parts.push(
-      `<text x="${nx + 8}" y="${ny + 16}" fill="#e4e4e7" font-size="11" font-family="monospace">${titleText}</text>`,
+      `<text x="${nx + 8}" y="${ny + 16}" fill="#e4e4e7" font-size="11" font-family="monospace">${titleText}</text>`
     )
     // Category badge
     parts.push(
-      `<text x="${nx + 8}" y="${ny + 30}" fill="#71717a" font-size="9" font-family="monospace">[${node.category}]</text>`,
+      `<text x="${nx + 8}" y="${ny + 30}" fill="#71717a" font-size="9" font-family="monospace">[${node.category}]</text>`
     )
     parts.push('</a>')
   }

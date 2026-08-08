@@ -17,15 +17,19 @@ type ContentItem = {
   seo_description?: string
 }
 
-export function buildMetadata(item: ContentItem, collection: string): Metadata & { alternates: { canonical: string } } {
+export function buildMetadata(
+  item: ContentItem,
+  collection: string
+): Metadata & { alternates: { canonical: string } } {
   const title = item.seo_title ?? item.title
-  const description = item.seo_description ?? item.excerpt ?? item.description ?? ''
+  const description =
+    item.seo_description ?? item.excerpt ?? item.description ?? ''
 
   return {
     title,
     description,
     alternates: {
-      canonical: `${SITE_URL}/${item.slug}`,
+      canonical: `${SITE_URL}/${item.slug}`
     },
     openGraph: {
       title,
@@ -35,14 +39,17 @@ export function buildMetadata(item: ContentItem, collection: string): Metadata &
           url: `${SITE_URL}/api/og?category=${collection}&slug=${encodeURIComponent(item.slug)}`,
           width: 1200,
           height: 630,
-          type: 'image/png',
-        },
-      ],
-    },
+          type: 'image/png'
+        }
+      ]
+    }
   }
 }
 
-export function buildArticleJsonLd(item: ContentItem, collection: string): WithContext<TechArticle> {
+export function buildArticleJsonLd(
+  item: ContentItem,
+  collection: string
+): WithContext<TechArticle> {
   return {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
@@ -50,13 +57,15 @@ export function buildArticleJsonLd(item: ContentItem, collection: string): WithC
     description: item.excerpt ?? item.description ?? '',
     author: {
       '@type': 'Person',
-      name: 'Blake Petersen',
+      name: 'Blake Petersen'
     },
-    ...(item.date ? { datePublished: item.date } : {}),
+    ...(item.date ? { datePublished: item.date } : {})
   }
 }
 
-export function buildBreadcrumbJsonLd(pathname: string): WithContext<BreadcrumbList> {
+export function buildBreadcrumbJsonLd(
+  pathname: string
+): WithContext<BreadcrumbList> {
   const crumbs = buildBreadcrumbs(pathname)
 
   return {
@@ -66,8 +75,8 @@ export function buildBreadcrumbJsonLd(pathname: string): WithContext<BreadcrumbL
       '@type': 'ListItem' as const,
       position: index + 1,
       name: crumb.label,
-      item: `${SITE_URL}${crumb.href}`,
-    })),
+      item: `${SITE_URL}${crumb.href}`
+    }))
   }
 }
 

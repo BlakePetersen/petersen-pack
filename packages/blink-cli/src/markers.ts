@@ -64,13 +64,13 @@ interface LineInfo {
 }
 
 function parseLines(fileContent: string): LineInfo[] {
-  return fileContent.split('\n').map((text) => {
+  return fileContent.split('\n').map(text => {
     const startMatch = text.match(MARKER_START)
     const endMatch = text.match(MARKER_END)
     return {
       text,
       startSlug: startMatch ? startMatch[1] : null,
-      endSlug: endMatch ? endMatch[1] : null,
+      endSlug: endMatch ? endMatch[1] : null
     }
   })
 }
@@ -100,9 +100,7 @@ export class ParsedFile {
 
       if (endSlug && openStarts.has(endSlug)) {
         const startLine = openStarts.get(endSlug)!
-        const contentLines = this.lines
-          .slice(startLine + 1, i)
-          .map((l) => l.text)
+        const contentLines = this.lines.slice(startLine + 1, i).map(l => l.text)
         const content = contentLines.join('\n').replace(/\n+$/, '')
 
         sections.push({ slug: endSlug, startLine, endLine: i, content })
@@ -114,7 +112,7 @@ export class ParsedFile {
   }
 
   sectionsForSlug(slug: string): MarkerBounds[] {
-    return this.sections.filter((s) => s.slug === slug)
+    return this.sections.filter(s => s.slug === slug)
   }
 
   replace(slug: string, newContent: string): string {
@@ -150,8 +148,8 @@ export class ParsedFile {
 
   strip(slug: string): string {
     return this.lines
-      .filter((line) => line.startSlug !== slug && line.endSlug !== slug)
-      .map((line) => line.text)
+      .filter(line => line.startSlug !== slug && line.endSlug !== slug)
+      .map(line => line.text)
       .join('\n')
   }
 
@@ -225,15 +223,26 @@ export function getCommentStyle(ext: string): CommentStyle {
   return defaultEngine.styles.forExtension(ext)
 }
 
-export function injectMarkers(content: string, slug: string, filePath: string): string {
+export function injectMarkers(
+  content: string,
+  slug: string,
+  filePath: string
+): string {
   return defaultEngine.inject(content, slug, filePath)
 }
 
-export function findManagedSections(fileContent: string, slug: string): MarkerBounds[] {
+export function findManagedSections(
+  fileContent: string,
+  slug: string
+): MarkerBounds[] {
   return defaultEngine.parse(fileContent).sectionsForSlug(slug)
 }
 
-export function replaceManagedContent(fileContent: string, slug: string, newContent: string): string {
+export function replaceManagedContent(
+  fileContent: string,
+  slug: string,
+  newContent: string
+): string {
   return defaultEngine.parse(fileContent).replace(slug, newContent)
 }
 

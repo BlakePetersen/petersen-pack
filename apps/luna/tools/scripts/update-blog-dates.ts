@@ -65,7 +65,10 @@ async function updatePostDate(postUrl: string) {
   }
 }
 
-async function scrapeBlogPage(url: string, allPostUrls: Set<string>): Promise<string | null> {
+async function scrapeBlogPage(
+  url: string,
+  allPostUrls: Set<string>
+): Promise<string | null> {
   try {
     const response = await axios.get(url, { timeout: 30000 })
     const $ = cheerio.load(response.data)
@@ -104,7 +107,9 @@ async function scrapeBlogPage(url: string, allPostUrls: Set<string>): Promise<st
 }
 
 async function main() {
-  console.log('Updating blog post publish dates from ashleypetersenphoto.com/blog')
+  console.log(
+    'Updating blog post publish dates from ashleypetersenphoto.com/blog'
+  )
   console.log('='.repeat(80))
 
   try {
@@ -162,7 +167,9 @@ async function main() {
 
     console.log('\nMost recent posts:')
     posts.forEach((post) => {
-      console.log(`  • ${post.publishedAt?.toLocaleDateString()} - ${post.title}`)
+      console.log(
+        `  • ${post.publishedAt?.toLocaleDateString()} - ${post.title}`
+      )
     })
   } catch (error) {
     console.error('Fatal error:', error)

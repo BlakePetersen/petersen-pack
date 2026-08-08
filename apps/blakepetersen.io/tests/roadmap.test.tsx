@@ -6,15 +6,15 @@ import { getReleases } from '@/lib/github'
 import RoadmapPage, { revalidate } from '@/app/roadmap/page'
 
 jest.mock('@/lib/github', () => ({
-  getReleases: jest.fn(),
+  getReleases: jest.fn()
 }))
 
 jest.mock('@/components/content-shell', () => ({
-  ContentShell: ({ children }: { children: React.ReactNode }) => children,
+  ContentShell: ({ children }: { children: React.ReactNode }) => children
 }))
 
 jest.mock('@/components/sidebar', () => ({
-  Sidebar: () => null,
+  Sidebar: () => null
 }))
 
 const mockedGetReleases = getReleases as jest.MockedFunction<typeof getReleases>
@@ -36,9 +36,24 @@ describe('roadmap page', () => {
 
   it('shows milestone history from releases', async () => {
     mockedGetReleases.mockResolvedValue([
-      { tagName: 'v1.0.0', name: 'Initial Release', publishedAt: '2025-01-01T00:00:00Z', body: '' },
-      { tagName: 'v1.1.0', name: 'v1.1.0', publishedAt: '2025-02-01T00:00:00Z', body: '' },
-      { tagName: 'v2.0.0', name: 'Major Update', publishedAt: '2025-06-01T00:00:00Z', body: '' },
+      {
+        tagName: 'v1.0.0',
+        name: 'Initial Release',
+        publishedAt: '2025-01-01T00:00:00Z',
+        body: ''
+      },
+      {
+        tagName: 'v1.1.0',
+        name: 'v1.1.0',
+        publishedAt: '2025-02-01T00:00:00Z',
+        body: ''
+      },
+      {
+        tagName: 'v2.0.0',
+        name: 'Major Update',
+        publishedAt: '2025-06-01T00:00:00Z',
+        body: ''
+      }
     ])
 
     const tree = await RoadmapPage()

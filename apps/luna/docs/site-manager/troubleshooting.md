@@ -113,12 +113,14 @@ Common issues and solutions for managing your Luna photography website.
 **Problem**: Colors, quality, or size changed
 
 **This is Normal**:
+
 - Images are automatically optimized
 - Converted to WebP format (better compression)
 - Resized to max 2400px (still high quality)
 - Compressed at 85% quality (imperceptible loss)
 
 **If Quality is Poor**:
+
 - Upload higher quality originals
 - Avoid uploading already-compressed images
 - Contact developer about quality settings
@@ -369,11 +371,13 @@ Common issues and solutions for managing your Luna photography website.
 **Problem**: Images take time to appear
 
 **This May Be Normal**:
+
 - High-quality images take time
 - Especially on slower connections
 - Lazy loading (images load as you scroll)
 
 **If Excessive**:
+
 - Check internet connection
 - Contact developer about image optimization
 - May need CDN or different storage
@@ -417,11 +421,13 @@ Common issues and solutions for managing your Luna photography website.
 **Recommendation**: Use desktop for admin tasks
 
 **Why**:
+
 - Admin dashboard designed for desktop
 - Image uploads easier on desktop
 - Managing galleries requires larger screen
 
 **If You Must Use Mobile**:
+
 - Rotate to landscape
 - Use tablet if available
 - Some features may be limited
@@ -497,16 +503,19 @@ When reporting an issue:
 ### Regular Maintenance
 
 **Weekly**:
+
 - Check new inquiries and bookings
 - Respond to client messages
 - Update availability
 
 **Monthly**:
+
 - Review upcoming client galleries (expirations)
 - Clean up old bookings (mark as completed)
 - Check for any error notifications
 
 **Quarterly**:
+
 - Review portfolio galleries (update featured)
 - Remove outdated galleries
 - Update pricing/services if changed
@@ -514,16 +523,19 @@ When reporting an issue:
 ### Best Practices
 
 **Keep Records**:
+
 - Note any recurring issues
 - Track when problems occur
 - Share patterns with developer
 
 **Stay Updated**:
+
 - Keep browser updated
 - Use secure passwords
 - Don't share login credentials
 
 **Backup**:
+
 - Download important images
 - Keep client information elsewhere
 - Don't rely solely on web system
@@ -555,6 +567,7 @@ When reporting an issue:
 ### Quick Fixes
 
 **Most Issues**:
+
 1. Refresh page
 2. Clear browser cache
 3. Try different browser
@@ -589,6 +602,7 @@ When reporting an issue:
 ### Before Contacting Support
 
 Try:
+
 - ✅ Refresh the page
 - ✅ Clear browser cache
 - ✅ Try different browser

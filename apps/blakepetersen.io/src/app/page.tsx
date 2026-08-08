@@ -9,9 +9,19 @@ import { CategoryCard } from '../components/category-card'
 
 export const revalidate = 3600
 
-const categories = getAllCollections().filter((c) => c.slug !== 'posts')
+const categories = getAllCollections().filter(c => c.slug !== 'posts')
 
-const stackTools = ['Next.js', 'TypeScript', 'Tailwind', 'Claude', 'pnpm', 'Velite', 'Turborepo', 'ESLint', 'Prettier']
+const stackTools = [
+  'Next.js',
+  'TypeScript',
+  'Tailwind',
+  'Claude',
+  'pnpm',
+  'Velite',
+  'Turborepo',
+  'ESLint',
+  'Prettier'
+]
 
 function stripPrefix(slug: string) {
   const parts = slug.split('/')
@@ -26,23 +36,37 @@ export default function Home() {
     <div className="mx-auto max-w-[1600px] px-4 py-8">
       {/* Section 1: Workbench hero */}
       <section className="mb-12">
-        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// dx_workbench'}</p>
+        <p className="mb-4 font-mono text-xs text-muted-foreground">
+          {'// dx_workbench'}
+        </p>
         <div className="border border-border p-6">
           <p className="font-mono text-lg text-foreground">
-            Opinionated AI-first DX practices,<br />documented and ready to apply.
+            Opinionated AI-first DX practices,
+            <br />
+            documented and ready to apply.
           </p>
           <nav className="mt-4 flex flex-wrap gap-3 font-mono text-sm">
-            <Link href="/skills" className="text-primary hover:underline">[skills]</Link>
-            <Link href="/hooks" className="text-primary hover:underline">[hooks]</Link>
-            <Link href="/configs" className="text-primary hover:underline">[configs]</Link>
-            <Link href="/guides" className="text-primary hover:underline">[guides]</Link>
+            <Link href="/skills" className="text-primary hover:underline">
+              [skills]
+            </Link>
+            <Link href="/hooks" className="text-primary hover:underline">
+              [hooks]
+            </Link>
+            <Link href="/configs" className="text-primary hover:underline">
+              [configs]
+            </Link>
+            <Link href="/guides" className="text-primary hover:underline">
+              [guides]
+            </Link>
           </nav>
         </div>
       </section>
 
       {/* Section 2: Stack snapshot */}
       <section className="mb-12">
-        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// stack'}</p>
+        <p className="mb-4 font-mono text-xs text-muted-foreground">
+          {'// stack'}
+        </p>
         <div className="flex flex-wrap gap-2">
           {stackTools.map(tool => (
             <Badge key={tool} variant="outline">
@@ -54,7 +78,9 @@ export default function Home() {
 
       {/* Section 3: Enriched content grid */}
       <section className="mb-12">
-        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// collections'}</p>
+        <p className="mb-4 font-mono text-xs text-muted-foreground">
+          {'// collections'}
+        </p>
         <div className="grid gap-4 md:grid-cols-2">
           {categories.map(({ slug, label, getter, href }) => {
             const items = getter()
@@ -64,11 +90,11 @@ export default function Home() {
                 name={slug}
                 label={label.toLowerCase()}
                 count={items.length}
-                recentItems={items.slice(0, 3).map((item) => ({
+                recentItems={items.slice(0, 3).map(item => ({
                   title: item.title,
                   slug: item.slug,
                   description: item.description,
-                  applies_to: 'applies_to' in item ? item.applies_to : undefined,
+                  applies_to: 'applies_to' in item ? item.applies_to : undefined
                 }))}
                 href={href}
               />
@@ -80,9 +106,11 @@ export default function Home() {
       {/* Recent posts */}
       {recentPosts.length > 0 && (
         <section className="mb-12">
-          <p className="mb-4 font-mono text-xs text-muted-foreground">{'// recent_posts'}</p>
+          <p className="mb-4 font-mono text-xs text-muted-foreground">
+            {'// recent_posts'}
+          </p>
           <div className="space-y-6">
-            {recentPosts.map((post) => (
+            {recentPosts.map(post => (
               <Link
                 key={post.slug}
                 href={`/posts/${stripPrefix(post.slug)}`}
@@ -99,7 +127,7 @@ export default function Home() {
                     {new Date(post.date).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'short',
-                      day: 'numeric',
+                      day: 'numeric'
                     })}
                   </time>
                 </div>
@@ -117,16 +145,24 @@ export default function Home() {
 
       {/* Section 4: Contribution callout */}
       <section className="mt-12">
-        <p className="mb-4 font-mono text-xs text-muted-foreground">{'// contribute'}</p>
+        <p className="mb-4 font-mono text-xs text-muted-foreground">
+          {'// contribute'}
+        </p>
         <div className="border border-border p-6">
           <p className="mb-4 font-mono text-sm text-secondary-foreground">
             Found something useful? Have feedback?
           </p>
           <div className="flex flex-wrap gap-4 font-mono text-sm">
-            <a href="https://github.com/BlakePetersen/petersen-pack/issues/new" className="text-primary hover:underline">
+            <a
+              href="https://github.com/BlakePetersen/petersen-pack/issues/new"
+              className="text-primary hover:underline"
+            >
               $ report-problem
             </a>
-            <a href="https://github.com/BlakePetersen/petersen-pack/discussions" className="text-primary hover:underline">
+            <a
+              href="https://github.com/BlakePetersen/petersen-pack/discussions"
+              className="text-primary hover:underline"
+            >
               $ suggest-improvement
             </a>
           </div>

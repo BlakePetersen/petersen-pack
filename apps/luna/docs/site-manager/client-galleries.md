@@ -5,6 +5,7 @@ Client Galleries are private, password-protected photo delivery spaces where you
 ## What is a Client Gallery?
 
 Think of Client Galleries as private online albums where:
+
 - Only the assigned client can view photos (after logging in)
 - You upload the final edited images from a session
 - Clients can mark favorites, download images, and view their photos
@@ -57,11 +58,13 @@ Think of Client Galleries as private online albums where:
 ### What Happens When You Create a Gallery
 
 **For New Clients**:
+
 - User account created automatically with the email provided
 - Temporary password generated (they use the gallery link, not password)
 - Client logs in with their email
 
 **Gallery Link**:
+
 - Unique URL like: `yourdomain.com/client/johnson-family-fall-2024-abc123`
 - Share this link with your client
 - Slug is unique and hard to guess
@@ -92,16 +95,19 @@ Think of Client Galleries as private online albums where:
 ### Best Practices
 
 **Image Quality**:
+
 - Upload only final, fully edited images
 - Full resolution (system optimizes automatically)
 - Color corrected and retouched
 
 **Organization**:
+
 - Use sort order to create a narrative flow
 - Start strong with a great image
 - Vary shot types (wide, close-up, details)
 
 **Timing**:
+
 - Upload all images before sharing link
 - OR let client know more photos coming soon
 
@@ -117,6 +123,7 @@ Think of Client Galleries as private online albums where:
 ### How to Share
 
 **Via Email** (Recommended):
+
 ```
 Hi Sarah,
 
@@ -145,6 +152,7 @@ Best,
 ```
 
 **Include**:
+
 - Direct link to gallery
 - Their login email
 - Gallery password (if you set one)
@@ -165,26 +173,31 @@ Best,
 ### What Clients Can Do
 
 **View Photos**:
+
 - Browse all images in grid layout
 - Click any image to view full size with lightbox
 - Navigate with arrow keys or on-screen controls
 - Zoom and pan on mobile
 
 **Mark Favorites**:
+
 - Click heart icon on any image
 - Useful for selecting prints or albums
 - You can see which images they favorited
 
 **Download Images**:
+
 - Download button on each image
 - Downloads high-quality version
 - System tracks downloads (you can see stats)
 
 **Filter**:
+
 - Toggle to show only favorited images
 - Makes it easy to review their selections
 
 **See Expiration**:
+
 - Countdown shows time remaining
 - Encourages timely downloads
 
@@ -262,11 +275,13 @@ To restore access to an expired gallery:
 ### Using This Information
 
 **Favorites**:
+
 - See which images client loves most
 - Use for print orders or album design
 - Understand client preferences for future sessions
 
 **Downloads**:
+
 - Confirm client received all photos
 - Follow up if they haven't downloaded
 
@@ -275,11 +290,13 @@ To restore access to an expired gallery:
 ### Access Control
 
 **Who Can View**:
+
 - Assigned client (must login)
 - You (admin account)
 - No one else
 
 **Password Protection**:
+
 - Account password (required login)
 - Gallery password (optional extra layer)
 - Unique, hard-to-guess URLs
@@ -287,16 +304,19 @@ To restore access to an expired gallery:
 ### Best Practices
 
 **Expiration Dates**:
+
 - Set reasonable timeframes (60-90 days typical)
 - Gives urgency for downloads
 - Prevents indefinite hosting
 
 **Gallery Passwords**:
+
 - Use for extra sensitive sessions
 - Choose secure passwords
 - Share separately from gallery link
 
 **Client Communication**:
+
 - Explain expiration clearly
 - Remind about backups before expiry
 - Offer extensions if needed
@@ -306,6 +326,7 @@ To restore access to an expired gallery:
 ### "I can't access my gallery"
 
 **Possible causes**:
+
 1. **Gallery expired**: Check expiration date, extend if needed
 2. **Wrong email**: Verify they're using correct login email
 3. **Wrong password**: Client may need password reset
@@ -314,6 +335,7 @@ To restore access to an expired gallery:
 ### "I can't download images"
 
 **Solutions**:
+
 - Try different browser
 - Check internet connection
 - Try right-click > Save Image As (alternative method)
@@ -322,11 +344,13 @@ To restore access to an expired gallery:
 ### "Images are loading slowly"
 
 **Causes**:
+
 - Client's internet connection speed
 - Large number of images in gallery
 - Mobile data connection
 
 **Solutions**:
+
 - Recommend WiFi connection
 - Download in batches
 - Be patient with loading
@@ -336,6 +360,7 @@ To restore access to an expired gallery:
 ### Gallery Creation
 
 **Naming**:
+
 - Include client name and session type
 - Add date or season
 - Examples:
@@ -344,12 +369,14 @@ To restore access to an expired gallery:
   - "Thompson Family Portraits"
 
 **Expiration**:
+
 - Standard: 60-90 days
 - Weddings: 90-120 days (more images, more time needed)
 - Shorter: 30 days with extension option
 - Communicate clearly in contract
 
 **Password Protection**:
+
 - Use for very private sessions
 - Wedding galleries (family privacy)
 - Boudoir or sensitive content
@@ -358,17 +385,20 @@ To restore access to an expired gallery:
 ### Communication
 
 **Initial Delivery**:
+
 - Email gallery link promptly
 - Include all access information
 - Provide brief instructions
 - Set expectations (expiration, downloads)
 
 **Follow-Up**:
+
 - Check if they've accessed gallery
 - Answer questions promptly
 - Remind before expiration (1 week warning)
 
 **Professional Touch**:
+
 - Thank them for their business
 - Invite them to leave review
 - Ask permission to use favorites in portfolio
@@ -377,11 +407,13 @@ To restore access to an expired gallery:
 ### Organization
 
 **Keep Track**:
+
 - Note which galleries are active
 - Set reminders for expirations
 - Archive old galleries (mental note or system)
 
 **Regular Cleanup**:
+
 - After expiration + grace period, consider removing
 - Keep portfolio favorites
 - Maintain client relationship history

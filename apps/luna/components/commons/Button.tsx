@@ -227,7 +227,8 @@ function getSecondaryCTAStylesDark(
 }
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   glassOpacity?: number
@@ -398,7 +399,8 @@ Button.displayName = 'Button'
 
 // Helper component for Next.js Link integration
 export interface ButtonLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  extends
+    React.AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof buttonVariants> {
   href: string
   glassOpacity?: number

@@ -7,7 +7,7 @@ import {
   SlugSchema,
   CalVerSchema,
   ArtifactTypeSchema,
-  MergeStrategySchema,
+  MergeStrategySchema
 } from 'blink-registry'
 
 describe('SCHEMA-05: blink-registry direct import', () => {
@@ -15,11 +15,14 @@ describe('SCHEMA-05: blink-registry direct import', () => {
   // src/lib/velite-prepare.ts (build-time validation). Schema imports live
   // wherever they're consumed; concatenate both for the regression check.
   const pipelineSource =
-    fs.readFileSync(path.resolve(__dirname, '..', 'velite.config.ts'), 'utf-8') +
+    fs.readFileSync(
+      path.resolve(__dirname, '..', 'velite.config.ts'),
+      'utf-8'
+    ) +
     '\n' +
     fs.readFileSync(
       path.resolve(__dirname, '..', 'src', 'lib', 'velite-prepare.ts'),
-      'utf-8',
+      'utf-8'
     )
 
   it('removes the inline slugPattern, calverPattern, validTypes, validMerges declarations', () => {

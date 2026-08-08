@@ -7,6 +7,7 @@ Inquiries are messages submitted through your contact form. This is often the fi
 When someone fills out your contact form at `/contact`, their message is saved as an **Inquiry** in your admin dashboard.
 
 **Typical Inquiry Types**:
+
 - General questions about your services
 - Pricing information requests
 - Availability questions
@@ -25,6 +26,7 @@ When someone fills out your contact form at `/contact`, their message is saved a
 ### What You See
 
 Each inquiry shows:
+
 - **Name**: Contact's name
 - **Email**: Their email address
 - **Phone**: Phone number (if provided)
@@ -54,6 +56,7 @@ Organize inquiries by where they are in your sales process:
 **Action**: Initial response sent
 
 **When to Use**: After you've:
+
 - Sent email response
 - Called them
 - Provided information they requested
@@ -67,6 +70,7 @@ Organize inquiries by where they are in your sales process:
 **Action**: Booking confirmed or contract signed
 
 **When to Use**: When inquiry leads to:
+
 - Confirmed booking
 - Signed contract
 - Paid deposit
@@ -79,6 +83,7 @@ Organize inquiries by where they are in your sales process:
 **Status**: Inquiry completed without conversion
 
 **When to Use**: When:
+
 - They weren't interested after all
 - They went with another photographer
 - They were just browsing
@@ -141,6 +146,7 @@ Best,
 ```
 
 **Key Elements**:
+
 - Personal greeting (use their name)
 - Acknowledge their specific request
 - Answer questions directly
@@ -151,6 +157,7 @@ Best,
 ### Following Up
 
 **First Follow-Up** (if no response after 3-4 days):
+
 ```
 Hi [Name],
 
@@ -165,6 +172,7 @@ Best,
 ```
 
 **Second Follow-Up** (after 1 week):
+
 ```
 Hi [Name],
 
@@ -177,6 +185,7 @@ All the best,
 ```
 
 **After Second Follow-Up**:
+
 - If no response: Update status to CLOSED
 - Note reason: "No response to follow-ups"
 
@@ -197,6 +206,7 @@ When an inquiry leads to a booking:
    - "Signed wedding package contract"
 
 **Why Track Conversions**:
+
 - Measure success rate
 - Understand which inquiry sources convert best
 - Track business growth
@@ -206,21 +216,25 @@ When an inquiry leads to a booking:
 Update status to **CLOSED** when:
 
 **Client Declined**:
+
 - They chose another photographer
 - Budget didn't align
 - Timing didn't work out
 
 **No Response**:
+
 - No reply to initial contact
 - No response to follow-ups
 - After 2-3 weeks
 
 **Not a Fit**:
+
 - Outside your service area
 - Service type you don't offer
 - Not actually interested (just browsing)
 
 **Spam/Invalid**:
+
 - Obvious spam
 - Invalid contact information
 - Marketing/sales pitches
@@ -230,10 +244,12 @@ Update status to **CLOSED** when:
 ### Automatic Emails
 
 **When Client Submits Inquiry**:
+
 - **To You**: New inquiry notification with details
 - **To Client**: Confirmation that inquiry was received
 
 **Email Contents**:
+
 - Client's name, email, phone
 - Their message
 - Preferred contact method
@@ -255,6 +271,7 @@ View inquiries by status to focus your work:
 ### Search
 
 Search for specific inquiries:
+
 - By name
 - By email
 - By date range
@@ -263,6 +280,7 @@ Search for specific inquiries:
 ### Sort
 
 Organize your view:
+
 - **Newest first**: See recent inquiries
 - **Oldest first**: Find lingering inquiries
 - **By status**: Group by workflow stage
@@ -272,12 +290,14 @@ Organize your view:
 ### Response Time
 
 **Speed Matters**:
+
 - Respond within 24 hours (ideally within 12)
 - Faster response = higher conversion
 - Clients often contact multiple photographers
 - First to respond often gets the booking
 
 **Set Expectations**:
+
 - Auto-response confirms receipt
 - Mention typical response time on contact page
 - "I'll respond within 24 hours"
@@ -285,18 +305,21 @@ Organize your view:
 ### Professional Communication
 
 **First Impressions**:
+
 - Use professional email signature
 - Proper grammar and spelling
 - Warm but professional tone
 - Address client by name
 
 **Provide Value**:
+
 - Answer questions thoroughly
 - Attach pricing guide or portfolio
 - Link to relevant gallery examples
 - Make it easy to take next step
 
 **Call to Action**:
+
 - Suggest specific next step
 - Offer to schedule call
 - Provide booking link
@@ -305,16 +328,19 @@ Organize your view:
 ### Tracking & Follow-Up
 
 **Use Status System**:
+
 - Update status after each interaction
 - Know at a glance what needs attention
 - Prioritize NEW inquiries
 
 **Set Reminders**:
+
 - Follow up if no response in 3-4 days
 - Check CONTACTED inquiries weekly
 - Follow up on tentative bookings
 
 **Take Notes**:
+
 - Add internal notes about conversation
 - Track what you sent them
 - Note their specific needs/preferences
@@ -323,23 +349,27 @@ Organize your view:
 ### Converting Inquiries
 
 **Qualify Leads**:
+
 - Ask about date, location, budget
 - Determine if they're serious
 - See if you're a good fit
 
 **Show Value**:
+
 - Share portfolio examples
 - Provide pricing transparency
 - Explain your process
 - Build trust quickly
 
 **Make Booking Easy**:
+
 - Clear pricing
 - Simple next steps
 - Booking link ready
 - Contract/invoice prepared
 
 **Follow Up**:
+
 - Don't assume silence = not interested
 - People get busy, emails get buried
 - Polite follow-up is professional

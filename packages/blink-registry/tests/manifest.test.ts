@@ -3,13 +3,13 @@
 import {
   ManifestFileEntrySchema,
   ManifestEntrySchema,
-  ManifestSchema,
+  ManifestSchema
 } from '../src/index'
 
 const validFileEntry = {
   path: 'eslint.config.mjs',
   checksum: 'abc123def456',
-  merge: 'replace' as const,
+  merge: 'replace' as const
 }
 
 const validEntry = {
@@ -19,12 +19,12 @@ const validEntry = {
   version: '2026.03.14.1',
   scope: 'project' as const,
   installedAt: '2026-03-14T12:00:00Z',
-  files: [validFileEntry],
+  files: [validFileEntry]
 }
 
 const validManifest = {
   version: 1 as const,
-  items: [validEntry],
+  items: [validEntry]
 }
 
 describe('ManifestFileEntrySchema', () => {
@@ -39,7 +39,8 @@ describe('ManifestFileEntrySchema', () => {
 
   it('rejects invalid merge strategy', () => {
     expect(
-      ManifestFileEntrySchema.safeParse({ ...validFileEntry, merge: 'patch' }).success
+      ManifestFileEntrySchema.safeParse({ ...validFileEntry, merge: 'patch' })
+        .success
     ).toBe(false)
   })
 })
@@ -63,7 +64,10 @@ describe('ManifestEntrySchema', () => {
 
   it('rejects invalid datetime format', () => {
     expect(
-      ManifestEntrySchema.safeParse({ ...validEntry, installedAt: 'not-a-date' }).success
+      ManifestEntrySchema.safeParse({
+        ...validEntry,
+        installedAt: 'not-a-date'
+      }).success
     ).toBe(false)
   })
 
@@ -79,20 +83,18 @@ describe('ManifestSchema', () => {
   })
 
   it('accepts empty items array', () => {
-    expect(
-      ManifestSchema.safeParse({ version: 1, items: [] }).success
-    ).toBe(true)
+    expect(ManifestSchema.safeParse({ version: 1, items: [] }).success).toBe(
+      true
+    )
   })
 
   it('rejects wrong version number', () => {
-    expect(
-      ManifestSchema.safeParse({ version: 2, items: [] }).success
-    ).toBe(false)
+    expect(ManifestSchema.safeParse({ version: 2, items: [] }).success).toBe(
+      false
+    )
   })
 
   it('rejects missing version', () => {
-    expect(
-      ManifestSchema.safeParse({ items: [] }).success
-    ).toBe(false)
+    expect(ManifestSchema.safeParse({ items: [] }).success).toBe(false)
   })
 })

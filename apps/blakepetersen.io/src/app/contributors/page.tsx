@@ -6,7 +6,7 @@ import {
   getContributorStats,
   getContributors,
   type Contributor,
-  type ContributorStats,
+  type ContributorStats
 } from '../../lib/github'
 import { ContentShell } from '../../components/content-shell'
 import { Sidebar } from '../../components/sidebar'
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   description:
     'People who have contributed to blakepetersen.io — avatars, commit stats, and contribution history.',
   alternates: {
-    canonical: 'https://blakepetersen.io/contributors',
-  },
+    canonical: 'https://blakepetersen.io/contributors'
+  }
 }
 
 export default async function ContributorsPage() {
@@ -33,10 +33,8 @@ export default async function ContributorsPage() {
 
   // Sort by commit count descending
   contributors.sort((a, b) => {
-    const aCount =
-      'totalCommits' in a ? a.totalCommits : a.contributions
-    const bCount =
-      'totalCommits' in b ? b.totalCommits : b.contributions
+    const aCount = 'totalCommits' in a ? a.totalCommits : a.contributions
+    const bCount = 'totalCommits' in b ? b.totalCommits : b.contributions
     return bCount - aCount
   })
 
@@ -60,7 +58,7 @@ export default async function ContributorsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {contributors.map((contributor) => (
+            {contributors.map(contributor => (
               <ContributorCard
                 key={contributor.login}
                 contributor={contributor}

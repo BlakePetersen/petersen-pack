@@ -18,7 +18,11 @@ describe('Card', () => {
   })
 
   it('supports custom className', () => {
-    render(<Card data-testid="card" className="custom">content</Card>)
+    render(
+      <Card data-testid="card" className="custom">
+        content
+      </Card>
+    )
     expect(screen.getByTestId('card').className).toContain('custom')
   })
 })

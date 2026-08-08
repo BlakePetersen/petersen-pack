@@ -7,7 +7,7 @@ import {
   mkdirSync,
   rmSync,
   existsSync,
-  realpathSync,
+  realpathSync
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -27,7 +27,7 @@ let fetchMock: jest.Mock
 let execSyncMock: jest.Mock
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config,
+  defineCommand: (config: any) => config
 }))
 
 jest.mock('consola', () => {
@@ -37,7 +37,7 @@ jest.mock('consola', () => {
     log: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
-    prompt: jest.fn(),
+    prompt: jest.fn()
   }
   return { consola: mock, default: mock, __esModule: true }
 })
@@ -46,16 +46,16 @@ jest.mock('picocolors', () => ({
   default: {
     dim: (s: string) => s,
     bold: (s: string) => s,
-    yellow: (s: string) => s,
+    yellow: (s: string) => s
   },
   __esModule: true,
   dim: (s: string) => s,
   bold: (s: string) => s,
-  yellow: (s: string) => s,
+  yellow: (s: string) => s
 }))
 
 jest.mock('node:child_process', () => ({
-  execSync: jest.fn(),
+  execSync: jest.fn()
 }))
 
 const MOCK_INDEX = {
@@ -66,10 +66,10 @@ const MOCK_INDEX = {
       type: 'config',
       version: '2026.03.14.1',
       description: 'Prettier config',
-      url: 'https://blakepetersen.io/r/config/prettier',
-    },
+      url: 'https://blakepetersen.io/r/config/prettier'
+    }
   ],
-  generatedAt: '2026-03-14T00:00:00.000Z',
+  generatedAt: '2026-03-14T00:00:00.000Z'
 }
 
 const MOCK_ARTIFACT = {
@@ -80,17 +80,25 @@ const MOCK_ARTIFACT = {
   description: 'Prettier config',
   url: 'https://blakepetersen.io/r/config/prettier',
   files: [
-    { path: '.prettierrc', content: '{ "semi": false }', merge: 'replace' as const },
-    { path: '.prettierignore', content: 'dist\nnode_modules', merge: 'replace' as const },
+    {
+      path: '.prettierrc',
+      content: '{ "semi": false }',
+      merge: 'replace' as const
+    },
+    {
+      path: '.prettierignore',
+      content: 'dist\nnode_modules',
+      merge: 'replace' as const
+    }
   ],
-  devDependencies: { prettier: '^3.0.0' },
+  devDependencies: { prettier: '^3.0.0' }
 }
 
 const MOCK_ARTIFACT_NO_DEPS = {
   ...MOCK_ARTIFACT,
   slug: 'nodeps',
   name: 'No Deps',
-  devDependencies: undefined,
+  devDependencies: undefined
 }
 
 const MOCK_SECTION_ARTIFACT = {
@@ -101,9 +109,13 @@ const MOCK_SECTION_ARTIFACT = {
   description: 'Shell RC managed section',
   url: 'https://blakepetersen.io/r/config/shellrc',
   files: [
-    { path: '.zshrc', content: 'export PATH="$HOME/.blink/bin:$PATH"', merge: 'section' as const },
+    {
+      path: '.zshrc',
+      content: 'export PATH="$HOME/.blink/bin:$PATH"',
+      merge: 'section' as const
+    }
   ],
-  devDependencies: undefined,
+  devDependencies: undefined
 }
 
 const MOCK_ARTIFACT_WITH_DEPS = {
@@ -114,10 +126,14 @@ const MOCK_ARTIFACT_WITH_DEPS = {
   description: 'ESLint with Prettier',
   url: 'https://blakepetersen.io/r/config/eslint-prettier',
   files: [
-    { path: '.eslintrc.json', content: '{ "extends": ["prettier"] }', merge: 'replace' as const },
+    {
+      path: '.eslintrc.json',
+      content: '{ "extends": ["prettier"] }',
+      merge: 'replace' as const
+    }
   ],
   dependencies: ['prettier'],
-  devDependencies: undefined,
+  devDependencies: undefined
 }
 
 const MOCK_INDEX_EXTENDED = {
@@ -129,7 +145,7 @@ const MOCK_INDEX_EXTENDED = {
       type: 'config',
       version: '2026.03.14.1',
       description: 'Shell RC managed section',
-      url: 'https://blakepetersen.io/r/config/shellrc',
+      url: 'https://blakepetersen.io/r/config/shellrc'
     },
     {
       slug: 'eslint-prettier',
@@ -137,21 +153,22 @@ const MOCK_INDEX_EXTENDED = {
       type: 'config',
       version: '2026.03.14.1',
       description: 'ESLint with Prettier',
-      url: 'https://blakepetersen.io/r/config/eslint-prettier',
-    },
+      url: 'https://blakepetersen.io/r/config/eslint-prettier'
+    }
   ],
-  generatedAt: '2026-03-14T00:00:00.000Z',
+  generatedAt: '2026-03-14T00:00:00.000Z'
 }
 
 function mockFetchResponses(index: any, artifact: any) {
-  fetchMock = jest.fn()
+  fetchMock = jest
+    .fn()
     .mockResolvedValueOnce({
       ok: true,
-      json: async () => index,
+      json: async () => index
     })
     .mockResolvedValueOnce({
       ok: true,
-      json: async () => artifact,
+      json: async () => artifact
     })
   global.fetch = fetchMock
 }
@@ -177,7 +194,10 @@ beforeEach(() => {
   execSyncMock.mockClear()
 
   // Default: TTY
-  Object.defineProperty(process.stdout, 'isTTY', { value: true, configurable: true })
+  Object.defineProperty(process.stdout, 'isTTY', {
+    value: true,
+    configurable: true
+  })
 })
 
 afterEach(() => {
@@ -188,7 +208,16 @@ afterEach(() => {
 async function runApply(args: Record<string, any> = {}) {
   const mod = await import('@/commands/apply')
   const command = mod.default
-  await command.run!({ args: { slug: 'prettier', 'dry-run': false, yes: false, project: true, global: false, ...args } } as any)
+  await command.run!({
+    args: {
+      slug: 'prettier',
+      'dry-run': false,
+      yes: false,
+      project: true,
+      global: false,
+      ...args
+    }
+  } as any)
 }
 
 describe('blink apply', () => {
@@ -201,7 +230,9 @@ describe('blink apply', () => {
 
       // Files written
       expect(existsSync(join(tmpDir, '.prettierrc'))).toBe(true)
-      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe('{ "semi": false }')
+      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe(
+        '{ "semi": false }'
+      )
       expect(existsSync(join(tmpDir, '.prettierignore'))).toBe(true)
 
       // Manifest updated
@@ -218,9 +249,13 @@ describe('blink apply', () => {
       const artifact = {
         ...MOCK_ARTIFACT,
         files: [
-          { path: 'src/config/prettier.ts', content: 'export default {}', merge: 'replace' as const },
+          {
+            path: 'src/config/prettier.ts',
+            content: 'export default {}',
+            merge: 'replace' as const
+          }
         ],
-        devDependencies: undefined,
+        devDependencies: undefined
       }
       mockFetchResponses(MOCK_INDEX, artifact)
 
@@ -247,9 +282,11 @@ describe('blink apply', () => {
               version: '2026.03.14.1',
               scope: 'project',
               installedAt: '2026-03-14T00:00:00.000Z',
-              files: [{ path: '.prettierrc', checksum: 'abc', merge: 'replace' }],
-            },
-          ],
+              files: [
+                { path: '.prettierrc', checksum: 'abc', merge: 'replace' }
+              ]
+            }
+          ]
         })
       )
 
@@ -275,7 +312,9 @@ describe('blink apply', () => {
 
       await runApply({ yes: true })
 
-      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe('{ "semi": false }')
+      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe(
+        '{ "semi": false }'
+      )
       // Should not have been prompted
       expect(consolaMock.prompt).not.toHaveBeenCalled()
     })
@@ -330,7 +369,10 @@ describe('blink apply', () => {
 
   describe('non-TTY', () => {
     it('skips prompts in non-TTY environment', async () => {
-      Object.defineProperty(process.stdout, 'isTTY', { value: false, configurable: true })
+      Object.defineProperty(process.stdout, 'isTTY', {
+        value: false,
+        configurable: true
+      })
       mockFetchResponses(MOCK_INDEX, MOCK_ARTIFACT)
 
       await runApply()
@@ -350,11 +392,13 @@ describe('blink apply', () => {
       const emptyIndex = { items: [], generatedAt: '2026-03-14T00:00:00.000Z' }
       fetchMock = jest.fn().mockResolvedValueOnce({
         ok: true,
-        json: async () => emptyIndex,
+        json: async () => emptyIndex
       })
       global.fetch = fetchMock
 
-      await expect(runApply({ slug: 'nonexistent' })).rejects.toThrow('process.exit')
+      await expect(runApply({ slug: 'nonexistent' })).rejects.toThrow(
+        'process.exit'
+      )
 
       expect(consolaMock.error).toHaveBeenCalledWith(
         expect.stringContaining('not found')
@@ -393,7 +437,7 @@ describe('blink apply', () => {
     it('does not run install when artifact has no devDependencies', async () => {
       const indexWithNoDeps = {
         ...MOCK_INDEX,
-        items: [{ ...MOCK_INDEX.items[0], slug: 'nodeps' }],
+        items: [{ ...MOCK_INDEX.items[0], slug: 'nodeps' }]
       }
       mockFetchResponses(indexWithNoDeps, MOCK_ARTIFACT_NO_DEPS)
 
@@ -451,8 +495,12 @@ describe('blink apply', () => {
       const scopeMod = await import('@/scope')
       const origResolveManifest = scopeMod.resolveManifestRoot
       const origResolveDest = scopeMod.resolveDestination
-      jest.spyOn(scopeMod, 'resolveManifestRoot').mockImplementation((_scope, cwd) => cwd)
-      jest.spyOn(scopeMod, 'resolveDestination').mockImplementation((filePath, _scope, cwd) => join(cwd, filePath))
+      jest
+        .spyOn(scopeMod, 'resolveManifestRoot')
+        .mockImplementation((_scope, cwd) => cwd)
+      jest
+        .spyOn(scopeMod, 'resolveDestination')
+        .mockImplementation((filePath, _scope, cwd) => join(cwd, filePath))
 
       await runApply({ yes: true, global: true, project: false })
 
@@ -528,7 +576,9 @@ describe('blink apply', () => {
 
       // Verify files exist (atomicWrite creates parent dirs and writes atomically)
       expect(existsSync(join(tmpDir, '.prettierrc'))).toBe(true)
-      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe('{ "semi": false }')
+      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe(
+        '{ "semi": false }'
+      )
     })
   })
 
@@ -538,8 +588,12 @@ describe('blink apply', () => {
 
       // Mock scope module to verify it's called with 'global' and to avoid writing to real $HOME
       const scopeMod = await import('@/scope')
-      const resolveDestSpy = jest.spyOn(scopeMod, 'resolveDestination').mockImplementation((filePath, _scope, cwd) => join(cwd, filePath))
-      jest.spyOn(scopeMod, 'resolveManifestRoot').mockImplementation((_scope, cwd) => cwd)
+      const resolveDestSpy = jest
+        .spyOn(scopeMod, 'resolveDestination')
+        .mockImplementation((filePath, _scope, cwd) => join(cwd, filePath))
+      jest
+        .spyOn(scopeMod, 'resolveManifestRoot')
+        .mockImplementation((_scope, cwd) => cwd)
 
       await runApply({ yes: true, global: true, project: false })
 
@@ -559,9 +613,16 @@ describe('blink apply', () => {
     it('prompts to apply missing dependencies', async () => {
       // First fetch: index. Second fetch: eslint-prettier artifact (has dep on prettier)
       // User declines to apply deps
-      fetchMock = jest.fn()
-        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_INDEX_EXTENDED })
-        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_ARTIFACT_WITH_DEPS })
+      fetchMock = jest
+        .fn()
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => MOCK_INDEX_EXTENDED
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => MOCK_ARTIFACT_WITH_DEPS
+        })
       global.fetch = fetchMock
       consolaMock.prompt.mockResolvedValueOnce(false) // decline dep install
 
@@ -582,7 +643,9 @@ describe('blink apply', () => {
 
       // Should not prompt for dependencies
       const promptCalls = consolaMock.prompt.mock.calls.map((c: any[]) => c[0])
-      const depPrompts = promptCalls.filter((msg: string) => typeof msg === 'string' && msg.includes('Missing'))
+      const depPrompts = promptCalls.filter(
+        (msg: string) => typeof msg === 'string' && msg.includes('Missing')
+      )
       expect(depPrompts).toHaveLength(0)
     })
 
@@ -602,15 +665,24 @@ describe('blink apply', () => {
               version: '2026.03.14.1',
               scope: 'project',
               installedAt: '2026-03-14T00:00:00.000Z',
-              files: [{ path: '.prettierrc', checksum: 'abc', merge: 'replace' }],
-            },
-          ],
+              files: [
+                { path: '.prettierrc', checksum: 'abc', merge: 'replace' }
+              ]
+            }
+          ]
         })
       )
 
-      fetchMock = jest.fn()
-        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_INDEX_EXTENDED })
-        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_ARTIFACT_WITH_DEPS })
+      fetchMock = jest
+        .fn()
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => MOCK_INDEX_EXTENDED
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => MOCK_ARTIFACT_WITH_DEPS
+        })
       global.fetch = fetchMock
 
       await runApply({ slug: 'eslint-prettier', yes: true })
@@ -633,20 +705,28 @@ describe('blink apply', () => {
         description: 'Shell RC managed section',
         url: 'https://blakepetersen.io/r/config/shellrc',
         files: [
-          { path: 'fresh-file.txt', content: 'new content', merge: 'replace' as const },
-          { path: '.zshrc', content: 'export FOO=1', merge: 'section' as const },
+          {
+            path: 'fresh-file.txt',
+            content: 'new content',
+            merge: 'replace' as const
+          },
+          { path: '.zshrc', content: 'export FOO=1', merge: 'section' as const }
         ],
-        devDependencies: undefined,
+        devDependencies: undefined
       }
       // Existing managed section for the same slug in .zshrc → conflict
       writeFileSync(
         join(tmpDir, '.zshrc'),
-        '# blink:start shellrc\nold\n# blink:end shellrc\n',
+        '# blink:start shellrc\nold\n# blink:end shellrc\n'
       )
 
       const originalExitCode = process.exitCode
-      fetchMock = jest.fn()
-        .mockResolvedValueOnce({ ok: true, json: async () => MOCK_INDEX_EXTENDED })
+      fetchMock = jest
+        .fn()
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => MOCK_INDEX_EXTENDED
+        })
         .mockResolvedValueOnce({ ok: true, json: async () => twoFileArtifact })
       global.fetch = fetchMock
 
@@ -654,7 +734,7 @@ describe('blink apply', () => {
 
       expect(existsSync(join(tmpDir, 'fresh-file.txt'))).toBe(false)
       expect(consolaMock.error).toHaveBeenCalledWith(
-        expect.stringContaining('already installed'),
+        expect.stringContaining('already installed')
       )
       expect(process.exitCode).toBe(1)
       process.exitCode = originalExitCode

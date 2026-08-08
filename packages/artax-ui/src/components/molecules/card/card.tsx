@@ -2,10 +2,7 @@
 // ABOUTME: Exports Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter.
 import { cn } from '../../../lib/utils'
 
-function Card({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function Card({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
@@ -17,10 +14,7 @@ function Card({
   )
 }
 
-function CardHeader({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn('flex flex-col space-y-1.5 p-6 font-mono', className)}
@@ -48,10 +42,7 @@ function CardTitle({
   )
 }
 
-function CardDescription({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn('text-sm text-muted-foreground', className)}
@@ -60,22 +51,13 @@ function CardDescription({
   )
 }
 
-function CardContent({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
   return <div className={cn('p-6 pt-0', className)} {...props} />
 }
 
-function CardFooter({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div
-      className={cn('flex items-center p-6 pt-0', className)}
-      {...props}
-    />
+    <div className={cn('flex items-center p-6 pt-0', className)} {...props} />
   )
 }
 

@@ -7,16 +7,16 @@ const config: Config = {
   testEnvironment: 'node',
   roots: ['<rootDir>/tests'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
-        tsconfig: 'tsconfig.test.json',
-      },
-    ],
-  },
+        tsconfig: 'tsconfig.test.json'
+      }
+    ]
+  }
 }
 
 export default config

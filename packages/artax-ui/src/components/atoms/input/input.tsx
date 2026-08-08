@@ -2,10 +2,7 @@
 // ABOUTME: Uses cn() for class merging with terminal border and placeholder styling.
 import { cn } from '../../../lib/utils'
 
-function Input({
-  className,
-  ...props
-}: React.ComponentProps<'input'>) {
+function Input({ className, ...props }: React.ComponentProps<'input'>) {
   return (
     <input
       className={cn(

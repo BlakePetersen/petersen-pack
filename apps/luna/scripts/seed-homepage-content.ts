@@ -19,7 +19,7 @@ async function main() {
         imageUrl: '/uploads/scraped/1761515352979-0-lifestyle-portraiture.webp',
         paragraphs: [
           'With over a decade of experience capturing moments that matter, I specialize in creating timeless imagery that tells your unique story.',
-          'My approach combines technical precision with artistic vision, resulting in photographs that are both beautiful and authentic. Whether it\'s an intimate portrait session or a grand commercial project, I bring the same level of dedication and creativity to every shoot.',
+          "My approach combines technical precision with artistic vision, resulting in photographs that are both beautiful and authentic. Whether it's an intimate portrait session or a grand commercial project, I bring the same level of dedication and creativity to every shoot.",
           'Based in the East Bay, I work with clients throughout the Bay Area, bringing a refined aesthetic and professional expertise to every project.',
         ],
         stats: [
@@ -43,7 +43,8 @@ async function main() {
       section: 'services',
       content: {
         heading: 'Services',
-        subtitle: 'Comprehensive photography services tailored to your vision and needs',
+        subtitle:
+          'Comprehensive photography services tailored to your vision and needs',
         services: [
           {
             icon: 'Camera',

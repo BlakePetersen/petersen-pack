@@ -11,7 +11,7 @@ const baselinePath = path.resolve(
   '..',
   '.planning',
   'intel',
-  'build-perf-baseline.json',
+  'build-perf-baseline.json'
 )
 
 describe('SCHEMA-07: build-perf baseline JSON shape', () => {
@@ -39,8 +39,8 @@ describe('SCHEMA-07: build-perf baseline JSON shape', () => {
           fullBuildWallMs: -1,
           veliteWallMs: -1,
           webpackCompileMs: null,
-          nextDevReadyMs: -1,
-        },
+          nextDevReadyMs: -1
+        }
       } as never)
 
   it('has top-level capturedAt, nodeVersion, contentCount, metrics', () => {

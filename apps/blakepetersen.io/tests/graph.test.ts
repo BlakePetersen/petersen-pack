@@ -5,19 +5,44 @@ import {
   buildGraph,
   getLocalGraph,
   computeLayout,
-  renderGraphSvg,
+  renderGraphSvg
 } from '@/lib/graph'
 import type { ContentNode } from '@/lib/graph'
 
 const testNodes: ContentNode[] = [
-  { slug: 'configs/eslint', title: 'ESLint Config', category: 'configs', dependencies: [] },
-  { slug: 'hooks/use-lint', title: 'useLint Hook', category: 'hooks', dependencies: ['configs/eslint'] },
-  { slug: 'skills/linting', title: 'Linting Skill', category: 'skills', dependencies: ['configs/eslint', 'hooks/use-lint'] },
+  {
+    slug: 'configs/eslint',
+    title: 'ESLint Config',
+    category: 'configs',
+    dependencies: []
+  },
+  {
+    slug: 'hooks/use-lint',
+    title: 'useLint Hook',
+    category: 'hooks',
+    dependencies: ['configs/eslint']
+  },
+  {
+    slug: 'skills/linting',
+    title: 'Linting Skill',
+    category: 'skills',
+    dependencies: ['configs/eslint', 'hooks/use-lint']
+  }
 ]
 
 const circularNodes: ContentNode[] = [
-  { slug: 'configs/a', title: 'Config A', category: 'configs', dependencies: ['configs/b'] },
-  { slug: 'configs/b', title: 'Config B', category: 'configs', dependencies: ['configs/a'] },
+  {
+    slug: 'configs/a',
+    title: 'Config A',
+    category: 'configs',
+    dependencies: ['configs/b']
+  },
+  {
+    slug: 'configs/b',
+    title: 'Config B',
+    category: 'configs',
+    dependencies: ['configs/a']
+  }
 ]
 
 describe('buildGraph', () => {
@@ -26,25 +51,39 @@ describe('buildGraph', () => {
 
     expect(graph.nodes.size).toBe(3)
     expect(graph.edges).toHaveLength(3)
-    expect(graph.edges).toContainEqual({ from: 'hooks/use-lint', to: 'configs/eslint' })
-    expect(graph.edges).toContainEqual({ from: 'skills/linting', to: 'configs/eslint' })
-    expect(graph.edges).toContainEqual({ from: 'skills/linting', to: 'hooks/use-lint' })
+    expect(graph.edges).toContainEqual({
+      from: 'hooks/use-lint',
+      to: 'configs/eslint'
+    })
+    expect(graph.edges).toContainEqual({
+      from: 'skills/linting',
+      to: 'configs/eslint'
+    })
+    expect(graph.edges).toContainEqual({
+      from: 'skills/linting',
+      to: 'hooks/use-lint'
+    })
   })
 
   it('computes reverse edges (required_by) automatically', () => {
     const graph = buildGraph(testNodes)
 
     expect(graph.reverseEdges.get('configs/eslint')).toEqual(
-      expect.arrayContaining(['hooks/use-lint', 'skills/linting']),
+      expect.arrayContaining(['hooks/use-lint', 'skills/linting'])
     )
     expect(graph.reverseEdges.get('hooks/use-lint')).toEqual(
-      expect.arrayContaining(['skills/linting']),
+      expect.arrayContaining(['skills/linting'])
     )
   })
 
   it('handles empty dependencies gracefully', () => {
     const graph = buildGraph([
-      { slug: 'configs/solo', title: 'Solo', category: 'configs', dependencies: [] },
+      {
+        slug: 'configs/solo',
+        title: 'Solo',
+        category: 'configs',
+        dependencies: []
+      }
     ])
 
     expect(graph.nodes.size).toBe(1)
@@ -82,7 +121,12 @@ describe('getLocalGraph', () => {
 
   it('returns empty graph for content with no dependencies and no dependents', () => {
     const graph = buildGraph([
-      { slug: 'configs/solo', title: 'Solo', category: 'configs', dependencies: [] },
+      {
+        slug: 'configs/solo',
+        title: 'Solo',
+        category: 'configs',
+        dependencies: []
+      }
     ])
     const local = getLocalGraph(graph, 'configs/solo')
 

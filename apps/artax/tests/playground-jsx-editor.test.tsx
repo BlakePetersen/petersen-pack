@@ -11,7 +11,7 @@ jest.mock('react-live', () => ({
   ),
   LiveEditor: () => <div data-testid="live-editor" />,
   LivePreview: () => <div data-testid="live-preview" />,
-  LiveError: () => null,
+  LiveError: () => null
 }))
 
 import { PlaygroundJsxEditor } from '@/components/playground-jsx-editor'
@@ -19,11 +19,7 @@ import { PlaygroundJsxEditor } from '@/components/playground-jsx-editor'
 describe('PlaygroundJsxEditor', () => {
   it('renders exactly one LiveProvider, LiveEditor, and LivePreview', () => {
     render(
-      <PlaygroundJsxEditor
-        code="<Button />"
-        scope={{}}
-        onReset={jest.fn()}
-      />
+      <PlaygroundJsxEditor code="<Button />" scope={{}} onReset={jest.fn()} />
     )
 
     expect(screen.getAllByTestId('live-provider')).toHaveLength(1)
@@ -33,11 +29,7 @@ describe('PlaygroundJsxEditor', () => {
 
   it('wraps the editor in a bg-card border chrome container', () => {
     const { container } = render(
-      <PlaygroundJsxEditor
-        code="<Button />"
-        scope={{}}
-        onReset={jest.fn()}
-      />
+      <PlaygroundJsxEditor code="<Button />" scope={{}} onReset={jest.fn()} />
     )
 
     const chrome = container.querySelector('.bg-card.border.border-border')
@@ -46,11 +38,7 @@ describe('PlaygroundJsxEditor', () => {
 
   it('renders the "// jsx editor" label in terminal aesthetic classes', () => {
     render(
-      <PlaygroundJsxEditor
-        code="<Button />"
-        scope={{}}
-        onReset={jest.fn()}
-      />
+      <PlaygroundJsxEditor code="<Button />" scope={{}} onReset={jest.fn()} />
     )
 
     const label = screen.getByText('// jsx editor')
@@ -63,11 +51,7 @@ describe('PlaygroundJsxEditor', () => {
   it('invokes onReset exactly once when the reset button is clicked', () => {
     const onReset = jest.fn()
     render(
-      <PlaygroundJsxEditor
-        code="<Button />"
-        scope={{}}
-        onReset={onReset}
-      />
+      <PlaygroundJsxEditor code="<Button />" scope={{}} onReset={onReset} />
     )
 
     const resetButton = screen.getByText('// reset to example')
@@ -78,11 +62,7 @@ describe('PlaygroundJsxEditor', () => {
 
   it('renders the reset button with terminal-aesthetic classes', () => {
     render(
-      <PlaygroundJsxEditor
-        code="<Button />"
-        scope={{}}
-        onReset={jest.fn()}
-      />
+      <PlaygroundJsxEditor code="<Button />" scope={{}} onReset={jest.fn()} />
     )
 
     const resetButton = screen.getByText('// reset to example')

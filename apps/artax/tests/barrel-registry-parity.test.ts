@@ -6,7 +6,7 @@ import { getComponentsByTier } from '@/lib/component-registry'
 
 for (const tier of ['atoms', 'molecules', 'organisms'] as const) {
   it(`${tier}: registry slugs equal barrel folder names`, () => {
-    const registrySlugs = new Set(getComponentsByTier(tier).map((c) => c.slug))
+    const registrySlugs = new Set(getComponentsByTier(tier).map(c => c.slug))
     expect(registrySlugs).toEqual(getBarrelComponentSlugs()[tier])
   })
 }

@@ -20,7 +20,7 @@ export function encodePlaygroundParams(props: Record<string, string>): string {
  * state.
  */
 export function decodePlaygroundParams(
-  searchParams: URLSearchParams,
+  searchParams: URLSearchParams
 ): Record<string, string> {
   const result: Record<string, string> = {}
   for (const [key, value] of searchParams.entries()) {

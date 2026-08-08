@@ -17,13 +17,16 @@ export function SidebarNav({ sections }: { sections: SidebarSection[] }) {
   return (
     <nav className="flex flex-col gap-1 py-4 px-3" aria-label="Sidebar">
       {sections.map((section, i) => (
-        <div key={section.label || `section-${i}`} className={section.label ? 'mt-4' : ''}>
+        <div
+          key={section.label || `section-${i}`}
+          className={section.label ? 'mt-4' : ''}
+        >
           {section.label && (
             <span className="block px-3 pb-1 font-mono text-xs text-muted-foreground">
               {section.label}
             </span>
           )}
-          {section.items.map((item) => {
+          {section.items.map(item => {
             const isActive = pathname === item.href
             return (
               <Link

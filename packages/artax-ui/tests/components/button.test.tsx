@@ -2,7 +2,10 @@
 // ABOUTME: Validates rendering, $ prefix, [bracket] ghost variant, and variant/size props.
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { Button, buttonVariants } from '../../src/components/atoms/button/button'
+import {
+  Button,
+  buttonVariants
+} from '../../src/components/atoms/button/button'
 
 describe('Button', () => {
   it('renders with children text', () => {

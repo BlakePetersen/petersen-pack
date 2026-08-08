@@ -5,12 +5,16 @@ import { getConfigs } from '../../lib/content'
 import {
   renderOgImage,
   ogImageSize as size,
-  ogImageContentType as contentType,
+  ogImageContentType as contentType
 } from '../../lib/og-image'
 
 export { size, contentType }
 export const alt = 'Configs'
 
 export default async function Image() {
-  return renderOgImage({ title: 'Configs', category: 'configs', itemCount: getConfigs().length })
+  return renderOgImage({
+    title: 'Configs',
+    category: 'configs',
+    itemCount: getConfigs().length
+  })
 }

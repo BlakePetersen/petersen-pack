@@ -11,8 +11,7 @@ export type ControlType =
 // string literals joined by `|`, e.g. "'sm' | 'md' | 'lg'" or '"a" | "b"'.
 // Trailing `...` or any non-literal member defeats the match, which is the
 // intended fallback behavior (see RESEARCH.md Pattern 3).
-const literalUnionRe =
-  /^(?:'[^']*'|"[^"]*")(?:\s*\|\s*(?:'[^']*'|"[^"]*"))+$/
+const literalUnionRe = /^(?:'[^']*'|"[^"]*")(?:\s*\|\s*(?:'[^']*'|"[^"]*"))+$/
 
 /**
  * Classify a PropDef.type string into a form-control descriptor. Uses pure
@@ -27,7 +26,7 @@ export function parsePropType(typeStr: string): ControlType {
   if (t === 'number') return { kind: 'number' }
 
   if (literalUnionRe.test(t)) {
-    const options = [...t.matchAll(/['"]([^'"]*)['"]/g)].map((m) => m[1])
+    const options = [...t.matchAll(/['"]([^'"]*)['"]/g)].map(m => m[1])
     return { kind: 'select', options }
   }
 

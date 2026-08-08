@@ -6,7 +6,7 @@ import {
   readFileSync,
   mkdirSync,
   rmSync,
-  realpathSync,
+  realpathSync
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -26,7 +26,7 @@ let consolaMock: {
 let fetchMock: jest.Mock
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config,
+  defineCommand: (config: any) => config
 }))
 
 jest.mock('consola', () => {
@@ -36,7 +36,7 @@ jest.mock('consola', () => {
     log: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
-    prompt: jest.fn(),
+    prompt: jest.fn()
   }
   return { consola: mock, default: mock, __esModule: true }
 })
@@ -48,7 +48,7 @@ jest.mock('picocolors', () => ({
     yellow: (s: string) => s,
     green: (s: string) => s,
     red: (s: string) => s,
-    cyan: (s: string) => s,
+    cyan: (s: string) => s
   },
   __esModule: true,
   dim: (s: string) => s,
@@ -56,7 +56,7 @@ jest.mock('picocolors', () => ({
   yellow: (s: string) => s,
   green: (s: string) => s,
   red: (s: string) => s,
-  cyan: (s: string) => s,
+  cyan: (s: string) => s
 }))
 
 const UPSTREAM_ARTIFACT = {
@@ -67,9 +67,13 @@ const UPSTREAM_ARTIFACT = {
   description: 'Prettier config',
   url: 'https://blakepetersen.io/r/config/prettier',
   files: [
-    { path: '.prettierrc', content: '{ "semi": false, "tabWidth": 4 }', merge: 'replace' as const },
+    {
+      path: '.prettierrc',
+      content: '{ "semi": false, "tabWidth": 4 }',
+      merge: 'replace' as const
+    }
   ],
-  devDependencies: { prettier: '^3.0.0' },
+  devDependencies: { prettier: '^3.0.0' }
 }
 
 const SECTION_UPSTREAM_ARTIFACT = {
@@ -80,12 +84,19 @@ const SECTION_UPSTREAM_ARTIFACT = {
   description: 'Shell RC managed section',
   url: 'https://blakepetersen.io/r/config/shellrc',
   files: [
-    { path: '.zshrc', content: 'export PATH="$HOME/.blink/bin:$PATH"\nexport BLINK_NEW=1', merge: 'section' as const },
+    {
+      path: '.zshrc',
+      content: 'export PATH="$HOME/.blink/bin:$PATH"\nexport BLINK_NEW=1',
+      merge: 'section' as const
+    }
   ],
-  devDependencies: undefined,
+  devDependencies: undefined
 }
 
-function createManifestWithItem(slug: string, files: Array<{ path: string; content: string; merge: string }>) {
+function createManifestWithItem(
+  slug: string,
+  files: Array<{ path: string; content: string; merge: string }>
+) {
   const blinkDir = join(tmpDir, BLINK_DIR)
   mkdirSync(blinkDir, { recursive: true })
   writeFileSync(
@@ -100,23 +111,22 @@ function createManifestWithItem(slug: string, files: Array<{ path: string; conte
           version: '2026.03.14.1',
           scope: 'project',
           installedAt: '2026-03-14T00:00:00.000Z',
-          files: files.map((f) => ({
+          files: files.map(f => ({
             path: f.path,
             checksum: checksum(f.content),
-            merge: f.merge,
-          })),
-        },
-      ],
+            merge: f.merge
+          }))
+        }
+      ]
     })
   )
 }
 
 function mockFetchForDiff(artifact: any) {
-  fetchMock = jest.fn()
-    .mockResolvedValue({
-      ok: true,
-      json: async () => artifact,
-    })
+  fetchMock = jest.fn().mockResolvedValue({
+    ok: true,
+    json: async () => artifact
+  })
   global.fetch = fetchMock
 }
 
@@ -134,7 +144,10 @@ beforeEach(() => {
   consolaMock.error.mockClear()
   consolaMock.prompt.mockClear()
 
-  Object.defineProperty(process.stdout, 'isTTY', { value: true, configurable: true })
+  Object.defineProperty(process.stdout, 'isTTY', {
+    value: true,
+    configurable: true
+  })
 })
 
 afterEach(() => {
@@ -153,7 +166,7 @@ describe('blink diff', () => {
     it('shows diff between local and upstream content', async () => {
       const originalContent = '{ "semi": false }'
       createManifestWithItem('prettier', [
-        { path: '.prettierrc', content: originalContent, merge: 'replace' },
+        { path: '.prettierrc', content: originalContent, merge: 'replace' }
       ])
       writeFileSync(join(tmpDir, '.prettierrc'), originalContent)
       mockFetchForDiff(UPSTREAM_ARTIFACT)
@@ -163,18 +176,24 @@ describe('blink diff', () => {
       // Should output diff content
       expect(consolaMock.log).toHaveBeenCalled()
       // File should not be modified (read-only)
-      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe(originalContent)
+      expect(readFileSync(join(tmpDir, '.prettierrc'), 'utf-8')).toBe(
+        originalContent
+      )
     })
   })
 
   describe('section merge', () => {
     it('shows diff of managed section content vs upstream', async () => {
       const originalManagedContent = 'export PATH="$HOME/.blink/bin:$PATH"'
-      const markedContent = injectMarkers(originalManagedContent, 'shellrc', '.zshrc')
+      const markedContent = injectMarkers(
+        originalManagedContent,
+        'shellrc',
+        '.zshrc'
+      )
       const fileWithUserContent = `# My stuff\n${markedContent}\n# End`
 
       createManifestWithItem('shellrc', [
-        { path: '.zshrc', content: markedContent, merge: 'section' },
+        { path: '.zshrc', content: markedContent, merge: 'section' }
       ])
       writeFileSync(join(tmpDir, '.zshrc'), fileWithUserContent)
       mockFetchForDiff(SECTION_UPSTREAM_ARTIFACT)
@@ -184,7 +203,9 @@ describe('blink diff', () => {
       // Should show diff output
       expect(consolaMock.log).toHaveBeenCalled()
       // File must not be modified
-      expect(readFileSync(join(tmpDir, '.zshrc'), 'utf-8')).toBe(fileWithUserContent)
+      expect(readFileSync(join(tmpDir, '.zshrc'), 'utf-8')).toBe(
+        fileWithUserContent
+      )
     })
   })
 
@@ -192,7 +213,7 @@ describe('blink diff', () => {
     it('shows up to date message when content matches', async () => {
       const upstreamContent = '{ "semi": false, "tabWidth": 4 }'
       createManifestWithItem('prettier', [
-        { path: '.prettierrc', content: upstreamContent, merge: 'replace' },
+        { path: '.prettierrc', content: upstreamContent, merge: 'replace' }
       ])
       writeFileSync(join(tmpDir, '.prettierrc'), upstreamContent)
       mockFetchForDiff(UPSTREAM_ARTIFACT)
@@ -218,7 +239,9 @@ describe('blink diff', () => {
         throw new Error('process.exit')
       })
 
-      await expect(runDiff({ slug: 'prettier' })).rejects.toThrow('process.exit')
+      await expect(runDiff({ slug: 'prettier' })).rejects.toThrow(
+        'process.exit'
+      )
 
       expect(consolaMock.error).toHaveBeenCalledWith(
         expect.stringContaining('not installed')

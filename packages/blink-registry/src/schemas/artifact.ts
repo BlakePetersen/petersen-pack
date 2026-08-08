@@ -6,13 +6,13 @@ import {
   ArtifactTypeSchema,
   CalVerSchema,
   MergeStrategySchema,
-  SlugSchema,
+  SlugSchema
 } from './primitives.ts'
 
 export const ArtifactFileSchema = z.object({
   path: z.string(),
   content: z.string(),
-  merge: MergeStrategySchema,
+  merge: MergeStrategySchema
 })
 
 export const ArtifactMetadataSchema = z.object({
@@ -23,7 +23,7 @@ export const ArtifactMetadataSchema = z.object({
   description: z.string(),
   files: z.array(ArtifactFileSchema),
   dependencies: z.array(SlugSchema).optional(),
-  devDependencies: z.record(z.string(), z.string()).optional(),
+  devDependencies: z.record(z.string(), z.string()).optional()
 })
 
 export type ArtifactFile = z.infer<typeof ArtifactFileSchema>

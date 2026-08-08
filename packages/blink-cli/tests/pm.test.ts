@@ -50,9 +50,7 @@ describe('installDevCommand', () => {
   })
 
   it('returns correct yarn command', () => {
-    expect(installDevCommand('yarn', ['prettier'])).toBe(
-      'yarn add -D prettier'
-    )
+    expect(installDevCommand('yarn', ['prettier'])).toBe('yarn add -D prettier')
   })
 
   it('returns correct npm command', () => {

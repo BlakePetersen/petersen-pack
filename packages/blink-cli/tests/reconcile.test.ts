@@ -7,13 +7,21 @@ import type { ArtifactFile, ManifestFileEntry } from 'blink-registry'
 
 // Mock mirrors real confirmAction: returns skipPrompt so default-true tests don't hang.
 jest.mock('../src/modules/prompt', () => ({
-  confirmAction: jest.fn((_msg: string, skipPrompt: boolean) => Promise.resolve(skipPrompt)),
+  confirmAction: jest.fn((_msg: string, skipPrompt: boolean) =>
+    Promise.resolve(skipPrompt)
+  )
 }))
 import { confirmAction } from '../src/modules/prompt'
 const mockConfirm = confirmAction as jest.MockedFunction<typeof confirmAction>
 
 jest.mock('consola', () => ({
-  consola: { warn: jest.fn(), log: jest.fn(), info: jest.fn(), success: jest.fn(), error: jest.fn() },
+  consola: {
+    warn: jest.fn(),
+    log: jest.fn(),
+    info: jest.fn(),
+    success: jest.fn(),
+    error: jest.fn()
+  }
 }))
 import { consola } from 'consola'
 const mockWarn = consola.warn as jest.MockedFunction<typeof consola.warn>
@@ -28,14 +36,16 @@ function sectionFile(content: string): ArtifactFile {
   return { path: 'README.md', content, merge: 'section' }
 }
 
-function makeInput(overrides: Partial<ReconcileInput> & Pick<ReconcileInput, 'file'>): ReconcileInput {
+function makeInput(
+  overrides: Partial<ReconcileInput> & Pick<ReconcileInput, 'file'>
+): ReconcileInput {
   return {
     destPath: '/tmp/dest',
     currentContent: null,
     manifestFileEntry: undefined,
     slug: SLUG,
     skipPrompt: true,
-    ...overrides,
+    ...overrides
   }
 }
 
@@ -47,10 +57,20 @@ beforeEach(() => {
 describe('reconcileFile — file missing on disk', () => {
   it('writes the upstream content fresh', async () => {
     const file = replaceFile('hello')
-    const result = await reconcileFile(makeInput({ file, currentContent: null }))
+    const result = await reconcileFile(
+      makeInput({ file, currentContent: null })
+    )
 
-    expect(result.action).toEqual({ kind: 'write', destPath: '/tmp/dest', content: 'hello' })
-    expect(result.entry).toEqual({ path: 'foo.json', checksum: checksum('hello'), merge: 'replace' })
+    expect(result.action).toEqual({
+      kind: 'write',
+      destPath: '/tmp/dest',
+      content: 'hello'
+    })
+    expect(result.entry).toEqual({
+      path: 'foo.json',
+      checksum: checksum('hello'),
+      merge: 'replace'
+    })
     expect(mockConfirm).not.toHaveBeenCalled()
   })
 })
@@ -61,9 +81,11 @@ describe('reconcileFile — replace strategy', () => {
     const manifestFileEntry: ManifestFileEntry = {
       path: 'foo.json',
       checksum: checksum('same'),
-      merge: 'replace',
+      merge: 'replace'
     }
-    const result = await reconcileFile(makeInput({ file, currentContent: 'same', manifestFileEntry }))
+    const result = await reconcileFile(
+      makeInput({ file, currentContent: 'same', manifestFileEntry })
+    )
 
     expect(result.action).toEqual({ kind: 'skip' })
     expect(result.entry).toBe(manifestFileEntry)
@@ -71,17 +93,29 @@ describe('reconcileFile — replace strategy', () => {
 
   it('rebuilds entry from disk when current matches upstream and no manifest entry exists', async () => {
     const file = replaceFile('same')
-    const result = await reconcileFile(makeInput({ file, currentContent: 'same' }))
+    const result = await reconcileFile(
+      makeInput({ file, currentContent: 'same' })
+    )
 
     expect(result.action).toEqual({ kind: 'skip' })
-    expect(result.entry).toEqual({ path: 'foo.json', checksum: checksum('same'), merge: 'replace' })
+    expect(result.entry).toEqual({
+      path: 'foo.json',
+      checksum: checksum('same'),
+      merge: 'replace'
+    })
   })
 
   it('writes upstream when content differs and there is no manifest entry', async () => {
     const file = replaceFile('new')
-    const result = await reconcileFile(makeInput({ file, currentContent: 'old' }))
+    const result = await reconcileFile(
+      makeInput({ file, currentContent: 'old' })
+    )
 
-    expect(result.action).toEqual({ kind: 'write', destPath: '/tmp/dest', content: 'new' })
+    expect(result.action).toEqual({
+      kind: 'write',
+      destPath: '/tmp/dest',
+      content: 'new'
+    })
     expect(mockConfirm).not.toHaveBeenCalled()
   })
 
@@ -90,10 +124,10 @@ describe('reconcileFile — replace strategy', () => {
     const manifestFileEntry: ManifestFileEntry = {
       path: 'foo.json',
       checksum: checksum('old'),
-      merge: 'replace',
+      merge: 'replace'
     }
     const result = await reconcileFile(
-      makeInput({ file, currentContent: 'old', manifestFileEntry }),
+      makeInput({ file, currentContent: 'old', manifestFileEntry })
     )
 
     expect(result.action.kind).toBe('write')
@@ -105,19 +139,22 @@ describe('reconcileFile — replace strategy', () => {
     const manifestFileEntry: ManifestFileEntry = {
       path: 'foo.json',
       checksum: checksum('originally-installed'),
-      merge: 'replace',
+      merge: 'replace'
     }
     const result = await reconcileFile(
       makeInput({
         file,
         currentContent: 'locally-edited',
         manifestFileEntry,
-        skipPrompt: true,
-      }),
+        skipPrompt: true
+      })
     )
 
     expect(result.action.kind).toBe('write')
-    expect(mockConfirm).toHaveBeenCalledWith(expect.stringMatching(/Local changes detected/), true)
+    expect(mockConfirm).toHaveBeenCalledWith(
+      expect.stringMatching(/Local changes detected/),
+      true
+    )
   })
 
   it('preserves manifest entry when user declines the overwrite prompt', async () => {
@@ -126,15 +163,15 @@ describe('reconcileFile — replace strategy', () => {
     const manifestFileEntry: ManifestFileEntry = {
       path: 'foo.json',
       checksum: checksum('originally-installed'),
-      merge: 'replace',
+      merge: 'replace'
     }
     const result = await reconcileFile(
       makeInput({
         file,
         currentContent: 'locally-edited',
         manifestFileEntry,
-        skipPrompt: false,
-      }),
+        skipPrompt: false
+      })
     )
 
     expect(result.action).toEqual({ kind: 'skip' })
@@ -152,10 +189,10 @@ describe('reconcileFile — section strategy', () => {
     const manifestFileEntry: ManifestFileEntry = {
       path: 'README.md',
       checksum: checksum('plain readme'),
-      merge: 'section',
+      merge: 'section'
     }
     const result = await reconcileFile(
-      makeInput({ file, currentContent: 'plain readme', manifestFileEntry }),
+      makeInput({ file, currentContent: 'plain readme', manifestFileEntry })
     )
 
     expect(result.action).toEqual({ kind: 'skip' })
@@ -169,14 +206,14 @@ describe('reconcileFile — section strategy', () => {
   it('rebuilds entry from disk when no managed section and no manifest entry exists', async () => {
     const file = sectionFile('whatever')
     const result = await reconcileFile(
-      makeInput({ file, currentContent: 'plain readme' }),
+      makeInput({ file, currentContent: 'plain readme' })
     )
 
     expect(result.action).toEqual({ kind: 'skip' })
     expect(result.entry).toEqual({
       path: 'README.md',
       checksum: checksum('plain readme'),
-      merge: 'section',
+      merge: 'section'
     })
   })
 
@@ -184,15 +221,13 @@ describe('reconcileFile — section strategy', () => {
     const upstream = 'managed-payload'
     const file = sectionFile(upstream)
     const currentContent = wrapInMarkers(upstream)
-    const result = await reconcileFile(
-      makeInput({ file, currentContent }),
-    )
+    const result = await reconcileFile(makeInput({ file, currentContent }))
 
     expect(result.action).toEqual({ kind: 'skip' })
     expect(result.entry).toEqual({
       path: 'README.md',
       checksum: checksum(currentContent),
-      merge: 'section',
+      merge: 'section'
     })
   })
 
@@ -202,10 +237,10 @@ describe('reconcileFile — section strategy', () => {
     const manifestFileEntry: ManifestFileEntry = {
       path: 'README.md',
       checksum: checksum(currentContent),
-      merge: 'section',
+      merge: 'section'
     }
     const result = await reconcileFile(
-      makeInput({ file, currentContent, manifestFileEntry }),
+      makeInput({ file, currentContent, manifestFileEntry })
     )
 
     expect(result.action.kind).toBe('write')
@@ -224,15 +259,15 @@ describe('reconcileFile — section strategy', () => {
     const manifestFileEntry: ManifestFileEntry = {
       path: 'README.md',
       checksum: checksum('something-different-manifest'),
-      merge: 'section',
+      merge: 'section'
     }
     const result = await reconcileFile(
       makeInput({
         file,
         currentContent,
         manifestFileEntry,
-        skipPrompt: false,
-      }),
+        skipPrompt: false
+      })
     )
 
     expect(result.action).toEqual({ kind: 'skip' })

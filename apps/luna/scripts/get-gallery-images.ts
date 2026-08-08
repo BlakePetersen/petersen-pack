@@ -31,7 +31,9 @@ async function main() {
 
   // Get all lifestyle portraiture images
   const lifestyleGallery = await prisma.gallery.findFirst({
-    where: { title: { contains: 'Lifestyle Portraiture', mode: 'insensitive' } },
+    where: {
+      title: { contains: 'Lifestyle Portraiture', mode: 'insensitive' },
+    },
     include: {
       images: {
         take: 10,

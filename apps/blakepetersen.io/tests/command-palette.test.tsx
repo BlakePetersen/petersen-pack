@@ -11,15 +11,15 @@ import '@testing-library/jest-dom'
 
 // Mock searchContent to return empty array
 jest.mock('@/lib/search', () => ({
-  searchContent: jest.fn().mockResolvedValue([]),
+  searchContent: jest.fn().mockResolvedValue([])
 }))
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
-    push: jest.fn(),
+    push: jest.fn()
   }),
-  usePathname: () => '/',
+  usePathname: () => '/'
 }))
 
 import { CommandPalette } from '@/components/command-palette'

@@ -7,7 +7,7 @@ import { useState, type ReactNode } from 'react'
 
 export function ComponentPreview({
   variants,
-  renderPreview,
+  renderPreview
 }: {
   variants?: string[]
   renderPreview: (values?: Record<string, string>) => ReactNode
@@ -21,7 +21,7 @@ export function ComponentPreview({
     >
       {variants && variants.length > 0 && (
         <div className="flex gap-2 border-b border-border px-4 py-2">
-          {variants.map((variant) => (
+          {variants.map(variant => (
             <button
               key={variant}
               type="button"

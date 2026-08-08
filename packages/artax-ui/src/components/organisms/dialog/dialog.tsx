@@ -9,10 +9,7 @@ function DialogOverlayPrimitive({
   ...props
 }: React.ComponentProps<'div'>) {
   return (
-    <div
-      className={cn('fixed inset-0 bg-black/80', className)}
-      {...props}
-    />
+    <div className={cn('fixed inset-0 bg-black/80', className)} {...props} />
   )
 }
 
@@ -23,10 +20,7 @@ function DialogContentPrimitive({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn(
-        'bg-card border border-border p-6 shadow-lg',
-        className
-      )}
+      className={cn('bg-card border border-border p-6 shadow-lg', className)}
       {...props}
     >
       {children}
@@ -40,10 +34,7 @@ function DialogTitlePrimitive({
 }: React.ComponentProps<'h2'>) {
   return (
     <h2
-      className={cn(
-        'font-mono text-lg font-medium text-foreground',
-        className
-      )}
+      className={cn('font-mono text-lg font-medium text-foreground', className)}
       {...props}
     />
   )
@@ -54,10 +45,7 @@ function DialogDescriptionPrimitive({
   ...props
 }: React.ComponentProps<'p'>) {
   return (
-    <p
-      className={cn('text-sm text-muted-foreground', className)}
-      {...props}
-    />
+    <p className={cn('text-sm text-muted-foreground', className)} {...props} />
   )
 }
 
@@ -107,10 +95,7 @@ function DialogTitle({
 }: React.ComponentProps<typeof RadixDialog.Title>) {
   return (
     <RadixDialog.Title
-      className={cn(
-        'font-mono text-lg font-medium text-foreground',
-        className
-      )}
+      className={cn('font-mono text-lg font-medium text-foreground', className)}
       {...props}
     />
   )

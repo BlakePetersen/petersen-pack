@@ -8,14 +8,14 @@ function makeContext(frontmatter: Record<string, unknown>): LintContext {
     file: 'content/skills/test-skill.mdx',
     frontmatter,
     body: '## Overview\n\nSome content.',
-    contentRoot: 'content',
+    contentRoot: 'content'
   }
 }
 
 const VALID_FRONTMATTER = {
   title: 'Test Skill',
   description: 'A valid test skill.',
-  applies_to: ['claude-code'],
+  applies_to: ['claude-code']
 }
 
 describe('frontmatterSchemaRule', () => {
@@ -28,22 +28,24 @@ describe('frontmatterSchemaRule', () => {
   it('surfaces the offending field path for missing required field title', () => {
     const ctx = makeContext({
       description: 'Missing title.',
-      applies_to: ['claude-code'],
+      applies_to: ['claude-code']
     })
     const diagnostics = frontmatterSchemaRule.check(ctx)
     expect(diagnostics.length).toBeGreaterThan(0)
-    expect(diagnostics.some((d) => d.message.startsWith('/title:'))).toBe(true)
+    expect(diagnostics.some(d => d.message.startsWith('/title:'))).toBe(true)
     expect(diagnostics[0].severity).toBe('error')
   })
 
   it('surfaces the offending field path for missing required field applies_to', () => {
     const ctx = makeContext({
       title: 'Test',
-      description: 'Missing applies_to.',
+      description: 'Missing applies_to.'
     })
     const diagnostics = frontmatterSchemaRule.check(ctx)
     expect(diagnostics.length).toBeGreaterThan(0)
-    expect(diagnostics.some((d) => d.message.startsWith('/applies_to:'))).toBe(true)
+    expect(diagnostics.some(d => d.message.startsWith('/applies_to:'))).toBe(
+      true
+    )
     expect(diagnostics[0].severity).toBe('error')
   })
 
@@ -51,11 +53,11 @@ describe('frontmatterSchemaRule', () => {
     const ctx = makeContext({
       title: 42,
       description: 'Wrong type.',
-      applies_to: ['claude-code'],
+      applies_to: ['claude-code']
     })
     const diagnostics = frontmatterSchemaRule.check(ctx)
     expect(diagnostics.length).toBeGreaterThan(0)
-    const titleDiag = diagnostics.find((d) => d.message.startsWith('/title:'))
+    const titleDiag = diagnostics.find(d => d.message.startsWith('/title:'))
     expect(titleDiag).toBeDefined()
     expect(titleDiag!.message).toContain('expected string')
   })
@@ -63,10 +65,12 @@ describe('frontmatterSchemaRule', () => {
   it('reports a non-ISO updated_context under its field path (registry tightened to z.iso.date)', () => {
     const ctx = makeContext({
       ...VALID_FRONTMATTER,
-      updated_context: 'last week',
+      updated_context: 'last week'
     })
     const diagnostics = frontmatterSchemaRule.check(ctx)
-    expect(diagnostics.some((d) => d.message.startsWith('/updated_context:'))).toBe(true)
+    expect(
+      diagnostics.some(d => d.message.startsWith('/updated_context:'))
+    ).toBe(true)
     expect(diagnostics[0].severity).toBe('error')
   })
 
@@ -74,7 +78,7 @@ describe('frontmatterSchemaRule', () => {
     const ctx = makeContext({
       title: 'Minimal',
       description: 'Only required fields.',
-      applies_to: ['vscode'],
+      applies_to: ['vscode']
     })
     const diagnostics = frontmatterSchemaRule.check(ctx)
     expect(diagnostics).toEqual([])
@@ -84,7 +88,7 @@ describe('frontmatterSchemaRule', () => {
     const ctx = makeContext({
       title: 'Fix Test',
       description: 'Needs defaults.',
-      applies_to: ['cursor'],
+      applies_to: ['cursor']
     })
     const result = frontmatterSchemaRule.fix!(ctx)
     expect(result).not.toBeNull()
@@ -109,7 +113,7 @@ describe('frontmatterSchemaRule', () => {
       voice: [],
       requires_artifact: false,
       decisions: [],
-      related: [],
+      related: []
     })
     const result = frontmatterSchemaRule.fix!(ctx)
     expect(result).toBeNull()
@@ -118,7 +122,7 @@ describe('frontmatterSchemaRule', () => {
   it('fix mode returns null for structurally-invalid frontmatter (cannot default)', () => {
     const ctx = makeContext({
       description: 'Missing title.',
-      applies_to: ['claude-code'],
+      applies_to: ['claude-code']
     })
     const result = frontmatterSchemaRule.fix!(ctx)
     expect(result).toBeNull()

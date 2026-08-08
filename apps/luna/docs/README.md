@@ -3,6 +3,7 @@
 Welcome to the Luna photography portfolio and client management system documentation!
 
 This documentation is organized into two main sections:
+
 - **Developer Documentation**: For developers, agents, and technical contributors
 - **Site Manager Documentation**: For Ashley and site administrators
 
@@ -14,16 +15,17 @@ Start here if you're working on the codebase, deploying, or maintaining the tech
 
 📚 **[Developer Documentation](./developer/)**
 
-| Document | Description |
-|----------|-------------|
+| Document                                                 | Description                                                 |
+| -------------------------------------------------------- | ----------------------------------------------------------- |
 | **[Architecture Overview](./developer/architecture.md)** | System design, technology stack, and architectural patterns |
-| **[Setup Guide](./developer/setup.md)** | Getting started with local development environment |
-| **[Development Guide](./developer/development.md)** | Day-to-day development workflow and best practices |
-| **[API Reference](./developer/api-reference.md)** | Complete API endpoint documentation |
-| **[Database Schema](./developer/database-schema.md)** | Database models, relationships, and schema reference |
-| **[Deployment Guide](./developer/deployment.md)** | Production deployment instructions and platform guides |
+| **[Setup Guide](./developer/setup.md)**                  | Getting started with local development environment          |
+| **[Development Guide](./developer/development.md)**      | Day-to-day development workflow and best practices          |
+| **[API Reference](./developer/api-reference.md)**        | Complete API endpoint documentation                         |
+| **[Database Schema](./developer/database-schema.md)**    | Database models, relationships, and schema reference        |
+| **[Deployment Guide](./developer/deployment.md)**        | Production deployment instructions and platform guides      |
 
 **Quick Links**:
+
 - 🚀 [Getting Started](./developer/setup.md#initial-setup)
 - 🏗️ [Architecture Patterns](./developer/architecture.md#architecture-patterns)
 - 🔌 [API Endpoints](./developer/api-reference.md)
@@ -38,16 +40,17 @@ Start here if you're managing content, galleries, bookings, and client interacti
 
 👤 **[Site Manager Documentation](./site-manager/)**
 
-| Document | Description |
-|----------|-------------|
-| **[Getting Started](./site-manager/getting-started.md)** | Introduction to the admin dashboard and basic tasks |
+| Document                                                       | Description                                                         |
+| -------------------------------------------------------------- | ------------------------------------------------------------------- |
+| **[Getting Started](./site-manager/getting-started.md)**       | Introduction to the admin dashboard and basic tasks                 |
 | **[Managing Portfolio](./site-manager/managing-portfolio.md)** | Creating galleries, uploading images, and organizing your portfolio |
-| **[Client Galleries](./site-manager/client-galleries.md)** | Private photo delivery and client gallery management |
-| **[Bookings](./site-manager/bookings.md)** | Managing availability and booking requests |
-| **[Inquiries](./site-manager/inquiries.md)** | Handling contact form submissions and leads |
-| **[Troubleshooting](./site-manager/troubleshooting.md)** | Common issues and solutions |
+| **[Client Galleries](./site-manager/client-galleries.md)**     | Private photo delivery and client gallery management                |
+| **[Bookings](./site-manager/bookings.md)**                     | Managing availability and booking requests                          |
+| **[Inquiries](./site-manager/inquiries.md)**                   | Handling contact form submissions and leads                         |
+| **[Troubleshooting](./site-manager/troubleshooting.md)**       | Common issues and solutions                                         |
 
 **Quick Links**:
+
 - 🎯 [Dashboard Overview](./site-manager/getting-started.md#dashboard-overview)
 - 📸 [Upload Images](./site-manager/managing-portfolio.md#uploading-images)
 - 🔐 [Create Client Gallery](./site-manager/client-galleries.md#creating-a-client-gallery)
@@ -92,6 +95,7 @@ Luna is a modern, full-stack photography portfolio and booking management system
 ### Key Features
 
 **Public Features**:
+
 - Portfolio gallery showcase with lightbox viewer
 - Online booking system with calendar
 - Contact form
@@ -99,6 +103,7 @@ Luna is a modern, full-stack photography portfolio and booking management system
 - Dark mode support
 
 **Admin Features**:
+
 - Gallery and image management
 - Client gallery creation (private photo delivery)
 - Booking request management
@@ -107,6 +112,7 @@ Luna is a modern, full-stack photography portfolio and booking management system
 - Dashboard with analytics
 
 **Client Features**:
+
 - Private gallery access
 - Favorite marking
 - Image downloads
@@ -124,6 +130,7 @@ Luna is a modern, full-stack photography portfolio and booking management system
 - See [Database Schema](./developer/database-schema.md) for data models
 
 **Issues?**
+
 - Check the [Development Guide](./developer/development.md#troubleshooting) for common problems
 - Review error messages carefully
 - Search the codebase for similar implementations
@@ -136,6 +143,7 @@ Luna is a modern, full-stack photography portfolio and booking management system
 - Check [Troubleshooting](./site-manager/troubleshooting.md) for common issues
 
 **Need Help?**
+
 - Review the relevant guide in [Site Manager Documentation](./site-manager/)
 - Check [Troubleshooting](./site-manager/troubleshooting.md)
 - Contact your web developer for technical issues
@@ -146,23 +154,23 @@ Luna is a modern, full-stack photography portfolio and booking management system
 
 ### Developers
 
-| Task | Documentation |
-|------|---------------|
-| Set up development environment | [Setup Guide](./developer/setup.md) |
-| Create a new API endpoint | [Development Guide](./developer/development.md#api-development) |
-| Modify database schema | [Development Guide](./developer/development.md#schema-changes) |
-| Deploy to production | [Deployment Guide](./developer/deployment.md) |
-| Understand authentication | [Architecture](./developer/architecture.md#authentication-flow) |
+| Task                           | Documentation                                                   |
+| ------------------------------ | --------------------------------------------------------------- |
+| Set up development environment | [Setup Guide](./developer/setup.md)                             |
+| Create a new API endpoint      | [Development Guide](./developer/development.md#api-development) |
+| Modify database schema         | [Development Guide](./developer/development.md#schema-changes)  |
+| Deploy to production           | [Deployment Guide](./developer/deployment.md)                   |
+| Understand authentication      | [Architecture](./developer/architecture.md#authentication-flow) |
 
 ### Site Managers
 
-| Task | Documentation |
-|------|---------------|
-| Upload photos to portfolio | [Managing Portfolio](./site-manager/managing-portfolio.md#uploading-images) |
+| Task                           | Documentation                                                                    |
+| ------------------------------ | -------------------------------------------------------------------------------- |
+| Upload photos to portfolio     | [Managing Portfolio](./site-manager/managing-portfolio.md#uploading-images)      |
 | Create client delivery gallery | [Client Galleries](./site-manager/client-galleries.md#creating-a-client-gallery) |
-| Respond to booking request | [Bookings](./site-manager/bookings.md#responding-to-booking-requests) |
-| Reply to contact form inquiry | [Inquiries](./site-manager/inquiries.md#responding-to-new-inquiries) |
-| Set available dates | [Bookings](./site-manager/bookings.md#creating-availability-slots) |
+| Respond to booking request     | [Bookings](./site-manager/bookings.md#responding-to-booking-requests)            |
+| Reply to contact form inquiry  | [Inquiries](./site-manager/inquiries.md#responding-to-new-inquiries)             |
+| Set available dates            | [Bookings](./site-manager/bookings.md#creating-availability-slots)               |
 
 ---
 

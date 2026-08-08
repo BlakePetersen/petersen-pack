@@ -7,13 +7,13 @@ import {
   CalVerSchema,
   MergeStrategySchema,
   ScopeSchema,
-  SlugSchema,
+  SlugSchema
 } from './primitives.ts'
 
 export const ManifestFileEntrySchema = z.object({
   path: z.string(),
   checksum: z.string(),
-  merge: MergeStrategySchema,
+  merge: MergeStrategySchema
 })
 
 export const ManifestEntrySchema = z.object({
@@ -23,12 +23,12 @@ export const ManifestEntrySchema = z.object({
   version: CalVerSchema,
   scope: ScopeSchema,
   installedAt: z.string().datetime(),
-  files: z.array(ManifestFileEntrySchema),
+  files: z.array(ManifestFileEntrySchema)
 })
 
 export const ManifestSchema = z.object({
   version: z.literal(1),
-  items: z.array(ManifestEntrySchema),
+  items: z.array(ManifestEntrySchema)
 })
 
 export type ManifestFileEntry = z.infer<typeof ManifestFileEntrySchema>

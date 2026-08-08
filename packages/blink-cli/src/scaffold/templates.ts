@@ -5,7 +5,7 @@ const BODY_TEMPLATES: Record<string, string> = {
   skills: '## Overview\n\n\n\n## Usage\n\n\n\n## Configuration\n\n',
   configs: '## Installation\n\n\n\n## Options\n\n\n\n## Customization\n\n',
   hooks: '## When to Use\n\n\n\n## Setup\n\n\n\n## API\n\n',
-  guides: '## Prerequisites\n\n\n\n## Steps\n\n\n\n## Troubleshooting\n\n',
+  guides: '## Prerequisites\n\n\n\n## Steps\n\n\n\n## Troubleshooting\n\n'
 }
 
 /**
@@ -41,7 +41,7 @@ export function getBodyTemplate(collection: string, voice?: string[]): string {
 export function getArtifactTemplate(
   name: string,
   description: string,
-  type: string,
+  type: string
 ): string {
   return `---
 name: ${name}

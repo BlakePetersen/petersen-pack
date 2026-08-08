@@ -10,18 +10,18 @@ import {
   TableBody,
   TableRow,
   TableHead,
-  TableCell,
+  TableCell
 } from 'artax-ui'
 import {
   getTokensByCategory,
   getTypographyTokens,
-  getSpacingTokens,
+  getSpacingTokens
 } from '@/lib/token-registry'
 import { TokenSwatch } from '@/components/token-swatch'
 import { TypographySpecimen } from '@/components/typography-specimen'
 
 export const metadata: Metadata = {
-  title: 'Design Tokens',
+  title: 'Design Tokens'
 }
 
 const typographySizes = [
@@ -30,10 +30,10 @@ const typographySizes = [
   {
     label: 'text-base',
     className: 'text-base',
-    cssValue: '1rem / 1.5rem',
+    cssValue: '1rem / 1.5rem'
   },
   { label: 'text-lg', className: 'text-lg', cssValue: '1.125rem / 1.75rem' },
-  { label: 'text-xl', className: 'text-xl', cssValue: '1.25rem / 1.75rem' },
+  { label: 'text-xl', className: 'text-xl', cssValue: '1.25rem / 1.75rem' }
 ]
 
 export default function TokensPage() {
@@ -45,9 +45,11 @@ export default function TokensPage() {
     <div className="mx-auto max-w-4xl space-y-12">
       {/* Colors Section */}
       <section className="space-y-8">
-        <h2 className="font-mono text-sm text-muted-foreground">{'// colors'}</h2>
+        <h2 className="font-mono text-sm text-muted-foreground">
+          {'// colors'}
+        </h2>
 
-        {categories.map((category) => (
+        {categories.map(category => (
           <div key={category.name} className="space-y-4">
             <h3 className="text-lg font-semibold">{category.name}</h3>
             <Table>
@@ -62,7 +64,7 @@ export default function TokensPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {category.tokens.map((token) => (
+                {category.tokens.map(token => (
                   <TableRow key={token.cssVar}>
                     <TableCell>
                       <TokenSwatch
@@ -104,7 +106,7 @@ export default function TokensPage() {
           {'// typography'}
         </h2>
 
-        {typography.map((font) => {
+        {typography.map(font => {
           const fontClass =
             font.name === 'mono'
               ? 'font-mono'

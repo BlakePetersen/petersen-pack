@@ -49,7 +49,7 @@ describe('collection dispatch', () => {
 
     const result = await runLint({ contentRoot: root })
 
-    const postDiagnostics = result.diagnostics.filter((d) =>
+    const postDiagnostics = result.diagnostics.filter(d =>
       d.file.includes('posts/')
     )
     expect(postDiagnostics).toEqual([])
@@ -57,14 +57,17 @@ describe('collection dispatch', () => {
   })
 
   it('still validates DX collection files against the DX schema', async () => {
-    write('skills/bad.mdx', `---\ntitle: Missing everything else\n---\n\nBody.\n`)
+    write(
+      'skills/bad.mdx',
+      `---\ntitle: Missing everything else\n---\n\nBody.\n`
+    )
 
     const result = await runLint({ contentRoot: root })
 
     expect(result.errorCount).toBeGreaterThan(0)
-    expect(
-      result.diagnostics.some((d) => d.rule === 'frontmatter-schema')
-    ).toBe(true)
+    expect(result.diagnostics.some(d => d.rule === 'frontmatter-schema')).toBe(
+      true
+    )
   })
 
   it('filters --files input to DX-collection .mdx entries', async () => {
@@ -77,12 +80,10 @@ describe('collection dispatch', () => {
 
     const result = await runLint({
       contentRoot: root,
-      files: [post, artifact, skill],
+      files: [post, artifact, skill]
     })
 
-    expect(
-      result.diagnostics.every((d) => d.file === skill)
-    ).toBe(true)
+    expect(result.diagnostics.every(d => d.file === skill)).toBe(true)
     expect(result.errorCount).toBeGreaterThan(0)
   })
 })
@@ -92,9 +93,7 @@ describe('discovery safety', () => {
     const result = await runLint({ contentRoot: join(root, 'nope') })
 
     expect(result.errorCount).toBeGreaterThan(0)
-    expect(
-      result.diagnostics.some((d) => d.rule === 'content-root')
-    ).toBe(true)
+    expect(result.diagnostics.some(d => d.rule === 'content-root')).toBe(true)
   })
 
   it('errors loudly when the content root contains no lintable files', async () => {
@@ -103,9 +102,7 @@ describe('discovery safety', () => {
     const result = await runLint({ contentRoot: root })
 
     expect(result.errorCount).toBeGreaterThan(0)
-    expect(
-      result.diagnostics.some((d) => d.rule === 'content-root')
-    ).toBe(true)
+    expect(result.diagnostics.some(d => d.rule === 'content-root')).toBe(true)
   })
 })
 
@@ -129,7 +126,7 @@ No component here.
     const result = await runLint({ contentRoot: root })
 
     const voiceDiag = result.diagnostics.find(
-      (d) => d.rule === 'voice-primitive' && d.message.includes('author-note')
+      d => d.rule === 'voice-primitive' && d.message.includes('author-note')
     )
     expect(voiceDiag).toBeDefined()
     expect(voiceDiag?.severity).toBe('error')
@@ -154,7 +151,7 @@ Because reasons.
     const result = await runLint({ contentRoot: root })
 
     const advisory = result.diagnostics.find(
-      (d) => d.rule === 'voice-primitive' && d.message.includes('heading')
+      d => d.rule === 'voice-primitive' && d.message.includes('heading')
     )
     if (advisory) {
       expect(advisory.severity).toBe('warning')
@@ -180,7 +177,7 @@ applies_to:
     const result = await runLint({ contentRoot: root })
 
     const diag = result.diagnostics.find(
-      (d) => d.rule === 'no-inline-artifact-body'
+      d => d.rule === 'no-inline-artifact-body'
     )
     expect(diag).toBeDefined()
     expect(diag?.severity).toBe('error')
@@ -203,7 +200,7 @@ applies_to:
     const result = await runLint({ contentRoot: root })
 
     expect(
-      result.diagnostics.some((d) => d.rule === 'no-inline-artifact-body')
+      result.diagnostics.some(d => d.rule === 'no-inline-artifact-body')
     ).toBe(false)
   })
 })

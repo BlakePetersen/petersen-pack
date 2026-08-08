@@ -16,8 +16,8 @@ describe('Shiki Terminal Theme (CONT-04a)', () => {
   })
 
   test('tokenColors includes required scopes', () => {
-    const scopes = terminalTheme.tokenColors!.flatMap((tc) =>
-      Array.isArray(tc.scope) ? tc.scope : [tc.scope],
+    const scopes = terminalTheme.tokenColors!.flatMap(tc =>
+      Array.isArray(tc.scope) ? tc.scope : [tc.scope]
     )
     const requiredScopes = [
       'comment',
@@ -26,7 +26,7 @@ describe('Shiki Terminal Theme (CONT-04a)', () => {
       'entity.name.type',
       'entity.name.function',
       'variable',
-      'keyword.operator',
+      'keyword.operator'
     ]
     for (const scope of requiredScopes) {
       expect(scopes).toContain(scope)
@@ -41,11 +41,11 @@ describe('Shiki Terminal Theme (CONT-04a)', () => {
       'entity.name.type': '#06B6D4',
       'entity.name.function': '#10B981',
       variable: '#FAFAFA',
-      'keyword.operator': '#9CA3AF',
+      'keyword.operator': '#9CA3AF'
     }
 
     for (const [scope, expectedColor] of Object.entries(colorMap)) {
-      const tokenColor = terminalTheme.tokenColors!.find((tc) => {
+      const tokenColor = terminalTheme.tokenColors!.find(tc => {
         const scopes = Array.isArray(tc.scope) ? tc.scope : [tc.scope]
         return scopes.includes(scope)
       })

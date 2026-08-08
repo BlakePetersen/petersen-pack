@@ -33,22 +33,22 @@ jest.mock('@/lib/collection-registry', () => ({
     showInSitemap: true,
     showInFeed: true,
     href: `/${slug}`,
-    getter: () => [],
-  }),
+    getter: () => []
+  })
 }))
 
 // Mock content module (referenced transitively) so tests don't depend on Velite output.
 jest.mock('@/lib/content', () => ({
-  resolveRelatedSlugs: () => [],
+  resolveRelatedSlugs: () => []
 }))
 
 // Mock layout components to keep the rendered tree small and focused on factory output.
 jest.mock('@/components/content-shell', () => ({
-  ContentShell: ({ children }: { children: React.ReactNode }) => children,
+  ContentShell: ({ children }: { children: React.ReactNode }) => children
 }))
 
 jest.mock('@/components/sidebar', () => ({
-  Sidebar: () => null,
+  Sidebar: () => null
 }))
 
 // Import AFTER the mocks are registered.

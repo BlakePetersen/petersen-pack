@@ -34,7 +34,7 @@ function resolveGlobalsCssPath(): string {
   const candidates = [
     join(process.cwd(), 'packages/artax-ui/src/styles/globals.css'),
     join(process.cwd(), '../../packages/artax-ui/src/styles/globals.css'),
-    join(__dirname, '../../../../packages/artax-ui/src/styles/globals.css'),
+    join(__dirname, '../../../../packages/artax-ui/src/styles/globals.css')
   ]
   for (const candidate of candidates) {
     try {
@@ -51,7 +51,7 @@ function resolveThemeCssPath(): string {
   const candidates = [
     join(process.cwd(), 'packages/artax-ui/src/styles/theme.css'),
     join(process.cwd(), '../../packages/artax-ui/src/styles/theme.css'),
-    join(__dirname, '../../../../packages/artax-ui/src/styles/theme.css'),
+    join(__dirname, '../../../../packages/artax-ui/src/styles/theme.css')
   ]
   for (const candidate of candidates) {
     try {
@@ -68,7 +68,7 @@ function parseBlock(css: string, blockStart: string): Record<string, string> {
   // Find the block where blockStart is the selector (followed by `{` with only whitespace between).
   // This avoids matching occurrences inside other constructs (e.g., @custom-variant).
   const selectorPattern = new RegExp(
-    blockStart.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*\\{',
+    blockStart.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*\\{'
   )
   const selectorMatch = selectorPattern.exec(css)
   if (!selectorMatch) return {}
@@ -112,7 +112,7 @@ function getTokenMapping(cssVar: string): TokenMapping | null {
     '--secondary': { tsKey: 'secondary' },
     '--muted': { tsKey: 'muted' },
     '--accent': { tsKey: 'accent' },
-    '--destructive': { tsKey: 'destructive' },
+    '--destructive': { tsKey: 'destructive' }
   }
 
   if (bgVars[cssVar]) {
@@ -121,7 +121,7 @@ function getTokenMapping(cssVar: string): TokenMapping | null {
       category: 'Background',
       tailwindPrefix: `bg-${name}`,
       tsPath: 'tokens.bg',
-      tsKey: bgVars[cssVar].tsKey,
+      tsKey: bgVars[cssVar].tsKey
     }
   }
 
@@ -129,32 +129,32 @@ function getTokenMapping(cssVar: string): TokenMapping | null {
     '--foreground': { tailwindName: 'foreground', tsKey: 'foreground' },
     '--primary-foreground': {
       tailwindName: 'primary-foreground',
-      tsKey: 'primaryForeground',
+      tsKey: 'primaryForeground'
     },
     '--secondary-foreground': {
       tailwindName: 'secondary-foreground',
-      tsKey: 'secondaryForeground',
+      tsKey: 'secondaryForeground'
     },
     '--card-foreground': {
       tailwindName: 'card-foreground',
-      tsKey: 'cardForeground',
+      tsKey: 'cardForeground'
     },
     '--popover-foreground': {
       tailwindName: 'popover-foreground',
-      tsKey: 'popoverForeground',
+      tsKey: 'popoverForeground'
     },
     '--muted-foreground': {
       tailwindName: 'muted-foreground',
-      tsKey: 'mutedForeground',
+      tsKey: 'mutedForeground'
     },
     '--accent-foreground': {
       tailwindName: 'accent-foreground',
-      tsKey: 'accentForeground',
+      tsKey: 'accentForeground'
     },
     '--destructive-foreground': {
       tailwindName: 'destructive-foreground',
-      tsKey: 'destructiveForeground',
-    },
+      tsKey: 'destructiveForeground'
+    }
   }
 
   if (textVars[cssVar]) {
@@ -162,13 +162,13 @@ function getTokenMapping(cssVar: string): TokenMapping | null {
       category: 'Text',
       tailwindPrefix: `text-${textVars[cssVar].tailwindName}`,
       tsPath: 'tokens.text',
-      tsKey: textVars[cssVar].tsKey,
+      tsKey: textVars[cssVar].tsKey
     }
   }
 
   const borderVars: Record<string, { tsKey: string }> = {
     '--border': { tsKey: 'border' },
-    '--input': { tsKey: 'input' },
+    '--input': { tsKey: 'input' }
   }
 
   if (borderVars[cssVar]) {
@@ -177,7 +177,7 @@ function getTokenMapping(cssVar: string): TokenMapping | null {
       category: 'Border',
       tailwindPrefix: `border-${name}`,
       tsPath: 'tokens.border',
-      tsKey: borderVars[cssVar].tsKey,
+      tsKey: borderVars[cssVar].tsKey
     }
   }
 
@@ -186,14 +186,14 @@ function getTokenMapping(cssVar: string): TokenMapping | null {
       category: 'Ring',
       tailwindPrefix: 'ring-ring',
       tsPath: 'tokens.ring',
-      tsKey: 'ring',
+      tsKey: 'ring'
     }
   }
 
   const statusVars: Record<string, { tsKey: string }> = {
     '--success': { tsKey: 'success' },
     '--info': { tsKey: 'info' },
-    '--warning': { tsKey: 'warning' },
+    '--warning': { tsKey: 'warning' }
   }
 
   if (statusVars[cssVar]) {
@@ -202,14 +202,14 @@ function getTokenMapping(cssVar: string): TokenMapping | null {
       category: 'Status',
       tailwindPrefix: `text-${name}`,
       tsPath: 'tokens.text',
-      tsKey: statusVars[cssVar].tsKey,
+      tsKey: statusVars[cssVar].tsKey
     }
   }
 
   const surfaceVars: Record<string, { tsKey: string }> = {
     '--surface-info': { tsKey: 'surfaceInfo' },
     '--surface-warning': { tsKey: 'surfaceWarning' },
-    '--surface-success': { tsKey: 'surfaceSuccess' },
+    '--surface-success': { tsKey: 'surfaceSuccess' }
   }
 
   if (surfaceVars[cssVar]) {
@@ -218,7 +218,7 @@ function getTokenMapping(cssVar: string): TokenMapping | null {
       category: 'Surface',
       tailwindPrefix: `bg-${name}`,
       tsPath: 'tokens.bg',
-      tsKey: surfaceVars[cssVar].tsKey,
+      tsKey: surfaceVars[cssVar].tsKey
     }
   }
 
@@ -248,7 +248,7 @@ export function getTokensByCategory(): TokenCategory[] {
       tsConstant: `${mapping.tsPath}.${mapping.tsKey}`,
       lightValue,
       darkValue: darkValues[cssVar] ?? lightValue,
-      category: mapping.category,
+      category: mapping.category
     }
 
     const existing = categoryMap.get(mapping.category) ?? []
@@ -262,11 +262,11 @@ export function getTokensByCategory(): TokenCategory[] {
     'Border',
     'Ring',
     'Status',
-    'Surface',
+    'Surface'
   ]
   return categoryOrder
-    .filter((name) => categoryMap.has(name))
-    .map((name) => ({ name, tokens: categoryMap.get(name)! }))
+    .filter(name => categoryMap.has(name))
+    .map(name => ({ name, tokens: categoryMap.get(name)! }))
 }
 
 export function getTypographyTokens(): TypographyToken[] {
@@ -280,7 +280,7 @@ export function getTypographyTokens(): TypographyToken[] {
     tokens.push({
       name: match[1],
       cssVar: `--font-${match[1]}`,
-      value: match[2].trim(),
+      value: match[2].trim()
     })
   }
 
@@ -296,6 +296,6 @@ export function getSpacingTokens(): SpacingTokens {
 
   return {
     radius,
-    note: 'Artax UI uses sharp corners exclusively to maintain the terminal aesthetic. All components render with 0px border-radius.',
+    note: 'Artax UI uses sharp corners exclusively to maintain the terminal aesthetic. All components render with 0px border-radius.'
   }
 }

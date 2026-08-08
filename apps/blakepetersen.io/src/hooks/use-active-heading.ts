@@ -16,17 +16,17 @@ export function useActiveHeading(): string | null {
     }
 
     const observer = new IntersectionObserver(
-      (entries) => {
+      entries => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             setActiveId(entry.target.id)
           }
         }
       },
-      { rootMargin: '0px 0px -80% 0px' },
+      { rootMargin: '0px 0px -80% 0px' }
     )
 
-    headings.forEach((heading) => observer.observe(heading))
+    headings.forEach(heading => observer.observe(heading))
 
     return () => observer.disconnect()
   }, [])

@@ -22,8 +22,7 @@ export const mdxComponents = {
       )}
       {...props}
     >
-      <span className="text-muted-foreground">┌───</span>{' '}
-      {children}{' '}
+      <span className="text-muted-foreground">┌───</span> {children}{' '}
       <span className="text-muted-foreground">───┐</span>
     </h1>
   ),
@@ -112,23 +111,26 @@ export const mdxComponents = {
 
   ul: ({ className, ...props }: Props) => (
     <ul
-      className={cn('list-disc list-inside mb-4 space-y-1 text-foreground', className)}
+      className={cn(
+        'list-disc list-inside mb-4 space-y-1 text-foreground',
+        className
+      )}
       {...props}
     />
   ),
 
   ol: ({ className, ...props }: Props) => (
     <ol
-      className={cn('list-decimal list-inside mb-4 space-y-1 text-foreground', className)}
+      className={cn(
+        'list-decimal list-inside mb-4 space-y-1 text-foreground',
+        className
+      )}
       {...props}
     />
   ),
 
   li: ({ className, ...props }: Props) => (
-    <li
-      className={cn('font-sans text-foreground', className)}
-      {...props}
-    />
+    <li className={cn('font-sans text-foreground', className)} {...props} />
   ),
 
   blockquote: ({ className, ...props }: Props) => (
@@ -151,7 +153,8 @@ export const mdxComponents = {
 
   code: ({ className, ...props }: Props) => {
     // Shiki-processed code elements have inline styles; don't apply inline code styling to those
-    const isShikiCode = className?.includes('shiki') || (props as Record<string, unknown>).style
+    const isShikiCode =
+      className?.includes('shiki') || (props as Record<string, unknown>).style
     if (isShikiCode) {
       return <code className={className} {...props} />
     }
@@ -159,7 +162,7 @@ export const mdxComponents = {
       <code
         className={cn(
           'bg-muted text-primary px-1 py-0.5 font-mono text-sm',
-          className,
+          className
         )}
         {...props}
       />
@@ -170,7 +173,8 @@ export const mdxComponents = {
     // Extract metadata from the Shiki-generated code child element
     const codeChild = React.Children.toArray(children).find(
       (child): child is React.ReactElement =>
-        React.isValidElement(child) && (child as React.ReactElement).type === 'code',
+        React.isValidElement(child) &&
+        (child as React.ReactElement).type === 'code'
     ) as React.ReactElement | undefined
 
     const codeProps = codeChild?.props as Record<string, unknown> | undefined
@@ -197,7 +201,10 @@ export const mdxComponents = {
         rawCode={rawCode}
         className={className}
       >
-        <pre className={(props as Record<string, unknown>).className as string} {...props}>
+        <pre
+          className={(props as Record<string, unknown>).className as string}
+          {...props}
+        >
           {children}
         </pre>
       </CodeBlock>
@@ -214,10 +221,7 @@ export const mdxComponents = {
   ),
 
   thead: ({ className, ...props }: Props) => (
-    <thead
-      className={cn('border-b border-border', className)}
-      {...props}
-    />
+    <thead className={cn('border-b border-border', className)} {...props} />
   ),
 
   tbody: ({ className, ...props }: Props) => (
@@ -225,27 +229,18 @@ export const mdxComponents = {
   ),
 
   tr: ({ className, ...props }: Props) => (
-    <tr
-      className={cn('border-b border-border', className)}
-      {...props}
-    />
+    <tr className={cn('border-b border-border', className)} {...props} />
   ),
 
   th: ({ className, ...props }: TableHeaderCellProps) => (
     <th
-      className={cn(
-        'text-left p-2 font-bold text-muted-foreground',
-        className
-      )}
+      className={cn('text-left p-2 font-bold text-muted-foreground', className)}
       {...props}
     />
   ),
 
   td: ({ className, ...props }: TableCellProps) => (
-    <td
-      className={cn('p-2 text-foreground', className)}
-      {...props}
-    />
+    <td className={cn('p-2 text-foreground', className)} {...props} />
   ),
 
   img: ({ className, alt, ...props }: ImgProps) => (
@@ -258,10 +253,7 @@ export const mdxComponents = {
   ),
 
   strong: ({ className, ...props }: Props) => (
-    <strong
-      className={cn('text-foreground font-bold', className)}
-      {...props}
-    />
+    <strong className={cn('text-foreground font-bold', className)} {...props} />
   ),
 
   em: ({ className, ...props }: Props) => (
@@ -270,5 +262,5 @@ export const mdxComponents = {
 
   AuthorNote: AuthorNoteMolecule,
 
-  DecisionRationale: DecisionRationaleMolecule,
+  DecisionRationale: DecisionRationaleMolecule
 }

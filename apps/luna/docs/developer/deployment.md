@@ -46,7 +46,6 @@ This guide covers deploying Luna to production. The recommended platform is Verc
 3. **Configure Build Settings**
 
    Vercel auto-detects Next.js projects:
-
    - **Framework Preset**: Next.js
    - **Build Command**: `npm run build` (auto-detected)
    - **Output Directory**: `.next` (auto-detected)
@@ -74,6 +73,7 @@ This guide covers deploying Luna to production. The recommended platform is Verc
    ```
 
    **Generate Production Secret**:
+
    ```bash
    openssl rand -base64 32
    ```
@@ -103,7 +103,6 @@ This guide covers deploying Luna to production. The recommended platform is Verc
    ```
 
 7. **Custom Domain** (optional)
-
    - Vercel Dashboard → Domains
    - Add your domain
    - Update DNS records as instructed
@@ -128,6 +127,7 @@ This guide covers deploying Luna to production. The recommended platform is Verc
 4. **Environment Variables**
 
    Add in Settings → Variables:
+
    ```bash
    NEXTAUTH_URL=${{ RAILWAY_PUBLIC_DOMAIN }}
    NEXTAUTH_SECRET=your-secret
@@ -157,11 +157,13 @@ Next.js 15 App Router requires Netlify's Next.js Runtime.
    - **Publish directory**: `.next`
 
 4. **Install Plugin**
+
    ```bash
    npm install -D @netlify/plugin-nextjs
    ```
 
    Add to `netlify.toml`:
+
    ```toml
    [[plugins]]
      package = "@netlify/plugin-nextjs"
@@ -339,6 +341,7 @@ Next.js 15 App Router requires Netlify's Next.js Runtime.
    - Add to `RESEND_API_KEY`
 
 4. **Set From Address**
+
    ```bash
    FROM_EMAIL=noreply@yourdomain.com
    ADMIN_EMAIL=admin@yourdomain.com
@@ -367,12 +370,13 @@ Next.js 15 App Router requires Netlify's Next.js Runtime.
    - Copy `BLOB_READ_WRITE_TOKEN`
 
 3. **Update Upload Code**
+
    ```typescript
-   import { put } from '@vercel/blob';
+   import { put } from '@vercel/blob'
 
    const blob = await put(filename, buffer, {
      access: 'public',
-   });
+   })
 
    // Save blob.url to database
    ```
@@ -517,6 +521,7 @@ CLOUDINARY_API_SECRET="..."
 **Error**: Type errors during build
 
 **Solution**:
+
 ```bash
 # Regenerate Prisma Client
 npx prisma generate
@@ -528,6 +533,7 @@ npm run build
 **Error**: Can't reach database
 
 **Solutions**:
+
 - Check `DATABASE_URL` format
 - Verify database is accessible from deployment platform
 - Enable SSL if required: `?sslmode=require`
@@ -538,6 +544,7 @@ npm run build
 **Error**: 404 on image URLs
 
 **Solutions**:
+
 - If using Vercel: Switch to Vercel Blob (ephemeral filesystem)
 - If self-hosted: Check `/public/uploads/` permissions
 - Verify image URLs in database match storage location
@@ -547,6 +554,7 @@ npm run build
 **Error**: Emails not received
 
 **Solutions**:
+
 - Check `RESEND_API_KEY` is set
 - Verify domain in Resend dashboard
 - Check DNS records for domain verification
@@ -558,6 +566,7 @@ npm run build
 **Error**: Can't login or session expires immediately
 
 **Solutions**:
+
 - Verify `NEXTAUTH_SECRET` is set
 - Check `NEXTAUTH_URL` matches deployment URL
 - Clear cookies and try again

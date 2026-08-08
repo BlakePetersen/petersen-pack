@@ -10,6 +10,6 @@ export default defineConfig({
   output: {
     ...baseConfig.output,
     data: '.velite-fixture',
-    clean: true,
-  },
+    clean: true
+  }
 })

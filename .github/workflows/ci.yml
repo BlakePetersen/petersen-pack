@@ -33,6 +33,7 @@ jobs:
           restore-keys: turbo-${{ runner.os }}-
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
       - run: pnpm build
       - run: pnpm typecheck
       - run: pnpm lint
@@ -45,3 +46,47 @@ jobs:
         with:
           args: --offline --no-progress --root-dir apps/blakepetersen.io/.next/server/app --fallback-extensions html --exclude '_next/.*' --exclude 'feed\.xml' --exclude 'images\.ctfassets\.net' apps/blakepetersen.io/.next/server/app/**/*.html apps/blakepetersen.io/content/**/*.mdx
           fail: true
+
+  luna-tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: luna
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Write .env.test (gitignored — must be generated in-job)
+        working-directory: apps/luna
+        run: |
+          cat > .env.test <<'EOF'
+          DATABASE_URL=postgresql://postgres:postgres@localhost:5432/luna
+          DIRECT_URL=postgresql://postgres:postgres@localhost:5432/luna
+          AUTH_SECRET=ci_test_secret_at_least_32_chars_long_xx
+          STRIPE_SECRET_KEY=sk_test_dummy
+          RESEND_API_KEY=re_dummy
+          FROM_EMAIL=test@example.com
+          UPSTASH_REDIS_REST_URL=https://example.com
+          UPSTASH_REDIS_REST_TOKEN=dummy_upstash_token_20chars
+          NEXT_PUBLIC_APP_URL=http://localhost:3333
+          EOF
+      - name: Generate Prisma client (no postinstall — must run explicitly)
+        run: pnpm --filter Luna exec prisma generate
+      - name: Run luna unit suite (test:migrate + vitest run)
+        run: pnpm --filter Luna test:unit

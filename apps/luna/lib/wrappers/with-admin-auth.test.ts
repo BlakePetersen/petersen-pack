@@ -66,9 +66,8 @@ describe('withAdminAuth', () => {
   })
 
   it('attaches __wrapperKind and __wrappedHandler back-pointer', async () => {
-    const { withAdminAuth, WRAPPER_KIND_ADMIN_AUTH } = await import(
-      './with-admin-auth'
-    )
+    const { withAdminAuth, WRAPPER_KIND_ADMIN_AUTH } =
+      await import('./with-admin-auth')
     const inner = async () => new Response('ok')
     const wrapped = withAdminAuth(inner) as unknown as {
       __wrapperKind: symbol

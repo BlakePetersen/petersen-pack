@@ -30,7 +30,7 @@ function getRecentPages(): RecentPage[] {
 function recordRecentPage(url: string, title: string) {
   if (typeof window === 'undefined') return
   try {
-    const pages = getRecentPages().filter((p) => p.url !== url)
+    const pages = getRecentPages().filter(p => p.url !== url)
     pages.unshift({ url, title })
     localStorage.setItem(
       RECENT_PAGES_KEY,
@@ -89,7 +89,7 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
     function handleKeyDown(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault()
-        setOpen((prev) => !prev)
+        setOpen(prev => !prev)
       }
     }
     document.addEventListener('keydown', handleKeyDown)
@@ -116,10 +116,9 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
   }, [])
 
   // Flatten grouped results for keyboard navigation indexing
-  const allItems: { url: string; title: string }[] =
-    query.trim()
-      ? results.map((r) => ({ url: r.url, title: r.title }))
-      : recentPages
+  const allItems: { url: string; title: string }[] = query.trim()
+    ? results.map(r => ({ url: r.url, title: r.title }))
+    : recentPages
 
   function navigateTo(url: string, title: string) {
     recordRecentPage(url, title)
@@ -130,10 +129,10 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === 'ArrowDown') {
       e.preventDefault()
-      setSelectedIndex((prev) => Math.min(prev + 1, allItems.length - 1))
+      setSelectedIndex(prev => Math.min(prev + 1, allItems.length - 1))
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
-      setSelectedIndex((prev) => Math.max(prev - 1, 0))
+      setSelectedIndex(prev => Math.max(prev - 1, 0))
     } else if (e.key === 'Enter' && allItems[selectedIndex]) {
       e.preventDefault()
       const item = allItems[selectedIndex]
@@ -157,7 +156,7 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
           <Dialog.Content
             className="fixed left-[50%] top-[20%] z-50 w-full max-w-lg translate-x-[-50%] border border-border bg-background shadow-lg"
             onKeyDown={handleKeyDown}
-            onOpenAutoFocus={(e) => {
+            onOpenAutoFocus={e => {
               e.preventDefault()
               inputRef.current?.focus()
             }}
@@ -169,7 +168,7 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
                 ref={inputRef}
                 type="text"
                 value={query}
-                onChange={(e) => handleQueryChange(e.target.value)}
+                onChange={e => handleQueryChange(e.target.value)}
                 placeholder="Search content..."
                 className="w-full bg-transparent font-mono text-sm text-foreground outline-none placeholder:text-muted-foreground"
               />
@@ -209,7 +208,7 @@ export function CommandPalette({ defaultOpen = false }: CommandPaletteProps) {
                     <div className="px-2 py-1.5 font-mono text-xs text-muted-foreground">
                       {group}
                     </div>
-                    {items.map((result) => {
+                    {items.map(result => {
                       const currentIndex = flatIndex++
                       return (
                         <button

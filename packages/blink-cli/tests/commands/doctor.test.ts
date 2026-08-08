@@ -6,7 +6,7 @@ import {
   readFileSync,
   mkdirSync,
   rmSync,
-  realpathSync,
+  realpathSync
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -24,7 +24,7 @@ let consolaMock: {
 }
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config,
+  defineCommand: (config: any) => config
 }))
 
 jest.mock('consola', () => {
@@ -33,7 +33,7 @@ jest.mock('consola', () => {
     success: jest.fn(),
     log: jest.fn(),
     warn: jest.fn(),
-    error: jest.fn(),
+    error: jest.fn()
   }
   return { consola: mock, default: mock, __esModule: true }
 })
@@ -46,7 +46,7 @@ jest.mock('picocolors', () => ({
     green: (s: string) => s,
     red: (s: string) => s,
     cyan: (s: string) => s,
-    blue: (s: string) => s,
+    blue: (s: string) => s
   },
   __esModule: true,
   dim: (s: string) => s,
@@ -55,7 +55,7 @@ jest.mock('picocolors', () => ({
   green: (s: string) => s,
   red: (s: string) => s,
   cyan: (s: string) => s,
-  blue: (s: string) => s,
+  blue: (s: string) => s
 }))
 
 function createManifest(items: any[]) {
@@ -78,11 +78,11 @@ function makeEntry(
     version: '2026.03.14.1',
     scope: 'project' as const,
     installedAt: '2026-03-14T00:00:00.000Z',
-    files: files.map((f) => ({
+    files: files.map(f => ({
       path: f.path,
       checksum: checksum(f.content),
-      merge: f.merge,
-    })),
+      merge: f.merge
+    }))
   }
 }
 
@@ -126,7 +126,9 @@ describe('blink doctor', () => {
     it('reports no issues when everything is healthy', async () => {
       const content = '{ "semi": false }'
       createManifest([
-        makeEntry('prettier', [{ path: '.prettierrc', content, merge: 'replace' }]),
+        makeEntry('prettier', [
+          { path: '.prettierrc', content, merge: 'replace' }
+        ])
       ])
       writeFileSync(join(tmpDir, '.prettierrc'), content)
 
@@ -141,7 +143,9 @@ describe('blink doctor', () => {
   describe('orphaned manifest entries', () => {
     it('detects files in manifest but missing from disk', async () => {
       createManifest([
-        makeEntry('prettier', [{ path: '.prettierrc', content: '{}', merge: 'replace' }]),
+        makeEntry('prettier', [
+          { path: '.prettierrc', content: '{}', merge: 'replace' }
+        ])
       ])
       // Don't create .prettierrc on disk
 
@@ -150,21 +154,29 @@ describe('blink doctor', () => {
       const allCalls = [
         ...consolaMock.error.mock.calls,
         ...consolaMock.warn.mock.calls,
-        ...consolaMock.log.mock.calls,
+        ...consolaMock.log.mock.calls
       ].flat()
 
-      expect(allCalls.some((msg: string) =>
-        typeof msg === 'string' && msg.includes('Orphaned manifest entry') && msg.includes('.prettierrc')
-      )).toBe(true)
+      expect(
+        allCalls.some(
+          (msg: string) =>
+            typeof msg === 'string' &&
+            msg.includes('Orphaned manifest entry') &&
+            msg.includes('.prettierrc')
+        )
+      ).toBe(true)
     })
   })
 
   describe('broken markers', () => {
     it('detects unmatched start/end markers', async () => {
-      const brokenContent = '# blink:start shellrc\nsome content\n# missing end marker'
+      const brokenContent =
+        '# blink:start shellrc\nsome content\n# missing end marker'
 
       createManifest([
-        makeEntry('shellrc', [{ path: '.zshrc', content: brokenContent, merge: 'section' }]),
+        makeEntry('shellrc', [
+          { path: '.zshrc', content: brokenContent, merge: 'section' }
+        ])
       ])
       writeFileSync(join(tmpDir, '.zshrc'), brokenContent)
 
@@ -173,12 +185,17 @@ describe('blink doctor', () => {
       const allCalls = [
         ...consolaMock.error.mock.calls,
         ...consolaMock.warn.mock.calls,
-        ...consolaMock.log.mock.calls,
+        ...consolaMock.log.mock.calls
       ].flat()
 
-      expect(allCalls.some((msg: string) =>
-        typeof msg === 'string' && msg.includes('blink:start') && msg.includes('without matching')
-      )).toBe(true)
+      expect(
+        allCalls.some(
+          (msg: string) =>
+            typeof msg === 'string' &&
+            msg.includes('blink:start') &&
+            msg.includes('without matching')
+        )
+      ).toBe(true)
     })
   })
 
@@ -192,12 +209,15 @@ describe('blink doctor', () => {
       const allCalls = [
         ...consolaMock.error.mock.calls,
         ...consolaMock.warn.mock.calls,
-        ...consolaMock.log.mock.calls,
+        ...consolaMock.log.mock.calls
       ].flat()
 
-      expect(allCalls.some((msg: string) =>
-        typeof msg === 'string' && msg.includes('Orphaned temp file')
-      )).toBe(true)
+      expect(
+        allCalls.some(
+          (msg: string) =>
+            typeof msg === 'string' && msg.includes('Orphaned temp file')
+        )
+      ).toBe(true)
     })
   })
 
@@ -205,22 +225,32 @@ describe('blink doctor', () => {
     it('detects locally modified replace-merge files', async () => {
       const originalContent = '{ "semi": false }'
       createManifest([
-        makeEntry('prettier', [{ path: '.prettierrc', content: originalContent, merge: 'replace' }]),
+        makeEntry('prettier', [
+          { path: '.prettierrc', content: originalContent, merge: 'replace' }
+        ])
       ])
       // Write different content than what manifest expects
-      writeFileSync(join(tmpDir, '.prettierrc'), '{ "semi": true, "tabWidth": 2 }')
+      writeFileSync(
+        join(tmpDir, '.prettierrc'),
+        '{ "semi": true, "tabWidth": 2 }'
+      )
 
       await runDoctor()
 
       const allCalls = [
         ...consolaMock.error.mock.calls,
         ...consolaMock.warn.mock.calls,
-        ...consolaMock.log.mock.calls,
+        ...consolaMock.log.mock.calls
       ].flat()
 
-      expect(allCalls.some((msg: string) =>
-        typeof msg === 'string' && msg.includes('Locally modified') && msg.includes('.prettierrc')
-      )).toBe(true)
+      expect(
+        allCalls.some(
+          (msg: string) =>
+            typeof msg === 'string' &&
+            msg.includes('Locally modified') &&
+            msg.includes('.prettierrc')
+        )
+      ).toBe(true)
     })
 
     it('detects locally modified section-merge managed content', async () => {
@@ -228,7 +258,9 @@ describe('blink doctor', () => {
       const markedContent = injectMarkers(originalManaged, 'shellrc', '.zshrc')
 
       createManifest([
-        makeEntry('shellrc', [{ path: '.zshrc', content: markedContent, merge: 'section' }]),
+        makeEntry('shellrc', [
+          { path: '.zshrc', content: markedContent, merge: 'section' }
+        ])
       ])
 
       // Modify the managed section content
@@ -243,19 +275,26 @@ describe('blink doctor', () => {
       const allCalls = [
         ...consolaMock.error.mock.calls,
         ...consolaMock.warn.mock.calls,
-        ...consolaMock.log.mock.calls,
+        ...consolaMock.log.mock.calls
       ].flat()
 
-      expect(allCalls.some((msg: string) =>
-        typeof msg === 'string' && msg.includes('Locally modified') && msg.includes('.zshrc')
-      )).toBe(true)
+      expect(
+        allCalls.some(
+          (msg: string) =>
+            typeof msg === 'string' &&
+            msg.includes('Locally modified') &&
+            msg.includes('.zshrc')
+        )
+      ).toBe(true)
     })
   })
 
   describe('issue summary', () => {
     it('reports issue count with severity breakdown', async () => {
       createManifest([
-        makeEntry('prettier', [{ path: '.prettierrc', content: '{}', merge: 'replace' }]),
+        makeEntry('prettier', [
+          { path: '.prettierrc', content: '{}', merge: 'replace' }
+        ])
       ])
       // Missing file = orphaned entry (error)
 
@@ -265,12 +304,14 @@ describe('blink doctor', () => {
         ...consolaMock.error.mock.calls,
         ...consolaMock.warn.mock.calls,
         ...consolaMock.log.mock.calls,
-        ...consolaMock.info.mock.calls,
+        ...consolaMock.info.mock.calls
       ].flat()
 
-      expect(allCalls.some((msg: string) =>
-        typeof msg === 'string' && msg.includes('issue')
-      )).toBe(true)
+      expect(
+        allCalls.some(
+          (msg: string) => typeof msg === 'string' && msg.includes('issue')
+        )
+      ).toBe(true)
     })
   })
 })

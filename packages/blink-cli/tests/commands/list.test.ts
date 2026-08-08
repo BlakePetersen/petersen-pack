@@ -10,7 +10,7 @@ const validIndex: RegistryIndex = {
       type: 'config',
       version: '2026.03.14.1',
       description: 'Prettier config',
-      url: 'https://blakepetersen.io/r/config/prettier.json',
+      url: 'https://blakepetersen.io/r/config/prettier.json'
     },
     {
       slug: 'lint-staged',
@@ -18,14 +18,14 @@ const validIndex: RegistryIndex = {
       type: 'config',
       version: '2026.03.14.1',
       description: 'Lint-staged config',
-      url: 'https://blakepetersen.io/r/config/lint-staged.json',
-    },
+      url: 'https://blakepetersen.io/r/config/lint-staged.json'
+    }
   ],
-  generatedAt: '2026-03-14T00:00:00.000Z',
+  generatedAt: '2026-03-14T00:00:00.000Z'
 }
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config,
+  defineCommand: (config: any) => config
 }))
 
 const consolaMock = {
@@ -33,33 +33,33 @@ const consolaMock = {
   success: jest.fn(),
   log: jest.fn(),
   warn: jest.fn(),
-  error: jest.fn(),
+  error: jest.fn()
 }
 
 jest.mock('consola', () => ({
   consola: consolaMock,
   default: consolaMock,
-  __esModule: true,
+  __esModule: true
 }))
 
 jest.mock('picocolors', () => ({
   default: {
     dim: (s: string) => s,
-    bold: (s: string) => s,
+    bold: (s: string) => s
   },
   __esModule: true,
   dim: (s: string) => s,
-  bold: (s: string) => s,
+  bold: (s: string) => s
 }))
 
 const mockFetchIndex = jest.fn()
 jest.mock('@/registry', () => ({
-  fetchIndex: (...args: any[]) => mockFetchIndex(...args),
+  fetchIndex: (...args: any[]) => mockFetchIndex(...args)
 }))
 
 const mockFormatListTable = jest.fn().mockReturnValue('formatted table')
 jest.mock('@/output', () => ({
-  formatListTable: (...args: any[]) => mockFormatListTable(...args),
+  formatListTable: (...args: any[]) => mockFormatListTable(...args)
 }))
 
 let mockProcessExit: jest.SpyInstance
@@ -73,7 +73,9 @@ beforeEach(() => {
   consolaMock.log.mockClear()
   consolaMock.warn.mockClear()
   consolaMock.error.mockClear()
-  mockProcessExit = jest.spyOn(process, 'exit').mockImplementation((() => {}) as any)
+  mockProcessExit = jest
+    .spyOn(process, 'exit')
+    .mockImplementation((() => {}) as any)
   mockConsoleLog = jest.spyOn(console, 'log').mockImplementation(() => {})
 })
 

@@ -11,7 +11,11 @@ type InquiryData = {
   inquiryId: string
 }
 
-export function AdminInquiryNotification({ inquiry }: { inquiry: InquiryData }) {
+export function AdminInquiryNotification({
+  inquiry,
+}: {
+  inquiry: InquiryData
+}) {
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
 
   return {
@@ -38,11 +42,15 @@ export function AdminInquiryNotification({ inquiry }: { inquiry: InquiryData }) 
       <p style="margin: 5px 0; color: #4b5563;">
         <strong>Email:</strong> <a href="mailto:${inquiry.email}" style="color: #667eea; text-decoration: none;">${inquiry.email}</a>
       </p>
-      ${inquiry.phone ? `
+      ${
+        inquiry.phone
+          ? `
       <p style="margin: 5px 0; color: #4b5563;">
         <strong>Phone:</strong> <a href="tel:${inquiry.phone}" style="color: #667eea; text-decoration: none;">${inquiry.phone}</a>
       </p>
-      ` : ''}
+      `
+          : ''
+      }
     </div>
 
     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">

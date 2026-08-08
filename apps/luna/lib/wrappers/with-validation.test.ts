@@ -109,9 +109,8 @@ describe('withValidation', () => {
   })
 
   it('attaches __wrapperKind === Symbol.for("luna.withValidation") and __wrappedHandler back-pointer', async () => {
-    const { withValidation, WRAPPER_KIND_VALIDATION } = await import(
-      './with-validation'
-    )
+    const { withValidation, WRAPPER_KIND_VALIDATION } =
+      await import('./with-validation')
     const inner = async () => new Response('ok')
     const wrapped = withValidation(Schema, inner) as unknown as {
       __wrapperKind: symbol

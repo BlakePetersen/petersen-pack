@@ -3,7 +3,7 @@
 
 export function buildReportUrl(pageTitle: string, pageUrl: string): string {
   const url = new URL(
-    'https://github.com/BlakePetersen/petersen-pack/issues/new',
+    'https://github.com/BlakePetersen/petersen-pack/issues/new'
   )
   url.searchParams.set('template', 'content-issue.yml')
   url.searchParams.set('title', `Content issue: ${pageTitle}`)
@@ -14,7 +14,7 @@ export function buildReportUrl(pageTitle: string, pageUrl: string): string {
 
 export function ReportProblemLink({
   title,
-  pageUrl,
+  pageUrl
 }: {
   title: string
   pageUrl: string

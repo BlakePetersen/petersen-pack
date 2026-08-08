@@ -6,7 +6,7 @@ import {
   findManagedSections,
   replaceManagedContent,
   stripMarkers,
-  validateMarkers,
+  validateMarkers
 } from '@/markers'
 
 describe('getCommentStyle', () => {
@@ -70,28 +70,39 @@ describe('getCommentStyle', () => {
 describe('injectMarkers', () => {
   it('wraps content with markdown markers', () => {
     const result = injectMarkers('some config', 'eslint', 'config.md')
-    expect(result).toBe('<!-- blink:start eslint -->\nsome config\n<!-- blink:end eslint -->')
+    expect(result).toBe(
+      '<!-- blink:start eslint -->\nsome config\n<!-- blink:end eslint -->'
+    )
   })
 
   it('wraps content with JS markers for .ts files', () => {
     const result = injectMarkers('const x = 1', 'prettier', 'file.ts')
-    expect(result).toBe('// blink:start prettier\nconst x = 1\n// blink:end prettier')
+    expect(result).toBe(
+      '// blink:start prettier\nconst x = 1\n// blink:end prettier'
+    )
   })
 
   it('wraps content with hash markers for .yaml files', () => {
     const result = injectMarkers('key: value', 'my-config', 'config.yaml')
-    expect(result).toBe('# blink:start my-config\nkey: value\n# blink:end my-config')
+    expect(result).toBe(
+      '# blink:start my-config\nkey: value\n# blink:end my-config'
+    )
   })
 
   it('wraps content with block comment markers for .css files', () => {
     const result = injectMarkers('.cls {}', 'styles', 'file.css')
-    expect(result).toBe('/* blink:start styles */\n.cls {}\n/* blink:end styles */')
+    expect(result).toBe(
+      '/* blink:start styles */\n.cls {}\n/* blink:end styles */'
+    )
   })
 })
 
 describe('findManagedSections', () => {
   it('returns empty array when no markers present', () => {
-    const result = findManagedSections('just some text\nno markers here', 'eslint')
+    const result = findManagedSections(
+      'just some text\nno markers here',
+      'eslint'
+    )
     expect(result).toEqual([])
   })
 
@@ -101,7 +112,7 @@ describe('findManagedSections', () => {
       '<!-- blink:start eslint -->',
       'managed content',
       '<!-- blink:end eslint -->',
-      'other stuff',
+      'other stuff'
     ].join('\n')
 
     const result = findManagedSections(content, 'eslint')
@@ -116,7 +127,7 @@ describe('findManagedSections', () => {
     const content = [
       '// blink:start prettier',
       'const x = 1',
-      '// blink:end prettier',
+      '// blink:end prettier'
     ].join('\n')
 
     const result = findManagedSections(content, 'prettier')
@@ -132,7 +143,7 @@ describe('findManagedSections', () => {
       '',
       '<!-- blink:start prettier -->',
       'prettier stuff',
-      '<!-- blink:end prettier -->',
+      '<!-- blink:end prettier -->'
     ].join('\n')
 
     const eslintSections = findManagedSections(content, 'eslint')
@@ -149,7 +160,7 @@ describe('findManagedSections', () => {
       'line 1',
       'line 2',
       '',
-      '// blink:end test',
+      '// blink:end test'
     ].join('\n')
 
     const result = findManagedSections(content, 'test')
@@ -162,7 +173,7 @@ describe('findManagedSections', () => {
       'line 1',
       'line 2',
       'line 3',
-      '# blink:end config',
+      '# blink:end config'
     ].join('\n')
 
     const result = findManagedSections(content, 'config')
@@ -178,17 +189,19 @@ describe('replaceManagedContent', () => {
       '// blink:start eslint',
       'old content',
       '// blink:end eslint',
-      'after',
+      'after'
     ].join('\n')
 
     const result = replaceManagedContent(content, 'eslint', 'new content')
-    expect(result).toBe([
-      'before',
-      '// blink:start eslint',
-      'new content',
-      '// blink:end eslint',
-      'after',
-    ].join('\n'))
+    expect(result).toBe(
+      [
+        'before',
+        '// blink:start eslint',
+        'new content',
+        '// blink:end eslint',
+        'after'
+      ].join('\n')
+    )
   })
 
   it('throws when slug markers not found', () => {
@@ -204,7 +217,7 @@ describe('replaceManagedContent', () => {
       '<!-- blink:end eslint -->',
       '<!-- blink:start prettier -->',
       'prettier old',
-      '<!-- blink:end prettier -->',
+      '<!-- blink:end prettier -->'
     ].join('\n')
 
     const result = replaceManagedContent(content, 'eslint', 'eslint new')
@@ -220,15 +233,11 @@ describe('stripMarkers', () => {
       '// blink:start eslint',
       'managed content',
       '// blink:end eslint',
-      'after',
+      'after'
     ].join('\n')
 
     const result = stripMarkers(content, 'eslint')
-    expect(result).toBe([
-      'before',
-      'managed content',
-      'after',
-    ].join('\n'))
+    expect(result).toBe(['before', 'managed content', 'after'].join('\n'))
   })
 
   it('returns unchanged content when no markers present', () => {
@@ -243,7 +252,7 @@ describe('stripMarkers', () => {
       '<!-- blink:end eslint -->',
       '<!-- blink:start prettier -->',
       'prettier content',
-      '<!-- blink:end prettier -->',
+      '<!-- blink:end prettier -->'
     ].join('\n')
 
     const result = stripMarkers(content, 'eslint')
@@ -259,7 +268,7 @@ describe('validateMarkers', () => {
     const content = [
       '// blink:start eslint',
       'content',
-      '// blink:end eslint',
+      '// blink:end eslint'
     ].join('\n')
 
     const result = validateMarkers(content)
@@ -296,7 +305,7 @@ describe('validateMarkers', () => {
       '// blink:start eslint',
       'content',
       '// blink:end eslint',
-      '// blink:end eslint',
+      '// blink:end eslint'
     ].join('\n')
 
     const result = validateMarkers(content)
@@ -311,7 +320,7 @@ describe('validateMarkers', () => {
       '// blink:end eslint',
       '// blink:start prettier',
       'prettier content',
-      '// blink:end prettier',
+      '// blink:end prettier'
     ].join('\n')
 
     const result = validateMarkers(content)

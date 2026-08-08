@@ -11,9 +11,9 @@ const config: NextConfig = {
       {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
-        pathname: '/**',
-      },
-    ],
+        pathname: '/**'
+      }
+    ]
   },
   turbopack: {},
   webpack(config, { dev }) {
@@ -22,13 +22,19 @@ const config: NextConfig = {
     // worker with a rewritten argv (watch mode silently never started).
     config.plugins.push(new VeliteWebpackPlugin(dev))
     return config
-  },
+  }
 }
 
 class VeliteWebpackPlugin {
   static started = false
   constructor(private readonly dev: boolean) {}
-  apply(compiler: { hooks: { beforeCompile: { tapPromise: (name: string, fn: () => Promise<void>) => void } } }) {
+  apply(compiler: {
+    hooks: {
+      beforeCompile: {
+        tapPromise: (name: string, fn: () => Promise<void>) => void
+      }
+    }
+  }) {
     compiler.hooks.beforeCompile.tapPromise('VeliteWebpackPlugin', async () => {
       if (VeliteWebpackPlugin.started) return
       VeliteWebpackPlugin.started = true

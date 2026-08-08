@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { CodeBlock, Separator } from 'artax-ui'
 
 export const metadata: Metadata = {
-  title: 'Getting Started',
+  title: 'Getting Started'
 }
 
 const installCommand = `pnpm add artax-ui
@@ -69,11 +69,7 @@ export default function GettingStartedPage() {
           artax-ui is distributed as a workspace package. Install it like any
           other dependency:
         </p>
-        <CodeBlock
-          filename="terminal"
-          language="bash"
-          rawCode={installCommand}
-        >
+        <CodeBlock filename="terminal" language="bash" rawCode={installCommand}>
           <pre>
             <code>{installCommand}</code>
           </pre>
@@ -145,8 +141,8 @@ export default function GettingStartedPage() {
         </h2>
         <p className="text-sm text-foreground">
           artax-ui supports light and dark modes via a single{' '}
-          <code className="font-mono text-xs">data-theme</code> attribute on
-          the root element. The ThemeProvider manages the attribute for you and
+          <code className="font-mono text-xs">data-theme</code> attribute on the
+          root element. The ThemeProvider manages the attribute for you and
           exposes a <code className="font-mono text-xs">useTheme()</code> hook
           for programmatic toggles.
         </p>

@@ -5,7 +5,7 @@ import {
   formatStatusTable,
   formatDryRunHeader,
   formatActionLabel,
-  formatColoredDiff,
+  formatColoredDiff
 } from '@/output'
 import type { RegistryItem, ManifestEntry } from 'blink-registry'
 
@@ -16,7 +16,7 @@ const registryItems: RegistryItem[] = [
     type: 'config',
     version: '2026.03.14.1',
     description: 'Prettier config',
-    url: 'https://blakepetersen.io/r/config/prettier.json',
+    url: 'https://blakepetersen.io/r/config/prettier.json'
   },
   {
     slug: 'eslint',
@@ -24,7 +24,7 @@ const registryItems: RegistryItem[] = [
     type: 'config',
     version: '2026.03.14.1',
     description: 'ESLint config',
-    url: 'https://blakepetersen.io/r/config/eslint.json',
+    url: 'https://blakepetersen.io/r/config/eslint.json'
   },
   {
     slug: 'use-local-storage',
@@ -32,8 +32,8 @@ const registryItems: RegistryItem[] = [
     type: 'hook',
     version: '2026.03.14.1',
     description: 'Local storage hook',
-    url: 'https://blakepetersen.io/r/hook/use-local-storage.json',
-  },
+    url: 'https://blakepetersen.io/r/hook/use-local-storage.json'
+  }
 ]
 
 const manifestEntries: ManifestEntry[] = [
@@ -44,7 +44,7 @@ const manifestEntries: ManifestEntry[] = [
     version: '2026.03.14.1',
     scope: 'project',
     installedAt: '2026-03-14T00:00:00.000Z',
-    files: [{ path: '.prettierrc', checksum: 'abc', merge: 'replace' }],
+    files: [{ path: '.prettierrc', checksum: 'abc', merge: 'replace' }]
   },
   {
     slug: 'eslint',
@@ -53,8 +53,8 @@ const manifestEntries: ManifestEntry[] = [
     version: '2026.03.01.1',
     scope: 'project',
     installedAt: '2026-03-01T00:00:00.000Z',
-    files: [{ path: '.eslintrc', checksum: 'def', merge: 'replace' }],
-  },
+    files: [{ path: '.eslintrc', checksum: 'def', merge: 'replace' }]
+  }
 ]
 
 describe('formatListTable', () => {
@@ -111,7 +111,11 @@ describe('formatActionLabel', () => {
 
 describe('formatColoredDiff', () => {
   it('produces unified diff output', () => {
-    const result = formatColoredDiff('line 1\nline 2\n', 'line 1\nline 3\n', 'test.txt')
+    const result = formatColoredDiff(
+      'line 1\nline 2\n',
+      'line 1\nline 3\n',
+      'test.txt'
+    )
     // Should contain diff markers (the raw content may be wrapped in ANSI codes)
     expect(result).toBeTruthy()
     expect(result.length).toBeGreaterThan(0)

@@ -7,18 +7,21 @@ Luna is a modern, full-stack photography portfolio and booking management system
 ### Technology Stack
 
 **Frontend**
+
 - Next.js 15.5 (App Router)
 - TypeScript 5.5+ (strict mode)
 - React 18 (server components by default)
 - Tailwind CSS 3.4
 
 **Backend**
+
 - Next.js API Routes
 - NextAuth.js v5 (authentication)
 - Prisma ORM
 - PostgreSQL
 
 **Infrastructure**
+
 - Email: Resend
 - Image Processing: Sharp
 - Image Storage: Local filesystem (Vercel Blob optional)
@@ -108,6 +111,7 @@ prisma/
 **Rationale**: App Router provides better performance through React Server Components, streaming, and improved data fetching patterns.
 
 **Implementation**:
+
 - Server components fetch data directly (no `getServerSideProps`)
 - Layouts for shared UI across route segments
 - Loading states with `loading.tsx`
@@ -118,6 +122,7 @@ prisma/
 **Rationale**: Reduces client-side JavaScript bundle size and improves performance.
 
 **Guidelines**:
+
 - Use server components unless interactivity is required
 - Mark with `'use client'` only for:
   - Event handlers
@@ -130,6 +135,7 @@ prisma/
 **Rationale**: Type-safe database access with excellent TypeScript integration.
 
 **Benefits**:
+
 - Auto-generated types from schema
 - Migration management
 - Query optimization
@@ -140,6 +146,7 @@ prisma/
 **Rationale**: Simplifies initial setup and reduces dependencies.
 
 **Trade-offs**:
+
 - Pros: No external service setup, faster local development
 - Cons: Not suitable for horizontal scaling
 - Migration path: Vercel Blob integration ready
@@ -149,6 +156,7 @@ prisma/
 **Rationale**: Stateless authentication scales better than session stores.
 
 **Implementation**:
+
 - Sessions stored in database via Prisma adapter
 - JWT contains minimal data (id, role)
 - Tokens refreshed on page loads
@@ -231,10 +239,10 @@ Email sends are fire-and-forget to prevent API delays:
 
 ```typescript
 // Email sent asynchronously
-sendEmail(data).catch(console.error);
+sendEmail(data).catch(console.error)
 
 // Response sent immediately
-return NextResponse.json({ success: true });
+return NextResponse.json({ success: true })
 ```
 
 ### Template System

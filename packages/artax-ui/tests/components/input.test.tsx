@@ -21,7 +21,9 @@ describe('Input', () => {
   })
 
   it('passes through native input props', () => {
-    render(<Input data-testid="input" placeholder="enter command" type="text" />)
+    render(
+      <Input data-testid="input" placeholder="enter command" type="text" />
+    )
     const input = screen.getByTestId('input') as HTMLInputElement
     expect(input.placeholder).toBe('enter command')
     expect(input.type).toBe('text')

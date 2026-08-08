@@ -6,14 +6,14 @@ import {
   DX_COLLECTIONS,
   crossRefRegex,
   VOICE_PRIMITIVES,
-  VoiceSchema,
+  VoiceSchema
 } from '../src/index'
 
 describe('DxFrontmatterSchema', () => {
   const validSkillFrontmatter = {
     title: 'Writing Custom Claude Code Skills',
     description: 'How to structure SKILL.md files for effective AI assistance',
-    applies_to: ['claude-code'],
+    applies_to: ['claude-code']
   }
 
   it('accepts valid skill frontmatter with all required fields', () => {
@@ -24,7 +24,7 @@ describe('DxFrontmatterSchema', () => {
   it('rejects frontmatter missing required field title', () => {
     const result = DxFrontmatterSchema.safeParse({
       description: 'Some description',
-      applies_to: ['test'],
+      applies_to: ['test']
     })
     expect(result.success).toBe(false)
   })
@@ -46,7 +46,7 @@ describe('DxFrontmatterSchema', () => {
   it('rejects invalid voice value', () => {
     const result = DxFrontmatterSchema.safeParse({
       ...validSkillFrontmatter,
-      voice: ['not-a-voice'],
+      voice: ['not-a-voice']
     })
     expect(result.success).toBe(false)
   })
@@ -54,7 +54,7 @@ describe('DxFrontmatterSchema', () => {
   it('accepts a valid voice primitive', () => {
     const result = DxFrontmatterSchema.safeParse({
       ...validSkillFrontmatter,
-      voice: ['author-note'],
+      voice: ['author-note']
     })
     expect(result.success).toBe(true)
   })
@@ -62,7 +62,7 @@ describe('DxFrontmatterSchema', () => {
   it('accepts an ISO date updated_context', () => {
     const result = DxFrontmatterSchema.safeParse({
       ...validSkillFrontmatter,
-      updated_context: '2026-07-01',
+      updated_context: '2026-07-01'
     })
     expect(result.success).toBe(true)
   })
@@ -70,7 +70,7 @@ describe('DxFrontmatterSchema', () => {
   it('rejects a non-ISO updated_context (closes the s.isodate drift)', () => {
     const result = DxFrontmatterSchema.safeParse({
       ...validSkillFrontmatter,
-      updated_context: 'last week',
+      updated_context: 'last week'
     })
     expect(result.success).toBe(false)
   })
@@ -122,7 +122,7 @@ describe('getDxJsonSchema', () => {
       'category',
       'decisions',
       'related',
-      'updated_context',
+      'updated_context'
     ]
     for (const key of expectedKeys) {
       expect(jsonSchema.properties).toHaveProperty(key)

@@ -7,12 +7,14 @@ Your portfolio is the heart of your website, showcasing your photography work to
 A **gallery** is a collection of images from a specific shoot or category.
 
 **Examples**:
+
 - "Summer Weddings 2024"
 - "Family Portraits"
 - "Commercial Work"
 - "Maternity Sessions"
 
 Each gallery has:
+
 - **Title**: Display name (e.g., "Beach Wedding Collection")
 - **Slug**: URL-friendly version (e.g., "beach-wedding-collection")
 - **Description**: Optional text about the gallery
@@ -66,6 +68,7 @@ Each gallery has:
 ### Best Practices
 
 **Naming Galleries**:
+
 - Be specific and descriptive
 - Include shoot type or theme
 - Include year for time-based collections
@@ -76,12 +79,14 @@ Each gallery has:
   - ❌ "Photos"
 
 **Organizing Galleries**:
+
 - Use sort order to highlight your best work
 - Feature your most impressive galleries
 - Update featured galleries seasonally
 - Keep total galleries manageable (10-20)
 
 **Descriptions**:
+
 - Keep it brief (2-3 sentences)
 - Mention unique aspects of the shoot
 - Include location or season if relevant
@@ -110,6 +115,7 @@ To reorder galleries on your portfolio page:
 3. Use increments of 10 (0, 10, 20) for easy reordering
 
 **Example**:
+
 - Featured wedding gallery: Sort Order = 0
 - Recent portrait work: Sort Order = 10
 - Older work: Sort Order = 20
@@ -148,16 +154,19 @@ The cover image is the main photo shown on the gallery card:
 ### Image Requirements
 
 **Supported Formats**:
+
 - JPEG (.jpg, .jpeg)
 - PNG (.png)
 - WebP (.webp)
 
 **File Size**:
+
 - No hard limit, but smaller files upload faster
 - Images are automatically optimized
 
 **Automatic Processing**:
 Your images are automatically:
+
 - Resized to maximum 2400px (preserves quality for large screens)
 - Converted to WebP format (smaller file size, faster loading)
 - Compressed at 85% quality (great visual quality, optimized size)
@@ -184,16 +193,19 @@ After uploading, you can:
 ### Best Practices for Images
 
 **Selection**:
+
 - Choose your absolute best work (10-30 images per gallery)
 - Tell a story with your image sequence
 - Include variety (details, wide shots, candids, posed)
 
 **Image Order**:
+
 - Start with a strong, attention-grabbing image
 - Build a narrative flow
 - End with a memorable shot
 
 **Quality Over Quantity**:
+
 - Better to have 15 amazing photos than 50 mediocre ones
 - Curate ruthlessly
 - Update galleries to remove weaker images
@@ -205,6 +217,7 @@ After uploading, you can:
 **Warning**: Deleting a gallery also deletes all images in it. This cannot be undone.
 
 **Alternative**: Instead of deleting, consider:
+
 - Unmarking as "Featured" to hide from homepage
 - Updating the sort order to move it down the list
 
@@ -223,12 +236,14 @@ Featured galleries appear on your homepage, making them highly visible to visito
 ### How Many to Feature?
 
 **Recommended**: 3-6 galleries
+
 - Too few: Homepage looks sparse
 - Too many: Overwhelming for visitors
 
 ### Which Galleries to Feature?
 
 Feature galleries that:
+
 - Showcase your best work
 - Represent different styles/services
 - Appeal to your target clients
@@ -237,6 +252,7 @@ Feature galleries that:
 ### Seasonal Updates
 
 Update featured galleries periodically:
+
 - **Spring/Summer**: Beach weddings, outdoor portraits
 - **Fall/Winter**: Cozy indoor sessions, holiday photos
 - **Throughout Year**: Mix recent and evergreen work
@@ -253,11 +269,13 @@ To see how your portfolio appears to visitors:
 ### Portfolio Features (Client View)
 
 **Gallery Grid**:
+
 - Cards showing cover image, title, and description
 - Filter by shoot type
 - Click to view full gallery
 
 **Gallery Page**:
+
 - All images in a responsive grid
 - Click any image to open lightbox
 - Navigate with arrow keys or on-screen arrows
@@ -322,6 +340,7 @@ A: Yes! Select multiple images at once when uploading. They'll process one after
 ## Need Help?
 
 If you encounter any issues:
+
 - Check [Troubleshooting](./troubleshooting.md)
 - Contact your web developer for technical issues
 - Review this guide for step-by-step instructions

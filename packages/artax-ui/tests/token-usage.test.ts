@@ -27,30 +27,32 @@ describe('token-usage: no legacy tokens in components', () => {
   })
 
   describe('no terminal-* class references in components', () => {
-    it.each(
-      componentFiles.map(f => [relative(componentDir, f), f])
-    )('%s has no terminal-* classes', (_name, filePath) => {
-      const content = readFileSync(filePath as string, 'utf-8')
-      // Strip ABOUTME and comment lines to avoid false positives
-      const lines = content.split('\n').filter(
-        line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line)
-      )
-      const codeContent = lines.join('\n')
-      expect(codeContent).not.toMatch(/terminal-/)
-    })
+    it.each(componentFiles.map(f => [relative(componentDir, f), f]))(
+      '%s has no terminal-* classes',
+      (_name, filePath) => {
+        const content = readFileSync(filePath as string, 'utf-8')
+        // Strip ABOUTME and comment lines to avoid false positives
+        const lines = content
+          .split('\n')
+          .filter(line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line))
+        const codeContent = lines.join('\n')
+        expect(codeContent).not.toMatch(/terminal-/)
+      }
+    )
   })
 
   describe('no amber-accent class references in components', () => {
-    it.each(
-      componentFiles.map(f => [relative(componentDir, f), f])
-    )('%s has no amber-accent classes', (_name, filePath) => {
-      const content = readFileSync(filePath as string, 'utf-8')
-      const lines = content.split('\n').filter(
-        line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line)
-      )
-      const codeContent = lines.join('\n')
-      expect(codeContent).not.toMatch(/amber-accent/)
-    })
+    it.each(componentFiles.map(f => [relative(componentDir, f), f]))(
+      '%s has no amber-accent classes',
+      (_name, filePath) => {
+        const content = readFileSync(filePath as string, 'utf-8')
+        const lines = content
+          .split('\n')
+          .filter(line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line))
+        const codeContent = lines.join('\n')
+        expect(codeContent).not.toMatch(/amber-accent/)
+      }
+    )
   })
 })
 
@@ -58,9 +60,9 @@ describe('token-usage: no legacy tokens in mdx/components.tsx', () => {
   const mdxPath = resolve(SRC_DIR, 'mdx/components.tsx')
   const content = readFileSync(mdxPath, 'utf-8')
   // Strip comments
-  const lines = content.split('\n').filter(
-    line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line)
-  )
+  const lines = content
+    .split('\n')
+    .filter(line => !/^\s*(\/\/|\/?\*|\*\/)/.test(line))
   const codeContent = lines.join('\n')
 
   it('has no terminal-* class references', () => {
@@ -73,10 +75,7 @@ describe('token-usage: no legacy tokens in mdx/components.tsx', () => {
 })
 
 describe('token-usage: no legacy tokens in theme.css @theme block', () => {
-  const themeCss = readFileSync(
-    resolve(SRC_DIR, 'styles/theme.css'),
-    'utf-8'
-  )
+  const themeCss = readFileSync(resolve(SRC_DIR, 'styles/theme.css'), 'utf-8')
 
   // Extract the @theme block content
   const themeMatch = themeCss.match(/@theme\s*\{([\s\S]*?)\}/)

@@ -15,10 +15,7 @@ export function resolveDestination(
   return join(cwd, filePath)
 }
 
-export function resolveManifestRoot(
-  scope: Scope,
-  cwd: string
-): string {
+export function resolveManifestRoot(scope: Scope, cwd: string): string {
   if (scope === 'global') {
     return homedir()
   }

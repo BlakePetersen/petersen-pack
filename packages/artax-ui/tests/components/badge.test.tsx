@@ -16,7 +16,11 @@ describe('Badge', () => {
   })
 
   it('supports custom className', () => {
-    render(<Badge data-testid="badge" className="custom">active</Badge>)
+    render(
+      <Badge data-testid="badge" className="custom">
+        active
+      </Badge>
+    )
     expect(screen.getByTestId('badge').className).toContain('custom')
   })
 
@@ -26,32 +30,56 @@ describe('Badge', () => {
   })
 
   it('renders outline variant', () => {
-    render(<Badge data-testid="badge" variant="outline">pending</Badge>)
+    render(
+      <Badge data-testid="badge" variant="outline">
+        pending
+      </Badge>
+    )
     expect(screen.getByTestId('badge')).toBeInTheDocument()
   })
 
   it('renders secondary variant', () => {
-    render(<Badge data-testid="badge" variant="secondary">archived</Badge>)
+    render(
+      <Badge data-testid="badge" variant="secondary">
+        archived
+      </Badge>
+    )
     expect(screen.getByTestId('badge')).toBeInTheDocument()
   })
 
   it('renders info variant with info token', () => {
-    render(<Badge data-testid="badge" variant="info">info</Badge>)
+    render(
+      <Badge data-testid="badge" variant="info">
+        info
+      </Badge>
+    )
     expect(screen.getByTestId('badge').className).toContain('text-info')
   })
 
   it('renders success variant with success token', () => {
-    render(<Badge data-testid="badge" variant="success">shipped</Badge>)
+    render(
+      <Badge data-testid="badge" variant="success">
+        shipped
+      </Badge>
+    )
     expect(screen.getByTestId('badge').className).toContain('text-success')
   })
 
   it('renders warning variant with warning token', () => {
-    render(<Badge data-testid="badge" variant="warning">beta</Badge>)
+    render(
+      <Badge data-testid="badge" variant="warning">
+        beta
+      </Badge>
+    )
     expect(screen.getByTestId('badge').className).toContain('text-warning')
   })
 
   it('renders destructive variant with destructive token', () => {
-    render(<Badge data-testid="badge" variant="destructive">danger</Badge>)
+    render(
+      <Badge data-testid="badge" variant="destructive">
+        danger
+      </Badge>
+    )
     expect(screen.getByTestId('badge').className).toContain('text-destructive')
   })
 })

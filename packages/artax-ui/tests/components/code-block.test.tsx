@@ -12,7 +12,7 @@ describe('CodeBlock', () => {
             <span className="line">const x = 1</span>
           </code>
         </pre>
-      </CodeBlock>,
+      </CodeBlock>
     )
     expect(screen.getByText('const x = 1')).toBeInTheDocument()
   })
@@ -29,7 +29,7 @@ describe('CodeBlock', () => {
 
   it('header bar hidden when no filename and no language', () => {
     const { container } = render(
-      <CodeBlock data-testid="codeblock">code</CodeBlock>,
+      <CodeBlock data-testid="codeblock">code</CodeBlock>
     )
     // No header bar element should exist
     const headerBar = container.querySelector('[data-testid="code-header"]')
@@ -47,7 +47,7 @@ describe('CodeBlock', () => {
     render(
       <CodeBlock className="custom" data-testid="codeblock">
         code
-      </CodeBlock>,
+      </CodeBlock>
     )
     expect(screen.getByTestId('codeblock').className).toContain('custom')
   })

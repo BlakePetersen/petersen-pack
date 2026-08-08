@@ -1,11 +1,6 @@
 // ABOUTME: Tests for the blink status command.
 // ABOUTME: Validates installed item display, --json output, uninitialized state, and network error handling.
-import {
-  mkdtempSync,
-  writeFileSync,
-  mkdirSync,
-  rmSync,
-} from 'node:fs'
+import { mkdtempSync, writeFileSync, mkdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR } from '@/manifest'
@@ -18,9 +13,7 @@ const sampleEntry: ManifestEntry = {
   version: '2026.03.14.1',
   scope: 'project',
   installedAt: '2026-03-14T00:00:00.000Z',
-  files: [
-    { path: '.prettierrc', checksum: 'abc123', merge: 'replace' },
-  ],
+  files: [{ path: '.prettierrc', checksum: 'abc123', merge: 'replace' }]
 }
 
 const validIndex: RegistryIndex = {
@@ -31,20 +24,20 @@ const validIndex: RegistryIndex = {
       type: 'config',
       version: '2026.03.15.1',
       description: 'Prettier config',
-      url: 'https://blakepetersen.io/r/config/prettier.json',
-    },
+      url: 'https://blakepetersen.io/r/config/prettier.json'
+    }
   ],
-  generatedAt: '2026-03-15T00:00:00.000Z',
+  generatedAt: '2026-03-15T00:00:00.000Z'
 }
 
 let mockHomedir: string
 jest.mock('node:os', () => ({
   ...jest.requireActual('node:os'),
-  homedir: () => mockHomedir,
+  homedir: () => mockHomedir
 }))
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config,
+  defineCommand: (config: any) => config
 }))
 
 const consolaMock = {
@@ -52,33 +45,33 @@ const consolaMock = {
   success: jest.fn(),
   log: jest.fn(),
   warn: jest.fn(),
-  error: jest.fn(),
+  error: jest.fn()
 }
 
 jest.mock('consola', () => ({
   consola: consolaMock,
   default: consolaMock,
-  __esModule: true,
+  __esModule: true
 }))
 
 jest.mock('picocolors', () => ({
   default: {
     dim: (s: string) => s,
-    bold: (s: string) => s,
+    bold: (s: string) => s
   },
   __esModule: true,
   dim: (s: string) => s,
-  bold: (s: string) => s,
+  bold: (s: string) => s
 }))
 
 const mockFetchIndex = jest.fn()
 jest.mock('@/registry', () => ({
-  fetchIndex: (...args: any[]) => mockFetchIndex(...args),
+  fetchIndex: (...args: any[]) => mockFetchIndex(...args)
 }))
 
 const mockFormatStatusTable = jest.fn().mockReturnValue('status table')
 jest.mock('@/output', () => ({
-  formatStatusTable: (...args: any[]) => mockFormatStatusTable(...args),
+  formatStatusTable: (...args: any[]) => mockFormatStatusTable(...args)
 }))
 
 let tmpDir: string
@@ -98,7 +91,9 @@ beforeEach(() => {
   consolaMock.log.mockClear()
   consolaMock.warn.mockClear()
   consolaMock.error.mockClear()
-  mockProcessExit = jest.spyOn(process, 'exit').mockImplementation((() => {}) as any)
+  mockProcessExit = jest
+    .spyOn(process, 'exit')
+    .mockImplementation((() => {}) as any)
   mockConsoleLog = jest.spyOn(console, 'log').mockImplementation(() => {})
 })
 
@@ -128,16 +123,21 @@ describe('blink status --global', () => {
   it('reads the global manifest from the home directory', async () => {
     // Global installs were write-only: apply --global recorded to the homedir
     // manifest, but every reader hardcoded process.cwd().
-    const globalEntry = { ...sampleEntry, slug: 'global-skill', name: 'Global Skill', scope: 'global' as const }
+    const globalEntry = {
+      ...sampleEntry,
+      slug: 'global-skill',
+      name: 'Global Skill',
+      scope: 'global' as const
+    }
     mkdirSync(join(mockHomedir, BLINK_DIR), { recursive: true })
     writeFileSync(
       join(mockHomedir, BLINK_DIR, 'manifest.json'),
-      JSON.stringify({ version: 1, items: [globalEntry] }, null, 2),
+      JSON.stringify({ version: 1, items: [globalEntry] }, null, 2)
     )
 
     await runStatus({ json: true, global: true })
 
-    const logged = mockConsoleLog.mock.calls.map((c) => c[0]).join('\n')
+    const logged = mockConsoleLog.mock.calls.map(c => c[0]).join('\n')
     expect(logged).toContain('global-skill')
   })
 })
@@ -200,9 +200,6 @@ describe('blink status', () => {
 
     await runStatus()
 
-    expect(mockFormatStatusTable).toHaveBeenCalledWith(
-      [sampleEntry],
-      []
-    )
+    expect(mockFormatStatusTable).toHaveBeenCalledWith([sampleEntry], [])
   })
 })

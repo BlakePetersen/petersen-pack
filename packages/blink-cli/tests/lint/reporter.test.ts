@@ -6,9 +6,24 @@ import type { LintDiagnostic } from '@/lint/types'
 describe('formatDiagnostics', () => {
   it('groups diagnostics by file path with file header', () => {
     const diagnostics: LintDiagnostic[] = [
-      { file: 'content/skills/a.mdx', severity: 'error', rule: 'frontmatter-schema', message: 'missing title' },
-      { file: 'content/skills/a.mdx', severity: 'warning', rule: 'voice-primitive', message: 'voice not used' },
-      { file: 'content/configs/b.mdx', severity: 'error', rule: 'frontmatter-schema', message: 'missing applies_to' },
+      {
+        file: 'content/skills/a.mdx',
+        severity: 'error',
+        rule: 'frontmatter-schema',
+        message: 'missing title'
+      },
+      {
+        file: 'content/skills/a.mdx',
+        severity: 'warning',
+        rule: 'voice-primitive',
+        message: 'voice not used'
+      },
+      {
+        file: 'content/configs/b.mdx',
+        severity: 'error',
+        rule: 'frontmatter-schema',
+        message: 'missing applies_to'
+      }
     ]
     const output = formatDiagnostics(diagnostics)
     expect(output).toContain('content/skills/a.mdx')
@@ -17,7 +32,14 @@ describe('formatDiagnostics', () => {
 
   it('indents each violation under file header with severity, message, and rule name', () => {
     const diagnostics: LintDiagnostic[] = [
-      { file: 'content/skills/a.mdx', severity: 'error', rule: 'frontmatter-schema', message: 'missing title', line: 3, column: 1 },
+      {
+        file: 'content/skills/a.mdx',
+        severity: 'error',
+        rule: 'frontmatter-schema',
+        message: 'missing title',
+        line: 3,
+        column: 1
+      }
     ]
     const output = formatDiagnostics(diagnostics)
     expect(output).toContain('missing title')
@@ -29,7 +51,7 @@ describe('formatDiagnostics', () => {
     const diagnostics: LintDiagnostic[] = [
       { file: 'a.mdx', severity: 'error', rule: 'r1', message: 'm1' },
       { file: 'a.mdx', severity: 'warning', rule: 'r2', message: 'm2' },
-      { file: 'b.mdx', severity: 'error', rule: 'r1', message: 'm3' },
+      { file: 'b.mdx', severity: 'error', rule: 'r1', message: 'm3' }
     ]
     const output = formatDiagnostics(diagnostics)
     expect(output).toContain('2 error')
@@ -43,8 +65,18 @@ describe('formatDiagnostics', () => {
 
   it('handles mixed error and warning severities in output', () => {
     const diagnostics: LintDiagnostic[] = [
-      { file: 'content/a.mdx', severity: 'error', rule: 'frontmatter-schema', message: 'type error' },
-      { file: 'content/a.mdx', severity: 'warning', rule: 'voice-primitive', message: 'missing voice' },
+      {
+        file: 'content/a.mdx',
+        severity: 'error',
+        rule: 'frontmatter-schema',
+        message: 'type error'
+      },
+      {
+        file: 'content/a.mdx',
+        severity: 'warning',
+        rule: 'voice-primitive',
+        message: 'missing voice'
+      }
     ]
     const output = formatDiagnostics(diagnostics)
     expect(output).toContain('error')
@@ -76,8 +108,8 @@ describe('formatDiagnostics', () => {
         '',
         '## Overview',
         '',
-        'Content here.',
-      ].join('\n'),
+        'Content here.'
+      ].join('\n')
     )
 
     const result = await runLint({ contentRoot: dir })
@@ -102,13 +134,15 @@ describe('formatDiagnostics', () => {
         '  - claude-code',
         '---',
         '',
-        '## Content',
-      ].join('\n'),
+        '## Content'
+      ].join('\n')
     )
 
     const result = await runLint({ contentRoot: dir })
     expect(result.diagnostics.length).toBeGreaterThan(0)
-    expect(result.diagnostics.some((d) => d.rule === 'frontmatter-schema')).toBe(true)
+    expect(result.diagnostics.some(d => d.rule === 'frontmatter-schema')).toBe(
+      true
+    )
     expect(result.errorCount).toBeGreaterThan(0)
   })
 })

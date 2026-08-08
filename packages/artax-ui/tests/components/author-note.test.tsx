@@ -41,7 +41,9 @@ describe('AuthorNote', () => {
     const { container } = render(
       <AuthorNote className="custom-class">body</AuthorNote>
     )
-    expect(container.querySelector('aside')?.className).toContain('custom-class')
+    expect(container.querySelector('aside')?.className).toContain(
+      'custom-class'
+    )
   })
 
   // D-05 editorial-voice gate guard — source-grep assertion.

@@ -28,7 +28,9 @@ async function main() {
   console.log(`Found ${galleriesWithImages.length} galleries with images`)
 
   if (galleriesWithImages.length === 0) {
-    console.log('No galleries with images found. Please create some galleries first.')
+    console.log(
+      'No galleries with images found. Please create some galleries first.'
+    )
     return
   }
 
@@ -51,7 +53,9 @@ async function main() {
         sortOrder: i,
       },
     })
-    console.log(`Featured gallery: ${gallery.title} (${gallery._count.images} images)`)
+    console.log(
+      `Featured gallery: ${gallery.title} (${gallery._count.images} images)`
+    )
   }
 
   console.log(`✅ Successfully featured ${galleriestoFeature.length} galleries`)

@@ -38,33 +38,48 @@ function expectValidToken(group: string, key: string, value: string): void {
 
 describe('tokens sync with theme.css', () => {
   describe('bg tokens', () => {
-    it.each(Object.entries(tokens.bg))('%s maps to a valid --color-* property', (key, value) => {
-      expectValidToken('bg', key, value)
-    })
+    it.each(Object.entries(tokens.bg))(
+      '%s maps to a valid --color-* property',
+      (key, value) => {
+        expectValidToken('bg', key, value)
+      }
+    )
   })
 
   describe('text tokens', () => {
-    it.each(Object.entries(tokens.text))('%s maps to a valid --color-* property', (key, value) => {
-      expectValidToken('text', key, value)
-    })
+    it.each(Object.entries(tokens.text))(
+      '%s maps to a valid --color-* property',
+      (key, value) => {
+        expectValidToken('text', key, value)
+      }
+    )
   })
 
   describe('border tokens', () => {
-    it.each(Object.entries(tokens.border))('%s maps to a valid --color-* property', (key, value) => {
-      expectValidToken('border', key, value)
-    })
+    it.each(Object.entries(tokens.border))(
+      '%s maps to a valid --color-* property',
+      (key, value) => {
+        expectValidToken('border', key, value)
+      }
+    )
   })
 
   describe('ring tokens', () => {
-    it.each(Object.entries(tokens.ring))('%s maps to a valid --color-* property', (key, value) => {
-      expectValidToken('ring', key, value)
-    })
+    it.each(Object.entries(tokens.ring))(
+      '%s maps to a valid --color-* property',
+      (key, value) => {
+        expectValidToken('ring', key, value)
+      }
+    )
   })
 
   describe('font tokens', () => {
-    it.each(Object.entries(tokens.font))('%s maps to a valid --font-* property', (key, value) => {
-      expectValidToken('font', key, value)
-    })
+    it.each(Object.entries(tokens.font))(
+      '%s maps to a valid --font-* property',
+      (key, value) => {
+        expectValidToken('font', key, value)
+      }
+    )
   })
 
   describe('CSS → tokens (reverse sync)', () => {
@@ -77,7 +92,7 @@ describe('tokens sync with theme.css', () => {
       '--radius-sm',
       '--radius-md',
       '--radius-lg',
-      '--radius-xl',
+      '--radius-xl'
     ])
 
     /** Build a flat set of CSS custom property names that tokens.ts maps to. */
@@ -94,14 +109,18 @@ describe('tokens sync with theme.css', () => {
 
     /** Extract all --color-*, --font-*, and --radius-* custom property definitions from theme.css. */
     function getCssProperties(): string[] {
-      const matches = [...themeCss.matchAll(/^\s*(--(color|font|radius)-[\w-]+)\s*:/gm)]
+      const matches = [
+        ...themeCss.matchAll(/^\s*(--(color|font|radius)-[\w-]+)\s*:/gm)
+      ]
       return [...new Set(matches.map(m => m[1]))]
     }
 
     it('every --color-*, --font-*, and --radius-* CSS property has a corresponding token', () => {
       const tokenProps = getAllTokenProperties()
       const cssProps = getCssProperties()
-      const missing = cssProps.filter(p => !tokenProps.has(p) && !INTENTIONALLY_EXCLUDED.has(p))
+      const missing = cssProps.filter(
+        p => !tokenProps.has(p) && !INTENTIONALLY_EXCLUDED.has(p)
+      )
       expect(missing).toEqual([])
     })
   })

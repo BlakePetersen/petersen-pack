@@ -7,9 +7,9 @@ jest.mock('@/components/breadcrumbs', () => ({
     if (segments.length < 2) return []
     return segments.map((segment: string, index: number) => ({
       label: segment.replace(/-/g, ' '),
-      href: '/' + segments.slice(0, index + 1).join('/'),
+      href: '/' + segments.slice(0, index + 1).join('/')
     }))
-  },
+  }
 }))
 
 import { buildArticleJsonLd, buildBreadcrumbJsonLd } from '@/lib/metadata'
@@ -19,7 +19,7 @@ describe('buildArticleJsonLd', () => {
     const item = {
       title: 'My Skill',
       description: 'A great skill',
-      slug: 'skills/my-skill',
+      slug: 'skills/my-skill'
     }
     const result = buildArticleJsonLd(item, 'skills')
     expect(result['@type']).toBe('TechArticle')
@@ -30,12 +30,12 @@ describe('buildArticleJsonLd', () => {
     const item = {
       title: 'My Skill',
       description: 'A great skill',
-      slug: 'skills/my-skill',
+      slug: 'skills/my-skill'
     }
     const result = buildArticleJsonLd(item, 'skills')
     expect(result.author).toEqual({
       '@type': 'Person',
-      name: 'Blake Petersen',
+      name: 'Blake Petersen'
     })
   })
 
@@ -44,7 +44,7 @@ describe('buildArticleJsonLd', () => {
       title: 'My Post',
       description: 'A post',
       slug: 'posts/hello-world',
-      date: '2025-06-15',
+      date: '2025-06-15'
     }
     const result = buildArticleJsonLd(item, 'posts')
     expect(result.datePublished).toBe('2025-06-15')
@@ -54,7 +54,7 @@ describe('buildArticleJsonLd', () => {
     const item = {
       title: 'My Skill',
       description: 'A great skill',
-      slug: 'skills/my-skill',
+      slug: 'skills/my-skill'
     }
     const result = buildArticleJsonLd(item, 'skills')
     expect(result).not.toHaveProperty('datePublished')
@@ -65,7 +65,7 @@ describe('buildArticleJsonLd', () => {
       title: 'My Skill',
       description: 'Full description',
       excerpt: 'Short excerpt',
-      slug: 'skills/my-skill',
+      slug: 'skills/my-skill'
     }
     const result = buildArticleJsonLd(item, 'skills')
     expect(result.description).toBe('Short excerpt')
@@ -94,13 +94,13 @@ describe('buildBreadcrumbJsonLd', () => {
       '@type': 'ListItem',
       position: 1,
       name: 'skills',
-      item: 'https://blakepetersen.io/skills',
+      item: 'https://blakepetersen.io/skills'
     })
     expect(arr[1]).toMatchObject({
       '@type': 'ListItem',
       position: 2,
       name: 'my skill',
-      item: 'https://blakepetersen.io/skills/my-skill',
+      item: 'https://blakepetersen.io/skills/my-skill'
     })
   })
 })

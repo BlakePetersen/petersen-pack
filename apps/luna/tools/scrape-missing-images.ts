@@ -31,10 +31,13 @@ if (!fs.existsSync(DOWNLOAD_DIR)) {
   fs.mkdirSync(DOWNLOAD_DIR, { recursive: true })
 }
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function sanitizeFilename(filename: string): string {
-  return filename.replace(/[^a-zA-Z0-9.-]/g, '-').replace(/-+/g, '-').toLowerCase()
+  return filename
+    .replace(/[^a-zA-Z0-9.-]/g, '-')
+    .replace(/-+/g, '-')
+    .toLowerCase()
 }
 
 async function downloadImage(url: string, filepath: string): Promise<void> {
@@ -42,13 +45,17 @@ async function downloadImage(url: string, filepath: string): Promise<void> {
     responseType: 'arraybuffer',
     timeout: 30000,
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-    }
+      'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+    },
   })
   fs.writeFileSync(filepath, response.data)
 }
 
-async function processImage(inputPath: string, outputPath: string): Promise<{ width: number; height: number }> {
+async function processImage(
+  inputPath: string,
+  outputPath: string
+): Promise<{ width: number; height: number }> {
   const buffer = fs.readFileSync(inputPath)
   const metadata = await sharp(buffer).metadata()
 
@@ -73,8 +80,9 @@ async function scrapeGalleryImages(galleryPath: string): Promise<string[]> {
 
   const response = await axios.get(url, {
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-    }
+      'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+    },
   })
 
   const $ = cheerio.load(response.data)
@@ -108,7 +116,13 @@ async function scrapeGalleryImages(galleryPath: string): Promise<string[]> {
     const $img = $(element)
     let src = $img.attr('src')
 
-    if (src && (src.includes('.jpg') || src.includes('.jpeg') || src.includes('.png') || src.includes('.webp'))) {
+    if (
+      src &&
+      (src.includes('.jpg') ||
+        src.includes('.jpeg') ||
+        src.includes('.png') ||
+        src.includes('.webp'))
+    ) {
       if (src.startsWith('//')) {
         src = `https:${src}`
       } else if (src.startsWith('/')) {
@@ -140,12 +154,12 @@ async function scrapeMissingImages() {
       where: { slug: gallery.slug },
       include: {
         images: {
-          select: { url: true }
+          select: { url: true },
         },
         _count: {
-          select: { images: true }
-        }
-      }
+          select: { images: true },
+        },
+      },
     })
 
     if (!dbGallery) {
@@ -217,7 +231,10 @@ async function scrapeMissingImages() {
 
         await delay(DELAY_MS)
       } catch (error) {
-        console.error(`    ✗ Failed:`, error instanceof Error ? error.message : error)
+        console.error(
+          `    ✗ Failed:`,
+          error instanceof Error ? error.message : error
+        )
         if (fs.existsSync(tempPath)) {
           fs.unlinkSync(tempPath)
         }

@@ -232,7 +232,7 @@ import { BlogCardSkeleton } from '@/components/commons/Skeleton'
 
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-white px-gutter py-page-top dark:bg-gray-950">
+    <div className="px-gutter py-page-top min-h-screen bg-white dark:bg-gray-950">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 animate-pulse">
           <div className="mb-4 h-12 w-64 rounded bg-gray-200 dark:bg-gray-800" />
@@ -257,7 +257,7 @@ import { GalleryCardSkeleton } from '@/components/commons/Skeleton'
 
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-white px-gutter py-page-top dark:bg-gray-950">
+    <div className="px-gutter py-page-top min-h-screen bg-white dark:bg-gray-950">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 9 }).map((_, i) => (

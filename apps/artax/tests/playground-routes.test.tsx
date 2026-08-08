@@ -7,12 +7,12 @@ import type { ReactNode } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 jest.mock('next/navigation', () => ({
-  useSearchParams: jest.fn(),
+  useSearchParams: jest.fn()
 }))
 
 jest.mock('@/lib/playground-url-state', () => ({
   ...jest.requireActual('@/lib/playground-url-state'),
-  pushPlaygroundParams: jest.fn(),
+  pushPlaygroundParams: jest.fn()
 }))
 
 // react-live is mocked so the JSX editor (when toggled on) does not run Sucrase
@@ -26,7 +26,7 @@ jest.mock('react-live', () => ({
   ),
   LiveEditor: () => <div data-testid="live-editor" />,
   LivePreview: () => <div data-testid="live-preview" />,
-  LiveError: () => null,
+  LiveError: () => null
 }))
 
 import { ComponentPageClient } from '@/components/component-page-client'
@@ -58,14 +58,14 @@ const ENABLED: ReadonlyArray<{ tier: string; slug: string }> = [
   { tier: 'molecules', slug: 'table' },
   { tier: 'molecules', slug: 'callout' },
   { tier: 'molecules', slug: 'code-block' },
-  { tier: 'molecules', slug: 'tabs' },
+  { tier: 'molecules', slug: 'tabs' }
 ]
 
 const EXCLUDED: ReadonlyArray<{ tier: string; slug: string }> = [
   { tier: 'molecules', slug: 'tooltip' },
   { tier: 'organisms', slug: 'accordion' },
   { tier: 'organisms', slug: 'dialog' },
-  { tier: 'organisms', slug: 'dropdown' },
+  { tier: 'organisms', slug: 'dropdown' }
 ]
 
 describe('playground routes — Playground tab visibility', () => {
@@ -91,9 +91,7 @@ describe('playground routes — Playground tab visibility', () => {
       it('has no <TabsTrigger value="playground">', () => {
         render(<ComponentPageClient tier={tier} slug={slug} />)
 
-        expect(
-          screen.queryByRole('tab', { name: 'Playground' })
-        ).toBeNull()
+        expect(screen.queryByRole('tab', { name: 'Playground' })).toBeNull()
       })
 
       it('still renders the Code and Props tabs', () => {

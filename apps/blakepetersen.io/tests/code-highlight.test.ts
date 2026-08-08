@@ -25,8 +25,8 @@ describe('Code Highlighting (CONT-04b)', () => {
   })
 
   test('Shiki-processed code blocks contain styled span elements with color values', () => {
-    const eslintConfig = configs.find((c) =>
-      c.slug.includes('eslint-flat-config'),
+    const eslintConfig = configs.find(c =>
+      c.slug.includes('eslint-flat-config')
     )
     expect(eslintConfig).toBeDefined()
 
@@ -35,8 +35,8 @@ describe('Code Highlighting (CONT-04b)', () => {
   })
 
   test('code blocks contain shiki class marker', () => {
-    const eslintConfig = configs.find((c) =>
-      c.slug.includes('eslint-flat-config'),
+    const eslintConfig = configs.find(c =>
+      c.slug.includes('eslint-flat-config')
     )
     expect(eslintConfig).toBeDefined()
 
@@ -45,8 +45,8 @@ describe('Code Highlighting (CONT-04b)', () => {
   })
 
   test('code blocks contain token spans, not raw unhighlighted text', () => {
-    const eslintConfig = configs.find((c) =>
-      c.slug.includes('eslint-flat-config'),
+    const eslintConfig = configs.find(c =>
+      c.slug.includes('eslint-flat-config')
     )
     expect(eslintConfig).toBeDefined()
 
@@ -59,7 +59,7 @@ describe('Line Highlighting (CONT-04c)', () => {
   test('meta string {1} produces highlighted class on a line span', () => {
     const configs = readCollection('configs')
     const eslintConfig = configs.find((c: { slug: string }) =>
-      c.slug.includes('eslint-flat-config'),
+      c.slug.includes('eslint-flat-config')
     )
     expect(eslintConfig).toBeDefined()
 

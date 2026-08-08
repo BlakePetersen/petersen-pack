@@ -25,27 +25,27 @@ describe('Content Pipeline (CONT-01)', () => {
 
   test.each(['skills', 'hooks', 'configs', 'guides', 'posts'])(
     '%s collection produces a non-empty JSON array',
-    (collection) => {
+    collection => {
       const items = readCollection(collection)
       expect(Array.isArray(items)).toBe(true)
       expect(items.length).toBeGreaterThan(0)
-    },
+    }
   )
 
   test.each(['skills', 'hooks', 'configs', 'guides', 'posts'])(
     'each %s item has compiled MDX code field',
-    (collection) => {
+    collection => {
       const items = readCollection(collection)
       for (const item of items) {
         expect(typeof item.code).toBe('string')
         expect(item.code.length).toBeGreaterThan(0)
       }
-    },
+    }
   )
 
   test.each(['skills', 'hooks', 'configs', 'guides', 'posts'])(
     'each %s item has computed fields: excerpt, readingTime, wordCount',
-    (collection) => {
+    collection => {
       const items = readCollection(collection)
       for (const item of items) {
         expect(typeof item.excerpt).toBe('string')
@@ -53,13 +53,13 @@ describe('Content Pipeline (CONT-01)', () => {
         expect(typeof item.wordCount).toBe('number')
         expect(item.wordCount).toBeGreaterThan(0)
       }
-    },
+    }
   )
 
   test('draft items are excluded when NODE_ENV=production', () => {
     const result = execSync('NODE_ENV=production pnpm velite', {
       cwd: appRoot,
-      stdio: 'pipe',
+      stdio: 'pipe'
     })
     const collections = ['skills', 'hooks', 'configs', 'guides', 'posts']
     for (const name of collections) {

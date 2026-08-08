@@ -40,16 +40,18 @@ async function downloadImage(url: string, filepath: string): Promise<void> {
   const cleanUrl = url.split('?')[0] // Remove query params
 
   return new Promise((resolve, reject) => {
-    https.get(cleanUrl, (response) => {
-      if (response.statusCode === 200) {
-        const writeStream = fs.createWriteStream(filepath)
-        pipeline(response, writeStream)
-          .then(() => resolve())
-          .catch(reject)
-      } else {
-        reject(new Error(`Failed to download: ${response.statusCode}`))
-      }
-    }).on('error', reject)
+    https
+      .get(cleanUrl, (response) => {
+        if (response.statusCode === 200) {
+          const writeStream = fs.createWriteStream(filepath)
+          pipeline(response, writeStream)
+            .then(() => resolve())
+            .catch(reject)
+        } else {
+          reject(new Error(`Failed to download: ${response.statusCode}`))
+        }
+      })
+      .on('error', reject)
   })
 }
 
@@ -64,7 +66,7 @@ async function main() {
 
   // Get galleries
   const galleries = await prisma.gallery.findMany()
-  const galleryMap = new Map(galleries.map(g => [g.slug, g]))
+  const galleryMap = new Map(galleries.map((g) => [g.slug, g]))
 
   for (const [gallerySlug, urls] of Object.entries(imageData)) {
     const gallery = galleryMap.get(gallerySlug)

@@ -22,7 +22,7 @@ describe('scaffold round-trip', () => {
         slug: `test-roundtrip-${collection}`,
         contentRoot: tmpDir,
         dryRun: false,
-        force: false,
+        force: false
       })
     }
   })
@@ -33,7 +33,7 @@ describe('scaffold round-trip', () => {
 
   test.each(collections)(
     'blink scaffold %s produces schema-valid MDX',
-    (collection) => {
+    collection => {
       const plural = collection + 's'
       const mdxPath = join(tmpDir, plural, `test-roundtrip-${collection}.mdx`)
       expect(existsSync(mdxPath)).toBe(true)
@@ -45,31 +45,31 @@ describe('scaffold round-trip', () => {
       if (!parsed.success) {
         // Surface Zod errors for debugging
         throw new Error(
-          `Schema validation failed for ${collection}:\n${JSON.stringify(parsed.error.issues, null, 2)}`,
+          `Schema validation failed for ${collection}:\n${JSON.stringify(parsed.error.issues, null, 2)}`
         )
       }
 
       expect(parsed.success).toBe(true)
-    },
+    }
   )
 
   test.each(['skill', 'config', 'hook'] as const)(
     'blink scaffold %s produces companion .artifact.md',
-    (collection) => {
+    collection => {
       const artifactPath = join(
         tmpDir,
         collection + 's',
-        `test-roundtrip-${collection}.artifact.md`,
+        `test-roundtrip-${collection}.artifact.md`
       )
       expect(existsSync(artifactPath)).toBe(true)
-    },
+    }
   )
 
   test('blink scaffold guide does NOT produce .artifact.md', () => {
     const artifactPath = join(
       tmpDir,
       'guides',
-      'test-roundtrip-guide.artifact.md',
+      'test-roundtrip-guide.artifact.md'
     )
     expect(existsSync(artifactPath)).toBe(false)
   })

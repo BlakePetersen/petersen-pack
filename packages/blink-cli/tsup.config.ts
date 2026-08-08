@@ -18,7 +18,7 @@ export default defineConfig({
       // gray-matter uses CJS require('fs') internally; esbuild's ESM __require shim',
       // does not resolve Node builtins. Provide a real createRequire-based shim.',
       'import { createRequire as __gm_createRequire } from "node:module";',
-      'const require = __gm_createRequire(import.meta.url);',
-    ].join('\n'),
-  },
+      'const require = __gm_createRequire(import.meta.url);'
+    ].join('\n')
+  }
 })

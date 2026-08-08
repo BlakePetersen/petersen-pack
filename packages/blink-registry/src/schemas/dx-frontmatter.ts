@@ -51,7 +51,7 @@ export const DxFrontmatterSchema = z.object({
     .array(z.object({ choice: z.string(), rationale: z.string() }))
     .default([]),
   related: z.array(CrossRefSchema).default([]),
-  updated_context: z.iso.date().optional(),
+  updated_context: z.iso.date().optional()
 })
 
 export type DxFrontmatter = z.infer<typeof DxFrontmatterSchema>

@@ -15,13 +15,14 @@ export function RelatedContent({ items }: { items: RelatedItem[] }) {
     <nav aria-label="Related content" className="p-4 font-mono text-xs">
       <p className="mb-3 text-info">{'// related'}</p>
       <ul className="space-y-1.5">
-        {items.map((item) => (
+        {items.map(item => (
           <li key={item.href}>
             <Link
               href={item.href}
               className="text-muted-foreground hover:text-info"
             >
-              {'> '}{item.title}
+              {'> '}
+              {item.title}
             </Link>
           </li>
         ))}

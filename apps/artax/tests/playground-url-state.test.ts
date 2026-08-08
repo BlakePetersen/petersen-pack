@@ -5,7 +5,7 @@
 import {
   encodePlaygroundParams,
   decodePlaygroundParams,
-  pushPlaygroundParams,
+  pushPlaygroundParams
 } from '@/lib/playground-url-state'
 
 describe('playground-url-state', () => {
@@ -21,7 +21,7 @@ describe('playground-url-state', () => {
       const params = new URLSearchParams(encoded)
       expect(decodePlaygroundParams(params)).toEqual({
         variant: 'outline',
-        size: 'sm',
+        size: 'sm'
       })
     })
   })
@@ -43,11 +43,13 @@ describe('playground-url-state', () => {
     })
 
     it('handles multiple p[*] params in one query string', () => {
-      const params = new URLSearchParams('p[variant]=outline&p[size]=sm&p[disabled]=true')
+      const params = new URLSearchParams(
+        'p[variant]=outline&p[size]=sm&p[disabled]=true'
+      )
       expect(decodePlaygroundParams(params)).toEqual({
         variant: 'outline',
         size: 'sm',
-        disabled: 'true',
+        disabled: 'true'
       })
     })
   })
@@ -56,10 +58,10 @@ describe('playground-url-state', () => {
     const cases: Array<Record<string, string>> = [
       {},
       { variant: 'outline' },
-      { variant: 'outline', size: 'sm', disabled: 'true' },
+      { variant: 'outline', size: 'sm', disabled: 'true' }
     ]
 
-    it.each(cases)('round-trips %p', (input) => {
+    it.each(cases)('round-trips %p', input => {
       const encoded = encodePlaygroundParams(input)
       const roundTripped = decodePlaygroundParams(new URLSearchParams(encoded))
       expect(roundTripped).toEqual(input)
@@ -87,17 +89,25 @@ describe('playground-url-state', () => {
      * then install the spy. After this returns, exactly one subsequent
      * pushState call (the one under test) is captured in pushStateSpy.
      */
-    function stubLocation(parts: { pathname?: string; search?: string; hash?: string }) {
+    function stubLocation(parts: {
+      pathname?: string
+      search?: string
+      hash?: string
+    }) {
       const pathname = parts.pathname ?? '/'
       const search = parts.search ?? ''
       const hash = parts.hash ?? ''
       window.history.pushState(null, '', `${pathname}${search}${hash}`)
-      pushStateSpy = jest.spyOn(window.history, 'pushState').mockImplementation(() => {})
+      pushStateSpy = jest
+        .spyOn(window.history, 'pushState')
+        .mockImplementation(() => {})
     }
 
     /** Used by the three pre-existing tests that don't need a stubbed URL. */
     function spyOnly() {
-      pushStateSpy = jest.spyOn(window.history, 'pushState').mockImplementation(() => {})
+      pushStateSpy = jest
+        .spyOn(window.history, 'pushState')
+        .mockImplementation(() => {})
     }
 
     it('invokes window.history.pushState exactly once', () => {
@@ -125,7 +135,7 @@ describe('playground-url-state', () => {
     it('preserves non-playground query params', () => {
       stubLocation({
         pathname: '/components/button',
-        search: '?utm=test&ref=email',
+        search: '?utm=test&ref=email'
       })
       pushPlaygroundParams({ variant: 'outline' })
       const urlArg = pushStateSpy.mock.calls[0][2] as string
@@ -138,7 +148,7 @@ describe('playground-url-state', () => {
       stubLocation({
         pathname: '/components/button',
         search: '',
-        hash: '#examples',
+        hash: '#examples'
       })
       pushPlaygroundParams({ variant: 'outline' })
       const urlArg = pushStateSpy.mock.calls[0][2] as string
@@ -148,7 +158,7 @@ describe('playground-url-state', () => {
     it('drops stale p[*] keys before overlaying new payload', () => {
       stubLocation({
         pathname: '/components/button',
-        search: '?p[variant]=ghost&p[size]=lg&utm=test',
+        search: '?p[variant]=ghost&p[size]=lg&utm=test'
       })
       pushPlaygroundParams({ variant: 'outline' })
       const urlArg = pushStateSpy.mock.calls[0][2] as string
@@ -161,7 +171,7 @@ describe('playground-url-state', () => {
       stubLocation({
         pathname: '/components/button',
         search: '?utm=test',
-        hash: '#anchor',
+        hash: '#anchor'
       })
       pushPlaygroundParams({})
       const urlArg = pushStateSpy.mock.calls[0][2] as string

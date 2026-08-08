@@ -8,15 +8,15 @@ import {
   MergeStrategySchema,
   MERGE_STRATEGIES,
   ScopeSchema,
-  Sha256HexSchema,
+  Sha256HexSchema
 } from '../src/index'
 
 describe('ArtifactTypeSchema', () => {
-  it.each(['config', 'skill', 'hook', 'guide'])('accepts "%s"', (value) => {
+  it.each(['config', 'skill', 'hook', 'guide'])('accepts "%s"', value => {
     expect(ArtifactTypeSchema.safeParse(value).success).toBe(true)
   })
 
-  it.each(['unknown', 'plugin', '', 'Config'])('rejects "%s"', (value) => {
+  it.each(['unknown', 'plugin', '', 'Config'])('rejects "%s"', value => {
     expect(ArtifactTypeSchema.safeParse(value).success).toBe(false)
   })
 })
@@ -24,51 +24,55 @@ describe('ArtifactTypeSchema', () => {
 describe('SlugSchema', () => {
   it.each(['eslint-config', 'prettier', 'my-hook-v2', 'a', 'a1b2'])(
     'accepts "%s"',
-    (value) => {
+    value => {
       expect(SlugSchema.safeParse(value).success).toBe(true)
     }
   )
 
-  it.each(['UPPERCASE', '', 'has spaces', 'trailing-', '-leading', 'has--double'])(
-    'rejects "%s"',
-    (value) => {
-      expect(SlugSchema.safeParse(value).success).toBe(false)
-    }
-  )
+  it.each([
+    'UPPERCASE',
+    '',
+    'has spaces',
+    'trailing-',
+    '-leading',
+    'has--double'
+  ])('rejects "%s"', value => {
+    expect(SlugSchema.safeParse(value).success).toBe(false)
+  })
 })
 
 describe('CalVerSchema', () => {
   it.each(['2026.03.14.1', '2026.01.01.0', '2026.12.31.99'])(
     'accepts "%s"',
-    (value) => {
+    value => {
       expect(CalVerSchema.safeParse(value).success).toBe(true)
     }
   )
 
   it.each(['2026.3.14.1', '2026-03-14-1', '2026.03.14', 'v2026.03.14.1', ''])(
     'rejects "%s"',
-    (value) => {
+    value => {
       expect(CalVerSchema.safeParse(value).success).toBe(false)
     }
   )
 })
 
 describe('MergeStrategySchema', () => {
-  it.each(['replace', 'section'])('accepts "%s"', (value) => {
+  it.each(['replace', 'section'])('accepts "%s"', value => {
     expect(MergeStrategySchema.safeParse(value).success).toBe(true)
   })
 
-  it.each(['merge', 'append', ''])('rejects "%s"', (value) => {
+  it.each(['merge', 'append', ''])('rejects "%s"', value => {
     expect(MergeStrategySchema.safeParse(value).success).toBe(false)
   })
 })
 
 describe('ScopeSchema', () => {
-  it.each(['project', 'global'])('accepts "%s"', (value) => {
+  it.each(['project', 'global'])('accepts "%s"', value => {
     expect(ScopeSchema.safeParse(value).success).toBe(true)
   })
 
-  it.each(['local', 'user', ''])('rejects "%s"', (value) => {
+  it.each(['local', 'user', ''])('rejects "%s"', value => {
     expect(ScopeSchema.safeParse(value).success).toBe(false)
   })
 })
@@ -96,7 +100,7 @@ describe('Sha256HexSchema', () => {
 
   it.each(['abc', '', 'a'.repeat(63), 'a'.repeat(65), 'g'.repeat(64)])(
     'rejects "%s"',
-    (value) => {
+    value => {
       expect(Sha256HexSchema.safeParse(value).success).toBe(false)
     }
   )

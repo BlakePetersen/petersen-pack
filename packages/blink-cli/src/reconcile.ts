@@ -29,23 +29,25 @@ export interface ReconcileInput {
 
 function writeFresh(input: ReconcileInput): ReconcileResult {
   return {
-    action: { kind: 'write', destPath: input.destPath, content: input.file.content },
+    action: {
+      kind: 'write',
+      destPath: input.destPath,
+      content: input.file.content
+    },
     entry: {
       path: input.file.path,
       checksum: checksum(input.file.content),
-      merge: input.file.merge,
-    },
+      merge: input.file.merge
+    }
   }
 }
 
 function preserveExisting(input: ReconcileInput): ReconcileResult {
-  const entry =
-    input.manifestFileEntry ??
-    {
-      path: input.file.path,
-      checksum: checksum(input.currentContent ?? ''),
-      merge: input.file.merge,
-    }
+  const entry = input.manifestFileEntry ?? {
+    path: input.file.path,
+    checksum: checksum(input.currentContent ?? ''),
+    merge: input.file.merge
+  }
   return { action: { kind: 'skip' }, entry }
 }
 
@@ -55,7 +57,7 @@ function preserveExisting(input: ReconcileInput): ReconcileResult {
 function materialize(
   file: ArtifactFile,
   currentContent: string,
-  slug: string,
+  slug: string
 ):
   | { kind: 'no-section'; reason: string }
   | { kind: 'unchanged' }
@@ -65,7 +67,7 @@ function materialize(
     if (sections.length === 0) {
       return {
         kind: 'no-section',
-        reason: `No managed section found for ${pc.bold(slug)} in ${file.path}.`,
+        reason: `No managed section found for ${pc.bold(slug)} in ${file.path}.`
       }
     }
     const currentManaged = sections[0].content
@@ -73,15 +75,21 @@ function materialize(
     return {
       kind: 'changed',
       writeContent: replaceManagedContent(currentContent, slug, file.content),
-      currentDiff: currentManaged,
+      currentDiff: currentManaged
     }
   }
 
   if (currentContent === file.content) return { kind: 'unchanged' }
-  return { kind: 'changed', writeContent: file.content, currentDiff: currentContent }
+  return {
+    kind: 'changed',
+    writeContent: file.content,
+    currentDiff: currentContent
+  }
 }
 
-export async function reconcileFile(input: ReconcileInput): Promise<ReconcileResult> {
+export async function reconcileFile(
+  input: ReconcileInput
+): Promise<ReconcileResult> {
   if (input.currentContent === null) {
     return writeFresh(input)
   }
@@ -103,7 +111,7 @@ export async function reconcileFile(input: ReconcileInput): Promise<ReconcileRes
   ) {
     const confirmed = await confirmAction(
       `Local changes detected in ${input.file.path}. Overwrite?`,
-      input.skipPrompt,
+      input.skipPrompt
     )
     if (!confirmed) {
       return { action: { kind: 'skip' }, entry: input.manifestFileEntry }
@@ -113,14 +121,20 @@ export async function reconcileFile(input: ReconcileInput): Promise<ReconcileRes
   // Diff against the section payload (or full file for replace), not the
   // reconstructed full file — otherwise section-merge previews show all the
   // surrounding unchanged content as additions.
-  consola.log(formatColoredDiff(mat.currentDiff, input.file.content, input.file.path))
+  consola.log(
+    formatColoredDiff(mat.currentDiff, input.file.content, input.file.path)
+  )
 
   return {
-    action: { kind: 'write', destPath: input.destPath, content: mat.writeContent },
+    action: {
+      kind: 'write',
+      destPath: input.destPath,
+      content: mat.writeContent
+    },
     entry: {
       path: input.file.path,
       checksum: checksum(mat.writeContent),
-      merge: input.file.merge,
-    },
+      merge: input.file.merge
+    }
   }
 }

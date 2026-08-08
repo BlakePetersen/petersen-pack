@@ -51,7 +51,7 @@ import {
   DropdownContent,
   DropdownItem,
   DropdownSeparator,
-  DropdownLabel,
+  DropdownLabel
 } from 'artax-ui'
 
 export interface PropDef {
@@ -100,52 +100,52 @@ const components: ComponentDef[] = [
         name: 'variant',
         type: "'default' | 'outline' | 'ghost'",
         default: "'default'",
-        description: 'Visual style variant.',
+        description: 'Visual style variant.'
       },
       {
         name: 'size',
         type: "'default' | 'sm' | 'lg'",
         default: "'default'",
-        description: 'Button size.',
+        description: 'Button size.'
       },
       {
         name: 'disabled',
         type: 'boolean',
         default: 'false',
-        description: 'Disables the button and reduces opacity.',
+        description: 'Disables the button and reduces opacity.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
+        description: 'Additional classes merged via cn().'
       },
       {
         name: 'children',
         type: 'ReactNode',
         default: '-',
-        description: 'Button label content.',
-      },
+        description: 'Button label content.'
+      }
     ],
     variants: ['default', 'outline', 'ghost'],
     codeExamples: [
       { label: 'Basic', code: '<Button>Run</Button>' },
       {
         label: 'Variants',
-        code: '<Button variant="default">Run</Button>\n<Button variant="outline">Run</Button>\n<Button variant="ghost">Run</Button>',
+        code: '<Button variant="default">Run</Button>\n<Button variant="outline">Run</Button>\n<Button variant="ghost">Run</Button>'
       },
       {
         label: 'Sizes',
-        code: '<Button size="sm">Small</Button>\n<Button size="default">Default</Button>\n<Button size="lg">Large</Button>',
-      },
+        code: '<Button size="sm">Small</Button>\n<Button size="default">Default</Button>\n<Button size="lg">Large</Button>'
+      }
     ],
     a11y: [
       'Renders a native <button> element with full keyboard support.',
       'Tab moves focus; Enter and Space activate the button.',
       'Focus ring uses the amber accent ring for high-contrast visibility.',
-      'disabled removes pointer events and reduces opacity but retains the role.',
+      'disabled removes pointer events and reduces opacity but retains the role.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(
         Button,
         {
@@ -153,11 +153,11 @@ const components: ComponentDef[] = [
             (values?.variant as 'default' | 'outline' | 'ghost') ?? 'default',
           size: (values?.size as 'default' | 'sm' | 'lg') ?? 'default',
           disabled: values?.disabled === 'true',
-          className: values?.className,
+          className: values?.className
         },
-        'Run',
+        'Run'
       ),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'Input',
@@ -171,48 +171,48 @@ const components: ComponentDef[] = [
         name: 'type',
         type: "'text' | 'email' | 'password' | 'number' | 'search' | ...",
         default: "'text'",
-        description: 'Any native HTML input type.',
+        description: 'Any native HTML input type.'
       },
       {
         name: 'placeholder',
         type: 'string',
         default: '-',
-        description: 'Placeholder text rendered in muted color.',
+        description: 'Placeholder text rendered in muted color.'
       },
       {
         name: 'disabled',
         type: 'boolean',
         default: 'false',
-        description: 'Disables the input with reduced opacity.',
+        description: 'Disables the input with reduced opacity.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
-      },
+        description: 'Additional classes merged via cn().'
+      }
     ],
     codeExamples: [
       { label: 'Basic', code: '<Input placeholder="username" />' },
       {
         label: 'Variants',
-        code: '<Input type="text" placeholder="username" />\n<Input type="password" placeholder="password" />\n<Input disabled placeholder="disabled" />',
-      },
+        code: '<Input type="text" placeholder="username" />\n<Input type="password" placeholder="password" />\n<Input disabled placeholder="disabled" />'
+      }
     ],
     a11y: [
       'Uses a native <input> element, so it supports all native form semantics.',
       'Focus ring uses the amber accent ring for high-contrast visibility.',
       'Associate with a <label htmlFor> or aria-label for assistive-tech access.',
-      'Disabled state sets cursor-not-allowed and reduces opacity.',
+      'Disabled state sets cursor-not-allowed and reduces opacity.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(Input, {
         type: values?.type ?? 'text',
         placeholder: values?.placeholder ?? 'username',
         disabled: values?.disabled === 'true',
-        className: values?.className ?? 'max-w-xs',
+        className: values?.className ?? 'max-w-xs'
       }),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'Badge',
@@ -226,46 +226,46 @@ const components: ComponentDef[] = [
         name: 'variant',
         type: "'default' | 'outline' | 'secondary'",
         default: "'default'",
-        description: 'Visual style variant.',
+        description: 'Visual style variant.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
+        description: 'Additional classes merged via cn().'
       },
       {
         name: 'children',
         type: 'ReactNode',
         default: '-',
-        description: 'Badge label content.',
-      },
+        description: 'Badge label content.'
+      }
     ],
     variants: ['default', 'outline', 'secondary'],
     codeExamples: [
       { label: 'Basic', code: '<Badge>NEW</Badge>' },
       {
         label: 'Variants',
-        code: '<Badge variant="default">default</Badge>\n<Badge variant="outline">outline</Badge>\n<Badge variant="secondary">secondary</Badge>',
-      },
+        code: '<Badge variant="default">default</Badge>\n<Badge variant="outline">outline</Badge>\n<Badge variant="secondary">secondary</Badge>'
+      }
     ],
     a11y: [
       'Renders as a <span>, so it does not interrupt the tab order.',
       'Decorative by default; wrap with aria-label on the parent if it conveys status.',
-      'Pair with role="status" on a live region when the badge reflects dynamic state.',
+      'Pair with role="status" on a live region when the badge reflects dynamic state.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(
         Badge,
         {
           variant:
             (values?.variant as 'default' | 'outline' | 'secondary') ??
             'default',
-          className: values?.className,
+          className: values?.className
         },
-        'NEW',
+        'NEW'
       ),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'Separator',
@@ -279,39 +279,47 @@ const components: ComponentDef[] = [
         name: 'orientation',
         type: "'horizontal' | 'vertical'",
         default: "'horizontal'",
-        description: 'Axis along which the separator is drawn.',
+        description: 'Axis along which the separator is drawn.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
-      },
+        description: 'Additional classes merged via cn().'
+      }
     ],
     codeExamples: [
       { label: 'Basic', code: '<Separator />' },
       {
         label: 'Variants',
-        code: '<Separator orientation="horizontal" />\n<Separator orientation="vertical" className="h-4" />',
-      },
+        code: '<Separator orientation="horizontal" />\n<Separator orientation="vertical" className="h-4" />'
+      }
     ],
     a11y: [
       'Renders a div with role="separator" and aria-orientation set correctly.',
-      'Not focusable; purely presentational but announced as a divider by screen readers.',
+      'Not focusable; purely presentational but announced as a divider by screen readers.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(
         'div',
         { className: 'w-full max-w-sm space-y-2' },
-        h('p', { className: 'font-mono text-xs text-muted-foreground' }, 'above'),
+        h(
+          'p',
+          { className: 'font-mono text-xs text-muted-foreground' },
+          'above'
+        ),
         h(Separator, {
           orientation:
             (values?.orientation as 'horizontal' | 'vertical') ?? 'horizontal',
-          className: values?.className,
+          className: values?.className
         }),
-        h('p', { className: 'font-mono text-xs text-muted-foreground' }, 'below'),
+        h(
+          'p',
+          { className: 'font-mono text-xs text-muted-foreground' },
+          'below'
+        )
       ),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'CopyButton',
@@ -325,33 +333,33 @@ const components: ComponentDef[] = [
         name: 'text',
         type: 'string',
         default: '-',
-        description: 'Text copied to the clipboard when the button is pressed.',
+        description: 'Text copied to the clipboard when the button is pressed.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
-      },
+        description: 'Additional classes merged via cn().'
+      }
     ],
     codeExamples: [
       { label: 'Basic', code: '<CopyButton text="echo hello" />' },
       {
         label: 'Variants',
-        code: '<CopyButton text="short" />\n<CopyButton text={longSnippet} className="text-primary" />',
-      },
+        code: '<CopyButton text="short" />\n<CopyButton text={longSnippet} className="text-primary" />'
+      }
     ],
     a11y: [
       'Renders a native <button> with aria-label="Copy code".',
       'Uses the async Clipboard API; requires a user-gesture to succeed in browsers.',
-      'State revert after 2s is purely visual; announce copy success with a live region if needed.',
+      'State revert after 2s is purely visual; announce copy success with a live region if needed.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(CopyButton, {
         text: values?.text ?? 'echo "hello, artax"',
-        className: values?.className,
+        className: values?.className
       }),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'Toggle',
@@ -365,63 +373,65 @@ const components: ComponentDef[] = [
         name: 'pressed',
         type: 'boolean',
         default: 'false',
-        description: 'Controlled pressed state.',
+        description: 'Controlled pressed state.'
       },
       {
         name: 'defaultPressed',
         type: 'boolean',
         default: 'false',
-        description: 'Uncontrolled initial pressed state.',
+        description: 'Uncontrolled initial pressed state.'
       },
       {
         name: 'onPressedChange',
         type: '(pressed: boolean) => void',
         default: '-',
-        description: 'Called when the pressed state changes.',
+        description: 'Called when the pressed state changes.'
       },
       {
         name: 'disabled',
         type: 'boolean',
         default: 'false',
-        description: 'Disables the toggle.',
+        description: 'Disables the toggle.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
-      },
+        description: 'Additional classes merged via cn().'
+      }
     ],
     variants: ['default', 'pressed'],
     codeExamples: [
       { label: 'Basic', code: '<Toggle aria-label="bold">B</Toggle>' },
       {
         label: 'Variants',
-        code: '<Toggle defaultPressed={false} aria-label="bold">B</Toggle>\n<Toggle defaultPressed aria-label="italic">I</Toggle>',
-      },
+        code: '<Toggle defaultPressed={false} aria-label="bold">B</Toggle>\n<Toggle defaultPressed aria-label="italic">I</Toggle>'
+      }
     ],
     a11y: [
       'Built on Radix Toggle; exposes role="button" with aria-pressed.',
       'Space and Enter toggle the state; keyboard focus ring is visible.',
-      'Always provide an aria-label when the child content is an icon or glyph.',
+      'Always provide an aria-label when the child content is an icon or glyph.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(
         Toggle,
         {
           'aria-label': 'bold',
           pressed:
-            values?.pressed !== undefined ? values.pressed === 'true' : undefined,
+            values?.pressed !== undefined
+              ? values.pressed === 'true'
+              : undefined,
           defaultPressed:
             values?.pressed === undefined
               ? values?.defaultPressed === 'true'
               : undefined,
           disabled: values?.disabled === 'true',
-          className: values?.className,
+          className: values?.className
         },
-        'B',
+        'B'
       ),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   // ─────────────────────────────────────────────────────── Molecules ──
   {
@@ -437,17 +447,20 @@ const components: ComponentDef[] = [
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn() on the root <div>.',
+        description: 'Additional classes merged via cn() on the root <div>.'
       },
       {
         name: 'children',
         type: 'ReactNode',
         default: '-',
-        description: 'Typically CardHeader, CardContent, and CardFooter.',
-      },
+        description: 'Typically CardHeader, CardContent, and CardFooter.'
+      }
     ],
     codeExamples: [
-      { label: 'Basic', code: '<Card>\n  <CardContent>Simple card body.</CardContent>\n</Card>' },
+      {
+        label: 'Basic',
+        code: '<Card>\n  <CardContent>Simple card body.</CardContent>\n</Card>'
+      },
       {
         label: 'Composition',
         code: `<Card>
@@ -457,14 +470,14 @@ const components: ComponentDef[] = [
   </CardHeader>
   <CardContent>Last login at 14:22</CardContent>
   <CardFooter>connected</CardFooter>
-</Card>`,
-      },
+</Card>`
+      }
     ],
     a11y: [
       'Composed of semantic <div> elements; add a landmark role (e.g. region) when meaningful.',
-      'CardTitle renders terminal-style text with a // prefix; pair with heading levels if the card is a true section.',
+      'CardTitle renders terminal-style text with a // prefix; pair with heading levels if the card is a true section.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(
         Card,
         { className: values?.className ?? 'w-72' },
@@ -472,16 +485,16 @@ const components: ComponentDef[] = [
           CardHeader,
           null,
           h(CardTitle, null, 'session'),
-          h(CardDescription, null, 'ssh user@artax'),
+          h(CardDescription, null, 'ssh user@artax')
         ),
         h(CardContent, null, 'Last login at 14:22'),
         h(
           CardFooter,
           { className: 'font-mono text-xs text-muted-foreground' },
-          'connected',
-        ),
+          'connected'
+        )
       ),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'Table',
@@ -496,14 +509,15 @@ const components: ComponentDef[] = [
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn() on the root <table>.',
+        description: 'Additional classes merged via cn() on the root <table>.'
       },
       {
         name: 'children',
         type: 'ReactNode',
         default: '-',
-        description: 'Composed sub-components (TableHeader, TableBody, TableRow, etc.).',
-      },
+        description:
+          'Composed sub-components (TableHeader, TableBody, TableRow, etc.).'
+      }
     ],
     codeExamples: [
       {
@@ -515,7 +529,7 @@ const components: ComponentDef[] = [
       <TableCell>ok</TableCell>
     </TableRow>
   </TableBody>
-</Table>`,
+</Table>`
       },
       {
         label: 'Composition',
@@ -536,15 +550,15 @@ const components: ComponentDef[] = [
       <TableCell>ok</TableCell>
     </TableRow>
   </TableBody>
-</Table>`,
-      },
+</Table>`
+      }
     ],
     a11y: [
       'Renders native <table> / <thead> / <tbody> / <tr> / <th> / <td>; screen readers announce row/column headers.',
       'Use <TableHead> inside <TableHeader> so the <th> elements have scope="col" by convention.',
-      'Wrap dense tables in a scroll container that keeps the header visible when needed.',
+      'Wrap dense tables in a scroll container that keeps the header visible when needed.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(
         Table,
         { className: values?.className ?? 'max-w-sm' },
@@ -555,8 +569,8 @@ const components: ComponentDef[] = [
             TableRow,
             null,
             h(TableHead, null, 'stage'),
-            h(TableHead, null, 'status'),
-          ),
+            h(TableHead, null, 'status')
+          )
         ),
         h(
           TableBody,
@@ -565,17 +579,17 @@ const components: ComponentDef[] = [
             TableRow,
             null,
             h(TableCell, null, 'lint'),
-            h(TableCell, null, 'ok'),
+            h(TableCell, null, 'ok')
           ),
           h(
             TableRow,
             null,
             h(TableCell, null, 'test'),
-            h(TableCell, null, 'ok'),
-          ),
-        ),
+            h(TableCell, null, 'ok')
+          )
+        )
       ),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'Callout',
@@ -589,58 +603,58 @@ const components: ComponentDef[] = [
         name: 'variant',
         type: "'info' | 'warning' | 'error' | 'success'",
         default: "'info'",
-        description: 'Semantic variant that sets the left border accent color.',
+        description: 'Semantic variant that sets the left border accent color.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
+        description: 'Additional classes merged via cn().'
       },
       {
         name: 'children',
         type: 'ReactNode',
         default: '-',
-        description: 'Callout body content.',
-      },
+        description: 'Callout body content.'
+      }
     ],
     variants: ['info', 'warning', 'error', 'success'],
     codeExamples: [
       {
         label: 'Basic',
-        code: '<Callout>Shells close automatically after 15 minutes of inactivity.</Callout>',
+        code: '<Callout>Shells close automatically after 15 minutes of inactivity.</Callout>'
       },
       {
         label: 'Variants',
         code: `<Callout variant="info">Informational message.</Callout>
 <Callout variant="warning">Approach with care.</Callout>
 <Callout variant="error">Something went wrong.</Callout>
-<Callout variant="success">Deploy complete.</Callout>`,
+<Callout variant="success">Deploy complete.</Callout>`
       },
       {
         label: 'Composition',
         code: `<Callout variant="warning">
   <strong className="font-mono">warning:</strong>
   Writes outside the sandbox require confirmation.
-</Callout>`,
-      },
+</Callout>`
+      }
     ],
     a11y: [
       'Rendered as a plain <div>; add role="note" or role="status" when the callout conveys semantic meaning.',
-      'Color alone distinguishes variants — always pair with a text prefix (e.g. "warning:") for users who cannot perceive the accent.',
+      'Color alone distinguishes variants — always pair with a text prefix (e.g. "warning:") for users who cannot perceive the accent.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(
         Callout,
         {
           variant:
             (values?.variant as 'info' | 'warning' | 'error' | 'success') ??
             'info',
-          className: values?.className ?? 'max-w-md',
+          className: values?.className ?? 'max-w-md'
         },
-        'Shells close automatically after 15 minutes of inactivity.',
+        'Shells close automatically after 15 minutes of inactivity.'
       ),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'CodeBlock',
@@ -654,39 +668,41 @@ const components: ComponentDef[] = [
         name: 'filename',
         type: 'string',
         default: '-',
-        description: 'Optional filename shown in the header with a // prefix.',
+        description: 'Optional filename shown in the header with a // prefix.'
       },
       {
         name: 'language',
         type: 'string',
         default: '-',
-        description: 'Optional language label shown as a small pill in the header.',
+        description:
+          'Optional language label shown as a small pill in the header.'
       },
       {
         name: 'rawCode',
         type: 'string',
         default: '-',
-        description: 'Raw code copied to the clipboard when the copy button is pressed.',
+        description:
+          'Raw code copied to the clipboard when the copy button is pressed.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn() on the root.',
+        description: 'Additional classes merged via cn() on the root.'
       },
       {
         name: 'children',
         type: 'ReactNode',
         default: '-',
-        description: 'Highlighted <pre><code> output (typically from Shiki).',
-      },
+        description: 'Highlighted <pre><code> output (typically from Shiki).'
+      }
     ],
     codeExamples: [
       {
         label: 'Basic',
         code: `<CodeBlock rawCode="pnpm install">
   <pre><code>pnpm install</code></pre>
-</CodeBlock>`,
+</CodeBlock>`
       },
       {
         label: 'Composition',
@@ -696,15 +712,15 @@ const components: ComponentDef[] = [
   rawCode={configSource}
 >
   {highlightedNodes}
-</CodeBlock>`,
-      },
+</CodeBlock>`
+      }
     ],
     a11y: [
       'The copy button exposes aria-label="Copy code" via the underlying CopyButton.',
       'Wrap highlighted output in <pre><code>; screen readers announce the code region correctly.',
-      'Language pill is decorative — convey language elsewhere if critical.',
+      'Language pill is decorative — convey language elsewhere if critical.'
     ],
-    preview: (values) => {
+    preview: values => {
       const rawCode = values?.rawCode ?? 'pnpm install\npnpm -F artax build'
       return h(
         CodeBlock,
@@ -712,12 +728,12 @@ const components: ComponentDef[] = [
           filename: values?.filename ?? 'install.sh',
           language: values?.language ?? 'bash',
           rawCode,
-          className: values?.className ?? 'max-w-lg my-0',
+          className: values?.className ?? 'max-w-lg my-0'
         },
-        h('pre', null, h('code', null, rawCode)),
+        h('pre', null, h('code', null, rawCode))
       )
     },
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'Tabs',
@@ -732,26 +748,26 @@ const components: ComponentDef[] = [
         name: 'defaultValue',
         type: 'string',
         default: '-',
-        description: 'Uncontrolled initial tab value.',
+        description: 'Uncontrolled initial tab value.'
       },
       {
         name: 'value',
         type: 'string',
         default: '-',
-        description: 'Controlled active tab value.',
+        description: 'Controlled active tab value.'
       },
       {
         name: 'onValueChange',
         type: '(value: string) => void',
         default: '-',
-        description: 'Called when the active tab changes.',
+        description: 'Called when the active tab changes.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn() on the root.',
-      },
+        description: 'Additional classes merged via cn() on the root.'
+      }
     ],
     codeExamples: [
       {
@@ -763,7 +779,7 @@ const components: ComponentDef[] = [
   </TabsList>
   <TabsContent value="code">…</TabsContent>
   <TabsContent value="props">…</TabsContent>
-</Tabs>`,
+</Tabs>`
       },
       {
         label: 'Composition',
@@ -776,32 +792,32 @@ const components: ComponentDef[] = [
   <TabsContent value="code"><CodeExamples /></TabsContent>
   <TabsContent value="props"><PropsTable /></TabsContent>
   <TabsContent value="a11y"><A11yNotes /></TabsContent>
-</Tabs>`,
-      },
+</Tabs>`
+      }
     ],
     a11y: [
       'Built on Radix Tabs; triggers expose role="tab", content exposes role="tabpanel", list exposes role="tablist".',
       'ArrowLeft/ArrowRight cycle focus between tabs; Home/End jump to first/last.',
-      'Active tab is indicated by aria-selected and a visible amber underline.',
+      'Active tab is indicated by aria-selected and a visible amber underline.'
     ],
-    preview: (values) =>
+    preview: values =>
       h(
         Tabs,
         {
           defaultValue: values?.defaultValue ?? 'code',
           value: values?.value,
-          className: values?.className ?? 'w-full max-w-md',
+          className: values?.className ?? 'w-full max-w-md'
         },
         h(
           TabsList,
           null,
           h(TabsTrigger, { value: 'code' }, 'code'),
-          h(TabsTrigger, { value: 'props' }, 'props'),
+          h(TabsTrigger, { value: 'props' }, 'props')
         ),
         h(TabsContent, { value: 'code' }, 'Code examples live here.'),
-        h(TabsContent, { value: 'props' }, 'Props reference lives here.'),
+        h(TabsContent, { value: 'props' }, 'Props reference lives here.')
       ),
-    playground: { enabled: true },
+    playground: { enabled: true }
   },
   {
     name: 'Tooltip',
@@ -816,20 +832,21 @@ const components: ComponentDef[] = [
         name: 'side',
         type: "'top' | 'right' | 'bottom' | 'left'",
         default: "'top'",
-        description: 'Placement of the tooltip relative to the trigger (TooltipContent).',
+        description:
+          'Placement of the tooltip relative to the trigger (TooltipContent).'
       },
       {
         name: 'sideOffset',
         type: 'number',
         default: '4',
-        description: 'Distance in pixels from the trigger (TooltipContent).',
+        description: 'Distance in pixels from the trigger (TooltipContent).'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn() on TooltipContent.',
-      },
+        description: 'Additional classes merged via cn() on TooltipContent.'
+      }
     ],
     codeExamples: [
       {
@@ -841,7 +858,7 @@ const components: ComponentDef[] = [
     </TooltipTrigger>
     <TooltipContent>tip</TooltipContent>
   </Tooltip>
-</TooltipProvider>`,
+</TooltipProvider>`
       },
       {
         label: 'Composition',
@@ -854,13 +871,13 @@ const components: ComponentDef[] = [
       Press ⌘K to open the palette
     </TooltipContent>
   </Tooltip>
-</TooltipProvider>`,
-      },
+</TooltipProvider>`
+      }
     ],
     a11y: [
       'Radix Tooltip exposes role="tooltip" and associates it with the trigger via aria-describedby.',
       'Shows on hover and on keyboard focus; dismisses on blur and on Escape.',
-      'Provide a real accessible label on the trigger — tooltip text is supplementary, not primary.',
+      'Provide a real accessible label on the trigger — tooltip text is supplementary, not primary.'
     ],
     preview: () =>
       h(TooltipProvider, {
@@ -871,16 +888,16 @@ const components: ComponentDef[] = [
             h(
               TooltipTrigger,
               { asChild: true, key: 'trigger' },
-              h(Button, { variant: 'outline' }, 'hover'),
+              h(Button, { variant: 'outline' }, 'hover')
             ),
             h(
               TooltipContent,
               { side: 'right', key: 'content' },
-              'keyboard shortcut: ⌘K',
-            ),
-          ],
-        }),
-      }),
+              'keyboard shortcut: ⌘K'
+            )
+          ]
+        })
+      })
   },
   {
     name: 'PrevNextNav',
@@ -894,20 +911,22 @@ const components: ComponentDef[] = [
         name: 'prev',
         type: '{ href: string; label: string }',
         default: '-',
-        description: 'Optional previous-article slot; omitted when there is no earlier page.',
+        description:
+          'Optional previous-article slot; omitted when there is no earlier page.'
       },
       {
         name: 'next',
         type: '{ href: string; label: string }',
         default: '-',
-        description: 'Optional next-article slot; omitted when there is no later page.',
+        description:
+          'Optional next-article slot; omitted when there is no later page.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
-      },
+        description: 'Additional classes merged via cn().'
+      }
     ],
     codeExamples: [
       {
@@ -915,20 +934,20 @@ const components: ComponentDef[] = [
         code: `<PrevNextNav
   prev={{ href: '/intro', label: 'intro' }}
   next={{ href: '/setup', label: 'setup' }}
-/>`,
-      },
+/>`
+      }
     ],
     a11y: [
       'Wrapped in a <nav aria-label="Article navigation"> landmark for quick jump access.',
       'Each slot renders a real next/link anchor, so it is keyboard focusable and announced as a link.',
-      'Arrow glyphs are decorative; the destination label carries the meaning.',
+      'Arrow glyphs are decorative; the destination label carries the meaning.'
     ],
     preview: () =>
       h(PrevNextNav, {
         prev: { href: '#', label: 'intro' },
         next: { href: '#', label: 'setup' },
-        className: 'mt-0 w-full max-w-md',
-      }),
+        className: 'mt-0 w-full max-w-md'
+      })
   },
   {
     name: 'AuthorNote',
@@ -942,46 +961,48 @@ const components: ComponentDef[] = [
         name: 'author',
         type: '{ name: string; avatar?: string; href?: string }',
         default: '-',
-        description: 'Optional byline rendered in the meta line above the note body.',
+        description:
+          'Optional byline rendered in the meta line above the note body.'
       },
       {
         name: 'date',
         type: 'string',
         default: '-',
-        description: 'Optional date shown next to the author in the meta line.',
+        description: 'Optional date shown next to the author in the meta line.'
       },
       {
         name: 'children',
         type: 'ReactNode',
         default: '-',
-        description: 'Note body content.',
+        description: 'Note body content.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
-      },
+        description: 'Additional classes merged via cn().'
+      }
     ],
     codeExamples: [
       {
         label: 'Basic',
         code: `<AuthorNote author={{ name: 'blake' }} date="2026-07-13">
   Sandbox sessions reset nightly — export anything worth keeping.
-</AuthorNote>`,
-      },
+</AuthorNote>`
+      }
     ],
     a11y: [
       'Rendered as <aside role="note" aria-label="Author\'s note"> so assistive tech announces a supplementary note.',
-      'The meta line (author + date) is plain text — keep the byline meaningful on its own.',
+      'The meta line (author + date) is plain text — keep the byline meaningful on its own.'
     ],
     preview: () =>
       h(AuthorNote, {
         author: { name: 'blake' },
         date: '2026-07-13',
         className: 'my-0 max-w-md',
-        children: 'Sandbox sessions reset nightly — export anything worth keeping.',
-      }),
+        children:
+          'Sandbox sessions reset nightly — export anything worth keeping.'
+      })
   },
   {
     name: 'DecisionRationale',
@@ -995,32 +1016,34 @@ const components: ComponentDef[] = [
         name: 'decision',
         type: 'string',
         default: '-',
-        description: 'Short statement of the decision that was made.',
+        description: 'Short statement of the decision that was made.'
       },
       {
         name: 'rationale',
         type: 'ReactNode',
         default: '-',
-        description: 'Body explaining why the decision was made.',
+        description: 'Body explaining why the decision was made.'
       },
       {
         name: 'alternatives',
         type: 'Array<{ name: string; reason: string }>',
         default: '-',
-        description: 'Optional list of rejected options with the reason each was passed over.',
+        description:
+          'Optional list of rejected options with the reason each was passed over.'
       },
       {
         name: 'collapsed',
         type: 'boolean',
         default: 'false',
-        description: 'When true, renders inside a native <details>/<summary> disclosure.',
+        description:
+          'When true, renders inside a native <details>/<summary> disclosure.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn().',
-      },
+        description: 'Additional classes merged via cn().'
+      }
     ],
     codeExamples: [
       {
@@ -1029,13 +1052,13 @@ const components: ComponentDef[] = [
   decision="Use next/link for prev/next navigation"
   rationale="Client-side transitions keep article reading fast and preserve scroll position."
   alternatives={[{ name: 'Plain anchors', reason: 'Full page reloads drop the SPA feel.' }]}
-/>`,
-      },
+/>`
+      }
     ],
     a11y: [
       'Default layout uses a <section> with an <h3> decision heading for the document outline.',
       'The collapsed variant uses native <details>/<summary>, which is keyboard operable and announces expanded state.',
-      'Alternatives render as a plain <ul>; each item pairs the option name with its reason.',
+      'Alternatives render as a plain <ul>; each item pairs the option name with its reason.'
     ],
     preview: () =>
       h(DecisionRationale, {
@@ -1043,10 +1066,13 @@ const components: ComponentDef[] = [
         rationale:
           'Client-side transitions keep article reading fast and preserve scroll position.',
         alternatives: [
-          { name: 'Plain anchors', reason: 'Full page reloads drop the SPA feel.' },
+          {
+            name: 'Plain anchors',
+            reason: 'Full page reloads drop the SPA feel.'
+          }
         ],
-        className: 'my-0 max-w-md',
-      }),
+        className: 'my-0 max-w-md'
+      })
   },
   {
     name: 'ThemeToggle',
@@ -1061,16 +1087,16 @@ const components: ComponentDef[] = [
         type: '-',
         default: '-',
         description:
-          'Takes no props. Clicking cycles dark → light → system; the current mode drives the Sun/Moon/Monitor icon and aria-label.',
-      },
+          'Takes no props. Clicking cycles dark → light → system; the current mode drives the Sun/Moon/Monitor icon and aria-label.'
+      }
     ],
     codeExamples: [{ label: 'Basic', code: '<ThemeToggle />' }],
     a11y: [
       'Renders a real <button> with type="button", so it is focusable and keyboard operable.',
       'aria-label and title reflect the active mode (Light mode / Dark mode / System theme) for screen readers.',
-      'Guards against hydration mismatch with a useSyncExternalStore mount check before rendering the icon.',
+      'Guards against hydration mismatch with a useSyncExternalStore mount check before rendering the icon.'
     ],
-    preview: () => h(ThemeToggle),
+    preview: () => h(ThemeToggle)
   },
   // ─────────────────────────────────────────────────────── Organisms ──
   {
@@ -1086,32 +1112,33 @@ const components: ComponentDef[] = [
         name: 'type',
         type: "'single' | 'multiple'",
         default: "'single'",
-        description: 'Whether one or many items can be expanded at a time.',
+        description: 'Whether one or many items can be expanded at a time.'
       },
       {
         name: 'collapsible',
         type: 'boolean',
         default: 'false',
-        description: 'When type="single", allow closing the currently open item.',
+        description:
+          'When type="single", allow closing the currently open item.'
       },
       {
         name: 'defaultValue',
         type: 'string | string[]',
         default: '-',
-        description: 'Uncontrolled initial open item(s).',
+        description: 'Uncontrolled initial open item(s).'
       },
       {
         name: 'value',
         type: 'string | string[]',
         default: '-',
-        description: 'Controlled open item(s).',
+        description: 'Controlled open item(s).'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn() on the root.',
-      },
+        description: 'Additional classes merged via cn() on the root.'
+      }
     ],
     codeExamples: [
       {
@@ -1121,7 +1148,7 @@ const components: ComponentDef[] = [
     <AccordionTrigger>open</AccordionTrigger>
     <AccordionContent>content</AccordionContent>
   </AccordionItem>
-</Accordion>`,
+</Accordion>`
       },
       {
         label: 'Composition',
@@ -1134,13 +1161,13 @@ const components: ComponentDef[] = [
     <AccordionTrigger>theming</AccordionTrigger>
     <AccordionContent>Wrap with ThemeProvider.</AccordionContent>
   </AccordionItem>
-</Accordion>`,
-      },
+</Accordion>`
+      }
     ],
     a11y: [
       'Triggers render as <button> children of an <h3>-equivalent header; they expose aria-expanded and aria-controls.',
       'ArrowDown/ArrowUp move focus between triggers; Home/End jump to first/last.',
-      'Enter or Space on a focused trigger expands or collapses the item.',
+      'Enter or Space on a focused trigger expands or collapses the item.'
     ],
     preview: () =>
       h(
@@ -1149,21 +1176,21 @@ const components: ComponentDef[] = [
           type: 'single',
           collapsible: true,
           defaultValue: 'install',
-          className: 'w-full max-w-md',
+          className: 'w-full max-w-md'
         },
         h(
           AccordionItem,
           { value: 'install' },
           h(AccordionTrigger, null, 'installation'),
-          h(AccordionContent, null, 'pnpm add artax-ui'),
+          h(AccordionContent, null, 'pnpm add artax-ui')
         ),
         h(
           AccordionItem,
           { value: 'theme' },
           h(AccordionTrigger, null, 'theming'),
-          h(AccordionContent, null, 'Wrap your tree with ThemeProvider.'),
-        ),
-      ),
+          h(AccordionContent, null, 'Wrap your tree with ThemeProvider.')
+        )
+      )
   },
   {
     name: 'Dialog',
@@ -1178,26 +1205,26 @@ const components: ComponentDef[] = [
         name: 'open',
         type: 'boolean',
         default: '-',
-        description: 'Controlled open state.',
+        description: 'Controlled open state.'
       },
       {
         name: 'defaultOpen',
         type: 'boolean',
         default: 'false',
-        description: 'Uncontrolled initial open state.',
+        description: 'Uncontrolled initial open state.'
       },
       {
         name: 'onOpenChange',
         type: '(open: boolean) => void',
         default: '-',
-        description: 'Called when the dialog opens or closes.',
+        description: 'Called when the dialog opens or closes.'
       },
       {
         name: 'modal',
         type: 'boolean',
         default: 'true',
-        description: 'When true, interactions outside the dialog are blocked.',
-      },
+        description: 'When true, interactions outside the dialog are blocked.'
+      }
     ],
     codeExamples: [
       {
@@ -1209,7 +1236,7 @@ const components: ComponentDef[] = [
   <DialogContent>
     <DialogTitle>confirm</DialogTitle>
   </DialogContent>
-</Dialog>`,
+</Dialog>`
       },
       {
         label: 'Composition',
@@ -1231,14 +1258,14 @@ const components: ComponentDef[] = [
       </DialogClose>
     </div>
   </DialogContent>
-</Dialog>`,
-      },
+</Dialog>`
+      }
     ],
     a11y: [
       'Radix Dialog exposes role="dialog" with aria-modal="true" and labels the dialog via DialogTitle.',
       'Focus is trapped inside the dialog while open and restored to the trigger on close.',
       'Escape closes the dialog; clicking the overlay dismisses modal dialogs.',
-      'Always include a DialogTitle so assistive tech can announce the dialog purpose.',
+      'Always include a DialogTitle so assistive tech can announce the dialog purpose.'
     ],
     preview: () =>
       h(
@@ -1247,7 +1274,7 @@ const components: ComponentDef[] = [
         h(
           DialogTrigger,
           { asChild: true },
-          h(Button, { variant: 'outline' }, 'open dialog'),
+          h(Button, { variant: 'outline' }, 'open dialog')
         ),
         h(
           DialogContent,
@@ -1260,11 +1287,11 @@ const components: ComponentDef[] = [
             h(
               DialogClose,
               { asChild: true },
-              h(Button, { variant: 'ghost' }, 'close'),
-            ),
-          ),
-        ),
-      ),
+              h(Button, { variant: 'ghost' }, 'close')
+            )
+          )
+        )
+      )
   },
   {
     name: 'Dropdown',
@@ -1279,26 +1306,26 @@ const components: ComponentDef[] = [
         name: 'open',
         type: 'boolean',
         default: '-',
-        description: 'Controlled open state.',
+        description: 'Controlled open state.'
       },
       {
         name: 'defaultOpen',
         type: 'boolean',
         default: 'false',
-        description: 'Uncontrolled initial open state.',
+        description: 'Uncontrolled initial open state.'
       },
       {
         name: 'onOpenChange',
         type: '(open: boolean) => void',
         default: '-',
-        description: 'Called when the menu opens or closes.',
+        description: 'Called when the menu opens or closes.'
       },
       {
         name: 'modal',
         type: 'boolean',
         default: 'true',
-        description: 'Whether the menu blocks outside interactions while open.',
-      },
+        description: 'Whether the menu blocks outside interactions while open.'
+      }
     ],
     codeExamples: [
       {
@@ -1311,7 +1338,7 @@ const components: ComponentDef[] = [
     <DropdownItem>new</DropdownItem>
     <DropdownItem>open</DropdownItem>
   </DropdownContent>
-</Dropdown>`,
+</Dropdown>`
       },
       {
         label: 'Composition',
@@ -1327,14 +1354,14 @@ const components: ComponentDef[] = [
     <DropdownLabel>session</DropdownLabel>
     <DropdownItem>disconnect</DropdownItem>
   </DropdownContent>
-</Dropdown>`,
-      },
+</Dropdown>`
+      }
     ],
     a11y: [
       'Radix DropdownMenu exposes role="menu" with role="menuitem" children and manages aria-expanded on the trigger.',
       'ArrowDown opens the menu and focuses the first item; ArrowUp/ArrowDown cycle items.',
       'Typeahead focuses items by their text content; Escape closes and returns focus to the trigger.',
-      'DropdownSeparator renders as role="separator" and is skipped by keyboard focus.',
+      'DropdownSeparator renders as role="separator" and is skipped by keyboard focus.'
     ],
     preview: () =>
       h(
@@ -1343,7 +1370,7 @@ const components: ComponentDef[] = [
         h(
           DropdownTrigger,
           { asChild: true },
-          h(Button, { variant: 'outline' }, 'open menu'),
+          h(Button, { variant: 'outline' }, 'open menu')
         ),
         h(
           DropdownContent,
@@ -1352,9 +1379,9 @@ const components: ComponentDef[] = [
           h(DropdownItem, null, 'new'),
           h(DropdownItem, null, 'open'),
           h(DropdownSeparator, null),
-          h(DropdownItem, null, 'disconnect'),
-        ),
-      ),
+          h(DropdownItem, null, 'disconnect')
+        )
+      )
   },
   {
     name: 'Modal',
@@ -1368,38 +1395,39 @@ const components: ComponentDef[] = [
         name: 'open',
         type: 'boolean',
         default: '-',
-        description: 'Controlled open state.',
+        description: 'Controlled open state.'
       },
       {
         name: 'onOpenChange',
         type: '(open: boolean) => void',
         default: '-',
-        description: 'Called when the modal opens or closes.',
+        description: 'Called when the modal opens or closes.'
       },
       {
         name: 'size',
         type: "'sm' | 'md' | 'lg'",
         default: "'md'",
-        description: 'Content width slot mapped to a max-width class.',
+        description: 'Content width slot mapped to a max-width class.'
       },
       {
         name: 'trigger',
         type: 'ReactNode',
         default: '-',
-        description: 'Element that opens the modal; wrapped in a DialogTrigger.',
+        description: 'Element that opens the modal; wrapped in a DialogTrigger.'
       },
       {
         name: 'children',
         type: 'ReactNode',
         default: '-',
-        description: 'Modal body, typically Modal.Title, Modal.Description, and actions.',
+        description:
+          'Modal body, typically Modal.Title, Modal.Description, and actions.'
       },
       {
         name: 'className',
         type: 'string',
         default: '-',
-        description: 'Additional classes merged via cn() on the content.',
-      },
+        description: 'Additional classes merged via cn() on the content.'
+      }
     ],
     codeExamples: [
       {
@@ -1407,7 +1435,7 @@ const components: ComponentDef[] = [
         code: `<Modal trigger={<Button>open</Button>}>
   <Modal.Title>confirm</Modal.Title>
   <Modal.Description>This cannot be undone.</Modal.Description>
-</Modal>`,
+</Modal>`
       },
       {
         label: 'Composition',
@@ -1422,37 +1450,48 @@ const components: ComponentDef[] = [
       <Button>destroy</Button>
     </Modal.Close>
   </div>
-</Modal>`,
-      },
+</Modal>`
+      }
     ],
     a11y: [
       'Composes artax-ui Dialog: content exposes role="dialog" with aria-modal="true".',
       'Focus is trapped while open and restored to the trigger on close; Escape dismisses.',
       'Always include a Modal.Title so assistive tech can announce the modal purpose.',
-      'Applies a mounted-flag SSR gate so the trigger renders server-side without a hydration mismatch.',
+      'Applies a mounted-flag SSR gate so the trigger renders server-side without a hydration mismatch.'
     ],
     preview: () =>
       h(Modal, {
         trigger: h(Button, { variant: 'outline' }, 'open modal'),
         children: [
           h(Modal.Title, { key: 'title' }, 'confirm'),
-          h(Modal.Description, { key: 'description' }, 'This is a Modal preview.'),
+          h(
+            Modal.Description,
+            { key: 'description' },
+            'This is a Modal preview.'
+          ),
           h(
             'div',
             { key: 'actions', className: 'mt-4 flex justify-end' },
-            h(Modal.Close, { asChild: true }, h(Button, { variant: 'ghost' }, 'close')),
-          ),
-        ],
-      }),
-  },
+            h(
+              Modal.Close,
+              { asChild: true },
+              h(Button, { variant: 'ghost' }, 'close')
+            )
+          )
+        ]
+      })
+  }
 ]
 
-export function getComponent(tier: string, slug: string): ComponentDef | undefined {
-  return components.find((c) => c.tier === tier && c.slug === slug)
+export function getComponent(
+  tier: string,
+  slug: string
+): ComponentDef | undefined {
+  return components.find(c => c.tier === tier && c.slug === slug)
 }
 
 export function getComponentsByTier(tier: string): ComponentDef[] {
-  return components.filter((c) => c.tier === tier)
+  return components.filter(c => c.tier === tier)
 }
 
 export function getAllComponents(): ComponentDef[] {
@@ -1470,8 +1509,8 @@ export function getSidebarSections(): SidebarSection[] {
       label: '',
       items: [
         { name: 'Overview', href: '/' },
-        { name: 'Getting Started', href: '/getting-started' },
-      ],
+        { name: 'Getting Started', href: '/getting-started' }
+      ]
     },
     {
       label: '// atoms',
@@ -1481,8 +1520,8 @@ export function getSidebarSections(): SidebarSection[] {
         { name: 'Badge', href: '/components/atoms/badge' },
         { name: 'Separator', href: '/components/atoms/separator' },
         { name: 'CopyButton', href: '/components/atoms/copy-button' },
-        { name: 'Toggle', href: '/components/atoms/toggle' },
-      ],
+        { name: 'Toggle', href: '/components/atoms/toggle' }
+      ]
     },
     {
       label: '// molecules',
@@ -1495,9 +1534,12 @@ export function getSidebarSections(): SidebarSection[] {
         { name: 'Tooltip', href: '/components/molecules/tooltip' },
         { name: 'PrevNextNav', href: '/components/molecules/prev-next-nav' },
         { name: 'AuthorNote', href: '/components/molecules/author-note' },
-        { name: 'DecisionRationale', href: '/components/molecules/decision-rationale' },
-        { name: 'ThemeToggle', href: '/components/molecules/theme-toggle' },
-      ],
+        {
+          name: 'DecisionRationale',
+          href: '/components/molecules/decision-rationale'
+        },
+        { name: 'ThemeToggle', href: '/components/molecules/theme-toggle' }
+      ]
     },
     {
       label: '// organisms',
@@ -1505,12 +1547,12 @@ export function getSidebarSections(): SidebarSection[] {
         { name: 'Accordion', href: '/components/organisms/accordion' },
         { name: 'Dialog', href: '/components/organisms/dialog' },
         { name: 'Dropdown', href: '/components/organisms/dropdown' },
-        { name: 'Modal', href: '/components/organisms/modal' },
-      ],
+        { name: 'Modal', href: '/components/organisms/modal' }
+      ]
     },
     {
       label: '',
-      items: [{ name: 'Tokens', href: '/tokens' }],
-    },
+      items: [{ name: 'Tokens', href: '/tokens' }]
+    }
   ]
 }

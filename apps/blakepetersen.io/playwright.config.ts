@@ -20,35 +20,35 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
+    screenshot: 'only-on-failure'
   },
 
   expect: {
     toHaveScreenshot: {
       maxDiffPixels: 100,
-      threshold: 0.2,
-    },
+      threshold: 0.2
+    }
   },
 
   projects: [
     {
       name: 'desktop-light',
-      use: { ...devices['Desktop Chrome'], colorScheme: 'light' },
+      use: { ...devices['Desktop Chrome'], colorScheme: 'light' }
     },
     {
       name: 'desktop-dark',
-      use: { ...devices['Desktop Chrome'], colorScheme: 'dark' },
+      use: { ...devices['Desktop Chrome'], colorScheme: 'dark' }
     },
     {
       name: 'mobile-light',
-      use: { ...devices['Pixel 5'], colorScheme: 'light' },
-    },
+      use: { ...devices['Pixel 5'], colorScheme: 'light' }
+    }
   ],
 
   webServer: {
     command: 'pnpm dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
-    timeout: 120000,
-  },
+    timeout: 120000
+  }
 })

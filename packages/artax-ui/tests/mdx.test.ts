@@ -3,14 +3,30 @@
 import { mdxComponents } from '../src/mdx/components'
 
 const REQUIRED_KEYS = [
-  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-  'p', 'a',
-  'ul', 'ol', 'li',
-  'blockquote', 'hr',
-  'code', 'pre',
-  'table', 'thead', 'tbody', 'tr', 'th', 'td',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'p',
+  'a',
+  'ul',
+  'ol',
+  'li',
+  'blockquote',
+  'hr',
+  'code',
+  'pre',
+  'table',
+  'thead',
+  'tbody',
+  'tr',
+  'th',
+  'td',
   'img',
-  'strong', 'em'
+  'strong',
+  'em'
 ] as const
 
 describe('mdxComponents', () => {

@@ -6,7 +6,7 @@ import {
   readFileSync,
   mkdirSync,
   rmSync,
-  realpathSync,
+  realpathSync
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -24,7 +24,7 @@ let consolaMock: {
 }
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config,
+  defineCommand: (config: any) => config
 }))
 
 jest.mock('consola', () => {
@@ -33,7 +33,7 @@ jest.mock('consola', () => {
     success: jest.fn(),
     log: jest.fn(),
     warn: jest.fn(),
-    error: jest.fn(),
+    error: jest.fn()
   }
   return { consola: mock, default: mock, __esModule: true }
 })
@@ -45,7 +45,7 @@ jest.mock('picocolors', () => ({
     yellow: (s: string) => s,
     green: (s: string) => s,
     red: (s: string) => s,
-    cyan: (s: string) => s,
+    cyan: (s: string) => s
   },
   __esModule: true,
   dim: (s: string) => s,
@@ -53,7 +53,7 @@ jest.mock('picocolors', () => ({
   yellow: (s: string) => s,
   green: (s: string) => s,
   red: (s: string) => s,
-  cyan: (s: string) => s,
+  cyan: (s: string) => s
 }))
 
 function createManifest(items: any[]) {
@@ -65,7 +65,10 @@ function createManifest(items: any[]) {
   )
 }
 
-function makeEntry(slug: string, files: Array<{ path: string; content: string; merge: string }>) {
+function makeEntry(
+  slug: string,
+  files: Array<{ path: string; content: string; merge: string }>
+) {
   return {
     slug,
     name: slug === 'shellrc' ? 'Shell RC' : 'Prettier',
@@ -73,11 +76,11 @@ function makeEntry(slug: string, files: Array<{ path: string; content: string; m
     version: '2026.03.14.1',
     scope: 'project',
     installedAt: '2026-03-14T00:00:00.000Z',
-    files: files.map((f) => ({
+    files: files.map(f => ({
       path: f.path,
       checksum: checksum(f.content),
-      merge: f.merge,
-    })),
+      merge: f.merge
+    }))
   }
 }
 
@@ -103,7 +106,9 @@ afterEach(() => {
 async function runEject(args: Record<string, any> = {}) {
   const mod = await import('@/commands/eject')
   const command = mod.default
-  await command.run!({ args: { slug: undefined, 'dry-run': false, yes: false, ...args } } as any)
+  await command.run!({
+    args: { slug: undefined, 'dry-run': false, yes: false, ...args }
+  } as any)
 }
 
 describe('blink eject', () => {
@@ -113,7 +118,9 @@ describe('blink eject', () => {
         throw new Error('process.exit')
       })
 
-      await expect(runEject({ slug: 'prettier' })).rejects.toThrow('process.exit')
+      await expect(runEject({ slug: 'prettier' })).rejects.toThrow(
+        'process.exit'
+      )
       expect(consolaMock.error).toHaveBeenCalledWith(
         expect.stringContaining('No blink manifest')
       )
@@ -128,7 +135,9 @@ describe('blink eject', () => {
         throw new Error('process.exit')
       })
 
-      await expect(runEject({ slug: 'prettier' })).rejects.toThrow('process.exit')
+      await expect(runEject({ slug: 'prettier' })).rejects.toThrow(
+        'process.exit'
+      )
       expect(consolaMock.error).toHaveBeenCalledWith(
         expect.stringContaining('not installed')
       )
@@ -143,7 +152,11 @@ describe('blink eject', () => {
       const markedContent = injectMarkers(managedContent, 'shellrc', '.zshrc')
       const fileContent = `# My stuff\nalias ll="ls -la"\n\n${markedContent}\n\n# More stuff`
 
-      createManifest([makeEntry('shellrc', [{ path: '.zshrc', content: markedContent, merge: 'section' }])])
+      createManifest([
+        makeEntry('shellrc', [
+          { path: '.zshrc', content: markedContent, merge: 'section' }
+        ])
+      ])
       writeFileSync(join(tmpDir, '.zshrc'), fileContent)
 
       await runEject({ slug: 'shellrc' })
@@ -162,7 +175,11 @@ describe('blink eject', () => {
       const managedContent = 'line1\nline2\nline3'
       const markedContent = injectMarkers(managedContent, 'shellrc', '.zshrc')
 
-      createManifest([makeEntry('shellrc', [{ path: '.zshrc', content: markedContent, merge: 'section' }])])
+      createManifest([
+        makeEntry('shellrc', [
+          { path: '.zshrc', content: markedContent, merge: 'section' }
+        ])
+      ])
       writeFileSync(join(tmpDir, '.zshrc'), markedContent)
 
       await runEject({ slug: 'shellrc' })
@@ -175,7 +192,11 @@ describe('blink eject', () => {
   describe('replace merge files', () => {
     it('does not modify files with merge: replace', async () => {
       const content = '{ "semi": false }'
-      createManifest([makeEntry('prettier', [{ path: '.prettierrc', content, merge: 'replace' }])])
+      createManifest([
+        makeEntry('prettier', [
+          { path: '.prettierrc', content, merge: 'replace' }
+        ])
+      ])
       writeFileSync(join(tmpDir, '.prettierrc'), content)
 
       await runEject({ slug: 'prettier' })
@@ -191,13 +212,20 @@ describe('blink eject', () => {
   describe('manifest updates', () => {
     it('removes entry from manifest after eject', async () => {
       const content = '{ "semi": false }'
-      const otherEntry = makeEntry('shellrc', [{ path: '.zshrc', content: '# test', merge: 'section' }])
+      const otherEntry = makeEntry('shellrc', [
+        { path: '.zshrc', content: '# test', merge: 'section' }
+      ])
       createManifest([
-        makeEntry('prettier', [{ path: '.prettierrc', content, merge: 'replace' }]),
-        otherEntry,
+        makeEntry('prettier', [
+          { path: '.prettierrc', content, merge: 'replace' }
+        ]),
+        otherEntry
       ])
       writeFileSync(join(tmpDir, '.prettierrc'), content)
-      writeFileSync(join(tmpDir, '.zshrc'), injectMarkers('# test', 'shellrc', '.zshrc'))
+      writeFileSync(
+        join(tmpDir, '.zshrc'),
+        injectMarkers('# test', 'shellrc', '.zshrc')
+      )
 
       await runEject({ slug: 'prettier' })
 
@@ -214,7 +242,11 @@ describe('blink eject', () => {
       const managedContent = 'export PATH="$HOME/.blink/bin:$PATH"'
       const markedContent = injectMarkers(managedContent, 'shellrc', '.zshrc')
 
-      createManifest([makeEntry('shellrc', [{ path: '.zshrc', content: markedContent, merge: 'section' }])])
+      createManifest([
+        makeEntry('shellrc', [
+          { path: '.zshrc', content: markedContent, merge: 'section' }
+        ])
+      ])
       writeFileSync(join(tmpDir, '.zshrc'), markedContent)
 
       await runEject({ slug: 'shellrc', 'dry-run': true })
@@ -233,7 +265,11 @@ describe('blink eject', () => {
 
   describe('missing files', () => {
     it('handles files deleted from disk gracefully', async () => {
-      createManifest([makeEntry('shellrc', [{ path: '.zshrc', content: '# test', merge: 'section' }])])
+      createManifest([
+        makeEntry('shellrc', [
+          { path: '.zshrc', content: '# test', merge: 'section' }
+        ])
+      ])
       // Don't write .zshrc to disk
 
       await runEject({ slug: 'shellrc' })
@@ -252,7 +288,11 @@ describe('blink eject', () => {
   describe('success output', () => {
     it('reports success with ejected file list', async () => {
       const content = '{ "semi": false }'
-      createManifest([makeEntry('prettier', [{ path: '.prettierrc', content, merge: 'replace' }])])
+      createManifest([
+        makeEntry('prettier', [
+          { path: '.prettierrc', content, merge: 'replace' }
+        ])
+      ])
       writeFileSync(join(tmpDir, '.prettierrc'), content)
 
       await runEject({ slug: 'prettier' })

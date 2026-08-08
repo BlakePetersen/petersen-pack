@@ -6,7 +6,7 @@ import type { NextConfig } from 'next'
 const config: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ['artax-ui'],
-  turbopack: {},
+  turbopack: {}
 }
 
 export default config

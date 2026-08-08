@@ -18,7 +18,7 @@ function DecisionRationale({
   rationale,
   alternatives,
   collapsed,
-  className,
+  className
 }: DecisionRationaleProps) {
   const containerClass = cn(
     'my-6 bg-card p-6 border-l-4 border-l-primary font-mono text-base text-foreground',
@@ -37,7 +37,7 @@ function DecisionRationale({
         <div className="mt-4 leading-relaxed">{rationale}</div>
         {alternatives && alternatives.length > 0 && (
           <ul className="mt-4 space-y-1">
-            {alternatives.map((alt) => (
+            {alternatives.map(alt => (
               <li key={alt.name} className="text-muted-foreground">
                 <span className="text-foreground">{alt.name}</span>
                 {': '}
@@ -59,7 +59,7 @@ function DecisionRationale({
       <div className="leading-relaxed">{rationale}</div>
       {alternatives && alternatives.length > 0 && (
         <ul className="mt-4 space-y-1">
-          {alternatives.map((alt) => (
+          {alternatives.map(alt => (
             <li key={alt.name} className="text-muted-foreground">
               <span className="text-foreground">{alt.name}</span>
               {': '}

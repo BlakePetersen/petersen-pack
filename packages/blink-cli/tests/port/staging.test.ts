@@ -7,7 +7,7 @@ import {
   writeFileSync,
   rmSync,
   mkdirSync,
-  existsSync,
+  existsSync
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -38,8 +38,8 @@ describe('stageEntry', () => {
         '> [!note] A tip',
         '> Some insight',
         '',
-        'Regular text.',
-      ].join('\n'),
+        'Regular text.'
+      ].join('\n')
     )
 
     const contentRoot = join(tmpDir, 'content')
@@ -50,7 +50,7 @@ describe('stageEntry', () => {
     const result = await stageEntry({
       inputDir,
       contentRoot,
-      stagingDir: stagingPath,
+      stagingDir: stagingPath
     })
 
     expect(result.staged).toHaveLength(1)
@@ -65,14 +65,25 @@ describe('stageEntry', () => {
     mkdirSync(inputDir)
     writeFileSync(
       join(inputDir, 'test-note.md'),
-      ['---', 'title: Test', 'description: A test note', '---', '', 'Body.'].join('\n'),
+      [
+        '---',
+        'title: Test',
+        'description: A test note',
+        '---',
+        '',
+        'Body.'
+      ].join('\n')
     )
 
     const contentRoot = join(tmpDir, 'content')
     mkdirSync(contentRoot)
     const stagingPath = join(tmpDir, STAGING_DIR)
 
-    const result = await stageEntry({ inputDir, contentRoot, stagingDir: stagingPath })
+    const result = await stageEntry({
+      inputDir,
+      contentRoot,
+      stagingDir: stagingPath
+    })
 
     const stagedContent = readFileSync(result.staged[0].path, 'utf-8')
     expect(stagedContent).toContain('title: Test')
@@ -85,17 +96,30 @@ describe('stageEntry', () => {
     mkdirSync(inputDir)
     writeFileSync(
       join(inputDir, 'custom.md'),
-      ['---', 'title: Custom', 'custom_field: hello', '---', '', 'Body content.'].join('\n'),
+      [
+        '---',
+        'title: Custom',
+        'custom_field: hello',
+        '---',
+        '',
+        'Body content.'
+      ].join('\n')
     )
 
     const contentRoot = join(tmpDir, 'content')
     mkdirSync(contentRoot)
     const stagingPath = join(tmpDir, STAGING_DIR)
 
-    const result = await stageEntry({ inputDir, contentRoot, stagingDir: stagingPath })
+    const result = await stageEntry({
+      inputDir,
+      contentRoot,
+      stagingDir: stagingPath
+    })
 
     const stagedContent = readFileSync(result.staged[0].path, 'utf-8')
-    expect(stagedContent).toContain('{/* Obsidian meta (review + delete): custom_field: hello */}')
+    expect(stagedContent).toContain(
+      '{/* Obsidian meta (review + delete): custom_field: hello */}'
+    )
   })
 
   it('preserves original file name as the slug', async () => {
@@ -103,14 +127,18 @@ describe('stageEntry', () => {
     mkdirSync(inputDir)
     writeFileSync(
       join(inputDir, 'my-fancy-note.md'),
-      ['---', 'title: Fancy', '---', '', 'Content.'].join('\n'),
+      ['---', 'title: Fancy', '---', '', 'Content.'].join('\n')
     )
 
     const contentRoot = join(tmpDir, 'content')
     mkdirSync(contentRoot)
     const stagingPath = join(tmpDir, STAGING_DIR)
 
-    const result = await stageEntry({ inputDir, contentRoot, stagingDir: stagingPath })
+    const result = await stageEntry({
+      inputDir,
+      contentRoot,
+      stagingDir: stagingPath
+    })
 
     expect(result.staged[0].slug).toBe('my-fancy-note')
     expect(result.staged[0].path).toContain('my-fancy-note.mdx')
@@ -121,7 +149,10 @@ describe('commitEntry', () => {
   it('moves staged .mdx from staging dir to content/<collection>/<slug>.mdx', async () => {
     const stagingPath = join(tmpDir, STAGING_DIR)
     mkdirSync(stagingPath, { recursive: true })
-    writeFileSync(join(stagingPath, 'my-skill.mdx'), '---\ntitle: Skill\n---\n\nBody.')
+    writeFileSync(
+      join(stagingPath, 'my-skill.mdx'),
+      '---\ntitle: Skill\n---\n\nBody.'
+    )
 
     const contentRoot = join(tmpDir, 'content')
     mkdirSync(join(contentRoot, 'skills'), { recursive: true })
@@ -130,7 +161,7 @@ describe('commitEntry', () => {
       slug: 'my-skill',
       collection: 'skills',
       contentRoot,
-      stagingDir: stagingPath,
+      stagingDir: stagingPath
     })
 
     expect(existsSync(join(contentRoot, 'skills', 'my-skill.mdx'))).toBe(true)
@@ -140,8 +171,14 @@ describe('commitEntry', () => {
   it('moves companion .artifact.md if present in staging', async () => {
     const stagingPath = join(tmpDir, STAGING_DIR)
     mkdirSync(stagingPath, { recursive: true })
-    writeFileSync(join(stagingPath, 'my-skill.mdx'), '---\ntitle: Skill\n---\n\nBody.')
-    writeFileSync(join(stagingPath, 'my-skill.artifact.md'), '---\nname: my-skill\n---\n\nArtifact.')
+    writeFileSync(
+      join(stagingPath, 'my-skill.mdx'),
+      '---\ntitle: Skill\n---\n\nBody.'
+    )
+    writeFileSync(
+      join(stagingPath, 'my-skill.artifact.md'),
+      '---\nname: my-skill\n---\n\nArtifact.'
+    )
 
     const contentRoot = join(tmpDir, 'content')
     mkdirSync(join(contentRoot, 'skills'), { recursive: true })
@@ -150,17 +187,22 @@ describe('commitEntry', () => {
       slug: 'my-skill',
       collection: 'skills',
       contentRoot,
-      stagingDir: stagingPath,
+      stagingDir: stagingPath
     })
 
-    expect(existsSync(join(contentRoot, 'skills', 'my-skill.artifact.md'))).toBe(true)
+    expect(
+      existsSync(join(contentRoot, 'skills', 'my-skill.artifact.md'))
+    ).toBe(true)
     expect(existsSync(join(stagingPath, 'my-skill.artifact.md'))).toBe(false)
   })
 
   it('refuses to commit if target already exists', async () => {
     const stagingPath = join(tmpDir, STAGING_DIR)
     mkdirSync(stagingPath, { recursive: true })
-    writeFileSync(join(stagingPath, 'existing.mdx'), '---\ntitle: Existing\n---\n\nBody.')
+    writeFileSync(
+      join(stagingPath, 'existing.mdx'),
+      '---\ntitle: Existing\n---\n\nBody.'
+    )
 
     const contentRoot = join(tmpDir, 'content')
     mkdirSync(join(contentRoot, 'skills'), { recursive: true })
@@ -171,8 +213,8 @@ describe('commitEntry', () => {
         slug: 'existing',
         collection: 'skills',
         contentRoot,
-        stagingDir: stagingPath,
-      }),
+        stagingDir: stagingPath
+      })
     ).rejects.toThrow()
   })
 
@@ -188,8 +230,8 @@ describe('commitEntry', () => {
         slug: 'nonexistent',
         collection: 'skills',
         contentRoot,
-        stagingDir: stagingPath,
-      }),
+        stagingDir: stagingPath
+      })
     ).rejects.toThrow()
   })
 })

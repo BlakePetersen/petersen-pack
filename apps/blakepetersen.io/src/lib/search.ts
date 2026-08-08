@@ -46,13 +46,13 @@ export async function searchContent(query: string): Promise<SearchResult[]> {
   const top = response.results.slice(0, MAX_RESULTS)
 
   const results = await Promise.all(
-    top.map(async (result) => {
+    top.map(async result => {
       const data = await result.data()
       return {
         url: data.url,
         title: data.title,
         excerpt: data.excerpt,
-        meta: data.meta,
+        meta: data.meta
       }
     })
   )

@@ -107,12 +107,12 @@ export function SectionHeader({
 
   return (
     <div className={`mb-12 md:mb-16 ${alignClass} ${className}`}>
-      <h2 className="mb-4 font-serif text-heading-xl text-gray-900 dark:text-white">
+      <h2 className="text-heading-xl mb-4 font-serif text-gray-900 dark:text-white">
         {title}
       </h2>
       {subtitle && (
         <p
-          className={`max-w-2xl text-body-lg text-gray-600 dark:text-gray-400 ${subtitleAlign}`}
+          className={`text-body-lg max-w-2xl text-gray-600 dark:text-gray-400 ${subtitleAlign}`}
         >
           {subtitle}
         </p>
@@ -166,7 +166,7 @@ export function PageHeader({ title, subtitle }: PageHeaderProps) {
   return (
     <section className="px-gutter pb-section pt-page-top">
       <div className="mx-auto max-w-4xl text-center">
-        <h1 className="mb-4 font-serif text-display-lg text-gray-900 dark:text-white">
+        <h1 className="text-display-lg mb-4 font-serif text-gray-900 dark:text-white">
           {title}
         </h1>
         {subtitle && (
@@ -229,11 +229,11 @@ export function CtaSection({
   return (
     <section className="px-gutter py-section">
       <div className="mx-auto max-w-3xl text-center">
-        <h2 className="mb-6 font-serif text-heading-xl text-gray-900 dark:text-white">
+        <h2 className="text-heading-xl mb-6 font-serif text-gray-900 dark:text-white">
           {title}
         </h2>
         {description && (
-          <p className="mb-10 text-body-lg text-gray-600 dark:text-gray-300">
+          <p className="text-body-lg mb-10 text-gray-600 dark:text-gray-300">
             {description}
           </p>
         )}
@@ -543,7 +543,7 @@ export default function ContactPage() {
             <ArrowLink href="/faq">Browse FAQs</ArrowLink>
           </div>
 
-          <div className="rounded-lg border border-gray-200 bg-white p-gutter dark:border-gray-800 dark:bg-gray-950">
+          <div className="p-gutter rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
             <Suspense
               fallback={
                 <div className="h-96 animate-pulse bg-gray-100 dark:bg-gray-800" />

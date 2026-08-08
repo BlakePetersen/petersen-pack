@@ -11,7 +11,11 @@ type BookingData = {
   status: 'CONFIRMED' | 'CANCELLED'
 }
 
-export function CustomerBookingStatusUpdate({ booking }: { booking: BookingData }) {
+export function CustomerBookingStatusUpdate({
+  booking,
+}: {
+  booking: BookingData
+}) {
   const isConfirmed = booking.status === 'CONFIRMED'
 
   return {
@@ -36,21 +40,25 @@ export function CustomerBookingStatusUpdate({ booking }: { booking: BookingData 
 
     <div style="background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
       <p style="margin: 0 0 15px 0; font-size: 16px; color: #111827;">Hi ${booking.name},</p>
-      ${isConfirmed ? `
+      ${
+        isConfirmed
+          ? `
       <p style="margin: 0 0 15px 0; color: #4b5563;">
         Great news! Your photography session has been confirmed. I'm looking forward to working with you!
       </p>
       <p style="margin: 0; color: #4b5563;">
         Please mark your calendar and let me know if you have any questions before your session.
       </p>
-      ` : `
+      `
+          : `
       <p style="margin: 0 0 15px 0; color: #4b5563;">
         Unfortunately, I'm unable to accommodate your requested session time. I apologize for any inconvenience.
       </p>
       <p style="margin: 0; color: #4b5563;">
         Please feel free to check my availability calendar for alternative times, or reply to this email to discuss other options.
       </p>
-      `}
+      `
+      }
     </div>
 
     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid ${isConfirmed ? '#059669' : '#dc2626'};">
@@ -77,7 +85,9 @@ export function CustomerBookingStatusUpdate({ booking }: { booking: BookingData 
       </div>
     </div>
 
-    ${isConfirmed ? `
+    ${
+      isConfirmed
+        ? `
     <div style="background: #dbeafe; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-bottom: 20px;">
       <p style="margin: 0 0 10px 0; color: #1e40af; font-weight: 600; font-size: 14px;">Before Your Session:</p>
       <ul style="margin: 0; padding-left: 20px; color: #1e3a8a; font-size: 14px;">
@@ -86,7 +96,9 @@ export function CustomerBookingStatusUpdate({ booking }: { booking: BookingData 
         <li style="margin-bottom: 5px;">Contact me if you need to reschedule</li>
       </ul>
     </div>
-    ` : ''}
+    `
+        : ''
+    }
 
     <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px; text-align: center;">
       <p style="margin: 0 0 10px 0; color: #4b5563; font-size: 14px;">
@@ -96,7 +108,7 @@ export function CustomerBookingStatusUpdate({ booking }: { booking: BookingData 
         Reply to this email and I'll get back to you as soon as possible.
       </p>
       <p style="margin: 15px 0 0 0; color: #9ca3af; font-size: 12px;">
-        ${isConfirmed ? 'Can\'t wait to work with you!' : 'Thank you for your understanding.'}<br>
+        ${isConfirmed ? "Can't wait to work with you!" : 'Thank you for your understanding.'}<br>
         Ashley Petersen Photography
       </p>
     </div>

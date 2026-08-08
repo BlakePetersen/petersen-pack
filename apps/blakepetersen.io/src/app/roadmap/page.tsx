@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   description:
     'Project direction and milestone history for blakepetersen.io — see what has shipped and what is planned.',
   alternates: {
-    canonical: 'https://blakepetersen.io/roadmap',
-  },
+    canonical: 'https://blakepetersen.io/roadmap'
+  }
 }
 
 function formatDate(iso: string): string {
@@ -24,7 +24,7 @@ function formatDate(iso: string): string {
   return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
-    year: 'numeric',
+    year: 'numeric'
   })
 }
 
@@ -110,7 +110,7 @@ export default async function RoadmapPage() {
                     {version}
                   </h2>
                   <div className="space-y-0">
-                    {entries.map((release) => (
+                    {entries.map(release => (
                       <div
                         key={release.tagName}
                         className="flex items-baseline gap-3 border-l border-border py-1 pl-3"

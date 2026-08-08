@@ -9,7 +9,7 @@ type Theme = 'light' | 'dark' | 'system'
 
 function ThemeProvider({
   children,
-  defaultTheme = 'system',
+  defaultTheme = 'system'
 }: {
   children: ReactNode
   defaultTheme?: Theme

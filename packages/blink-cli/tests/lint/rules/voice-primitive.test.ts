@@ -5,13 +5,13 @@ import type { LintContext } from '@/lint/types'
 
 function makeContext(
   frontmatter: Record<string, unknown>,
-  body: string,
+  body: string
 ): LintContext {
   return {
     file: 'content/skills/test-skill.mdx',
     frontmatter,
     body,
-    contentRoot: 'content',
+    contentRoot: 'content'
   }
 }
 
@@ -19,7 +19,7 @@ describe('voicePrimitiveRule', () => {
   it('no diagnostic when voice=[author-note] and body contains <AuthorNote', () => {
     const ctx = makeContext(
       { voice: ['author-note'] },
-      '## Overview\n\n<AuthorNote>\nSome note.\n</AuthorNote>',
+      '## Overview\n\n<AuthorNote>\nSome note.\n</AuthorNote>'
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     expect(diagnostics).toEqual([])
@@ -28,7 +28,7 @@ describe('voicePrimitiveRule', () => {
   it('error when voice=[author-note] but body does NOT contain <AuthorNote', () => {
     const ctx = makeContext(
       { voice: ['author-note'] },
-      '## Overview\n\nNo author note here.',
+      '## Overview\n\nNo author note here.'
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     expect(diagnostics.length).toBe(1)
@@ -40,7 +40,7 @@ describe('voicePrimitiveRule', () => {
   it('error when voice=[decision-rationale] but body does NOT contain <DecisionRationale', () => {
     const ctx = makeContext(
       { voice: ['decision-rationale'] },
-      '## Overview\n\nNo rationale component.',
+      '## Overview\n\nNo rationale component.'
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     expect(diagnostics.length).toBe(1)
@@ -52,14 +52,14 @@ describe('voicePrimitiveRule', () => {
   it('no diagnostic when voice=[] regardless of body content', () => {
     const ctx = makeContext(
       { voice: [] },
-      '## Why\n\nSome rationale heading with content.',
+      '## Why\n\nSome rationale heading with content.'
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     // voice=[] means no voice declared, so no missing-component check
     // However, advisory check for rationale-shaped heading may still fire
     // That's tested separately — this tests the "no voice = no missing component" path
-    const missingComponentDiagnostics = diagnostics.filter(
-      (d) => d.message.includes('declared but'),
+    const missingComponentDiagnostics = diagnostics.filter(d =>
+      d.message.includes('declared but')
     )
     expect(missingComponentDiagnostics).toEqual([])
   })
@@ -67,7 +67,7 @@ describe('voicePrimitiveRule', () => {
   it('warning when body contains rationale-shaped heading but voice does NOT include decision-rationale', () => {
     const ctx = makeContext(
       { voice: [] },
-      '## Why\n\nWe chose this approach because...',
+      '## Why\n\nWe chose this approach because...'
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     expect(diagnostics.length).toBe(1)
@@ -81,16 +81,18 @@ describe('voicePrimitiveRule', () => {
     // organic invocation rate). The rationale-heading nudge remains advisory.
     const ctx = makeContext(
       { voice: ['author-note', 'decision-rationale'] },
-      '## Overview\n\nNo components at all.',
+      '## Overview\n\nNo components at all.'
     )
     const diagnostics = voicePrimitiveRule.check(ctx)
     expect(diagnostics.length).toBeGreaterThan(0)
-    for (const d of diagnostics.filter((x) => x.message.includes('declared but'))) {
+    for (const d of diagnostics.filter(x =>
+      x.message.includes('declared but')
+    )) {
       expect(d.severity).toBe('error')
     }
 
     const advisory = voicePrimitiveRule.check(
-      makeContext({ voice: [] }, '## Why\n\nBecause.'),
+      makeContext({ voice: [] }, '## Why\n\nBecause.')
     )
     expect(advisory.length).toBe(1)
     expect(advisory[0].severity).toBe('warning')
@@ -99,12 +101,14 @@ describe('voicePrimitiveRule', () => {
   it('fix mode adds missing voice value when rationale-shaped heading detected', () => {
     const ctx = makeContext(
       { voice: [] },
-      '## Decision\n\nWe decided to use X.',
+      '## Decision\n\nWe decided to use X.'
     )
     const result = voicePrimitiveRule.fix!(ctx)
     expect(result).not.toBeNull()
     expect(result!.frontmatter).toBeDefined()
-    expect((result!.frontmatter!.voice as string[])).toContain('decision-rationale')
+    expect(result!.frontmatter!.voice as string[]).toContain(
+      'decision-rationale'
+    )
     // Fix does NOT modify body
     expect(result!.body).toBeUndefined()
   })

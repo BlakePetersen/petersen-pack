@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export function GiscusComments({
   term,
-  onMetadata,
+  onMetadata
 }: {
   term: string
   onMetadata?: (data: { reactionCount: number }) => void
@@ -25,7 +25,7 @@ export function GiscusComments({
           observer.disconnect()
         }
       },
-      { threshold: 0, rootMargin: '200px' },
+      { threshold: 0, rootMargin: '200px' }
     )
 
     observer.observe(containerRef.current)
@@ -48,10 +48,9 @@ export function GiscusComments({
     script.setAttribute('data-emit-metadata', '1')
     script.setAttribute('data-input-position', 'bottom')
     script.setAttribute('data-lang', 'en')
-    const theme =
-      process.env.NEXT_PUBLIC_SITE_URL
-        ? `${process.env.NEXT_PUBLIC_SITE_URL}/giscus-theme.css`
-        : 'dark_tritanopia'
+    const theme = process.env.NEXT_PUBLIC_SITE_URL
+      ? `${process.env.NEXT_PUBLIC_SITE_URL}/giscus-theme.css`
+      : 'dark_tritanopia'
     script.setAttribute('data-theme', theme)
     script.crossOrigin = 'anonymous'
     script.async = true

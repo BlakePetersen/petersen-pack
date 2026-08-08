@@ -7,12 +7,12 @@ import type { ReactNode } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 jest.mock('next/navigation', () => ({
-  useSearchParams: jest.fn(),
+  useSearchParams: jest.fn()
 }))
 
 jest.mock('@/lib/playground-url-state', () => ({
   ...jest.requireActual('@/lib/playground-url-state'),
-  pushPlaygroundParams: jest.fn(),
+  pushPlaygroundParams: jest.fn()
 }))
 
 // Track the last `code` prop passed to the mocked LiveProvider so tests can
@@ -20,13 +20,7 @@ jest.mock('@/lib/playground-url-state', () => ({
 const liveProviderCodeHistory: string[] = []
 
 jest.mock('react-live', () => ({
-  LiveProvider: ({
-    code,
-    children,
-  }: {
-    code: string
-    children: ReactNode
-  }) => {
+  LiveProvider: ({ code, children }: { code: string; children: ReactNode }) => {
     liveProviderCodeHistory.push(code)
     return (
       <div data-testid="live-provider" data-code={code}>
@@ -36,7 +30,7 @@ jest.mock('react-live', () => ({
   },
   LiveEditor: () => <div data-testid="live-editor" />,
   LivePreview: () => <div data-testid="live-preview" />,
-  LiveError: () => null,
+  LiveError: () => null
 }))
 
 import { ComponentPlayground } from '@/components/component-playground'
@@ -77,7 +71,9 @@ describe('ComponentPlayground', () => {
     expect(canvas).toBeInTheDocument()
     expect(canvas.className).toContain('bg-[radial-gradient')
     // PlaygroundPropsForm renders a <select> for variant (literal-union).
-    expect(container.querySelector('select[name="variant"]')).toBeInTheDocument()
+    expect(
+      container.querySelector('select[name="variant"]')
+    ).toBeInTheDocument()
   })
 
   it('returns null for excluded components (tooltip, no playground field)', () => {

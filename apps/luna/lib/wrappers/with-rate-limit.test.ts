@@ -152,9 +152,8 @@ describe('withRateLimit', () => {
   })
 
   it('attaches __wrapperKind and __wrappedHandler back-pointer', async () => {
-    const { withRateLimit, WRAPPER_KIND_RATE_LIMIT } = await import(
-      './with-rate-limit'
-    )
+    const { withRateLimit, WRAPPER_KIND_RATE_LIMIT } =
+      await import('./with-rate-limit')
     const inner = async () => new Response('ok')
     const wrapped = withRateLimit('admin', inner) as unknown as {
       __wrapperKind: symbol

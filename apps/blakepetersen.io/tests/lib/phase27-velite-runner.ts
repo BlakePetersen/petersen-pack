@@ -17,13 +17,22 @@ export interface VeliteRunResult {
 function resolveVeliteBin(): string {
   const candidates = [
     path.resolve(__dirname, '..', '..', 'node_modules', '.bin', 'velite'),
-    path.resolve(__dirname, '..', '..', '..', '..', 'node_modules', '.bin', 'velite'),
+    path.resolve(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      '..',
+      'node_modules',
+      '.bin',
+      'velite'
+    )
   ]
   for (const candidate of candidates) {
     if (fs.existsSync(candidate)) return candidate
   }
   throw new Error(
-    `velite binary not found in expected locations: ${candidates.join(', ')}`,
+    `velite binary not found in expected locations: ${candidates.join(', ')}`
   )
 }
 
@@ -45,8 +54,8 @@ export function runVeliteFixture(fixtureDirectory: string): VeliteRunResult {
     {
       cwd: fixtureDirectory,
       encoding: 'utf-8',
-      env: { ...process.env, NODE_ENV: 'test' },
-    },
+      env: { ...process.env, NODE_ENV: 'test' }
+    }
   )
   const stdout = result.stdout ?? ''
   const stderr = result.stderr ?? ''
@@ -54,11 +63,18 @@ export function runVeliteFixture(fixtureDirectory: string): VeliteRunResult {
     exitCode: result.status ?? -1,
     stdout,
     stderr,
-    combined: stdout + '\n' + stderr,
+    combined: stdout + '\n' + stderr
   }
 }
 
 /** Convenience: resolve a fixture dir from the repo's apps/blakepetersen.io root. */
 export function fixtureDir(scenario: string): string {
-  return path.resolve(__dirname, '..', '..', 'test-fixtures', 'phase27', scenario)
+  return path.resolve(
+    __dirname,
+    '..',
+    '..',
+    'test-fixtures',
+    'phase27',
+    scenario
+  )
 }

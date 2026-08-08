@@ -22,15 +22,15 @@ function getHeadingsSnapshot(): TocEntry[] {
   }
   const headings = document.querySelectorAll('h2[id], h3[id]')
   const key = Array.from(headings)
-    .map((h) => h.id)
+    .map(h => h.id)
     .join(',')
 
   if (key !== cachedKey) {
     cachedKey = key
-    cachedEntries = Array.from(headings).map((heading) => ({
+    cachedEntries = Array.from(headings).map(heading => ({
       id: heading.id,
       text: heading.textContent ?? '',
-      level: heading.tagName === 'H2' ? 2 : 3,
+      level: heading.tagName === 'H2' ? 2 : 3
     }))
   }
 
@@ -54,7 +54,7 @@ export function TableOfContents() {
   const entries = useSyncExternalStore(
     subscribe,
     getHeadingsSnapshot,
-    getServerSnapshot,
+    getServerSnapshot
   )
   const activeId = useActiveHeading()
 
@@ -66,7 +66,7 @@ export function TableOfContents() {
     <nav aria-label="Table of contents" className="p-4 font-mono text-xs">
       <p className="mb-3 text-muted-foreground">{'// on this page'}</p>
       <ul className="space-y-1.5">
-        {entries.map((entry) => (
+        {entries.map(entry => (
           <li key={entry.id} className={entry.level === 3 ? 'pl-3' : ''}>
             <a
               href={`#${entry.id}`}

@@ -50,7 +50,10 @@ export { PrevNextNav } from './components/molecules/prev-next-nav/prev-next-nav'
 export { AuthorNote } from './components/molecules/author-note/author-note'
 export type { AuthorNoteProps } from './components/molecules/author-note/author-note'
 export { DecisionRationale } from './components/molecules/decision-rationale/decision-rationale'
-export type { DecisionRationaleProps, Alternative } from './components/molecules/decision-rationale/decision-rationale'
+export type {
+  DecisionRationaleProps,
+  Alternative
+} from './components/molecules/decision-rationale/decision-rationale'
 export { ThemeToggle } from './components/molecules/theme-toggle/theme-toggle'
 
 // Organisms
@@ -90,7 +93,13 @@ export {
 } from './components/organisms/dropdown/dropdown-menu'
 export { cn } from './lib/utils'
 export { tokens } from './styles/tokens'
-export type { BgToken, TextToken, BorderToken, RingToken, FontToken } from './styles/tokens'
+export type {
+  BgToken,
+  TextToken,
+  BorderToken,
+  RingToken,
+  FontToken
+} from './styles/tokens'
 export { mdxComponents } from './mdx/components'
 
 // Providers

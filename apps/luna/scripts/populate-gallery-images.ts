@@ -49,7 +49,10 @@ async function main() {
   let imageIndex = 0
 
   for (const gallery of galleries) {
-    const numImages = Math.min(imagesPerGallery + 2, imageFiles.length - imageIndex)
+    const numImages = Math.min(
+      imagesPerGallery + 2,
+      imageFiles.length - imageIndex
+    )
 
     if (numImages <= 0) break
 
@@ -97,10 +100,14 @@ async function main() {
         sortOrder: i,
       },
     })
-    console.log(`\nFeatured: ${galleriesWithImages[i].title} (${galleriesWithImages[i]._count.images} images)`)
+    console.log(
+      `\nFeatured: ${galleriesWithImages[i].title} (${galleriesWithImages[i]._count.images} images)`
+    )
   }
 
-  console.log(`\n✅ Successfully populated galleries with images and featured ${galleriesWithImages.length} galleries`)
+  console.log(
+    `\n✅ Successfully populated galleries with images and featured ${galleriesWithImages.length} galleries`
+  )
 }
 
 main()

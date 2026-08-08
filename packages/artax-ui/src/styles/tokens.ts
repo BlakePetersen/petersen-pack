@@ -13,7 +13,7 @@ export const tokens = {
     destructive: 'bg-destructive',
     surfaceInfo: 'bg-surface-info',
     surfaceWarning: 'bg-surface-warning',
-    surfaceSuccess: 'bg-surface-success',
+    surfaceSuccess: 'bg-surface-success'
   },
   text: {
     foreground: 'text-foreground',
@@ -33,24 +33,24 @@ export const tokens = {
     destructiveForeground: 'text-destructive-foreground',
     success: 'text-success',
     info: 'text-info',
-    warning: 'text-warning',
+    warning: 'text-warning'
   },
   border: {
     border: 'border-border',
     input: 'border-input',
     primary: 'border-primary',
     destructive: 'border-destructive',
-    ring: 'border-ring',
+    ring: 'border-ring'
   },
   ring: {
     ring: 'ring-ring',
-    primary: 'ring-primary',
+    primary: 'ring-primary'
   },
   font: {
     mono: 'font-mono',
     monoAlt: 'font-mono-alt',
-    sans: 'font-sans',
-  },
+    sans: 'font-sans'
+  }
 } as const
 
 export type BgToken = keyof typeof tokens.bg

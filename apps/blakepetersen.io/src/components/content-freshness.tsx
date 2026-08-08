@@ -16,7 +16,7 @@ export function ContentFreshness({ slug }: { slug: string }) {
 
   const absoluteDate = new Date(history.lastModified).toLocaleDateString(
     'en-US',
-    { year: 'numeric', month: 'long', day: 'numeric' },
+    { year: 'numeric', month: 'long', day: 'numeric' }
   )
   const relativeDate = formatRelativeDate(history.lastModified)
 

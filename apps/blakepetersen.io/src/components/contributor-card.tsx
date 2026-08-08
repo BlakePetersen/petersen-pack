@@ -17,7 +17,7 @@ function formatMonth(iso: string | null): string {
 }
 
 export function ContributorCard({
-  contributor,
+  contributor
 }: {
   contributor: ContributorStats | Contributor
 }) {

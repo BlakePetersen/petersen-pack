@@ -4,7 +4,7 @@
 const atomicWriteMock = jest.fn().mockResolvedValue(undefined)
 
 jest.mock('@/writer', () => ({
-  atomicWrite: (...args: unknown[]) => atomicWriteMock(...args),
+  atomicWrite: (...args: unknown[]) => atomicWriteMock(...args)
 }))
 
 import { writeManifest, createEmptyManifest, BLINK_DIR } from '@/manifest'

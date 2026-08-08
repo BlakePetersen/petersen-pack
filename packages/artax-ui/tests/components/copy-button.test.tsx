@@ -7,7 +7,7 @@ import { CopyButton } from '../../src/components/atoms/copy-button/copy-button'
 const mockWriteText = jest.fn().mockResolvedValue(undefined)
 Object.defineProperty(navigator, 'clipboard', {
   value: { writeText: mockWriteText },
-  writable: true,
+  writable: true
 })
 
 describe('CopyButton', () => {
@@ -23,7 +23,7 @@ describe('CopyButton', () => {
   it('renders a button with "Copy code" aria-label', () => {
     render(<CopyButton text="hello" />)
     expect(
-      screen.getByRole('button', { name: 'Copy code' }),
+      screen.getByRole('button', { name: 'Copy code' })
     ).toBeInTheDocument()
   })
 

@@ -11,38 +11,38 @@ import { generateScaffold } from '@/scaffold/generator'
 export default defineCommand({
   meta: {
     name: 'scaffold',
-    description: 'Generate content scaffolds',
+    description: 'Generate content scaffolds'
   },
   args: {
     collection: {
       type: 'positional',
       description: 'Collection type (skill, config, hook, guide)',
-      required: true,
+      required: true
     },
     slug: {
       type: 'positional',
       description: 'Entry slug (e.g., my-new-skill)',
-      required: true,
+      required: true
     },
     'dry-run': {
       type: 'boolean',
       description: 'Preview without writing',
-      default: false,
+      default: false
     },
     force: {
       type: 'boolean',
       description: 'Overwrite existing files',
-      default: false,
+      default: false
     },
     voice: {
       type: 'string',
       description:
-        'Voice primitives to stub (comma-separated: author-note,decision-rationale)',
+        'Voice primitives to stub (comma-separated: author-note,decision-rationale)'
     },
     'content-root': {
       type: 'string',
-      description: 'Path to content directory',
-    },
+      description: 'Path to content directory'
+    }
   },
   async run({ args }) {
     const collection = args.collection as string
@@ -50,7 +50,7 @@ export default defineCommand({
     const dryRun = args['dry-run']
     const force = args.force
     const voice = args.voice
-      ? (args.voice as string).split(',').map((v) => v.trim())
+      ? (args.voice as string).split(',').map(v => v.trim())
       : undefined
     const contentRoot = args['content-root']
       ? resolve(args['content-root'] as string)
@@ -62,15 +62,15 @@ export default defineCommand({
       contentRoot,
       dryRun,
       force,
-      voice,
+      voice
     })
 
     const prefix = dryRun ? `${formatDryRunHeader()} ` : ''
 
     for (const file of result.files) {
       consola.success(
-        `${prefix}${formatActionLabel('write')} ${pc.dim(file.path)}`,
+        `${prefix}${formatActionLabel('write')} ${pc.dim(file.path)}`
       )
     }
-  },
+  }
 })

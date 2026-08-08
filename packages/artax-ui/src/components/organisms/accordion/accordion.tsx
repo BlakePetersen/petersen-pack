@@ -8,12 +8,7 @@ function AccordionItemPrimitive({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn('border-b border-border', className)}
-      {...props}
-    />
-  )
+  return <div className={cn('border-b border-border', className)} {...props} />
 }
 
 function AccordionTriggerPrimitive({
@@ -50,12 +45,7 @@ function Accordion({
   className,
   ...props
 }: React.ComponentProps<typeof RadixAccordion.Root>) {
-  return (
-    <RadixAccordion.Root
-      className={cn('w-full', className)}
-      {...props}
-    />
-  )
+  return <RadixAccordion.Root className={cn('w-full', className)} {...props} />
 }
 
 function AccordionItem({

@@ -11,7 +11,11 @@ type BookingData = {
   createdAt: Date
 }
 
-export function CustomerBookingConfirmation({ booking }: { booking: BookingData }) {
+export function CustomerBookingConfirmation({
+  booking,
+}: {
+  booking: BookingData
+}) {
   return {
     subject: 'Booking Request Received - Ashley Petersen Photography',
     html: `

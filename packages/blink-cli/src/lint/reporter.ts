@@ -23,7 +23,8 @@ export function formatDiagnostics(diagnostics: LintDiagnostic[]): string {
 
     for (const d of fileDiagnostics) {
       const pos = d.line ? `${d.line}:${d.column ?? 0}` : ''
-      const severity = d.severity === 'error' ? pc.red('error') : pc.yellow('warning')
+      const severity =
+        d.severity === 'error' ? pc.red('error') : pc.yellow('warning')
 
       lines.push(`  ${pos}  ${severity}  ${d.message}  ${pc.dim(d.rule)}`)
 

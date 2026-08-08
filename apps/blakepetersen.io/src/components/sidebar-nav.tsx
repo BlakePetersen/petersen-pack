@@ -13,8 +13,8 @@ export function SidebarNav({ sections }: { sections: NavSection[] }) {
 
   const [openSections, setOpenSections] = useState<string[]>(() => {
     const matching = sections
-      .filter((s) => pathname.startsWith(s.href))
-      .map((s) => s.label)
+      .filter(s => pathname.startsWith(s.href))
+      .map(s => s.label)
     return matching.length > 0 ? matching : []
   })
 
@@ -27,16 +27,14 @@ export function SidebarNav({ sections }: { sections: NavSection[] }) {
   }, [pathname])
 
   function toggleSection(label: string) {
-    setOpenSections((prev) =>
-      prev.includes(label)
-        ? prev.filter((l) => l !== label)
-        : [...prev, label],
+    setOpenSections(prev =>
+      prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]
     )
   }
 
   return (
     <nav className="p-4">
-      {sections.map((section) => {
+      {sections.map(section => {
         const isOpen = openSections.includes(section.label)
         return (
           <div key={section.label} className="mb-2">
@@ -45,18 +43,26 @@ export function SidebarNav({ sections }: { sections: NavSection[] }) {
               className="flex w-full items-center justify-between py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
               <span>
-                <span className="mr-1.5 text-[8px]" style={{ color: section.color }}>●</span>
-                {'// '}{section.label.toLowerCase()}
+                <span
+                  className="mr-1.5 text-[8px]"
+                  style={{ color: section.color }}
+                >
+                  ●
+                </span>
+                {'// '}
+                {section.label.toLowerCase()}
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="text-muted-foreground/60">{section.items.length}</span>
+                <span className="text-muted-foreground/60">
+                  {section.items.length}
+                </span>
                 <span>{isOpen ? '▼' : '▶'}</span>
               </span>
             </button>
 
             {isOpen && (
               <ul className="ml-2 mt-1 space-y-0.5">
-                {section.items.map((item) => {
+                {section.items.map(item => {
                   const isActive = pathname === item.href
                   return (
                     <li key={item.href}>

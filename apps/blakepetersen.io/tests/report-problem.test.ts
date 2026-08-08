@@ -10,7 +10,7 @@ describe('buildReportUrl (COMM-04)', () => {
   test('returns URL starting with GitHub issues/new endpoint', () => {
     const url = buildReportUrl(pageTitle, pageUrl)
     expect(url).toMatch(
-      /^https:\/\/github\.com\/BlakePetersen\/petersen-pack\/issues\/new/,
+      /^https:\/\/github\.com\/BlakePetersen\/petersen-pack\/issues\/new/
     )
   })
 
@@ -23,9 +23,7 @@ describe('buildReportUrl (COMM-04)', () => {
   test('URL contains title with "Content issue: {pageTitle}" format', () => {
     const url = buildReportUrl(pageTitle, pageUrl)
     const parsed = new URL(url)
-    expect(parsed.searchParams.get('title')).toBe(
-      `Content issue: ${pageTitle}`,
-    )
+    expect(parsed.searchParams.get('title')).toBe(`Content issue: ${pageTitle}`)
   })
 
   test('URL contains page-url parameter matching provided pageUrl', () => {

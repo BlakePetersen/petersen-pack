@@ -10,24 +10,27 @@ const BASE_URL = 'https://blakepetersen.io'
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
-  const allCollections = getAllCollections().filter((c) => c.showInSitemap)
+  const allCollections = getAllCollections().filter(c => c.showInSitemap)
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: now },
-    ...allCollections.map((c) => ({ url: `${BASE_URL}${c.href}`, lastModified: now })),
+    ...allCollections.map(c => ({
+      url: `${BASE_URL}${c.href}`,
+      lastModified: now
+    }))
   ]
 
-  const collections = allCollections.map((c) => c.getter())
+  const collections = allCollections.map(c => c.getter())
 
   const gitHistory = getAllGitHistory()
 
-  const contentPages: MetadataRoute.Sitemap = collections.flatMap((items) =>
-    items.map((item) => ({
+  const contentPages: MetadataRoute.Sitemap = collections.flatMap(items =>
+    items.map(item => ({
       url: `${BASE_URL}/${item.slug}`,
       lastModified: gitHistory[item.slug]
         ? new Date(gitHistory[item.slug].lastModified)
-        : now,
-    })),
+        : now
+    }))
   )
 
   return [...staticPages, ...contentPages]

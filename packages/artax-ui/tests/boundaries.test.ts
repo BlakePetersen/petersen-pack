@@ -49,10 +49,7 @@ describe('server/client boundaries', () => {
     it.each(serverSafeFiles)(
       '%s does not contain "use client" directive',
       filename => {
-        const content = readFileSync(
-          resolve(componentsDir, filename),
-          'utf-8'
-        )
+        const content = readFileSync(resolve(componentsDir, filename), 'utf-8')
         expect(content).not.toContain("'use client'")
         expect(content).not.toContain('"use client"')
       }
@@ -60,24 +57,15 @@ describe('server/client boundaries', () => {
   })
 
   describe('client components have use client', () => {
-    it.each(clientFiles)(
-      '%s has "use client" as first line',
-      filename => {
-        const content = readFileSync(
-          resolve(componentsDir, filename),
-          'utf-8'
-        )
-        const firstLine = content.split('\n')[0].trim()
-        expect(firstLine).toBe("'use client'")
-      }
-    )
+    it.each(clientFiles)('%s has "use client" as first line', filename => {
+      const content = readFileSync(resolve(componentsDir, filename), 'utf-8')
+      const firstLine = content.split('\n')[0].trim()
+      expect(firstLine).toBe("'use client'")
+    })
   })
 
   it('index.ts does not contain "use client" directive', () => {
-    const content = readFileSync(
-      resolve(__dirname, '../src/index.ts'),
-      'utf-8'
-    )
+    const content = readFileSync(resolve(__dirname, '../src/index.ts'), 'utf-8')
     expect(content).not.toContain("'use client'")
     expect(content).not.toContain('"use client"')
   })

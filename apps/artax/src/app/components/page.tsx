@@ -3,22 +3,17 @@
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from 'artax-ui'
+import { Card, CardHeader, CardTitle, CardDescription } from 'artax-ui'
 import { getComponentsByTier } from '@/lib/component-registry'
 
 export const metadata: Metadata = {
-  title: 'Components',
+  title: 'Components'
 }
 
 const tiers: { slug: 'atoms' | 'molecules' | 'organisms'; label: string }[] = [
   { slug: 'atoms', label: '// atoms' },
   { slug: 'molecules', label: '// molecules' },
-  { slug: 'organisms', label: '// organisms' },
+  { slug: 'organisms', label: '// organisms' }
 ]
 
 export default function ComponentsPage() {
@@ -31,7 +26,7 @@ export default function ComponentsPage() {
         </p>
       </header>
 
-      {tiers.map((tier) => {
+      {tiers.map(tier => {
         const entries = getComponentsByTier(tier.slug)
         return (
           <section key={tier.slug} className="space-y-4">
@@ -39,7 +34,7 @@ export default function ComponentsPage() {
               {tier.label}
             </h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {entries.map((c) => (
+              {entries.map(c => (
                 <Link
                   key={c.slug}
                   href={`/components/${c.tier}/${c.slug}`}

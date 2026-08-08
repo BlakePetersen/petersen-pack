@@ -8,7 +8,7 @@ import {
   buildGraph,
   getLocalGraph,
   computeLayout,
-  renderGraphSvg,
+  renderGraphSvg
 } from './graph'
 import type { ContentNode } from './graph'
 import { getGitHistoryForFile } from './git-history'
@@ -20,7 +20,7 @@ import {
   MergeStrategySchema,
   type Slug,
   type CalVer,
-  type Sha256Hex,
+  type Sha256Hex
 } from 'blink-registry'
 
 // --- Types ---
@@ -91,11 +91,11 @@ type DxCollectionName = 'skills' | 'hooks' | 'configs' | 'guides'
 // --- 1. Draft filtering (production only) ---
 
 export function filterDrafts(data: DxData): void {
-  data.skills = data.skills.filter((s) => !s.draft)
-  data.hooks = data.hooks.filter((h) => !h.draft)
-  data.configs = data.configs.filter((c) => !c.draft)
-  data.guides = data.guides.filter((g) => !g.draft)
-  data.posts = data.posts.filter((p) => !p.draft)
+  data.skills = data.skills.filter(s => !s.draft)
+  data.hooks = data.hooks.filter(h => !h.draft)
+  data.configs = data.configs.filter(c => !c.draft)
+  data.guides = data.guides.filter(g => !g.draft)
+  data.posts = data.posts.filter(p => !p.draft)
 }
 
 // --- 2. Cross-reference integrity ---
@@ -110,10 +110,10 @@ export function filterDrafts(data: DxData): void {
 // of one rebuild per bad ref.
 export function validateCrossReferences(data: DxData): void {
   const collectionSlugs: Record<DxCollectionName, Set<string>> = {
-    skills: new Set(data.skills.map((i) => i.slug)),
-    hooks: new Set(data.hooks.map((i) => i.slug)),
-    configs: new Set(data.configs.map((i) => i.slug)),
-    guides: new Set(data.guides.map((i) => i.slug)),
+    skills: new Set(data.skills.map(i => i.slug)),
+    hooks: new Set(data.hooks.map(i => i.slug)),
+    configs: new Set(data.configs.map(i => i.slug)),
+    guides: new Set(data.guides.map(i => i.slug))
   }
 
   const brokenRefs: string[] = []
@@ -121,7 +121,7 @@ export function validateCrossReferences(data: DxData): void {
     ...data.skills,
     ...data.hooks,
     ...data.configs,
-    ...data.guides,
+    ...data.guides
   ]
 
   for (const item of allDx) {
@@ -131,20 +131,20 @@ export function validateCrossReferences(data: DxData): void {
         const slashIndex = ref.indexOf('/')
         if (slashIndex <= 0 || slashIndex === ref.length - 1) {
           brokenRefs.push(
-            `  ${item.slug} ${field}: '${ref}' — invalid format (expected '<collection>/<slug>')`,
+            `  ${item.slug} ${field}: '${ref}' — invalid format (expected '<collection>/<slug>')`
           )
           continue
         }
         const coll = ref.slice(0, slashIndex)
         if (!(coll in collectionSlugs)) {
           brokenRefs.push(
-            `  ${item.slug} ${field}: '${ref}' — unknown collection '${coll}'`,
+            `  ${item.slug} ${field}: '${ref}' — unknown collection '${coll}'`
           )
           continue
         }
         if (!collectionSlugs[coll as DxCollectionName].has(ref)) {
           brokenRefs.push(
-            `  ${item.slug} ${field}: '${ref}' — target not found in collection '${coll}'`,
+            `  ${item.slug} ${field}: '${ref}' — target not found in collection '${coll}'`
           )
         }
       }
@@ -153,7 +153,7 @@ export function validateCrossReferences(data: DxData): void {
 
   // Posts' `related` refs may target DX entries or other posts; they used to
   // bypass validation entirely and silently drop at render time.
-  const postSlugs = new Set(data.posts.map((p) => p.slug))
+  const postSlugs = new Set(data.posts.map(p => p.slug))
   for (const post of data.posts) {
     for (const ref of post.related) {
       const coll = ref.slice(0, ref.indexOf('/'))
@@ -170,7 +170,7 @@ export function validateCrossReferences(data: DxData): void {
 
   if (brokenRefs.length > 0) {
     const error = new Error(
-      `Broken cross-references in content (${brokenRefs.length}):\n${brokenRefs.join('\n')}`,
+      `Broken cross-references in content (${brokenRefs.length}):\n${brokenRefs.join('\n')}`
     )
     // Stable name for error tracking — a bare Error from inside Velite's
     // prepare hook is indistinguishable from any other build failure.
@@ -186,12 +186,12 @@ export function buildAndWriteGraphs(data: DxData, outputDir: string): void {
     ...data.skills,
     ...data.hooks,
     ...data.configs,
-    ...data.guides,
-  ].map((item) => ({
+    ...data.guides
+  ].map(item => ({
     slug: item.slug,
     title: item.title,
     category: item.category,
-    dependencies: item.dependencies,
+    dependencies: item.dependencies
   }))
 
   const fullGraph = buildGraph(dxItems)
@@ -205,14 +205,14 @@ export function buildAndWriteGraphs(data: DxData, outputDir: string): void {
       const localLayout = computeLayout(local)
       localGraphs[item.slug] = renderGraphSvg(localLayout, {
         currentSlug: item.slug,
-        basePath: '/dx',
+        basePath: '/dx'
       })
     }
   }
 
   fs.writeFileSync(
     path.join(outputDir, 'graph.json'),
-    JSON.stringify({ fullGraphSvg, localGraphs }, null, 2),
+    JSON.stringify({ fullGraphSvg, localGraphs }, null, 2)
   )
 }
 
@@ -221,17 +221,20 @@ export function buildAndWriteGraphs(data: DxData, outputDir: string): void {
 export function extractGitHistory(
   data: DxData,
   contentDir: string,
-  outputDir: string,
+  outputDir: string
 ): void {
   const allItems = [
     ...data.skills,
     ...data.hooks,
     ...data.configs,
     ...data.guides,
-    ...data.posts,
+    ...data.posts
   ]
 
-  const gitHistory: Record<string, { lastModified: string; commitCount: number }> = {}
+  const gitHistory: Record<
+    string,
+    { lastModified: string; commitCount: number }
+  > = {}
   for (const item of allItems) {
     const mdxPath = path.join(contentDir, `${item.slug}.mdx`)
     gitHistory[item.slug] = getGitHistoryForFile(mdxPath)
@@ -239,7 +242,7 @@ export function extractGitHistory(
 
   fs.writeFileSync(
     path.join(outputDir, 'git-history.json'),
-    JSON.stringify(gitHistory, null, 2),
+    JSON.stringify(gitHistory, null, 2)
   )
 }
 
@@ -247,7 +250,10 @@ export function extractGitHistory(
 
 type VersionManifest = Record<Slug, { hash: Sha256Hex; version: CalVer }>
 
-function deriveArtifactPaths(velitePath: string): { slug: string; pagePath: string } {
+function deriveArtifactPaths(velitePath: string): {
+  slug: string
+  pagePath: string
+} {
   const pagePath = velitePath
     .replace(/\.artifact\/manifest$/, '')
     .replace(/\.artifact$/, '')
@@ -270,26 +276,31 @@ function sha256Hex(payload: string): string {
 // persisting the manifest, so a bad artifact never corrupts the hash gate.
 export function versionAndValidateArtifacts(
   data: DxData,
-  contentDir: string,
+  contentDir: string
 ): ValidatedArtifact[] {
-  const versionManifestPath = path.resolve(contentDir, '.artifact-versions.json')
+  const versionManifestPath = path.resolve(
+    contentDir,
+    '.artifact-versions.json'
+  )
   let priorVersionManifest: VersionManifest = {}
   if (fs.existsSync(versionManifestPath)) {
     try {
-      priorVersionManifest = JSON.parse(fs.readFileSync(versionManifestPath, 'utf-8'))
+      priorVersionManifest = JSON.parse(
+        fs.readFileSync(versionManifestPath, 'utf-8')
+      )
     } catch (cause) {
       // Merge conflicts are the usual culprit — a raw SyntaxError from inside
       // Velite's prepare hook gave no path and no recovery step.
       throw new Error(
         `Version manifest corrupted at ${versionManifestPath} — fix or delete it to regenerate (versions will re-derive from git dates)`,
-        { cause },
+        { cause }
       )
     }
   }
   const updatedVersionManifest: VersionManifest = {}
   const dateCounters = new Map<string, number>()
 
-  const singles: ValidatedArtifact[] = data.singleArtifacts.map((artifact) => {
+  const singles: ValidatedArtifact[] = data.singleArtifacts.map(artifact => {
     const { slug, pagePath } = deriveArtifactPaths(artifact.slug)
     // Hash the distributed-payload bytes only (single-file artifact = the body).
     const hash = sha256Hex(artifact.body)
@@ -314,18 +325,18 @@ export function versionAndValidateArtifacts(
         {
           path: artifact.destination,
           content: artifact.body,
-          merge: artifact.merge,
-        },
+          merge: artifact.merge
+        }
       ],
-      devDependencies: artifact.devDependencies,
+      devDependencies: artifact.devDependencies
     }
   })
 
-  const multis: ValidatedArtifact[] = data.multiArtifacts.map((artifact) => {
+  const multis: ValidatedArtifact[] = data.multiArtifacts.map(artifact => {
     const { slug, pagePath } = deriveArtifactPaths(artifact.slug)
     // Hash the concatenated file contents in declared order (no separator —
     // file boundaries are immaterial to the consumer-facing payload).
-    const concatenated = artifact.files.map((f) => f.content).join('')
+    const concatenated = artifact.files.map(f => f.content).join('')
     const hash = sha256Hex(concatenated)
     const prior = priorVersionManifest[slug]
     let version: string
@@ -345,7 +356,7 @@ export function versionAndValidateArtifacts(
       description: artifact.description,
       pagePath,
       files: artifact.files,
-      devDependencies: artifact.devDependencies,
+      devDependencies: artifact.devDependencies
     }
   })
 
@@ -359,7 +370,7 @@ export function versionAndValidateArtifacts(
     const priorSlugSource = slugSources.get(artifact.slug)
     if (priorSlugSource) {
       throw new Error(
-        `Duplicate artifact slug '${artifact.slug}' derived from both '${priorSlugSource}' and '${artifact.pagePath}'`,
+        `Duplicate artifact slug '${artifact.slug}' derived from both '${priorSlugSource}' and '${artifact.pagePath}'`
       )
     }
     slugSources.set(artifact.slug, artifact.pagePath)
@@ -369,7 +380,7 @@ export function versionAndValidateArtifacts(
       const priorDest = replaceDestinations.get(file.path)
       if (priorDest) {
         throw new Error(
-          `Duplicate replace-merge destination '${file.path}' declared by both '${priorDest}' and '${artifact.slug}' — the second silently clobbers the first on apply`,
+          `Duplicate replace-merge destination '${file.path}' declared by both '${priorDest}' and '${artifact.slug}' — the second silently clobbers the first on apply`
         )
       }
       replaceDestinations.set(file.path, artifact.slug)
@@ -381,17 +392,25 @@ export function versionAndValidateArtifacts(
       throw new Error(`Invalid artifact slug: "${artifact.slug}"`)
     }
     if (!CalVerSchema.safeParse(artifact.version).success) {
-      throw new Error(`Invalid artifact version: "${artifact.version}" for ${artifact.slug}`)
+      throw new Error(
+        `Invalid artifact version: "${artifact.version}" for ${artifact.slug}`
+      )
     }
     if (!ArtifactTypeSchema.safeParse(artifact.type).success) {
-      throw new Error(`Invalid artifact type: "${artifact.type}" for ${artifact.slug}`)
+      throw new Error(
+        `Invalid artifact type: "${artifact.type}" for ${artifact.slug}`
+      )
     }
     for (const file of artifact.files) {
       if (!MergeStrategySchema.safeParse(file.merge).success) {
-        throw new Error(`Invalid merge strategy: "${file.merge}" in ${artifact.slug}`)
+        throw new Error(
+          `Invalid merge strategy: "${file.merge}" in ${artifact.slug}`
+        )
       }
       if (!file.content) {
-        throw new Error(`Empty file content for "${file.path}" in ${artifact.slug}`)
+        throw new Error(
+          `Empty file content for "${file.path}" in ${artifact.slug}`
+        )
       }
     }
   }
@@ -400,11 +419,13 @@ export function versionAndValidateArtifacts(
   // Velite's prepare hook runs serially in a single build process (no
   // parallel builds), so a plain write is safe — no write-temp-then-rename.
   const sortedVersionManifest = Object.fromEntries(
-    Object.entries(updatedVersionManifest).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
+    Object.entries(updatedVersionManifest).sort(([a], [b]) =>
+      a < b ? -1 : a > b ? 1 : 0
+    )
   )
   fs.writeFileSync(
     versionManifestPath,
-    JSON.stringify(sortedVersionManifest, null, 2) + '\n',
+    JSON.stringify(sortedVersionManifest, null, 2) + '\n'
   )
 
   return allArtifacts
@@ -414,10 +435,9 @@ export function versionAndValidateArtifacts(
 
 export function writeRegistryFiles(
   allArtifacts: ValidatedArtifact[],
-  registryDirOverride?: string,
+  registryDirOverride?: string
 ): void {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://blakepetersen.io'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://blakepetersen.io'
   const registryDir =
     registryDirOverride ?? path.resolve(process.cwd(), 'public', 'r')
 
@@ -425,21 +445,21 @@ export function writeRegistryFiles(
   fs.rmSync(registryDir, { recursive: true, force: true })
   fs.mkdirSync(registryDir, { recursive: true })
 
-  const items = allArtifacts.map((artifact) => ({
+  const items = allArtifacts.map(artifact => ({
     slug: artifact.slug,
     name: artifact.name,
     type: artifact.type,
     version: artifact.version,
     description: artifact.description,
     // pagePath is the real site route — `<type>s/<slug>` 404'd for nested entries
-    url: `${baseUrl}/${artifact.pagePath}`,
+    url: `${baseUrl}/${artifact.pagePath}`
   }))
 
   // Use max CalVer version as generatedAt (avoids noisy git diffs from wall-clock time)
   const maxVersion =
     allArtifacts.length > 0
       ? allArtifacts
-          .map((a) => a.version)
+          .map(a => a.version)
           .sort()
           .pop()!
       : new Date().toISOString()
@@ -454,7 +474,7 @@ export function writeRegistryFiles(
 
   fs.writeFileSync(
     path.join(registryDir, 'index.json'),
-    JSON.stringify(index, null, 2),
+    JSON.stringify(index, null, 2)
   )
 
   for (const artifact of allArtifacts) {
@@ -465,12 +485,12 @@ export function writeRegistryFiles(
     const { pagePath, ...publishable } = artifact
     const detail = {
       ...publishable,
-      url: `${baseUrl}/${pagePath}`,
+      url: `${baseUrl}/${pagePath}`
     }
 
     fs.writeFileSync(
       path.join(typeDir, `${artifact.slug}.json`),
-      JSON.stringify(detail, null, 2),
+      JSON.stringify(detail, null, 2)
     )
   }
 }

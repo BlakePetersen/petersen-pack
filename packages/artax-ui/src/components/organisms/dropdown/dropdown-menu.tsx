@@ -10,10 +10,7 @@ function DropdownContentPrimitive({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn(
-        'bg-popover border border-border p-1 shadow-md',
-        className
-      )}
+      className={cn('bg-popover border border-border p-1 shadow-md', className)}
       {...props}
     />
   )
@@ -38,12 +35,7 @@ function DropdownSeparatorPrimitive({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn('my-1 h-px bg-border', className)}
-      {...props}
-    />
-  )
+  return <div className={cn('my-1 h-px bg-border', className)} {...props} />
 }
 
 const Dropdown = DropdownMenu.Root

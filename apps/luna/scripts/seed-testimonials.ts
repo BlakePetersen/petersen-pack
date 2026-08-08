@@ -65,7 +65,9 @@ async function main() {
     const created = await prisma.testimonial.create({
       data: testimonial,
     })
-    console.log(`Created testimonial: ${created.clientName} - ${created.projectType}`)
+    console.log(
+      `Created testimonial: ${created.clientName} - ${created.projectType}`
+    )
   }
 
   console.log(`✅ Successfully seeded ${testimonials.length} testimonials`)

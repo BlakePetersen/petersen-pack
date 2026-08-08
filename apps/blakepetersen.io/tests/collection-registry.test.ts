@@ -4,7 +4,7 @@
 import {
   getAllCollections,
   getVisibleCollections,
-  getCollection,
+  getCollection
 } from '@/lib/collection-registry'
 
 // Mock the content module so tests don't depend on Velite build output
@@ -13,7 +13,7 @@ jest.mock('@/lib/content', () => ({
   getHooks: () => [{ slug: 'hooks/a', title: 'Hook A' }],
   getConfigs: () => [{ slug: 'configs/a', title: 'Config A' }],
   getGuides: () => [{ slug: 'guides/a', title: 'Guide A' }],
-  getPosts: () => [{ slug: 'posts/a', title: 'Post A' }],
+  getPosts: () => [{ slug: 'posts/a', title: 'Post A' }]
 }))
 
 describe('collection-registry', () => {
@@ -21,12 +21,12 @@ describe('collection-registry', () => {
     it('returns all five content collections', () => {
       const all = getAllCollections()
       expect(all).toHaveLength(5)
-      expect(all.map((c) => c.slug)).toEqual([
+      expect(all.map(c => c.slug)).toEqual([
         'skills',
         'hooks',
         'configs',
         'guides',
-        'posts',
+        'posts'
       ])
     })
 
@@ -78,7 +78,7 @@ describe('collection-registry', () => {
 
     it('throws on unknown slug', () => {
       expect(() => getCollection('nonexistent')).toThrow(
-        'Unknown collection: nonexistent',
+        'Unknown collection: nonexistent'
       )
     })
   })
