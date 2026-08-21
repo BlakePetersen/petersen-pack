@@ -3,7 +3,7 @@
 
 import { readFile, readdir, stat, unlink } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
-import { join, basename, extname, resolve } from 'node:path'
+import { join, basename, resolve } from 'node:path'
 import matter from 'gray-matter'
 import { atomicWrite } from '@/writer'
 import {
