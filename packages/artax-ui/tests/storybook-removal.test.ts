@@ -14,6 +14,10 @@ describe('storybook removal', () => {
     expect(existsSync(resolve(pkgRoot, '.storybook'))).toBe(false)
   })
 
+  it('storybook-static/ output directory does not exist', () => {
+    expect(existsSync(resolve(pkgRoot, 'storybook-static'))).toBe(false)
+  })
+
   it('package.json has no storybook devDependencies', () => {
     const pkg = JSON.parse(
       readFileSync(resolve(pkgRoot, 'package.json'), 'utf-8')
