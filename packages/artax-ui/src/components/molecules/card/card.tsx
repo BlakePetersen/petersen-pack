@@ -36,7 +36,7 @@ function CardTitle({
       )}
       {...props}
     >
-      <span className="text-muted-foreground">// </span>
+      <span className="text-muted-foreground">{'// '}</span>
       {children}
     </div>
   )
