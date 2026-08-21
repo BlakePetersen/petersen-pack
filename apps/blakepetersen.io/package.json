@@ -34,7 +34,7 @@
     "test:visual": "playwright test tests/visual",
     "test:visual:update": "playwright test tests/visual --update-snapshots",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
-    "velite": "velite build"
+    "velite": "velite build --strict"
   },
   "devDependencies": {
     "@blink/cli": "workspace:*",

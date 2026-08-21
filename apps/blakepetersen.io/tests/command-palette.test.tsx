@@ -35,6 +35,30 @@ describe('CommandPalette', () => {
     const input = screen.getByPlaceholderText(/search/i)
     expect(input).toBeInTheDocument()
   })
+
+  it('open dialog exposes an accessible description', () => {
+    render(<CommandPalette defaultOpen />)
+    const dialog = screen.getByRole('dialog')
+    const describedBy = dialog.getAttribute('aria-describedby')
+    expect(describedBy).toBeTruthy()
+
+    const description = document.getElementById(describedBy as string)
+    expect(description).not.toBeNull()
+    expect(description).toHaveTextContent(/Search across all site content/i)
+  })
+
+  it('does not warn about a missing dialog description', () => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+    try {
+      render(<CommandPalette defaultOpen />)
+      const describedByWarnings = warn.mock.calls.filter(([first]) =>
+        String(first).includes('Missing `Description`')
+      )
+      expect(describedByWarnings).toEqual([])
+    } finally {
+      warn.mockRestore()
+    }
+  })
 })
 
 describe('SearchTrigger', () => {

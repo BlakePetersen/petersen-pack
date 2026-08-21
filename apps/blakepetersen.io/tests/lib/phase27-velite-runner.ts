@@ -7,6 +7,9 @@ import path from 'node:path'
 
 export interface VeliteRunResult {
   exitCode: number
+  // A signal kill (SIGKILL/OOM) reports status=null; without this field it
+  // would be indistinguishable from a genuine exit(-1).
+  signal: NodeJS.Signals | null
   stdout: string
   stderr: string
   combined: string
@@ -61,6 +64,7 @@ export function runVeliteFixture(fixtureDirectory: string): VeliteRunResult {
   const stderr = result.stderr ?? ''
   return {
     exitCode: result.status ?? -1,
+    signal: result.signal ?? null,
     stdout,
     stderr,
     combined: stdout + '\n' + stderr

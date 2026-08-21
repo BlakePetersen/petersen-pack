@@ -1,0 +1,66 @@
+# ABOUTME: Advisory visual-regression job — Playwright screenshots against a prod build.
+# ABOUTME: Not a required merge check this phase; promotion to required is a follow-up.
+
+name: Visual
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      update_snapshots:
+        description: 'Regenerate Linux baselines and upload them as an artifact'
+        type: boolean
+        default: false
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      # blakepetersen.io imports blink-registry's built dist at build time, and
+      # `--filter <pkg>` alone does not walk the workspace graph.
+      - run: pnpm --filter blakepetersen.io^... build
+
+      - run: pnpm --filter blakepetersen.io build
+
+      - run: pnpm --filter blakepetersen.io exec playwright install --with-deps chromium
+
+      - name: Run visual suite (assert)
+        if: ${{ !inputs.update_snapshots }}
+        run: pnpm --filter blakepetersen.io test:visual
+
+      - name: Regenerate baselines (update)
+        if: ${{ inputs.update_snapshots }}
+        run: pnpm --filter blakepetersen.io test:visual:update
+
+      - name: Upload regenerated baselines
+        if: ${{ inputs.update_snapshots }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-snapshots
+          path: apps/blakepetersen.io/tests/visual/**/*.png
+
+      # test-results/ holds the Linux-rendered `-actual.png` for every diff, so a
+      # red run also carries the bytes needed to seed baselines from this env.
+      - name: Upload diff on failure
+        if: ${{ failure() && !inputs.update_snapshots }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-diff
+          path: |
+            apps/blakepetersen.io/playwright-report
+            apps/blakepetersen.io/test-results

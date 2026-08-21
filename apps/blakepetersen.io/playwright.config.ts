@@ -1,5 +1,5 @@
 // ABOUTME: Playwright configuration for visual regression tests
-// ABOUTME: Configured for Next.js dev server on port 3000 (CONTENT-06 torture test)
+// ABOUTME: Serves the Next.js production build on port 3000 (CONTENT-06 torture test)
 
 import { defineConfig, devices } from '@playwright/test'
 
@@ -45,8 +45,11 @@ export default defineConfig({
     }
   ],
 
+  // Baselines are captured against the production build: dev-server output
+  // (unminified CSS, dev overlays) renders differently from what ships.
+  // Run `pnpm build` before `pnpm test:visual`.
   webServer: {
-    command: 'pnpm dev',
+    command: 'pnpm start',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120000

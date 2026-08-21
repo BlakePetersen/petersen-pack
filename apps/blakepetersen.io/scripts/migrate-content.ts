@@ -4,6 +4,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { inspect } from 'node:util'
+import { discoverMigrationFiles } from './migration-discovery'
 import type { Migration } from './migrations/types'
 
 // tsx runs this as native ESM, where __dirname is undefined — derive it.
@@ -17,10 +19,7 @@ async function loadMigrations(): Promise<Migration[]> {
   if (!fs.existsSync(migrationsDir)) {
     throw new Error(`Migrations directory not found: ${migrationsDir}`)
   }
-  const files = fs
-    .readdirSync(migrationsDir)
-    .filter(f => /^\d{3}-[a-z0-9-]+\.ts$/.test(f))
-    .sort()
+  const files = discoverMigrationFiles(migrationsDir)
 
   const loaded: Migration[] = []
   for (const f of files) {
@@ -97,6 +96,9 @@ async function main(): Promise<void> {
 }
 
 main().catch(err => {
-  console.error(err)
+  // A thrown non-Error would render as [object Object] — inspect it instead.
+  console.error(
+    err instanceof Error ? (err.stack ?? err.message) : inspect(err)
+  )
   process.exitCode = 1
 })
