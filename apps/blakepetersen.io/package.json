@@ -45,7 +45,6 @@
     "@types/react-dom": "19.2.3",
     "jest": "30.3.0",
     "pagefind": "^1.4.0",
-    "playwright": "^1.59.1",
     "rehype-slug": "^6.0.0",
     "ts-jest": "^29.4.9",
     "tsconfig": "workspace:*",

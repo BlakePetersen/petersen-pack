@@ -241,9 +241,6 @@ importers:
       pagefind:
         specifier: ^1.4.0
         version: 1.4.0
-      playwright:
-        specifier: ^1.59.1
-        version: 1.60.0
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
