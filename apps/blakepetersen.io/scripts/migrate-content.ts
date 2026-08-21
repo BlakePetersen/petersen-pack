@@ -97,6 +97,8 @@ async function main(): Promise<void> {
 
 main().catch(err => {
   // A thrown non-Error would render as [object Object] — inspect it instead.
-  console.error(err instanceof Error ? (err.stack ?? err.message) : inspect(err))
+  console.error(
+    err instanceof Error ? (err.stack ?? err.message) : inspect(err)
+  )
   process.exitCode = 1
 })

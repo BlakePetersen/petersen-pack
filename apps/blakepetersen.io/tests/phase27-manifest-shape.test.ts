@@ -37,8 +37,14 @@ describe('SCHEMA-08: .artifact-versions.json shape', () => {
   it('serializes byte-identically regardless of key insertion order (D-06)', () => {
     const entryA = { hash: 'a'.repeat(64), version: '2026.07.13.1' }
     const entryB = { hash: 'b'.repeat(64), version: '2026.07.13.2' }
-    const first = serializeVersionManifest({ 'z-slug': entryB, 'a-slug': entryA })
-    const second = serializeVersionManifest({ 'a-slug': entryA, 'z-slug': entryB })
+    const first = serializeVersionManifest({
+      'z-slug': entryB,
+      'a-slug': entryA
+    })
+    const second = serializeVersionManifest({
+      'a-slug': entryA,
+      'z-slug': entryB
+    })
 
     expect(second).toBe(first)
     expect(first.endsWith('\n')).toBe(true)
