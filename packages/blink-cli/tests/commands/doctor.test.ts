@@ -105,7 +105,9 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runDoctor(args: Record<string, string | boolean | undefined> = {}) {
+async function runDoctor(
+  args: Record<string, string | boolean | undefined> = {}
+) {
   const mod = await import('@/commands/doctor')
   const command = mod.default
   await command.run!({ args: { ...args } } as unknown as CommandContext)

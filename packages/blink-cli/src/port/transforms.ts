@@ -98,7 +98,6 @@ export function transformWikilinks(
  * Unknown keys preserved in MDX comment block.
  */
 
-
 export function transformFrontmatter(data: Record<string, unknown>): {
   mapped: Record<string, unknown>
   unknownComment: string

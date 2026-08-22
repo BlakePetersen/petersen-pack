@@ -104,7 +104,9 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runEject(args: Record<string, string | boolean | undefined> = {}) {
+async function runEject(
+  args: Record<string, string | boolean | undefined> = {}
+) {
   const mod = await import('@/commands/eject')
   const command = mod.default
   await command.run!({

@@ -157,7 +157,9 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runDiff(args: Record<string, string | boolean | undefined> = {}) {
+async function runDiff(
+  args: Record<string, string | boolean | undefined> = {}
+) {
   const mod = await import('@/commands/diff')
   const command = mod.default
   await command.run!({

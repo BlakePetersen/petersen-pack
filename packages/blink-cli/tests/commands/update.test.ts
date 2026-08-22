@@ -157,7 +157,9 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runUpdate(args: Record<string, string | boolean | undefined> = {}) {
+async function runUpdate(
+  args: Record<string, string | boolean | undefined> = {}
+) {
   const mod = await import('@/commands/update')
   const command = mod.default
   await command.run!({
