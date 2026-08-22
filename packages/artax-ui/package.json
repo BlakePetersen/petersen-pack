@@ -16,6 +16,7 @@
     "**/*.css"
   ],
   "scripts": {
+    "lint": "eslint .",
     "test": "jest"
   },
   "peerDependencies": {

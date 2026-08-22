@@ -98,8 +98,6 @@ export function transformWikilinks(
  * Unknown keys preserved in MDX comment block.
  */
 
-const KNOWN_KEYS = new Set(['title', 'description', 'tags', 'aliases', 'date'])
-
 export function transformFrontmatter(data: Record<string, unknown>): {
   mapped: Record<string, unknown>
   unknownComment: string

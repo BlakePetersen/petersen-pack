@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "lint": "eslint .",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },

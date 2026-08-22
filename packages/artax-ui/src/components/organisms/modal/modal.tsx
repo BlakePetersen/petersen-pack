@@ -33,6 +33,7 @@ export function Modal({
 }: ModalProps) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
+    // eslint-disable-next-line @eslint-react/set-state-in-effect -- SSR mount gate (24.1-03, 26-01)
     setMounted(true)
   }, [])
   if (!mounted && trigger) return <>{trigger}</>

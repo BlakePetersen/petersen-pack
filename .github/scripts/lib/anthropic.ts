@@ -5,6 +5,7 @@ import Anthropic from '@anthropic-ai/sdk'
 
 export const CLAUDE_MODEL = 'claude-sonnet-5'
 export const DEFAULT_TRIAGE_MAX_TOKENS = 1024
+export const DEFAULT_REVIEW_MAX_TOKENS = 4096
 
 export function createAnthropicClient(): Anthropic {
   const apiKey = process.env.ANTHROPIC_API_KEY

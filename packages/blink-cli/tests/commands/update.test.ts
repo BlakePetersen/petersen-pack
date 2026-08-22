@@ -6,13 +6,14 @@ import {
   readFileSync,
   mkdirSync,
   rmSync,
-  existsSync,
   realpathSync
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR, checksum } from '@/manifest'
 import { injectMarkers } from '@/markers'
+import type { CommandContext } from 'citty'
+import type { RegistryArtifact } from 'blink-registry'
 
 let tmpDir: string
 let originalCwd: string
@@ -27,7 +28,7 @@ let consolaMock: {
 let fetchMock: jest.Mock
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config
+  defineCommand: <T>(config: T): T => config
 }))
 
 jest.mock('consola', () => {
@@ -123,7 +124,7 @@ function createManifestWithItem(
   )
 }
 
-function mockFetchForUpdate(artifact: any) {
+function mockFetchForUpdate(artifact: RegistryArtifact) {
   fetchMock = jest.fn().mockResolvedValue({
     ok: true,
     json: async () => artifact
@@ -156,12 +157,14 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runUpdate(args: Record<string, any> = {}) {
+async function runUpdate(
+  args: Record<string, string | boolean | undefined> = {}
+) {
   const mod = await import('@/commands/update')
   const command = mod.default
   await command.run!({
     args: { slug: undefined, 'dry-run': false, yes: false, ...args }
-  } as any)
+  } as unknown as CommandContext)
 }
 
 describe('blink update', () => {

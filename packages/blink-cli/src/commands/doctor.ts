@@ -4,7 +4,7 @@ import { defineCommand } from 'citty'
 import { consola } from 'consola'
 import pc from 'picocolors'
 import { readFile } from 'node:fs/promises'
-import { readdir, stat } from 'node:fs/promises'
+import { readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { readManifest, checksum } from '@/manifest'
 import { validateMarkers, findManagedSections } from '@/markers'
@@ -148,7 +148,6 @@ export default defineCommand({
 
     const errors = issues.filter(i => i.severity === 'error')
     const warnings = issues.filter(i => i.severity === 'warning')
-    const infos = issues.filter(i => i.severity === 'info')
 
     for (const issue of issues) {
       const prefix =

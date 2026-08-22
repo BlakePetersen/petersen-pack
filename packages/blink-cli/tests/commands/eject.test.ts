@@ -12,6 +12,7 @@ import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR, checksum } from '@/manifest'
 import { injectMarkers } from '@/markers'
+import type { CommandContext } from 'citty'
 
 let tmpDir: string
 let originalCwd: string
@@ -24,7 +25,7 @@ let consolaMock: {
 }
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config
+  defineCommand: <T>(config: T): T => config
 }))
 
 jest.mock('consola', () => {
@@ -56,7 +57,7 @@ jest.mock('picocolors', () => ({
   cyan: (s: string) => s
 }))
 
-function createManifest(items: any[]) {
+function createManifest(items: ReturnType<typeof makeEntry>[]) {
   const blinkDir = join(tmpDir, BLINK_DIR)
   mkdirSync(blinkDir, { recursive: true })
   writeFileSync(
@@ -103,12 +104,14 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runEject(args: Record<string, any> = {}) {
+async function runEject(
+  args: Record<string, string | boolean | undefined> = {}
+) {
   const mod = await import('@/commands/eject')
   const command = mod.default
   await command.run!({
     args: { slug: undefined, 'dry-run': false, yes: false, ...args }
-  } as any)
+  } as unknown as CommandContext)
 }
 
 describe('blink eject', () => {

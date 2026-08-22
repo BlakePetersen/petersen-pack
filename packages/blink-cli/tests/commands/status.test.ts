@@ -5,6 +5,7 @@ import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR } from '@/manifest'
 import type { Manifest, ManifestEntry, RegistryIndex } from 'blink-registry'
+import type { CommandContext } from 'citty'
 
 const sampleEntry: ManifestEntry = {
   slug: 'prettier',
@@ -37,7 +38,7 @@ jest.mock('node:os', () => ({
 }))
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config
+  defineCommand: <T>(config: T): T => config
 }))
 
 const consolaMock = {
@@ -66,12 +67,12 @@ jest.mock('picocolors', () => ({
 
 const mockFetchIndex = jest.fn()
 jest.mock('@/registry', () => ({
-  fetchIndex: (...args: any[]) => mockFetchIndex(...args)
+  fetchIndex: (...args: unknown[]) => mockFetchIndex(...args)
 }))
 
 const mockFormatStatusTable = jest.fn().mockReturnValue('status table')
 jest.mock('@/output', () => ({
-  formatStatusTable: (...args: any[]) => mockFormatStatusTable(...args)
+  formatStatusTable: (...args: unknown[]) => mockFormatStatusTable(...args)
 }))
 
 let tmpDir: string
@@ -93,7 +94,7 @@ beforeEach(() => {
   consolaMock.error.mockClear()
   mockProcessExit = jest
     .spyOn(process, 'exit')
-    .mockImplementation((() => {}) as any)
+    .mockImplementation((() => {}) as unknown as typeof process.exit)
   mockConsoleLog = jest.spyOn(console, 'log').mockImplementation(() => {})
 })
 
@@ -116,7 +117,9 @@ function writeManifestFile(manifest: Manifest) {
 async function runStatus(args: Record<string, boolean> = {}) {
   const mod = await import('@/commands/status')
   const command = mod.default
-  await command.run!({ args: { json: false, ...args } } as any)
+  await command.run!({
+    args: { json: false, ...args }
+  } as unknown as CommandContext)
 }
 
 describe('blink status --global', () => {

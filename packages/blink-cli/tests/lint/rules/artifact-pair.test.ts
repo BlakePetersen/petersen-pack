@@ -1,6 +1,6 @@
 // ABOUTME: Tests for the artifact-pair lint rule (LINT-02).
 // ABOUTME: Validates requires_artifact sync and orphan .artifact.md detection.
-import { mkdtempSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
+import { mkdtempSync, writeFileSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { artifactPairRule } from '@/lint/rules/artifact-pair'

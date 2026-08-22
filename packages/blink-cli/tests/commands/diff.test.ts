@@ -12,6 +12,8 @@ import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR, checksum } from '@/manifest'
 import { injectMarkers } from '@/markers'
+import type { CommandContext } from 'citty'
+import type { RegistryArtifact } from 'blink-registry'
 
 let tmpDir: string
 let originalCwd: string
@@ -26,7 +28,7 @@ let consolaMock: {
 let fetchMock: jest.Mock
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config
+  defineCommand: <T>(config: T): T => config
 }))
 
 jest.mock('consola', () => {
@@ -122,7 +124,7 @@ function createManifestWithItem(
   )
 }
 
-function mockFetchForDiff(artifact: any) {
+function mockFetchForDiff(artifact: RegistryArtifact) {
   fetchMock = jest.fn().mockResolvedValue({
     ok: true,
     json: async () => artifact
@@ -155,10 +157,14 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runDiff(args: Record<string, any> = {}) {
+async function runDiff(
+  args: Record<string, string | boolean | undefined> = {}
+) {
   const mod = await import('@/commands/diff')
   const command = mod.default
-  await command.run!({ args: { slug: 'prettier', ...args } } as any)
+  await command.run!({
+    args: { slug: 'prettier', ...args }
+  } as unknown as CommandContext)
 }
 
 describe('blink diff', () => {

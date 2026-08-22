@@ -82,8 +82,8 @@ export const artifactPairRule: LintRule & {
         if (name === 'node_modules' || name === '.git') continue
         const fullPath = join(dir, name)
 
-        let isDir = false
-        let isFile = false
+        let isDir: boolean
+        let isFile: boolean
         try {
           const s = statSync(fullPath)
           isDir = s.isDirectory()

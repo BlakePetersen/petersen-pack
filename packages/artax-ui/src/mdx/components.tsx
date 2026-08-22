@@ -35,7 +35,7 @@ export const mdxComponents = {
       )}
       {...props}
     >
-      <span className="text-muted-foreground">// </span>
+      <span className="text-muted-foreground">{'// '}</span>
       {children}
     </h2>
   ),
@@ -171,6 +171,7 @@ export const mdxComponents = {
 
   pre: ({ children, className, ...props }: Props) => {
     // Extract metadata from the Shiki-generated code child element
+    // eslint-disable-next-line @eslint-react/no-children-to-array -- flattens fragments so the Shiki-generated <code> child is findable
     const codeChild = React.Children.toArray(children).find(
       (child): child is React.ReactElement =>
         React.isValidElement(child) &&
@@ -190,6 +191,7 @@ export const mdxComponents = {
       if (!React.isValidElement(node)) return ''
       const el = node as React.ReactElement
       const elProps = el.props as { children?: React.ReactNode }
+      // eslint-disable-next-line @eslint-react/no-children-to-array -- normalizes nested/fragment children into a flat list for raw-text extraction
       return React.Children.toArray(elProps.children).map(extractText).join('')
     }
     const rawCode = codeChild ? extractText(codeChild) : undefined
@@ -244,7 +246,6 @@ export const mdxComponents = {
   ),
 
   img: ({ className, alt, ...props }: ImgProps) => (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={cn('border border-border my-4', className)}
       alt={alt}

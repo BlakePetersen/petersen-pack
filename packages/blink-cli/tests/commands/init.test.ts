@@ -11,6 +11,7 @@ import {
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR } from '@/manifest'
+import type { CommandContext } from 'citty'
 
 let tmpDir: string
 let originalCwd: string
@@ -22,7 +23,7 @@ let consolaMock: {
 }
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config
+  defineCommand: <T>(config: T): T => config
 }))
 
 jest.mock('consola', () => {
@@ -70,7 +71,9 @@ async function runInit(args: Record<string, boolean> = {}) {
   // Fresh import each time to avoid stale module state
   const mod = await import('@/commands/init')
   const command = mod.default
-  await command.run!({ args: { yes: false, 'dry-run': false, ...args } } as any)
+  await command.run!({
+    args: { yes: false, 'dry-run': false, ...args }
+  } as unknown as CommandContext)
 }
 
 describe('blink init', () => {

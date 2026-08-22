@@ -17,6 +17,7 @@ jest.mock('next-themes', () => ({
       {children as React.ReactNode}
     </div>
   )),
+  // eslint-disable-next-line @eslint-react/no-unnecessary-use-prefix -- mocks next-themes' useTheme; the name is the module's contract
   useTheme: (...args: unknown[]) => mockUseTheme(...args)
 }))
 

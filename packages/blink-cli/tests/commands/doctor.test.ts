@@ -3,7 +3,6 @@
 import {
   mkdtempSync,
   writeFileSync,
-  readFileSync,
   mkdirSync,
   rmSync,
   realpathSync
@@ -12,6 +11,7 @@ import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR, checksum } from '@/manifest'
 import { injectMarkers } from '@/markers'
+import type { CommandContext } from 'citty'
 
 let tmpDir: string
 let originalCwd: string
@@ -24,7 +24,7 @@ let consolaMock: {
 }
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config
+  defineCommand: <T>(config: T): T => config
 }))
 
 jest.mock('consola', () => {
@@ -58,7 +58,7 @@ jest.mock('picocolors', () => ({
   blue: (s: string) => s
 }))
 
-function createManifest(items: any[]) {
+function createManifest(items: ReturnType<typeof makeEntry>[]) {
   const blinkDir = join(tmpDir, BLINK_DIR)
   mkdirSync(blinkDir, { recursive: true })
   writeFileSync(
@@ -105,10 +105,12 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runDoctor(args: Record<string, any> = {}) {
+async function runDoctor(
+  args: Record<string, string | boolean | undefined> = {}
+) {
   const mod = await import('@/commands/doctor')
   const command = mod.default
-  await command.run!({ args: { ...args } } as any)
+  await command.run!({ args: { ...args } } as unknown as CommandContext)
 }
 
 describe('blink doctor', () => {

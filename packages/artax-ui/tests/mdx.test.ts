@@ -43,7 +43,7 @@ describe('mdxComponents', () => {
   })
 
   it('does not contain unexpected non-function values', () => {
-    for (const [key, value] of Object.entries(mdxComponents)) {
+    for (const [, value] of Object.entries(mdxComponents)) {
       expect(typeof value).toBe('function')
     }
   })
