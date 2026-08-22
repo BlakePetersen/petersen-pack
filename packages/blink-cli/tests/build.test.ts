@@ -7,6 +7,9 @@ import { join } from 'node:path'
 const DIST_DIR = join(__dirname, '..', 'dist')
 const CLI_PATH = join(DIST_DIR, 'cli.mjs')
 
+// execSync throws an Error carrying the child's captured output.
+type ExecFailure = { stdout?: string; stderr?: string }
+
 describe('blink-cli build output', () => {
   it('dist/cli.mjs file exists', () => {
     expect(existsSync(CLI_PATH)).toBe(true)
@@ -31,9 +34,10 @@ describe('blink-cli build output', () => {
         encoding: 'utf-8',
         cwd: join(__dirname, '..')
       })
-    } catch (error: any) {
+    } catch (error) {
       // citty exits with code 1 when no subcommand given
-      output = error.stdout || error.stderr || ''
+      const { stdout, stderr } = error as ExecFailure
+      output = stdout || stderr || ''
     }
     expect(output).toContain('apply')
     expect(output).toContain('init')
@@ -48,8 +52,9 @@ describe('blink-cli build output', () => {
         encoding: 'utf-8',
         cwd: join(__dirname, '..')
       })
-    } catch (error: any) {
-      output = error.stdout || error.stderr || ''
+    } catch (error) {
+      const { stdout, stderr } = error as ExecFailure
+      output = stdout || stderr || ''
     }
     expect(output).toContain('dry-run')
     expect(output).toContain('yes')

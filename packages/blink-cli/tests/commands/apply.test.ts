@@ -12,6 +12,8 @@ import {
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { BLINK_DIR } from '@/manifest'
+import type { CommandContext } from 'citty'
+import type { RegistryIndex, RegistryArtifact } from 'blink-registry'
 
 let tmpDir: string
 let originalCwd: string
@@ -27,7 +29,7 @@ let fetchMock: jest.Mock
 let execSyncMock: jest.Mock
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config
+  defineCommand: <T>(config: T): T => config
 }))
 
 jest.mock('consola', () => {
@@ -159,7 +161,7 @@ const MOCK_INDEX_EXTENDED = {
   generatedAt: '2026-03-14T00:00:00.000Z'
 }
 
-function mockFetchResponses(index: any, artifact: any) {
+function mockFetchResponses(index: RegistryIndex, artifact: RegistryArtifact) {
   fetchMock = jest
     .fn()
     .mockResolvedValueOnce({
@@ -205,7 +207,7 @@ afterEach(() => {
   rmSync(tmpDir, { recursive: true, force: true })
 })
 
-async function runApply(args: Record<string, any> = {}) {
+async function runApply(args: Record<string, string | boolean | undefined> = {}) {
   const mod = await import('@/commands/apply')
   const command = mod.default
   await command.run!({
@@ -217,7 +219,7 @@ async function runApply(args: Record<string, any> = {}) {
       global: false,
       ...args
     }
-  } as any)
+  } as unknown as CommandContext)
 }
 
 describe('blink apply', () => {
@@ -493,8 +495,6 @@ describe('blink apply', () => {
 
       // For global scope tests, mock scope module to avoid writing to real $HOME
       const scopeMod = await import('@/scope')
-      const origResolveManifest = scopeMod.resolveManifestRoot
-      const origResolveDest = scopeMod.resolveDestination
       jest
         .spyOn(scopeMod, 'resolveManifestRoot')
         .mockImplementation((_scope, cwd) => cwd)
@@ -642,7 +642,7 @@ describe('blink apply', () => {
       await runApply({ yes: true })
 
       // Should not prompt for dependencies
-      const promptCalls = consolaMock.prompt.mock.calls.map((c: any[]) => c[0])
+      const promptCalls = consolaMock.prompt.mock.calls.map(c => c[0])
       const depPrompts = promptCalls.filter(
         (msg: string) => typeof msg === 'string' && msg.includes('Missing')
       )

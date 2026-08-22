@@ -10,7 +10,7 @@ import {
 } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { getBodyTemplate, getArtifactTemplate } from '@/scaffold/templates'
+import { getBodyTemplate } from '@/scaffold/templates'
 import { generateScaffold } from '@/scaffold/generator'
 
 describe('getBodyTemplate', () => {

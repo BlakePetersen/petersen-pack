@@ -1,6 +1,7 @@
 // ABOUTME: Tests for the blink list command.
 // ABOUTME: Validates registry item listing, --json output, and network error handling.
 import type { RegistryIndex } from 'blink-registry'
+import type { CommandContext } from 'citty'
 
 const validIndex: RegistryIndex = {
   items: [
@@ -25,7 +26,7 @@ const validIndex: RegistryIndex = {
 }
 
 jest.mock('citty', () => ({
-  defineCommand: (config: any) => config
+  defineCommand: <T>(config: T): T => config
 }))
 
 const consolaMock = {
@@ -54,12 +55,12 @@ jest.mock('picocolors', () => ({
 
 const mockFetchIndex = jest.fn()
 jest.mock('@/registry', () => ({
-  fetchIndex: (...args: any[]) => mockFetchIndex(...args)
+  fetchIndex: (...args: unknown[]) => mockFetchIndex(...args)
 }))
 
 const mockFormatListTable = jest.fn().mockReturnValue('formatted table')
 jest.mock('@/output', () => ({
-  formatListTable: (...args: any[]) => mockFormatListTable(...args)
+  formatListTable: (...args: unknown[]) => mockFormatListTable(...args)
 }))
 
 let mockProcessExit: jest.SpyInstance
@@ -75,7 +76,7 @@ beforeEach(() => {
   consolaMock.error.mockClear()
   mockProcessExit = jest
     .spyOn(process, 'exit')
-    .mockImplementation((() => {}) as any)
+    .mockImplementation((() => {}) as unknown as typeof process.exit)
   mockConsoleLog = jest.spyOn(console, 'log').mockImplementation(() => {})
 })
 
@@ -87,7 +88,9 @@ afterEach(() => {
 async function runList(args: Record<string, boolean> = {}) {
   const mod = await import('@/commands/list')
   const command = mod.default
-  await command.run!({ args: { json: false, ...args } } as any)
+  await command.run!({
+    args: { json: false, ...args }
+  } as unknown as CommandContext)
 }
 
 describe('blink list', () => {

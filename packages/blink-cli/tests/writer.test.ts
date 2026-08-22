@@ -5,9 +5,9 @@ import {
   readFileSync,
   rmSync,
   existsSync,
-  mkdirSync
+  mkdirSync,
+  readdirSync
 } from 'node:fs'
-import { rename } from 'node:fs/promises'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { atomicWrite } from '@/writer'
@@ -53,8 +53,8 @@ describe('atomicWrite', () => {
 
     await atomicWrite(dest, 'content')
 
-    const files = require('node:fs').readdirSync(tmpDir)
-    const tmpFiles = files.filter((f: string) => f.includes('.blink-tmp-'))
+    const files = readdirSync(tmpDir)
+    const tmpFiles = files.filter(f => f.includes('.blink-tmp-'))
     expect(tmpFiles).toHaveLength(0)
   })
 
@@ -68,8 +68,8 @@ describe('atomicWrite', () => {
     await expect(atomicWrite(dest, 'content')).rejects.toThrow()
 
     // Verify no temp files remain
-    const files = require('node:fs').readdirSync(tmpDir)
-    const tmpFiles = files.filter((f: string) => f.includes('.blink-tmp-'))
+    const files = readdirSync(tmpDir)
+    const tmpFiles = files.filter(f => f.includes('.blink-tmp-'))
     expect(tmpFiles).toHaveLength(0)
   })
 
