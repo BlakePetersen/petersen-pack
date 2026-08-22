@@ -55,6 +55,11 @@ async function main(): Promise<void> {
     return
   }
 
+  if (!process.env.ANTHROPIC_API_KEY) {
+    core.setFailed('ANTHROPIC_API_KEY environment variable is required')
+    return
+  }
+
   const engine = createReviewEngine({
     ai: buildAiPort(),
     github: {
